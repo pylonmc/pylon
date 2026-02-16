@@ -41,7 +41,6 @@ public class ClimbingPick extends RebarItem implements RebarBlockInteractor {
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        event.setCancelled(true);
         if (!event.getAction().isRightClick()
                 || (event.getPlayer().isSneaking() && event.useInteractedBlock() == Event.Result.ALLOW)
                 || event.getPlayer().getPersistentDataContainer().has(HOOKED_KEY)

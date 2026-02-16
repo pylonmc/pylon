@@ -97,7 +97,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
         }
 
         if (priority == EventPriority.NORMAL) {
-            event.setUseInteractedBlock(Event.Result.DENY);
+            event.setUseItemInHand(Event.Result.DENY);
             return;
         }
 
