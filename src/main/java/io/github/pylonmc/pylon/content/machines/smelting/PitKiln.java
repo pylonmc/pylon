@@ -216,6 +216,11 @@ public final class PitKiln extends RebarBlock implements
         }
     }
 
+    @Override
+    public @NotNull WailaDisplay getWaila(@NotNull Player player) {
+        return getComponentWaila(player);
+    }
+
     private WailaDisplay getComponentWaila(@NotNull Player player) {
         Component status = processingTime != null
                 ? Component.translatable(

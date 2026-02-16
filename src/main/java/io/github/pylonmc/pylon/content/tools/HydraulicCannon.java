@@ -85,16 +85,15 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
             return;
         }
 
-        boolean projectileFound = false;
+        ItemStack projectile = null;
         for (ItemStack stack : event.getPlayer().getInventory()) {
             if (PylonItems.TIN_PROJECTILE.isSimilar(stack)) {
-                stack.subtract();
-                projectileFound = true;
+                projectile = stack;
                 break;
             }
         }
 
-        if (!projectileFound) {
+        if (projectile == null) {
             return;
         }
 
@@ -103,6 +102,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
             return;
         }
 
+        projectile.subtract();
         setHydraulicFluid(getHydraulicFluid() - hydraulicFluidPerShot);
         setDirtyHydraulicFluid(getDirtyHydraulicFluid() + hydraulicFluidPerShot);
 
