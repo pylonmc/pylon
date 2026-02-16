@@ -11,6 +11,7 @@ pylon:tin_ingots_from_tin_block:
   result:
     pylon:tin_ingot: 9
   category: misc
+  priority: -2
 
 pylon:bronze_nuggets_from_bronze_ingot:
   ingredients:
@@ -25,6 +26,7 @@ pylon:bronze_ingots_from_bronze_block:
   result:
     pylon:bronze_ingot: 9
   category: misc
+  priority: -2
 
 pylon:steel_nuggets_from_steel_ingot:
   ingredients:
@@ -39,6 +41,7 @@ pylon:charcoal_from_charcoal_block:
   result:
     minecraft:charcoal: 9
   category: building
+  priority: -2
 
 pylon:steel_ingots_from_steel_block:
   ingredients:
@@ -46,6 +49,7 @@ pylon:steel_ingots_from_steel_block:
   result:
     pylon:steel_ingot: 9
   category: misc
+  priority: -2
 
 pylon:nickel_nuggets_from_nickel_ingot:
   ingredients:
@@ -60,6 +64,7 @@ pylon:nickel_ingots_from_nickel_block:
   result:
     pylon:nickel_ingot: 9
   category: misc
+  priority: -2
 
 pylon:cobalt_nuggets_from_cobalt_ingot:
   ingredients:
@@ -74,6 +79,7 @@ pylon:cobalt_ingots_from_cobalt_block:
   result:
     pylon:cobalt_ingot: 9
   category: misc
+  priority: -2
 
 pylon:shimmer_dust_1:
   ingredients:

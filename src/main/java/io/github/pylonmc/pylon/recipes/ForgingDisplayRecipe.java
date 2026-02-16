@@ -40,7 +40,7 @@ public record ForgingDisplayRecipe(
 
     @Override
     public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of();
+        return List.of(RecipeInput.of(input));
     }
 
     @Override
@@ -60,9 +60,9 @@ public record ForgingDisplayRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('h', new ItemButton(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
-                .addIngredient('i', input)
+                .addIngredient('i', new ItemButton(input))
                 .addIngredient('b', new ItemButton(PylonItems.BRONZE_ANVIL))
-                .addIngredient('r', result)
+                .addIngredient('r', new ItemButton(result))
                 .build();
     }
 }

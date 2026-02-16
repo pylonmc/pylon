@@ -7,6 +7,7 @@ pylon:tin_ingot_from_tin_nuggets:
     N: pylon:tin_nugget
   result: pylon:tin_ingot
   category: misc
+  priority: -2
 
 pylon:tin_block_from_tin_ingots:
   pattern:
@@ -27,6 +28,7 @@ pylon:bronze_ingot_from_bronze_nuggets:
     N: pylon:bronze_nugget
   result: pylon:bronze_ingot
   category: misc
+  priority: -2
 
 pylon:bronze_block_from_bronze_ingots:
   pattern:
@@ -47,6 +49,7 @@ pylon:steel_ingot_from_steel_nuggets:
     N: pylon:steel_nugget
   result: pylon:steel_ingot
   category: misc
+  priority: -2
 
 pylon:steel_block_from_steel_ingots:
   pattern:
@@ -77,6 +80,7 @@ pylon:nickel_ingot_from_nickel_nuggets:
     N: pylon:nickel_nugget
   result: pylon:nickel_ingot
   category: misc
+  priority: -2
 
 pylon:nickel_block_from_nickel_ingots:
   pattern:
@@ -97,6 +101,7 @@ pylon:cobalt_ingot_from_cobalt_nuggets:
     N: pylon:cobalt_nugget
   result: pylon:cobalt_ingot
   category: misc
+  priority: -2
 
 pylon:cobalt_block_from_cobalt_ingots:
   pattern:
