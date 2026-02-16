@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.building;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarTargetBlock;
@@ -10,6 +11,7 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.papermc.paper.event.block.TargetHitEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.GameRules;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventPriority;
@@ -58,10 +60,12 @@ public class ExplosiveTarget extends RebarBlock implements RebarTargetBlock {
             return;
         }
 
-        if (!hitBlock.getWorld().createExplosion(hitBlock.getLocation(), (float) explosivePower, createsFire)) {
-            return;
-        }
+        Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> {
+            if (!hitBlock.getWorld().createExplosion(hitBlock.getLocation(), (float) explosivePower, createsFire)) {
+                return;
+            }
 
-        BlockStorage.breakBlock(getBlock());
+            BlockStorage.breakBlock(getBlock());
+        });
     }
 }
