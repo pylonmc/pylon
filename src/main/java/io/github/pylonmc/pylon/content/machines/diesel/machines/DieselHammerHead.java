@@ -196,6 +196,10 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
+        if (fluidAmount(PylonFluids.BIODIESEL) < dieselPerCraft) {
+            return;
+        }
+
         if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
             return;
         }

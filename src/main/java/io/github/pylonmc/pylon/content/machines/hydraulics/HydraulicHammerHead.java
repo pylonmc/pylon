@@ -188,6 +188,10 @@ public class HydraulicHammerHead extends RebarBlock implements
             );
         }
 
+        if (fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerCraft) {
+            return;
+        }
+
         if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
             return;
         }
