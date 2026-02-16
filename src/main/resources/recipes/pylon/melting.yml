@@ -100,54 +100,6 @@ pylon:tin_from_block:
   amount: 1296
   temperature: 231.9
 
-pylon:cobalt_from_ingot:
-  input: pylon:cobalt_ingot
-  result: pylon:cobalt
-  amount: 144
-  temperature: 1495
-
-pylon:cobalt_from_dust:
-  input: pylon:cobalt_dust
-  result: pylon:cobalt
-  amount: 144
-  temperature: 1495
-
-pylon:cobalt_from_nugget:
-  input: pylon:cobalt_nugget
-  result: pylon:cobalt
-  amount: 16
-  temperature: 1495
-
-pylon:cobalt_from_block:
-  input: pylon:cobalt_block
-  result: pylon:cobalt
-  amount: 1296
-  temperature: 1495
-
-pylon:nickel_from_ingot:
-  input: pylon:nickel_ingot
-  result: pylon:nickel
-  amount: 144
-  temperature: 1455
-
-pylon:nickel_from_dust:
-  input: pylon:nickel_dust
-  result: pylon:nickel
-  amount: 144
-  temperature: 1455
-
-pylon:nickel_from_nugget:
-  input: pylon:nickel_nugget
-  result: pylon:nickel
-  amount: 16
-  temperature: 1455
-
-pylon:nickel_from_block:
-  input: pylon:nickel_block
-  result: pylon:nickel
-  amount: 1296
-  temperature: 1455
-
 pylon:bronze_from_ingot:
   input: pylon:bronze_ingot
   result: pylon:bronze
@@ -195,3 +147,27 @@ pylon:steel_from_block:
   result: pylon:steel
   amount: 1296
   temperature: 1410
+
+pylon:palladium_from_ingot:
+  input: pylon:palladium_ingot
+  result: pylon:palladium
+  amount: 144
+  temperature: 1555
+
+pylon:palladium_from_dust:
+  input: pylon:palladium_dust
+  result: pylon:palladium
+  amount: 144
+  temperature: 1555
+
+pylon:palladium_from_nugget:
+  input: pylon:palladium_nugget
+  result: pylon:palladium
+  amount: 16
+  temperature: 1555
+
+pylon:palladium_from_block:
+  input: pylon:palladium_block
+  result: pylon:palladium
+  amount: 1296
+  temperature: 1555

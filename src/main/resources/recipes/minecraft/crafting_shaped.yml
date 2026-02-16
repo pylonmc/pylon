@@ -58,6 +58,26 @@ pylon:steel_block_from_steel_ingots:
   result: pylon:steel_block
   category: misc
 
+pylon:palladium_ingot_from_palladium_nuggets:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:palladium_nugget
+  result: pylon:palladium_ingot
+  category: misc
+
+pylon:palladium_block_from_palladium_ingots:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:palladium_ingot
+  result: pylon:palladium_block
+  category: misc
+
 pylon:charcoal_block_from_charcoal:
   pattern:
     - "NNN"
@@ -67,46 +87,6 @@ pylon:charcoal_block_from_charcoal:
     N: minecraft:charcoal
   result: pylon:charcoal_block
   category: building
-
-pylon:nickel_ingot_from_nickel_nuggets:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:nickel_nugget
-  result: pylon:nickel_ingot
-  category: misc
-
-pylon:nickel_block_from_nickel_ingots:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:nickel_ingot
-  result: pylon:nickel_block
-  category: misc
-
-pylon:cobalt_ingot_from_cobalt_nuggets:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:cobalt_nugget
-  result: pylon:cobalt_ingot
-  category: misc
-
-pylon:cobalt_block_from_cobalt_ingots:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:cobalt_ingot
-  result: pylon:cobalt_block
-  category: misc
 
 pylon:bronze_sword:
   pattern:

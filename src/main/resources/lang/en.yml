@@ -49,18 +49,6 @@ item:
   coal_dust:
     name: "Coal Dust"
 
-  cobalt_dust:
-    name: "Cobalt Dust"
-
-  cobalt_ingot:
-    name: "Cobalt Ingot"
-
-  cobalt_nugget:
-    name: "Cobalt Nugget"
-
-  cobalt_block:
-    name: "Block of Cobalt"
-
   carbon:
     name: "Carbon"
 
@@ -611,18 +599,6 @@ item:
       <arrow> Slightly tastier than rotten flesh - but only slightly...
       <arrow> Can be crafted into leather
 
-  nickel_dust:
-    name: "Nickel Dust"
-
-  nickel_ingot:
-    name: "Nickel Ingot"
-
-  nickel_nugget:
-    name: "Nickel Nugget"
-
-  nickel_block:
-    name: "Block of Nickel"
-
   obsidian_chip:
     name: "Obsidian Chip"
 
@@ -848,6 +824,21 @@ item:
   steel_sheet:
     name: "Steel Sheet"
 
+  palladium_dust:
+    name: "Palladium Dust"
+
+  palladium_ingot:
+    name: "Palladium Ingot"
+
+  palladium_nugget:
+    name: "Palladium Nugget"
+
+  palladium_block:
+    name: "Block of Palladium"
+
+  palladium_sheet:
+    name: "Palladium Sheet"
+
   charcoal_block:
     name: "Block of Charcoal"
 
@@ -894,6 +885,14 @@ item:
 
   health_talisman_ultimate:
     name: "Ultimate Healing Talisman"
+    lore: |-
+      <arrow> Increases your maximum health
+      <arrow> Does not stack
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Max health increase:</attr> %health-boost%
+
+  health_talisman_palladium:
+    name: "Palladium Health Talisman"
     lore: |-
       <arrow> Increases your maximum health
       <arrow> Does not stack
@@ -1736,6 +1735,14 @@ item:
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
+  hunger_talisman_palladium:
+    name: "Palladium Hunger Talisman"
+    lore: |-
+      <arrow> Increases your saturation and hunger every %period%
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
+      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
+
   farming_talisman_simple:
     name: "Simple Farming Talisman"
     lore: |-
@@ -1752,6 +1759,13 @@ item:
 
   farming_talisman_ultimate:
     name: "Ultimate Farming Talisman"
+    lore: |-
+      <arrow> Get an extra drop when breaking a crop
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Success rate:</attr> %extra_crop_chance%
+
+  farming_talisman_palladium:
+    name: "Palladium Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
       <arrow> Only works while in your inventory
@@ -1778,6 +1792,13 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
+  bartering_talisman_palladium:
+    name: "Palladium Bartering Talisman"
+    lore: |-
+      <arrow> Don't consume items traded to piglins
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
+
   water_breathing_talisman_simple:
     name: "<white>Simple Water Breathing Talisman"
     lore: |-
@@ -1794,6 +1815,13 @@ item:
 
   water_breathing_talisman_ultimate:
     name: "<white>Ultimate Water Breathing Talisman"
+    lore: |-
+      <arrow> Allows you to breathe longer underwater
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
+
+  water_breathing_talisman_palladium:
+    name: "<white>Palladium Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Only works while in your inventory
@@ -1820,6 +1848,13 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
+  luck_talisman_palladium:
+    name: "Palladium Luck Talisman"
+    lore: |-
+      <arrow> Increases your chances of looting higher quality items
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Bonus luck:</attr> %bonus_luck%
+
   breeding_talisman_simple:
     name: "Simple Breeding Talisman"
     lore: |-
@@ -1836,6 +1871,13 @@ item:
 
   breeding_talisman_ultimate:
     name: "Ultimate Breeding Talisman"
+    lore: |-
+      <arrow> Bred children grow up instantly
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Success rate:</attr> %adult_chance%
+
+  breeding_talisman_palladium:
+    name: "Palladium Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
       <arrow> Only works while in your inventory
@@ -1862,6 +1904,13 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
+  enchanting_talisman_palladium:
+    name: "<white>Palladium Enchanting Talisman"
+    lore: |-
+      <arrow> Increase the level of enchantments in the enchanting table by 1
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Success rate:</attr> %bonus_level_chance%
+
   hunting_talisman_simple:
     name: "<white>Simple Hunting Talisman"
     lore: |-
@@ -1883,17 +1932,22 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
+  hunting_talisman_palladium:
+    name: "<white>Palladium Hunting Talisman"
+    lore: |-
+      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Success rate:</attr> %bonus_item_chance%
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
   bronze: "<#8d6f64>Liquid Bronze"
-  cobalt: "<gray>Liquid Cobalt"
   copper: "<#b5591b>Liquid Copper"
   gold: "<gold>Liquid Gold"
   iron: "<gray>Liquid Iron"
   lava: "<#fc4e03>Lava"
   mercury: "<#dedede>Mercury"
-  nickel: "<gray>Liquid Nickel"
   none: "None"
   slurry: "<gray>Slurry"
   slurry_coal: "<gray>Coal Slurry"
@@ -1908,6 +1962,7 @@ fluid:
   sulfur: "<yellow>Sulfur"
   tin: "<gray>Liquid Tin"
   water: "<blue>Water"
+  palladium: "<#b642f5>Liquid Palladium"
   plant_oil: "<#c4b352>Plant Oil"
   hydraulic_fluid: "<#212d99>Hydraulic Fluid"
   dirty_hydraulic_fluid: "<#48459b>Dirty Hydraulic Fluid"

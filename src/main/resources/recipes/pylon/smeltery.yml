@@ -49,24 +49,24 @@ pylon:gold_smelting:
     pylon:mercury: 800
   temperature: 1064
 
+pylon:palladium_smelting:
+  inputs:
+    pylon:slurry_raw_gold: 1000
+    pylon:mercury: 1000
+  outputs:
+    pylon:gold: 144
+    pylon:slurry: 200
+    pylon:slurry_raw_tin: 400
+    pylon:mercury: 756
+    pylon:palladium: 144
+  temperature: 1555
+
 pylon:iron_smelting:
   inputs:
     pylon:slurry_raw_iron: 1000
     pylon:slurry_carbon: 500
   outputs:
     pylon:iron: 144
-    pylon:slurry: 1356
-  temperature: 1540
-
-pylon:iron_smelting_with_sulfur:
-  inputs:
-    pylon:slurry_raw_iron: 1000
-    pylon:slurry_carbon: 500
-    pylon:sulfur: 144
-  outputs:
-    pylon:iron: 144
-    pylon:cobalt: 72
-    pylon:nickel: 72
     pylon:slurry: 1356
   temperature: 1540
 

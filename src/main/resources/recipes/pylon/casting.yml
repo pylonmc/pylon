@@ -28,18 +28,6 @@ pylon:tin_ingot:
   result: pylon:tin_ingot
   temperature: 231.9
 
-pylon:cobalt_ingot:
-  input:
-    pylon:cobalt: 144
-  result: pylon:cobalt_ingot
-  temperature: 1495
-
-pylon:nickel_ingot:
-  input:
-    pylon:nickel: 144
-  result: pylon:nickel_ingot
-  temperature: 1455
-
 pylon:bronze_ingot:
   input:
     pylon:bronze: 144
@@ -51,3 +39,9 @@ pylon:steel_ingot:
     pylon:steel: 144
   result: pylon:steel_ingot
   temperature: 1410
+
+pylon:palladium_ingot:
+  input:
+    pylon:palladium: 144
+  result: pylon:palladium_ingot
+  temperature: 1555

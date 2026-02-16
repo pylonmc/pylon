@@ -47,34 +47,6 @@ pylon:steel_ingots_from_steel_block:
     pylon:steel_ingot: 9
   category: misc
 
-pylon:nickel_nuggets_from_nickel_ingot:
-  ingredients:
-    - pylon:nickel_ingot
-  result:
-    pylon:nickel_nugget: 9
-  category: misc
-
-pylon:nickel_ingots_from_nickel_block:
-  ingredients:
-    - pylon:nickel_block
-  result:
-    pylon:nickel_ingot: 9
-  category: misc
-
-pylon:cobalt_nuggets_from_cobalt_ingot:
-  ingredients:
-    - pylon:cobalt_ingot
-  result:
-    pylon:cobalt_nugget: 9
-  category: misc
-
-pylon:cobalt_ingots_from_cobalt_block:
-  ingredients:
-    - pylon:cobalt_block
-  result:
-    pylon:cobalt_ingot: 9
-  category: misc
-
 pylon:shimmer_dust_1:
   ingredients:
     - pylon:copper_dust
