@@ -116,7 +116,6 @@ public record AssemblingRecipe(
 
     public static @Nullable AssemblingRecipe findRecipe(ItemStack[] items) {
         for (AssemblingRecipe recipe : RECIPE_TYPE.getRecipes()) {
-
             boolean hasAllIngredients = true;
             for (RecipeInput.Item requiredItem : recipe.inputs) {
                 boolean hasIngredient = false;
