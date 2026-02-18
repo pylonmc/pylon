@@ -152,18 +152,6 @@ pylon:steel_dust_from_steel_ingot:
   cycles: 2
   particle-data: minecraft:netherite_block
 
-pylon:nickel_dust_from_nickel_ingot:
-  input: pylon:nickel_ingot
-  results: pylon:nickel_dust
-  cycles: 2
-  particle-data: minecraft:iron_block
-
-pylon:cobalt_dust_from_cobalt_ingot:
-  input: pylon:cobalt_ingot
-  results: pylon:cobalt_dust
-  cycles: 2
-  particle-data: minecraft:iron_block
-
 pylon:fiber:
   input: minecraft:string
   results:

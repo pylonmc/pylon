@@ -72,19 +72,6 @@ drilling_2:
     - pylon:gypsum
     - pylon:gypsum_dust
 
-drilling_3:
-  item: pylon:subsurface_core_chunk
-  cost: 100
-  unlocks:
-    - pylon:nickel_dust
-    - pylon:nickel_ingot
-    - pylon:nickel_nugget
-    - pylon:nickel_block
-    - pylon:cobalt_dust
-    - pylon:cobalt_block
-    - pylon:cobalt_ingot
-    - pylon:cobalt_nugget
-
 smelting_1:
   item: pylon:smeltery_controller
   cost: 5

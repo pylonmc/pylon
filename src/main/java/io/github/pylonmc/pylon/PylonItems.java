@@ -271,64 +271,34 @@ public final class PylonItems {
         PylonPages.METALS.addItem(STEEL_DUST);
     }
 
-    public static final ItemStack NICKEL_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.NICKEL_INGOT)
+    public static final ItemStack PALLADIUM_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PALLADIUM_INGOT)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_INGOT.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, NICKEL_INGOT);
-        PylonPages.METALS.addItem(NICKEL_INGOT);
+        RebarItem.register(RebarItem.class, PALLADIUM_INGOT);
+        PylonPages.METALS.addItem(PALLADIUM_INGOT);
     }
 
-    public static final ItemStack NICKEL_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NICKEL_NUGGET)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, NICKEL_NUGGET);
-        PylonPages.METALS.addItem(NICKEL_NUGGET);
-    }
-
-    public static final ItemStack NICKEL_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.NICKEL_BLOCK)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, NICKEL_BLOCK, PylonKeys.NICKEL_BLOCK);
-        PylonPages.METALS.addItem(NICKEL_BLOCK);
-    }
-
-    public static final ItemStack NICKEL_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.NICKEL_DUST)
+    public static final ItemStack PALLADIUM_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PALLADIUM_DUST)
             .set(DataComponentTypes.ITEM_MODEL, Material.SUGAR.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, NICKEL_DUST);
-        PylonPages.METALS.addItem(NICKEL_DUST);
+        RebarItem.register(RebarItem.class, PALLADIUM_DUST);
+        PylonPages.METALS.addItem(PALLADIUM_DUST);
     }
 
-    public static final ItemStack COBALT_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COBALT_INGOT)
-            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_INGOT.getKey())
+    public static final ItemStack PALLADIUM_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.PALLADIUM_NUGGET)
             .build();
     static {
-        RebarItem.register(RebarItem.class, COBALT_INGOT);
-        PylonPages.METALS.addItem(COBALT_INGOT);
+        RebarItem.register(RebarItem.class, PALLADIUM_NUGGET);
+        PylonPages.METALS.addItem(PALLADIUM_NUGGET);
     }
 
-    public static final ItemStack COBALT_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.COBALT_NUGGET)
+    public static final ItemStack PALLADIUM_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.PALLADIUM_BLOCK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, COBALT_NUGGET);
-        PylonPages.METALS.addItem(COBALT_NUGGET);
-    }
-
-    public static final ItemStack COBALT_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.COBALT_BLOCK)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, COBALT_BLOCK, PylonKeys.COBALT_BLOCK);
-        PylonPages.METALS.addItem(COBALT_BLOCK);
-    }
-
-    public static final ItemStack COBALT_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COBALT_DUST)
-            .set(DataComponentTypes.ITEM_MODEL, Material.SUGAR.getKey())
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, COBALT_DUST);
-        PylonPages.METALS.addItem(COBALT_DUST);
+        RebarItem.register(RebarItem.class, PALLADIUM_BLOCK, PylonKeys.PALLADIUM_BLOCK);
+        PylonPages.METALS.addItem(PALLADIUM_BLOCK);
     }
 
     //</editor-fold>
@@ -566,8 +536,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, TIN_SHEET);
         PylonPages.COMPONENTS.addItem(TIN_SHEET);
-
-
     }
 
     public static final ItemStack BRONZE_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.BRONZE_SHEET)
@@ -575,8 +543,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, BRONZE_SHEET);
         PylonPages.COMPONENTS.addItem(BRONZE_SHEET);
-
-
     }
 
     public static final ItemStack STEEL_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.STEEL_SHEET)
@@ -584,6 +550,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, STEEL_SHEET);
         PylonPages.COMPONENTS.addItem(STEEL_SHEET);
+    }
+
+    public static final ItemStack PALLADIUM_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.PALLADIUM_SHEET)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SHEET);
+        PylonPages.COMPONENTS.addItem(PALLADIUM_SHEET);
     }
 
 
@@ -1071,6 +1044,15 @@ public final class PylonItems {
         RebarItem.register(HealthTalisman.class, HEALTH_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_ULTIMATE);
     }
+
+    public static final ItemStack HEALTH_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.AMETHYST_SHARD, PylonKeys.HEALTH_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+    static {
+        RebarItem.register(HealthTalisman.class, HEALTH_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack HUNGER_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_SIMPLE)
             .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
             .build();
@@ -1095,6 +1077,14 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack HUNGER_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
+            .build();
+    static {
+        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack FARMING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1114,6 +1104,13 @@ public final class PylonItems {
     static {
         RebarItem.register(FarmingTalisman.class, FARMING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(FARMING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack FARMING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(FarmingTalisman.class, FARMING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(FARMING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack BARTERING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.GOLD_INGOT, PylonKeys.BARTERING_TALISMAN_SIMPLE)
@@ -1137,6 +1134,13 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(BARTERING_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack BARTERING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.GOLD_INGOT, PylonKeys.BARTERING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(BarteringTalisman.class, BARTERING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(BARTERING_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack WATER_BREATHING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.NAUTILUS_SHELL, PylonKeys.WATER_BREATHING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1156,6 +1160,13 @@ public final class PylonItems {
     static {
         RebarItem.register(WaterBreathingTalisman.class, WATER_BREATHING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(WATER_BREATHING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack WATER_BREATHING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.NAUTILUS_SHELL, PylonKeys.WATER_BREATHING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(WaterBreathingTalisman.class, WATER_BREATHING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(WATER_BREATHING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack LUCK_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.RABBIT_FOOT, PylonKeys.LUCK_TALISMAN_SIMPLE)
@@ -1179,6 +1190,13 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(LUCK_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack LUCK_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.RABBIT_FOOT, PylonKeys.LUCK_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(LuckTalisman.class, LUCK_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(LUCK_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack BREEDING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.APPLE, PylonKeys.BREEDING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1198,6 +1216,13 @@ public final class PylonItems {
     static {
         RebarItem.register(BreedingTalisman.class, BREEDING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(BREEDING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack BREEDING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.APPLE, PylonKeys.BREEDING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(BreedingTalisman.class, BREEDING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(BREEDING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack ENCHANTING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.ENCHANTED_BOOK, PylonKeys.ENCHANTING_TALISMAN_SIMPLE)
@@ -1224,6 +1249,14 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(ENCHANTING_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack ENCHANTING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.ENCHANTED_BOOK, PylonKeys.ENCHANTING_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, false)
+            .build();
+    static {
+        RebarItem.register(EnchantingTalisman.class, ENCHANTING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(ENCHANTING_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack HUNTING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.SKELETON_SKULL, PylonKeys.HUNTING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1243,6 +1276,13 @@ public final class PylonItems {
     static {
         RebarItem.register(HuntingTalisman.class, HUNTING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack HUNTING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.SKELETON_SKULL, PylonKeys.HUNTING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(HuntingTalisman.class, HUNTING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_PALLADIUM);
     }
 
     //</editor-fold>
