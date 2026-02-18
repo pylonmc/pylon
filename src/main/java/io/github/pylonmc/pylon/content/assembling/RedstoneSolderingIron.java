@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.assembling;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,6 +24,7 @@ public class RedstoneSolderingIron extends RebarItem implements RebarBlockIntera
 
     public final String toolType = getSettings().get("tool-type", ConfigAdapter.STRING);
     public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int durability = getSettings().getOrThrow("durability", ConfigAdapter.INT);
 
     public RedstoneSolderingIron(@NotNull ItemStack stack) {
         super(stack);
@@ -50,7 +52,7 @@ public class RedstoneSolderingIron extends RebarItem implements RebarBlockIntera
         if (rebarBlock instanceof AssemblyTable assemblyTable) {
             if (assemblyTable.useTool(toolType, event.getPlayer())) {
                 getStack().damage(1, event.getPlayer());
-                event.getPlayer().setCooldown(getStack(), cooldownTicks);
+                event.getPlayer().setCooldown(PylonKeys.REDSTONE_SOLDERING_IRON, cooldownTicks);
                 new ParticleBuilder(Particle.SMOKE)
                         .location(assemblyTable.getWorkspaceCenter())
                         .extra(0)

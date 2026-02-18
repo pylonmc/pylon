@@ -2355,6 +2355,14 @@ public final class PylonItems {
 
     public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.COPPER_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.COPPER_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
             .build();
     static {
         RebarItem.register(Screwdriver.class, COPPER_SCREWDRIVER, PylonKeys.COPPER_SCREWDRIVER);
@@ -2363,6 +2371,14 @@ public final class PylonItems {
 
     public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.IRON_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.IRON_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.IRON_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
             .build();
     static {
         RebarItem.register(Screwdriver.class, IRON_SCREWDRIVER, PylonKeys.IRON_SCREWDRIVER);
@@ -2371,6 +2387,14 @@ public final class PylonItems {
 
     public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.BRONZE_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.BRONZE_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
             .build();
     static {
         RebarItem.register(Screwdriver.class, BRONZE_SCREWDRIVER, PylonKeys.BRONZE_SCREWDRIVER);
@@ -2379,6 +2403,14 @@ public final class PylonItems {
 
     public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
             .build();
     static {
         RebarItem.register(Screwdriver.class, STEEL_SCREWDRIVER, PylonKeys.STEEL_SCREWDRIVER);
@@ -2387,6 +2419,14 @@ public final class PylonItems {
 
     public static final ItemStack REDSTONE_SOLDERING_IRON = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.REDSTONE_SOLDERING_IRON)
             .set(DataComponentTypes.ITEM_MODEL, Material.COMPASS.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.REDSTONE_SOLDERING_IRON)
+            )
             .build();
     static {
         RebarItem.register(RedstoneSolderingIron.class, REDSTONE_SOLDERING_IRON, PylonKeys.REDSTONE_SOLDERING_IRON);

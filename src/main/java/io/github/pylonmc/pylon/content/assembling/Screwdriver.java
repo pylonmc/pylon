@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.assembling;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -48,7 +49,7 @@ public class Screwdriver extends RebarItem implements RebarBlockInteractor {
         if (rebarBlock instanceof AssemblyTable assemblyTable) {
             if (assemblyTable.useTool(toolType, event.getPlayer())) {
                 getStack().damage(1, event.getPlayer());
-                event.getPlayer().setCooldown(getStack(), cooldownTicks);
+                event.getPlayer().setCooldown(PylonKeys.SCREWDRIVER, cooldownTicks);
             }
         }
     }

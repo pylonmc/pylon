@@ -382,4 +382,6 @@ public class PylonKeys {
     public static final NamespacedKey REDSTONE_SOLDERING_IRON = pylonKey("redstone_soldering_iron");
 
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
+
+    public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 }
