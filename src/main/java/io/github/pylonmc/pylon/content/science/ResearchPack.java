@@ -18,8 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ResearchPack extends RebarItem implements RebarInteractor {
 
-    public final int points = getSettings().getOrThrow("points", ConfigAdapter.INT);
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int points = getSettings().getOrThrow("points", ConfigAdapter.INTEGER);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public ResearchPack(@NotNull ItemStack stack) {
         super(stack);

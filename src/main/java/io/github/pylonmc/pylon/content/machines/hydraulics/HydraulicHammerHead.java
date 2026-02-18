@@ -55,11 +55,11 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     public static final NamespacedKey HAMMER_KEY = pylonKey("hammer");
 
-    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INT);
+    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INT);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     private final ItemStack emptyHammerTipStack = ItemStackBuilder.of(Material.AIR)
             .addCustomModelDataString(getKey() + ":hammer_tip:empty")
@@ -68,8 +68,8 @@ public class HydraulicHammerHead extends RebarBlock implements
     public static class Item extends RebarItem {
 
         public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INT);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+        public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -186,6 +186,10 @@ public class HydraulicHammerHead extends RebarBlock implements
                     .addCustomModelDataString(getKey() + ":hammer_tip:" + hammer.getKey().key())
                     .build()
             );
+        }
+
+        if (fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerCraft) {
+            return;
         }
 
         if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {

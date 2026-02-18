@@ -3,45 +3,53 @@ pylon:sulfur:
     pylon:sulfur: 144
   result: pylon:sulfur
   temperature: 112.8
+  priority: -1
 
 pylon:copper_ingot:
   input:
     pylon:copper: 144
   result: minecraft:copper_ingot
   temperature: 1083
+  priority: -1
 
 pylon:gold_ingot:
   input:
     pylon:gold: 144
   result: minecraft:gold_ingot
   temperature: 1064
+  priority: -1
 
 pylon:iron_ingot:
   input:
     pylon:iron: 144
   result: minecraft:iron_ingot
   temperature: 1538
+  priority: -1
 
 pylon:tin_ingot:
   input:
     pylon:tin: 144
   result: pylon:tin_ingot
   temperature: 231.9
+  priority: -1
 
 pylon:bronze_ingot:
   input:
     pylon:bronze: 144
   result: pylon:bronze_ingot
   temperature: 950
+  priority: -1
 
 pylon:steel_ingot:
   input:
     pylon:steel: 144
   result: pylon:steel_ingot
   temperature: 1410
+  priority: -1
 
 pylon:palladium_ingot:
   input:
     pylon:palladium: 144
   result: pylon:palladium_ingot
   temperature: 1555
+  priority: -1

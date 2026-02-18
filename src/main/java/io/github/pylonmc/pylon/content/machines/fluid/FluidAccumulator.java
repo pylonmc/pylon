@@ -53,15 +53,15 @@ public class FluidAccumulator extends RebarBlock implements
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.WHITE_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
 
-    public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INT);
-    public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INT);
+    public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
+    public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
 
     private boolean isDischarging;
 
     public static class Item extends RebarItem {
 
-        public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INT);
-        public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INT);
+        public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
+        public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -110,7 +110,6 @@ public class FluidAccumulator extends RebarBlock implements
 
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.25F);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false, 0.25F);
-        setDisableBlockTextureEntity(true);
     }
 
     @SuppressWarnings("unused")
@@ -118,7 +117,10 @@ public class FluidAccumulator extends RebarBlock implements
         super(block);
 
         this.isDischarging = pdc.get(IS_DISCHARGING_KEY, RebarSerializers.BOOLEAN);
+    }
 
+    @Override
+    public void postInitialise() {
         setDisableBlockTextureEntity(true);
     }
 

@@ -34,10 +34,10 @@ public class PylonPages {
     public static final SimpleStaticGuidePage CARGO = new SimpleStaticGuidePage(pylonKey("machines_cargo"));
     public static final SimpleStaticGuidePage DIESEL_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_diesel_machines"));
     public static final SimpleStaticGuidePage DIESEL_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_diesel_production"));
-    private static final SimpleStaticGuidePage MACHINES = new SimpleStaticGuidePage(pylonKey("machines"));
+    public static final SimpleStaticGuidePage MACHINES = new SimpleStaticGuidePage(pylonKey("machines"));
 
+    public static final SimpleStaticGuidePage ASSEMBLING = new SimpleStaticGuidePage(pylonKey("assembling"));
     public static final SimpleStaticGuidePage BUILDING = new SimpleStaticGuidePage(pylonKey("building"));
-
     public static final SimpleStaticGuidePage CREATIVE_ITEMS = new SimpleStaticGuidePage(pylonKey("creative_items")) {
         @Override
         public boolean shouldDisplay(@NotNull Player player) {
@@ -71,6 +71,7 @@ public class PylonPages {
         MACHINES.addPage(PylonItems.DIESEL_PIPE_BENDER, DIESEL_MACHINES);
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);
         RebarGuide.getRootPage().addPage(PylonItems.MIXING_POT, MACHINES);
+        RebarGuide.getRootPage().addPage(PylonItems.ASSEMBLY_TABLE, ASSEMBLING);
 
         RebarGuide.getRootPage().addPage(PylonItems.ELEVATOR_1, BUILDING);
         RebarGuide.getRootPage().addPage(PylonItems.FLUID_PIPE_CREATIVE, CREATIVE_ITEMS);

@@ -144,6 +144,7 @@ public class CreativeItemSource extends RebarBlock
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("output", LogisticGroupType.OUTPUT, new InfiniteLogisticSlot());
         inventory.addPostUpdateHandler(event -> getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(inventory.getItem(0)));
     }

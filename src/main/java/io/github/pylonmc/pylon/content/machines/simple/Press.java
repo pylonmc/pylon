@@ -47,9 +47,9 @@ public class Press extends RebarBlock implements
         RebarRecipeProcessor<PressRecipe> {
 
     private static final Config settings = Settings.get(PylonKeys.PRESS);
-    public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INT);
-    public static final int RETURN_TO_START_TIME_TICKS = settings.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INT);
-    public static final int CAPACITY_MB = settings.getOrThrow("capacity-mb", ConfigAdapter.INT);
+    public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
+    public static final int RETURN_TO_START_TIME_TICKS = settings.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INTEGER);
+    public static final int CAPACITY_MB = settings.getOrThrow("capacity-mb", ConfigAdapter.INTEGER);
 
     public static class PressItem extends RebarItem {
 

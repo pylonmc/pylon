@@ -44,16 +44,16 @@ public class HydraulicMiner extends Miner implements
         RebarLogisticBlock,
         RebarFluidBufferBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final int hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.INT);
+    public final int hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.INTEGER);
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INT);
+        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
         public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final int hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.INT);
+        public final int hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.INTEGER);
         public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {

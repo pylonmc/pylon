@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.building.Pedestal;
 import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
+import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
@@ -42,7 +43,7 @@ public class ShimmerAltar extends RebarBlock
 
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, BlockCreateContext context) {
@@ -149,7 +150,7 @@ public class ShimmerAltar extends RebarBlock
 
         // dust line animation
         for (Pedestal pedestal : usedPedestals) {
-            drawLine(
+            PylonUtils.drawParticleLine(
                     pedestal.getBlock().getLocation().toCenterLocation().add(0.0, 0.7, 0.0),
                     getBlock().getLocation().toCenterLocation().subtract(0.0, 0.3, 0.0),
                     0.25,
@@ -169,7 +170,7 @@ public class ShimmerAltar extends RebarBlock
         while (to == from) {
             to = random.nextInt(usedPedestals.size());
         }
-        drawLine(
+        PylonUtils.drawParticleLine(
                 usedPedestals.get(from).getBlock().getLocation().toCenterLocation(),
                 usedPedestals.get(to).getBlock().getLocation().toCenterLocation(),
                 0.25,
@@ -224,24 +225,5 @@ public class ShimmerAltar extends RebarBlock
                 .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
-    }
-
-    public static void drawLine(
-            Location start,
-            @NotNull Location end,
-            double spacing,
-            Consumer<Location> spawnParticle
-    ) {
-        double currentPoint = 0;
-        Vector startToEnd = end.clone().subtract(start).toVector();
-        Vector step = startToEnd.clone().normalize().multiply(spacing);
-        double length = startToEnd.length();
-        Location current = start.clone();
-
-        while (currentPoint < length) {
-            spawnParticle.accept(current);
-            currentPoint += spacing;
-            current.add(step);
-        }
     }
 }

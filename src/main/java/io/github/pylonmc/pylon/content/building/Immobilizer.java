@@ -39,16 +39,16 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
     public static HashMap<BlockPosition, Set<Player>> frozenPlayers = new HashMap<>();
     private final NamespacedKey cooldownKey = pylonKey("immobilizer_cooldown_millis");
     private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-    private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INT);
-    private final long cooldownMillis = getSettings().getOrThrow("cooldown", ConfigAdapter.INT) * 50L;
-    private final int particleCount = getSettings().getOrThrow("particle.count", ConfigAdapter.INT);
+    private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
+    private final long cooldownMillis = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
+    private final int particleCount = getSettings().getOrThrow("particle.count", ConfigAdapter.INTEGER);
     private final double particleRadius = getSettings().getOrThrow("particle.radius", ConfigAdapter.DOUBLE);
-    private final int particlePeriod = getSettings().getOrThrow("particle.period", ConfigAdapter.INT);
+    private final int particlePeriod = getSettings().getOrThrow("particle.period", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
         private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-        private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INT);
-        private final int cooldown = getSettings().getOrThrow("cooldown", ConfigAdapter.INT);
+        private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
+        private final int cooldown = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

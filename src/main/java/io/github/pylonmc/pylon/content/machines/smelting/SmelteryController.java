@@ -66,13 +66,13 @@ public final class SmelteryController extends SmelteryComponent
     private static final NamespacedKey FLUIDS_KEY = pylonKey("fluids");
 
     private static final Config settings = Settings.get(PylonKeys.SMELTERY_CONTROLLER);
-    public static final int TICK_INTERVAL = settings.getOrThrow("tick-interval", ConfigAdapter.INT);
+    public static final int TICK_INTERVAL = settings.getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final double FLUID_REACTION_PER_TICK = settings.getOrThrow("fluid-reaction-per-tick", ConfigAdapter.DOUBLE);
     public static final double HEATING_FACTOR = settings.getOrThrow("heating-factor", ConfigAdapter.DOUBLE);
     public static final double COOLING_FACTOR = settings.getOrThrow("cooling-factor", ConfigAdapter.DOUBLE);
     public static final double ROOM_TEMPERATURE = settings.getOrThrow("room-temperature", ConfigAdapter.DOUBLE);
 
-    public final int maxHeight = settings.getOrThrow("max-height", ConfigAdapter.INT);
+    public final int maxHeight = settings.getOrThrow("max-height", ConfigAdapter.INTEGER);
 
     private final Set<SmelteryComponent> components = new HashSet<>();
     private final Object2DoubleMap<RebarFluid> fluids = new Object2DoubleRBTreeMap<>(
@@ -427,7 +427,7 @@ public final class SmelteryController extends SmelteryComponent
 
     // <editor-fold desc="Fluid display" defaultstate="collapsed">
     private final List<TextDisplay> pixels = new ArrayList<>();
-    private static final int RESOLUTION = Settings.get(PylonKeys.SMELTERY_CONTROLLER).getOrThrow("display.resolution", ConfigAdapter.INT);
+    private static final int RESOLUTION = Settings.get(PylonKeys.SMELTERY_CONTROLLER).getOrThrow("display.resolution", ConfigAdapter.INTEGER);
     private static final int PIXELS_PER_SIDE = 3 * RESOLUTION;
 
     private static final SimplexOctaveGenerator LAVA_NOISE = new SimplexOctaveGenerator(ThreadLocalRandom.current().nextLong(), 4);

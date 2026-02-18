@@ -103,13 +103,16 @@ public class FluidFilter extends RebarBlock
         );
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.25F);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false, 0.25F);
-        setDisableBlockTextureEntity(true);
     }
 
     @SuppressWarnings("unused")
     public FluidFilter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block);
         fluid = pdc.get(FLUID_KEY, RebarSerializers.REBAR_FLUID);
+    }
+
+    @Override
+    public void postInitialise() {
         setDisableBlockTextureEntity(true);
     }
 

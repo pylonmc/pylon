@@ -24,7 +24,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class IronBloom extends RebarItem implements RebarInventoryTicker {
 
     public static final long DAMAGE_INTERVAL = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("damage-interval", ConfigAdapter.LONG);
-    public static final int UNPROTECTED_DAMAGE = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("unprotected-damage", ConfigAdapter.INT);
+    public static final int UNPROTECTED_DAMAGE = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("unprotected-damage", ConfigAdapter.INTEGER);
 
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
     public static final int MAX_TEMPERATURE = 12;

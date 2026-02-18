@@ -55,7 +55,7 @@ public class HydraulicBreaker extends RebarBlock implements
 
     public final double hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.DOUBLE);
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {

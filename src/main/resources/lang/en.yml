@@ -506,18 +506,21 @@ item:
     lore: |-
       <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of diamond</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   iron_hammer:
     name: "Iron Hammer"
     lore: |-
       <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of iron</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   stone_hammer:
     name: "Stone Hammer"
     lore: |-
       <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>stone block</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   immobilizer:
     name: "Immobilizer"
@@ -1939,6 +1942,55 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
+  assembly_table:
+    name: "<white>Assembly Table"
+    lore: |-
+      <arrow> A table for assembling complex components
+      <arrow> <insn>Insert items</insn> to start a recipe
+      <arrow> <insn>Use tools</insn> to progress the recipe
+
+  copper_screwdriver:
+    name: "Copper Screwdriver"
+    lore: |-
+      <arrow> <insn>Left click</insn> on an assembly table to use
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  iron_screwdriver:
+    name: "Iron Screwdriver"
+    lore: |-
+      <arrow> <insn>Left click</insn> on an assembly table to use
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  bronze_screwdriver:
+    name: "Bronze Screwdriver"
+    lore: |-
+      <arrow> <insn>Left click</insn> on an assembly table to use
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  steel_screwdriver:
+    name: "<white>Steel Screwdriver"
+    lore: |-
+      <arrow> <insn>Left click</insn> on an assembly table to use
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  redstone_soldering_iron:
+    name: "<white>Redstone Soldering Iron"
+    lore: |-
+      <arrow> <insn>Left click</insn> on an assembly table to use
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  steel_cylinder:
+    name: "<white>Steel Cylinder"
+
+  steel_crankshaft:
+    name: "<white>Steel Crankshaft"
+
+  kinetic_control_mechanism:
+    name: "<white>Kinetic Control Mechanism"
+
+  internal_combustion_engine:
+    name: "<white>Internal Combustion Engine"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2078,6 +2130,7 @@ guide:
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
     machines: "<white>Machines"
+    assembling: "<white>Assembling"
     building: "<white>Building"
     creative_items: "<light_purple>Creative Items <#ff0000>(admin only)</#ff0000>"
     magic: "<white>Magic"
@@ -2094,6 +2147,8 @@ guide:
     hammer: "<attr>Chance:</attr> %chance%"
 
 message:
+  assembly_table:
+    full: "<red>Output full!"
   fluid_selector:
     current_fluid: "<white>Current fluid: %fluid%"
     clear: "<white>Clear"
@@ -2127,8 +2182,8 @@ message:
     enabled: "Shimmer Magnet <gray>has been</gray> <green>enabled"
     disabled: "Shimmer Magnet <gray>has been</gray> <red>disabled"
   valve:
-    enabled: "<green>enabled"
-    disabled: "<red>disabled"
+    open: "<green>open"
+    closed: "<red>closed"
   elevator:
     none_within_range:
       above: "<red>No elevators within range above you"
@@ -2226,6 +2281,8 @@ gui:
     auto_cast: "Auto cast: %status%"
   progress_bar:
     text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
+  discrete_progress_bar:
+    text: "%filled_bars%<dark_gray>%empty_bars% <gray>%stage%/%max_stage%"
   vacuum_hopper:
     blacklist: "<white>Blacklist"
     whitelist: "<white>Whitelist"
@@ -2256,6 +2313,14 @@ gui:
       <arrow> <insn>Right click</insn> to decrease
       <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
       <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
+  assembly_table:
+    step: "<#adc5ce>Step %step_index%: <white>%tool% <gray>(x%clicks%)"
+    no_recipe: "<red>No recipe"
+    clicks_remaining: "<yellow>%clicks%<white>x"
+    tools:
+      hammer: "Hammer"
+      screwdriver: "Screwdriver"
+      redstone_soldering_iron: "Redstone Soldering Iron"
 
 inventory:
   fuel: "Fuel"

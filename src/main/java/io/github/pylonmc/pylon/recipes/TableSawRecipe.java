@@ -44,7 +44,7 @@ public record TableSawRecipe(
                     section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA),
-                    section.getOrThrow("time-ticks", ConfigAdapter.INT)
+                    section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
             );
         }
     };

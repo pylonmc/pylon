@@ -1,0 +1,213 @@
+pylonbase:kinetic_control_mechanism:
+  inputs:
+    - minecraft:comparator: 2
+    - minecraft:piston: 2
+    - minecraft:clock: 1
+    - minecraft:redstone: 3
+    - pylon:bronze_sheet: 2
+  results:
+    - pylon:kinetic_control_mechanism
+  steps:
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 3
+      add-displays:
+        - name: "sh"
+          item: minecraft:terracotta
+          position: [0.5, 0.5]
+          scale: [0.7, 0.03, 0.85]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "rb1"
+          item: minecraft:redstone_block
+          position: [0.3, 0.2]
+          scale: [0.15, 0.15, 0.15]
+        - name: "rb2"
+          item: minecraft:redstone_block
+          position: [0.7, 0.3]
+          scale: [0.15, 0.15, 0.15]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "pi1"
+          item: minecraft:piston
+          position: [0.7, 0.8]
+          scale: [0.15, 0.15, 0.15]
+        - name: "pi2"
+          item: minecraft:piston
+          position: [0.4, 0.8]
+          scale: [0.15, 0.15, 0.15]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "cl1"
+          item: minecraft:gold_block
+          position: [0.5, 0.5]
+          scale: [0.2, 0.2, 0.2]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 2
+      add-displays:
+        - name: "rw1"
+          item: minecraft:red_concrete
+          position: [0.55, 0.8]
+          scale: [0.3, 0.08, 0.08]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 3
+      add-displays:
+        - name: "rw2"
+          item: minecraft:red_concrete
+          position: [0.7, 0.55]
+          scale: [0.08, 0.08, 0.6]
+        - name: "rw3"
+          item: minecraft:red_concrete
+          position: [0.6, 0.5]
+          scale: [0.2, 0.08, 0.08]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 2
+      add-displays:
+        - name: "rw4"
+          item: minecraft:red_concrete
+          position: [0.4, 0.5]
+          scale: [0.28, 0.08, 0.08]
+        - name: "rw5"
+          item: minecraft:red_concrete
+          position: [0.3, 0.35]
+          scale: [0.08, 0.08, 0.38]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 3
+
+pylonbase:internal_combustion_engine:
+  inputs:
+    - pylon:kinetic_control_mechanism: 1
+    - pylon:steel_cylinder: 4
+    - pylon:steel_crankshaft: 1
+    - pylon:backflow_valve: 2
+    - pylon:bronze_ingot: 3
+    - pylon:steel_sheet: 3
+  results:
+    - pylon:internal_combustion_engine
+  steps:
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "base"
+          item: minecraft:light_gray_concrete
+          position: [0.5, 0.5]
+          scale: [0.8, 0.05, 1.0]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 16
+      add-displays:
+        - name: "piston1"
+          item: minecraft:light_blue_terracotta
+          position: [0.25, 0.5]
+          scale: [0.2, 0.15, 0.1]
+        - name: "piston2"
+          item: minecraft:light_blue_terracotta
+          position: [0.75, 0.5]
+          scale: [0.2, 0.15, 0.1]
+        - name: "piston3"
+          item: minecraft:light_blue_terracotta
+          position: [0.25, 0.7]
+          scale: [0.2, 0.15, 0.1]
+        - name: "piston4"
+          item: minecraft:light_blue_terracotta
+          position: [0.75, 0.7]
+          scale: [0.2, 0.15, 0.1]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 4
+      add-displays:
+        - name: "start"
+          item: minecraft:terracotta
+          position: [0.5, 0.9]
+          scale: [0.6, 0.2, 0.15]
+        - name: "end"
+          item: minecraft:terracotta
+          position: [0.5, 0.175]
+          scale: [0.6, 0.2, 0.25]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "valves"
+          item: minecraft:light_gray_terracotta
+          position: [0.5, 0.175]
+          scale: [0.9, 0.1, 0.1]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 12
+      add-displays:
+        - name: "crankshaft1"
+          item: minecraft:gray_concrete
+          position: [0.5, 0.3]
+          scale: [0.05, 0.1, 0.2]
+        - name: "crankshaft2"
+          item: minecraft:gray_concrete
+          position: [0.525, 0.4]
+          scale: [0.1, 0.1, 0.05]
+        - name: "crankshaft3"
+          item: minecraft:gray_concrete
+          position: [0.55, 0.5]
+          scale: [0.05, 0.1, 0.2]
+        - name: "crankshaft4"
+          item: minecraft:gray_concrete
+          position: [0.5, 0.6]
+          scale: [0.15, 0.1, 0.05]
+        - name: "crankshaft5"
+          item: minecraft:gray_concrete
+          position: [0.45, 0.7]
+          scale: [0.05, 0.1, 0.2]
+        - name: "crankshaft6"
+          item: minecraft:gray_concrete
+          position: [0.475, 0.8]
+          scale: [0.1, 0.1, 0.05]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "pistoncon1"
+          item: minecraft:white_concrete
+          position: [0.5, 0.5]
+          scale: [0.6, 0.09, 0.04]
+        - name: "pistoncon5"
+          item: minecraft:white_concrete
+          position: [0.5, 0.7]
+          scale: [0.6, 0.09, 0.04]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "control"
+          item: minecraft:gold_block
+          position: [0.6, 0.175]
+          scale: [0.1, 0.25, 0.1]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 4
+      add-displays:
+        - name: "wire"
+          item: minecraft:red_concrete
+          position: [0.5, 0.175]
+          scale: [0.3, 0.23, 0.03]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 4
+      add-displays:
+        - name: "wall1"
+          item: minecraft:light_gray_concrete
+          position: [0.15, 0.5]
+          scale: [0.1, 0.25, 1.0]
+        - name: "wall2"
+          item: minecraft:light_gray_concrete
+          position: [0.85, 0.5]
+          scale: [0.1, 0.25, 1.0]

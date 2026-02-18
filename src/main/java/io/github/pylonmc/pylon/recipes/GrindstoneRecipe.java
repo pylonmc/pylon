@@ -52,7 +52,7 @@ public record GrindstoneRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
-                    section.getOrThrow("cycles", ConfigAdapter.INT),
+                    section.getOrThrow("cycles", ConfigAdapter.INTEGER),
                     section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA)
             );
         }

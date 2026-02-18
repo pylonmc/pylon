@@ -36,7 +36,7 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(RebarArgument.of(
                     "elevator_range",
-                    UnitFormat.BLOCKS.format(getSettings().getOrThrow("range", ConfigAdapter.INT))
+                    UnitFormat.BLOCKS.format(getSettings().getOrThrow("range", ConfigAdapter.INTEGER))
             ));
         }
     }
@@ -54,7 +54,7 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
     }
 
     private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {
-        int range = getSettings().getOrThrow("range", ConfigAdapter.INT);
+        int range = getSettings().getOrThrow("range", ConfigAdapter.INTEGER);
         int checkingLevel = 1;
         List<RebarBlock> blocks = new ArrayList<>();
 

@@ -183,6 +183,11 @@ public class PylonKeys {
     public static final NamespacedKey ITEM_INPUT_HATCH = pylonKey("item_input_hatch");
     public static final NamespacedKey ITEM_OUTPUT_HATCH = pylonKey("item_output_hatch");
 
+    public static final NamespacedKey STEEL_CYLINDER = pylonKey("steel_cylinder");
+    public static final NamespacedKey STEEL_CRANKSHAFT = pylonKey("steel_crankshaft");
+    public static final NamespacedKey KINETIC_CONTROL_MECHANISM = pylonKey("kinetic_control_mechanism");
+    public static final NamespacedKey INTERNAL_COMBUSTION_ENGINE = pylonKey("internal_combustion_engine");
+
     public static final NamespacedKey WATER_PUMP = pylonKey("water_pump");
 
     public static final NamespacedKey FLUID_VALVE = pylonKey("fluid_valve");
@@ -374,5 +379,14 @@ public class PylonKeys {
     public static final NamespacedKey HUNTING_TALISMAN_ULTIMATE = pylonKey("hunting_talisman_ultimate");
     public static final NamespacedKey HUNTING_TALISMAN_PALLADIUM = pylonKey("hunting_talisman_palladium");
 
+    public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");
+    public static final NamespacedKey COPPER_SCREWDRIVER = pylonKey("copper_screwdriver");
+    public static final NamespacedKey IRON_SCREWDRIVER = pylonKey("iron_screwdriver");
+    public static final NamespacedKey BRONZE_SCREWDRIVER = pylonKey("bronze_screwdriver");
+    public static final NamespacedKey STEEL_SCREWDRIVER = pylonKey("steel_screwdriver");
+    public static final NamespacedKey REDSTONE_SOLDERING_IRON = pylonKey("redstone_soldering_iron");
+
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
+
+    public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 }

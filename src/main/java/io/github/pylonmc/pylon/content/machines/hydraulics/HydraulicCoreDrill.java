@@ -32,12 +32,12 @@ import java.util.Map;
 
 public class HydraulicCoreDrill extends CoreDrill implements RebarTickingBlock {
 
-    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
+    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerCycle = hydraulicFluidUsage * getCycleDuration() / 20.0;
 
     public static class Item extends CoreDrill.Item {
 
-        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
+        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

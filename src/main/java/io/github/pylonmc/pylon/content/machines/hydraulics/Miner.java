@@ -29,7 +29,7 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
     public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
     public static final NamespacedKey CHUNK_POSITIONS_KEY = pylonKey("chunk_positions");
 
-    public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INT);
+    public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
 
     protected final List<BlockPosition> blockPositions;
     protected final Set<ChunkPosition> chunkPositions;

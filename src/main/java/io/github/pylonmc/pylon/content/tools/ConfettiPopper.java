@@ -20,8 +20,8 @@ public class ConfettiPopper extends RebarItem implements RebarConsumable {
 
     public final double length = getSettings().getOrThrow("length", ConfigAdapter.DOUBLE);
     public final double size = getSettings().getOrThrow("size", ConfigAdapter.DOUBLE);
-    public final int amount = getSettings().getOrThrow("amount", ConfigAdapter.INT);
-    public final int lifetime = getSettings().getOrThrow("lifetime-ticks", ConfigAdapter.INT);
+    public final int amount = getSettings().getOrThrow("amount", ConfigAdapter.INTEGER);
+    public final int lifetime = getSettings().getOrThrow("lifetime-ticks", ConfigAdapter.INTEGER);
 
     public ConfettiPopper(@NotNull ItemStack stack) {
         super(stack);
