@@ -183,7 +183,7 @@ public record AssemblingRecipe(
         for (int i = 0; i < inputs.size(); i++) {
             RecipeInput.Item input = inputs.get(i);
             if (input != null) {
-                gui.setItem(1 + i % 2, Math.floorDiv(i, 2), new ItemButton(input.getRepresentativeItem()));
+                gui.setItem(1 + i % 2, i / 2, new ItemButton(input.getRepresentativeItem()));
             }
         }
 
