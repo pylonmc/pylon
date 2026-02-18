@@ -135,7 +135,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         ENTITY_OVERRIDES = Map.copyOf(entityOverrides);
     }
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public Loupe(@NotNull ItemStack stack) {
         super(stack);
@@ -412,8 +412,8 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
     public record EntryConfig(int uses, int points) {
         public static EntryConfig loadFrom(ConfigSection section) {
             return new EntryConfig(
-                    section.getOrThrow("uses", ConfigAdapter.INT),
-                    section.getOrThrow("points", ConfigAdapter.INT)
+                    section.getOrThrow("uses", ConfigAdapter.INTEGER),
+                    section.getOrThrow("points", ConfigAdapter.INTEGER)
             );
         }
     }

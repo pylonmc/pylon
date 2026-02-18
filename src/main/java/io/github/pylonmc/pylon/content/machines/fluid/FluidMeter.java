@@ -59,8 +59,8 @@ public class FluidMeter extends RebarBlock implements
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
 
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-    public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INT);
-    public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INT);
+    public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+    public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
     private double fluidAddedLastUpdate;
     private final List<Double> measurements;
@@ -69,8 +69,8 @@ public class FluidMeter extends RebarBlock implements
     public static class Item extends RebarItem {
 
         public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-        public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INT);
-        public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INT);
+        public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+        public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -158,8 +158,6 @@ public class FluidMeter extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation())
         );
 
-        setDisableBlockTextureEntity(true);
-
         measurements = new ArrayList<>();
         numberOfMeasurements = minNumberOfMeasurements;
     }
@@ -168,10 +166,13 @@ public class FluidMeter extends RebarBlock implements
     public FluidMeter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
 
-        setDisableBlockTextureEntity(true);
-
         measurements = new ArrayList<>(pdc.get(MEASUREMENTS_KEY, RebarSerializers.LIST.listTypeFrom(RebarSerializers.DOUBLE)));
         numberOfMeasurements = pdc.get(NUMBER_OF_MEASUREMENTS_KEY, RebarSerializers.INTEGER);
+    }
+
+    @Override
+    public void postInitialise() {
+        setDisableBlockTextureEntity(true);
     }
 
     @Override

@@ -18,7 +18,6 @@ import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -50,24 +49,24 @@ public class CargoValve extends RebarBlock implements
 
     public static final NamespacedKey ENABLED_KEY = pylonKey("enabled");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inventory = new VirtualInventory(1);
 
-    public boolean enabled;
+    public boolean open;
 
     public final ItemStackBuilder inputStack = ItemStackBuilder.of(Material.LIME_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":input");
     public final ItemStackBuilder outputStack = ItemStackBuilder.of(Material.RED_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":output");
-    public final ItemStackBuilder stackOff = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
-            .addCustomModelDataString(getKey() + ":stack_off");
-    public final ItemStackBuilder stackOn = ItemStackBuilder.of(Material.WHITE_CONCRETE)
-            .addCustomModelDataString(getKey() + ":stack_on");
+    public final ItemStackBuilder closedStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
+            .addCustomModelDataString(getKey() + ":closed");
+    public final ItemStackBuilder openStack = ItemStackBuilder.of(Material.WHITE_CONCRETE)
+            .addCustomModelDataString(getKey() + ":open");
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -94,7 +93,7 @@ public class CargoValve extends RebarBlock implements
         addCargoLogisticGroup(getFacing().getOppositeFace(), "output");
 
         addEntity("main", new ItemDisplayBuilder()
-                .itemStack(stackOff)
+                .itemStack(closedStack)
                 .transformation(new TransformBuilder()
                         .lookAlong(getFacing())
                         .scale(0.5, 0.5, 0.65)
@@ -122,7 +121,7 @@ public class CargoValve extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation())
         );
 
-        enabled = false;
+        open = false;
         setCargoTransferRate(0);
     }
 
@@ -130,12 +129,12 @@ public class CargoValve extends RebarBlock implements
     public CargoValve(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
 
-        enabled = pdc.get(ENABLED_KEY, RebarSerializers.BOOLEAN);
+        open = pdc.get(ENABLED_KEY, RebarSerializers.BOOLEAN);
     }
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
-        pdc.set(ENABLED_KEY, RebarSerializers.BOOLEAN, enabled);
+        pdc.set(ENABLED_KEY, RebarSerializers.BOOLEAN, open);
     }
 
     @Override
@@ -151,17 +150,17 @@ public class CargoValve extends RebarBlock implements
 
         event.setUseItemInHand(Event.Result.DENY);
 
-        enabled = !enabled;
+        open = !open;
 
 
-        if (enabled) {
+        if (open) {
             setCargoTransferRate(transferRate);
         } else {
             setCargoTransferRate(0);
         }
 
         getHeldEntityOrThrow(ItemDisplay.class, "main")
-                .setItemStack((enabled ? stackOn : stackOff).build());
+                .setItemStack((open ? openStack : closedStack).build());
     }
 
     @Override
@@ -175,6 +174,7 @@ public class CargoValve extends RebarBlock implements
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("input", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inventory, 0));
         createLogisticGroup("output", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(inventory, 0));
     }
@@ -183,7 +183,7 @@ public class CargoValve extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("status", Component.translatable(
-                        "pylon.message.valve." + (enabled ? "enabled" : "disabled")
+                        "pylon.message.valve." + (open ? "open" : "closed")
                 ))
         ));
     }
@@ -191,12 +191,5 @@ public class CargoValve extends RebarBlock implements
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
         return Map.of("inventory", inventory);
-    }
-
-    @Override
-    public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
-        var properties = super.getBlockTextureProperties();
-        properties.put("enabled", new Pair<>(enabled ? "true" : "false", 2));
-        return properties;
     }
 }

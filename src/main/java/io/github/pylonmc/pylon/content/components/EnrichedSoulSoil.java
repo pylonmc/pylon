@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class EnrichedSoulSoil extends RebarBlock implements RebarTickingBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public EnrichedSoulSoil(@NotNull Block block, @NotNull BlockCreateContext context) {

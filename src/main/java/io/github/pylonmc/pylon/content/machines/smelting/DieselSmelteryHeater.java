@@ -33,7 +33,7 @@ public class DieselSmelteryHeater extends SmelteryComponent implements
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double temperature = getSettings().getOrThrow("temperature", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Talisman extends RebarItem implements RebarInventoryEffectItem {
-    public final int level = getSettings().getOrThrow("level", ConfigAdapter.INT);
+    public final int level = getSettings().getOrThrow("level", ConfigAdapter.INTEGER);
 
     public Talisman(@NotNull ItemStack stack) {
         super(stack);

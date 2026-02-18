@@ -2072,8 +2072,8 @@ message:
     enabled: "Shimmer Magnet <gray>has been</gray> <green>enabled"
     disabled: "Shimmer Magnet <gray>has been</gray> <red>disabled"
   valve:
-    enabled: "<green>enabled"
-    disabled: "<red>disabled"
+    open: "<green>open"
+    closed: "<red>closed"
   elevator:
     none_within_range:
       above: "<red>No elevators within range above you"

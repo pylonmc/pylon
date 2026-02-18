@@ -49,8 +49,8 @@ public class VacuumHopper extends RebarBlock implements
         RebarLogisticBlock {
 
     public static class Item extends RebarItem {
-        public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INT);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+        public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
+        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -75,8 +75,8 @@ public class VacuumHopper extends RebarBlock implements
     @Getter
     private final @NotNull VirtualInventory filterInventory = new VirtualInventory(9);
 
-    public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder filterGuiStack = ItemStackBuilder.gui(Material.PINK_STAINED_GLASS_PANE, getKey() + "filter")
             .name(Component.translatable("pylon.gui.filter"));

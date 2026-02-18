@@ -40,9 +40,9 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public final class PitKiln extends RebarBlock implements
         RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarBreakHandler, RebarVanillaContainerBlock {
 
-    public static final int CAPACITY = Settings.get(PylonKeys.PIT_KILN).getOrThrow("capacity", ConfigAdapter.INT);
+    public static final int CAPACITY = Settings.get(PylonKeys.PIT_KILN).getOrThrow("capacity", ConfigAdapter.INTEGER);
     public static final int PROCESSING_TIME_SECONDS =
-            Settings.get(PylonKeys.PIT_KILN).getOrThrow("processing-time-seconds", ConfigAdapter.INT);
+            Settings.get(PylonKeys.PIT_KILN).getOrThrow("processing-time-seconds", ConfigAdapter.INTEGER);
 
     private static final double MULTIPLIER_CAMPFIRE = Settings.get(PylonKeys.PIT_KILN).getOrThrow("speed-multipliers.campfire", ConfigAdapter.DOUBLE);
     private static final double MULTIPLIER_SOUL_CAMPFIRE = Settings.get(PylonKeys.PIT_KILN).getOrThrow("speed-multipliers.soul-campfire", ConfigAdapter.DOUBLE);

@@ -44,7 +44,7 @@ public record PipeBendingRecipe(
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA),
-                    section.getOrThrow("time-ticks", ConfigAdapter.INT)
+                    section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
             );
         }
     };

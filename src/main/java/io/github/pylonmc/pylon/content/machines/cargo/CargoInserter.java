@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
+import io.github.pylonmc.rebar.block.base.RebarEntityCulledBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -29,13 +30,16 @@ import xyz.xenondevs.invui.gui.Gui;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class CargoInserter extends CargoInteractor implements
         RebarCargoBlock,
-        RebarGuiBlock {
+        RebarGuiBlock,
+        RebarEntityCulledBlock
+{
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.LIGHT_GRAY_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
@@ -46,7 +50,7 @@ public class CargoInserter extends CargoInteractor implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -90,7 +94,7 @@ public class CargoInserter extends CargoInteractor implements
                 .transformation(new TransformBuilder()
                         .lookAlong(getFacing())
                         .translate(0, 0, -0.3)
-                        .scale(0.4, 0.4, 0.05)
+                        .scale(0.45, 0.45, 0.05)
                 )
                 .build(block.getLocation().toCenterLocation())
         );
@@ -109,6 +113,11 @@ public class CargoInserter extends CargoInteractor implements
     @SuppressWarnings("unused")
     public CargoInserter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+    }
+
+    @Override
+    public void postInitialise() {
+        setDisableBlockTextureEntity(true);
     }
 
     @Override
@@ -164,5 +173,10 @@ public class CargoInserter extends CargoInteractor implements
     @Override
     public boolean isValidGroup(@NotNull LogisticGroup group) {
         return group.getSlotType() == LogisticGroupType.BOTH || group.getSlotType() == LogisticGroupType.INPUT;
+    }
+
+    @Override
+    public @NotNull Iterable<UUID> getCulledEntityIds() {
+        return getHeldEntities().values();
     }
 }

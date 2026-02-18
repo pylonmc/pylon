@@ -45,9 +45,9 @@ public class HydraulicPipeBender extends RebarBlock implements
         RebarLogisticBlock,
         RebarRecipeProcessor<PipeBendingRecipe> {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
-    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
     public ItemStack cubeStack = ItemStackBuilder.of(Material.ORANGE_CONCRETE)
             .addCustomModelDataString(getKey() + ":cube")
@@ -55,8 +55,8 @@ public class HydraulicPipeBender extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

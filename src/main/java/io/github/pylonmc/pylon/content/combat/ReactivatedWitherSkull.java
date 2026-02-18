@@ -23,7 +23,7 @@ public class ReactivatedWitherSkull extends RebarItem implements RebarInteractor
     private final boolean chargedSkulls = getSettings().getOrThrow("charged-skulls", ConfigAdapter.BOOLEAN);
     private final double skullSpeed = getSettings().getOrThrow("skull-speed", ConfigAdapter.DOUBLE);
     private final double playerHeight = getSettings().getOrThrow("player-height", ConfigAdapter.DOUBLE);
-    private final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    private final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     private static final TranslatableComponent trueCharged = Component.translatable("pylon.item.reactivated_wither_skull.charged.true");
     private static final TranslatableComponent falseCharged = Component.translatable("pylon.item.reactivated_wither_skull.charged.false");
 

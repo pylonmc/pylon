@@ -24,10 +24,10 @@ import java.util.WeakHashMap;
 
 public class HungerTalisman extends Talisman {
     private static final NamespacedKey HUNGER_TALISMAN_KEY = PylonUtils.pylonKey("hunger_talisman");
-    public final int hungerIncrease = getSettings().getOrThrow("hunger-increase", ConfigAdapter.INT);
+    public final int hungerIncrease = getSettings().getOrThrow("hunger-increase", ConfigAdapter.INTEGER);
     public final float saturationIncrease = getSettings().getOrThrow("saturation-increase", ConfigAdapter.FLOAT);
-    public final int increasePeriod = getSettings().getOrThrow("period-ticks", ConfigAdapter.INT);
-    public final int level = getSettings().getOrThrow("level", ConfigAdapter.INT);
+    public final int increasePeriod = getSettings().getOrThrow("period-ticks", ConfigAdapter.INTEGER);
+    public final int level = getSettings().getOrThrow("level", ConfigAdapter.INTEGER);
     private static final WeakHashMap<UUID, BukkitTask> hungerTasks = new WeakHashMap<>();
 
     public HungerTalisman(@NotNull ItemStack stack) {

@@ -85,6 +85,7 @@ public class CreativeItemVoider extends RebarBlock
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("input", LogisticGroupType.INPUT, new VoiderLogisticSlot());
     }
 }

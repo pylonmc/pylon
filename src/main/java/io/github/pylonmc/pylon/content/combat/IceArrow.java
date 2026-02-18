@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class IceArrow extends RebarItem implements RebarArrow {
-    private final int freezeDuration = getSettings().getOrThrow("freeze-duration", ConfigAdapter.INT);
+    private final int freezeDuration = getSettings().getOrThrow("freeze-duration", ConfigAdapter.INTEGER);
     private final double freezeSpeed = getSettings().getOrThrow("freeze-speed", ConfigAdapter.DOUBLE);
 
     public IceArrow(@NotNull ItemStack stack) {
