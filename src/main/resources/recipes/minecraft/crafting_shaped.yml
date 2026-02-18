@@ -1651,3 +1651,87 @@ pylon:farming_talisman_simple:
     H: minecraft:iron_hoe
   result: pylon:farming_talisman_simple
   category: equipment
+
+pylon:copper_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: minecraft:copper_nugget
+    I: minecraft:copper_ingot
+    S: minecraft:stick
+  result: pylon:copper_screwdriver
+  category: equipment
+
+pylon:iron_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: minecraft:iron_nugget
+    I: minecraft:iron_ingot
+    S: minecraft:stick
+  result: pylon:iron_screwdriver
+  category: equipment
+
+pylon:bronze_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: pylon:bronze_nugget
+    I: pylon:bronze_ingot
+    S: minecraft:stick
+  result: pylon:bronze_screwdriver
+  category: equipment
+
+pylon:steel_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: pylon:steel_nugget
+    I: pylon:steel_ingot
+    S: minecraft:stick
+  result: pylon:steel_screwdriver
+  category: equipment
+
+pylon:redstone_soldering_iron:
+  pattern:
+    - " R "
+    - "HIH"
+    - " S "
+  key:
+    R: minecraft:redstone_block
+    I: minecraft:iron_ingot
+    H: pylon:covalent_binder
+    S: minecraft:stick
+  result: pylon:redstone_soldering_iron
+  category: equipment
+
+pylon:steel_cylinder:
+  pattern:
+    - " S "
+    - "S S"
+    - " S "
+  key:
+    S: pylon:steel_sheet
+  result:
+    pylon:steel_cylinder: 4
+  category: equipment
+
+pylon:steel_crankshaft:
+  pattern:
+    - "   "
+    - "NIN"
+    - "   "
+  key:
+    N: pylon:steel_nugget
+    I: pylon:steel_ingot
+  result:
+    pylon:steel_crankshaft: 1
+  category: equipment

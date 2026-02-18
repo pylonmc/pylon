@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.building.Elevator;
 import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
@@ -159,6 +160,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CARGO_ACCUMULATOR, Material.STRUCTURE_VOID, CargoAccumulator.class);
         RebarBlock.register(PylonKeys.CARGO_FLUID_ACCUMULATOR, Material.STRUCTURE_VOID, CargoFluidAccumulator.class);
         RebarBlock.register(PylonKeys.CARGO_OVERFLOW_GATE, Material.STRUCTURE_VOID, CargoOverflowGate.class);
+        RebarBlock.register(PylonKeys.ASSEMBLY_TABLE, Material.ANVIL, AssemblyTable.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_SOURCE, Material.STRUCTURE_VOID, CreativeItemSource.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
     }
