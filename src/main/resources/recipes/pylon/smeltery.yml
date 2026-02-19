@@ -35,7 +35,7 @@ pylon:copper_smelting:
     pylon:slurry_raw_copper: 1000
   outputs:
     pylon:copper: 144
-    pylon:slurry: 500
+    pylon:slurry: 856
   temperature: 1085
 
 pylon:gold_smelting:
@@ -44,10 +44,22 @@ pylon:gold_smelting:
     pylon:mercury: 1000
   outputs:
     pylon:gold: 144
-    pylon:slurry: 400
-    pylon:slurry_raw_tin: 200
-    pylon:mercury: 900
+    pylon:slurry: 200
+    pylon:slurry_raw_tin: 500
+    pylon:mercury: 800
   temperature: 1064
+
+pylon:palladium_smelting:
+  inputs:
+    pylon:slurry_raw_gold: 1000
+    pylon:mercury: 1000
+  outputs:
+    pylon:gold: 144
+    pylon:slurry: 200
+    pylon:slurry_raw_tin: 400
+    pylon:mercury: 756
+    pylon:palladium: 144
+  temperature: 1555
 
 pylon:iron_smelting:
   inputs:
@@ -55,19 +67,7 @@ pylon:iron_smelting:
     pylon:slurry_carbon: 500
   outputs:
     pylon:iron: 144
-    pylon:slurry: 500
-  temperature: 1540
-
-pylon:iron_smelting_with_sulfur:
-  inputs:
-    pylon:slurry_raw_iron: 1000
-    pylon:slurry_carbon: 500
-    pylon:sulfur: 100
-  outputs:
-    pylon:iron: 144
-    pylon:slurry: 400
-    pylon:cobalt: 16
-    pylon:nickel: 16
+    pylon:slurry: 1356
   temperature: 1540
 
 pylon:tin_smelting:
@@ -76,7 +76,7 @@ pylon:tin_smelting:
     pylon:slurry_carbon: 500
   outputs:
     pylon:tin: 144
-    pylon:slurry: 500
+    pylon:slurry: 1356
   temperature: 250
 
 pylon:redstone_decomposition:

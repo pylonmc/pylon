@@ -33,8 +33,8 @@ public record MoldingRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
-                            .asQuantity(section.getOrThrow("resultAmount", ConfigAdapter.INT)),
-                    section.getOrThrow("cycles", ConfigAdapter.INT)
+                            .asQuantity(section.getOrThrow("resultAmount", ConfigAdapter.INTEGER)),
+                    section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
         }
     };

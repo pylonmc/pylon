@@ -33,13 +33,13 @@ public class HydraulicGrindstoneTurner extends RebarBlock implements
         RebarFluidBufferBlock,
         RebarDirectionalBlock {
 
-    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
 
-        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INT);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

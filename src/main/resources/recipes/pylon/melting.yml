@@ -21,12 +21,14 @@ pylon:copper_from_nugget:
   result: pylon:copper
   amount: 16
   temperature: 1083
+  priority: -1
 
 pylon:copper_from_block:
   input: "#minecraft:copper"
   result: pylon:copper
   amount: 1296
   temperature: 1083
+  priority: -1
 
 pylon:gold_from_ingot:
   input: minecraft:gold_ingot
@@ -45,12 +47,14 @@ pylon:gold_from_nugget:
   result: pylon:gold
   amount: 16
   temperature: 1064
+  priority: -1
 
 pylon:gold_from_block:
   input: minecraft:gold_block
   result: pylon:gold
   amount: 1296
   temperature: 1064
+  priority: -1
 
 pylon:iron_from_ingot:
   input: minecraft:iron_ingot
@@ -69,12 +73,14 @@ pylon:iron_from_nugget:
   result: pylon:iron
   amount: 16
   temperature: 1064
+  priority: -1
 
 pylon:iron_from_block:
   input: minecraft:iron_block
   result: pylon:iron
   amount: 1296
   temperature: 1064
+  priority: -1
 
 pylon:tin_from_ingot:
   input: pylon:tin_ingot
@@ -93,60 +99,14 @@ pylon:tin_from_nugget:
   result: pylon:tin
   amount: 16
   temperature: 231.9
+  priority: -1
 
 pylon:tin_from_block:
   input: pylon:tin_block
   result: pylon:tin
   amount: 1296
   temperature: 231.9
-
-pylon:cobalt_from_ingot:
-  input: pylon:cobalt_ingot
-  result: pylon:cobalt
-  amount: 144
-  temperature: 1495
-
-pylon:cobalt_from_dust:
-  input: pylon:cobalt_dust
-  result: pylon:cobalt
-  amount: 144
-  temperature: 1495
-
-pylon:cobalt_from_nugget:
-  input: pylon:cobalt_nugget
-  result: pylon:cobalt
-  amount: 16
-  temperature: 1495
-
-pylon:cobalt_from_block:
-  input: pylon:cobalt_block
-  result: pylon:cobalt
-  amount: 1296
-  temperature: 1495
-
-pylon:nickel_from_ingot:
-  input: pylon:nickel_ingot
-  result: pylon:nickel
-  amount: 144
-  temperature: 1455
-
-pylon:nickel_from_dust:
-  input: pylon:nickel_dust
-  result: pylon:nickel
-  amount: 144
-  temperature: 1455
-
-pylon:nickel_from_nugget:
-  input: pylon:nickel_nugget
-  result: pylon:nickel
-  amount: 16
-  temperature: 1455
-
-pylon:nickel_from_block:
-  input: pylon:nickel_block
-  result: pylon:nickel
-  amount: 1296
-  temperature: 1455
+  priority: -1
 
 pylon:bronze_from_ingot:
   input: pylon:bronze_ingot
@@ -165,12 +125,14 @@ pylon:bronze_from_nugget:
   result: pylon:bronze
   amount: 16
   temperature: 950
+  priority: -1
 
 pylon:bronze_from_block:
   input: pylon:bronze_block
   result: pylon:bronze
   amount: 1296
   temperature: 950
+  priority: -1
 
 pylon:steel_from_ingot:
   input: pylon:steel_ingot
@@ -189,9 +151,37 @@ pylon:steel_from_nugget:
   result: pylon:steel
   amount: 16
   temperature: 1410
+  priority: -1
 
 pylon:steel_from_block:
   input: pylon:steel_block
   result: pylon:steel
   amount: 1296
   temperature: 1410
+  priority: -1
+
+pylon:palladium_from_ingot:
+  input: pylon:palladium_ingot
+  result: pylon:palladium
+  amount: 144
+  temperature: 1555
+
+pylon:palladium_from_dust:
+  input: pylon:palladium_dust
+  result: pylon:palladium
+  amount: 144
+  temperature: 1555
+
+pylon:palladium_from_nugget:
+  input: pylon:palladium_nugget
+  result: pylon:palladium
+  amount: 16
+  temperature: 1555
+  priority: -1
+
+pylon:palladium_from_block:
+  input: pylon:palladium_block
+  result: pylon:palladium
+  amount: 1296
+  temperature: 1555
+  priority: -1

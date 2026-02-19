@@ -36,7 +36,7 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
 
     public static class Item extends RebarItem {
 
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
         public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
@@ -55,7 +55,7 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final RebarFluid fluid = getSettings().getOrThrow("fluid", ConfigAdapter.REBAR_FLUID);
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final Block placeBlock;
 
     @SuppressWarnings("unused")

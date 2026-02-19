@@ -54,11 +54,11 @@ public class DieselHammerHead extends RebarBlock implements
         RebarDirectionalBlock,
         RebarLogisticBlock {
 
-    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INT);
+    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INT);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     private final VirtualInventory hammerInventory = new VirtualInventory(1);
 
@@ -77,8 +77,8 @@ public class DieselHammerHead extends RebarBlock implements
     public static class Item extends RebarItem {
 
         public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INT);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INT);
+        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -122,7 +122,7 @@ public class DieselHammerHead extends RebarBlock implements
                 .itemStack(sideStack2)
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
-                        .scale(0.9, 0.8, 1.1))
+                        .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("hammer_head", new ItemDisplayBuilder()
@@ -193,6 +193,10 @@ public class DieselHammerHead extends RebarBlock implements
 
         Block baseBlock = getBlock().getRelative(BlockFace.DOWN, 3);
         if (BlockStorage.isRebarBlock(baseBlock) || baseBlock.getType() != hammer.baseBlock) {
+            return;
+        }
+
+        if (fluidAmount(PylonFluids.BIODIESEL) < dieselPerCraft) {
             return;
         }
 

@@ -7,6 +7,7 @@ pylon:tin_ingot_from_tin_nuggets:
     N: pylon:tin_nugget
   result: pylon:tin_ingot
   category: misc
+  priority: -2
 
 pylon:tin_block_from_tin_ingots:
   pattern:
@@ -27,6 +28,7 @@ pylon:bronze_ingot_from_bronze_nuggets:
     N: pylon:bronze_nugget
   result: pylon:bronze_ingot
   category: misc
+  priority: -2
 
 pylon:bronze_block_from_bronze_ingots:
   pattern:
@@ -47,6 +49,7 @@ pylon:steel_ingot_from_steel_nuggets:
     N: pylon:steel_nugget
   result: pylon:steel_ingot
   category: misc
+  priority: -2
 
 pylon:steel_block_from_steel_ingots:
   pattern:
@@ -58,6 +61,28 @@ pylon:steel_block_from_steel_ingots:
   result: pylon:steel_block
   category: misc
 
+pylon:palladium_ingot_from_palladium_nuggets:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:palladium_nugget
+  result: pylon:palladium_ingot
+  category: misc
+  priority: -2
+
+pylon:palladium_block_from_palladium_ingots:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:palladium_ingot
+  result: pylon:palladium_block
+  category: misc
+  priority: -2
+
 pylon:charcoal_block_from_charcoal:
   pattern:
     - "NNN"
@@ -67,46 +92,6 @@ pylon:charcoal_block_from_charcoal:
     N: minecraft:charcoal
   result: pylon:charcoal_block
   category: building
-
-pylon:nickel_ingot_from_nickel_nuggets:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:nickel_nugget
-  result: pylon:nickel_ingot
-  category: misc
-
-pylon:nickel_block_from_nickel_ingots:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:nickel_ingot
-  result: pylon:nickel_block
-  category: misc
-
-pylon:cobalt_ingot_from_cobalt_nuggets:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:cobalt_nugget
-  result: pylon:cobalt_ingot
-  category: misc
-
-pylon:cobalt_block_from_cobalt_ingots:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:cobalt_ingot
-  result: pylon:cobalt_block
-  category: misc
 
 pylon:bronze_sword:
   pattern:
@@ -1645,4 +1630,88 @@ pylon:farming_talisman_simple:
     B: minecraft:hay_block
     H: minecraft:iron_hoe
   result: pylon:farming_talisman_simple
+  category: equipment
+
+pylon:copper_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: minecraft:copper_nugget
+    I: minecraft:copper_ingot
+    S: minecraft:stick
+  result: pylon:copper_screwdriver
+  category: equipment
+
+pylon:iron_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: minecraft:iron_nugget
+    I: minecraft:iron_ingot
+    S: minecraft:stick
+  result: pylon:iron_screwdriver
+  category: equipment
+
+pylon:bronze_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: pylon:bronze_nugget
+    I: pylon:bronze_ingot
+    S: minecraft:stick
+  result: pylon:bronze_screwdriver
+  category: equipment
+
+pylon:steel_screwdriver:
+  pattern:
+    - " N "
+    - " I "
+    - " S "
+  key:
+    N: pylon:steel_nugget
+    I: pylon:steel_ingot
+    S: minecraft:stick
+  result: pylon:steel_screwdriver
+  category: equipment
+
+pylon:redstone_soldering_iron:
+  pattern:
+    - " R "
+    - "HIH"
+    - " S "
+  key:
+    R: minecraft:redstone_block
+    I: minecraft:iron_ingot
+    H: pylon:covalent_binder
+    S: minecraft:stick
+  result: pylon:redstone_soldering_iron
+  category: equipment
+
+pylon:steel_cylinder:
+  pattern:
+    - " S "
+    - "S S"
+    - " S "
+  key:
+    S: pylon:steel_sheet
+  result:
+    pylon:steel_cylinder: 4
+  category: equipment
+
+pylon:steel_crankshaft:
+  pattern:
+    - "   "
+    - "NIN"
+    - "   "
+  key:
+    N: pylon:steel_nugget
+    I: pylon:steel_ingot
+  result:
+    pylon:steel_crankshaft: 1
   category: equipment

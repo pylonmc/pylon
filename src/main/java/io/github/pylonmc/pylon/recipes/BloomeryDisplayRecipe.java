@@ -40,7 +40,7 @@ public record BloomeryDisplayRecipe(
 
     @Override
     public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of();
+        return List.of(RecipeInput.of(input));
     }
 
     @Override

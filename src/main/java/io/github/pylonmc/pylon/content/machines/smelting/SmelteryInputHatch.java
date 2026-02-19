@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
@@ -12,12 +13,13 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public final class SmelteryInputHatch extends SmelteryComponent implements RebarFluidBlock {
+public final class SmelteryInputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
     public final double flowRate = getSettings().getOrThrow("flow-rate", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public SmelteryInputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        setFacing(context.getFacingVertical());
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, true);
     }
 

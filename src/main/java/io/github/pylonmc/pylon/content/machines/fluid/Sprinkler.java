@@ -44,9 +44,9 @@ public class Sprinkler extends RebarBlock
 
     private static final Config settings = Settings.get(PylonKeys.SPRINKLER);
     public static final WateringSettings SETTINGS = WateringSettings.fromConfig(settings);
-    public static final int TICK_INTERVAL = settings.getOrThrow("tick-interval", ConfigAdapter.INT);
-    public static final double WATER_PER_SECOND = settings.getOrThrow("water-per-second", ConfigAdapter.INT);
-    public static final double BUFFER = settings.getOrThrow("buffer", ConfigAdapter.INT);
+    public static final int TICK_INTERVAL = settings.getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public static final double WATER_PER_SECOND = settings.getOrThrow("water-per-second", ConfigAdapter.INTEGER);
+    public static final double BUFFER = settings.getOrThrow("buffer", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
 

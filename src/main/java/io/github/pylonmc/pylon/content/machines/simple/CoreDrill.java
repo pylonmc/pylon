@@ -39,8 +39,8 @@ public abstract class CoreDrill extends RebarBlock
 
     public static class Item extends RebarItem {
 
-        private final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INT);
-        private final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INT);
+        private final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+        private final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
         private final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
 
         public Item(@NotNull ItemStack stack) {
@@ -56,8 +56,8 @@ public abstract class CoreDrill extends RebarBlock
         }
     }
 
-    @Getter protected final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INT);
-    @Getter protected final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INT);
+    @Getter protected final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+    @Getter protected final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
     protected final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
     protected final Material drillMaterial = getSettings().getOrThrow("drill-material", ConfigAdapter.MATERIAL);
     protected final ItemStackBuilder drillStack = ItemStackBuilder.of(drillMaterial)

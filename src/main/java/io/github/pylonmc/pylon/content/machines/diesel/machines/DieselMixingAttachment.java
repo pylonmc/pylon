@@ -47,12 +47,12 @@ public class DieselMixingAttachment extends RebarBlock implements
         RebarProcessor,
         RebarDirectionalBlock {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
-    public final int downAnimationTimeTicks = getSettings().getOrThrow("down-animation-time-ticks", ConfigAdapter.INT);
-    public final int upAnimationTimeTicks = getSettings().getOrThrow("up-animation-time-ticks", ConfigAdapter.INT);
-    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INT);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int downAnimationTimeTicks = getSettings().getOrThrow("down-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final int upAnimationTimeTicks = getSettings().getOrThrow("up-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -63,9 +63,9 @@ public class DieselMixingAttachment extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
-        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INT);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INT);
+        public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

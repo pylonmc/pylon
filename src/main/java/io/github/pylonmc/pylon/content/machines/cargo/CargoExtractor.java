@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
+import io.github.pylonmc.rebar.block.base.RebarEntityCulledBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
@@ -48,18 +49,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class CargoExtractor extends CargoInteractor implements
         RebarCargoBlock,
         RebarTickingBlock,
         RebarGuiBlock,
-        RebarVirtualInventoryBlock {
+        RebarVirtualInventoryBlock,
+        RebarEntityCulledBlock
+{
 
     public static final NamespacedKey ITEMS_TO_FILTER_KEY = PylonUtils.pylonKey("items_to_filter");
     public static final NamespacedKey IS_WHITELIST_KEY = PylonUtils.pylonKey("is_whitelist");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.LIGHT_GRAY_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
@@ -79,7 +83,7 @@ public class CargoExtractor extends CargoInteractor implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -143,7 +147,7 @@ public class CargoExtractor extends CargoInteractor implements
                 .transformation(new TransformBuilder()
                         .lookAlong(getFacing())
                         .translate(0, 0, -0.3)
-                        .scale(0.4, 0.4, 0.05)
+                        .scale(0.45, 0.45, 0.05)
                 )
                 .build(block.getLocation().toCenterLocation())
         );
@@ -166,6 +170,8 @@ public class CargoExtractor extends CargoInteractor implements
         isWhitelist = pdc.get(IS_WHITELIST_KEY, RebarSerializers.BOOLEAN);
     }
 
+
+
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         super.write(pdc);
@@ -175,6 +181,7 @@ public class CargoExtractor extends CargoInteractor implements
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
 
         filterInventory.addPostUpdateHandler(event -> {
@@ -275,5 +282,10 @@ public class CargoExtractor extends CargoInteractor implements
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
         return Map.of("output", outputInventory, "filter", filterInventory);
+    }
+
+    @Override
+    public @NotNull Iterable<UUID> getCulledEntityIds() {
+        return getHeldEntities().values();
     }
 }

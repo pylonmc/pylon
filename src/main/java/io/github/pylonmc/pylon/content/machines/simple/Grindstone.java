@@ -50,7 +50,7 @@ public class Grindstone extends RebarBlock implements
         RebarRecipeProcessor<GrindstoneRecipe> {
 
     public static final int CYCLE_DURATION_TICKS = Settings.get(PylonKeys.GRINDSTONE)
-            .getOrThrow("cycle-duration-ticks",ConfigAdapter.INT);
+            .getOrThrow("cycle-duration-ticks",ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull BlockCreateContext context) {

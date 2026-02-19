@@ -9,6 +9,7 @@ pylon:redstone_smelting:
     - minecraft:redstone
   outputs:
     - pylon:sulfur
+  priority: 1
 
 pylon:bronze:
   inputs:

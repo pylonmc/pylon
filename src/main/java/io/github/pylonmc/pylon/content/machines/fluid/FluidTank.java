@@ -36,14 +36,14 @@ import java.util.Set;
 public class FluidTank extends RebarBlock
         implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock {
 
-    private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INT);
+    private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
 
     private final List<FluidTankCasing> casings = new ArrayList<>();
     private final List<FluidTemperature> allowedTemperatures = new ArrayList<>();
 
     public static class Item extends RebarItem {
 
-        private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INT);
+        private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

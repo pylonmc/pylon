@@ -1,6 +1,8 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.armor.BronzeArmor;
+import io.github.pylonmc.pylon.content.assembling.RedstoneSolderingIron;
+import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
 import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
@@ -61,11 +63,11 @@ public final class PylonItems {
             .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
                     .animation(ItemUseAnimation.SPYGLASS)
                     .hasConsumeParticles(false)
-                    .consumeSeconds(Settings.get(PylonKeys.LOUPE).getOrThrow("use-ticks", ConfigAdapter.INT) / 20.0F)
+                    .consumeSeconds(Settings.get(PylonKeys.LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
                     .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
             )
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
-                            Settings.get(PylonKeys.LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F)
+                            Settings.get(PylonKeys.LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
                     .cooldownGroup(PylonKeys.LOUPE)
             )
             .build();
@@ -75,7 +77,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INT), PylonKeys.RESEARCH_PACK_1)
+            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_1)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -84,7 +86,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_2 = ItemStackBuilder.rebar(Material.LIME_BANNER, PylonKeys.RESEARCH_PACK_2)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_2).getOrThrow("cooldown-ticks", ConfigAdapter.INT), PylonKeys.RESEARCH_PACK_2)
+            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_2).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_2)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -269,64 +271,34 @@ public final class PylonItems {
         PylonPages.METALS.addItem(STEEL_DUST);
     }
 
-    public static final ItemStack NICKEL_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.NICKEL_INGOT)
+    public static final ItemStack PALLADIUM_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PALLADIUM_INGOT)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_INGOT.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, NICKEL_INGOT);
-        PylonPages.METALS.addItem(NICKEL_INGOT);
+        RebarItem.register(RebarItem.class, PALLADIUM_INGOT);
+        PylonPages.METALS.addItem(PALLADIUM_INGOT);
     }
 
-    public static final ItemStack NICKEL_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NICKEL_NUGGET)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, NICKEL_NUGGET);
-        PylonPages.METALS.addItem(NICKEL_NUGGET);
-    }
-
-    public static final ItemStack NICKEL_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.NICKEL_BLOCK)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, NICKEL_BLOCK, PylonKeys.NICKEL_BLOCK);
-        PylonPages.METALS.addItem(NICKEL_BLOCK);
-    }
-
-    public static final ItemStack NICKEL_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.NICKEL_DUST)
+    public static final ItemStack PALLADIUM_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PALLADIUM_DUST)
             .set(DataComponentTypes.ITEM_MODEL, Material.SUGAR.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, NICKEL_DUST);
-        PylonPages.METALS.addItem(NICKEL_DUST);
+        RebarItem.register(RebarItem.class, PALLADIUM_DUST);
+        PylonPages.METALS.addItem(PALLADIUM_DUST);
     }
 
-    public static final ItemStack COBALT_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COBALT_INGOT)
-            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_INGOT.getKey())
+    public static final ItemStack PALLADIUM_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.PALLADIUM_NUGGET)
             .build();
     static {
-        RebarItem.register(RebarItem.class, COBALT_INGOT);
-        PylonPages.METALS.addItem(COBALT_INGOT);
+        RebarItem.register(RebarItem.class, PALLADIUM_NUGGET);
+        PylonPages.METALS.addItem(PALLADIUM_NUGGET);
     }
 
-    public static final ItemStack COBALT_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.COBALT_NUGGET)
+    public static final ItemStack PALLADIUM_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.PALLADIUM_BLOCK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, COBALT_NUGGET);
-        PylonPages.METALS.addItem(COBALT_NUGGET);
-    }
-
-    public static final ItemStack COBALT_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.COBALT_BLOCK)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, COBALT_BLOCK, PylonKeys.COBALT_BLOCK);
-        PylonPages.METALS.addItem(COBALT_BLOCK);
-    }
-
-    public static final ItemStack COBALT_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COBALT_DUST)
-            .set(DataComponentTypes.ITEM_MODEL, Material.SUGAR.getKey())
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, COBALT_DUST);
-        PylonPages.METALS.addItem(COBALT_DUST);
+        RebarItem.register(RebarItem.class, PALLADIUM_BLOCK, PylonKeys.PALLADIUM_BLOCK);
+        PylonPages.METALS.addItem(PALLADIUM_BLOCK);
     }
 
     //</editor-fold>
@@ -564,8 +536,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, TIN_SHEET);
         PylonPages.COMPONENTS.addItem(TIN_SHEET);
-
-
     }
 
     public static final ItemStack BRONZE_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.BRONZE_SHEET)
@@ -573,8 +543,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, BRONZE_SHEET);
         PylonPages.COMPONENTS.addItem(BRONZE_SHEET);
-
-
     }
 
     public static final ItemStack STEEL_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.STEEL_SHEET)
@@ -582,6 +550,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, STEEL_SHEET);
         PylonPages.COMPONENTS.addItem(STEEL_SHEET);
+    }
+
+    public static final ItemStack PALLADIUM_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.PALLADIUM_SHEET)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SHEET);
+        PylonPages.COMPONENTS.addItem(PALLADIUM_SHEET);
     }
 
 
@@ -713,6 +688,35 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(ITEM_OUTPUT_HATCH);
     }
 
+    public static final ItemStack STEEL_CYLINDER = ItemStackBuilder.rebar(Material.FLOWER_POT, PylonKeys.STEEL_CYLINDER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_CYLINDER, PylonKeys.STEEL_CYLINDER);
+        PylonPages.COMPONENTS.addItem(STEEL_CYLINDER);
+    }
+
+    public static final ItemStack STEEL_CRANKSHAFT = ItemStackBuilder.rebar(Material.GRAY_CANDLE, PylonKeys.STEEL_CRANKSHAFT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_CRANKSHAFT, PylonKeys.STEEL_CRANKSHAFT);
+        PylonPages.COMPONENTS.addItem(STEEL_CRANKSHAFT);
+    }
+
+    public static final ItemStack KINETIC_CONTROL_MECHANISM = ItemStackBuilder.rebar(Material.CLOCK, PylonKeys.KINETIC_CONTROL_MECHANISM)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, KINETIC_CONTROL_MECHANISM, PylonKeys.KINETIC_CONTROL_MECHANISM);
+        PylonPages.COMPONENTS.addItem(KINETIC_CONTROL_MECHANISM);
+    }
+
+    public static final ItemStack INTERNAL_COMBUSTION_ENGINE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.INTERNAL_COMBUSTION_ENGINE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.DROPPER.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INTERNAL_COMBUSTION_ENGINE, PylonKeys.INTERNAL_COMBUSTION_ENGINE);
+        PylonPages.COMPONENTS.addItem(INTERNAL_COMBUSTION_ENGINE);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
@@ -777,7 +781,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack LUMBER_AXE = ItemStackBuilder.rebar(Material.WOODEN_AXE, PylonKeys.LUMBER_AXE)
-            .durability(Settings.get(PylonKeys.LUMBER_AXE).getOrThrow("durability", ConfigAdapter.INT))
+            .durability(Settings.get(PylonKeys.LUMBER_AXE).getOrThrow("durability", ConfigAdapter.INTEGER))
             .build();
     static {
         RebarItem.register(LumberAxe.class, LUMBER_AXE);
@@ -813,7 +817,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack BRICK_MOLD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRICK_MOLD)
-            .useCooldown(Settings.get(PylonKeys.BRICK_MOLD).getOrThrow("cooldown-ticks", ConfigAdapter.INT), PylonKeys.BRICK_MOLD)
+            .useCooldown(Settings.get(PylonKeys.BRICK_MOLD).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.BRICK_MOLD)
             .set(DataComponentTypes.ITEM_MODEL, Material.OAK_FENCE_GATE.getKey())
             .build();
     static {
@@ -894,7 +898,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack BEHEADING_SWORD = ItemStackBuilder.rebar(Material.DIAMOND_SWORD, PylonKeys.BEHEADING_SWORD)
-            .durability(Settings.get(PylonKeys.BEHEADING_SWORD).getOrThrow("durability", ConfigAdapter.INT)) // todo: weapon stats?
+            .durability(Settings.get(PylonKeys.BEHEADING_SWORD).getOrThrow("durability", ConfigAdapter.INTEGER)) // todo: weapon stats?
             .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
             .build();
     static {
@@ -956,8 +960,8 @@ public final class PylonItems {
     }
 
     public static final ItemStack REACTIVATED_WITHER_SKULL = ItemStackBuilder.rebar(Material.WITHER_SKELETON_SKULL, PylonKeys.REACTIVATED_WITHER_SKULL)
-            .durability(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INT))
-            .useCooldown(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INT), PylonKeys.REACTIVATED_WITHER_SKULL)
+            .durability(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .useCooldown(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.REACTIVATED_WITHER_SKULL)
             .build();
     static {
         RebarItem.register(ReactivatedWitherSkull.class, REACTIVATED_WITHER_SKULL);
@@ -965,8 +969,8 @@ public final class PylonItems {
     }
 
     public static final ItemStack HYPER_ACTIVATED_WITHER_SKULL = ItemStackBuilder.rebar(Material.WITHER_SKELETON_SKULL, PylonKeys.HYPER_ACTIVATED_WITHER_SKULL)
-            .durability(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INT))
-            .useCooldown(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INT), PylonKeys.REACTIVATED_WITHER_SKULL)
+            .durability(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .useCooldown(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.REACTIVATED_WITHER_SKULL)
             .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
             .build();
     static {
@@ -991,7 +995,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_HORSE_ARMOR.getKey())
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown
                     .useCooldown(
-                            Settings.get(PylonKeys.HYDRAULIC_CANNON).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                            Settings.get(PylonKeys.HYDRAULIC_CANNON).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F
                     )
                     .cooldownGroup(PylonKeys.HYDRAULIC_CANNON.key())
                     .build())
@@ -1038,6 +1042,15 @@ public final class PylonItems {
         RebarItem.register(HealthTalisman.class, HEALTH_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_ULTIMATE);
     }
+
+    public static final ItemStack HEALTH_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.AMETHYST_SHARD, PylonKeys.HEALTH_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+    static {
+        RebarItem.register(HealthTalisman.class, HEALTH_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack HUNGER_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_SIMPLE)
             .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
             .build();
@@ -1062,6 +1075,14 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack HUNGER_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
+            .build();
+    static {
+        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack FARMING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1081,6 +1102,13 @@ public final class PylonItems {
     static {
         RebarItem.register(FarmingTalisman.class, FARMING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(FARMING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack FARMING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(FarmingTalisman.class, FARMING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(FARMING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack BARTERING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.GOLD_INGOT, PylonKeys.BARTERING_TALISMAN_SIMPLE)
@@ -1104,6 +1132,13 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(BARTERING_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack BARTERING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.GOLD_INGOT, PylonKeys.BARTERING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(BarteringTalisman.class, BARTERING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(BARTERING_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack WATER_BREATHING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.NAUTILUS_SHELL, PylonKeys.WATER_BREATHING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1123,6 +1158,13 @@ public final class PylonItems {
     static {
         RebarItem.register(WaterBreathingTalisman.class, WATER_BREATHING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(WATER_BREATHING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack WATER_BREATHING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.NAUTILUS_SHELL, PylonKeys.WATER_BREATHING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(WaterBreathingTalisman.class, WATER_BREATHING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(WATER_BREATHING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack LUCK_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.RABBIT_FOOT, PylonKeys.LUCK_TALISMAN_SIMPLE)
@@ -1146,6 +1188,13 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(LUCK_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack LUCK_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.RABBIT_FOOT, PylonKeys.LUCK_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(LuckTalisman.class, LUCK_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(LUCK_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack BREEDING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.APPLE, PylonKeys.BREEDING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1165,6 +1214,13 @@ public final class PylonItems {
     static {
         RebarItem.register(BreedingTalisman.class, BREEDING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(BREEDING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack BREEDING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.APPLE, PylonKeys.BREEDING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(BreedingTalisman.class, BREEDING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(BREEDING_TALISMAN_PALLADIUM);
     }
 
     public static final ItemStack ENCHANTING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.ENCHANTED_BOOK, PylonKeys.ENCHANTING_TALISMAN_SIMPLE)
@@ -1191,6 +1247,14 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(ENCHANTING_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack ENCHANTING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.ENCHANTED_BOOK, PylonKeys.ENCHANTING_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, false)
+            .build();
+    static {
+        RebarItem.register(EnchantingTalisman.class, ENCHANTING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(ENCHANTING_TALISMAN_PALLADIUM);
+    }
+
     public static final ItemStack HUNTING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.SKELETON_SKULL, PylonKeys.HUNTING_TALISMAN_SIMPLE)
             .build();
     static {
@@ -1210,6 +1274,13 @@ public final class PylonItems {
     static {
         RebarItem.register(HuntingTalisman.class, HUNTING_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack HUNTING_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.SKELETON_SKULL, PylonKeys.HUNTING_TALISMAN_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(HuntingTalisman.class, HUNTING_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_PALLADIUM);
     }
 
     //</editor-fold>
@@ -1284,7 +1355,7 @@ public final class PylonItems {
             .set(DataComponentTypes.CONSUMABLE, Consumable.consumable().build())
             .set(DataComponentTypes.FOOD, FoodProperties.food()
                     .canAlwaysEat(false)
-                    .nutrition(Settings.get(PylonKeys.MONSTER_JERKY).getOrThrow("nutrition", ConfigAdapter.INT))
+                    .nutrition(Settings.get(PylonKeys.MONSTER_JERKY).getOrThrow("nutrition", ConfigAdapter.INTEGER))
                     .saturation(Settings.get(PylonKeys.MONSTER_JERKY).getOrThrow("saturation", ConfigAdapter.DOUBLE).floatValue())
                     .build()
             )
@@ -2306,6 +2377,98 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, BIOREFINERY_SMOKESTACK_CAP, PylonKeys.BIOREFINERY_SMOKESTACK_CAP);
         PylonPages.DIESEL_PRODUCTION.addItem(BIOREFINERY_SMOKESTACK_CAP);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Assembling" defaultstate=collapsed>
+
+    public static final ItemStack ASSEMBLY_TABLE = ItemStackBuilder.rebar(Material.ANVIL, PylonKeys.ASSEMBLY_TABLE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.CRAFTING_TABLE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ASSEMBLY_TABLE, PylonKeys.ASSEMBLY_TABLE);
+        PylonPages.ASSEMBLING.addItem(ASSEMBLY_TABLE);
+    }
+
+    public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_SCREWDRIVER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.COPPER_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.COPPER_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
+            .build();
+    static {
+        RebarItem.register(Screwdriver.class, COPPER_SCREWDRIVER, PylonKeys.COPPER_SCREWDRIVER);
+        PylonPages.ASSEMBLING.addItem(COPPER_SCREWDRIVER);
+    }
+
+    public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.IRON_SCREWDRIVER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.IRON_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.IRON_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
+            .build();
+    static {
+        RebarItem.register(Screwdriver.class, IRON_SCREWDRIVER, PylonKeys.IRON_SCREWDRIVER);
+        PylonPages.ASSEMBLING.addItem(IRON_SCREWDRIVER);
+    }
+
+    public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_SCREWDRIVER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.BRONZE_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.BRONZE_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
+            .build();
+    static {
+        RebarItem.register(Screwdriver.class, BRONZE_SCREWDRIVER, PylonKeys.BRONZE_SCREWDRIVER);
+        PylonPages.ASSEMBLING.addItem(BRONZE_SCREWDRIVER);
+    }
+
+    public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_SCREWDRIVER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.SCREWDRIVER)
+            )
+            .build();
+    static {
+        RebarItem.register(Screwdriver.class, STEEL_SCREWDRIVER, PylonKeys.STEEL_SCREWDRIVER);
+        PylonPages.ASSEMBLING.addItem(STEEL_SCREWDRIVER);
+    }
+
+    public static final ItemStack REDSTONE_SOLDERING_IRON = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.REDSTONE_SOLDERING_IRON)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COMPASS.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.DAMAGE, 0)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.USE_COOLDOWN,
+                    UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                    ).cooldownGroup(PylonKeys.REDSTONE_SOLDERING_IRON)
+            )
+            .build();
+    static {
+        RebarItem.register(RedstoneSolderingIron.class, REDSTONE_SOLDERING_IRON, PylonKeys.REDSTONE_SOLDERING_IRON);
+        PylonPages.ASSEMBLING.addItem(REDSTONE_SOLDERING_IRON);
     }
 
     //</editor-fold>

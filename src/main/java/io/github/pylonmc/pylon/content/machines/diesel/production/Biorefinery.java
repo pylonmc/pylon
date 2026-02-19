@@ -50,7 +50,7 @@ public class Biorefinery extends RebarBlock implements
         RebarProcessor,
         RebarTickingBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double biodieselPerSecond = getSettings().getOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
     public final double ethanolPerMbOfBiodiesel = getSettings().getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
     public final double plantOilPerMbOfBiodiesel = getSettings().getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);

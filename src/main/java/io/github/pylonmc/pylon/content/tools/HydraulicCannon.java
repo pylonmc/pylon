@@ -38,15 +38,15 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
 
     private final Config settings = getSettings();
 
-    public final int cooldownTicks = settings.getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int cooldownTicks = settings.getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerShot = settings.getOrThrow("hydraulic-fluid-per-shot", ConfigAdapter.DOUBLE);
     public final Material projectileMaterial = settings.getOrThrow("projectile.material", ConfigAdapter.MATERIAL);
     public final float projectileThickness = settings.getOrThrow("projectile.thickness", ConfigAdapter.FLOAT);
     public final float projectileLength = settings.getOrThrow("projectile.length", ConfigAdapter.FLOAT);
     public final float projectileSpeedBlocksPerSecond = settings.getOrThrow("projectile.speed-blocks-per-second", ConfigAdapter.FLOAT);
     public final double projectileDamage = settings.getOrThrow("projectile.damage", ConfigAdapter.DOUBLE);
-    public final int projectileTickInterval = settings.getOrThrow("projectile.tick-interval", ConfigAdapter.INT);
-    public final int projectileLifetimeTicks = settings.getOrThrow("projectile.lifetime-ticks", ConfigAdapter.INT);
+    public final int projectileTickInterval = settings.getOrThrow("projectile.tick-interval", ConfigAdapter.INTEGER);
+    public final int projectileLifetimeTicks = settings.getOrThrow("projectile.lifetime-ticks", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public HydraulicCannon(@NotNull ItemStack stack) {

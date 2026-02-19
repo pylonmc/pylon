@@ -51,7 +51,7 @@ public final class Bloomery extends RebarBlock implements
         RebarLogisticBlock,
         RebarBreakHandler {
 
-    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BLOOMERY).getOrThrow("tick-interval", ConfigAdapter.INT);
+    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BLOOMERY).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final float HEAT_CHANCE = Settings.get(PylonKeys.BLOOMERY).getOrThrow("heat-chance", ConfigAdapter.FLOAT);
 
     @SuppressWarnings("unused")

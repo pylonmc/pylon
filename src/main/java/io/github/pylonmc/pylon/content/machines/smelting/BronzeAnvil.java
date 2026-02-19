@@ -52,9 +52,9 @@ public final class BronzeAnvil extends RebarBlock implements
         RebarInteractBlock,
         RebarFallingBlock {
 
-    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tick-interval", ConfigAdapter.INT);
+    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final float COOL_CHANCE = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("cool-chance", ConfigAdapter.FLOAT);
-    public static final int TOLERANCE = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tolerance", ConfigAdapter.INT);
+    public static final int TOLERANCE = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tolerance", ConfigAdapter.INTEGER);
     public static final Sound HAMMER_SOUND = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("sound.hammer", ConfigAdapter.SOUND);
     public static final Sound TONGS_SOUND = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("sound.tongs", ConfigAdapter.SOUND);
 

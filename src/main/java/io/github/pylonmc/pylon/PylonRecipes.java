@@ -10,6 +10,7 @@ public class PylonRecipes {
     }
 
     public static void initialize() {
+        AssemblingRecipe.RECIPE_TYPE.register();
         CastingRecipe.RECIPE_TYPE.register();
         DrillingDisplayRecipe.RECIPE_TYPE.register();
         ForgingDisplayRecipe.RECIPE_TYPE.register();

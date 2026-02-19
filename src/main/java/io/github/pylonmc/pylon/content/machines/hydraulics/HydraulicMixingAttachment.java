@@ -42,18 +42,18 @@ public class HydraulicMixingAttachment extends RebarBlock implements
         RebarProcessor,
         RebarDirectionalBlock {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
-    public final int downAnimationTimeTicks = getSettings().getOrThrow("down-animation-time-ticks", ConfigAdapter.INT);
-    public final int upAnimationTimeTicks = getSettings().getOrThrow("up-animation-time-ticks", ConfigAdapter.INT);
-    public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INT);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int downAnimationTimeTicks = getSettings().getOrThrow("down-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final int upAnimationTimeTicks = getSettings().getOrThrow("up-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
 
-        public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
-        public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INT);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+        public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+        public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

@@ -46,7 +46,7 @@ public class CargoOverflowGate extends RebarBlock
     private static final NamespacedKey IS_LEFT_KEY = pylonKey("is_left");
 
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory leftInventory = new VirtualInventory(1);
@@ -75,7 +75,7 @@ public class CargoOverflowGate extends RebarBlock
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -226,6 +226,7 @@ public class CargoOverflowGate extends RebarBlock
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("input", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inputInventory, 0));
         createLogisticGroup("left", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(leftInventory, 0));
         createLogisticGroup("right", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(rightInventory, 0));

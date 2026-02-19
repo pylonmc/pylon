@@ -53,8 +53,8 @@ public class DieselBrickMolder extends RebarBlock implements
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
-    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory outputInventory = new VirtualInventory(1);
@@ -63,8 +63,8 @@ public class DieselBrickMolder extends RebarBlock implements
 
         public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
         public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
-        public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INT);
+        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

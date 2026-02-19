@@ -40,7 +40,7 @@ public class CargoFilter extends RebarBlock implements
         RebarVirtualInventoryBlock,
         RebarCargoBlock {
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory leftInventory = new VirtualInventory(1);
@@ -49,8 +49,6 @@ public class CargoFilter extends RebarBlock implements
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.LIGHT_GRAY_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
-    public final ItemStackBuilder verticalStack = ItemStackBuilder.of(Material.PINK_TERRACOTTA)
-            .addCustomModelDataString(getKey() + ":vertical");
     public final ItemStackBuilder inputStack = ItemStackBuilder.of(Material.LIME_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":input");
     public final ItemStackBuilder outputLeftStack = ItemStackBuilder.of(Material.YELLOW_CONCRETE)
@@ -78,7 +76,7 @@ public class CargoFilter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INT);
+        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -186,6 +184,7 @@ public class CargoFilter extends RebarBlock implements
 
     @Override
     public void postInitialise() {
+        setDisableBlockTextureEntity(true);
         createLogisticGroup("input", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inputInventory, 0));
         createLogisticGroup("left", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(leftInventory, 0));
         createLogisticGroup("right", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(rightInventory, 0));

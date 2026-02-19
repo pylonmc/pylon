@@ -21,7 +21,7 @@ import java.util.List;
 
 public class BrickMold extends RebarItem implements RebarBlockInteractor {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public BrickMold(@NotNull ItemStack stack) {

@@ -88,7 +88,7 @@ public record ShimmerAltarRecipe(
                     inputs,
                     catalyst,
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
-                    section.getOrThrow("time-seconds", ConfigAdapter.INT)
+                    section.getOrThrow("time-seconds", ConfigAdapter.INTEGER)
             );
         }
     };

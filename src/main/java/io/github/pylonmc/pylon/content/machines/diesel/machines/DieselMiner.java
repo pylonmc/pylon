@@ -52,16 +52,16 @@ public class DieselMiner extends Miner implements
         RebarVirtualInventoryBlock,
         RebarLogisticBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final int dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.INT);
+    public final int dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.INTEGER);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INT);
+        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
         public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final int dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.INT);
+        public final int dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.INTEGER);
         public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {

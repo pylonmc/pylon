@@ -57,8 +57,8 @@ public final class Crucible extends RebarBlock implements
         RebarCauldron,
         RebarTickingBlock {
 
-    public final int capacity = getSettings().getOrThrow("capacity", ConfigAdapter.INT);
-    public final int smeltTime = getSettings().getOrThrow("smelt-time", ConfigAdapter.INT);
+    public final int capacity = getSettings().getOrThrow("capacity", ConfigAdapter.INTEGER);
+    public final int smeltTime = getSettings().getOrThrow("smelt-time", ConfigAdapter.INTEGER);
 
     private ItemStack processingType = null;
     private int amount = 0;
@@ -66,7 +66,7 @@ public final class Crucible extends RebarBlock implements
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
     private static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
 
-    public static final Map<Material, Integer> VANILLA_BLOCK_HEAT_MAP = Settings.get(PylonKeys.CRUCIBLE).getOrThrow("vanilla-block-heat-map", ConfigAdapter.MAP.from(ConfigAdapter.MATERIAL, ConfigAdapter.INT));
+    public static final Map<Material, Integer> VANILLA_BLOCK_HEAT_MAP = Settings.get(PylonKeys.CRUCIBLE).getOrThrow("vanilla-block-heat-map", ConfigAdapter.MAP.from(ConfigAdapter.MATERIAL, ConfigAdapter.INTEGER));
 
     @SuppressWarnings("unused")
     public Crucible(@NotNull Block block, @NotNull BlockCreateContext context) {

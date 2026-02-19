@@ -52,10 +52,10 @@ public class CoalFiredPurificationTower extends RebarBlock implements
         RebarLogisticBlock,
         RebarTickingBlock {
 
-    public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INT);
+    public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
     public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INT);
+    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public static final NamespacedKey FUELS_KEY = pylonKey("coal_fired_purification_tower_fuels");
     public static final RebarRegistry<Fuel> FUELS = new RebarRegistry<>(FUELS_KEY);
@@ -105,9 +105,9 @@ public class CoalFiredPurificationTower extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INT);
+        public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
         public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INT);
+        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
