@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -29,6 +30,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockCookEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -220,13 +222,13 @@ public class DieselFurnace extends RebarBlock implements
         ));
     }
 
-    @Override
-    public void onEndSmelting(@NotNull BlockCookEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onEndSmelting(@NotNull BlockCookEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
-    @Override
-    public void onFuelBurn(@NotNull FurnaceBurnEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onFuelBurn(@NotNull FurnaceBurnEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 

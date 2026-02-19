@@ -1,10 +1,12 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarConsumable;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +26,8 @@ public class HealingConsumable extends RebarItem implements RebarConsumable {
         );
     }
 
-    @Override
-    public void onConsumed(@NotNull PlayerItemConsumeEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onConsumed(@NotNull PlayerItemConsumeEvent event, @NotNull EventPriority priority) {
         event.getPlayer().heal(healAmount);
     }
 }

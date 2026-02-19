@@ -2189,7 +2189,7 @@ message:
       above: "<red>No elevators within range above you"
       below: "<red>No elevators within range below you"
   fireproof_result:
-    tooltip: "<red><bold>Fire-proofed"
+    tooltip: "<arrow> <#ff5e00>Fireproof"
     success: "<red>Your item has been fire-proofed"
   hydraulic_refueling_station:
     extra: "| %hydraulic-fluid-bar% | %dirty-hydraulic-fluid-bar%"

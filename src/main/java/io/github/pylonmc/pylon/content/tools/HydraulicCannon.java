@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.EntityStorage;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
@@ -19,6 +20,8 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -73,24 +76,33 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
         );
     }
 
-    @Override
-    public void onUsedToRightClick(@NotNull PlayerInteractEvent event) {
-        if (getHydraulicFluid() < hydraulicFluidPerShot || getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick()
+                || event.useItemInHand() == Event.Result.DENY
+                || getHydraulicFluid() < hydraulicFluidPerShot
+                || getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
             return;
         }
 
-        boolean projectileFound = false;
+        ItemStack projectile = null;
         for (ItemStack stack : event.getPlayer().getInventory()) {
             if (PylonItems.TIN_PROJECTILE.isSimilar(stack)) {
-                stack.subtract();
-                projectileFound = true;
+                projectile = stack;
                 break;
             }
         }
-        if (!projectileFound) {
+
+        if (projectile == null) {
             return;
         }
 
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        }
+
+        projectile.subtract();
         setHydraulicFluid(getHydraulicFluid() - hydraulicFluidPerShot);
         setDirtyHydraulicFluid(getDirtyHydraulicFluid() + hydraulicFluidPerShot);
 

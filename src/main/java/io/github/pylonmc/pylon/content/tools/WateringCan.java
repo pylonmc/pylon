@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
@@ -13,6 +14,8 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -33,29 +36,27 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         super(stack);
     }
 
-        @Override
-        public @NotNull List<RebarArgument> getPlaceholders() {
-            return List.of(RebarArgument.of("range", UnitFormat.BLOCKS.format(settings.horizontalRange())));
-        }
-
     @Override
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick()) {
-            return;
-        }
-
-        event.setCancelled(true);
-
-        Block center = event.getClickedBlock();
-        if (center == null) {
-            return;
-        }
-
-        water(center.getRelative(BlockFace.UP), settings);
+    public @NotNull List<RebarArgument> getPlaceholders() {
+        return List.of(RebarArgument.of("range", UnitFormat.BLOCKS.format(settings.horizontalRange())));
     }
 
-    @Override
-    public void onBucketFilled(@NotNull PlayerBucketFillEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        }
+
+        water(event.getClickedBlock().getRelative(BlockFace.UP), settings);
+    }
+
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onBucketFilled(@NotNull PlayerBucketFillEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
@@ -193,8 +194,8 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         block.getWorld().playSound(settings.sound().create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
     }
 
-    @Override
-    public void onDispense(@NotNull BlockDispenseEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onDispense(@NotNull BlockDispenseEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 }

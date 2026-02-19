@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -26,6 +27,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -103,16 +106,20 @@ public class HydraulicTableSaw extends RebarBlock implements
         createLogisticGroup("input", LogisticGroupType.INPUT, new ItemDisplayLogisticSlot(getItemDisplay()));
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.useInteractedBlock() == Event.Result.DENY
         ) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack oldStack = itemDisplay.getItemStack();
@@ -120,10 +127,7 @@ public class HydraulicTableSaw extends RebarBlock implements
 
         // drop old item
         if (!oldStack.getType().isAir()) {
-            getBlock().getWorld().dropItem(
-                    getBlock().getLocation().toCenterLocation().add(0, 0.75, 0),
-                    oldStack
-            );
+            event.getPlayer().give(oldStack);
             itemDisplay.setItemStack(null);
             stopRecipe();
             return;

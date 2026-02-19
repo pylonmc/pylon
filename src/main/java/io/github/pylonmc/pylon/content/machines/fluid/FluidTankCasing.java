@@ -5,6 +5,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -15,6 +16,8 @@ import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.block.Block;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -75,10 +78,10 @@ public class FluidTankCasing extends RebarBlock implements RebarInteractBlock {
         return properties;
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (tank != null) {
-            PylonUtils.handleFluidTankRightClick(tank, event);
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.useInteractedBlock() != Event.Result.DENY && tank != null) {
+            PylonUtils.handleFluidTankRightClick(tank, event, priority);
         }
     }
 
@@ -89,7 +92,7 @@ public class FluidTankCasing extends RebarBlock implements RebarInteractBlock {
 
     public void reset() {
         setShape(Shape.SINGLE);
-        Waila.removeWailaOverride(new BlockPosition(getBlock()));
+        Waila.removeWailaOverride(getBlock());
     }
 
     public enum Shape {

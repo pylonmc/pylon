@@ -1,16 +1,18 @@
 package io.github.pylonmc.pylon.content.combat;
 
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarWeapon;
-import io.papermc.paper.tag.EntityTags;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class BeheadingSword extends RebarItem implements RebarWeapon {
     }
 
     private static final Map<EntityType, ItemStack> ENTITY_HEADS = Map.of(
+            EntityType.WITHER_SKELETON, new ItemStack(Material.WITHER_SKELETON_SKULL),
+            EntityType.PLAYER, new ItemStack(Material.PLAYER_HEAD),
             EntityType.CREEPER, new ItemStack(Material.CREEPER_HEAD),
             EntityType.PIGLIN, new ItemStack(Material.PIGLIN_HEAD),
             EntityType.ENDER_DRAGON, new ItemStack(Material.DRAGON_HEAD),
@@ -35,32 +39,31 @@ public class BeheadingSword extends RebarItem implements RebarWeapon {
             EntityType.SKELETON, new ItemStack(Material.SKELETON_SKULL)
     );
 
-    @Override
-    public void onUsedToKillEntity(@NotNull EntityDeathEvent event) {
-        if (EntityTags.MINECARTS.isTagged(event.getEntityType())) {
+    @Override @MultiHandler(ignoreCancelled = true)
+    public void onUsedToKillEntity(@NotNull EntityDeathEvent event, @NotNull EventPriority priority) {
+        ItemStack head = ENTITY_HEADS.get(event.getEntityType());
+        if (head == null || event.getDrops().contains(head)) {
             return;
         }
+
+        float chance = ThreadLocalRandom.current().nextFloat();
         if (event.getEntityType() == EntityType.WITHER_SKELETON) {
-            if (ThreadLocalRandom.current().nextFloat() < witherSkeletonHeadChance && !event.getDrops().contains(new ItemStack(Material.WITHER_SKELETON_SKULL))) {
-                event.getDrops().add(new ItemStack(Material.WITHER_SKELETON_SKULL));
+            if (chance < witherSkeletonHeadChance) {
+                event.getDrops().add(head.clone());
             }
             return;
-        }
-        if (ThreadLocalRandom.current().nextFloat() > normalEntityHeadChance) {
+        } else if (chance > normalEntityHeadChance) {
             return;
         }
-        ItemStack head;
-        if (event.getEntity().getType() == EntityType.PLAYER) {
-            // This cast is safe because RebarItemListener only calls this listener when the killer is a player
-            head = new ItemStack(Material.PLAYER_HEAD);
-            SkullMeta meta = (SkullMeta) head.getItemMeta();
-            meta.setOwningPlayer((Player) event.getEntity());
-            head.setItemMeta(meta);
-        } else {
-            if (!ENTITY_HEADS.containsKey(event.getEntityType())) {
-                return;
+
+        head = head.clone();
+        if (event.getEntity() instanceof Player player) {
+            head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(player.getPlayerProfile()));
+            for (ItemStack drop : event.getDrops()) {
+                if (drop.getType() == Material.PLAYER_HEAD) {
+                    return;
+                }
             }
-            head = ENTITY_HEADS.get(event.getEntityType());
         }
         event.getDrops().add(head);
     }

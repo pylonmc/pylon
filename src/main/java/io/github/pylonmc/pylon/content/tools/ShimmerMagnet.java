@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
@@ -15,6 +16,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -43,14 +46,19 @@ public class ShimmerMagnet extends RebarItem implements RebarInteractor {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    @Override
-    public void onUsedToRightClick(@NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick()) return;
-        ItemStack stack = event.getItem();
-        if (stack == null) return; // should never happen
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        }
 
         Player player = event.getPlayer();
-        stack.editPersistentDataContainer(pdc -> {
+        getStack().editPersistentDataContainer(pdc -> {
             boolean enabled;
             if (!pdc.has(ENABLED_KEY)) {
                 enabled = false;
@@ -64,14 +72,14 @@ public class ShimmerMagnet extends RebarItem implements RebarInteractor {
             pdc.set(ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
         });
 
-        CustomModelData data = stack.getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
+        CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
         CustomModelData newData = CustomModelData.customModelData()
                 .addStrings(data.strings())
                 .addFloats(data.floats())
                 .addColors(data.colors())
                 .addFlag(isEnabled())
                 .build();
-        stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
+        getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
     }
 
     /**

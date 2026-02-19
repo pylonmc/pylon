@@ -5,7 +5,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,7 +23,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ import java.util.List;
 
 
 public class FluidDrainer extends RebarBlock
-        implements RebarFluidBufferBlock, RebarDirectionalBlock, RebarTickingBlock, RebarInteractBlock {
+        implements RebarFluidBufferBlock, RebarDirectionalBlock, RebarTickingBlock, RebarNoVanillaContainerBlock {
 
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final RebarFluid fluid = getSettings().getOrThrow("fluid", ConfigAdapter.REBAR_FLUID);
@@ -101,14 +100,6 @@ public class FluidDrainer extends RebarBlock
         ) {
             drainBlock.setType(Material.AIR);
             addFluid(fluid, 1000.0);
-        }
-    }
-
-    // Prevent opening dispenser
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction().isRightClick()) {
-            event.setCancelled(true);
         }
     }
 }

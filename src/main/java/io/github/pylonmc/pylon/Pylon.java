@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.command.PylonCommand;
-import io.github.pylonmc.pylon.content.building.IgneousCompositeListener;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
@@ -54,7 +53,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PluginManager pm = Bukkit.getPluginManager();
 
         pm.registerEvents(new Sprinkler.SprinklerPlaceListener(), this);
-        pm.registerEvents(new IgneousCompositeListener(), this);
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
         pm.registerEvents(new Rune.RuneListener(), this);
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);

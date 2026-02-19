@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.block.base.RebarCauldron;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -27,6 +28,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.CauldronLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -79,8 +82,8 @@ public final class MixingPot extends RebarBlock implements
         return true;
     }
 
-    @Override
-    public void onLevelChange(@NotNull CauldronLevelChangeEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
@@ -109,16 +112,17 @@ public final class MixingPot extends RebarBlock implements
         ));
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.useInteractedBlock() == Event.Result.DENY
         ) {
             return;
         }
 
-        if (event.getItem() != null && PylonUtils.handleFluidTankRightClick(this, event)) {
+        if (event.getItem() != null && PylonUtils.handleFluidTankRightClick(this, event, priority)) {
             return;
         }
 

@@ -9,6 +9,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
@@ -22,6 +23,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -116,17 +119,21 @@ public final class PitKiln extends RebarBlock implements
         removeWailas();
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        event.setCancelled(true);
-        Player player = event.getPlayer();
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY || !event.getHand().isHand()) return;
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         ItemStack item = event.getItem();
-        if (item == null || item.getType().isAir()) return;
-        //noinspection DataFlowIssue
-        player.swingHand(event.getHand());
+        if (item == null || item.isEmpty()) {
+            return;
+        }
 
+        event.getPlayer().swingHand(event.getHand());
         addItem(item, true);
     }
 
@@ -207,6 +214,11 @@ public final class PitKiln extends RebarBlock implements
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
             coalBlock.setType(Material.AIR);
         }
+    }
+
+    @Override
+    public @NotNull WailaDisplay getWaila(@NotNull Player player) {
+        return getComponentWaila(player);
     }
 
     private WailaDisplay getComponentWaila(@NotNull Player player) {
@@ -296,10 +308,12 @@ public final class PitKiln extends RebarBlock implements
         }
     }
 
-    @Override
-    public void onItemMoveTo(@NotNull InventoryMoveItemEvent event) {
-        if (countItems() >= CAPACITY) {
-            event.setCancelled(true);
+    @Override @MultiHandler(priorities = { EventPriority.LOWEST, EventPriority.MONITOR }, ignoreCancelled = true)
+    public void onItemMoveTo(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
+        if (priority == EventPriority.LOWEST) {
+            if (countItems() >= CAPACITY) {
+                event.setCancelled(true);
+            }
             return;
         }
 

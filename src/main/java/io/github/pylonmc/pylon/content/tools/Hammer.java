@@ -1,15 +1,14 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
-import io.github.pylonmc.pylon.recipes.AssemblingRecipe;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
@@ -17,7 +16,6 @@ import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,6 +28,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
     public static final Random random = new Random();
@@ -110,6 +108,28 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         return false;
     }
 
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getHand() != EquipmentSlot.HAND
+                || event.getPlayer().isSneaking()
+                || event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        } else if (event.getPlayer().hasCooldown(getStack())) {
+            return;
+        }
+
+        if (event.getAction().isLeftClick()) {
+            tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
+        } else {
+            tryDoRecipe(event.getClickedBlock(), event.getPlayer(), event.getHand(), event.getBlockFace());
+        }
+    }
+
     public void tryUseAssemblyTable(Block clickedBlock, Player player) {
         RebarBlock rebarBlock = BlockStorage.get(clickedBlock);
         if (!(rebarBlock instanceof AssemblyTable assemblyTable)) {
@@ -153,22 +173,8 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
     }
 
     @Override
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event) {
-        event.setUseInteractedBlock(Event.Result.DENY);
-
-        Player player = event.getPlayer();
-        if (player.hasCooldown(getStack())) {
-            return;
-        }
-
-        Block clickedBlock = event.getClickedBlock();
-        Preconditions.checkState(clickedBlock != null);
-
-        if (event.getAction().isLeftClick()) {
-            tryUseAssemblyTable(clickedBlock, player);
-        } else {
-            tryDoRecipe(clickedBlock, player, event.getHand(), event.getBlockFace());
-        }
+    public boolean respectCooldown() {
+        return false;
     }
 
     @Override

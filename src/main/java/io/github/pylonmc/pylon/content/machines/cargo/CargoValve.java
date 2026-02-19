@@ -4,12 +4,14 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -25,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -44,6 +47,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class CargoValve extends RebarBlock implements
         RebarDirectionalBlock,
         RebarGuiBlock,
+        RebarInteractBlock,
         RebarVirtualInventoryBlock,
         RebarCargoBlock {
 
@@ -137,22 +141,15 @@ public class CargoValve extends RebarBlock implements
         pdc.set(ENABLED_KEY, RebarSerializers.BOOLEAN, open);
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND) {
-            return;
-        }
-
-        if (!event.getPlayer().isSneaking()) {
-            RebarGuiBlock.super.onInteract(event);
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
 
         event.setUseItemInHand(Event.Result.DENY);
 
         open = !open;
-
-
         if (open) {
             setCargoTransferRate(transferRate);
         } else {

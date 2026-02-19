@@ -62,13 +62,13 @@ pylon:lumber_axe:
 pylon:shimmer_magnet:
   shape:
     - "SI "
-    - "  R"
-    - "EI "
+    - " R "
+    - " IE"
   key:
     I: pylon:iron_sheet
     R: minecraft:redstone_block
     S: pylon:shimmer_dust_2
-    E: minecraft:diamond_dust
+    E: pylon:diamond_dust
   result: pylon:shimmer_magnet
   time-seconds: 20
 

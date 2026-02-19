@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.base.RebarPiston;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -17,6 +18,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -72,8 +74,8 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
         super(block);
     }
 
-    @Override
-    public void onExtend(@NotNull BlockPistonExtendEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
 
         BukkitScheduler scheduler = Bukkit.getScheduler();

@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -32,6 +33,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -119,7 +122,7 @@ public class HydraulicHammerHead extends RebarBlock implements
     @SuppressWarnings("unused")
     public HydraulicHammerHead(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        hammer = (Hammer) RebarItem.fromStack(pdc.get(HAMMER_KEY, RebarSerializers.ITEM_STACK));
+        hammer = RebarItem.fromStack(pdc.get(HAMMER_KEY, RebarSerializers.ITEM_STACK), Hammer.class);
     }
 
     @Override
@@ -130,25 +133,30 @@ public class HydraulicHammerHead extends RebarBlock implements
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         super.write(pdc);
-        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, hammer == null ? null : hammer.getStack());
+        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, hammer.getStack());
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking()) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         if (hammer != null) {
             event.getPlayer().give(hammer.getStack());
             hammer = null;
         } else {
             ItemStack stack = event.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
-            if (RebarItem.fromStack(stack.clone()) instanceof Hammer hammer) {
+            if (RebarItem.fromStack(stack.asOne()) instanceof Hammer hammer) {
                 this.hammer = hammer;
                 stack.subtract();
+            } else {
+                return;
             }
         }
 

@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarConsumable;
@@ -32,6 +33,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -141,10 +144,15 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         super(stack);
     }
 
-    @Override
-    public void onUsedToRightClick(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
-        if (!event.getAction().isRightClick()) {
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
             return;
         }
 
@@ -216,7 +224,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
     }
 
     @Override
-    public void onConsumed(@NotNull PlayerItemConsumeEvent event) {
+    public void onConsumed(@NotNull PlayerItemConsumeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
 
         Player player = event.getPlayer();

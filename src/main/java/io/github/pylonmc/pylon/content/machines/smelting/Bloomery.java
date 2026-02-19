@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -25,7 +26,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -84,18 +87,21 @@ public final class Bloomery extends RebarBlock implements
         }
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND) return;
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
         Player player = event.getPlayer();
         if (player.isSneaking() || !isFormedAndFullyLoaded()) return;
 
-        event.setCancelled(true);
-        ItemStack placedItem = event.getItem();
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
+        ItemStack placedItem = event.getItem();
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack oldStack = itemDisplay.getItemStack();
-        if (oldStack.getType().isAir()) {
+        if (oldStack.isEmpty()) {
             if (placedItem != null) {
                 if (RebarItem.fromStack(placedItem) instanceof IronBloom bloom) {
                     bloom.setDisplayGlowOn(itemDisplay);
@@ -104,9 +110,7 @@ public final class Bloomery extends RebarBlock implements
                 placedItem.subtract();
             }
         } else {
-            for (ItemStack stack : player.getInventory().addItem(oldStack).values()) {
-                player.getWorld().dropItemNaturally(player.getLocation(), stack);
-            }
+            player.give(oldStack);
             itemDisplay.setItemStack(null);
             itemDisplay.setGlowing(false);
         }

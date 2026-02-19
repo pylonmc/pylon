@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarTool;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -15,6 +16,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -33,15 +35,17 @@ public class LumberAxe extends RebarItem implements RebarTool {
 
     private static final Set<Event> eventsToIgnore = Collections.newSetFromMap(new WeakHashMap<>());
 
-    @Override
-    public void onUsedToBreakBlock(@NotNull BlockBreakEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onUsedToBreakBlock(@NotNull BlockBreakEvent event, @NotNull EventPriority priority) {
         if (!Tag.LOGS.isTagged(event.getBlock().getType()) || BlockStorage.isRebarBlock(event.getBlock())) {
             return;
         }
+
         if (eventsToIgnore.contains(event)) {
             eventsToIgnore.remove(event);
             return;
         }
+
         breakAttachedWood(event.getBlock(), event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
         event.setCancelled(true); // Stop vanilla logic
     }

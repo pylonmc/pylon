@@ -3,14 +3,18 @@ package io.github.pylonmc.pylon.content.tools;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
@@ -25,7 +29,7 @@ import java.util.List;
 
 import static java.lang.Math.pow;
 
-public class ClimbingPick extends RebarItem implements RebarInteractor {
+public class ClimbingPick extends RebarItem implements RebarBlockInteractor {
     private static final NamespacedKey HOOKED_KEY = PylonUtils.pylonKey("climbing_pick_hooked");
     private final double jumpSpeed = getSettings().getOrThrow("jump-speed", ConfigAdapter.DOUBLE);
     private final double hookRange = getSettings().getOrThrow("hook-range", ConfigAdapter.DOUBLE);
@@ -35,11 +39,20 @@ public class ClimbingPick extends RebarItem implements RebarInteractor {
         super(stack);
     }
 
-    @Override
-    public void onUsedToRightClick(@NotNull PlayerInteractEvent event) {
-        event.setCancelled(true);
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getPlayer().getPersistentDataContainer().has(HOOKED_KEY))
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick()
+                || (event.getPlayer().isSneaking() && event.useInteractedBlock() == Event.Result.ALLOW)
+                || event.getPlayer().getPersistentDataContainer().has(HOOKED_KEY)
+                || event.useItemInHand() == Event.Result.DENY) {
             return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        }
+
         double distSquared = event.getClickedBlock().getLocation().clone().subtract(event.getPlayer().getEyeLocation()).toVector().toVector3f().lengthSquared();
         if (distSquared < hookRangeSquared) {
             PlayerJumpListener listener = new PlayerJumpListener(event.getPlayer(), (float) jumpSpeed);

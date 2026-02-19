@@ -16,12 +16,15 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -83,23 +86,26 @@ public class ShimmerAltar extends RebarBlock
         return map;
     }
 
-    @Override
-    public void onInteract(PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.useInteractedBlock() == Event.Result.DENY
         ) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         // drop item if not processing and an item is already on the altar
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack displayItem = itemDisplay.getItemStack();
-        if (!isProcessingRecipe() && !displayItem.getType().isAir()) {
-            Location location = itemDisplay.getLocation().add(0, 0.5, 0);
-            location.getWorld().dropItemNaturally(location, displayItem);
+        if (!isProcessingRecipe() && !displayItem.isEmpty()) {
+            event.getPlayer().give(displayItem);
             itemDisplay.setItemStack(new ItemStack(Material.AIR));
             return;
         }
@@ -145,7 +151,7 @@ public class ShimmerAltar extends RebarBlock
 
         List<Pedestal> usedPedestals = getPedestals()
                 .stream()
-                .filter(pedestal -> !pedestal.getItemDisplay().getItemStack().getType().isAir())
+                .filter(pedestal -> !pedestal.getItemDisplay().getItemStack().isEmpty())
                 .toList();
 
         // dust line animation

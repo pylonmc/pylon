@@ -5,9 +5,12 @@ import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Switch;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.scheduler.BukkitTask;
@@ -27,9 +30,9 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
         super(block, pdc);
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick() || event.getPlayer().isSneaking()) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
 
@@ -45,8 +48,12 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
             return;
         }
 
-        if (blockData.isPowered()) {
-            event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            if (blockData.isPowered()) {
+                event.setUseInteractedBlock(Event.Result.DENY);
+            }
+            return;
         }
 
         drill.cycle();

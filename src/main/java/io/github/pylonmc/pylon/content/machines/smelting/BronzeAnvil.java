@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -28,6 +29,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -94,9 +97,15 @@ public final class BronzeAnvil extends RebarBlock implements
         }
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND) return;
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
+
         if (event.getAction().isRightClick()) {
             onRightClick(event);
         } else if (event.getAction().isLeftClick()) {
@@ -112,7 +121,7 @@ public final class BronzeAnvil extends RebarBlock implements
         if (itemDisplay != null) {
             ItemStack oldStack = itemDisplay.getItemStack();
 
-            if (oldStack.getType().isAir()) {
+            if (oldStack.isEmpty()) {
                 if (placedItem != null) {
                     itemDisplay.setItemStack(placedItem.asOne());
                     placedItem.subtract();
@@ -122,10 +131,7 @@ public final class BronzeAnvil extends RebarBlock implements
                     }
                 }
             } else {
-                Player player = event.getPlayer();
-                for (ItemStack stack : player.getInventory().addItem(oldStack).values()) {
-                    player.getWorld().dropItemNaturally(player.getLocation(), stack);
-                }
+                event.getPlayer().give(oldStack);
                 itemDisplay.setItemStack(null);
 
                 ItemDisplay display = getItemDisplay();
@@ -138,7 +144,6 @@ public final class BronzeAnvil extends RebarBlock implements
             }
         }
 
-        event.setCancelled(true);
         event.getPlayer().swingHand(EquipmentSlot.HAND);
     }
 
@@ -147,7 +152,7 @@ public final class BronzeAnvil extends RebarBlock implements
         if (!(RebarItem.fromStack(itemDisplay.getItemStack()) instanceof IronBloom bloom)) return;
 
         ItemStack item = event.getItem();
-        if (item == null || item.getType().isAir()) return;
+        if (item == null || item.isEmpty()) return;
 
         Player player = event.getPlayer();
 
@@ -169,7 +174,6 @@ public final class BronzeAnvil extends RebarBlock implements
             return;
         }
 
-        event.setCancelled(true);
         int working = bloom.getWorking();
         int newWorking = working + workingChange;
         Location centerLoc = getBlock().getRelative(BlockFace.UP).getLocation().toCenterLocation();

@@ -19,6 +19,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.EquipmentSlot;
@@ -235,8 +236,8 @@ public class PylonUtils {
      * Handles players right clicking with bottles, water buckets, etc
      * Returns true if the function attempted to process the item used (i.e. if it's a water bucket, bottle, etc)
      */
-    public boolean handleFluidTankRightClick(@NotNull RebarFluidTank tank, @NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick()) {
+    public boolean handleFluidTankRightClick(@NotNull RebarFluidTank tank, @NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.useInteractedBlock() == Event.Result.DENY) {
             return false;
         }
 
@@ -246,84 +247,68 @@ public class PylonUtils {
             return false;
         }
 
+        Material type = item.getType();
         ItemStack newItemStack = null;
+        boolean triggered = false;
 
         // Inserting water
-        if (item.getType() == Material.WATER_BUCKET && tank.isAllowedFluid(PylonFluids.WATER)) {
-            event.setUseItemInHand(Event.Result.DENY);
-
-            if (PylonFluids.WATER.equals(tank.getFluidType()) && tank.getFluidSpaceRemaining() >= 1000.0) {
-                tank.setFluid(tank.getFluidAmount() + 1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
-            }
-
-            if (tank.getFluidType() == null) {
+        if (type == Material.WATER_BUCKET && tank.canAddFluid(PylonFluids.WATER, 1000.0)) {
+            if (priority == EventPriority.NORMAL) {
+                event.setUseItemInHand(Event.Result.DENY);
+            } else {
                 tank.setFluidType(PylonFluids.WATER);
-                tank.setFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
-            }
-        }
-
-        // Inserting lava
-        if (item.getType() == Material.LAVA_BUCKET && tank.isAllowedFluid(PylonFluids.LAVA)) {
-            event.setUseItemInHand(Event.Result.DENY);
-
-            if (PylonFluids.LAVA.equals(tank.getFluidType()) && tank.getFluidSpaceRemaining() >= 1000.0) {
                 tank.addFluid(1000.0);
                 newItemStack = new ItemStack(Material.BUCKET);
             }
-
-            if (tank.getFluidType() == null) {
-                tank.setFluidType(PylonFluids.LAVA);
-                tank.setFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
-            }
+            triggered = true;
         }
 
-        if (item.getType() == Material.BUCKET) {
-            event.setUseItemInHand(Event.Result.DENY);
-
-            // Taking water
-            if (PylonFluids.WATER.equals(tank.getFluidType()) && tank.getFluidAmount() >= 1000.0) {
-                tank.removeFluid(1000.0);
-                newItemStack = new ItemStack(Material.WATER_BUCKET);
-            }
-
-            // Taking lava
-            if (PylonFluids.LAVA.equals(tank.getFluidType()) && tank.getFluidAmount() >= 1000.0) {
-                tank.removeFluid(1000.0);
-                newItemStack = new ItemStack(Material.LAVA_BUCKET);
-            }
-        }
-
-        if (item.getType() == Material.GLASS_BOTTLE) {
-            event.setUseItemInHand(Event.Result.DENY);
-
-            // Taking water
-            if (PylonFluids.WATER.equals(tank.getFluidType()) && tank.getFluidAmount() >= 333.332) {
-                tank.setFluid(Math.max(0.0, tank.getFluidAmount() - 333.333));
-                newItemStack = new ItemStack(Material.POTION);
-                newItemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(PotionType.WATER));
-            }
-        }
-
-        if (item.getType() == Material.POTION
+        if (type == Material.POTION
                 && item.hasData(DataComponentTypes.POTION_CONTENTS)
                 && item.getData(DataComponentTypes.POTION_CONTENTS).potion() == PotionType.WATER
+                && tank.canAddFluid(PylonFluids.WATER, 333.333)
+
         ) {
-            event.setUseItemInHand(Event.Result.DENY);
-
-            // Adding water
-            if (PylonFluids.WATER.equals(tank.getFluidType()) && tank.getFluidSpaceRemaining() >= 333.332) {
-                tank.setFluid(Math.min(tank.getFluidCapacity(), tank.getFluidAmount() + 333.333));
-                newItemStack = new ItemStack(Material.GLASS_BOTTLE);
-            }
-
-            if (tank.getFluidType() == null) {
+            if (priority == EventPriority.NORMAL) {
+                event.setUseItemInHand(Event.Result.DENY);
+            } else {
                 tank.setFluidType(PylonFluids.WATER);
                 tank.setFluid(333.333);
                 newItemStack = new ItemStack(Material.GLASS_BOTTLE);
             }
+            triggered = true;
+        }
+
+        // Inserting lava
+        if (type == Material.LAVA_BUCKET && tank.canAddFluid(PylonFluids.LAVA, 1000.0)) {
+            if (priority == EventPriority.NORMAL) {
+                event.setUseItemInHand(Event.Result.DENY);
+            } else if (tank.canAddFluid(PylonFluids.LAVA, 1000.0)) {
+                tank.setFluidType(PylonFluids.LAVA);
+                tank.addFluid(1000.0);
+                newItemStack = new ItemStack(Material.BUCKET);
+            }
+        }
+
+        if (type == Material.BUCKET && tank.getFluidAmount() >= 1000.0 && (tank.getFluidType() == PylonFluids.WATER || tank.getFluidType() == PylonFluids.LAVA)) {
+            if (priority == EventPriority.NORMAL) {
+                event.setUseItemInHand(Event.Result.DENY);
+            } else {
+                tank.removeFluid(1000.0);
+                newItemStack = new ItemStack(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
+            }
+            triggered = true;
+        }
+
+        if (item.getType() == Material.GLASS_BOTTLE && tank.getFluidAmount() >= 333.333 && PylonFluids.WATER.equals(tank.getFluidType())) {
+            if (priority == EventPriority.NORMAL) {
+                event.setUseItemInHand(Event.Result.DENY);
+            } else {
+                tank.setFluid(Math.max(0.0, tank.getFluidAmount() - 333.333));
+                newItemStack = new ItemStack(Material.POTION);
+                newItemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(PotionType.WATER));
+            }
+            triggered = true;
         }
 
         if (newItemStack != null) {
@@ -332,13 +317,13 @@ public class PylonUtils {
                 // This is a hack. When I change the item from within a PlayerInteractEvent, a new event
                 // is fired for the new item stack. No idea why. Nor did the guy from the paper team.
                 ItemStack finalNewItemStack = newItemStack;
-                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+                Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> {
                     item.subtract();
                     event.getPlayer().give(finalNewItemStack);
-                }, 0);
+                });
             }
             return true;
         }
-        return false;
+        return triggered;
     }
 }

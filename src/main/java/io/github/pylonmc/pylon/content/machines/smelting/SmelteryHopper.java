@@ -7,10 +7,12 @@ import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.base.RebarVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -49,8 +51,8 @@ public final class SmelteryHopper extends SmelteryComponent implements
         );
     }
 
-    @Override
-    public void onItemMoveFrom(InventoryMoveItemEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onItemMoveFrom(InventoryMoveItemEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 

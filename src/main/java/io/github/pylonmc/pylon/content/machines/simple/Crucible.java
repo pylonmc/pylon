@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -32,6 +33,8 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.CauldronLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -113,10 +116,10 @@ public final class Crucible extends RebarBlock implements
         return true;
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         // Don't allow fluid to be manually inserted/removed
-        if (PylonUtils.handleFluidTankRightClick(this, event)) {
+        if (event.useInteractedBlock() == Event.Result.DENY || PylonUtils.handleFluidTankRightClick(this, event, priority)) {
             return;
         }
 
@@ -127,16 +130,18 @@ public final class Crucible extends RebarBlock implements
             return;
         }
 
-        event.setCancelled(true);
-
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-
         if (!CrucibleRecipe.isValid(item)) {
             return;
         }
 
         int amount = Math.min(item.getAmount(), spaceAvailable());
         if (amount == 0) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
             return;
         }
 
@@ -201,8 +206,8 @@ public final class Crucible extends RebarBlock implements
         }
     }
 
-    @Override
-    public void onLevelChange(@NotNull CauldronLevelChangeEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 

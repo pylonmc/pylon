@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -23,7 +24,9 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -92,16 +95,20 @@ public class Grindstone extends RebarBlock implements
         return Map.of(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.GRINDSTONE_HANDLE));
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.useInteractedBlock() == Event.Result.DENY
         ) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         if (!isFormedAndFullyLoaded()) {
             return;
@@ -112,11 +119,8 @@ public class Grindstone extends RebarBlock implements
         ItemStack newStack = event.getItem();
 
         // drop old item
-        if (!oldStack.getType().isAir()) {
-            getBlock().getWorld().dropItem(
-                    getBlock().getLocation().toCenterLocation().add(0, 0.25, 0),
-                    oldStack
-            );
+        if (!oldStack.isEmpty()) {
+            event.getPlayer().give(oldStack);
             itemDisplay.setItemStack(null);
             return;
         }

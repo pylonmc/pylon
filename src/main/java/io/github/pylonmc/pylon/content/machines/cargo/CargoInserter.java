@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.RebarCargoConnectEvent;
 import io.github.pylonmc.rebar.event.RebarCargoDisconnectEvent;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -22,6 +23,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -120,8 +122,8 @@ public class CargoInserter extends CargoInteractor implements
         setDisableBlockTextureEntity(true);
     }
 
-    @Override
-    public void onDuctConnected(@NotNull RebarCargoConnectEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onDuctConnected(@NotNull RebarCargoConnectEvent event, @NotNull EventPriority priority) {
         // Remove all faces that aren't to the connected block - this will make sure only
         // one duct is connected at a time
         for (BlockFace face : getCargoLogisticGroups().keySet()) {
@@ -131,8 +133,8 @@ public class CargoInserter extends CargoInteractor implements
         }
     }
 
-    @Override
-    public void onDuctDisconnected(@NotNull RebarCargoDisconnectEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR)
+    public void onDuctDisconnected(@NotNull RebarCargoDisconnectEvent event, @NotNull EventPriority priority) {
         // Allow connecting to all faces now that there are zero connections
         List<BlockFace> faces = RebarUtils.perpendicularImmediateFaces(getFacing());
         faces.add(getFacing());

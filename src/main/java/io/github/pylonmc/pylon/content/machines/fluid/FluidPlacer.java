@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -24,7 +24,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.FluidLevelChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
-public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarInteractBlock {
+public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarNoVanillaContainerBlock {
 
     public static class Item extends RebarItem {
 
@@ -106,13 +105,6 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
 
         if (new FluidLevelChangeEvent(placeBlock, material.createBlockData()).callEvent()) {
             placeBlock.setType(material);
-        }
-    }
-
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction().isRightClick()) {
-            event.setCancelled(true);
         }
     }
 }

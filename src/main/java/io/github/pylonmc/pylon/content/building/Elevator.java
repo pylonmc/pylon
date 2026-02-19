@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.base.RebarJumpBlock;
 import io.github.pylonmc.rebar.block.base.RebarSneakableBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.RandomizedSound;
@@ -15,6 +16,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -90,13 +92,13 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
         player.getWorld().playSound(useSound.create(), elevatorLocation.x(), elevatorLocation.y(), elevatorLocation.z());
     }
 
-    @Override
-    public void onSneakedOn(@NotNull PlayerToggleSneakEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onSneakedOn(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
         teleportPlayer(event.getPlayer(), getBlock().getLocation(), true);
     }
 
-    @Override
-    public void onJumpedOn(@NotNull PlayerJumpEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onJumpedOn(@NotNull PlayerJumpEvent event, @NotNull EventPriority priority) {
         teleportPlayer(event.getPlayer(), getBlock().getLocation(), false);
     }
 }

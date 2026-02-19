@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +66,7 @@ public abstract class Rune extends RebarItem {
     public abstract void onContactItem(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target);
 
     public static class RuneListener implements Listener {
-        @EventHandler
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         void onRuneDrop(@NotNull PlayerDropItemEvent event) {
             Player player = event.getPlayer();
             Item runeEntity = event.getItemDrop();

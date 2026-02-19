@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.science;
 
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
@@ -8,6 +9,8 @@ import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -25,10 +28,14 @@ public class ResearchPack extends RebarItem implements RebarInteractor {
         super(stack);
     }
 
-    @Override
-    public void onUsedToRightClick(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = EventPriority.MONITOR)
+    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
-        if (!event.getAction().isRightClick()) return;
+        if (!event.getAction().isRightClick()
+                || (event.hasBlock() && event.useInteractedBlock() == Event.Result.ALLOW)
+                || event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
 
         long originalPoints = Research.getResearchPoints(player);
         Research.setResearchPoints(player, originalPoints + points);

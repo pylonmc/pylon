@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import lombok.Getter;
@@ -17,6 +18,9 @@ import lombok.Setter;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -73,18 +77,24 @@ public class Pedestal extends RebarBlock implements
         pdc.set(LOCKED_KEY, RebarSerializers.BOOLEAN, locked);
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (locked || event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (locked || event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        } else if (event.useItemInHand() != Event.Result.DENY) {
+            return;
+        }
 
+        Player player = event.getPlayer();
         ItemDisplay display = getItemDisplay();
 
         // rotate
-        if (event.getPlayer().isSneaking()) {
+        if (player.isSneaking()) {
             rotation += PI / 4;
             display.setTransformationMatrix(transformBuilder().buildForItemDisplay());
             return;
@@ -94,7 +104,7 @@ public class Pedestal extends RebarBlock implements
         ItemStack oldStack = display.getItemStack();
         ItemStack newStack = event.getItem();
         if (!oldStack.getType().isAir()) {
-            display.getWorld().dropItem(display.getLocation().toCenterLocation().add(0, 0.7, 0), oldStack);
+            player.give(oldStack);
             display.setItemStack(null);
             return;
         }

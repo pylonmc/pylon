@@ -5,6 +5,7 @@ import io.github.pylonmc.pylon.content.building.Elevator;
 import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
 import io.github.pylonmc.pylon.content.building.Pedestal;
+import io.github.pylonmc.pylon.content.building.WitherProofBlock;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
@@ -42,7 +43,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ENRICHED_SOUL_SOIL, Material.SOUL_SOIL, EnrichedSoulSoil.class);
         RebarBlock.register(PylonKeys.MIXING_POT, Material.CAULDRON, MixingPot.class);
         RebarBlock.register(PylonKeys.CRUCIBLE, Material.CAULDRON, Crucible.class);
-        RebarBlock.register(PylonKeys.IGNEOUS_COMPOSITE, Material.OBSIDIAN, RebarBlock.class);
+        RebarBlock.register(PylonKeys.IGNEOUS_COMPOSITE, Material.OBSIDIAN, WitherProofBlock.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_WOOD, Material.BROWN_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_COPPER, Material.ORANGE_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_TIN, Material.GREEN_STAINED_GLASS, PortableFluidTank.class);

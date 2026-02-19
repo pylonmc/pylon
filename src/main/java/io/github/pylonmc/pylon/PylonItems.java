@@ -828,7 +828,7 @@ public final class PylonItems {
     public static final ItemStack TONGS = ItemStackBuilder.rebar(Material.SHEARS, PylonKeys.TONGS)
             .build();
     static {
-        RebarItem.register(Tongs.class, TONGS);
+        RebarItem.register(RebarItem.class, TONGS);
         PylonPages.TOOLS.addItem(TONGS);
     }
 
@@ -841,14 +841,11 @@ public final class PylonItems {
     }
 
     public static final ItemStack FIREPROOF_RUNE = ItemStackBuilder.rebar(Material.FIREWORK_STAR, PylonKeys.FIREPROOF_RUNE)
-            .set(
-                    DataComponentTypes.DAMAGE_RESISTANT,
-                    DamageResistant.damageResistant(DamageTypeTagKeys.IS_FIRE)
-            )
-            .set(
-                    DataComponentTypes.FIREWORK_EXPLOSION,
-                    FireworkEffect.builder().withColor(Color.RED).build()
-            )
+            .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(DamageTypeTagKeys.IS_FIRE))
+            .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
+                    .withColor(Color.fromRGB(0xff5e00))
+                    .build())
+            .hideFromTooltip(DataComponentTypes.FIREWORK_EXPLOSION)
             .build();
     static {
         RebarItem.register(FireproofRune.class, FIREPROOF_RUNE);
@@ -859,6 +856,7 @@ public final class PylonItems {
             .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
                     .withColor(Color.PURPLE)
                     .build())
+            .hideFromTooltip(DataComponentTypes.FIREWORK_EXPLOSION)
             .build();
     static {
         RebarItem.register(SoulboundRune.class, SOULBOUND_RUNE);

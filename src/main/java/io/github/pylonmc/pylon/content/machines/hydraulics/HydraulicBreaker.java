@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -18,7 +19,6 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -30,6 +30,8 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -37,21 +39,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.*;
-
 
 public class HydraulicBreaker extends RebarBlock implements
         RebarFluidBufferBlock,
         RebarDirectionalBlock,
         RebarTickingBlock,
         RebarMultiblock,
-        RebarGuiBlock,
         RebarVirtualInventoryBlock,
         RebarLogisticBlock,
-        RebarProcessor {
+        RebarProcessor,
+        RebarInteractBlock
+{
 
     public final double hydraulicFluidPerBlock = getSettings().getOrThrow("hydraulic-fluid-per-block", ConfigAdapter.DOUBLE);
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
@@ -122,16 +123,20 @@ public class HydraulicBreaker extends RebarBlock implements
         createLogisticGroup("tool", LogisticGroupType.INPUT, toolInventory);
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.useInteractedBlock() == Event.Result.DENY
         ) {
             return;
         }
 
-        event.setCancelled(true);
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
+            return;
+        }
 
         // drop old item
         ItemStack tool = toolInventory.getItem(0);
@@ -167,16 +172,6 @@ public class HydraulicBreaker extends RebarBlock implements
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
                 .data(drilling.getBlockData())
                 .spawn();
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        // Not actually used, just provided for easy inventory serialization
-        return Gui.builder()
-                .setStructure("# # # # x # # # #")
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('x', toolInventory)
-                .build();
     }
 
     public void tryStartDrilling() {

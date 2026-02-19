@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -26,6 +27,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -83,21 +86,29 @@ public class HydraulicRefuelingStation extends RebarBlock implements
         );
     }
 
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND || !event.getAction().isRightClick()) {
+    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR }, ignoreCancelled = true)
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (event.getHand() != EquipmentSlot.HAND
+                || !event.getAction().isRightClick()
+                || event.getPlayer().isSneaking()
+                || event.useInteractedBlock() == Event.Result.DENY
+        ) {
+            return;
+        }
+
+        if (priority == EventPriority.NORMAL) {
+            event.setUseItemInHand(Event.Result.DENY);
             return;
         }
 
         ItemDisplay itemDisplay = getHeldEntityOrThrow(ItemDisplay.class, "item");
+        ItemStack oldStack = itemDisplay.getItemStack();
         ItemStack toInsert = event.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
 
-        if (!itemDisplay.getItemStack().isEmpty()) {
-            getBlock().getWorld().dropItemNaturally(
-                    getBlock().getLocation().toCenterLocation().add(0, 0.25, 0),
-                    itemDisplay.getItemStack()
-            );
-            itemDisplay.setItemStack(new ItemStack(Material.AIR));
+        if (!oldStack.isEmpty()) {
+            event.getPlayer().give(oldStack);
+            itemDisplay.setItemStack(null);
+            return;
         }
 
         if (RebarItem.fromStack(toInsert) instanceof HydraulicRefuelable) {
