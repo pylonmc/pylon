@@ -1934,3 +1934,113 @@ pylon:diesel_brick_molder:
     B: pylon:brick_mold
   result: pylon:diesel_brick_molder
   category: building
+
+pylon:fermenter:
+  pattern:
+    - "ICI"
+    - "VCP"
+    - "IBI"
+  key:
+    B: pylon:bronze_sheet
+    I: pylon:iron_sheet
+    P: pylon:fluid_pipe_bronze
+    C: pylon:fermenter_core
+    V: pylon:backflow_valve
+  result: pylon:fermenter
+  category: building
+
+pylon:fermenter_core:
+  pattern:
+    - "   "
+    - "SGS"
+    - "   "
+  key:
+    S: pylon:steel_sheet
+    G: minecraft:glass
+  result: pylon:fermenter_core
+  category: building
+
+pylon:fermenter_casing:
+  pattern:
+    - " P "
+    - "PSP"
+    - " P "
+  key:
+    S: pylon:steel_sheet
+    P: minecraft:glass_pane
+  result:
+    pylon:fermenter_casing: 4
+  category: building
+
+pylon:biorefinery:
+  pattern:
+    - "SAS"
+    - "KCK"
+    - "SSS"
+  key:
+    S: pylon:steel_sheet
+    K: pylon:kinetic_control_mechanism
+    A: pylon:analogue_display
+    C: pylon:steel_crankshaft
+  result: pylon:biorefinery
+  category: building
+
+pylon:biorefinery_foundation:
+  pattern:
+    - "   "
+    - "SSS"
+    - "BIB"
+  key:
+    S: pylon:bronze_sheet
+    I: minecraft:iron_ingot
+    B: minecraft:bricks
+  result:
+    pylon:biorefinery_foundation: 3
+  category: building
+
+
+pylon:biorefinery_plating:
+  pattern:
+    - "   "
+    - "IS "
+    - "SI "
+  key:
+    I: pylon:iron_sheet
+    S: pylon:steel_sheet
+  result:
+    pylon:biorefinery_plating: 4
+  category: building
+
+pylon:biorefinery_tower_ring:
+  pattern:
+    - "R R"
+    - "I I"
+    - "R R"
+  key:
+    R: pylon:refractory_brick
+    I: pylon:steel_ingot
+  result: pylon:biorefinery_tower_ring
+  category: building
+
+pylon:biorefinery_smokestack_ring:
+  pattern:
+    - "B B"
+    - "I I"
+    - "B B"
+  key:
+    I: pylon:bronze_ingot
+    B: minecraft:brick
+  result:
+    pylon:biorefinery_smokestack_ring: 2
+  category: building
+
+pylon:biorefinery_smokestack_cap:
+  pattern:
+    - "   "
+    - "B B"
+    - "BFB"
+  key:
+    F: pylon:filter_mesh
+    B: minecraft:brick
+  result: pylon:biorefinery_smokestack_cap
+  category: building
