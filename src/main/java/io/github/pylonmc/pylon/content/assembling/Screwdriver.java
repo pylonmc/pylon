@@ -21,7 +21,7 @@ import java.util.List;
 public class Screwdriver extends RebarItem implements RebarBlockInteractor {
 
     public final String toolType = getSettings().get("tool-type", ConfigAdapter.STRING);
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public Screwdriver(@NotNull ItemStack stack) {
         super(stack);
