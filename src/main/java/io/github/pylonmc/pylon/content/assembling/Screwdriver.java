@@ -46,11 +46,18 @@ public class Screwdriver extends RebarItem implements RebarBlockInteractor {
         if (priority == EventPriority.NORMAL) {
             event.setUseInteractedBlock(Event.Result.DENY);
             return;
+        } else if (event.getPlayer().hasCooldown(getStack())) {
+            return;
         }
 
         if (assemblyTable.useTool(toolType, event.getPlayer())) {
             getStack().damage(1, event.getPlayer());
             event.getPlayer().setCooldown(PylonKeys.SCREWDRIVER, cooldownTicks);
         }
+    }
+
+    @Override
+    public boolean respectCooldown() {
+        return false;
     }
 }

@@ -119,6 +119,8 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         if (priority == EventPriority.NORMAL) {
             event.setUseInteractedBlock(Event.Result.DENY);
             return;
+        } else if (event.getPlayer().hasCooldown(getStack())) {
+            return;
         }
 
         if (event.getAction().isLeftClick()) {
@@ -168,6 +170,11 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                     .data(data)
                     .spawn();
         }
+    }
+
+    @Override
+    public boolean respectCooldown() {
+        return false;
     }
 
     @Override

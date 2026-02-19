@@ -52,6 +52,8 @@ public class RedstoneSolderingIron extends RebarItem implements RebarBlockIntera
         if (priority == EventPriority.NORMAL) {
             event.setUseInteractedBlock(Event.Result.DENY);
             return;
+        } else if (event.getPlayer().hasCooldown(getStack())) {
+            return;
         }
 
         if (assemblyTable.useTool(toolType, event.getPlayer())) {
@@ -64,5 +66,10 @@ public class RedstoneSolderingIron extends RebarItem implements RebarBlockIntera
                     .offset(assemblyTable.scale / 4, 0, assemblyTable.scale / 4)
                     .spawn();
         }
+    }
+
+    @Override
+    public boolean respectCooldown() {
+        return false;
     }
 }
