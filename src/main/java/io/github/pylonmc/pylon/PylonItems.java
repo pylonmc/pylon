@@ -2445,10 +2445,10 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
-            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("durability", ConfigAdapter.INTEGER))
             .set(DataComponentTypes.USE_COOLDOWN,
                     UseCooldown.useCooldown(
-                            Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                            Settings.get(PylonKeys.STEEL_SCREWDRIVER).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F
                     ).cooldownGroup(PylonKeys.SCREWDRIVER)
             )
             .build();
@@ -2461,10 +2461,10 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.COMPASS.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
-            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("durability", ConfigAdapter.INT))
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("durability", ConfigAdapter.INTEGER))
             .set(DataComponentTypes.USE_COOLDOWN,
                     UseCooldown.useCooldown(
-                            Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("cooldown-ticks", ConfigAdapter.INT) / 20.0F
+                            Settings.get(PylonKeys.REDSTONE_SOLDERING_IRON).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F
                     ).cooldownGroup(PylonKeys.REDSTONE_SOLDERING_IRON)
             )
             .build();
