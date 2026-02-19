@@ -1069,9 +1069,9 @@ pylon:explosive_target:
 
 pylon:immobilizer:
   pattern:
-    - "DSD"
+    - " S "
     - "DGD"
-    - "DRD"
+    - " R "
   key:
     S: minecraft:daylight_detector
     D: pylon:shimmer_dust_3
@@ -1216,6 +1216,34 @@ pylon:hydraulic_farmer:
     P: pylon:fluid_pipe_bronze
     H: pylon:bronze_hoe
   result: pylon:hydraulic_farmer
+  category: building
+
+pylon:hydraulic_miner:
+  pattern:
+    - "CDC"
+    - "PEP"
+    - "CSC"
+  key:
+    C: minecraft:copper_block
+    S: pylon:copper_sheet
+    E: pylon:hydraulic_motor
+    P: pylon:fluid_pipe_bronze
+    D: pylon:bronze_drill_bit
+  result: pylon:hydraulic_miner
+  category: building
+
+pylon:hydraulic_breaker:
+  pattern:
+    - "SSS"
+    - "PEP"
+    - "CDC"
+  key:
+    C: minecraft:copper_block
+    S: pylon:copper_sheet
+    E: pylon:hydraulic_motor
+    P: pylon:fluid_pipe_bronze
+    D: pylon:bronze_drill_bit
+  result: pylon:hydraulic_breaker
   category: building
 
 pylon:purification_tower_glass:
@@ -1700,8 +1728,7 @@ pylon:steel_cylinder:
     - " S "
   key:
     S: pylon:steel_sheet
-  result:
-    pylon:steel_cylinder: 4
+  result: pylon:steel_cylinder
   category: equipment
 
 pylon:steel_crankshaft:
@@ -1712,6 +1739,198 @@ pylon:steel_crankshaft:
   key:
     N: pylon:steel_nugget
     I: pylon:steel_ingot
-  result:
-    pylon:steel_crankshaft: 1
+  result: pylon:steel_crankshaft
   category: equipment
+
+pylon:assembly_table:
+  pattern:
+    - "BCB"
+    - " W "
+    - "WWW"
+  key:
+    W: "#minecraft:planks"
+    B: pylon:bronze_sheet
+    C: minecraft:crafting_table
+  result: pylon:assembly_table
+  category: building
+
+pylon:fluid_input_hatch:
+  pattern:
+    - "B B"
+    - "CCV"
+    - "B B"
+  key:
+    B: pylon:bronze_sheet
+    C: pylon:fluid_pipe_copper
+    V: pylon:backflow_valve
+  result: pylon:fluid_input_hatch
+  category: building
+
+pylon:fluid_output_hatch:
+  pattern:
+    - "B B"
+    - "VCC"
+    - "B B"
+  key:
+    B: pylon:bronze_sheet
+    C: pylon:fluid_pipe_copper
+    V: pylon:backflow_valve
+  result: pylon:fluid_output_hatch
+  category: building
+
+pylon:item_input_hatch:
+  pattern:
+    - "B B"
+    - "HCB"
+    - "B B"
+  key:
+    B: pylon:bronze_sheet
+    C: minecraft:chest
+    H: minecraft:hopper
+  result: pylon:item_input_hatch
+  category: building
+
+pylon:item_output_hatch:
+  pattern:
+    - "B B"
+    - "BCH"
+    - "B B"
+  key:
+    B: pylon:bronze_sheet
+    C: minecraft:chest
+    H: minecraft:hopper
+  result: pylon:item_output_hatch
+  category: building
+
+pylon:diesel_grindstone:
+  pattern:
+    - "SHS"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    E: pylon:internal_combustion_engine
+    S: minecraft:smooth_stone
+    H: pylon:grindstone_handle
+  result: pylon:diesel_grindstone
+  category: building
+
+pylon:diesel_mixing_attachment:
+  pattern:
+    - "SHS"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    H: pylon:grindstone_handle
+  result: pylon:diesel_mixing_attachment
+  category: building
+
+pylon:diesel_press:
+  pattern:
+    - "IRI"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    I: minecraft:piston
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    R: pylon:press
+  result: pylon:diesel_press
+  category: building
+
+pylon:diesel_hammer_head:
+  pattern:
+    - "SWS"
+    - "PEP"
+    - "SWS"
+  key:
+    P: pylon:fluid_pipe_steel
+    W: pylon:weighted_shaft
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+  result: pylon:diesel_hammer_head
+  category: building
+
+pylon:diesel_pipe_bender:
+  pattern:
+    - "LSL"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    L: minecraft:lever
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+  result: pylon:diesel_pipe_bender
+  category: building
+
+pylon:diesel_table_saw:
+  pattern:
+    - "SAS"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    A: pylon:sawblade
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+  result: pylon:diesel_table_saw
+  category: building
+
+pylon:diesel_miner:
+  pattern:
+    - "BDB"
+    - "PEP"
+    - "BSB"
+  key:
+    P: pylon:fluid_pipe_steel
+    D: pylon:bronze_drill_bit
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    B: minecraft:iron_block
+  result: pylon:diesel_miner
+  category: building
+
+pylon:diesel_breaker:
+  pattern:
+    - "SSS"
+    - "PEP"
+    - "BDB"
+  key:
+    P: pylon:fluid_pipe_steel
+    D: pylon:bronze_drill_bit
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    B: minecraft:iron_block
+  result: pylon:diesel_breaker
+  category: building
+
+pylon:diesel_furnace:
+  pattern:
+    - "SFS"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    F: minecraft:furnace
+  result: pylon:diesel_furnace
+  category: building
+
+pylon:diesel_brick_molder:
+  pattern:
+    - "SBS"
+    - "PEP"
+    - "SSS"
+  key:
+    P: pylon:fluid_pipe_steel
+    E: pylon:internal_combustion_engine
+    S: pylon:iron_sheet
+    B: pylon:brick_mold
+  result: pylon:diesel_brick_molder
+  category: building
