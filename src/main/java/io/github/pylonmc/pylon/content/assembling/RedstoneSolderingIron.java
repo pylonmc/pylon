@@ -23,8 +23,8 @@ import java.util.List;
 public class RedstoneSolderingIron extends RebarItem implements RebarBlockInteractor {
 
     public final String toolType = getSettings().get("tool-type", ConfigAdapter.STRING);
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INT);
-    public final int durability = getSettings().getOrThrow("durability", ConfigAdapter.INT);
+    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int durability = getSettings().getOrThrow("durability", ConfigAdapter.INTEGER);
 
     public RedstoneSolderingIron(@NotNull ItemStack stack) {
         super(stack);

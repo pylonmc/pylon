@@ -71,7 +71,7 @@ public record AssemblingRecipe(
                 steps.add(new Step(
                         stepSection.getOrThrow("tool", ConfigAdapter.STRING),
                         stepSection.getOrThrow("icon", ConfigAdapter.ITEM_STACK),
-                        stepSection.getOrThrow("clicks", ConfigAdapter.INT),
+                        stepSection.getOrThrow("clicks", ConfigAdapter.INTEGER),
                         addDisplays,
                         stepSection.get("remove_displays", ConfigAdapter.LIST.from(ConfigAdapter.STRING), new ArrayList<>())
                 ));
