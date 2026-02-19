@@ -1728,7 +1728,8 @@ pylon:steel_cylinder:
     - " S "
   key:
     S: pylon:steel_sheet
-  result: pylon:steel_cylinder
+  result:
+    pylon:steel_cylinder: 4
   category: equipment
 
 pylon:steel_crankshaft:
