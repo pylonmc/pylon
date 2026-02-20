@@ -211,3 +211,85 @@ pylonbase:internal_combustion_engine:
           item: minecraft:light_gray_concrete
           position: [0.85, 0.5]
           scale: [0.1, 0.25, 1.0]
+
+pylonbase:cargo_controller:
+  inputs:
+    - minecraft:repeater: 1
+    - minecraft:redstone_torch: 2
+    - minecraft:redstone: 3
+    - pylon:iron_sheet: 1
+  results:
+    - pylon:cargo_controller
+  steps:
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 1
+      add-displays:
+        - name: "base"
+          item: minecraft:light_gray_concrete
+          position: [0.5, 0.5]
+          scale: [0.8, 0.03, 0.8]
+
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "core1"
+          item: minecraft:gray_concrete
+          position: [0.45, 0.5]
+          scale: [0.4, 0.13, 0.3]
+        - name: "core2"
+          item: minecraft:white_concrete
+          position: [0.5, 0.5]
+          scale: [0.2, 0.18, 0.2]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 1
+      add-displays:
+        - name: "torch1"
+          item: minecraft:redstone_block
+          position: [0.5, 0.2]
+          scale: [0.1, 0.13, 0.1]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 1
+      add-displays:
+        - name: "torch2"
+          item: minecraft:redstone_block
+          position: [0.5, 0.8]
+          scale: [0.1, 0.13, 0.1]
+    - tool: "screwdriver"
+      icon: pylon:copper_screwdriver
+      clicks: 1
+      add-displays:
+        - name: "torch3"
+          item: minecraft:redstone_block
+          position: [0.8, 0.5]
+          scale: [0.1, 0.13, 0.1]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "wire1"
+          item: minecraft:red_concrete
+          position: [0.5, 0.35]
+          scale: [0.04, 0.07, 0.3]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "wire2"
+          item: minecraft:red_concrete
+          position: [0.5, 0.65]
+          scale: [0.04, 0.07, 0.3]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "wire3"
+          item: minecraft:red_concrete
+          position: [0.65, 0.5]
+          scale: [0.3, 0.07, 0.04]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 1

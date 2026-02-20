@@ -321,6 +321,60 @@ vacuum_hoppers_2:
     - pylon:vacuum_hopper_3
     - pylon:vacuum_hopper_4
 
+shimmer_magic_1:
+  item: pylon:shimmer_dust_1
+  cost: 5
+  unlocks:
+    - pylon:shimmer_dust_1
+    - pylon:shimmer_dust_2
+    - pylon:enriched_soul_soil
+
+shimmer_magic_2:
+  item: pylon:shimmer_dust_1
+  cost: 10
+  unlocks:
+    - pylon:covalent_binder
+    - pylon:shimmer_bronze
+    - pylon:shimmer_pedestal
+    - pylon:shimmer_altar
+    - pylon:shimmer_magnet
+
+shimmer_magic_3:
+  item: pylon:shimmer_dust_1
+  cost: 20
+  unlocks:
+    - pylon:shimmer_dust_3
+    - pylon:shimmer_skull
+
+igneous_magic:
+  item: pylon:igneous_composite
+  cost: 10
+  unlocks:
+    - pylon:obsidian_chip
+    - pylon:igneous_composite
+
+shimmer_field_manipulation:
+  item: pylon:cohesive_unit
+  cost: 20
+  unlocks:
+    - pylon:collimator
+    - pylon:collimator_pillar
+    - pylon:cohesive_unit
+    - pylon:liselette_conductor
+    - pylon:liselette_cathode
+    - pylon:liselette_anode
+
+assembling:
+  item: pylon:assembly_table
+  cost: 10
+  unlocks:
+    - pylon:assembly_table
+    - pylon:copper_screwdriver
+    - pylon:iron_screwdriver
+    - pylon:bronze_screwdriver
+    - pylon:steel_screwdriver
+    - pylon:redstone_soldering_iron
+
 cargo_1:
   item: pylon:cargo_buffer
   cost: 30
@@ -379,13 +433,6 @@ diesel_production:
     - pylon:biorefinery_smokestack_ring
     - pylon:biorefinery_smokestack_cap
 
-igneous_magic:
-  item: pylon:igneous_composite
-  cost: 20
-  unlocks:
-  - pylon:obsidian_chip
-  - pylon:igneous_composite
-
 portable_workstations:
   item: pylon:portable_crafting_table
   cost: 20
@@ -407,31 +454,7 @@ scientific_revolution_2:
   unlocks:
   - pylon:research_pack_2
 
-shimmer_magic_1:
-  item: pylon:shimmer_dust_1
-  cost: 5
-  unlocks:
-  - pylon:shimmer_dust_1
-  - pylon:shimmer_dust_2
-  - pylon:enriched_soul_soil
-
-shimmer_magic_2:
-  item: pylon:shimmer_dust_1
-  cost: 10
-  unlocks:
-  - pylon:covalent_binder
-  - pylon:shimmer_pedestal
-  - pylon:shimmer_altar
-  - pylon:shimmer_magnet
-
-shimmer_magic_3:
-  item: pylon:shimmer_dust_1
-  cost: 10
-  unlocks:
-    - pylon:shimmer_dust_3
-    - pylon:shimmer_skull
-
-simple_components:
+components_1:
   item: pylon:bronze_drill_bit
   cost: 10
   unlocks:
@@ -452,6 +475,15 @@ simple_components:
   - pylon:fluid_output_hatch
   - pylon:item_input_hatch
   - pylon:item_output_hatch
+
+components_2:
+  item: pylon:steel_crankshaft
+  cost: 10
+  unlocks:
+    - pylon:steel_cylinder
+    - pylon:steel_crankshaft
+    - pylon:kinetic_control_mechanism
+    - pylon:internal_combustion_engine
 
 straining:
   item: pylon:fluid_strainer

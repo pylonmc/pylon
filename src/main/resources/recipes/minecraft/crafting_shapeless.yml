@@ -85,3 +85,19 @@ pylon:explosive_target_super:
   result:
     pylon:explosive_target_super: 1
   category: redstone
+
+pylon:liselette_cathode:
+  ingredients:
+    - pylon:liselette_conductor: 1
+    - minecraft:redstone: 1
+  result:
+    pylon:liselette_cathode: 1
+  category: misc
+
+pylon:liselette_anode:
+  ingredients:
+    - pylon:liselette_conductor: 1
+    - minecraft:glowstone_dust: 1
+  result:
+    pylon:liselette_anode: 1
+  category: misc

@@ -400,12 +400,13 @@ pylon:shimmer_altar:
   pattern:
     - " I "
     - "DPD"
-    - "DSD"
+    - "BSB"
   key:
     P: pylon:pedestal
     S: minecraft:smooth_stone_slab
     D: pylon:shimmer_dust_2
     I: pylon:diamond_dust
+    B: pylon:shimmer_bronze
   result: pylon:shimmer_altar
   category: building
 
@@ -2044,4 +2045,213 @@ pylon:biorefinery_smokestack_cap:
     F: pylon:filter_mesh
     B: minecraft:brick
   result: pylon:biorefinery_smokestack_cap
+  category: building
+
+pylon:collimator:
+  pattern:
+    - " S "
+    - "POP"
+    - "BBB"
+  key:
+    O: minecraft:obsidian
+    S: pylon:shimmer_dust_2
+    P: pylon:fluid_pipe_bronze
+    B: pylon:shimmer_bronze
+  result: pylon:collimator
+  category: building
+
+pylon:collimator_pillar:
+  pattern:
+    - "BSB"
+    - " S "
+    - "BSB"
+  key:
+    S: pylon:shimmer_bronze
+    B: minecraft:brick
+  result: pylon:collimator_pillar
+  category: building
+
+pylon:cargo_duct:
+  pattern:
+    - "SSS"
+    - "CCC"
+    - "SSS"
+  key:
+    S: pylon:copper_sheet
+    C: pylon:liselette_conductor
+  result:
+    pylon:cargo_duct: 6
+  category: building
+
+pylon:cargo_extractor:
+  pattern:
+    - "S  "
+    - "SDC"
+    - "S  "
+  key:
+    S: pylon:copper_sheet
+    D: pylon:cargo_duct
+    C: pylon:liselette_cathode
+  result: pylon:cargo_extractor
+  category: building
+
+pylon:cargo_inserter:
+  pattern:
+    - "S  "
+    - "SDA"
+    - "S  "
+  key:
+    S: pylon:copper_sheet
+    D: pylon:cargo_duct
+    A: pylon:liselette_anode
+  result: pylon:cargo_inserter
+  category: building
+
+pylon:cargo_valve:
+  pattern:
+    - "SCS"
+    - " BL"
+    - "SAS"
+  key:
+    S: pylon:copper_sheet
+    A: pylon:liselette_anode
+    C: pylon:liselette_cathode
+    L: minecraft:lever
+    B: minecraft:chest
+  result: pylon:cargo_valve
+  category: building
+
+pylon:cargo_buffer:
+  pattern:
+    - "SCS"
+    - " B "
+    - "SAS"
+  key:
+    S: pylon:copper_sheet
+    A: pylon:liselette_anode
+    C: pylon:liselette_cathode
+    B: minecraft:barrel
+  result: pylon:cargo_buffer
+  category: building
+
+pylon:cargo_monitor:
+  pattern:
+    - " I "
+    - "RBC"
+    - "   "
+  key:
+    I: pylon:analogue_display
+    B: pylon:cargo_buffer
+    R: minecraft:redstone
+    C: minecraft:comparator
+  result: pylon:cargo_monitor
+  category: building
+
+pylon:cargo_meter:
+  pattern:
+    - " E "
+    - "RMC"
+    - "   "
+  key:
+    M: pylon:cargo_monitor
+    R: minecraft:redstone
+    E: minecraft:repeater
+    C: minecraft:comparator
+  result: pylon:cargo_meter
+  category: building
+
+pylon:cargo_splitter:
+  pattern:
+    - "S S"
+    - "COC"
+    - "SAS"
+  key:
+    S: pylon:iron_sheet
+    O: pylon:cargo_controller
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+  result: pylon:cargo_splitter
+  category: building
+
+pylon:cargo_merger:
+  pattern:
+    - "SCS"
+    - "AOA"
+    - "S S"
+  key:
+    S: pylon:iron_sheet
+    O: pylon:cargo_controller
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+  result: pylon:cargo_merger
+  category: building
+
+pylon:cargo_filter:
+  pattern:
+    - "SFS"
+    - "COC"
+    - "SAS"
+  key:
+    S: pylon:iron_sheet
+    O: pylon:cargo_controller
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+    F: pylon:filter_mesh
+  result: pylon:cargo_filter
+  category: building
+
+pylon:cargo_overflow_gate:
+  pattern:
+    - "SRS"
+    - "COC"
+    - "SAS"
+  key:
+    S: pylon:iron_sheet
+    O: pylon:cargo_controller
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+    R: minecraft:comparator
+  result: pylon:cargo_overflow_gate
+  category: building
+
+pylon:cargo_gate:
+  pattern:
+    - "SCS"
+    - "AOA"
+    - "SRS"
+  key:
+    S: pylon:steel_sheet
+    O: pylon:cargo_controller
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+    R: minecraft:comparator
+  result: pylon:cargo_gate
+  category: building
+
+pylon:cargo_accumulator:
+  pattern:
+    - "SCS"
+    - "DOR"
+    - "SAS"
+  key:
+    S: pylon:steel_sheet
+    O: pylon:cargo_controller
+    A: pylon:liselette_anode
+    C: pylon:liselette_cathode
+    R: minecraft:repeater
+    D: minecraft:redstone
+  result: pylon:cargo_accumulator
+  category: building
+
+pylon:cargo_fluid_accumulator:
+  pattern:
+    - " P "
+    - "DAR"
+    - " P "
+  key:
+    A: pylon:cargo_accumulator
+    P: pylon:fluid_pipe_steel
+    R: minecraft:repeater
+    D: minecraft:redstone
+  result: pylon:cargo_fluid_accumulator
   category: building

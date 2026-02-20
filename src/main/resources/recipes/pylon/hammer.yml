@@ -80,3 +80,10 @@ pylon:flint_from_gravel:
   result: minecraft:flint
   mining-level: stone
   chance: 0.5
+
+pylon:liselette_conductor:
+  input: pylon:cohesive_unit
+  result:
+    pylon:liselette_conductor: 2
+  mining-level: iron
+  chance: 0.5

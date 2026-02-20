@@ -725,6 +725,11 @@ item:
     lore: |-
       <arrow> Some kind of force keeps the grains of dust together; the further they are pulled from the rest, the more strongly they resist...
 
+  shimmer_bronze:
+    name: "<white>Shimmer Bronze"
+    lore: |-
+      <arrow> Stronger yet more brittle than normal bronze
+
   shimmer_skull:
     name: "<white>Shimmer Skull"
     lore: |-
@@ -1305,6 +1310,8 @@ item:
       <arrow> A hard and durable material, held together by forces currently beyond our comprehension
       <arrow> Can withstand very high temperatures
       <arrow> Wither proof
+      
+      <story>When obscyra is mixed with covalent binder and nether bricks, it solidifies into a remarkably durable material. The obscyra residue helps create contours in the shimmer field along the solids, contributing to the material's strength, but little more than that is known.
 
   rotor:
     name: "Rotor"
@@ -1991,6 +1998,47 @@ item:
   internal_combustion_engine:
     name: "<white>Internal Combustion Engine"
 
+  collimator:
+    name: "Collimator"
+    lore: |-
+      <arrow> Slowly synthesizes Cohesive Units
+      <arrow> Only works below <white>y = 0
+      <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
+      <arrow> <attr>Time per Cohesive Unit:</attr> %time-per-cohesive-unit%
+      
+      <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
+    waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
+
+  collimator_pillar:
+    name: "Collimation Pillar"
+    lore: |-
+      <story>A breakthrough in shimmer theory came when Liselette discovered that the shimmer field could be weakly ordered with the help of a shimmer bronze cylinder (or 'pillar'). The field resists entering the cylinder at the bottom, allowing the shimmer bronze to force the field to separate evenly along the cylinder. This crude method only works deep underground, where the shimmer field is stronger.
+
+  cohesive_unit:
+    name: "Cohesive Unit"
+    lore: |-
+      <arrow> Synthesized using a Collimator
+      
+      <story>Obscyra naturally resonates with shimmer fields, but in nature such fields are chaotic and overlapping. A Cohesive Unit results from a coordinated and persistent shaping of the fields that forces the obscyra into a smaller and smaller space, until it collapses completely as predicted by the Chaudresker Correspondance. This collapse is termed 'Collimation.'
+
+  liselette_cathode:
+    name: "Liselette Cathode"
+    lore: |-
+      <story>Creates a Liselette gradient when paired with a Liselette Anode and appropriate mediating conductors.
+
+  liselette_conductor:
+    name: "Liselette Conductor"
+    lore: |-
+      <story>Facilitates the creation of Liselette gradients; dynamical systems which can be thought of as similar a conveyor belt. The gradient allows mass to be slowly transferred from a Liselette cathode to a Liselette anode while respecting Leibar's conservation laws.
+
+  liselette_anode:
+    name: "Liselette Anode"
+    lore: |-
+      <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
+
+  cargo_controller:
+    name: "Cargo Controller"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2063,7 +2111,8 @@ research:
   portable_workstations: "<#9b816c>Portable workstations"
   showing_off: "<rainbow>Showing off"
   combat_engineering: "<#ef8c4a>Combat engineering"
-  igneous_magic: "<#45336d>Igneous magic"
+  igneous_magic: "<#45336d>Igneous Magic"
+  shimmer_field_manipulation: "<#e5c4ef>Shimmer field manipulation"
   scientific_revolution_1: "<#5bfc05>The Scientific Revolution I"
   scientific_revolution_2: "<#5bfc05>The Scientific Revolution II"
   talismans_1: "<#ce6625>Talismans I"
@@ -2094,7 +2143,8 @@ research:
   fluid_handling_2: "<#58e2d2>Fluid handling II"
   fluid_handling_3: "<#58e2d2>Fluid handling III"
   fluid_handling_4: "<#58e2d2>Fluid handling IV"
-  simple_components: "<#c1c1c1>Simple components"
+  components_1: "<#c1c1c1>Components I"
+  components_2: "<#c1c1c1>Components II"
   straining: "<#c99fa1>Straining"
   climbing_equipment: "<#a6b579>Climbing equipment"
   vacuum_hoppers_1: "<#54536d>Vacuum hoppers I"
@@ -2105,6 +2155,7 @@ research:
   cargo_3: "<#e89888>Cargo III"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
+  assembling: "<#846e5a>Assembling"
 
 guide:
   page:
