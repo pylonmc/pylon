@@ -140,6 +140,8 @@ public class PylonKeys {
 
     public static final NamespacedKey ENRICHED_SOUL_SOIL = pylonKey("enriched_soul_soil");
 
+    public static final NamespacedKey SHIMMER_BRONZE = pylonKey("shimmer_bronze");
+
     public static final NamespacedKey PEDESTAL = pylonKey("pedestal");
     public static final NamespacedKey SHIMMER_PEDESTAL = pylonKey("shimmer_pedestal");
     public static final NamespacedKey SHIMMER_ALTAR = pylonKey("shimmer_altar");
@@ -187,6 +189,7 @@ public class PylonKeys {
     public static final NamespacedKey STEEL_CRANKSHAFT = pylonKey("steel_crankshaft");
     public static final NamespacedKey KINETIC_CONTROL_MECHANISM = pylonKey("kinetic_control_mechanism");
     public static final NamespacedKey INTERNAL_COMBUSTION_ENGINE = pylonKey("internal_combustion_engine");
+    public static final NamespacedKey CARGO_CONTROLLER = pylonKey("cargo_controller");
 
     public static final NamespacedKey WATER_PUMP = pylonKey("water_pump");
 
@@ -385,6 +388,14 @@ public class PylonKeys {
     public static final NamespacedKey BRONZE_SCREWDRIVER = pylonKey("bronze_screwdriver");
     public static final NamespacedKey STEEL_SCREWDRIVER = pylonKey("steel_screwdriver");
     public static final NamespacedKey REDSTONE_SOLDERING_IRON = pylonKey("redstone_soldering_iron");
+
+    public static final NamespacedKey COHESIVE_UNIT = pylonKey("cohesive_unit");
+    public static final NamespacedKey COLLIMATOR = pylonKey("collimator");
+    public static final NamespacedKey COLLIMATOR_PILLAR = pylonKey("collimator_pillar");
+
+    public static final NamespacedKey LISELETTE_CATHODE = pylonKey("liselette_cathode");
+    public static final NamespacedKey LISELETTE_CONDUCTOR = pylonKey("liselette_conductor");
+    public static final NamespacedKey LISELETTE_ANODE = pylonKey("liselette_anode");
 
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
 

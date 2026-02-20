@@ -334,3 +334,14 @@ pylon:farming_talisman_ultimate:
   output:
     pylon:farming_talisman_ultimate: 1
   requires-enriched-fire: true
+
+pylon:shimmer_bronze:
+  input-items:
+    - pylon:shimmer_dust_2: 2
+    - pylon:bronze_ingot: 1
+    - minecraft:orange_dye: 1
+  input-fluid:
+    pylon:dirty_hydraulic_fluid: 1000
+  output:
+    pylon:shimmer_bronze: 1
+  requires-enriched-fire: false

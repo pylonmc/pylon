@@ -146,7 +146,6 @@ public final class PylonItems {
         PylonPages.METALS.addItem(CRUSHED_RAW_GOLD);
     }
 
-
     public static final ItemStack RAW_TIN = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.RAW_TIN)
             .build();
     static {
@@ -367,6 +366,46 @@ public final class PylonItems {
         PylonPages.MAGIC.addItem(COVALENT_BINDER);
     }
 
+    public static final ItemStack COHESIVE_UNIT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COHESIVE_UNIT)
+            .set(DataComponentTypes.ITEM_MODEL, Material.ENDER_PEARL.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, COHESIVE_UNIT);
+        PylonPages.MAGIC.addItem(COHESIVE_UNIT);
+    }
+
+    public static final ItemStack SHIMMER_BRONZE = ItemStackBuilder.rebar(Material.COPPER_INGOT, PylonKeys.SHIMMER_BRONZE)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SHIMMER_BRONZE);
+        PylonPages.MAGIC.addItem(SHIMMER_BRONZE);
+    }
+
+    public static final ItemStack LISELETTE_CONDUCTOR = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LISELETTE_CONDUCTOR)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BAMBOO_BUTTON.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LISELETTE_CONDUCTOR);
+        PylonPages.MAGIC.addItem(LISELETTE_CONDUCTOR);
+    }
+
+    public static final ItemStack LISELETTE_CATHODE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LISELETTE_CATHODE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.CRIMSON_BUTTON.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LISELETTE_CATHODE);
+        PylonPages.MAGIC.addItem(LISELETTE_CATHODE);
+    }
+
+    public static final ItemStack LISELETTE_ANODE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LISELETTE_ANODE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.WARPED_BUTTON.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LISELETTE_ANODE);
+        PylonPages.MAGIC.addItem(LISELETTE_ANODE);
+    }
+
     public static final ItemStack ENRICHED_SOUL_SOIL = ItemStackBuilder.rebar(Material.SOUL_SOIL, PylonKeys.ENRICHED_SOUL_SOIL)
             .build();
     static {
@@ -559,7 +598,6 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(PALLADIUM_SHEET);
     }
 
-
     public static final ItemStack COPPER_DRILL_BIT = ItemStackBuilder.rebar(Material.LIGHTNING_ROD, PylonKeys.COPPER_DRILL_BIT)
             .build();
     static {
@@ -715,6 +753,14 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, INTERNAL_COMBUSTION_ENGINE, PylonKeys.INTERNAL_COMBUSTION_ENGINE);
         PylonPages.COMPONENTS.addItem(INTERNAL_COMBUSTION_ENGINE);
+    }
+
+    public static final ItemStack CARGO_CONTROLLER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CARGO_CONTROLLER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NOTE_BLOCK.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CARGO_CONTROLLER, PylonKeys.CARGO_CONTROLLER);
+        PylonPages.COMPONENTS.addItem(CARGO_CONTROLLER);
     }
 
     //</editor-fold>
@@ -1553,6 +1599,20 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SHIMMER_ALTAR, PylonKeys.SHIMMER_ALTAR);
         PylonPages.SIMPLE_MACHINES.addItem(SHIMMER_ALTAR);
+    }
+
+    public static final ItemStack COLLIMATOR = ItemStackBuilder.rebar(Material.OBSIDIAN, PylonKeys.COLLIMATOR)
+            .build();
+    static {
+        RebarItem.register(Collimator.Item.class, COLLIMATOR, PylonKeys.COLLIMATOR);
+        PylonPages.SIMPLE_MACHINES.addItem(COLLIMATOR);
+    }
+
+    public static final ItemStack COLLIMATOR_PILLAR = ItemStackBuilder.rebar(Material.DEEPSLATE_TILE_WALL, PylonKeys.COLLIMATOR_PILLAR)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, COLLIMATOR_PILLAR, PylonKeys.COLLIMATOR_PILLAR);
+        PylonPages.SIMPLE_MACHINES.addItem(COLLIMATOR_PILLAR);
     }
 
     //</editor-fold>

@@ -171,3 +171,10 @@ pylon:string_from_bamboo:
   results: minecraft:string
   cycles: 3
   particle-data: minecraft:bamboo[age=1]
+
+pylon:blaze_powder:
+  input: minecraft:blaze_rod
+  results:
+    minecraft:blaze_powder: 3
+  cycles: 5
+  particle-data: minecraft:yellow_concrete
