@@ -179,6 +179,7 @@ pylon:breeding_talisman_advanced:
   input-items:
     - pylon:breeding_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -188,6 +189,7 @@ pylon:hunger_talisman_advanced:
   input-items:
     - pylon:hunger_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -197,6 +199,7 @@ pylon:luck_talisman_advanced:
   input-items:
     - pylon:luck_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -206,6 +209,7 @@ pylon:hunting_talisman_advanced:
   input-items:
     - pylon:hunting_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -215,6 +219,7 @@ pylon:enchanting_talisman_advanced:
   input-items:
     - pylon:enchanting_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -224,6 +229,7 @@ pylon:bartering_talisman_advanced:
   input-items:
     - pylon:bartering_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -233,6 +239,7 @@ pylon:water_breathing_talisman_advanced:
   input-items:
     - pylon:water_breathing_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
@@ -242,6 +249,7 @@ pylon:farming_talisman_advanced:
   input-items:
     - pylon:farming_talisman_simple: 1
     - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
   input-fluid:
     pylon:plant_oil: 1000
   output:
