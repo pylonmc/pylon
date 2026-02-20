@@ -2255,3 +2255,107 @@ pylon:cargo_fluid_accumulator:
     D: minecraft:redstone
   result: pylon:cargo_fluid_accumulator
   category: building
+
+pylon:palladium_helmet:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:palladium_ingot
+  result:
+    pylon:palladium_helmet: 1
+  category: equipment
+
+pylon:palladium_chestplate:
+  pattern:
+    - "P P"
+    - "PPP"
+    - "PPP"
+  key:
+    P: pylon:palladium_ingot
+  result:
+    pylon:palladium_chestplate: 1
+  category: equipment
+
+pylon:palladium_leggings:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "P P"
+  key:
+    P: pylon:palladium_ingot
+  result:
+    pylon:palladium_leggings: 1
+  category: equipment
+
+pylon:palladium_boots:
+  pattern:
+    - "P P"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:palladium_ingot
+  result:
+    pylon:palladium_boots: 1
+  category: equipment
+
+pylon:palladium_sword:
+  pattern:
+    - " P "
+    - " P "
+    - " S "
+  key:
+    P: pylon:palladium_ingot
+    S: minecraft:stick
+  result:
+    pylon:palladium_sword: 1
+  category: equipment
+
+pylon:palladium_axe:
+  pattern:
+    - "PP "
+    - "PS "
+    - " S "
+  key:
+    P: pylon:palladium_ingot
+    S: minecraft:stick
+  result:
+    pylon:palladium_axe: 1
+  category: equipment
+
+pylon:palladium_pickaxe:
+  pattern:
+    - "PPP"
+    - " S "
+    - " S "
+  key:
+    P: pylon:palladium_ingot
+    S: minecraft:stick
+  result:
+    pylon:palladium_pickaxe: 1
+  category: equipment
+
+pylon:palladium_shovel:
+  pattern:
+    - " P "
+    - " S "
+    - " S "
+  key:
+    P: pylon:palladium_ingot
+    S: minecraft:stick
+  result:
+    pylon:palladium_shovel: 1
+  category: equipment
+
+pylon:palladium_hoe:
+  pattern:
+    - "PP "
+    - " S "
+    - " S "
+  key:
+    P: pylon:palladium_ingot
+    S: minecraft:stick
+  result:
+    pylon:palladium_hoe: 1
+  category: equipment

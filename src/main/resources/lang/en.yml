@@ -2039,6 +2039,33 @@ item:
   cargo_controller:
     name: "Cargo Controller"
 
+  palladium_helmet:
+    name: "Palladium Helmet"
+
+  palladium_chestplate:
+    name: "Palladium Chestplate"
+
+  palladium_leggings:
+    name: "Palladium Leggings"
+
+  palladium_boots:
+    name: "Palladium Boots"
+
+  palladium_sword:
+    name: "Palladium Sword"
+
+  palladium_axe:
+    name: "Palladium Axe"
+
+  palladium_pickaxe:
+    name: "Palladium Pickaxe"
+
+  palladium_shovel:
+    name: "Palladium Shovel"
+
+  palladium_hoe:
+    name: "Palladium Hoe"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2156,6 +2183,7 @@ research:
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   assembling: "<#846e5a>Assembling"
+  palladium_tools: "<#2937e3>Palladium tools"
 
 guide:
   page:

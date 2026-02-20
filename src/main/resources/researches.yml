@@ -534,3 +534,21 @@ wither_reactivation:
     - pylon:reactivated_wither_skull
     - pylon:hyper_activated_wither_skull
 
+palladium_tools:
+  item: pylon:palladium_sword
+  cost: 20
+  unlocks:
+    - pylon:palladium_sword
+    - pylon:palladium_axe
+    - pylon:palladium_pickaxe
+    - pylon:palladium_shovel
+    - pylon:palladium_hoe
+
+palladium_armor:
+  item: pylon:palladium_chestplate
+  cost: 20
+  unlocks:
+    - pylon:palladium_helmet
+    - pylon:palladium_chestplate
+    - pylon:palladium_leggings
+    - pylon:palladdium_boots

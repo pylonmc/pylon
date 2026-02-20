@@ -41,8 +41,10 @@ import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
@@ -2604,6 +2606,108 @@ public final class PylonItems {
                 .addIngredient(DISINFECTANT);
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
+    }
+
+    public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebar(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_HELMET);
+        PylonPages.ARMOUR.addItem(PALLADIUM_HELMET);
+    }
+
+    public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebar(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_CHESTPLATE);
+        PylonPages.ARMOUR.addItem(PALLADIUM_CHESTPLATE);
+    }
+
+    public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebar(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_LEGGINGS);
+        PylonPages.ARMOUR.addItem(PALLADIUM_LEGGINGS);
+    }
+
+    public static final ItemStack PALLADIUM_BOOTS = ItemStackBuilder.rebar(Material.DIAMOND_BOOTS, PylonKeys.PALLADIUM_BOOTS)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .add(Enchantment.FROST_WALKER, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("frost-walker-level", ConfigAdapter.INTEGER))
+                    .build())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_BOOTS);
+        PylonPages.ARMOUR.addItem(PALLADIUM_BOOTS);
+    }
+
+    public static final ItemStack PALLADIUM_SWORD = ItemStackBuilder.rebar(Material.DIAMOND_SWORD, PylonKeys.PALLADIUM_SWORD)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.SHARPNESS, Settings.get(PylonKeys.PALLADIUM_SWORD).getOrThrow("sharpness-level", ConfigAdapter.INTEGER))
+                    .build()
+            )
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_SWORD).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SWORD);
+        PylonPages.COMBAT.addItem(PALLADIUM_SWORD);
+    }
+
+    public static final ItemStack PALLADIUM_AXE = ItemStackBuilder.rebar(Material.DIAMOND_AXE, PylonKeys.PALLADIUM_AXE)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_AXE);
+        PylonPages.TOOLS.addItem(PALLADIUM_AXE);
+    }
+
+    public static final ItemStack PALLADIUM_PICKAXE = ItemStackBuilder.rebar(Material.DIAMOND_PICKAXE, PylonKeys.PALLADIUM_PICKAXE)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_PICKAXE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_PICKAXE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_PICKAXE);
+        PylonPages.TOOLS.addItem(PALLADIUM_PICKAXE);
+    }
+
+    public static final ItemStack PALLADIUM_SHOVEL = ItemStackBuilder.rebar(Material.DIAMOND_SHOVEL, PylonKeys.PALLADIUM_SHOVEL)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_SHOVEL).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build()
+            )
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_SHOVEL).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SHOVEL);
+        PylonPages.TOOLS.addItem(PALLADIUM_SHOVEL);
+    }
+
+    public static final ItemStack PALLADIUM_HOE = ItemStackBuilder.rebar(Material.DIAMOND_HOE, PylonKeys.PALLADIUM_HOE)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_HOE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HOE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_HOE);
+        PylonPages.TOOLS.addItem(PALLADIUM_HOE);
     }
 
     static {

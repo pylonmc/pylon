@@ -400,4 +400,15 @@ public class PylonKeys {
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
+
+    public static final NamespacedKey PALLADIUM_HELMET = pylonKey("palladium_helmet");
+    public static final NamespacedKey PALLADIUM_CHESTPLATE = pylonKey("palladium_chestplate");
+    public static final NamespacedKey PALLADIUM_LEGGINGS = pylonKey("palladium_leggings");
+    public static final NamespacedKey PALLADIUM_BOOTS = pylonKey("palladium_boots");
+
+    public static final NamespacedKey PALLADIUM_SWORD = pylonKey("palladium_sword");
+    public static final NamespacedKey PALLADIUM_AXE = pylonKey("palladium_axe");
+    public static final NamespacedKey PALLADIUM_PICKAXE = pylonKey("palladium_pickaxe");
+    public static final NamespacedKey PALLADIUM_SHOVEL = pylonKey("palladium_shovel");
+    public static final NamespacedKey PALLADIUM_HOE = pylonKey("palladium_hoe");
 }
