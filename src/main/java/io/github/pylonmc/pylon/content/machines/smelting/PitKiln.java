@@ -215,11 +215,6 @@ public final class PitKiln extends RebarBlock implements
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
             coalBlock.setType(Material.AIR);
         }
-        Block fireBlock = getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z());
-        if (fireBlock.getType() == Material.FIRE || fireBlock.getType() == Material.SOUL_FIRE) {
-            fireBlock.getWorld().playEffect(fireBlock.getLocation(), Effect.EXTINGUISH, 0);
-            fireBlock.setType(Material.AIR);
-        }
     }
 
     @Override
