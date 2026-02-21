@@ -18,16 +18,21 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Campfire;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -41,7 +46,7 @@ import java.util.*;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class PitKiln extends RebarBlock implements
-        RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarBreakHandler, RebarVanillaContainerBlock {
+        RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarBreakHandler, RebarNoVanillaContainerBlock {
 
     public static final int CAPACITY = Settings.get(PylonKeys.PIT_KILN).getOrThrow("capacity", ConfigAdapter.INTEGER);
     public static final int PROCESSING_TIME_SECONDS =
@@ -77,19 +82,19 @@ public final class PitKiln extends RebarBlock implements
     }
 
     private static final NamespacedKey CONTENTS_KEY = pylonKey("contents");
-    private static final PersistentDataType<?, Set<ItemStack>> CONTENTS_TYPE =
-            RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK);
+    private static final PersistentDataType<?, List<ItemStack>> CONTENTS_TYPE =
+            RebarSerializers.LIST.listTypeFrom(RebarSerializers.ITEM_STACK);
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
     private static final NamespacedKey PROCESSING_TIME_KEY = pylonKey("processing_time");
 
-    private final Set<ItemStack> contents;
+    private final ArrayList<ItemStack> contents;
     private final Set<ItemStack> processing;
     private @Nullable Double processingTime;
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        contents = new HashSet<>();
+        contents = new ArrayList<>();
         processing = new HashSet<>();
         processingTime = null;
     }
@@ -97,7 +102,7 @@ public final class PitKiln extends RebarBlock implements
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        contents = pdc.get(CONTENTS_KEY, CONTENTS_TYPE);
+        contents = new ArrayList<>(pdc.get(CONTENTS_KEY, CONTENTS_TYPE));
         processing = pdc.get(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK));
         processingTime = pdc.get(PROCESSING_TIME_KEY, RebarSerializers.DOUBLE);
     }
@@ -119,22 +124,32 @@ public final class PitKiln extends RebarBlock implements
         removeWailas();
     }
 
-    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    @Override
+    @MultiHandler(priorities = {EventPriority.NORMAL, EventPriority.MONITOR})
     public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY || !event.getHand().isHand()) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY || event.getHand() != EquipmentSlot.HAND)
+            return;
 
         if (priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
             return;
-        }
-
-        ItemStack item = event.getItem();
-        if (item == null || item.isEmpty()) {
-            return;
+        } else {
+            event.setUseInteractedBlock(Event.Result.DENY);
         }
 
         event.getPlayer().swingHand(event.getHand());
-        addItem(item, true);
+        if(!event.getPlayer().isSneaking()) {
+            ItemStack item = event.getItem();
+            if (item == null || item.isEmpty()) {
+                return;
+            }
+            addItem(item, true);
+        } else {
+            if(contents.isEmpty()){
+                return;
+            }
+            event.getPlayer().give(contents.removeLast());
+        }
     }
 
     public int countItems() {
@@ -148,7 +163,7 @@ public final class PitKiln extends RebarBlock implements
     /**
      * Will add 1 of the type specified in the itemstack
      *
-     * @param item specified itemstack type
+     * @param item          specified itemstack type
      * @param directRemoval if item stack passed will be decreased
      */
     public void addItem(ItemStack item, boolean directRemoval) {
@@ -212,7 +227,27 @@ public final class PitKiln extends RebarBlock implements
         processing.clear();
         for (Vector3i coal : COAL_POSITIONS) {
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
+            if (!(new BlockBreakBlockEvent(coalBlock, getBlock(), List.of())).callEvent()) {
+                continue;
+            }
             coalBlock.setType(Material.AIR);
+        }
+        Block fireBlock = getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z());
+        switch (fireBlock.getType()) {
+            case CAMPFIRE:
+            case SOUL_CAMPFIRE:
+                if (!(fireBlock.getBlockData() instanceof Campfire campfireData)) {
+                    break;
+                }
+                campfireData.setLit(false);
+                fireBlock.getWorld().playSound(fireBlock.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                fireBlock.setBlockData(campfireData);
+                break;
+            default:
+                if (new BlockBreakBlockEvent(fireBlock, getBlock(), List.of()).callEvent()) {
+                    fireBlock.getWorld().playSound(fireBlock.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    fireBlock.setType(Material.AIR);
+                }
         }
     }
 
@@ -224,16 +259,17 @@ public final class PitKiln extends RebarBlock implements
     private WailaDisplay getComponentWaila(@NotNull Player player) {
         Component status = processingTime != null
                 ? Component.translatable(
-                        "pylon.waila.pit_kiln.smelting",
-                        RebarArgument.of(
-                                "time",
-                                UnitFormat.formatDuration(Duration.ofSeconds(processingTime.longValue()), false)
-                        )
+                "pylon.waila.pit_kiln.smelting",
+                RebarArgument.of(
+                        "time",
+                        UnitFormat.formatDuration(Duration.ofSeconds(processingTime.longValue()), false)
                 )
+        )
                 : Component.translatable("pylon.waila.pit_kiln.invalid_recipe");
         return new WailaDisplay(Component.translatable(
                 "pylon.item.pit_kiln.waila",
-                RebarArgument.of("info", status)
+                RebarArgument.of("info", status),
+                RebarArgument.of("nitems", countItems())
         ));
     }
 
@@ -308,20 +344,6 @@ public final class PitKiln extends RebarBlock implements
         }
     }
 
-    @Override @MultiHandler(priorities = { EventPriority.LOWEST, EventPriority.MONITOR }, ignoreCancelled = true)
-    public void onItemMoveTo(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
-        if (priority == EventPriority.LOWEST) {
-            if (countItems() >= CAPACITY) {
-                event.setCancelled(true);
-            }
-            return;
-        }
-
-        ItemStack stack = event.getItem().clone();
-        event.setItem(ItemStack.empty());
-        this.addItem(stack, false);
-    }
-
     // <editor-fold desc="Multiblock" defaultstate="collapsed">
     private static final List<Vector3i> COAL_POSITIONS = List.of(
             new Vector3i(-1, 0, -1),
@@ -353,9 +375,9 @@ public final class PitKiln extends RebarBlock implements
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
         for (Vector3i coalPosition : COAL_POSITIONS) {
             components.put(coalPosition, new MixedMultiblockComponent(
-                    new VanillaMultiblockComponent(Material.COAL_BLOCK),
-                    new RebarMultiblockComponent(PylonKeys.CHARCOAL_BLOCK)
-                )
+                            new VanillaMultiblockComponent(Material.COAL_BLOCK),
+                            new RebarMultiblockComponent(PylonKeys.CHARCOAL_BLOCK)
+                    )
             );
         }
         for (Vector3i podzolPosition : TOP_POSITIONS) {
