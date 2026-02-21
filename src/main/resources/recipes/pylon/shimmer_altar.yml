@@ -21,31 +21,6 @@ pylon:shimmer_skull:
   result: pylon:shimmer_skull
   time-seconds: 30
 
-pylon:health_talisman_advanced:
-  shape:
-    - " SC"
-    - "SDS"
-    - "BS "
-  key:
-    S: pylon:health_talisman_simple
-    D: pylon:diamond_dust
-    C: pylon:carbon
-    B: pylon:bronze_dust
-  result: pylon:health_talisman_advanced
-  time-seconds: 35
-
-pylon:health_talisman_ultimate:
-  shape:
-    - "AAA"
-    - "ASA"
-    - " E "
-  key:
-    A: pylon:health_talisman_advanced
-    S: pylon:shimmer_skull
-    E: pylon:emerald_dust
-  result: pylon:health_talisman_ultimate
-  time-seconds: 90
-
 pylon:lumber_axe:
   shape:
     - "S G"
