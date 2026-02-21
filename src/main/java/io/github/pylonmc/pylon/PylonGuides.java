@@ -27,7 +27,19 @@ public class PylonGuides {
 
         RebarGuide.getInfoPage().addButton(new AddonPageButton(Pylon.getInstance(), INFO));
 
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.IRON_PICKAXE, Pylon.getInstance(), "info.progression.manual_core")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.CLOCK, Pylon.getInstance(), "info.loupe"))); // recycle loupe desc
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BRICKS, Pylon.getInstance(), "info.progression.pit_kiln")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BRICK, Pylon.getInstance(), "info.progression.bronze_age")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.WATER_BUCKET, Pylon.getInstance(), "info.progression.hydraulic_machines")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.MINECART, Pylon.getInstance(), "info.progression.cargo_machines")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.QUARTZ, Pylon.getInstance(), "info.progression.gypsum")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BLAST_FURNACE, Pylon.getInstance(), "info.progression.steel_age")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.PISTON, Pylon.getInstance(), "info.progression.diesel_machines")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.NETHERITE_INGOT, Pylon.getInstance(), "info.progression.palladium")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "info.progression.palladium_flight_ring")));
         INFO.addPage(Material.BOOKSHELF, PROGRESSION);
+
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.DECORATED_POT).addCustomModelDataString(PylonKeys.PIT_KILN.asString()), PIT_KILN));
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.BROWN_TERRACOTTA).addCustomModelDataString(PylonKeys.FLUID_PIPE_WOOD.asString()), FLUID_HANDLING));
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.WAXED_COPPER_BULB).addCustomModelDataString(PylonKeys.HYDRAULIC_CORE_DRILL.asString()), HYDRAULICS));
