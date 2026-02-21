@@ -88,10 +88,6 @@ public record AssemblingRecipe(
                     results.size() <= 6,
                     "Assembling recipes can have at most 6 results - " + key
             );
-            Preconditions.checkArgument(
-                    steps.size() <= 9,
-                    "Assembling recipes can have at most 9 steps - " + key
-            );
 
             return new AssemblingRecipe(key, inputs, results, steps);
         }
