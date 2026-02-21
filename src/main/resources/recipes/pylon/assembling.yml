@@ -1242,11 +1242,6 @@ pylon:bartering_talisman_palladium:
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
 
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
-
 pylon:water_breathing_talisman_palladium:
   inputs:
     - pylon:water_breathing_talisman_ultimate: 1
@@ -1483,11 +1478,6 @@ pylon:water_breathing_talisman_palladium:
           item: minecraft:light_blue_concrete
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
-
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
 
 pylon:luck_talisman_palladium:
   inputs:
@@ -1726,11 +1716,6 @@ pylon:luck_talisman_palladium:
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
 
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
-
 pylon:breeding_talisman_palladium:
   inputs:
     - pylon:breeding_talisman_ultimate: 1
@@ -1967,11 +1952,6 @@ pylon:breeding_talisman_palladium:
           item: minecraft:light_blue_concrete
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
-
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
 
 pylon:enchanting_talisman_palladium:
   inputs:
@@ -2210,11 +2190,6 @@ pylon:enchanting_talisman_palladium:
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
 
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
-
 pylon:hunting_talisman_palladium:
   inputs:
     - pylon:hunting_talisman_ultimate: 1
@@ -2451,8 +2426,3 @@ pylon:hunting_talisman_palladium:
           item: minecraft:light_blue_concrete
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
-
-    - name: "talisman"
-      item: pylon:health_talisman_ultimate
-      position: [0.5, 0.5]
-      scale: [0.25, 0.25, 0.25]
