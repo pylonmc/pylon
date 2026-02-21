@@ -2261,6 +2261,13 @@ guide:
     building: "<white>Building"
     creative_items: "<light_purple>Creative Items <#ff0000>(admin only)</#ff0000>"
     magic: "<white>Magic"
+    info: "<white>Pylon Info"
+    info_progression: "<white>Pylon Progression"
+    info_pit_kiln: "<white>Pit Kiln 101"
+    info_fluid_handling: "<white>Fluid handling 101"
+    info_hydraulics: "<white>Hydraulics 101"
+    info_bloomery: "<white>Forging 101: Bloomery"
+    info_smeltery: "<white>Forging 102: Smeltery"
   recipe:
     grindstone:
       time: "<attr>Grinding time:</attr> %time%"
@@ -2272,6 +2279,65 @@ guide:
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
     hammer: "<attr>Chance:</attr> %chance%"
+  button:
+    info:
+      loupe:
+        name: "Researching with the Loupe"
+        lore: |-
+          <arrow> The loupe is your first source of research points, by examining items/blocks/entities with it you can gain research points
+          <arrow> Examining dropped items & blocks **will** consume them (unless they are unbreakable), so use it carefully
+      research_packs:
+        name: "Research Packs"
+        lore: |-
+          <arrow> As you need more and more research points, the loupe may fall behind or just not be enough
+          <arrow> Research packs can be crafted and consumed to grant a fixed number of research points, with a cooldown between uses
+          progression:
+      progression:
+        manual_core:
+          name: "Manual Core"
+          lore: ""
+        pit_kiln:
+          name: "Pit Kiln"
+          lore: ""
+        bronze_age:
+          name: "Bronze Age"
+          lore: ""
+        hydraulic_machines:
+          name: "Hydraulic Machines"
+          lore: ""
+        cargo_machines:
+          name: "Cargo Machines"
+          lore: ""
+        gypsum:
+          name: "Gypsum"
+          lore: ""
+        steel_age:
+          name: "Steel Age"
+          lore: ""
+        diesel_machines:
+          name: "Diesel Machines"
+          lore: ""
+        palladium:
+          name: "Palladium Age"
+          lore: ""
+        palladium_flight_ring:
+          name: "Palladium Flight Ring"
+          lore: ""
+      pit_kiln:
+        kiln:
+          name: "The Pit Kiln"
+          lore: |-
+            <arrow> The pit kiln is the earliest form of advanced smelting available to you
+        construction:
+          name: "Constructing the Pit Kiln"
+          lore: ""
+        crafting:
+          name: "Crafting with the Pit Kiln"
+          lore: ""
+      bloomery:
+        bloomer:
+          name: "The Bloomery"
+          lore: ""
 
 message:
   assembly_table:

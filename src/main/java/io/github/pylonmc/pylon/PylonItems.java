@@ -2790,6 +2790,7 @@ public final class PylonItems {
 
     static {
         PylonPages.initialise();
+        PylonGuides.initialise();
     }
 
     // Calling this method forces all the static blocks to run, which initializes our items
