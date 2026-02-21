@@ -651,7 +651,7 @@ item:
       ...or 1x <yellow>Soul Fire</yellow> (%soul_fire%x <attr>speed</attr>) 
       <diamond> 9x <yellow>Podzol</yellow> (%podzol%x <attr>yield</attr>) 
       ...or 9x <yellow>Coarse Dirt</yellow> (%coarse_dirt%x <attr>yield</attr>)
-    waila: "Pit Kiln | %info%"
+    waila: "Pit Kiln | %info% | %nitems% items"
 
   portability_catalyst:
     name: "Portability Catalyst"

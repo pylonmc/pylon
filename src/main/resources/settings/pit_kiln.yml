@@ -1,5 +1,5 @@
 capacity: 18
-processing-time-seconds: 300
+processing-time-seconds: 2
 speed-multipliers:
   campfire: 0.5
   soul-campfire: 1.0
