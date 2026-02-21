@@ -1988,6 +1988,11 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
+  palladium_flight_ring:
+    name: "<white>Palladium Flight Ring"
+    lore: |-
+      <arrow> Allows creative flight
+
   assembly_table:
     name: "<white>Assembly Table"
     lore: |-
