@@ -41,13 +41,16 @@ import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
 
 import java.util.Objects;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 @SuppressWarnings({"UnstableApiUsage", "OverlyComplexClass"})
 public final class PylonItems {
@@ -767,6 +770,9 @@ public final class PylonItems {
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
     public static final ItemStack STONE_HAMMER = ItemStackBuilder.rebarWeapon(Material.STONE_PICKAXE, PylonKeys.STONE_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, STONE_HAMMER);
@@ -774,6 +780,9 @@ public final class PylonItems {
     }
 
     public static final ItemStack IRON_HAMMER = ItemStackBuilder.rebarWeapon(Material.IRON_PICKAXE, PylonKeys.IRON_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, IRON_HAMMER);
@@ -781,6 +790,9 @@ public final class PylonItems {
     }
 
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
@@ -2604,6 +2616,151 @@ public final class PylonItems {
                 .addIngredient(DISINFECTANT);
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
+    }
+
+    public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebar(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET)
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
+                    pylonKey("palladium_helmet_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.MULTIPLY_SCALAR_1,
+                    EquipmentSlotGroup.HEAD
+            ))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_HELMET);
+        PylonPages.ARMOUR.addItem(PALLADIUM_HELMET);
+    }
+
+    public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebar(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
+                    pylonKey("palladium_chestplate_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.MULTIPLY_SCALAR_1,
+                    EquipmentSlotGroup.CHEST
+            ))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_CHESTPLATE);
+        PylonPages.ARMOUR.addItem(PALLADIUM_CHESTPLATE);
+    }
+
+    public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebar(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .build())
+            .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
+                    pylonKey("palladium_leggings_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.MULTIPLY_SCALAR_1,
+                    EquipmentSlotGroup.LEGS
+            ))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_LEGGINGS);
+        PylonPages.ARMOUR.addItem(PALLADIUM_LEGGINGS);
+    }
+
+    public static final ItemStack PALLADIUM_BOOTS = ItemStackBuilder.rebarBoots(Material.DIAMOND_BOOTS, PylonKeys.PALLADIUM_BOOTS, true)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
+                    .add(Enchantment.FROST_WALKER, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("frost-walker-level", ConfigAdapter.INTEGER))
+                    .build())
+            .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
+                    pylonKey("palladium_boots_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.MULTIPLY_SCALAR_1,
+                    EquipmentSlotGroup.FEET
+            ))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_BOOTS);
+        PylonPages.ARMOUR.addItem(PALLADIUM_BOOTS);
+    }
+
+    public static final ItemStack PALLADIUM_SWORD = ItemStackBuilder.rebarWeapon(Material.DIAMOND_SWORD, PylonKeys.PALLADIUM_SWORD, true, true, false)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.SHARPNESS, Settings.get(PylonKeys.PALLADIUM_SWORD).getOrThrow("sharpness-level", ConfigAdapter.INTEGER))
+                    .build()
+            )
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_SWORD).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SWORD);
+        PylonPages.COMBAT.addItem(PALLADIUM_SWORD);
+    }
+
+    public static final ItemStack PALLADIUM_AXE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_AXE, PylonKeys.PALLADIUM_AXE, RebarUtils.axeMineable(), true, true, true)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_AXE);
+        PylonPages.TOOLS.addItem(PALLADIUM_AXE);
+    }
+
+    public static final ItemStack PALLADIUM_PICKAXE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_PICKAXE, PylonKeys.PALLADIUM_PICKAXE, RebarUtils.pickaxeMineable(), true, true, false)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_PICKAXE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_PICKAXE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_PICKAXE);
+        PylonPages.TOOLS.addItem(PALLADIUM_PICKAXE);
+    }
+
+    public static final ItemStack PALLADIUM_SHOVEL = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_SHOVEL, PylonKeys.PALLADIUM_SHOVEL, RebarUtils.shovelMineable(), true, true, false)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_SHOVEL).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build()
+            )
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_SHOVEL).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_SHOVEL);
+        PylonPages.TOOLS.addItem(PALLADIUM_SHOVEL);
+    }
+
+    public static final ItemStack PALLADIUM_HOE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_HOE, PylonKeys.PALLADIUM_HOE, RebarUtils.hoeMineable(), true, true, false)
+            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_HOE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
+                    .build())
+            .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HOE).getOrThrow("durability", ConfigAdapter.INTEGER))
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_HOE);
+        PylonPages.TOOLS.addItem(PALLADIUM_HOE);
+    }
+
+    public static final ItemStack FLUID_PIPE_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_PIPE_PALLADIUM)
+            .set(DataComponentTypes.ITEM_MODEL, Settings.get(PylonKeys.FLUID_PIPE_PALLADIUM).getOrThrow("material", ConfigAdapter.MATERIAL).key())
+            .build();
+    static {
+        RebarItem.register(FluidPipe.class, FLUID_PIPE_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_PIPE_PALLADIUM);
+    }
+
+    public static final ItemStack FLUID_TANK_CASING_PALLADIUM = ItemStackBuilder.rebar(Material.BLUE_STAINED_GLASS, PylonKeys.FLUID_TANK_CASING_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(FluidTankCasing.Item.class, FLUID_TANK_CASING_PALLADIUM, PylonKeys.FLUID_TANK_CASING_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_TANK_CASING_PALLADIUM);
+    }
+
+    public static final ItemStack PORTABLE_FLUID_TANK_PALLADIUM = ItemStackBuilder.rebar(Material.BLUE_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(PortableFluidTank.Item.class, PORTABLE_FLUID_TANK_PALLADIUM, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_PALLADIUM);
     }
 
     static {

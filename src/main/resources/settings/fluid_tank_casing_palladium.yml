@@ -1,0 +1,3 @@
+material: blue_stained_glass
+capacity: 50000.0
+allowed-temperatures: [cold, normal, hot] # can be cold (cryogenic), normal, or hot (molten)

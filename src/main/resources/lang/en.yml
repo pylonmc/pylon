@@ -252,6 +252,14 @@ item:
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
+  fluid_pipe_palladium:
+    name: "Palladium Fluid Pipe"
+    lore: |-
+      <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> You can only connect pipes of the same type
+      <arrow> <attr>Fluid:</attr> %fluid_per_second%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
   fluid_pipe_creative:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
@@ -336,6 +344,16 @@ item:
       <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
     waila: "Steel Portable Fluid Tank | %bars% (%fluid%)"
+
+  portable_fluid_tank_palladium:
+    name: "Palladium Portable Fluid Tank"
+    lore: |-
+      <arrow> Can be placed down and connected with pipes
+      <arrow> Retains contents when broken
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
+    waila: "Palladium Portable Fluid Tank | %bars% (%fluid%)"
 
   fluid_valve:
     name: "<white>Fluid Valve"
@@ -1202,6 +1220,13 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
+  fluid_tank_casing_palladium:
+    name: "Palladium Fluid Tank Casing"
+    lore: |-
+      <star> Fluid Tank multiblock component
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
   manual_core_drill_lever:
     name: "Manual Core Drill Lever"
     lore: |-
@@ -2039,6 +2064,33 @@ item:
   cargo_controller:
     name: "Cargo Controller"
 
+  palladium_helmet:
+    name: "Palladium Helmet"
+
+  palladium_chestplate:
+    name: "Palladium Chestplate"
+
+  palladium_leggings:
+    name: "Palladium Leggings"
+
+  palladium_boots:
+    name: "Palladium Boots"
+
+  palladium_sword:
+    name: "Palladium Sword"
+
+  palladium_axe:
+    name: "Palladium Axe"
+
+  palladium_pickaxe:
+    name: "Palladium Pickaxe"
+
+  palladium_shovel:
+    name: "Palladium Shovel"
+
+  palladium_hoe:
+    name: "Palladium Hoe"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2143,6 +2195,7 @@ research:
   fluid_handling_2: "<#58e2d2>Fluid handling II"
   fluid_handling_3: "<#58e2d2>Fluid handling III"
   fluid_handling_4: "<#58e2d2>Fluid handling IV"
+  fluid_handling_5: "<#2937e3>Fluid handling V"
   components_1: "<#c1c1c1>Components I"
   components_2: "<#c1c1c1>Components II"
   straining: "<#c99fa1>Straining"
@@ -2156,6 +2209,8 @@ research:
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   assembling: "<#846e5a>Assembling"
+  palladium_tools: "<#2937e3>Palladium tools"
+  palladium_armor: "<#2937e3>Palladium armor"
 
 guide:
   page:

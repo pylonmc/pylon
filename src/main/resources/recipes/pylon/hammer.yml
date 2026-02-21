@@ -69,6 +69,12 @@ pylon:steel_sheet:
   mining-level: diamond
   chance: 0.25
 
+pylon:palladium_sheet:
+  input: pylon:palladium_ingot
+  result: pylon:palladium_sheet
+  mining-level: diamond
+  chance: 0.25
+
 pylon:gravel_from_rocks:
   input: "#rebar:rocks"
   result: minecraft:gravel

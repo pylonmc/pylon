@@ -51,6 +51,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_BRONZE, Material.ORANGE_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE, Material.BLACK_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_STEEL, Material.GRAY_STAINED_GLASS, PortableFluidTank.class);
+        RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM, Material.BLUE_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.FLUID_TANK, Material.GRAY_TERRACOTTA, FluidTank.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_WOOD, Material.BROWN_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_COPPER, Material.ORANGE_STAINED_GLASS, FluidTankCasing.class);
@@ -59,6 +60,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_BRONZE, Material.ORANGE_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_IGNEOUS_COMPOSITE, Material.BLACK_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_STEEL, Material.GRAY_STAINED_GLASS, FluidTankCasing.class);
+        RebarBlock.register(PylonKeys.FLUID_TANK_CASING_PALLADIUM, Material.BLUE_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_INPUT_HATCH, Material.LIGHT_BLUE_TERRACOTTA, FluidInputHatch.class);
         RebarBlock.register(PylonKeys.FLUID_OUTPUT_HATCH, Material.ORANGE_TERRACOTTA, FluidOutputHatch.class);
         RebarBlock.register(PylonKeys.ITEM_INPUT_HATCH, Material.GREEN_TERRACOTTA, ItemInputHatch.class);
