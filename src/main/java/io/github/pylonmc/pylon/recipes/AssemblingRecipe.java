@@ -24,6 +24,7 @@ import xyz.xenondevs.invui.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -75,6 +76,15 @@ public record AssemblingRecipe(
                         addDisplays,
                         stepSection.get("remove_displays", ConfigAdapter.LIST.from(ConfigAdapter.STRING), new ArrayList<>())
                 ));
+            }
+            ArrayList<String> names = new ArrayList<>();
+            for(Step step : steps){
+                for(AddDisplay display : step.addDisplays){
+                    if(names.contains(display.name)){
+                        throw new IllegalArgumentException("Duplicate names for entities are not allowed. Offending name: " + display.name);
+                    }
+                    names.add(display.name);
+                }
             }
 
             List<RecipeInput.Item> inputs = section.getOrThrow("inputs", ConfigAdapter.LIST.from(ConfigAdapter.RECIPE_INPUT_ITEM));
