@@ -2426,3 +2426,140 @@ pylon:hunting_talisman_palladium:
           item: minecraft:light_blue_concrete
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
+pylon:research_pack_3:
+  inputs:
+    - pylon:internal_combustion_engine: 1
+    - pylon:backflow_valve: 2
+    - pylon:steel_cylinder: 1
+    - pylon:steel_crankshaft: 1
+  results:
+    - pylon:research_pack_3
+  steps:
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 2
+      add-displays:
+        - name: "Engine"
+          item: pylon:internal_combustion_engine
+          position: [0.5, 0.5]
+          scale: [0.35, 0.35, 0.35]
+        - name: "Valve1"
+          item: pylon:backflow_valve
+          position: [0.5, 1.0]
+          scale: [0.15, 0.15, 0.15]
+        - name: "Valve2"
+          item: pylon:backflow_valve
+          position: [0.5, 0.0]
+          scale: [0.15, 0.15, 0.15]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 2
+      add-displays:
+        - name: "Valve1P2"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.9 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+        - name: "Valve2P2"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.1 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Valve1"
+        - "Valve2"
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 2
+      add-displays:
+        - name: "Valve1P3"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.8 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+        - name: "Valve2P3"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.2 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+          - "Valve1P2"
+          - "Valve2P2"
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 2
+      add-displays:
+        - name: "Valve1P4"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.7 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+        - name: "Valve2P4"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Valve1P3"
+        - "Valve2P3"
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 2
+      add-displays:
+        - name: "Valve1P5"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.61 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+        - name: "Valve2P5"
+          item: pylon:backflow_valve
+          position: [ 0.5, 0.39 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Valve1P4"
+        - "Valve2P4"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "CrankP1"
+          item: pylon:steel_crankshaft
+          position: [1.0, 0.5]
+          scale: [0.2, 0.2, 0.2]
+
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "CrankP2"
+          item: pylon:steel_crankshaft
+          position: [0.9, 0.5]
+          scale: [0.2, 0.2, 0.2]
+      remove_displays:
+        - "CrankP1"
+
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "CrankP3"
+          item: pylon:steel_crankshaft
+          position: [0.8, 0.5]
+          scale: [0.2, 0.2, 0.2]
+      remove_displays:
+        - "CrankP2"
+
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "CrankP4"
+          item: pylon:steel_crankshaft
+          position: [0.7, 0.5]
+          scale: [0.2, 0.2, 0.2]
+      remove_displays:
+        - "CrankP3"
+
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "CrankP5"
+          item: pylon:steel_crankshaft
+          position: [0.6, 0.5]
+          scale: [0.2, 0.2, 0.2]
+      remove_displays:
+        - "CrankP4"
