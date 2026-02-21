@@ -97,7 +97,7 @@ public final class PylonItems {
         PylonPages.SCIENCE.addItem(RESEARCH_PACK_2);
     }
 
-    public static final ItemStack RESEARCH_PACK_3 = ItemStackBuilder.rebar(Material.BLACK_BANNER, PylonKeys.RESEARCH_PACK_3)
+    public static final ItemStack RESEARCH_PACK_3 = ItemStackBuilder.rebar(Material.GRAY_BANNER, PylonKeys.RESEARCH_PACK_3)
             .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_3).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_3)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
@@ -106,7 +106,7 @@ public final class PylonItems {
         PylonPages.SCIENCE.addItem(RESEARCH_PACK_3);
     }
 
-    public static final ItemStack RESEARCH_PACK_4 = ItemStackBuilder.rebar(Material.BLACK_BANNER, PylonKeys.RESEARCH_PACK_4)
+    public static final ItemStack RESEARCH_PACK_4 = ItemStackBuilder.rebar(Material.LIGHT_BLUE_BANNER, PylonKeys.RESEARCH_PACK_4)
             .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_4).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_4)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
