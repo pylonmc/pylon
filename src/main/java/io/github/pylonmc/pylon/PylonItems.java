@@ -97,6 +97,24 @@ public final class PylonItems {
         PylonPages.SCIENCE.addItem(RESEARCH_PACK_2);
     }
 
+    public static final ItemStack RESEARCH_PACK_3 = ItemStackBuilder.rebar(Material.BLACK_BANNER, PylonKeys.RESEARCH_PACK_3)
+            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_3).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_3)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 3)
+            .build();
+    static {
+        RebarItem.register(ResearchPack.class, RESEARCH_PACK_3);
+        PylonPages.SCIENCE.addItem(RESEARCH_PACK_3);
+    }
+
+    public static final ItemStack RESEARCH_PACK_4 = ItemStackBuilder.rebar(Material.BLACK_BANNER, PylonKeys.RESEARCH_PACK_4)
+            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_4).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_4)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 3)
+            .build();
+    static {
+        RebarItem.register(ResearchPack.class, RESEARCH_PACK_4);
+        PylonPages.SCIENCE.addItem(RESEARCH_PACK_4);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Resources - Metals" defaultstate=collapsed>

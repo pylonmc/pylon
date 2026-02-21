@@ -217,8 +217,11 @@ public class PylonKeys {
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");
 
     public static final NamespacedKey LOUPE = pylonKey("loupe");
+
     public static final NamespacedKey RESEARCH_PACK_1 = pylonKey("research_pack_1");
     public static final NamespacedKey RESEARCH_PACK_2 = pylonKey("research_pack_2");
+    public static final NamespacedKey RESEARCH_PACK_3 = pylonKey("research_pack_3");
+    public static final NamespacedKey RESEARCH_PACK_4 = pylonKey("research_pack_4");
 
     public static final NamespacedKey REFRACTORY_MIX = pylonKey("refractory_mix");
     public static final NamespacedKey UNFIRED_REFRACTORY_BRICK = pylonKey("unfired_refractory_brick");

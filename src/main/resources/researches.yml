@@ -462,6 +462,18 @@ scientific_revolution_2:
   unlocks:
   - pylon:research_pack_2
 
+scientific_revolution_3:
+  item: pylon:research_pack_3
+  cost: 70
+  unlocks:
+    - pylon:research_pack_3
+
+scientific_revolution_4:
+  item: pylon:research_pack_4
+  cost: 100
+  unlocks:
+    - pylon:research_pack_4
+
 components_1:
   item: pylon:bronze_drill_bit
   cost: 10

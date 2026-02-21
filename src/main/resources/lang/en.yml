@@ -725,6 +725,20 @@ item:
       <arrow> <attr>Research points:</attr> %points%
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
+  research_pack_3:
+    name: "Research Pack III"
+    lore: |-
+      <arrow> <insn>Right click</insn> to open
+      <arrow> <attr>Research points:</attr> %points%
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  research_pack_4:
+    name: "Research Pack IV"
+    lore: |-
+      <arrow> <insn>Right click</insn> to open
+      <arrow> <attr>Research points:</attr> %points%
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
   rock_dust:
     name: "Rock Dust"
 
@@ -2167,6 +2181,8 @@ research:
   shimmer_field_manipulation: "<#e5c4ef>Shimmer field manipulation"
   scientific_revolution_1: "<#5bfc05>The Scientific Revolution I"
   scientific_revolution_2: "<#5bfc05>The Scientific Revolution II"
+  scientific_revolution_3: "<#5bfc05>The Scientific Revolution III"
+  scientific_revolution_4: "<#5bfc05>The Scientific Revolution IV"
   talismans_1: "<#ce6625>Talismans I"
   talismans_2: "<#ce6625>Talismans II"
   talismans_3: "<#ce6625>Talismans III"
