@@ -22,8 +22,8 @@ public class PylonGuides {
     public static final SimpleStaticGuidePage SMELTERY = new SimpleStaticGuidePage(pylonKey("info_smeltery"));
 
     public static void initialise() {
-        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.GLASS_PANE, Pylon.getInstance(), "info_loupe")));
-        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.RED_BANNER, Pylon.getInstance(), "info_research_packs")));
+        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.GLASS_PANE, Pylon.getInstance(), "info.loupe")));
+        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.RED_BANNER, Pylon.getInstance(), "info.research_packs")));
 
         RebarGuide.getInfoPage().addButton(new AddonPageButton(Pylon.getInstance(), INFO));
 
