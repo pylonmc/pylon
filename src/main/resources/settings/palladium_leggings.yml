@@ -1,2 +1,5 @@
-durability: 525
-prot-level: 1
+durability: 650
+prot-level: 3
+armor-toughness: 5
+armor: 6
+speedmul: 0.05

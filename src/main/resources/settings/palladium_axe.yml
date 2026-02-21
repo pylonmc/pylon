@@ -1,2 +1,10 @@
-efficiency-level: 1
-durability: 1796
+efficiency-level: 3
+durability: 2400
+attack-damage: 12
+attack-speed: 1.6
+attack-durability-damage: 2
+attack-knockback: 0.25
+disable-shield-seconds: 5.0
+
+mining-speed: 10.5
+mining-durability-damage: 1
