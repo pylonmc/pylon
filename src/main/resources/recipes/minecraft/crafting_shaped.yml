@@ -488,6 +488,17 @@ pylon:fluid_pipe_steel:
     pylon:fluid_pipe_steel: 8
   category: building
 
+pylon:fluid_pipe_palladium:
+  pattern:
+    - "PPP"
+    - "   "
+    - "PPP"
+  key:
+    P: pylon:palladium_sheet
+  result:
+    pylon:fluid_pipe_palladium: 8
+  category: building
+
 pylon:portable_fluid_tank_wood:
   pattern:
     - "CGC"
@@ -564,6 +575,17 @@ pylon:portable_fluid_tank_steel:
     C: pylon:steel_sheet
     G: minecraft:glass
   result: pylon:portable_fluid_tank_steel
+  category: building
+
+pylon:portable_fluid_tank_palladium:
+  pattern:
+    - "PGP"
+    - "P P"
+    - "PGP"
+  key:
+    P: pylon:palladium_sheet
+    G: minecraft:glass
+  result: pylon:portable_fluid_tank_palladium
   category: building
 
 pylon:fluid_tank:
@@ -653,6 +675,17 @@ pylon:fluid_tank_casing_steel:
     C: pylon:steel_sheet
     G: minecraft:glass
   result: pylon:fluid_tank_casing_steel
+  category: building
+
+pylon:fluid_tank_casing_palladium:
+  pattern:
+    - "P P"
+    - "G G"
+    - "P P"
+  key:
+    P: pylon:palladium_sheet
+    G: minecraft:glass
+  result: pylon:fluid_tank_casing_palladium
   category: building
 
 pylon:rotor:

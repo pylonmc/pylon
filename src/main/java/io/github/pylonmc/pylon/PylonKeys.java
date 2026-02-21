@@ -119,6 +119,7 @@ public class PylonKeys {
     public static final NamespacedKey STONE_HAMMER = pylonKey("stone_hammer");
     public static final NamespacedKey IRON_HAMMER = pylonKey("iron_hammer");
     public static final NamespacedKey DIAMOND_HAMMER = pylonKey("diamond_hammer");
+    public static final NamespacedKey NETHERITE_HAMMER = pylonKey("netherite_hammer");
 
     public static final NamespacedKey WATERING_CAN = pylonKey("watering_can");
     public static final NamespacedKey SPRINKLER = pylonKey("sprinkler");
@@ -411,4 +412,8 @@ public class PylonKeys {
     public static final NamespacedKey PALLADIUM_PICKAXE = pylonKey("palladium_pickaxe");
     public static final NamespacedKey PALLADIUM_SHOVEL = pylonKey("palladium_shovel");
     public static final NamespacedKey PALLADIUM_HOE = pylonKey("palladium_hoe");
+
+    public static final NamespacedKey FLUID_PIPE_PALLADIUM = pylonKey("fluid_pipe_palladium");
+    public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
+    public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 }

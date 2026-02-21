@@ -768,6 +768,9 @@ public final class PylonItems {
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
     public static final ItemStack STONE_HAMMER = ItemStackBuilder.rebarWeapon(Material.STONE_PICKAXE, PylonKeys.STONE_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, STONE_HAMMER);
@@ -775,6 +778,9 @@ public final class PylonItems {
     }
 
     public static final ItemStack IRON_HAMMER = ItemStackBuilder.rebarWeapon(Material.IRON_PICKAXE, PylonKeys.IRON_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, IRON_HAMMER);
@@ -782,6 +788,9 @@ public final class PylonItems {
     }
 
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .build())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
@@ -2728,6 +2737,28 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, PALLADIUM_HOE);
         PylonPages.TOOLS.addItem(PALLADIUM_HOE);
+    }
+
+    public static final ItemStack FLUID_PIPE_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_PIPE_PALLADIUM)
+            .set(DataComponentTypes.ITEM_MODEL, Settings.get(PylonKeys.FLUID_PIPE_PALLADIUM).getOrThrow("material", ConfigAdapter.MATERIAL).key())
+            .build();
+    static {
+        RebarItem.register(FluidPipe.class, FLUID_PIPE_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_PIPE_PALLADIUM);
+    }
+
+    public static final ItemStack FLUID_TANK_CASING_PALLADIUM = ItemStackBuilder.rebar(Material.BLUE_STAINED_GLASS, PylonKeys.FLUID_TANK_CASING_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(FluidTankCasing.Item.class, FLUID_TANK_CASING_PALLADIUM, PylonKeys.FLUID_TANK_CASING_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_TANK_CASING_PALLADIUM);
+    }
+
+    public static final ItemStack PORTABLE_FLUID_TANK_PALLADIUM = ItemStackBuilder.rebar(Material.BLUE_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM)
+            .build();
+    static {
+        RebarItem.register(PortableFluidTank.Item.class, PORTABLE_FLUID_TANK_PALLADIUM, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_PALLADIUM);
     }
 
     static {

@@ -1,0 +1,3 @@
+material: diamond_block
+fluid-per-second: 750.0
+allowed-temperatures: [cold, normal, hot] # can be cold (cryogenic), normal, or hot (molten)

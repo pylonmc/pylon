@@ -46,3 +46,10 @@ pylon:fluid_pipe_igneous_composite:
     pylon:fluid_pipe_igneous_composite: 2
   particle-data: minecraft:obsidian
   time-ticks: 40
+
+pylon:fluid_pipe_palladium:
+  input: pylon:palladium_block
+  result:
+    pylon:fluid_pipe_palladium: 18
+  particle-data: minecraft:diamond_block
+  time-ticks: 400

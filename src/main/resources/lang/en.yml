@@ -252,6 +252,14 @@ item:
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
+  fluid_pipe_palladium:
+    name: "Palladium Fluid Pipe"
+    lore: |-
+      <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> You can only connect pipes of the same type
+      <arrow> <attr>Fluid:</attr> %fluid_per_second%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
   fluid_pipe_creative:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
@@ -336,6 +344,16 @@ item:
       <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
     waila: "Steel Portable Fluid Tank | %bars% (%fluid%)"
+
+  portable_fluid_tank_palladium:
+    name: "Palladium Portable Fluid Tank"
+    lore: |-
+      <arrow> Can be placed down and connected with pipes
+      <arrow> Retains contents when broken
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
+    waila: "Palladium Portable Fluid Tank | %bars% (%fluid%)"
 
   fluid_valve:
     name: "<white>Fluid Valve"
@@ -1197,6 +1215,13 @@ item:
 
   fluid_tank_casing_steel:
     name: "Steel Fluid Tank Casing"
+    lore: |-
+      <star> Fluid Tank multiblock component
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
+  fluid_tank_casing_palladium:
+    name: "Palladium Fluid Tank Casing"
     lore: |-
       <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%

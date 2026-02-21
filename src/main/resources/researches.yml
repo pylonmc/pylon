@@ -181,6 +181,9 @@ fluid_handling_4:
     - pylon:fluid_pipe_steel
     - pylon:portable_fluid_tank_steel
     - pylon:fluid_tank_casing_steel
+    - pylon:fluid_pipe_palladium
+    - pylon:portable_fluid_tank_palladium
+    - pylon:fluid_tank_casing_palladium
 
 fluid_machines_1:
   item: pylon:fluid_filter
