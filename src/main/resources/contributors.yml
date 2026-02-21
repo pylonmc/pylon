@@ -12,9 +12,7 @@ contributors:
     description: "<white><!i>A veteran Slimefun addon developer (SlimefunWarfare, SFCalc, Galactifun), with a impressive contribution record for SF addons, Paper, and Slimefun. Seggan is responsible for many core Rebar and Pylon systems, including translation, WAILA, researches, the smeltery, the recipe system, and more."
     minecraft-uuid: "8f1238ab-5acb-408a-8cd3-ef61bcbf6945"
   - display-name: Vaan1310
-    description: |-
-      <arrow> Previously headed a geopolitics server and has been doing a lot of valuable work on the 'smaller stuff'
-      <arrow> resolving issues, fixing bugs, adding polishing, making technical changes, and lots more.
+    description: "<white><!i>Previously headed a geopolitics server and has been doing a lot of valuable work on the 'smaller stuff' resolving issues, fixing bugs, adding polishing, making technical changes, and lots more."
     github: Intybyte
   - display-name: "JustAHuman"
     description: "<white><!i>Head developer on my server for 3 years and works professionally in the Minecraft space. He has done the majority of the texture pack support side of Pylon, and other various smaller refinements."
