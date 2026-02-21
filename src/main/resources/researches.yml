@@ -181,6 +181,11 @@ fluid_handling_4:
     - pylon:fluid_pipe_steel
     - pylon:portable_fluid_tank_steel
     - pylon:fluid_tank_casing_steel
+
+fluid_handling_5:
+  item: pylon:fluid_pipe_palladium
+  cost: 60
+  unlocks:
     - pylon:fluid_pipe_palladium
     - pylon:portable_fluid_tank_palladium
     - pylon:fluid_tank_casing_palladium
@@ -539,7 +544,7 @@ wither_reactivation:
 
 palladium_tools:
   item: pylon:palladium_sword
-  cost: 20
+  cost: 150
   unlocks:
     - pylon:palladium_sword
     - pylon:palladium_axe
@@ -549,7 +554,7 @@ palladium_tools:
 
 palladium_armor:
   item: pylon:palladium_chestplate
-  cost: 20
+  cost: 150
   unlocks:
     - pylon:palladium_helmet
     - pylon:palladium_chestplate

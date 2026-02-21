@@ -1,5 +1,5 @@
-durability: 650
+durability: 1300
 prot-level: 3
-armor-toughness: 5
+armor-toughness: 6
 armor: 6
-speedmul: 0.05
+speed-percentage-increase: 0.1

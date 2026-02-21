@@ -50,6 +50,8 @@ import org.bukkit.potion.PotionType;
 
 import java.util.Objects;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 @SuppressWarnings({"UnstableApiUsage", "OverlyComplexClass"})
 public final class PylonItems {
 
@@ -769,7 +771,7 @@ public final class PylonItems {
     //<editor-fold desc="Tools" defaultstate=collapsed>
     public static final ItemStack STONE_HAMMER = ItemStackBuilder.rebarWeapon(Material.STONE_PICKAXE, PylonKeys.STONE_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
-                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .cooldownGroup(PylonKeys.HAMMER)
                     .build())
             .noTool().build();
     static {
@@ -779,7 +781,7 @@ public final class PylonItems {
 
     public static final ItemStack IRON_HAMMER = ItemStackBuilder.rebarWeapon(Material.IRON_PICKAXE, PylonKeys.IRON_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
-                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .cooldownGroup(PylonKeys.HAMMER)
                     .build())
             .noTool().build();
     static {
@@ -789,7 +791,7 @@ public final class PylonItems {
 
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
-                    .cooldownGroup(Key.key("pylon_hammer_cdgroup"))
+                    .cooldownGroup(PylonKeys.HAMMER)
                     .build())
             .noTool().build();
     static {
@@ -2622,8 +2624,8 @@ public final class PylonItems {
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
                     .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
-                    new NamespacedKey(Pylon.getInstance(), "palladium_helmet_speed"),
-                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speedmul", ConfigAdapter.DOUBLE),
+                    pylonKey("palladium_helmet_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
                     AttributeModifier.Operation.MULTIPLY_SCALAR_1,
                     EquipmentSlotGroup.HEAD
             ))
@@ -2638,8 +2640,8 @@ public final class PylonItems {
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
                     .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
-                    new NamespacedKey(Pylon.getInstance(), "palladium_chestplate_speed"),
-                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speedmul", ConfigAdapter.DOUBLE),
+                    pylonKey("palladium_chestplate_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
                     AttributeModifier.Operation.MULTIPLY_SCALAR_1,
                     EquipmentSlotGroup.CHEST
             ))
@@ -2654,8 +2656,8 @@ public final class PylonItems {
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
                     .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
-                    new NamespacedKey(Pylon.getInstance(), "palladium_leggings_speed"),
-                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speedmul", ConfigAdapter.DOUBLE),
+                    pylonKey("palladium_leggings_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
                     AttributeModifier.Operation.MULTIPLY_SCALAR_1,
                     EquipmentSlotGroup.LEGS
             ))
@@ -2671,8 +2673,8 @@ public final class PylonItems {
                     .add(Enchantment.FROST_WALKER, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("frost-walker-level", ConfigAdapter.INTEGER))
                     .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
-                    new NamespacedKey(Pylon.getInstance(), "palladium_boots_speed"),
-                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speedmul", ConfigAdapter.DOUBLE),
+                    pylonKey("palladium_boots_speed"),
+                    Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
                     AttributeModifier.Operation.MULTIPLY_SCALAR_1,
                     EquipmentSlotGroup.FEET
             ))

@@ -116,6 +116,7 @@ public class PylonKeys {
     public static final NamespacedKey FLOUR = pylonKey("flour");
     public static final NamespacedKey DOUGH = pylonKey("dough");
 
+    public static final NamespacedKey HAMMER = pylonKey("hammer");
     public static final NamespacedKey STONE_HAMMER = pylonKey("stone_hammer");
     public static final NamespacedKey IRON_HAMMER = pylonKey("iron_hammer");
     public static final NamespacedKey DIAMOND_HAMMER = pylonKey("diamond_hammer");
