@@ -1,15 +1,15 @@
 contributors:
   - display-name: "Idra"
-    description: "A veteran Slimefun addon developer (SlimefunWarfare, SFCalc, Galactifun), with a impressive contribution record for SF addons, Paper, and Slimefun. Seggan is responsible for many core Rebar and Pylon systems, including translation, WAILA, researches, the smeltery, the recipe system, and more."
+    description: "<white><!i>A veteran Slimefun addon developer (SlimefunWarfare, SFCalc, Galactifun), with a impressive contribution record for SF addons, Paper, and Slimefun. Seggan is responsible for many core Rebar and Pylon systems, including translation, WAILA, researches, the smeltery, the recipe system, and more."
     minecraft-uuid: "bb685dd0-8a71-4506-bc20-24d374fb28b4"
     github: "LordIdra"
     link: "https://github.com/LordIdra"
   - display-name: "Ohm"
-    description: "New to plugin development, but has done a fantastic job getting up to speed and adding lots of base content, like talismans and the beheading sword, as well as a lot of various smaller technical changes & bug fixes."
+    description: "<white><!i>New to plugin development, but has done a fantastic job getting up to speed and adding lots of base content, like talismans and the beheading sword, as well as a lot of various smaller technical changes & bug fixes."
     minecraft-uuid: "5c0952e1-52e2-4474-937e-9f9c4b3fd9b3"
     github: "OhmV-IR"
   - display-name: "Seggan"
-    description: "A veteran Slimefun addon developer (SlimefunWarfare, SFCalc, Galactifun), with a impressive contribution record for SF addons, Paper, and Slimefun. Seggan is responsible for many core Rebar and Pylon systems, including translation, WAILA, researches, the smeltery, the recipe system, and more."
+    description: "<white><!i>A veteran Slimefun addon developer (SlimefunWarfare, SFCalc, Galactifun), with a impressive contribution record for SF addons, Paper, and Slimefun. Seggan is responsible for many core Rebar and Pylon systems, including translation, WAILA, researches, the smeltery, the recipe system, and more."
     minecraft-uuid: "8f1238ab-5acb-408a-8cd3-ef61bcbf6945"
   - display-name: Vaan1310
     description: |-
@@ -17,6 +17,6 @@ contributors:
       <arrow> resolving issues, fixing bugs, adding polishing, making technical changes, and lots more.
     github: Intybyte
   - display-name: "JustAHuman"
-    description: "Head developer on my server for 3 years and works professionally in the Minecraft space. He has done the majority of the texture pack support side of Pylon, and other various smaller refinements."
+    description: "<white><!i>Head developer on my server for 3 years and works professionally in the Minecraft space. He has done the majority of the texture pack support side of Pylon, and other various smaller refinements."
     minecraft-uuid: "476ca51b-ec04-431b-87da-dd22b20aa8bf"
     github: "JustAHuman-xD"
