@@ -2581,169 +2581,169 @@ pylon:research_pack_4:
           position: [0.5, 0.5]
           scale: [0.4, 0.4, 0.4]
         - name: "Sheet1P1"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [0.8, 0.5]
-          scale: [0.3, 0.3, 0.3]
+          scale: [0.2, 0.2, 0.2]
         - name: "Sheet2P1"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [0.2, 0.5]
-          scale: [0.3, 0.3, 0.3]
+          scale: [0.2, 0.2, 0.2]
         - name: "Sheet3P1"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [0.5, 0.8]
-          scale: [0.3, 0.3, 0.3]
+          scale: [0.2, 0.2, 0.2]
         - name: "Sheet4P1"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [0.5, 0.2]
-          scale: [0.3, 0.3, 0.3]
+          scale: [0.2, 0.2, 0.2]
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Unit1P1"
           item: pylon:cohesive_unit
-          position: [0.8, 0.49]
+          position: [0.8, 0.4]
           scale: [0.15, 0.15, 0.15]
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Unit2P1"
           item: pylon:cohesive_unit
-          position: [ 0.2, 0.49 ]
+          position: [ 0.2, 0.4 ]
           scale: [ 0.15, 0.15, 0.15 ]
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Unit3P1"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.79 ]
+          position: [ 0.5, 0.7 ]
           scale: [ 0.15, 0.15, 0.15 ]
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Unit4P1"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.19 ]
+          position: [ 0.5, 0.1 ]
           scale: [ 0.15, 0.15, 0.15 ]
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet1P2"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [0.7, 0.5]
-          scale: [0.3, 0.3, 0.3]
+          scale: [0.2, 0.2, 0.2]
         - name: "Unit1P2"
           item: pylon:cohesive_unit
-          position: [0.7, 0.49]
+          position: [0.7, 0.4]
           scale: [0.15, 0.15, 0.15]
       remove_displays:
         - "Sheet1P1"
         - "Unit1P1"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet2P2"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [ 0.3, 0.5 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit2P2"
           item: pylon:cohesive_unit
-          position: [ 0.3, 0.49 ]
+          position: [ 0.3, 0.4 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet2P1"
         - "Unit2P1"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet3P2"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [ 0.5, 0.7 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit3P2"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.69 ]
+          position: [ 0.5, 0.6 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet3P1"
         - "Unit3P1"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet4P2"
-          item: pylon:palladium_sheet
+          item: minecraft:blue_terracotta
           position: [ 0.5, 0.3 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit4P2"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.29 ]
+          position: [ 0.5, 0.2 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet4P1"
         - "Unit4P1"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet1P3"
-          item: pylon:palladium_sheet
-          position: [ 0.6, 0.5 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          item: minecraft:blue_terracotta
+          position: [ 0.61, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit1P3"
           item: pylon:cohesive_unit
-          position: [ 0.6, 0.49 ]
+          position: [ 0.61, 0.4 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet1P2"
         - "Unit1P2"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet2P3"
-          item: pylon:palladium_sheet
-          position: [ 0.4, 0.5 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          item: minecraft:blue_terracotta
+          position: [ 0.39, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit2P3"
           item: pylon:cohesive_unit
-          position: [ 0.4, 0.49 ]
+          position: [ 0.39, 0.4 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet2P2"
         - "Unit2P2"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet3P3"
-          item: pylon:palladium_sheet
-          position: [ 0.5, 0.6 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          item: minecraft:blue_terracotta
+          position: [ 0.5, 0.61 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit3P3"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.59 ]
+          position: [ 0.5, 0.51 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet3P2"
         - "Unit3P2"
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
-      clicks: 4
+      clicks: 2
       add-displays:
         - name: "Sheet4P3"
-          item: pylon:palladium_sheet
-          position: [ 0.5, 0.4 ]
-          scale: [ 0.3, 0.3, 0.3 ]
+          item: minecraft:blue_terracotta
+          position: [ 0.5, 0.39 ]
+          scale: [ 0.2, 0.2, 0.2 ]
         - name: "Unit4P3"
           item: pylon:cohesive_unit
-          position: [ 0.5, 0.39 ]
+          position: [ 0.5, 0.29 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
         - "Sheet4P2"
