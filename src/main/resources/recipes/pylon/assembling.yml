@@ -2563,3 +2563,191 @@ pylon:research_pack_3:
           scale: [0.2, 0.2, 0.2]
       remove_displays:
         - "CrankP4"
+
+pylon:research_pack_4:
+  inputs:
+    - pylon:palladium_block: 1
+    - pylon:palladium_sheet: 4
+    - pylon:cohesive_unit: 4
+  results:
+    - pylon:research_pack_4: 1
+  steps:
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 4
+      add-displays:
+        - name: "CenterBlock"
+          item: pylon:palladium_block
+          position: [0.5, 0.5]
+          scale: [0.4, 0.4, 0.4]
+        - name: "Sheet1P1"
+          item: pylon:palladium_sheet
+          position: [0.8, 0.5]
+          scale: [0.3, 0.3, 0.3]
+        - name: "Sheet2P1"
+          item: pylon:palladium_sheet
+          position: [0.2, 0.5]
+          scale: [0.3, 0.3, 0.3]
+        - name: "Sheet3P1"
+          item: pylon:palladium_sheet
+          position: [0.5, 0.8]
+          scale: [0.3, 0.3, 0.3]
+        - name: "Sheet4P1"
+          item: pylon:palladium_sheet
+          position: [0.5, 0.2]
+          scale: [0.3, 0.3, 0.3]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Unit1P1"
+          item: pylon:cohesive_unit
+          position: [0.8, 0.49]
+          scale: [0.15, 0.15, 0.15]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Unit2P1"
+          item: pylon:cohesive_unit
+          position: [ 0.2, 0.49 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Unit3P1"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.79 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Unit4P1"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.19 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet1P2"
+          item: pylon:palladium_sheet
+          position: [0.7, 0.5]
+          scale: [0.3, 0.3, 0.3]
+        - name: "Unit1P2"
+          item: pylon:cohesive_unit
+          position: [0.7, 0.49]
+          scale: [0.15, 0.15, 0.15]
+      remove_displays:
+        - "Sheet1P1"
+        - "Unit1P1"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet2P2"
+          item: pylon:palladium_sheet
+          position: [ 0.3, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit2P2"
+          item: pylon:cohesive_unit
+          position: [ 0.3, 0.49 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet2P1"
+        - "Unit2P1"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet3P2"
+          item: pylon:palladium_sheet
+          position: [ 0.5, 0.7 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit3P2"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.69 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet3P1"
+        - "Unit3P1"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet4P2"
+          item: pylon:palladium_sheet
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit4P2"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.29 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet4P1"
+        - "Unit4P1"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet1P3"
+          item: pylon:palladium_sheet
+          position: [ 0.6, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit1P3"
+          item: pylon:cohesive_unit
+          position: [ 0.6, 0.49 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet1P2"
+        - "Unit1P2"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet2P3"
+          item: pylon:palladium_sheet
+          position: [ 0.4, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit2P3"
+          item: pylon:cohesive_unit
+          position: [ 0.4, 0.49 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet2P2"
+        - "Unit2P2"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet3P3"
+          item: pylon:palladium_sheet
+          position: [ 0.5, 0.6 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit3P3"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.59 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet3P2"
+        - "Unit3P2"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "Sheet4P3"
+          item: pylon:palladium_sheet
+          position: [ 0.5, 0.4 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+        - name: "Unit4P3"
+          item: pylon:cohesive_unit
+          position: [ 0.5, 0.39 ]
+          scale: [ 0.15, 0.15, 0.15 ]
+      remove_displays:
+        - "Sheet4P2"
+        - "Unit4P2"
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 4
