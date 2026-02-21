@@ -2134,6 +2134,13 @@ guide:
     building: "<white>Building"
     creative_items: "<light_purple>Creative Items <#ff0000>(admin only)</#ff0000>"
     magic: "<white>Magic"
+    info: "<white>Pylon Info"
+    info_progression: "<white>Pylon Progression"
+    info_pit_kiln: "<white>Pit Kiln 101"
+    info_fluid_handling: "<white>Fluid handling 101"
+    info_hydraulics: "<white>Hydraulics 101"
+    info_bloomery: "<white>Forging 101: Bloomery"
+    info_smeltery: "<white>Forging 102: Smeltery"
   recipe:
     grindstone:
       time: "<attr>Grinding time:</attr> %time%"
@@ -2145,6 +2152,15 @@ guide:
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
     hammer: "<attr>Chance:</attr> %chance%"
+  button:
+    info_loupe:
+      name: "Researching with the Loupe"
+      lore: |-
+        <arrow> TODO
+    info_research_packs:
+      name: "Research Packs"
+      lore: |-
+        <arrow> TODO
 
 message:
   assembly_table:

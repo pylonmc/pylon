@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -213,6 +214,11 @@ public final class PitKiln extends RebarBlock implements
         for (Vector3i coal : COAL_POSITIONS) {
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
             coalBlock.setType(Material.AIR);
+        }
+        Block fireBlock = getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z());
+        if (fireBlock.getType() == Material.FIRE || fireBlock.getType() == Material.SOUL_FIRE) {
+            fireBlock.getWorld().playEffect(fireBlock.getLocation(), Effect.EXTINGUISH, 0);
+            fireBlock.setType(Material.AIR);
         }
     }
 
