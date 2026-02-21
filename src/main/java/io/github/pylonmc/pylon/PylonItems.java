@@ -1359,6 +1359,13 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_PALLADIUM);
     }
 
+    public static final ItemStack PALLADIUM_FLIGHT_RING = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.PALLADIUM_FLIGHT_RING_KEY)
+           .build();
+    static {
+        RebarItem.register(PalladiumFlightRing.class, PALLADIUM_FLIGHT_RING);
+        PylonPages.TALISMANS.addItem(PALLADIUM_FLIGHT_RING);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Armour" defaultstate=collapsed>
