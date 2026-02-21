@@ -40,10 +40,18 @@ public class PylonGuides {
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "info.progression.palladium_flight_ring")));
         INFO.addPage(Material.BOOKSHELF, PROGRESSION);
 
+        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "info.pit_kiln.kiln")));
+        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "info.pit_kiln.construction")));
+        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "info.pit_kiln.crafting")));
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.DECORATED_POT).addCustomModelDataString(PylonKeys.PIT_KILN.asString()), PIT_KILN));
+
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.BROWN_TERRACOTTA).addCustomModelDataString(PylonKeys.FLUID_PIPE_WOOD.asString()), FLUID_HANDLING));
+
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.WAXED_COPPER_BULB).addCustomModelDataString(PylonKeys.HYDRAULIC_CORE_DRILL.asString()), HYDRAULICS));
+
+        BLOOMERY.addButton(Item.simple(ItemStackBuilder.guide(Material.MAGMA_BLOCK, Pylon.getInstance(), "info.bloomery.bloomery")));
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.MAGMA_BLOCK).addCustomModelDataString(PylonKeys.BLOOMERY.asString()), BLOOMERY));
+
         INFO.addButton(new PageButton(ItemStackBuilder.of(Material.BLAST_FURNACE).addCustomModelDataString(PylonKeys.SMELTERY_CONTROLLER.asString()), SMELTERY));
 
     }

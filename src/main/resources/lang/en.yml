@@ -2164,37 +2164,53 @@ guide:
         lore: |-
           <arrow> As you need more and more research points, the loupe may fall behind or just not be enough
           <arrow> Research packs can be crafted and consumed to grant a fixed number of research points, with a cooldown between uses
-    progression:
-      manual_core:
-        name: "Manual Core"
-        lore:
+          progression:
+      progression:
+        manual_core:
+          name: "Manual Core"
+          lore: ""
+        pit_kiln:
+          name: "Pit Kiln"
+          lore: ""
+        bronze_age:
+          name: "Bronze Age"
+          lore: ""
+        hydraulic_machines:
+          name: "Hydraulic Machines"
+          lore: ""
+        cargo_machines:
+          name: "Cargo Machines"
+          lore: ""
+        gypsum:
+          name: "Gypsum"
+          lore: ""
+        steel_age:
+          name: "Steel Age"
+          lore: ""
+        diesel_machines:
+          name: "Diesel Machines"
+          lore: ""
+        palladium:
+          name: "Palladium Age"
+          lore: ""
+        palladium_flight_ring:
+          name: "Palladium Flight Ring"
+          lore: ""
       pit_kiln:
-        name: "Pit Kiln"
-        lore:
-      bronze_age:
-        name: "Bronze Age"
-        lore:
-      hydraulic_machines:
-        name: "Hydraulic Machines"
-        lore:
-      cargo_machines:
-        name: "Cargo Machines"
-        lore:
-      gypsum:
-        name: "Gypsum"
-        lore:
-      steel_age:
-        name: "Steel Age"
-        lore:
-      diesel_machines:
-        name: "Diesel Machines"
-        lore:
-      palladium:
-        name: "Palladium Age"
-        lore:
-      palladium_flight_ring:
-        name: "Palladium Flight Ring"
-        lore:
+        kiln:
+          name: "The Pit Kiln"
+          lore: |-
+            <arrow> The pit kiln is the earliest form of advanced smelting available to you
+        construction:
+          name: "Constructing the Pit Kiln"
+          lore: ""
+        crafting:
+          name: "Crafting with the Pit Kiln"
+          lore: ""
+      bloomery:
+        bloomer:
+          name: "The Bloomery"
+          lore: ""
 
 message:
   assembly_table:
