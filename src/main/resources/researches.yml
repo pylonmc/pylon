@@ -28,7 +28,7 @@ talismans_1:
     - pylon:hunting_talisman_simple
 
 talismans_2:
-  item: pylon:health_talisman_simple
+  item: pylon:health_talisman_advanced
   cost: 25
   unlocks:
     - pylon:health_talisman_advanced
@@ -42,7 +42,7 @@ talismans_2:
     - pylon:hunting_talisman_advanced
 
 talismans_3:
-  item: pylon:health_talisman_simple
+  item: pylon:health_talisman_ultimate
   cost: 60
   unlocks:
     - pylon:health_talisman_ultimate
@@ -55,6 +55,21 @@ talismans_3:
     - pylon:water_breathing_talisman_ultimate
     - pylon:enchanting_talisman_ultimate
     - pylon:hunting_talisman_ultimate
+
+talismans_4:
+  item: pylon:health_talisman_palladium
+  cost: 175
+  unlocks:
+    - pylon:health_talisman_palladium
+    - pylon:hunger_talisman_palladium
+    - pylon:farming_talisman_palladium
+    - pylon:bartering_talisman_palladium
+    - pylon:water_breathing_talisman_palladium
+    - pylon:luck_talisman_palladium
+    - pylon:breeding_talisman_palladium
+    - pylon:water_breathing_talisman_palladium
+    - pylon:enchanting_talisman_palladium
+    - pylon:hunting_talisman_palladium
 
 drilling_1:
   item: pylon:subsurface_core_chunk
