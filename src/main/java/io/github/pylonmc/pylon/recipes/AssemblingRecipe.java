@@ -19,12 +19,10 @@ import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.gui.Markers;
 import xyz.xenondevs.invui.gui.PagedGui;
-import xyz.xenondevs.invui.gui.Structure;
 import xyz.xenondevs.invui.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -40,7 +38,8 @@ public record AssemblingRecipe(
             ItemStack stack,
             Vector2d position,
             Vector3d scale
-    ) {}
+    ) {
+    }
 
     public record Step(
             String tool,
@@ -48,7 +47,8 @@ public record AssemblingRecipe(
             int clicks,
             List<AddDisplay> addDisplays,
             List<String> removeDisplays
-    ) {}
+    ) {
+    }
 
     public static final RecipeType<AssemblingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("assembling")) {
         @Override
@@ -78,9 +78,9 @@ public record AssemblingRecipe(
                 ));
             }
             ArrayList<String> names = new ArrayList<>();
-            for(Step step : steps){
-                for(AddDisplay display : step.addDisplays){
-                    if(names.contains(display.name)){
+            for (Step step : steps) {
+                for (AddDisplay display : step.addDisplays) {
+                    if (names.contains(display.name)) {
                         throw new IllegalArgumentException("Duplicate names for entities are not allowed. Offending name: " + display.name);
                     }
                     names.add(display.name);
@@ -115,9 +115,9 @@ public record AssemblingRecipe(
 
     @Override
     public @NotNull List<@NotNull FluidOrItem> getResults() {
-            return results.stream()
-                    .map(FluidOrItem::of)
-                    .toList();
+        return results.stream()
+                .map(FluidOrItem::of)
+                .toList();
     }
 
     public static @Nullable AssemblingRecipe findRecipe(ItemStack[] items) {
@@ -153,7 +153,7 @@ public record AssemblingRecipe(
             if (step != null) {
                 ItemStack stack = ItemStackBuilder.of(step.icon)
                         .name(Component.translatable("pylon.gui.assembly_table.step").arguments(
-                                RebarArgument.of("step_index", i+1),
+                                RebarArgument.of("step_index", i + 1),
                                 RebarArgument.of("tool", Component.translatable("pylon.gui.assembly_table.tools." + step.tool)),
                                 RebarArgument.of("clicks", step.clicks)
                         ))
