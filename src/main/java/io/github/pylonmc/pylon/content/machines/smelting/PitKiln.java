@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.PitKilnRecipe;
+import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -228,10 +229,14 @@ public final class PitKiln extends RebarBlock implements
         processing.clear();
         for (Vector3i coal : COAL_POSITIONS) {
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
-            if (!(new BlockBreakBlockEvent(coalBlock, getBlock(), List.of())).callEvent()) {
-                continue;
+            if(BlockStorage.isRebarBlock(coalBlock)){
+                BlockStorage.breakBlock(coalBlock, new BlockBreakContext.PluginBreak(coalBlock, false, true));
+            } else {
+                if (!(new BlockBreakBlockEvent(coalBlock, getBlock(), List.of())).callEvent()) {
+                    continue;
+                }
+                coalBlock.setType(Material.AIR);
             }
-            coalBlock.setType(Material.AIR);
         }
         Block fireBlock = getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z());
         switch (fireBlock.getType()) {
