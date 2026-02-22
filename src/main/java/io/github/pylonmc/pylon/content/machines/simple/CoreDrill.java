@@ -144,7 +144,7 @@ public abstract class CoreDrill extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon." + getKey().getNamespace() + ".item." + getKey().getKey() + ".waila_format";
+        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
         Integer timeLeft = getProcessTicksRemaining();
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
             RebarArgument.of("duration_if_any",
