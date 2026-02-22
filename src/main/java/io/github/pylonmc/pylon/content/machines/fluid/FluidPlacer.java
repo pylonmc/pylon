@@ -91,7 +91,8 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
 
     @Override
     public void tick() {
-        if (!(fluidAmount(fluid) >= 1000.0) || !placeBlock.getType().isAir()) {
+        if (!(fluidAmount(fluid) >= 1000.0) || !placeBlock.getType().isAir()
+                || !placeBlock.getWorld().getWorldBorder().isInside(placeBlock.getLocation())) {
             return;
         }
 

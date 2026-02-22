@@ -188,6 +188,10 @@ public class DieselBreaker extends RebarBlock implements
         }
 
         Block toDrill = getBlock().getRelative(getFacing());
+        if (!toDrill.getWorld().getWorldBorder().isInside(toDrill.getLocation())) {
+            return;
+        }
+
         ItemStack tool = toolInventory.getItem(0);
         if (tool == null
                 || !PylonUtils.shouldBreakBlockUsingTool(toDrill, tool)
@@ -217,12 +221,9 @@ public class DieselBreaker extends RebarBlock implements
         for (ItemStack drop : drops) {
             outputInventory.addItem(new MachineUpdateReason(), drop);
         }
-        tool.setData(DataComponentTypes.DAMAGE, tool.getData(DataComponentTypes.DAMAGE) + 1);
-        if (Objects.equals(tool.getData(DataComponentTypes.DAMAGE), tool.getData(DataComponentTypes.MAX_DAMAGE))) {
-            toolInventory.setItem(new MachineUpdateReason(), 0, null);
-        } else {
-            toolInventory.setItem(new MachineUpdateReason(), 0, tool);
-        }
+
+        toolInventory.setItem(new MachineUpdateReason(), 0, PylonUtils.damageTool(tool, 1));
+
         removeFluid(PylonFluids.BIODIESEL, dieselPerBlock);
     }
 

@@ -9,6 +9,8 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
@@ -38,15 +40,19 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
     @SuppressWarnings("unused")
     public Miner(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        WorldBorder border = block.getWorld().getWorldBorder();
         index = 0;
         blockPositions = new ArrayList<>();
         chunkPositions = new HashSet<>();
         for (int y = radius; y >= -radius; y--) {
             for (int x = -radius; x <= radius; x++) {
                 for (int z = -radius; z <= radius; z++) {
-                    BlockPosition blockPosition = new BlockPosition(getBlock().getRelative(x, y, z));
-                    blockPositions.add(blockPosition);
-                    chunkPositions.add(blockPosition.getChunk());
+                    Block neighbour = getBlock().getRelative(x, y, z);
+                    if (border.isInside(neighbour.getLocation())) {
+                        BlockPosition blockPosition = new BlockPosition(neighbour);
+                        blockPositions.add(blockPosition);
+                        chunkPositions.add(blockPosition.getChunk());
+                    }
                 }
             }
         }

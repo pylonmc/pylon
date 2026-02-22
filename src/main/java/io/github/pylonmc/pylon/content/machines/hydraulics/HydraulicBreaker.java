@@ -195,6 +195,10 @@ public class HydraulicBreaker extends RebarBlock implements
     @Override
     public void onProcessFinished() {
         Block toDrill = getBlock().getRelative(getFacing());
+        if (!toDrill.getWorld().getWorldBorder().isInside(toDrill.getLocation())) {
+            return;
+        }
+
         ItemStack tool = toolInventory.getItem(0);
         if (tool == null
                 || !PylonUtils.shouldBreakBlockUsingTool(toDrill, tool)
@@ -204,11 +208,7 @@ public class HydraulicBreaker extends RebarBlock implements
         }
 
         toDrill.breakNaturally();
-        tool.setData(DataComponentTypes.DAMAGE, tool.getData(DataComponentTypes.DAMAGE) + 1);
-        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
-        if (Objects.equals(tool.getData(DataComponentTypes.DAMAGE), tool.getData(DataComponentTypes.MAX_DAMAGE))) {
-            toolInventory.setItem(new MachineUpdateReason(), 0, null);
-        }
+        toolInventory.setItem(new MachineUpdateReason(), 0, PylonUtils.damageTool(tool, 1));
         removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidPerBlock);
         addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerBlock);
     }
