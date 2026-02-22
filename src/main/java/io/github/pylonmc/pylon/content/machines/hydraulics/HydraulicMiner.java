@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.hydraulics;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -37,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -45,7 +47,8 @@ public class HydraulicMiner extends Miner implements
         RebarDirectionalBlock,
         RebarInteractBlock,
         RebarLogisticBlock,
-        RebarFluidBufferBlock {
+        RebarFluidBufferBlock,
+        RebarVirtualInventoryBlock {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
@@ -224,5 +227,18 @@ public class HydraulicMiner extends Miner implements
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
         RebarFluidBufferBlock.super.onFluidRemoved(fluid, amount);
         updateMiner();
+    }
+
+    @Override
+    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        RebarFluidBufferBlock.super.onBreak(drops, context);
+        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    }
+
+    @Override
+    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
+        return Map.of(
+                "tool", toolInventory
+        );
     }
 }
