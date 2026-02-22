@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.base.RebarFluidTank;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
@@ -32,6 +33,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3d;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @UtilityClass
@@ -325,5 +327,18 @@ public class PylonUtils {
             return true;
         }
         return triggered;
+    }
+
+    @Nullable
+    public ItemStack damageTool(@NotNull ItemStack tool, int damage) {
+        if (tool.hasData(DataComponentTypes.UNBREAKABLE)) {
+            return tool;
+        }
+
+        tool.setData(DataComponentTypes.DAMAGE, tool.getData(DataComponentTypes.DAMAGE) + damage);
+        if (tool.getData(DataComponentTypes.DAMAGE) >= tool.getData(DataComponentTypes.MAX_DAMAGE)) {
+            return null;
+        }
+        return tool;
     }
 }

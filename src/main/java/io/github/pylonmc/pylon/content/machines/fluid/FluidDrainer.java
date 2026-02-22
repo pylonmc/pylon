@@ -97,6 +97,7 @@ public class FluidDrainer extends RebarBlock
                 && drainBlock.getBlockData() instanceof Levelled levelled
                 && levelled.getLevel() == 0 // 0 = source block (for some reason)
                 && new BlockBreakBlockEvent(drainBlock, getBlock(), List.of()).callEvent()
+                && drainBlock.getWorld().getWorldBorder().isInside(drainBlock.getLocation())
         ) {
             drainBlock.setType(Material.AIR);
             addFluid(fluid, 1000.0);
