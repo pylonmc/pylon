@@ -118,11 +118,7 @@ public class VacuumHopper extends RebarBlock implements
             }
         }
 
-        for (ItemStack item : filterInventory.getItems()) {
-            if (item != null) {
-                drops.add(item);
-            }
-        }
+        RebarVirtualInventoryBlock.super.onBreak(drops, context);
     }
 
     @Override
