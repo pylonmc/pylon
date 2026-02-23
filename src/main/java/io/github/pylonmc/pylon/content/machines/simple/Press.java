@@ -118,6 +118,8 @@ public class Press extends RebarBlock implements
         if (priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
             return;
+        } else {
+            event.setUseInteractedBlock(Event.Result.DENY);
         }
 
         tryStartRecipe();
