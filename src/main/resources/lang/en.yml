@@ -801,7 +801,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.smeltery_controller.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/> Hatch</yellow>
+      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
