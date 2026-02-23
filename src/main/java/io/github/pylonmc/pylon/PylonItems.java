@@ -37,8 +37,11 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.*;
 import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
+import io.papermc.paper.registry.set.RegistrySet;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -816,6 +819,15 @@ public final class PylonItems {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
     }
+
+    public static final ItemStack GLASS_BREAKER = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.GLASS_BREAKER, RegistrySet.keySet(RegistryKey.BLOCK, PylonItemTag.GLASSLIKE.getValues().stream().map(it -> TypedKey.create(RegistryKey.BLOCK, it.getKey())).toList()), true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_PICKAXE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GLASS_BREAKER);
+        PylonPages.TOOLS.addItem(GLASS_BREAKER);
+    }
+
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_AXE.getKey())

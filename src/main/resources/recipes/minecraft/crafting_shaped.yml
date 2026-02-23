@@ -93,6 +93,17 @@ pylon:charcoal_block_from_charcoal:
   result: pylon:charcoal_block
   category: building
 
+pylon:glass_breaker:
+  pattern:
+    - "TCT"
+    - "RSR"
+    - " S "
+  key:
+    S: minecraft:stick
+    C: minecraft:glowstone
+    T: pylon:tin_ingot
+    R: minecraft:redstone
+
 pylon:bronze_sword:
   pattern:
     - " I "

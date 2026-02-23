@@ -152,6 +152,16 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.bloomery.name/></yellow>
       <diamond> 4x <yellow><lang:pylon.item.refractory_bricks.name/></yellow>
 
+  glass_breaker:
+    name: "Glass Breaker"
+    lore: |-
+      <arrow> Breaks glass like material faster, includes:
+      <arrow> - All types of glass blocks
+      <arrow> - All types of glass panes
+      <arrow> - Sea Lantern
+      <arrow> - Glowstone Block
+      <arrow> - Redstone Lamp
+      <arrow> - Beacon
   bronze_anvil:
     name: "Bronze Anvil"
     lore: |-
