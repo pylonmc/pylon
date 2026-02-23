@@ -91,6 +91,8 @@ public final class PitKiln extends RebarBlock implements
     private final ArrayList<ItemStack> contents;
     private final Set<ItemStack> processing;
     private @Nullable Double processingTime;
+    private @Nullable PitKilnRecipe currentRecipe = null;
+    private int manufactureCount = 0;
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -187,16 +189,17 @@ public final class PitKiln extends RebarBlock implements
     public void tick() {
         if (!isFormedAndFullyLoaded()) {
             if (processingTime != null) {
+                currentRecipe = null;
                 processingTime = null;
                 processing.clear();
             }
             return;
         }
-        if (processingTime == null) {
+        if (processingTime == null || currentRecipe == null) {
             tryStartProcessing();
         }
 
-        if (processingTime == null) return;
+        if (processingTime == null || currentRecipe == null) return;
         processingTime -= getTickInterval() / 20.0;
         if (processingTime > 0) return;
 
@@ -214,6 +217,15 @@ public final class PitKiln extends RebarBlock implements
 
         double multiplier = calcMultiplier / TOP_POSITIONS.size();
 
+        for (RecipeInput.Item input : currentRecipe.input()) {
+            int removeAmount = input.getAmount() * manufactureCount;
+            for (ItemStack contentItem : contents) {
+                if (input.contains(contentItem)) {
+                    contentItem.subtract(removeAmount);
+                    break;
+                }
+            }
+        }
         outputLoop:
         for (ItemStack outputItem : processing) {
             int addAmount = (int) Math.floor(outputItem.getAmount() * multiplier);
@@ -300,7 +312,7 @@ public final class PitKiln extends RebarBlock implements
         if (processingTime != null || contents.isEmpty()) return;
         recipeLoop:
         for (PitKilnRecipe recipe : PitKilnRecipe.RECIPE_TYPE) {
-            int ratio = Integer.MAX_VALUE;
+            manufactureCount = Integer.MAX_VALUE;
             for (RecipeInput.Item input : recipe.input()) {
                 int existing = 0;
                 for (ItemStack contentItem : contents) {
@@ -313,23 +325,14 @@ public final class PitKiln extends RebarBlock implements
                 if (existing < required) {
                     continue recipeLoop;
                 }
-                ratio = Math.min(ratio, existing / required);
+                manufactureCount = Math.min(manufactureCount, existing / required);
             }
-            if (ratio <= 0) continue;
+            if (manufactureCount <= 0) continue;
 
-            for (RecipeInput.Item input : recipe.input()) {
-                int removeAmount = input.getAmount() * ratio;
-                for (ItemStack contentItem : contents) {
-                    if (input.contains(contentItem)) {
-                        contentItem.subtract(removeAmount);
-                        break;
-                    }
-                }
-            }
             Set<ItemStack> outputItems = new HashSet<>(recipe.output().size());
             for (ItemStack outputItem : recipe.output()) {
                 ItemStack outputCopy = outputItem.asOne();
-                outputCopy.setAmount(outputItem.getAmount() * ratio);
+                outputCopy.setAmount(outputItem.getAmount() * manufactureCount);
                 outputItems.add(outputCopy);
             }
             processing.addAll(outputItems);
@@ -341,6 +344,7 @@ public final class PitKiln extends RebarBlock implements
                 default -> throw new AssertionError();
             };
             processingTime = PROCESSING_TIME_SECONDS / multiplier;
+            currentRecipe = recipe;
             break;
         }
     }
