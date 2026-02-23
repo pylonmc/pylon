@@ -296,8 +296,8 @@ public class PylonUtils {
             if (priority == EventPriority.NORMAL) {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
-                tank.removeFluid(1000.0);
                 newItemStack = new ItemStack(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
+                tank.removeFluid(1000.0);
             }
             triggered = true;
         }
