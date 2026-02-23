@@ -423,4 +423,6 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_PIPE_PALLADIUM = pylonKey("fluid_pipe_palladium");
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
+
+    public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 }

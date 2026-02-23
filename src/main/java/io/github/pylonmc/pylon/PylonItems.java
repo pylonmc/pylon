@@ -2788,6 +2788,13 @@ public final class PylonItems {
         PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_PALLADIUM);
     }
 
+    public static final ItemStack FINE_SEDIMENT = ItemStackBuilder.rebar(Material.GLOWSTONE_DUST, PylonKeys.FINE_SEDIMENT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FINE_SEDIMENT);
+        PylonPages.MISCELLANEOUS.addItem(FINE_SEDIMENT);
+    }
+
     static {
         PylonPages.initialise();
         PylonGuides.initialise();

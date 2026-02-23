@@ -2110,6 +2110,9 @@ item:
   palladium_hoe:
     name: "Palladium Hoe"
 
+  fine_sediment:
+    name: "Fine Sediment"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"

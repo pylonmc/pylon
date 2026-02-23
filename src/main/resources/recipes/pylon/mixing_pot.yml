@@ -374,3 +374,12 @@ pylon:shimmer_bronze:
   output:
     pylon:shimmer_bronze: 1
   requires-enriched-fire: false
+
+pylon:clay_from_fine_sediment:
+  input-items:
+    - pylon:fine_sediment: 4
+  input-fluid:
+    pylon:water: 500
+  output:
+    minecraft:clay: 1
+  requires-enriched-fire: false
