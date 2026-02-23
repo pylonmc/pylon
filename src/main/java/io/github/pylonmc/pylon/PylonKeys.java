@@ -220,6 +220,7 @@ public class PylonKeys {
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");
 
     public static final NamespacedKey LOUPE = pylonKey("loupe");
+    public static final NamespacedKey BRONZE_LOUPE = pylonKey("bronze_loupe");
 
     public static final NamespacedKey RESEARCH_PACK_1 = pylonKey("research_pack_1");
     public static final NamespacedKey RESEARCH_PACK_2 = pylonKey("research_pack_2");

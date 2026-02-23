@@ -103,6 +103,8 @@ pylon:glass_breaker:
     C: minecraft:glowstone
     T: pylon:tin_ingot
     R: minecraft:redstone
+  result: pylon:glass_breaker
+  category: equipment
 
 pylon:bronze_sword:
   pattern:
@@ -979,6 +981,17 @@ pylon:loupe:
     C: minecraft:copper_ingot
     G: minecraft:glass_pane
   result: pylon:loupe
+  category: equipment
+
+pylon:bronze_loupe:
+  pattern:
+    - " C "
+    - "CGC"
+    - " C "
+  key:
+    C: pylon:bronze_ingot
+    G: pylon:loupe
+  result: pylon:bronze_loupe
   category: equipment
 
 pylon:fluid_strainer:

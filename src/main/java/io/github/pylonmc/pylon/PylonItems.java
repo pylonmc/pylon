@@ -82,6 +82,25 @@ public final class PylonItems {
         PylonPages.SCIENCE.addItem(LOUPE);
     }
 
+
+    public static final ItemStack BRONZE_LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_LOUPE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.GLASS_PANE.getKey())
+            .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
+                .animation(ItemUseAnimation.SPYGLASS)
+                .hasConsumeParticles(false)
+                .consumeSeconds(Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
+            )
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                    Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .cooldownGroup(PylonKeys.LOUPE)
+            )
+            .build();
+    static {
+        RebarItem.register(Loupe.class, BRONZE_LOUPE);
+        PylonPages.SCIENCE.addItem(BRONZE_LOUPE);
+    }
+
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
             .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_1)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
