@@ -245,7 +245,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         }
 
         if (scanEvent.isCustomHandled()) {
-            //player.setCooldown(getStack(), cooldownTicks);
+            player.setCooldown(getStack(), cooldownTicks);
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
             Material type = stack.getType();
@@ -269,7 +269,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
                 hit.setItemStack(stack);
             }
             addEntry(player, stack.effectiveName(), type.getKey(), getEntryConfig(type));
-            //player.setCooldown(getStack(), cooldownTicks);
+            player.setCooldown(getStack(), cooldownTicks);
         } else if (scan.getHitEntity() instanceof LivingEntity entity) {
             RebarArgument entityArg = RebarArgument.of("object", Component.translatable(entity.getType().translationKey()));
             if (!player.canSee(entity) || entity.isInvisible() || entity.hasPotionEffect(PotionEffectType.INVISIBILITY) || entity instanceof Player || alreadyExamined(player, entity) || !hasUses(player, entity.getType())
@@ -280,7 +280,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
 
             markAlreadyExamined(player, entity);
             addEntry(player, entityArg, entity.getType().getKey(), getEntryConfig(entity.getType()));
-            //player.setCooldown(getStack(), cooldownTicks);
+            player.setCooldown(getStack(), cooldownTicks);
         } else if (scan.getHitBlock() != null) {
             Block hit = scan.getHitBlock();
             Material type = hit.getType();
@@ -307,7 +307,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             }
 
             addEntry(player, Component.translatable(type), type.getKey(), getEntryConfig(type));
-            //player.setCooldown(getStack(), cooldownTicks);
+            player.setCooldown(getStack(), cooldownTicks);
         }
     }
 
