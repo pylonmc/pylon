@@ -9,6 +9,7 @@ pylon:shallow_core_chunk:
       weight: 0.3
   cycles: 6
   particle-data: minecraft:stone
+  priority: 3
 
 pylon:subsurface_core_chunk:
   input: pylon:subsurface_core_chunk
@@ -27,6 +28,7 @@ pylon:subsurface_core_chunk:
       weight: 0.4
   cycles: 8
   particle-data: minecraft:stone
+  priority: 2
 
 pylon:intermediate_core_chunk:
   input: pylon:intermediate_core_chunk
@@ -49,6 +51,7 @@ pylon:intermediate_core_chunk:
       weight: 0.1
   cycles: 10
   particle-data: minecraft:stone
+  priority: 1
 
 pylon:rock_dust:
   input: "#rebar:rocks"
