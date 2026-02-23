@@ -52,7 +52,8 @@ public class LumberAxe extends RebarItem implements RebarTool {
 
     private void breakAttachedWood(Block block, Player player, ItemStack tool) {
         // Recursive function, for every adjacent block check if it's a log, if so delete it and give the drop to the player and check all its adjacent blocks
-        if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)) {
+        if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)
+            || !block.getWorld().getWorldBorder().isInside(block.getLocation())) {
             return;
         }
         BlockBreakEvent blockBreakEvent = new BlockBreakEvent(block, player);

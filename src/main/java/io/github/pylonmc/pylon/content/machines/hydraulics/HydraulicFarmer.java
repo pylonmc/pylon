@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.waila.WailaDisplay;
 import lombok.Getter;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -225,15 +226,18 @@ public class HydraulicFarmer extends RebarBlock implements
         int diameter = 2 * radius + 1;
         ArrayList<FarmingTile> tiles = new ArrayList<>(diameter * diameter);
 
+        WorldBorder border = getBlock().getWorld().getWorldBorder();
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 Block cropBlock = getBlock().getRelative(x, 0, z);
+                if (border.isInside(cropBlock.getLocation())) {
 
-                tiles.add(
-                    new FarmingTile(
-                        cropBlock
-                    )
-                );
+                    tiles.add(
+                            new FarmingTile(
+                                    cropBlock
+                            )
+                    );
+                }
             }
         }
 
