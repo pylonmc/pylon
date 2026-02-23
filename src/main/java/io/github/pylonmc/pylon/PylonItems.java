@@ -80,7 +80,10 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_1)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.RESEARCH_PACK_1)
+            )
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -89,7 +92,10 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_2 = ItemStackBuilder.rebar(Material.LIME_BANNER, PylonKeys.RESEARCH_PACK_2)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_2).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_2)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.RESEARCH_PACK_2).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.RESEARCH_PACK_2)
+            )
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -98,7 +104,10 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_3 = ItemStackBuilder.rebar(Material.GRAY_BANNER, PylonKeys.RESEARCH_PACK_3)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_3).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_3)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.RESEARCH_PACK_3).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.RESEARCH_PACK_3)
+            )
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -107,7 +116,10 @@ public final class PylonItems {
     }
 
     public static final ItemStack RESEARCH_PACK_4 = ItemStackBuilder.rebar(Material.LIGHT_BLUE_BANNER, PylonKeys.RESEARCH_PACK_4)
-            .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_4).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_4)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.RESEARCH_PACK_4).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.RESEARCH_PACK_4)
+            )
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)
             .build();
     static {
@@ -893,7 +905,10 @@ public final class PylonItems {
     }
 
     public static final ItemStack BRICK_MOLD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRICK_MOLD)
-            .useCooldown(Settings.get(PylonKeys.BRICK_MOLD).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.BRICK_MOLD)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.BRICK_MOLD).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.BRICK_MOLD)
+            )
             .set(DataComponentTypes.ITEM_MODEL, Material.OAK_FENCE_GATE.getKey())
             .build();
     static {
@@ -1037,7 +1052,10 @@ public final class PylonItems {
 
     public static final ItemStack REACTIVATED_WITHER_SKULL = ItemStackBuilder.rebar(Material.WITHER_SKELETON_SKULL, PylonKeys.REACTIVATED_WITHER_SKULL)
             .durability(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INTEGER))
-            .useCooldown(Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.REACTIVATED_WITHER_SKULL)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.REACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.REACTIVATED_WITHER_SKULL)
+            )
             .build();
     static {
         RebarItem.register(ReactivatedWitherSkull.class, REACTIVATED_WITHER_SKULL);
@@ -1046,7 +1064,10 @@ public final class PylonItems {
 
     public static final ItemStack HYPER_ACTIVATED_WITHER_SKULL = ItemStackBuilder.rebar(Material.WITHER_SKELETON_SKULL, PylonKeys.HYPER_ACTIVATED_WITHER_SKULL)
             .durability(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("durability", ConfigAdapter.INTEGER))
-            .useCooldown(Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.REACTIVATED_WITHER_SKULL)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                            Settings.get(PylonKeys.HYPER_ACTIVATED_WITHER_SKULL).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.REACTIVATED_WITHER_SKULL)
+            )
             .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
             .build();
     static {
