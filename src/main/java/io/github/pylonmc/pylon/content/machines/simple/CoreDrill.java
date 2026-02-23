@@ -27,11 +27,13 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CoreDrill extends RebarBlock
@@ -62,6 +64,7 @@ public abstract class CoreDrill extends RebarBlock
     protected final Material drillMaterial = getSettings().getOrThrow("drill-material", ConfigAdapter.MATERIAL);
     protected final ItemStackBuilder drillStack = ItemStackBuilder.of(drillMaterial)
             .addCustomModelDataString(getKey() + ":drill");
+    private final ArrayList<BukkitTask> activeAnimations = new ArrayList<>();
 
     @SuppressWarnings("unused")
     protected CoreDrill(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -109,7 +112,7 @@ public abstract class CoreDrill extends RebarBlock
         for (int i = 0; i < rotationsPerCycle; i++) {
             for (int j = 0; j < 4; j++) {
                 double rotation = (j / 4.0) * 2.0 * Math.PI;
-                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+                activeAnimations.add(Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
                     PylonUtils.animate(getDrillDisplay(), rotationDuration / 4, getDrillDisplayMatrix(rotation));
                     new ParticleBuilder(Particle.BLOCK)
                             .count(5)
@@ -122,7 +125,7 @@ public abstract class CoreDrill extends RebarBlock
                             )
                             .spawn();
                     progressProcess(rotationDuration / 4);
-                }, (long) ((i + j/4.0) * rotationDuration));
+                }, (long) ((i + j/4.0) * rotationDuration)));
             }
         }
 
@@ -155,5 +158,14 @@ public abstract class CoreDrill extends RebarBlock
                     )
             )
         ));
+    }
+
+    @Override
+    public void onMultiblockUnformed(boolean partUnloaded) {
+        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        stopProcess();
+        for(BukkitTask animation : activeAnimations) {
+            animation.cancel();
+        }
     }
 }
