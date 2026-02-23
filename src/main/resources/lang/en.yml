@@ -2390,6 +2390,8 @@ message:
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
+  hammer:
+    too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
 
 gui:
   fluid-selector-title: "Select Fluid"
