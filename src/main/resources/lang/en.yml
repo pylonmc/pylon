@@ -162,6 +162,14 @@ item:
       <arrow> - Glowstone Block
       <arrow> - Redstone Lamp
       <arrow> - Beacon
+
+  bed_roll:
+    name: "Bed Roll"
+    lore: |-
+      <arrow> Right click to sleep on selected block.
+      <arrow> There must be space available to place a bed.
+      <arrow> Doesn't change respawn point
+
   bronze_anvil:
     name: "Bronze Anvil"
     lore: |-

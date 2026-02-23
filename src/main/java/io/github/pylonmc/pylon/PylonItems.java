@@ -101,6 +101,14 @@ public final class PylonItems {
         PylonPages.SCIENCE.addItem(BRONZE_LOUPE);
     }
 
+    public static final ItemStack BED_ROLL = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BED_ROLL)
+            .set(DataComponentTypes.ITEM_MODEL, Material.RED_BED.getKey())
+            .build();
+    static {
+        RebarItem.register(BedRoll.class, BED_ROLL);
+        PylonPages.TOOLS.addItem(BED_ROLL);
+    }
+
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
             .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_1)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)

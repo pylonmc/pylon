@@ -106,6 +106,18 @@ pylon:glass_breaker:
   result: pylon:glass_breaker
   category: equipment
 
+pylon:bed_roll:
+  pattern:
+    - "CCW"
+    - "CWW"
+    - "WWS"
+  key:
+    C: "#minecraft:wool_carpets"
+    W: "#minecraft:wool"
+    S: minecraft:string
+  result: pylon:bed_roll
+  category: equipment
+
 pylon:bronze_sword:
   pattern:
     - " I "
