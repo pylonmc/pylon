@@ -304,20 +304,19 @@ hydraulic_purification_1:
   unlocks:
     - pylon:solar_purification_tower_1
     - pylon:solar_purification_tower_2
-    - pylon:solar_purification_tower_3
     - pylon:purification_tower_glass
     - pylon:purification_tower_cap
     - pylon:solar_lens
 
 hydraulic_purification_2:
-  item: pylon:solar_purification_tower_1
+  item: pylon:coal_fired_purification_tower
   cost: 15
   unlocks:
     - pylon:coal_fired_purification_tower
     - pylon:solar_purification_tower_3
 
 hydraulic_purification_3:
-  item: pylon:solar_purification_tower_1
+  item: pylon:solar_purification_tower_5
   cost: 20
   unlocks:
     - pylon:solar_purification_tower_4
