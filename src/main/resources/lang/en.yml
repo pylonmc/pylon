@@ -582,6 +582,23 @@ item:
       <arrow> <red>The examined item/block will be consumed</red>
       <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
 
+  bronze_loupe:
+    name: "Bronze Loupe"
+    lore: |-
+      <arrow> An upgraded version of the loupe for faster scanning
+      <arrow> Examining items/blocks with the loupe yields research points
+      <arrow> The rarer the item/block, the more times it can be examined
+      <arrow> <red>The examined item/block will be consumed</red>
+      <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
+
+  tape_measure:
+    name: "Tape Measure"
+    lore: |-
+      <arrow> Measures the distance between two blocks in the same world
+      <arrow> <insn>Right click</insn> on a block to take the first position
+      <arrow> <insn>Left click</insn> on a block to take the second position
+      <arrow> <insn>Shift + Right click</insn> to calculate the distance of the saved positions
+
   lumber_axe:
     name: "Lumber Axe"
     lore: |-
@@ -2370,6 +2387,11 @@ message:
   biorefinery:
     no_fuel: "<red>No fuel"
     has_fuel: "%fuel-bar% %remaining-time%"
+  tape_measure:
+    incomplete_data: "<red>You have not taken both measurements"
+    incompatible_worlds: "<red>The two positions must be in the same world"
+    postion_set: "<green>Position %index% set to %location%"
+    success: "<green>The distance between the two position is %distance%"
   hammer_cant_use: "<red>You cannot use this hammer on this block"
   sprinkler_too_close: "<red>You cannot place sprinklers within %radius% blocks of each other"
   gained_research_points: "<green>+%points% research points (%total% points total)"

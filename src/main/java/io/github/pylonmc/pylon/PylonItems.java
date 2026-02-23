@@ -109,6 +109,14 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BED_ROLL);
     }
 
+    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.TAPE_MEASURE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_NUGGET.getKey())
+            .build();
+    static {
+        RebarItem.register(TapeMeasure.class, TAPE_MEASURE);
+        PylonPages.TOOLS.addItem(TAPE_MEASURE);
+    }
+
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
             .useCooldown(Settings.get(PylonKeys.RESEARCH_PACK_1).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER), PylonKeys.RESEARCH_PACK_1)
             .set(DataComponentTypes.MAX_STACK_SIZE, 3)

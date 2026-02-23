@@ -106,6 +106,19 @@ pylon:glass_breaker:
   result: pylon:glass_breaker
   category: equipment
 
+pylon:tape_measure:
+  pattern:
+    - " T "
+    - "IWI"
+    - "RTR"
+  key:
+    T: pylon:tin_ingot
+    I: minecraft:iron_ingot
+    R: minecraft:redstone
+    W: "#minecraft:logs"
+  result: pylon:tape_measure
+  category: equipment
+
 pylon:bed_roll:
   pattern:
     - "CCW"
