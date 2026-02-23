@@ -222,7 +222,8 @@ public class DieselBreaker extends RebarBlock implements
             outputInventory.addItem(new MachineUpdateReason(), drop);
         }
 
-        toolInventory.setItem(new MachineUpdateReason(), 0, PylonUtils.damageTool(tool, 1));
+        RebarUtils.damageItem(tool, 1, toDrill.getWorld());
+        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
 
         removeFluid(PylonFluids.BIODIESEL, dieselPerBlock);
     }

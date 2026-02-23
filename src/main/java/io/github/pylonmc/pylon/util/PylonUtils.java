@@ -328,17 +328,4 @@ public class PylonUtils {
         }
         return triggered;
     }
-
-    @Nullable
-    public ItemStack damageTool(@NotNull ItemStack tool, int damage) {
-        if (tool.hasData(DataComponentTypes.UNBREAKABLE)) {
-            return tool;
-        }
-
-        tool.setData(DataComponentTypes.DAMAGE, tool.getData(DataComponentTypes.DAMAGE) + damage);
-        if (tool.getData(DataComponentTypes.DAMAGE) >= tool.getData(DataComponentTypes.MAX_DAMAGE)) {
-            return null;
-        }
-        return tool;
-    }
 }

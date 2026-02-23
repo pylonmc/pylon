@@ -225,7 +225,8 @@ public class DieselMiner extends Miner implements
             outputInventory.addItem(new MachineUpdateReason(), drop);
         }
         block.setType(Material.AIR);
-        toolInventory.setItem(new MachineUpdateReason(), 0, PylonUtils.damageTool(tool, 1));
+        RebarUtils.damageItem(tool, 1, block.getWorld());
+        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
         removeFluid(PylonFluids.BIODIESEL, dieselPerBlock);
         updateMiner();
     }

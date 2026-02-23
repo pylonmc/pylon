@@ -191,7 +191,8 @@ public class HydraulicMiner extends Miner implements
         }
 
         block.breakNaturally();
-        toolInventory.setItem(new MachineUpdateReason(), 0, PylonUtils.damageTool(tool, 1));
+        RebarUtils.damageItem(tool, 1, block.getWorld());
+        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
         removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidPerBlock);
         addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerBlock);
         updateMiner();
