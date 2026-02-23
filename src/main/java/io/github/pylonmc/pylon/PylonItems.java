@@ -19,6 +19,7 @@ import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.smelting.PitKiln;
+import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
@@ -497,7 +498,7 @@ public final class PylonItems {
     public static final ItemStack CHARCOAL_BLOCK = ItemStackBuilder.rebar(Material.COAL_BLOCK, PylonKeys.CHARCOAL_BLOCK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, CHARCOAL_BLOCK, PylonKeys.CHARCOAL_BLOCK);
+        RebarItem.register(CharcoalBlock.class, CHARCOAL_BLOCK, PylonKeys.CHARCOAL_BLOCK);
         PylonPages.MISCELLANEOUS.addItem(CHARCOAL_BLOCK);
     }
 
