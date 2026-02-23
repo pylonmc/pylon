@@ -2050,6 +2050,9 @@ item:
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
       <arrow> <attr>Time per Cohesive Unit:</attr> %time-per-cohesive-unit%
       
+      <u>Components</u>
+      <diamond> 3x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
+      
       <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
     waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
 
