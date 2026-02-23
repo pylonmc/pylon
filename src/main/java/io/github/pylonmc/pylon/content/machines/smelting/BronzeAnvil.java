@@ -8,6 +8,7 @@ import io.github.pylonmc.pylon.content.tools.Hammer;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
@@ -50,7 +51,8 @@ public final class BronzeAnvil extends RebarBlock implements
         RebarTickingBlock,
         RebarLogisticBlock,
         RebarInteractBlock,
-        RebarFallingBlock {
+        RebarFallingBlock,
+        RebarNoVanillaContainerBlock {
 
     public static final int TICK_INTERVAL = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final float COOL_CHANCE = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("cool-chance", ConfigAdapter.FLOAT);
