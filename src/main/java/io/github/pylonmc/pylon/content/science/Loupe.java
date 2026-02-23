@@ -279,7 +279,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             }
 
             markAlreadyExamined(player, entity);
-            addEntry(player, entityArg, entity.getType().getKey(), getEntryConfig(entity.getType()));
+            addEntry(player, Component.translatable(entity.getType().translationKey()), entity.getType().getKey(), getEntryConfig(entity.getType()));
             //player.setCooldown(getStack(), cooldownTicks);
         } else if (scan.getHitBlock() != null) {
             Block hit = scan.getHitBlock();
