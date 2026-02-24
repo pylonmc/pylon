@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.armor.BronzeArmor;
+import io.github.pylonmc.pylon.content.armor.PalladiumArmor;
 import io.github.pylonmc.pylon.content.assembling.RedstoneSolderingIron;
 import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
@@ -2644,7 +2645,7 @@ public final class PylonItems {
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
     }
 
-    public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebar(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET)
+    public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET, true)
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("durability", ConfigAdapter.INTEGER))
             .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
@@ -2657,11 +2658,11 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_HELMET);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_HELMET);
         PylonPages.ARMOUR.addItem(PALLADIUM_HELMET);
     }
 
-    public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebar(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE)
+    public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE, true)
             .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
                     .build())
@@ -2673,11 +2674,11 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_CHESTPLATE);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_CHESTPLATE);
         PylonPages.ARMOUR.addItem(PALLADIUM_CHESTPLATE);
     }
 
-    public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebar(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS)
+    public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS, true)
             .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
                     .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
                     .build())
@@ -2689,7 +2690,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_LEGGINGS);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_LEGGINGS);
         PylonPages.ARMOUR.addItem(PALLADIUM_LEGGINGS);
     }
 
@@ -2706,7 +2707,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_BOOTS);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_BOOTS);
         PylonPages.ARMOUR.addItem(PALLADIUM_BOOTS);
     }
 
