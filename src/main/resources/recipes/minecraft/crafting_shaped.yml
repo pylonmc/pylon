@@ -1791,9 +1791,9 @@ pylon:assembly_table:
 
 pylon:fluid_input_hatch:
   pattern:
-    - "B B"
-    - "CCV"
-    - "B B"
+    - "BVB"
+    - " C "
+    - "BCB"
   key:
     B: pylon:bronze_sheet
     C: pylon:fluid_pipe_copper
