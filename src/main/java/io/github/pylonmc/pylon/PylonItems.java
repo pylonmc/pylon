@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.armor.BronzeArmor;
+import io.github.pylonmc.pylon.content.armor.PalladiumArmor;
 import io.github.pylonmc.pylon.content.assembling.RedstoneSolderingIron;
 import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
@@ -2656,7 +2657,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_HELMET);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_HELMET);
         PylonPages.ARMOUR.addItem(PALLADIUM_HELMET);
     }
 
@@ -2672,7 +2673,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_CHESTPLATE);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_CHESTPLATE);
         PylonPages.ARMOUR.addItem(PALLADIUM_CHESTPLATE);
     }
 
@@ -2688,7 +2689,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_LEGGINGS);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_LEGGINGS);
         PylonPages.ARMOUR.addItem(PALLADIUM_LEGGINGS);
     }
 
@@ -2705,7 +2706,7 @@ public final class PylonItems {
             ))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_BOOTS);
+        RebarItem.register(PalladiumArmor.class, PALLADIUM_BOOTS);
         PylonPages.ARMOUR.addItem(PALLADIUM_BOOTS);
     }
 
