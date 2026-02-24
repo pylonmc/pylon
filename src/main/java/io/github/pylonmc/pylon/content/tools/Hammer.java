@@ -83,17 +83,15 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                 }
                 if (!miningLevel.isAtLeast(recipe.level())) {
                     if (player != null) {
-                        ItemStack clone = recipe.result().clone();
-                        RebarTranslator.translateItem(clone, player.locale());
                         player.sendMessage(Component.translatable(
                                 "pylon.message.hammer.too-low-tier",
                                 RebarArgument.of(
                                         "tier_needed",
-                                        recipe.level().toString()
+                                        Component.translatable("pylon.message.hammer.tier." + recipe.level().toString().toLowerCase())
                                 ),
                                 RebarArgument.of(
                                         "item_name",
-                                        clone.displayName()
+                                        recipe.result().displayName()
                                 )
                         ));
                     }

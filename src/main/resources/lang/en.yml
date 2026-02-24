@@ -2392,6 +2392,14 @@ message:
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
   hammer:
     too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
+    tier:
+      any: "any"
+      wood: "wood"
+      gold: "gold"
+      stone: "stone"
+      iron: "iron"
+      diamond: "diamond"
+      netherite: "netherite"
 
 gui:
   fluid-selector-title: "Select Fluid"
