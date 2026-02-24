@@ -801,7 +801,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.smeltery_controller.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/> Hatch</yellow>
+      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
@@ -2050,6 +2050,9 @@ item:
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
       <arrow> <attr>Time per Cohesive Unit:</attr> %time-per-cohesive-unit%
       
+      <u>Components</u>
+      <diamond> 3x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
+      
       <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
     waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
 
@@ -2109,6 +2112,9 @@ item:
 
   palladium_hoe:
     name: "Palladium Hoe"
+
+  fine_sediment:
+    name: "Fine Sediment"
 
 fluid:
   castable:

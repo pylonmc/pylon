@@ -19,6 +19,7 @@ import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.smelting.PitKiln;
+import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
@@ -497,7 +498,7 @@ public final class PylonItems {
     public static final ItemStack CHARCOAL_BLOCK = ItemStackBuilder.rebar(Material.COAL_BLOCK, PylonKeys.CHARCOAL_BLOCK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, CHARCOAL_BLOCK, PylonKeys.CHARCOAL_BLOCK);
+        RebarItem.register(CharcoalBlock.class, CHARCOAL_BLOCK, PylonKeys.CHARCOAL_BLOCK);
         PylonPages.MISCELLANEOUS.addItem(CHARCOAL_BLOCK);
     }
 
@@ -2786,6 +2787,13 @@ public final class PylonItems {
     static {
         RebarItem.register(PortableFluidTank.Item.class, PORTABLE_FLUID_TANK_PALLADIUM, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM);
         PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_PALLADIUM);
+    }
+
+    public static final ItemStack FINE_SEDIMENT = ItemStackBuilder.rebar(Material.GLOWSTONE_DUST, PylonKeys.FINE_SEDIMENT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FINE_SEDIMENT);
+        PylonPages.MISCELLANEOUS.addItem(FINE_SEDIMENT);
     }
 
     static {

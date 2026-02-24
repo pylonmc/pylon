@@ -47,7 +47,8 @@ public class Press extends RebarBlock implements
         RebarFluidBufferBlock,
         RebarComposter,
         RebarDirectionalBlock,
-        RebarRecipeProcessor<PressRecipe> {
+        RebarRecipeProcessor<PressRecipe>,
+        RebarNoJobBlock {
 
     private static final Config settings = Settings.get(PylonKeys.PRESS);
     public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
@@ -118,6 +119,8 @@ public class Press extends RebarBlock implements
         if (priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
             return;
+        } else {
+            event.setUseInteractedBlock(Event.Result.DENY);
         }
 
         tryStartRecipe();

@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.base.RebarFluidTank;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
@@ -32,6 +33,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3d;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @UtilityClass
@@ -294,8 +296,8 @@ public class PylonUtils {
             if (priority == EventPriority.NORMAL) {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
-                tank.removeFluid(1000.0);
                 newItemStack = new ItemStack(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
+                tank.removeFluid(1000.0);
             }
             triggered = true;
         }
