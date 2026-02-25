@@ -13,10 +13,13 @@ import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BlockType;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -122,7 +125,10 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
             }
 
             if (random.nextDouble() < settings.sugarCaneChance()) {
-                topBlock.setType(Material.SUGAR_CANE);
+                BlockGrowEvent event = new BlockGrowEvent(topBlock, BlockType.SUGAR_CANE.createBlockData().createBlockState());
+                if (event.callEvent()) {
+                    topBlock.setType(Material.SUGAR_CANE);
+                }
             }
 
             return true;
@@ -156,7 +162,10 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
             }
 
             if (random.nextDouble() < settings.cactusChance()) {
-                topBlock.setType(Material.CACTUS);
+                BlockGrowEvent event = new BlockGrowEvent(topBlock, BlockType.CACTUS.createBlockData().createBlockState());
+                if (event.callEvent()) {
+                    topBlock.setType(Material.CACTUS);
+                }
             }
 
             return true;
@@ -175,8 +184,15 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         }
 
         if (random.nextDouble() < settings.cropChance()) {
-            ageable.setAge(ageable.getAge() + 1);
-            block.setBlockData(ageable);
+            Ageable changedAgeable = (Ageable) ageable.getMaterial().createBlockData();
+            ageable.copyTo(changedAgeable);
+            changedAgeable.setAge(ageable.getAge() + 1);
+            BlockState changedState = block.getState().copy();
+            changedState.setBlockData(changedAgeable);
+            BlockGrowEvent event = new BlockGrowEvent(block, changedState);
+            if (event.callEvent()) {
+                block.setBlockData(changedAgeable);
+            }
         }
 
         return true;
