@@ -20,6 +20,7 @@ public final class PalladiumFlightRing extends Talisman {
     @Override
     public void applyEffect(@NotNull Player player) {
         super.applyEffect(player);
+        player.setAllowFlight(true);
         player.setFlying(true);
     }
 
@@ -30,6 +31,7 @@ public final class PalladiumFlightRing extends Talisman {
         var gm = player.getGameMode();
         if (gm != GameMode.CREATIVE && gm != GameMode.SPECTATOR) {
             player.setFlying(false);
+            player.setAllowFlight(false);
         }
     }
 }
