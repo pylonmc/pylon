@@ -109,7 +109,9 @@ public final class SmelteryController extends SmelteryComponent
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
-        applyHeat();
+        if (temperature < avgTarget) {
+            temperature += (avgTarget - temperature) * HEATING_FACTOR;
+        }
         pdc.set(RUNNING_KEY, RebarSerializers.BOOLEAN, running);
         pdc.set(TEMPERATURE_KEY, RebarSerializers.DOUBLE, temperature);
         pdc.set(FLUIDS_KEY, RebarSerializers.MAP.mapTypeFrom(RebarSerializers.REBAR_FLUID, RebarSerializers.DOUBLE), fluids);
@@ -415,14 +417,6 @@ public final class SmelteryController extends SmelteryComponent
             avgTarget += (target - avgTarget) / ++heaters;
         }
     }
-
-    private void applyHeat() {
-        if (temperature < avgTarget) {
-            temperature += (avgTarget - temperature) * HEATING_FACTOR;
-        }
-        avgTarget = -1;
-        heaters = 0;
-    }
     // </editor-fold>
 
     // <editor-fold desc="Fluid display" defaultstate="collapsed">
@@ -562,11 +556,20 @@ public final class SmelteryController extends SmelteryComponent
     @Override
     public void tick() {
         if (isFormedAndFullyLoaded()) {
+            double oldTemperature = temperature;
             if (running) {
-                applyHeat();
+                if (temperature < avgTarget) {
+                    temperature += (avgTarget - temperature) * HEATING_FACTOR;
+                }
                 performRecipes();
             }
-            temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
+            if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
+                // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
+                // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
+                temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
+            }
+            avgTarget = -1;
+            heaters = 0;
             updateFluidDisplay();
         }
         infoItem.notifyWindows();
