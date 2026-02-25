@@ -157,7 +157,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         }
 
         RayTraceResult scan = player.getWorld().rayTrace(player.getEyeLocation(), player.getEyeLocation().getDirection(), 5,
-                player.isUnderWater() ? FluidCollisionMode.NEVER : FluidCollisionMode.SOURCE_ONLY, false, 0.25, hit -> hit != player);
+                player.isUnderWater() || player.isInLava() ? FluidCollisionMode.NEVER : FluidCollisionMode.SOURCE_ONLY, false, 0.25, hit -> hit != player);
         if (scan == null) {
             return;
         }
