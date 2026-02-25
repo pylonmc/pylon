@@ -87,12 +87,14 @@ public final class PitKiln extends RebarBlock implements
             RebarSerializers.LIST.listTypeFrom(RebarSerializers.ITEM_STACK);
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
     private static final NamespacedKey PROCESSING_TIME_KEY = pylonKey("processing_time");
+    private static final NamespacedKey CURRENT_RECIPE_KEY = pylonKey("current_recipe");
+    private static final NamespacedKey MANUFACTURE_COUNT_KEY = pylonKey("manufacture_count");
 
     private final ArrayList<ItemStack> contents;
     private final Set<ItemStack> processing;
     private @Nullable Double processingTime;
     private @Nullable PitKilnRecipe currentRecipe = null;
-    private int manufactureCount = 0;
+    private @Nullable Integer manufactureCount = null;
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -108,6 +110,16 @@ public final class PitKiln extends RebarBlock implements
         contents = new ArrayList<>(pdc.get(CONTENTS_KEY, CONTENTS_TYPE));
         processing = pdc.get(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK));
         processingTime = pdc.get(PROCESSING_TIME_KEY, RebarSerializers.DOUBLE);
+        NamespacedKey recipeKey = pdc.get(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY);
+        if(recipeKey != null){
+            currentRecipe = PitKilnRecipe.RECIPE_TYPE.getRecipe(recipeKey);
+            if(currentRecipe == null){
+                processing.clear();
+                manufactureCount = null;
+                processingTime = null;
+            }
+        }
+        manufactureCount = pdc.get(MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER);
     }
 
     @Override
@@ -115,6 +127,10 @@ public final class PitKiln extends RebarBlock implements
         pdc.set(CONTENTS_KEY, CONTENTS_TYPE, contents);
         pdc.set(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK), processing);
         RebarUtils.setNullable(pdc, PROCESSING_TIME_KEY, RebarSerializers.DOUBLE, processingTime);
+        RebarUtils.setNullable(pdc, MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER, manufactureCount);
+        if(currentRecipe != null) {
+            pdc.set(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY, currentRecipe.getKey());
+        }
     }
 
     @Override
