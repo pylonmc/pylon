@@ -526,6 +526,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.grindstone.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.grindstone_handle.name/></yellow>
+    waila: "Grindstone%info%"
 
   grindstone_handle:
     name: "Grindstone Handle"
@@ -2241,6 +2242,8 @@ waila:
       filled: "%bar% (%fluid%)"
   fluid_strainer:
     straining: " | Straining %item% | %bars%"
+  grindstone:
+    processing: " | Processing %item% | %bars%"
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"
