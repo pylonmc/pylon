@@ -59,7 +59,7 @@ public class HungerTalisman extends Talisman {
         hungerTasks.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimer(Pylon.getInstance(), () -> {
             player.setFoodLevel(Math.min(player.getFoodLevel() + hungerIncrease, 20));
             player.setSaturation(Math.min(player.getSaturation() + saturationIncrease, player.getFoodLevel()));
-        }, 0, increasePeriod));
+        }, increasePeriod, increasePeriod));
     }
 
     @Override
