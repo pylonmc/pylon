@@ -2289,6 +2289,19 @@ pylon:cargo_fluid_accumulator:
   result: pylon:cargo_fluid_accumulator
   category: building
 
+pylon:diesel_smeltery_heater:
+  pattern:
+    - "SIS"
+    - "R R"
+    - "SFS"
+  key:
+    S: pylon:steel_sheet
+    I: pylon:smeltery_input_hatch
+    R: pylon:refractory_bricks
+    F: minecraft:flint_and_steel
+  result: pylon:diesel_smeltery_heater
+  category: building
+
 pylon:palladium_helmet:
   pattern:
     - "PPP"
