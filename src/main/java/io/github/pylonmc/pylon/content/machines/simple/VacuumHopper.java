@@ -3,7 +3,6 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -25,7 +24,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Hopper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -45,8 +46,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class VacuumHopper extends RebarBlock implements
         RebarTickingBlock,
         RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarLogisticBlock {
+        RebarVirtualInventoryBlock {
 
     public static class Item extends RebarItem {
         public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
@@ -108,6 +108,17 @@ public class VacuumHopper extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull String, @NotNull VirtualInventory> getVirtualInventories() {
         return Map.of("filter", filterInventory);
+    }
+
+
+    @Override
+    public void onItemMoveTo(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
+        // RebarNoVanillaContainerBlock cancels item move events by default, so we need to manually allow moving items to the hopper inventory
+    }
+
+    @Override
+    public void onItemMoveFrom(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
+        // RebarNoVanillaContainerBlock cancels item move events by default, so we need to manually allow moving items from the hopper inventory
     }
 
     @Override
