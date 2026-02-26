@@ -109,9 +109,7 @@ public final class SmelteryController extends SmelteryComponent
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
-        if (temperature < avgTarget) {
-            temperature += (avgTarget - temperature) * HEATING_FACTOR;
-        }
+        applyHeat();
         pdc.set(RUNNING_KEY, RebarSerializers.BOOLEAN, running);
         pdc.set(TEMPERATURE_KEY, RebarSerializers.DOUBLE, temperature);
         pdc.set(FLUIDS_KEY, RebarSerializers.MAP.mapTypeFrom(RebarSerializers.REBAR_FLUID, RebarSerializers.DOUBLE), fluids);
@@ -417,6 +415,12 @@ public final class SmelteryController extends SmelteryComponent
             avgTarget += (target - avgTarget) / ++heaters;
         }
     }
+
+    private void applyHeat() {
+        if (temperature < avgTarget) {
+            temperature += (avgTarget - temperature) * HEATING_FACTOR;
+        }
+    }
     // </editor-fold>
 
     // <editor-fold desc="Fluid display" defaultstate="collapsed">
@@ -558,9 +562,7 @@ public final class SmelteryController extends SmelteryComponent
         if (isFormedAndFullyLoaded()) {
             double oldTemperature = temperature;
             if (running) {
-                if (temperature < avgTarget) {
-                    temperature += (avgTarget - temperature) * HEATING_FACTOR;
-                }
+                applyHeat();
                 performRecipes();
             }
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
