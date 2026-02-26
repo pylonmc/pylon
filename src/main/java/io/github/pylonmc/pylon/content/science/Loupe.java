@@ -47,6 +47,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -335,9 +336,15 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         pdc.set(EXAMINED_KEY, CHUNK_EXAMINED_TYPE, examined);
     }
 
+    private static <T> List<T> toMutableList(@Nullable List<T> list) {
+        if (list == null)
+            return new ArrayList<>();
+        return new ArrayList<>(list);
+    }
+
     public static void markAlreadyExamined(Player player, LivingEntity entity) {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
-        List<UUID> examiners = pdc.getOrDefault(EXAMINED_KEY, EXAMINED_TYPE, new ArrayList<>());
+        List<UUID> examiners = toMutableList(pdc.get(EXAMINED_KEY, EXAMINED_TYPE));
         examiners.add(player.getUniqueId());
         pdc.set(EXAMINED_KEY, EXAMINED_TYPE, examiners);
     }
