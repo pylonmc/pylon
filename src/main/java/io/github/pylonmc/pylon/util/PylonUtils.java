@@ -7,7 +7,6 @@ import io.github.pylonmc.rebar.block.base.RebarFluidTank;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
@@ -33,7 +32,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3d;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 @UtilityClass
@@ -142,7 +140,7 @@ public class PylonUtils {
         return Component.translatable("pylon.gui.progress_bar.text").arguments(
                 RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(color)),
                 RebarArgument.of("empty_bars", "|".repeat(bars - filledBars)),
-                RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100))
+                RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100).significantFigures(2))
         );
     }
 
