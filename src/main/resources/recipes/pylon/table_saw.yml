@@ -75,6 +75,69 @@ pylon:pale_oak_planks:
   particle-data: minecraft:pale_oak_log
   time-ticks: 20
 
+pylon:oak_planks_wood:
+  input: minecraft:oak_wood
+  result:
+    minecraft:oak_planks: 6
+  particle-data: minecraft:oak_wood
+  time-ticks: 20
+
+pylon:spruce_planks_wood:
+  input: minecraft:spruce_wood
+  result:
+    minecraft:spruce_planks: 6
+  particle-data: minecraft:spruce_wood
+  time-ticks: 20
+
+pylon:birch_planks_wood:
+  input: minecraft:birch_wood
+  result:
+    minecraft:birch_planks: 6
+  particle-data: minecraft:birch_wood
+  time-ticks: 20
+
+pylon:jungle_planks_wood:
+  input: minecraft:jungle_wood
+  result:
+    minecraft:jungle_planks: 6
+  particle-data: minecraft:jungle_wood
+  time-ticks: 20
+
+pylon:acacia_planks_wood:
+  input: minecraft:acacia_wood
+  result:
+    minecraft:acacia_planks: 6
+  particle-data: minecraft:acacia_wood
+  time-ticks: 20
+
+pylon:dark_oak_planks_wood:
+  input: minecraft:dark_oak_wood
+  result:
+    minecraft:dark_oak_planks: 6
+  particle-data: minecraft:dark_oak_wood
+  time-ticks: 20
+
+pylon:mangrove_planks_wood:
+  input: minecraft:mangrove_wood
+  result:
+    minecraft:mangrove_planks: 6
+  particle-data: minecraft:mangrove_wood
+  time-ticks: 20
+
+pylon:cherry_planks_wood:
+  input: minecraft:cherry_wood
+  result:
+    minecraft:cherry_planks: 6
+  particle-data: minecraft:cherry_wood
+  time-ticks: 20
+
+pylon:pale_oak_planks_wood:
+  input: minecraft:pale_oak_wood
+  result:
+    minecraft:pale_oak_planks: 6
+  particle-data: minecraft:pale_oak_wood
+  time-ticks: 20
+
 pylon:oak_sticks:
   input: minecraft:oak_planks
   result:
