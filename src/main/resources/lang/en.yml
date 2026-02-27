@@ -200,6 +200,7 @@ item:
     name: "Wooden Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -208,6 +209,7 @@ item:
     name: "Copper Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -216,6 +218,7 @@ item:
     name: "Tin Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -224,6 +227,7 @@ item:
     name: "Iron Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -232,6 +236,7 @@ item:
     name: "Bronze Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -240,6 +245,7 @@ item:
     name: "Igneous Composite Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -248,6 +254,7 @@ item:
     name: "Steel Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -256,6 +263,7 @@ item:
     name: "Palladium Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -264,6 +272,7 @@ item:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -1656,6 +1665,7 @@ item:
   cargo_duct:
     name: "<white>Cargo Duct"
     lore: |-
+      <arrow> <insn>Right click</insn> a placed cargo duct with a block to make it look like that block
       <arrow> Connects cargo blocks together
       <arrow> Adjacent cargo ducts will automatically connect to each other
 
