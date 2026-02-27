@@ -10,6 +10,7 @@ import io.github.pylonmc.pylon.content.tools.ShimmerMagnet;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.addon.RebarAddon;
+import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -21,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Set;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Pylon extends JavaPlugin implements RebarAddon {
 
@@ -67,6 +70,8 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);
         pm.registerEvents(new EnchantingTalisman.EnchantingListener(), this);
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
+
+        RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
     }
 
     @Override
