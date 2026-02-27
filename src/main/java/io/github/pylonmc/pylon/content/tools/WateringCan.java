@@ -125,7 +125,9 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
             }
 
             if (random.nextDouble() < settings.sugarCaneChance()) {
-                BlockGrowEvent event = new BlockGrowEvent(topBlock, BlockType.SUGAR_CANE.createBlockData().createBlockState());
+                BlockState snapshot = topBlock.getState();
+                snapshot.setType(Material.SUGAR_CANE);
+                BlockGrowEvent event = new BlockGrowEvent(topBlock, snapshot);
                 if (event.callEvent()) {
                     topBlock.setType(Material.SUGAR_CANE);
                 }
@@ -162,7 +164,9 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
             }
 
             if (random.nextDouble() < settings.cactusChance()) {
-                BlockGrowEvent event = new BlockGrowEvent(topBlock, BlockType.CACTUS.createBlockData().createBlockState());
+                BlockState snapshot = topBlock.getState();
+                snapshot.setType(Material.CACTUS);
+                BlockGrowEvent event = new BlockGrowEvent(topBlock, snapshot);
                 if (event.callEvent()) {
                     topBlock.setType(Material.CACTUS);
                 }
@@ -184,14 +188,14 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         }
 
         if (random.nextDouble() < settings.cropChance()) {
-            Ageable changedAgeable = (Ageable) ageable.getMaterial().createBlockData();
-            ageable.copyTo(changedAgeable);
-            changedAgeable.setAge(ageable.getAge() + 1);
-            BlockState changedState = block.getState().copy();
-            changedState.setBlockData(changedAgeable);
-            BlockGrowEvent event = new BlockGrowEvent(block, changedState);
+            Ageable copyBlockData = (Ageable) ageable.getMaterial().createBlockData();
+            ageable.copyTo(copyBlockData);
+            copyBlockData.setAge(ageable.getAge() + 1);
+            BlockState snapshot = block.getState();
+            snapshot.setBlockData(copyBlockData);
+            BlockGrowEvent event = new BlockGrowEvent(block, snapshot);
             if (event.callEvent()) {
-                block.setBlockData(changedAgeable);
+                block.setBlockData(copyBlockData);
             }
         }
 
