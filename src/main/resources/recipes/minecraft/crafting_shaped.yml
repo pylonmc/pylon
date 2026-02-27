@@ -1095,18 +1095,6 @@ pylon:smeltery_burner:
   result: pylon:smeltery_burner
   category: building
 
-pylon:smeltery_heater:
-  pattern:
-    - "BBB"
-    - "SFS"
-    - "BBB"
-  key:
-    B: pylon:refractory_brick
-    S: pylon:steel_sheet
-    F: minecraft:blast_furnace
-  result: pylon:diesel_smeltery_heater
-  category: building
-
 pylon:pit_kiln:
   pattern:
     - "B B"
