@@ -110,6 +110,7 @@ smelting_1:
   - pylon:bronze_sheet
   - pylon:bronze_nugget
   - pylon:bronze_block
+  - pylon:plant_oil_furnace
 
 smelting_2:
   item: pylon:smeltery_controller
