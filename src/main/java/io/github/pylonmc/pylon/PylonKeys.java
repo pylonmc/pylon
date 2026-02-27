@@ -93,6 +93,8 @@ public class PylonKeys {
 
     public static final NamespacedKey FIBER = pylonKey("fiber");
 
+    public static final NamespacedKey GLASS_BREAKER = pylonKey("glass_breaker");
+
     public static final NamespacedKey BRONZE_SWORD = pylonKey("bronze_sword");
     public static final NamespacedKey BRONZE_AXE = pylonKey("bronze_axe");
     public static final NamespacedKey BRONZE_PICKAXE = pylonKey("bronze_pickaxe");
@@ -218,6 +220,11 @@ public class PylonKeys {
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");
 
     public static final NamespacedKey LOUPE = pylonKey("loupe");
+    public static final NamespacedKey BRONZE_LOUPE = pylonKey("bronze_loupe");
+
+    public static final NamespacedKey BED_ROLL = pylonKey("bed_roll");
+
+    public static final NamespacedKey TAPE_MEASURE = pylonKey("tape_measure");
 
     public static final NamespacedKey RESEARCH_PACK_1 = pylonKey("research_pack_1");
     public static final NamespacedKey RESEARCH_PACK_2 = pylonKey("research_pack_2");

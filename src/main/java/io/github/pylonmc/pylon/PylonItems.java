@@ -39,8 +39,11 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.*;
 import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
+import io.papermc.paper.registry.set.RegistrySet;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -79,6 +82,41 @@ public final class PylonItems {
     static {
         RebarItem.register(Loupe.class, LOUPE);
         PylonPages.SCIENCE.addItem(LOUPE);
+    }
+
+
+    public static final ItemStack BRONZE_LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_LOUPE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.GLASS_PANE.getKey())
+            .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
+                .animation(ItemUseAnimation.SPYGLASS)
+                .hasConsumeParticles(false)
+                .consumeSeconds(Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
+            )
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                    Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .cooldownGroup(PylonKeys.LOUPE)
+            )
+            .build();
+    static {
+        RebarItem.register(Loupe.class, BRONZE_LOUPE);
+        PylonPages.SCIENCE.addItem(BRONZE_LOUPE);
+    }
+
+    public static final ItemStack BED_ROLL = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BED_ROLL)
+            .set(DataComponentTypes.ITEM_MODEL, Material.RED_BED.getKey())
+            .build();
+    static {
+        RebarItem.register(BedRoll.class, BED_ROLL);
+        PylonPages.TOOLS.addItem(BED_ROLL);
+    }
+
+    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.TAPE_MEASURE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_NUGGET.getKey())
+            .build();
+    static {
+        RebarItem.register(TapeMeasure.class, TAPE_MEASURE);
+        PylonPages.TOOLS.addItem(TAPE_MEASURE);
     }
 
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)
@@ -818,6 +856,15 @@ public final class PylonItems {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
     }
+
+    public static final ItemStack GLASS_BREAKER = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.GLASS_BREAKER, RegistrySet.keySet(RegistryKey.BLOCK, PylonItemTag.GLASSLIKE.getValues().stream().map(it -> TypedKey.create(RegistryKey.BLOCK, it.getKey())).toList()), true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_PICKAXE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GLASS_BREAKER);
+        PylonPages.TOOLS.addItem(GLASS_BREAKER);
+    }
+
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_AXE.getKey())

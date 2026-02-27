@@ -6,6 +6,7 @@ import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
+import io.github.pylonmc.pylon.content.tools.BedRoll;
 import io.github.pylonmc.pylon.content.tools.ShimmerMagnet;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
@@ -67,6 +68,8 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);
         pm.registerEvents(new EnchantingTalisman.EnchantingListener(), this);
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
+
+        pm.registerEvents(new BedRoll.BedRollListener(), this);
     }
 
     @Override
