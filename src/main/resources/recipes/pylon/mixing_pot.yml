@@ -225,6 +225,16 @@ pylon:hunting_talisman_advanced:
   output:
     pylon:hunting_talisman_advanced: 1
 
+pylon:experience_talisman_advanced:
+  input-items:
+    - pylon:experience_talisman_simple: 1
+    - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
+  input-fluid:
+    pylon:plant_oil: 1000
+  output:
+    pylon:experience_talisman_advanced: 1
+
 pylon:enchanting_talisman_advanced:
   input-items:
     - pylon:enchanting_talisman_simple: 1
@@ -318,6 +328,17 @@ pylon:hunting_talisman_ultimate:
     pylon:gold: 500
   output:
     pylon:hunting_talisman_ultimate: 1
+  requires-enriched-fire: true
+
+pylon:experience_talisman_ultimate:
+  input-items:
+    - pylon:experience_talisman_advanced: 1
+    - pylon:shimmer_skull: 1
+    - pylon:shimmer_dust_3: 4
+  input-fluid:
+    pylon:gold: 500
+  output:
+    pylon:experience_talisman_ultimate: 1
   requires-enriched-fire: true
 
 pylon:enchanting_talisman_ultimate:

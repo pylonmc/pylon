@@ -2004,6 +2004,34 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
+  experience_talisman_simple:
+    name: "Simple Experience Talisman"
+    lore: |-
+      <arrow> Boost your experience gain from orbs
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
+
+  experience_talisman_advanced:
+    name: "Advanced Experience Talisman"
+    lore: |-
+      <arrow> Boost your experience gain from orbs
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
+
+  experience_talisman_ultimate:
+    name: "Ultimate Experience Talisman"
+    lore: |-
+      <arrow> Boost your experience gain from orbs
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
+
+  experience_talisman_palladium:
+    name: "Palladium Experience Talisman"
+    lore: |-
+      <arrow> Boost your experience gain from orbs
+      <arrow> Only works while in your inventory
+      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
+
   palladium_flight_ring:
     name: "<white>Palladium Flight Ring"
     lore: |-
