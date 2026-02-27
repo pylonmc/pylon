@@ -247,7 +247,6 @@ public class DieselBreaker extends RebarBlock implements
     public void onMultiblockRefreshed() {
         if (isProcessing()) {
             stopProcess();
-            return;
         }
         tryStartDrilling();
     }
