@@ -420,8 +420,6 @@ public final class SmelteryController extends SmelteryComponent
         if (temperature < avgTarget) {
             temperature += (avgTarget - temperature) * HEATING_FACTOR;
         }
-        avgTarget = -1;
-        heaters = 0;
     }
     // </editor-fold>
 
@@ -562,11 +560,18 @@ public final class SmelteryController extends SmelteryComponent
     @Override
     public void tick() {
         if (isFormedAndFullyLoaded()) {
+            double oldTemperature = temperature;
             if (running) {
                 applyHeat();
                 performRecipes();
             }
-            temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
+            if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
+                // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
+                // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
+                temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
+            }
+            avgTarget = -1;
+            heaters = 0;
             updateFluidDisplay();
         }
         infoItem.notifyWindows();
