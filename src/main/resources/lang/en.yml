@@ -2164,7 +2164,8 @@ waila:
   fluid_strainer:
     straining: " | Straining %item% | %bars%"
   grindstone:
-    processing: " | Processing %item% | %bars%"
+    idle: " | %item% x%amount%"
+    processing: " | %item% x%amount% | %bars%"
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"
