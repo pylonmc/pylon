@@ -65,7 +65,7 @@ pylon:shimmer_dust_2:
     - pylon:gold_dust
     - minecraft:redstone
   input-fluid:
-    pylon:water: 333
+    pylon:water: 500
   output:
     pylon:shimmer_dust_2: 1
 
@@ -383,3 +383,12 @@ pylon:clay_from_fine_sediment:
   output:
     minecraft:clay: 1
   requires-enriched-fire: false
+
+pylon:slimeball:
+  input-items:
+    - pylon:covalent_binder: 1
+    - pylon:dough: 1
+  input-fluid:
+    pylon:plant_oil: 200
+  output:
+    minecraft:slime_ball: 2

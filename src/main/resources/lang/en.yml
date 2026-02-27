@@ -1361,6 +1361,9 @@ item:
   backflow_valve:
     name: "Backflow Valve"
 
+  leaf_valve:
+    name: "Leaf Valve"
+
   analogue_display:
     name: "Analogue Display"
 
