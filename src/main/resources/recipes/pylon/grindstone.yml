@@ -18,7 +18,7 @@ pylon:subsurface_core_chunk:
         minecraft:coal: 2
       weight: 0.3
     - value:
-        minecraft:raw_copper: 2
+        minecraft:raw_copper: 3
       weight: 0.25
     - value:
         pylon:raw_tin: 2
@@ -34,10 +34,10 @@ pylon:intermediate_core_chunk:
   input: pylon:intermediate_core_chunk
   results:
     - value:
-        minecraft:coal: 3
+        minecraft:coal: 4
       weight: 0.4
     - value:
-        minecraft:raw_copper: 2
+        minecraft:raw_copper: 3
       weight: 0.6
     - value:
         pylon:raw_tin: 2
