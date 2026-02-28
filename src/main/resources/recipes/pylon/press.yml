@@ -1,58 +1,58 @@
 pylon:oak_leaves:
   input: minecraft:oak_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:spruce_leaves:
   input: minecraft:spruce_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:birch_leaves:
   input: minecraft:birch_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:jungle_leaves:
   input: minecraft:jungle_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:acacia_leaves:
   input: minecraft:acacia_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:dark_oak_leaves:
   input: minecraft:dark_oak_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:mangrove_leaves:
   input: minecraft:mangrove_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:cherry_leaves:
   input: minecraft:cherry_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:pale_oak_leaves:
   input: minecraft:pale_oak_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:azalea_leaves:
   input: minecraft:azalea_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:flowering_azalea_leaves:
   input: minecraft:flowering_azalea_leaves
-  oil-amount: 8
+  oil-amount: 10
 
 pylon:kelp:
   input: minecraft:kelp
-  oil-amount: 16
+  oil-amount: 20
 
 pylon:bamboo:
   input: minecraft:bamboo
-  oil-amount: 16
+  oil-amount: 20
 
 pylon:short_grass:
   input: minecraft:short_grass
-  oil-amount: 16
+  oil-amount: 20
 
 pylon:tall_grass:
   input: minecraft:tall_grass
@@ -128,7 +128,7 @@ pylon:dead_bush:
 
 pylon:wheat:
   input: minecraft:wheat
-  oil-amount: 50
+  oil-amount: 100
 
 pylon:beetroot:
   input: minecraft:beetroot
@@ -144,31 +144,31 @@ pylon:potato:
 
 pylon:sugar_cane:
   input: minecraft:sugar_cane
-  oil-amount: 50
+  oil-amount: 25
 
 pylon:cactus:
   input: minecraft:cactus
-  oil-amount: 50
+  oil-amount: 25
 
 pylon:melon:
   input: minecraft:melon
-  oil-amount: 64
+  oil-amount: 300
 
 pylon:pumpkin:
   input: minecraft:pumpkin
-  oil-amount: 64
+  oil-amount: 200
 
 pylon:sweet_berries:
   input: minecraft:sweet_berries
-  oil-amount: 64
+  oil-amount: 60
 
 pylon:brown_mushroom:
   input: minecraft:brown_mushroom
-  oil-amount: 64
+  oil-amount: 60
 
 pylon:red_mushroom:
   input: minecraft:red_mushroom
-  oil-amount: 64
+  oil-amount: 60
 
 pylon:dandelion:
   input: minecraft:dandelion
