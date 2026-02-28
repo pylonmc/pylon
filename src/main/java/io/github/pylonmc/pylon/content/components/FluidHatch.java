@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -161,8 +162,8 @@ public abstract class FluidHatch extends RebarBlock implements
         ));
     }
 
-    public void setFluidType(RebarFluid fluid) {
-        if (this.fluid == fluid) {
+    public void setFluidType(@Nullable RebarFluid fluid) {
+        if (Objects.equals(this.fluid, fluid)) {
             return;
         }
         

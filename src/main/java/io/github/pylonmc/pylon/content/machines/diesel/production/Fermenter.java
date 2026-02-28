@@ -110,9 +110,9 @@ public class Fermenter extends RebarBlock implements
                 for (int z = -1; z <= 1; z++) {
                     Vector3i position = new Vector3i(x, y, z);
                     if (x == 0 && z == 0) {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.FERMENTER_CORE));
+                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS));
                     } else {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.FERMENTER_CASING));
+                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS_CASING));
                     }
                 }
             }

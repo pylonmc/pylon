@@ -83,6 +83,7 @@ public class PylonKeys {
     public static final NamespacedKey SAWBLADE = pylonKey("sawblade");
     public static final NamespacedKey COPPER_DRILL_BIT = pylonKey("copper_drill_bit");
     public static final NamespacedKey BRONZE_DRILL_BIT = pylonKey("bronze_drill_bit");
+    public static final NamespacedKey STEEL_DRILL_BIT = pylonKey("steel_drill_bit");
 
     public static final NamespacedKey COVALENT_BINDER = pylonKey("covalent_binder");
     public static final NamespacedKey SHIMMER_DUST_1 = pylonKey("shimmer_dust_1");
@@ -194,6 +195,8 @@ public class PylonKeys {
     public static final NamespacedKey KINETIC_CONTROL_MECHANISM = pylonKey("kinetic_control_mechanism");
     public static final NamespacedKey INTERNAL_COMBUSTION_ENGINE = pylonKey("internal_combustion_engine");
     public static final NamespacedKey CARGO_CONTROLLER = pylonKey("cargo_controller");
+    public static final NamespacedKey IRON_SUPPORT_BEAM = pylonKey("iron_support_beam");
+    public static final NamespacedKey STEEL_SUPPORT_BEAM = pylonKey("steel_support_beam");
 
     public static final NamespacedKey WATER_PUMP = pylonKey("water_pump");
 
@@ -278,6 +281,7 @@ public class PylonKeys {
     public static final NamespacedKey SHALLOW_CORE_CHUNK = pylonKey("shallow_core_chunk");
     public static final NamespacedKey SUBSURFACE_CORE_CHUNK = pylonKey("subsurface_core_chunk");
     public static final NamespacedKey INTERMEDIATE_CORE_CHUNK = pylonKey("intermediate_core_chunk");
+    public static final NamespacedKey DEEP_CORE_CHUNK = pylonKey("deep_core_chunk");
 
     public static final NamespacedKey FIREPROOF_RUNE = pylonKey("fireproof_rune");
 
@@ -315,17 +319,19 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_FURNACE = pylonKey("diesel_furnace");
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
     public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
+    public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
 
     public static final NamespacedKey FERMENTER = pylonKey("fermenter");
-    public static final NamespacedKey FERMENTER_CORE = pylonKey("fermenter_core");
-    public static final NamespacedKey FERMENTER_CASING = pylonKey("fermenter_casing");
+    public static final NamespacedKey REINFORCED_GLASS = pylonKey("reinforced_glass");
+    public static final NamespacedKey REINFORCED_GLASS_CASING = pylonKey("reinforced_glass_casing");
 
     public static final NamespacedKey BIOREFINERY = pylonKey("biorefinery");
-    public static final NamespacedKey BIOREFINERY_FOUNDATION = pylonKey("biorefinery_foundation");
-    public static final NamespacedKey BIOREFINERY_PLATING = pylonKey("biorefinery_plating");
-    public static final NamespacedKey BIOREFINERY_TOWER_RING = pylonKey("biorefinery_tower_ring");
-    public static final NamespacedKey BIOREFINERY_SMOKESTACK_RING = pylonKey("biorefinery_smokestack_ring");
-    public static final NamespacedKey BIOREFINERY_SMOKESTACK_CAP = pylonKey("biorefinery_smokestack_cap");
+    public static final NamespacedKey BRONZE_FOUNDATION = pylonKey("bronze_foundation");
+    public static final NamespacedKey BRONZE_GRATING = pylonKey("bronze_grating");
+    public static final NamespacedKey REINFORCED_PLATING = pylonKey("reinforced_plating");
+    public static final NamespacedKey DISTILLATION_TOWER_RING = pylonKey("distillation_tower_ring");
+    public static final NamespacedKey SMOKESTACK_RING = pylonKey("smokestack_ring");
+    public static final NamespacedKey SMOKESTACK_CAP = pylonKey("smokestack_cap");
 
     public static final NamespacedKey CARGO_BUFFER = pylonKey("cargo_buffer");
     public static final NamespacedKey CARGO_DUCT = pylonKey("cargo_duct");

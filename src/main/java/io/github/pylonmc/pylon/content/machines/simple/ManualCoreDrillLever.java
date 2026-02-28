@@ -28,6 +28,12 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
     @SuppressWarnings("unused")
     public ManualCoreDrillLever(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+
+        if (getBlock().getBlockData() instanceof Switch switchData) {
+            switchData.setPowered(false);
+            getBlock().setBlockData(switchData);
+            refreshBlockTextureItem();
+        }
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -45,6 +51,7 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
                 getBlock().getRelative(blockData.getFacing().getOppositeFace())
         );
         if (drill == null || drill.isProcessing()) {
+            event.setUseInteractedBlock(Event.Result.DENY);
             return;
         }
 
@@ -56,7 +63,7 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
             return;
         }
 
-        drill.cycle();
+        drill.startCycle();
 
         if (leverResetTask != null) {
             leverResetTask.cancel();
