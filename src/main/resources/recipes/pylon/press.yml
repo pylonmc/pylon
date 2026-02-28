@@ -142,6 +142,10 @@ pylon:potato:
   input: minecraft:potato
   oil-amount: 50
 
+pylon:nether_wart:
+  input: minecraft:nether_wart
+  oil-amount: 50
+
 pylon:sugar_cane:
   input: minecraft:sugar_cane
   oil-amount: 25
