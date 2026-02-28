@@ -72,6 +72,7 @@ public class PylonKeys {
 
     public static final NamespacedKey ROTOR = pylonKey("rotor");
     public static final NamespacedKey BACKFLOW_VALVE = pylonKey("backflow_valve");
+    public static final NamespacedKey LEAF_VALVE = pylonKey("leaf_valve");
     public static final NamespacedKey ANALOGUE_DISPLAY = pylonKey("analogue_display");
     public static final NamespacedKey FILTER_MESH = pylonKey("filter_mesh");
     public static final NamespacedKey NOZZLE = pylonKey("nozzle");

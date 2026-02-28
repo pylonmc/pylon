@@ -649,6 +649,13 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(BACKFLOW_VALVE);
     }
 
+    public static final ItemStack LEAF_VALVE = ItemStackBuilder.rebar(Material.DROPPER, PylonKeys.LEAF_VALVE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LEAF_VALVE);
+        PylonPages.COMPONENTS.addItem(LEAF_VALVE);
+    }
+
     public static final ItemStack ANALOGUE_DISPLAY = ItemStackBuilder.rebar(Material.LIME_STAINED_GLASS_PANE, PylonKeys.ANALOGUE_DISPLAY)
             .build();
     static {
