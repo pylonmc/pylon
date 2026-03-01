@@ -605,7 +605,7 @@ palladium_production:
   item: pylon:palladium_ingot
   cost: 500
   unlocks:
-    - pylon:palladium_drill
+    - pylon:palladium_condenser
     - pylon:palladium_nugget
     - pylon:palladium_ingot
     - pylon:palladium_block

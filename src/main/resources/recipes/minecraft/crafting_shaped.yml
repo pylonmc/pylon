@@ -2481,3 +2481,16 @@ pylon:steel_support_beam:
   result:
     pylon:steel_support_beam: 1
   category: building
+
+pylon:palladium_condenser:
+  pattern:
+    - "SNS"
+    - "SCS"
+    - "SNS"
+  key:
+    S: pylon:steel_sheet
+    N: minecraft:nether_star
+    C: pylon:diesel_core_drill
+  result:
+    pylon:palladium_condenser: 1
+  category: building

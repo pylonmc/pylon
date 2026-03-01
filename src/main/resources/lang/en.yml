@@ -2173,9 +2173,28 @@ item:
   fine_sediment:
     name: "Fine Sediment"
 
-  palladium_drill:
-    name: "Palladium Drill"
-    lore: "todo"
+  palladium_condenser:
+    name: "Palladium Condenser"
+    lore: |-
+      <arrow> Condenses Shimmer Dust II into Palladium Dust using Diesel and Hydraulic Fluid
+      <arrow> Outputs dirty hydraulic fluid
+      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
+      <arrow> <attr>Shimmer Dust II per cycle:</attr> %shimmer-dust-per-cycle%
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.palladium_condenser.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
+      <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Palladium Condenser | %duration-if-any%"
+    waila_format: "| %duration%"
 
 fluid:
   castable:

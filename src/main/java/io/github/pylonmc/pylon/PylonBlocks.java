@@ -123,7 +123,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.IMPROVED_MANUAL_CORE_DRILL, Material.WAXED_OXIDIZED_COPPER, ImprovedManualCoreDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_CORE_DRILL, Material.WAXED_COPPER_BULB, HydraulicCoreDrill.class);
         RebarBlock.register(PylonKeys.DIESEL_CORE_DRILL, Material.IRON_BLOCK, DieselCoreDrill.class);
-        RebarBlock.register(PylonKeys.PALLADIUM_DRILL, Material.NETHERITE_BLOCK, PalladiumDrill.class);
+        RebarBlock.register(PylonKeys.PALLADIUM_CONDENSER, Material.NETHERITE_BLOCK, PalladiumCondenser.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_1, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_2, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_3, Material.HOPPER, VacuumHopper.class);

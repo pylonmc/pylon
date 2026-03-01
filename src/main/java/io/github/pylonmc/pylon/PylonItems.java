@@ -2662,11 +2662,11 @@ public final class PylonItems {
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_CORE_DRILL);
     }
 
-    public static final ItemStack PALLADIUM_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.PALLADIUM_DRILL)
+    public static final ItemStack PALLADIUM_CONDENSER = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.PALLADIUM_CONDENSER)
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_DRILL, PylonKeys.PALLADIUM_DRILL);
-        PylonPages.DIESEL_MACHINES.addItem(PALLADIUM_DRILL);
+        RebarItem.register(PalladiumCondenser.Item.class, PALLADIUM_CONDENSER, PylonKeys.PALLADIUM_CONDENSER);
+        PylonPages.DIESEL_MACHINES.addItem(PALLADIUM_CONDENSER);
     }
 
     //</editor-fold>

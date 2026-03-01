@@ -1,6 +1,5 @@
 package io.github.pylonmc.pylon;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
 import org.bukkit.NamespacedKey;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
@@ -320,7 +319,7 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
     public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
     public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
-    public static final NamespacedKey PALLADIUM_DRILL = pylonKey("palladium_drill");
+    public static final NamespacedKey PALLADIUM_CONDENSER = pylonKey("palladium_condenser");
 
     public static final NamespacedKey FERMENTER = pylonKey("fermenter");
     public static final NamespacedKey REINFORCED_GLASS = pylonKey("reinforced_glass");
