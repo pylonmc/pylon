@@ -1664,6 +1664,17 @@ pylon:hunting_talisman_simple:
   result: pylon:hunting_talisman_simple
   category: equipment
 
+pylon:experience_talisman_simple:
+  pattern:
+    - "EEE"
+    - "EGE"
+    - "EEE"
+  key:
+    E: minecraft:ender_pearl
+    G: minecraft:ghast_tear
+  result: pylon:experience_talisman_simple
+  category: equipment
+
 pylon:enchanting_talisman_simple:
   pattern:
     - "LLL"
