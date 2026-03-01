@@ -20,7 +20,6 @@ import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -31,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -87,10 +85,14 @@ public final class PitKiln extends RebarBlock implements
             RebarSerializers.LIST.listTypeFrom(RebarSerializers.ITEM_STACK);
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
     private static final NamespacedKey PROCESSING_TIME_KEY = pylonKey("processing_time");
+    private static final NamespacedKey CURRENT_RECIPE_KEY = pylonKey("current_recipe");
+    private static final NamespacedKey MANUFACTURE_COUNT_KEY = pylonKey("manufacture_count");
 
     private final ArrayList<ItemStack> contents;
     private final Set<ItemStack> processing;
     private @Nullable Double processingTime;
+    private @Nullable PitKilnRecipe currentRecipe = null;
+    private @Nullable Integer manufactureCount = null;
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -106,6 +108,22 @@ public final class PitKiln extends RebarBlock implements
         contents = new ArrayList<>(pdc.get(CONTENTS_KEY, CONTENTS_TYPE));
         processing = pdc.get(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK));
         processingTime = pdc.get(PROCESSING_TIME_KEY, RebarSerializers.DOUBLE);
+        manufactureCount = pdc.get(MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER);
+        NamespacedKey recipeKey = pdc.get(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY);
+        if (recipeKey != null) {
+            currentRecipe = PitKilnRecipe.RECIPE_TYPE.getRecipe(recipeKey);
+            if (currentRecipe == null) {
+                pdc.remove(CURRENT_RECIPE_KEY);
+                pdc.remove(PROCESSING_KEY);
+                pdc.remove(PROCESSING_TIME_KEY);
+                pdc.remove(MANUFACTURE_COUNT_KEY);
+                if (processing != null) {
+                    processing.clear();
+                }
+                manufactureCount = null;
+                processingTime = null;
+            }
+        }
     }
 
     @Override
@@ -113,6 +131,10 @@ public final class PitKiln extends RebarBlock implements
         pdc.set(CONTENTS_KEY, CONTENTS_TYPE, contents);
         pdc.set(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK), processing);
         RebarUtils.setNullable(pdc, PROCESSING_TIME_KEY, RebarSerializers.DOUBLE, processingTime);
+        RebarUtils.setNullable(pdc, MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER, manufactureCount);
+        if (currentRecipe != null) {
+            pdc.set(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY, currentRecipe.getKey());
+        }
     }
 
     @Override
@@ -139,14 +161,14 @@ public final class PitKiln extends RebarBlock implements
         }
 
         event.getPlayer().swingHand(event.getHand());
-        if(!event.getPlayer().isSneaking()) {
+        if (!event.getPlayer().isSneaking()) {
             ItemStack item = event.getItem();
             if (item == null || item.isEmpty()) {
                 return;
             }
             addItem(item, true);
         } else {
-            if(contents.isEmpty()){
+            if (contents.isEmpty()) {
                 return;
             }
             event.getPlayer().give(contents.removeLast());
@@ -187,16 +209,17 @@ public final class PitKiln extends RebarBlock implements
     public void tick() {
         if (!isFormedAndFullyLoaded()) {
             if (processingTime != null) {
+                currentRecipe = null;
                 processingTime = null;
                 processing.clear();
             }
             return;
         }
-        if (processingTime == null) {
+        if (processingTime == null || currentRecipe == null) {
             tryStartProcessing();
         }
 
-        if (processingTime == null) return;
+        if (processingTime == null || currentRecipe == null) return;
         processingTime -= getTickInterval() / 20.0;
         if (processingTime > 0) return;
 
@@ -214,6 +237,15 @@ public final class PitKiln extends RebarBlock implements
 
         double multiplier = calcMultiplier / TOP_POSITIONS.size();
 
+        for (RecipeInput.Item input : currentRecipe.input()) {
+            int removeAmount = input.getAmount() * manufactureCount;
+            for (ItemStack contentItem : contents) {
+                if (input.contains(contentItem)) {
+                    contentItem.subtract(removeAmount);
+                    break;
+                }
+            }
+        }
         outputLoop:
         for (ItemStack outputItem : processing) {
             int addAmount = (int) Math.floor(outputItem.getAmount() * multiplier);
@@ -300,7 +332,7 @@ public final class PitKiln extends RebarBlock implements
         if (processingTime != null || contents.isEmpty()) return;
         recipeLoop:
         for (PitKilnRecipe recipe : PitKilnRecipe.RECIPE_TYPE) {
-            int ratio = Integer.MAX_VALUE;
+            manufactureCount = Integer.MAX_VALUE;
             for (RecipeInput.Item input : recipe.input()) {
                 int existing = 0;
                 for (ItemStack contentItem : contents) {
@@ -313,23 +345,14 @@ public final class PitKiln extends RebarBlock implements
                 if (existing < required) {
                     continue recipeLoop;
                 }
-                ratio = Math.min(ratio, existing / required);
+                manufactureCount = Math.min(manufactureCount, existing / required);
             }
-            if (ratio <= 0) continue;
+            if (manufactureCount <= 0) continue;
 
-            for (RecipeInput.Item input : recipe.input()) {
-                int removeAmount = input.getAmount() * ratio;
-                for (ItemStack contentItem : contents) {
-                    if (input.contains(contentItem)) {
-                        contentItem.subtract(removeAmount);
-                        break;
-                    }
-                }
-            }
             Set<ItemStack> outputItems = new HashSet<>(recipe.output().size());
             for (ItemStack outputItem : recipe.output()) {
                 ItemStack outputCopy = outputItem.asOne();
-                outputCopy.setAmount(outputItem.getAmount() * ratio);
+                outputCopy.setAmount(outputItem.getAmount() * manufactureCount);
                 outputItems.add(outputCopy);
             }
             processing.addAll(outputItems);
@@ -341,6 +364,7 @@ public final class PitKiln extends RebarBlock implements
                 default -> throw new AssertionError();
             };
             processingTime = PROCESSING_TIME_SECONDS / multiplier;
+            currentRecipe = recipe;
             break;
         }
     }
