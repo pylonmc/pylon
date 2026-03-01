@@ -20,7 +20,6 @@ import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -31,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -110,16 +108,22 @@ public final class PitKiln extends RebarBlock implements
         contents = new ArrayList<>(pdc.get(CONTENTS_KEY, CONTENTS_TYPE));
         processing = pdc.get(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK));
         processingTime = pdc.get(PROCESSING_TIME_KEY, RebarSerializers.DOUBLE);
+        manufactureCount = pdc.get(MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER);
         NamespacedKey recipeKey = pdc.get(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY);
-        if(recipeKey != null){
+        if (recipeKey != null) {
             currentRecipe = PitKilnRecipe.RECIPE_TYPE.getRecipe(recipeKey);
-            if(currentRecipe == null){
-                processing.clear();
+            if (currentRecipe == null) {
+                pdc.remove(CURRENT_RECIPE_KEY);
+                pdc.remove(PROCESSING_KEY);
+                pdc.remove(PROCESSING_TIME_KEY);
+                pdc.remove(MANUFACTURE_COUNT_KEY);
+                if (processing != null) {
+                    processing.clear();
+                }
                 manufactureCount = null;
                 processingTime = null;
             }
         }
-        manufactureCount = pdc.get(MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER);
     }
 
     @Override
@@ -128,7 +132,7 @@ public final class PitKiln extends RebarBlock implements
         pdc.set(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK), processing);
         RebarUtils.setNullable(pdc, PROCESSING_TIME_KEY, RebarSerializers.DOUBLE, processingTime);
         RebarUtils.setNullable(pdc, MANUFACTURE_COUNT_KEY, RebarSerializers.INTEGER, manufactureCount);
-        if(currentRecipe != null) {
+        if (currentRecipe != null) {
             pdc.set(CURRENT_RECIPE_KEY, RebarSerializers.NAMESPACED_KEY, currentRecipe.getKey());
         }
     }
@@ -157,14 +161,14 @@ public final class PitKiln extends RebarBlock implements
         }
 
         event.getPlayer().swingHand(event.getHand());
-        if(!event.getPlayer().isSneaking()) {
+        if (!event.getPlayer().isSneaking()) {
             ItemStack item = event.getItem();
             if (item == null || item.isEmpty()) {
                 return;
             }
             addItem(item, true);
         } else {
-            if(contents.isEmpty()){
+            if (contents.isEmpty()) {
                 return;
             }
             event.getPlayer().give(contents.removeLast());
