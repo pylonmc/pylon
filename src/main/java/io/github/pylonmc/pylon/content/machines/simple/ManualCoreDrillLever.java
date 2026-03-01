@@ -38,7 +38,12 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick() || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
+        if (!event.getAction().isRightClick() || event.useInteractedBlock() == Event.Result.DENY) {
+            return;
+        }
+
+        if (event.getPlayer().isSneaking()) {
+            event.setUseInteractedBlock(Event.Result.DENY);
             return;
         }
 
