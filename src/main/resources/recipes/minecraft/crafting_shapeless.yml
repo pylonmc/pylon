@@ -57,7 +57,7 @@ pylon:shimmer_dust_1:
     - minecraft:flint
     - minecraft:clay_ball
   result:
-    pylon:shimmer_dust_1: 1
+    pylon:shimmer_dust_1: 3
   category: misc
 
 pylon:medkit:

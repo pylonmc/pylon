@@ -144,7 +144,10 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> A device used for smelting steel from sponge iron
-      <arrow> <insn>Set fire to a block of coal with gypsum dust thrown on top</insn> to create
+      <arrow> Steps to create:
+      <arrow> 1 - <insn>Place a Block of Coal</insn>
+      <arrow> 2 - <insn>Drop one Gypsum Dust on top of it</insn>
+      <arrow> 3 - <insn>Ignite the top of the block</insn>
       <arrow> <insn>Right click</insn> to insert items
       <arrow> <insn>Right click with tongs</insn> to retrieve items safely
       
