@@ -1,0 +1,7 @@
+liquid-xp-buffer-size: 1000
+bottle-production-rate-ticks: 20
+input-fluid: pylon:biodiesel
+input-fluid-buffer-size: 1000
+input-fluid-consumption-rate: 50
+input-waila-bar-length: 20
+input-waila-bar-color: eaa627
