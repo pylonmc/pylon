@@ -17,12 +17,12 @@ import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class XPTalisman extends Talisman {
+public class ExperienceTalisman extends Talisman {
     public static final NamespacedKey XP_TALISMAN_KEY = pylonKey("xp_talisman");
     public static final NamespacedKey XP_MULTIPLIER_KEY = pylonKey("xp_talisman_multiplier");
     public final float xpMultiplier = getSettings().getOrThrow("xp-multiplier", ConfigAdapter.FLOAT);
 
-    public XPTalisman(@NotNull ItemStack stack) {
+    public ExperienceTalisman(@NotNull ItemStack stack) {
         super(stack);
     }
 
@@ -38,8 +38,14 @@ public class XPTalisman extends Talisman {
     }
 
     @Override
+    public void removeEffect(@NotNull Player player) {
+        super.removeEffect(player);
+        player.getPersistentDataContainer().remove(XP_MULTIPLIER_KEY);
+    }
+
+    @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("xp-boost", UnitFormat.PERCENT.format(xpMultiplier - 1).decimalPlaces(0)));
+        return List.of(RebarArgument.of("xp-boost", UnitFormat.PERCENT.format((xpMultiplier - 1) * 100).decimalPlaces(0)));
     }
 
     public static class XPTalismanListener implements Listener {

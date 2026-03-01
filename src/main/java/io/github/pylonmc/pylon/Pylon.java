@@ -70,6 +70,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);
         pm.registerEvents(new EnchantingTalisman.EnchantingListener(), this);
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
+        pm.registerEvents(new ExperienceTalisman.XPTalismanListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
     }

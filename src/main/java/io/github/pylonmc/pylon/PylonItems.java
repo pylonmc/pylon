@@ -1372,7 +1372,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
             .build();
     static {
-        RebarItem.register(XPTalisman.class, EXPERIENCE_TALISMAN_SIMPLE);
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_SIMPLE);
         PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_SIMPLE);
     }
 
@@ -1380,7 +1380,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
             .build();
     static {
-        RebarItem.register(XPTalisman.class, EXPERIENCE_TALISMAN_ADVANCED);
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_ADVANCED);
         PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_ADVANCED);
     }
 
@@ -1388,7 +1388,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
             .build();
     static {
-        RebarItem.register(XPTalisman.class, EXPERIENCE_TALISMAN_ULTIMATE);
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_ULTIMATE);
         PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_ULTIMATE);
     }
 
@@ -1396,7 +1396,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
             .build();
     static {
-        RebarItem.register(XPTalisman.class, EXPERIENCE_TALISMAN_PALLADIUM);
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_PALLADIUM);
         PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_PALLADIUM);
     }
 
