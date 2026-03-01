@@ -826,7 +826,7 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
     }
 
-    public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
+    public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_AXE.getKey())
             .build();
     static {
@@ -834,7 +834,7 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BRONZE_AXE);
     }
 
-    public static final ItemStack BRONZE_PICKAXE = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_PICKAXE, RebarUtils.pickaxeMineable(), true, false, false)
+    public static final ItemStack BRONZE_PICKAXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_PICKAXE, PylonKeys.BRONZE_PICKAXE, RebarUtils.pickaxeMineable(), true, false, false)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_PICKAXE.getKey())
             .build();
     static {
@@ -842,7 +842,7 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BRONZE_PICKAXE);
     }
 
-    public static final ItemStack BRONZE_SHOVEL = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_SHOVEL, RebarUtils.shovelMineable(), true, false, false)
+    public static final ItemStack BRONZE_SHOVEL = ItemStackBuilder.rebarToolWeapon(Material.STONE_SHOVEL, PylonKeys.BRONZE_SHOVEL, RebarUtils.shovelMineable(), true, false, false)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
             .build();
     static {
@@ -850,7 +850,7 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BRONZE_SHOVEL);
     }
 
-    public static final ItemStack BRONZE_HOE = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_HOE, RebarUtils.hoeMineable(), true, false, false)
+    public static final ItemStack BRONZE_HOE = ItemStackBuilder.rebarToolWeapon(Material.STONE_HOE, PylonKeys.BRONZE_HOE, RebarUtils.hoeMineable(), true, false, false)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_HOE.getKey())
             .build();
     static {
@@ -974,7 +974,7 @@ public final class PylonItems {
 
     //<editor-fold desc="Combat" defaultstate=collapsed>
 
-    public static final ItemStack BRONZE_SWORD = ItemStackBuilder.rebarWeapon(Material.CLAY_BALL, PylonKeys.BRONZE_SWORD, true, false, false)
+    public static final ItemStack BRONZE_SWORD = ItemStackBuilder.rebarWeapon(Material.STONE_SWORD, PylonKeys.BRONZE_SWORD, true, false, false)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SWORD.getKey())
             .build();
     static {
