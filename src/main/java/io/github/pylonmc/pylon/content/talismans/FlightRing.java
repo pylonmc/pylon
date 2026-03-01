@@ -14,7 +14,7 @@ public final class FlightRing extends Talisman {
 
     @Override
     public NamespacedKey getTalismanKey() {
-        return PylonKeys.PALLADIUM_FLIGHT_RING_KEY;
+        return PylonKeys.FLIGHT_RING_KEY;
     }
 
     @Override

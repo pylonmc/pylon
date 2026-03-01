@@ -2428,14 +2428,14 @@ pylon:hunting_talisman_palladium:
           scale: [ 0.3, 0.3, 0.3 ]
 
 
-pylon:palladium_flight_ring:
+pylon:flight_ring:
   inputs:
     - minecraft:nether_star: 1
     - minecraft:feather: 8
     - pylon:palladium_block: 8
     - pylon:shimmer_dust_3: 16
   results:
-    - pylon:palladium_flight_ring
+    - pylon:flight_ring
   steps:
     - tool: "hammer"
       icon: pylon:diamond_hammer

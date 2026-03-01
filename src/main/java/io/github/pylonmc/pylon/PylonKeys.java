@@ -396,7 +396,7 @@ public class PylonKeys {
     public static final NamespacedKey HUNTING_TALISMAN_ULTIMATE = pylonKey("hunting_talisman_ultimate");
     public static final NamespacedKey HUNTING_TALISMAN_PALLADIUM = pylonKey("hunting_talisman_palladium");
 
-    public static final NamespacedKey PALLADIUM_FLIGHT_RING_KEY = PylonUtils.pylonKey("palladium_flight_ring");
+    public static final NamespacedKey FLIGHT_RING_KEY = pylonKey("flight_ring");
 
     public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");
     public static final NamespacedKey COPPER_SCREWDRIVER = pylonKey("copper_screwdriver");

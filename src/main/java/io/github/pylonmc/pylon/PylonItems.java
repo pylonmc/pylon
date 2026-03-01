@@ -1106,7 +1106,7 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(PALLADIUM_HOE);
     }
 
-    public static final ItemStack FLIGHT_RING = ItemStackBuilder.rebar(Material.NETHER_STAR, PylonKeys.PALLADIUM_FLIGHT_RING_KEY)
+    public static final ItemStack FLIGHT_RING = ItemStackBuilder.rebar(Material.NETHER_STAR, PylonKeys.FLIGHT_RING_KEY)
             .build();
     static {
         RebarItem.register(FlightRing.class, FLIGHT_RING);
