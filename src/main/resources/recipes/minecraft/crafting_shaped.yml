@@ -1430,11 +1430,11 @@ pylon:recoil_arrow:
 pylon:manual_core_drill_lever:
   pattern:
     - " L "
-    - "LPL"
-    - " L "
+    - " I "
+    - "   "
   key:
     L: minecraft:lever
-    P: "#minecraft:planks"
+    I: minecraft:iron_ingot
   result: pylon:manual_core_drill_lever
   group: pylon:manual_core_drill_lever
   category: building
