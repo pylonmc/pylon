@@ -15,6 +15,10 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
+import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -2802,6 +2806,62 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, FINE_SEDIMENT);
         PylonPages.MISCELLANEOUS.addItem(FINE_SEDIMENT);
+    }
+
+    public static final ItemStack EXPERIENCE_DRAIN = ItemStackBuilder.rebar(Material.BLACKSTONE_SLAB, PylonKeys.EXPERIENCE_DRAIN)
+            .build();
+    static {
+        RebarItem.register(ExperienceDrain.Item.class, EXPERIENCE_DRAIN, PylonKeys.EXPERIENCE_DRAIN);
+        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_DRAIN);
+    }
+
+    public static final ItemStack EXPERIENCE_FOUNTAIN = ItemStackBuilder.rebar(Material.END_STONE, PylonKeys.EXPERIENCE_FOUNTAIN)
+            .build();
+    static {
+        RebarItem.register(ExperienceFountain.Item.class, EXPERIENCE_FOUNTAIN, PylonKeys.EXPERIENCE_FOUNTAIN);
+        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_FOUNTAIN);
+    }
+
+    public static final ItemStack EXPERIENCE_FOUNTAIN_SPOUT = ItemStackBuilder.rebar(Material.END_ROD, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, EXPERIENCE_FOUNTAIN_SPOUT, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT);
+        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_FOUNTAIN_SPOUT);
+    }
+
+    public static final ItemStack HYDRAULIC_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER)
+            .build();
+    static {
+        RebarItem.register(FluidExperienceBottler.Item.class, HYDRAULIC_EXPERIENCE_BOTTLER, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER);
+        PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_EXPERIENCE_BOTTLER);
+    }
+
+    public static final ItemStack DIESEL_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.DIESEL_EXPERIENCE_BOTTLER)
+            .build();
+    static {
+        RebarItem.register(FluidExperienceBottler.Item.class, DIESEL_EXPERIENCE_BOTTLER, PylonKeys.DIESEL_EXPERIENCE_BOTTLER);
+        PylonPages.DIESEL_MACHINES.addItem(DIESEL_EXPERIENCE_BOTTLER);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE_SUPER = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE_SUPER)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE_SUPER);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE_SUPER);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE_ULTRA = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE_ULTRA)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE_ULTRA);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE_ULTRA);
     }
 
     static {

@@ -1,0 +1,12 @@
+liquid-xp-buffer-size: 1000
+bottle-production-rate-ticks: 50
+input-fluid: pylon:hydraulic_fluid
+input-fluid-buffer-size: 500
+input-fluid-consumption-rate: 25
+input-waila-bar-length: 20
+input-waila-bar-color: 212d99
+output-fluid: pylon:dirty_hydraulic_fluid
+output-fluid-buffer-size: 1000
+fluid-output-production-rate: 25
+output-fluid-bar-length: 20
+output-waila-bar-color: 48459b

@@ -1465,6 +1465,19 @@ pylon:hydraulic_core_drill:
   result: pylon:hydraulic_core_drill
   category: building
 
+pylon:hydraulic_experience_bottler:
+  pattern:
+    - "BPB"
+    - "PSP"
+    - "BHB"
+  key:
+    B: pylon:bronze_sheet
+    H: pylon:hydraulic_motor
+    S: minecraft:brewing_stand
+    P: minecraft:piston
+  result: pylon:hydraulic_experience_bottler
+  category: building
+
 pylon:climbing_pick:
   pattern:
     - "H H"
@@ -1986,6 +1999,20 @@ pylon:diesel_brick_molder:
   result: pylon:diesel_brick_molder
   category: building
 
+pylon:diesel_experience_bottler:
+  pattern:
+    - "SPS"
+    - "PBP"
+    - "MEM"
+  key:
+    S: pylon:iron_sheet
+    P: minecraft:piston
+    M: pylon:brick_mold
+    E: pylon:internal_combustion_engine
+    B: minecraft:brewing_stand
+  result: pylon:diesel_experience_bottler
+  category: building
+
 pylon:fermenter:
   pattern:
     - "ICI"
@@ -2421,3 +2448,64 @@ pylon:palladium_hoe:
   result:
     pylon:palladium_hoe: 1
   category: equipment
+
+pylon:liquid_xp_bottle_super:
+  pattern:
+    - "BBB"
+    - "BBB"
+    - "BBB"
+  key:
+    B: pylon:liquid_xp_bottle
+  result:
+    pylon:liquid_xp_bottle_super: 1
+  category: misc
+
+pylon:liquid_xp_bottle_ultra:
+  pattern:
+    - "SSS"
+    - "SSS"
+    - "SSS"
+  key:
+    S: pylon:liquid_xp_bottle_super
+  result:
+    pylon:liquid_xp_bottle_ultra: 1
+  category: misc
+
+pylon:experience_fountain_spout:
+  pattern:
+    - "DDD"
+    - "DBD"
+    - "DSD"
+  key:
+    S: pylon:sprinkler
+    B: minecraft:iron_bars
+    D: pylon:shimmer_dust_2
+  result: pylon:experience_fountain_spout
+  category: building
+
+pylon:experience_fountain:
+  pattern:
+    - "BSB"
+    - "SCS"
+    - "BSB"
+  key:
+    C: minecraft:end_crystal
+    B: pylon:covalent_binder
+    S: pylon:shimmer_bronze
+  result: pylon:experience_fountain
+  category: building
+
+pylon:experience_drain:
+  pattern:
+    - "LLL"
+    - "CBA"
+    - "DSD"
+  key:
+    S: minecraft:stone_slab
+    D: pylon:shimmer_dust_2
+    B: pylon:covalent_binder
+    C: pylon:liselette_cathode
+    A: pylon:liselette_anode
+    L: pylon:liselette_conductor
+  result: pylon:experience_drain
+  category: building
