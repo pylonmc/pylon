@@ -156,19 +156,10 @@ public class Biorefinery extends RebarBlock implements
     }
 
     @Override
-    public boolean checkFormed() {
-        boolean formed = RebarSimpleMultiblock.super.checkFormed();
-        if (formed) {
-            getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
-            getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
-            getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
-            for (Vector3i position : getComponents().keySet()) {
-                Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-                Location location = getBlock().getLocation().add(relative);
-                Waila.addWailaOverride(location.getBlock(), this::getWaila);
-            }
-        }
-        return formed;
+    public void onMultiblockFormed() {
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
     @Override
@@ -185,11 +176,6 @@ public class Biorefinery extends RebarBlock implements
         FluidOutputHatch biodieselOutputHatch = getMultiblockComponent(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
         if (biodieselOutputHatch != null) {
             biodieselOutputHatch.setFluidType(null);
-        }
-        for (Vector3i position : getComponents().keySet()) {
-            Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-            Location location = getBlock().getLocation().add(relative);
-            Waila.removeWailaOverride(location.getBlock());
         }
     }
 

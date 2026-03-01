@@ -125,18 +125,10 @@ public class Fermenter extends RebarBlock implements
     }
 
     @Override
-    public boolean checkFormed() {
-        boolean formed = RebarSimpleMultiblock.super.checkFormed();
-        if (formed) {
-            getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
-            for (Vector3i position : getComponents().keySet()) {
-                Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-                Location location = getBlock().getLocation().add(relative);
-                Waila.addWailaOverride(location.getBlock(), this::getWaila);
-            }
-            getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
-        }
-        return formed;
+    public void onMultiblockFormed() {
+        RebarSimpleMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
+        getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
     }
 
     @Override
@@ -145,11 +137,6 @@ public class Fermenter extends RebarBlock implements
         FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, OUTPUT_HATCH);
         if (outputHatch != null) {
             outputHatch.setFluidType(null);
-        }
-        for (Vector3i position : getComponents().keySet()) {
-            Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-            Location location = getBlock().getLocation().add(relative);
-            Waila.removeWailaOverride(location.getBlock());
         }
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);
     }
