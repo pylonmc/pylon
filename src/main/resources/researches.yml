@@ -584,7 +584,7 @@ wither_reactivation:
 
 palladium_tools:
   item: pylon:palladium_sword
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_sword
     - pylon:palladium_axe
@@ -594,7 +594,7 @@ palladium_tools:
 
 palladium_armor:
   item: pylon:palladium_chestplate
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_helmet
     - pylon:palladium_chestplate
@@ -603,7 +603,7 @@ palladium_armor:
 
 palladium_production:
   item: pylon:palladium_ingot
-  cost: 500
+  cost: 150
   unlocks:
     - pylon:palladium_condenser
     - pylon:palladium_nugget
@@ -614,6 +614,6 @@ palladium_production:
 
 creative_flight:
   item: pylon:flight_ring
-  cost: 500
+  cost: 1000
   unlocks:
     - pylon:flight_ring
