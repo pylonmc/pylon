@@ -1106,11 +1106,11 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(PALLADIUM_HOE);
     }
 
-    public static final ItemStack PALLADIUM_FLIGHT_RING = ItemStackBuilder.rebar(Material.NETHER_STAR, PylonKeys.PALLADIUM_FLIGHT_RING_KEY)
+    public static final ItemStack FLIGHT_RING = ItemStackBuilder.rebar(Material.NETHER_STAR, PylonKeys.PALLADIUM_FLIGHT_RING_KEY)
             .build();
     static {
-        RebarItem.register(PalladiumFlightRing.class, PALLADIUM_FLIGHT_RING);
-        PylonPages.TOOLS.addItem(PALLADIUM_FLIGHT_RING);
+        RebarItem.register(FlightRing.class, FLIGHT_RING);
+        PylonPages.TOOLS.addItem(FLIGHT_RING);
     }
 
     //</editor-fold>
@@ -2660,6 +2660,13 @@ public final class PylonItems {
     static {
         RebarItem.register(DieselCoreDrill.Item.class, DIESEL_CORE_DRILL, PylonKeys.DIESEL_CORE_DRILL);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_CORE_DRILL);
+    }
+
+    public static final ItemStack PALLADIUM_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.PALLADIUM_DRILL)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PALLADIUM_DRILL, PylonKeys.PALLADIUM_DRILL);
+        PylonPages.DIESEL_MACHINES.addItem(PALLADIUM_DRILL);
     }
 
     //</editor-fold>

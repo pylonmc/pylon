@@ -1641,8 +1641,8 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.fermenter.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 2x <yellow>Block of Iron</yellow>
-      <diamond> 4x <yellow>Polished Deepslate Wall</yellow>
+      <diamond> 2x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
       <diamond> 4x <yellow><lang:pylon.item.reinforced_glass.name/></yellow>
       <diamond> 31x <yellow><lang:pylon.item.reinforced_glass_casing.name/></yellow>
     waila: "Fermenter | %sugarcane-bar% %sugarcane-amount% sugarcane"
@@ -2173,6 +2173,10 @@ item:
   fine_sediment:
     name: "Fine Sediment"
 
+  palladium_drill:
+    name: "Palladium Drill"
+    lore: "todo"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2298,6 +2302,7 @@ research:
   palladium_armor: "<#2937e3>Palladium armor"
   palladium_protection: "<#2937e3>Palladium production"
   creative_flight: "<#2937e3>Creative flight"
+  palladium_production: "<#2937e3>Palladium Production"
 
 guide:
   page:

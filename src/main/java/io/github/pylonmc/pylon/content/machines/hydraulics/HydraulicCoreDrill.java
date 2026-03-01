@@ -1,27 +1,21 @@
 package io.github.pylonmc.pylon.content.machines.hydraulics;
 
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.content.machines.simple.CoreDrill;
-import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
 import java.util.ArrayList;
@@ -33,6 +27,10 @@ public class HydraulicCoreDrill extends CoreDrill {
 
     public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerRotation = hydraulicFluidUsage * rotationDuration / 20.0;
+
+    public static final Vector3i FLUID_INPUT_HATCH = new Vector3i(1, -2, 3);
+    public static final Vector3i FLUID_OUTPUT_HATCH = new Vector3i(-1, -2, 3);
+    public static final Vector3i ITEM_OUTPUT_HATCH = new Vector3i(0, -1, 3);
 
     public static class Item extends CoreDrill.Item {
 
@@ -89,10 +87,10 @@ public class HydraulicCoreDrill extends CoreDrill {
         components.put(new Vector3i(1, -2, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
 
         components.put(new Vector3i(0, -2, 3), new VanillaMultiblockComponent(Material.CAULDRON));
-        components.put(new Vector3i(1, -2, 3), new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(new Vector3i(-1, -2, 3), new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(FLUID_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(FLUID_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
 
-        components.put(new Vector3i(0, -1, 3), new RebarMultiblockComponent(PylonKeys.ITEM_OUTPUT_HATCH));
+        components.put(ITEM_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_OUTPUT_HATCH));
 
         return components;
     }
@@ -103,10 +101,9 @@ public class HydraulicCoreDrill extends CoreDrill {
             return;
         }
 
-        FluidInputHatch inputHatch = getFluidInputHatch();
-        FluidOutputHatch outputHatch = getFluidOutputHatch();
-        ItemOutputHatch itemOutputHatch = getItemOutputHatch();
-        Preconditions.checkState(inputHatch != null && outputHatch != null && itemOutputHatch != null);
+        FluidInputHatch inputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH);
+        FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
+        ItemOutputHatch itemOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH);
 
         if (inputHatch.fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerRotation
                 || outputHatch.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerRotation
@@ -127,49 +124,30 @@ public class HydraulicCoreDrill extends CoreDrill {
 
     @Override
     public void onProcessFinished() {
-        ItemOutputHatch hatch = getItemOutputHatch();
-        Preconditions.checkState(hatch != null);
-        hatch.inventory.addItem(new MachineUpdateReason(), output);
+        getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)
+                .inventory
+                .addItem(new MachineUpdateReason(), output);
     }
 
     @Override
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
-        FluidInputHatch inputHatch = getFluidInputHatch();
-        FluidOutputHatch outputHatch = getFluidOutputHatch();
-        Preconditions.checkState(inputHatch != null && outputHatch != null);
-        inputHatch.setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        outputHatch.setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
+                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
+                .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
         super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch inputHatch = getFluidInputHatch();
+        FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH);
         if (inputHatch != null) {
             inputHatch.setFluidType(null);
         }
-        FluidOutputHatch outputHatch = getFluidOutputHatch();
+        FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
         if (outputHatch != null) {
             outputHatch.setFluidType(null);
         }
-    }
-
-    public @Nullable FluidInputHatch getFluidInputHatch() {
-        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(1, -2, 3), getFacing()));
-        Location location = getBlock().getLocation().add(relativeLocation);
-        return BlockStorage.getAs(FluidInputHatch.class, location);
-    }
-
-    public @Nullable FluidOutputHatch getFluidOutputHatch() {
-        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(-1, -2, 3), getFacing()));
-        Location location = getBlock().getLocation().add(relativeLocation);
-        return BlockStorage.getAs(FluidOutputHatch.class, location);
-    }
-
-    public @Nullable ItemOutputHatch getItemOutputHatch() {
-        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(0, -1, 3), getFacing()));
-        Location location = getBlock().getLocation().add(relativeLocation);
-        return BlockStorage.getAs(ItemOutputHatch.class, location);
     }
 }

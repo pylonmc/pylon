@@ -1,12 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.diesel.production;
 
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
@@ -52,6 +50,9 @@ public class Fermenter extends RebarBlock implements
     public final int sugarcaneCapacity = getSettings().getOrThrow("sugarcane-capacity", ConfigAdapter.INTEGER);
     public final double maxEthanolOutputRate = getSettings().getOrThrow("max-ethanol-output-rate", ConfigAdapter.DOUBLE);
 
+    public static final Vector3i INPUT_HATCH = new Vector3i(0, 0, -1);
+    public static final Vector3i OUTPUT_HATCH = new Vector3i(0, 0, 1);
+
     public static class Item extends RebarItem {
 
         public final double ethanolPerSugarcane = getSettings().getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
@@ -96,14 +97,14 @@ public class Fermenter extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(-1, 0, 0), new VanillaMultiblockComponent(Material.IRON_BLOCK));
-        components.put(new Vector3i(1, 0, 0), new VanillaMultiblockComponent(Material.IRON_BLOCK));
-        components.put(new Vector3i(0, 0, -1), new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(-1, 0, -1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(-1, 0, 1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(1, 0, -1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(1, 0, 1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
 
         for (int x = -1; x <= 1; x++) {
             for (int y = 1 ; y <= 4; y++) {
@@ -127,7 +128,7 @@ public class Fermenter extends RebarBlock implements
     public boolean checkFormed() {
         boolean formed = RebarSimpleMultiblock.super.checkFormed();
         if (formed) {
-            getOutputHatch().setFluidType(PylonFluids.ETHANOL);
+            getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
             for (Vector3i position : getComponents().keySet()) {
                 Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
                 Location location = getBlock().getLocation().add(relative);
@@ -141,7 +142,7 @@ public class Fermenter extends RebarBlock implements
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidOutputHatch outputHatch = getOutputHatch();
+        FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, OUTPUT_HATCH);
         if (outputHatch != null) {
             outputHatch.setFluidType(null);
         }
@@ -159,14 +160,13 @@ public class Fermenter extends RebarBlock implements
             return;
         }
 
-        ItemInputHatch inputHatch = getInputHatch();
-        FluidOutputHatch outputHatch = getOutputHatch();
-        Preconditions.checkState(inputHatch != null && outputHatch != null);
+        ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, INPUT_HATCH);
+        FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH);
 
         ItemStack sugarcane = inputHatch.inventory.getItem(0);
         if (sugarcane != null
                 && RebarItem.fromStack(sugarcane) == null
-                && sugarcane.getType().equals(Material.SUGAR_CANE)
+                && sugarcane.getType() == Material.SUGAR_CANE
                 && fluidSpaceRemaining(PylonFluids.SUGARCANE) > ethanolPerSugarcane
         ) {
             int max = (int) (fluidSpaceRemaining(PylonFluids.SUGARCANE) / ethanolPerSugarcane);
@@ -212,17 +212,5 @@ public class Fermenter extends RebarBlock implements
                 )),
                 RebarArgument.of("sugarcane-amount", sugarcaneAmount)
         ));
-    }
-
-    public @Nullable ItemInputHatch getInputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(0, 0, -1), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(ItemInputHatch.class, location);
-    }
-
-    public @Nullable FluidOutputHatch getOutputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(0, 0, 1), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(FluidOutputHatch.class, location);
     }
 }

@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public final class PalladiumFlightRing extends Talisman {
-    public PalladiumFlightRing(@NotNull ItemStack stack) {
+public final class FlightRing extends Talisman {
+    public FlightRing(@NotNull ItemStack stack) {
         super(stack);
     }
 

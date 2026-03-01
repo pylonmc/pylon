@@ -11,7 +11,7 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.DieselCoreDrill;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
-import io.github.pylonmc.pylon.content.machines.diesel.production.BiorefinerySmokestackCap;
+import io.github.pylonmc.pylon.content.components.SmokestackCap;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
@@ -123,6 +123,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.IMPROVED_MANUAL_CORE_DRILL, Material.WAXED_OXIDIZED_COPPER, ImprovedManualCoreDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_CORE_DRILL, Material.WAXED_COPPER_BULB, HydraulicCoreDrill.class);
         RebarBlock.register(PylonKeys.DIESEL_CORE_DRILL, Material.IRON_BLOCK, DieselCoreDrill.class);
+        RebarBlock.register(PylonKeys.PALLADIUM_DRILL, Material.NETHERITE_BLOCK, PalladiumDrill.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_1, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_2, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_3, Material.HOPPER, VacuumHopper.class);
@@ -152,7 +153,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.REINFORCED_PLATING, Material.GRAY_STAINED_GLASS_PANE, RebarBlock.class);
         RebarBlock.register(PylonKeys.DISTILLATION_TOWER_RING, Material.IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.SMOKESTACK_RING, Material.BRICK_WALL, RebarBlock.class);
-        RebarBlock.register(PylonKeys.SMOKESTACK_CAP, Material.FLOWER_POT, BiorefinerySmokestackCap.class);
+        RebarBlock.register(PylonKeys.SMOKESTACK_CAP, Material.FLOWER_POT, SmokestackCap.class);
         RebarBlock.register(PylonKeys.CARGO_DUCT, Material.STRUCTURE_VOID, CargoDuct.class);
         RebarBlock.register(PylonKeys.CARGO_BUFFER, Material.STRUCTURE_VOID, CargoBuffer.class);
         RebarBlock.register(PylonKeys.CARGO_EXTRACTOR, Material.STRUCTURE_VOID, CargoExtractor.class);
