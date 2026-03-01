@@ -2800,7 +2800,7 @@ public final class PylonItems {
     public static final ItemStack PLANT_OIL_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.PLANT_OIL_FURNACE)
             .build();
     static {
-        RebarItem.register(FluidFurnace.Item.class, PLANT_OIL_FURNACE);
+        RebarItem.register(FluidFurnace.Item.class, PLANT_OIL_FURNACE, PylonKeys.PLANT_OIL_FURNACE);
         PylonPages.FLUID_MACHINES.addItem(PLANT_OIL_FURNACE);
     }
 

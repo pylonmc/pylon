@@ -66,6 +66,10 @@ public class FluidFurnace extends RebarBlock implements
     public final int recipeTime = (int) Math.round(20 * 8 / speed);
     public final @NotNull RebarFluid inputFluid = getSettings().getOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
     public final @Nullable RebarFluid outputFluid = getSettings().get("output-fluid", ConfigAdapter.REBAR_FLUID);
+    public final int inputWailaNBars = getSettings().getOrThrow("input-waila-bar-length", ConfigAdapter.INTEGER);
+    public final @Nullable Integer outputWailaNBars = getSettings().get("output-waila-bar-length", ConfigAdapter.INTEGER);
+    public final TextColor inputWailaBarColor = getSettings().getOrThrow("input-waila-bar-color", ConfigAdapter.TEXT_COLOR);
+    public final @Nullable TextColor outputWailaBarColor = getSettings().get("output-waila-bar-color", ConfigAdapter.TEXT_COLOR);
 
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -108,9 +112,9 @@ public class FluidFurnace extends RebarBlock implements
     public FluidFurnace(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setTickInterval(tickInterval);
-        createFluidPoint(FluidPointType.INPUT, BlockFace.WEST);
+        createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH);
         if(outputFluid != null){
-            createFluidPoint(FluidPointType.OUTPUT, BlockFace.EAST);
+            createFluidPoint(FluidPointType.OUTPUT, BlockFace.NORTH);
         }
         setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
@@ -236,17 +240,20 @@ public class FluidFurnace extends RebarBlock implements
         RebarArgument inputBar = RebarArgument.of("inputBar", PylonUtils.createFluidAmountBar(
                 fluidAmount(inputFluid),
                 fluidCapacity(inputFluid),
-                20,
-                TextColor.fromHexString("#eaa627")
+                inputWailaNBars,
+                inputWailaBarColor
         ));
         if(outputFluid != null) {
+            if(outputWailaNBars == null || outputWailaBarColor == null) {
+                throw new RuntimeException("Output fluid was provided but either output-waila-bar-length or output-waila-bar-color was not set");
+            }
             return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                     inputBar,
                     RebarArgument.of("outputBar", PylonUtils.createFluidAmountBar(
                             fluidAmount(outputFluid),
                             fluidCapacity(outputFluid),
-                            20,
-                            TextColor.fromHexString("#eaa627")
+                            outputWailaNBars,
+                            outputWailaBarColor
                     ))
             ));
         } else {

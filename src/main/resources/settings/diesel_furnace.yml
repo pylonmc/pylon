@@ -3,3 +3,5 @@ fluid-buffer: 200
 tick-interval: 10
 speed: 1.5
 input-fluid: pylon:biodiesel
+input-waila-bar-length: 20
+input-waila-bar-color: eaa627
