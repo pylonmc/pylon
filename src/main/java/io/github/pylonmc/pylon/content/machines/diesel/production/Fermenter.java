@@ -134,10 +134,6 @@ public class Fermenter extends RebarBlock implements
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, OUTPUT_HATCH);
-        if (outputHatch != null) {
-            outputHatch.setFluidType(null);
-        }
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);
     }
 

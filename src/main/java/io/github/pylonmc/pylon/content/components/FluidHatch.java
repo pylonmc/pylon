@@ -168,13 +168,7 @@ public abstract class FluidHatch extends RebarBlock implements
         }
         
         if (this.fluid != null) {
-            // only clear buffer when a new fluid is set
-            // if we clear fluid buffer when fluid set to null, multi-chunk multiblocks can occasionally
-            // delete the fluid in fluid buffers because they call setFluidType when part of the multiblock
-            // is unloaded
-            if (fluid != null) {
-                deleteFluidBuffer(this.fluid);
-            }
+            deleteFluidBuffer(this.fluid);
             getFluidDisplay().setTransformationMatrix(new TransformBuilder()
                     .scale(0, 0, 0)
                     .buildForItemDisplay()

@@ -157,26 +157,10 @@ public class Biorefinery extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
+        RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
-    }
-
-    @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch ethanolInputHatch = getMultiblockComponent(FluidInputHatch.class, ETHANOL_INPUT_HATCH);
-        if (ethanolInputHatch != null) {
-            ethanolInputHatch.setFluidType(null);
-        }
-        FluidInputHatch plantOilInputHatch = getMultiblockComponent(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH);
-        if (plantOilInputHatch != null) {
-            plantOilInputHatch.setFluidType(null);
-        }
-        FluidOutputHatch biodieselOutputHatch = getMultiblockComponent(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
-        if (biodieselOutputHatch != null) {
-            biodieselOutputHatch.setFluidType(null);
-        }
     }
 
     @Override

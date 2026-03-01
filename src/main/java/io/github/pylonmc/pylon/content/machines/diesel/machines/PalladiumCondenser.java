@@ -251,23 +251,6 @@ public class PalladiumCondenser extends RebarBlock implements
     }
 
     @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch biodieselInputHatch = getMultiblockComponent(FluidInputHatch.class, BIODIESEL_INPUT_HATCH);
-        if (biodieselInputHatch != null) {
-            biodieselInputHatch.setFluidType(null);
-        }
-        FluidInputHatch hydraulicFluidInputHatch = getMultiblockComponent(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH);
-        if (hydraulicFluidInputHatch != null) {
-            hydraulicFluidInputHatch.setFluidType(null);
-        }
-        FluidOutputHatch dirtyHydraulicFluidOutputHatch = getMultiblockComponent(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH);
-        if (dirtyHydraulicFluidOutputHatch != null) {
-            dirtyHydraulicFluidOutputHatch.setFluidType(null);
-        }
-    }
-
-    @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
         Integer timeLeft = getProcessTicksRemaining();

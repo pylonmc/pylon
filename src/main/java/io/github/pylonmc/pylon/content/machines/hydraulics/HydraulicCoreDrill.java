@@ -137,17 +137,4 @@ public class HydraulicCoreDrill extends CoreDrill {
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
                 .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }
-
-    @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH);
-        if (inputHatch != null) {
-            inputHatch.setFluidType(null);
-        }
-        FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-        if (outputHatch != null) {
-            outputHatch.setFluidType(null);
-        }
-    }
 }

@@ -147,13 +147,4 @@ public class DieselCoreDrill extends CoreDrill {
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
                 .setFluidType(PylonFluids.BIODIESEL);
     }
-
-    @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH);
-        if (inputHatch != null) {
-            inputHatch.setFluidType(null);
-        }
-    }
 }
