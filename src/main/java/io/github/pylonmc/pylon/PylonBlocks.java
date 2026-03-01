@@ -13,6 +13,9 @@ import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.components.SmokestackCap;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -173,5 +176,10 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
+        RebarBlock.register(PylonKeys.EXPERIENCE_DRAIN, Material.BLACKSTONE_SLAB, ExperienceDrain.class);
+        RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN, Material.END_STONE, ExperienceFountain.class);
+        RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT, Material.END_ROD, RebarBlock.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
+        RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
     }
 }
