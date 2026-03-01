@@ -111,6 +111,10 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public void tick() {
+        if (!isFormedAndFullyLoaded()) {
+            return;
+        }
+
         if (!isProcessing()) {
             return;
         }
