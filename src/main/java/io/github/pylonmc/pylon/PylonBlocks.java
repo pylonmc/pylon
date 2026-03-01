@@ -136,7 +136,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_BRICK_MOLDER, Material.IRON_BLOCK, DieselBrickMolder.class);
         RebarBlock.register(PylonKeys.DIESEL_HAMMER_HEAD, Material.IRON_BLOCK, DieselHammerHead.class);
         RebarBlock.register(PylonKeys.DIESEL_MIXING_ATTACHMENT, Material.IRON_BLOCK, DieselMixingAttachment.class);
-        RebarBlock.register(PylonKeys.DIESEL_FURNACE, Material.FURNACE, DieselFurnace.class);
+        RebarBlock.register(PylonKeys.DIESEL_FURNACE, Material.FURNACE, FluidFurnace.class);
         RebarBlock.register(PylonKeys.DIESEL_BREAKER, Material.DROPPER, DieselBreaker.class);
         RebarBlock.register(PylonKeys.DIESEL_MINER, Material.IRON_BLOCK, DieselMiner.class);
         RebarBlock.register(PylonKeys.FERMENTER, Material.PINK_TERRACOTTA, Fermenter.class);
@@ -167,5 +167,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
+        RebarBlock.register(PylonKeys.PLANT_OIL_FURNACE, Material.FURNACE, FluidFurnace.class);
     }
 }
