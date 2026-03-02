@@ -1833,7 +1833,7 @@ pylon:assembly_table:
 pylon:fluid_input_hatch:
   pattern:
     - "B B"
-    - "VCB"
+    - "VCC"
     - "B B"
   key:
     B: pylon:bronze_sheet
@@ -1845,7 +1845,7 @@ pylon:fluid_input_hatch:
 pylon:fluid_output_hatch:
   pattern:
     - "B B"
-    - "VCB"
+    - "VCC"
     - "B B"
   key:
     B: pylon:bronze_sheet
