@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.recipes;
 
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonItems;
-import io.github.pylonmc.pylon.content.machines.smelting.PitKiln;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
@@ -37,7 +36,6 @@ public record PitKilnRecipe(
 
     public PitKilnRecipe {
         Preconditions.checkArgument(!input.isEmpty(), "Input cannot be empty");
-        Preconditions.checkArgument(input.size() <= PitKiln.CAPACITY, "Input cannot exceed the pit kiln's capacity of %s".formatted(PitKiln.CAPACITY));
         Preconditions.checkArgument(!output.isEmpty(), "Output cannot be empty");
         Preconditions.checkArgument(output.size() <= input.size(), "Output cannot exceed input size");
     }

@@ -636,22 +636,19 @@ item:
       <star> Multiblock
       <arrow> A primitive and inefficient high-temperature smelting method
       <arrow> <insn>Right click</insn> to insert items
-      <arrow> <insn>Break</insn> to retrieve the items
       <arrow> Complete the multiblock with a valid recipe inside to start the smelting process
-      <arrow> <attr>Capacity:</attr> %capacity% items
-      <arrow> <attr>Smelting time:</attr> %smelting_time%
+      <arrow> <attr>Base smelting time:</attr> %smelting_time%
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.pit_kiln.name/></yellow>
       <diamond> 8x <yellow>Block of Coal</yellow>
-      <diamond> 20x <yellow>Coarse Dirt</yellow>
+      ... or 8x <yellow>Block of Charcoal</yellow>
       <diamond> 1x <yellow>Campfire</yellow> (%campfire%x <attr>speed</attr>) 
       ...or 1x <yellow>Fire</yellow> (%fire%x <attr>speed</attr>) 
       ...or 1x <yellow>Soul Campfire</yellow> (%soul_campfire%x <attr>speed</attr>) 
       ...or 1x <yellow>Soul Fire</yellow> (%soul_fire%x <attr>speed</attr>) 
-      <diamond> 9x <yellow>Podzol</yellow> (%podzol%x <attr>yield</attr>) 
-      ...or 9x <yellow>Coarse Dirt</yellow> (%coarse_dirt%x <attr>yield</attr>)
-    waila: "Pit Kiln | %info% | %nitems% items"
+      <diamond> 9x <yellow>Coarse Dirt</yellow>
+    waila: "Pit Kiln | %info%"
 
   portability_catalyst:
     name: "Portability Catalyst"
