@@ -1677,7 +1677,7 @@ item:
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
       <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
       <diamond> 4x <yellow><lang:pylon.item.distillation_tower_ring.name/></yellow>
-      <diamond> 9x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
       <diamond> 2x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
       <diamond> 24x <yellow><lang:pylon.item.reinforced_plating.name/></yellow>
     waila: "Biorefinery | %info%"
