@@ -491,7 +491,8 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(EMERALD_DUST);
     }
 
-    public static final ItemStack FIBER = ItemStackBuilder.rebar(Material.BAMBOO_MOSAIC, PylonKeys.FIBER)
+    public static final ItemStack FIBER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FIBER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BAMBOO_MOSAIC.getKey())
             .build();
     static {
         RebarItem.register(RebarItem.class, FIBER);
