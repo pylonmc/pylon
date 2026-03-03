@@ -1302,13 +1302,44 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.hydraulic_core_drill.name/></yellow>
       <diamond> 1x <yellow>Cauldron</yellow>
-      <diamond> 1x <yellow>Chest</yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 6x <yellow>Iron Bars</yellow>
-      <diamond> 12x <yellow>Polished Deepslate Wall</yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 12x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
     waila: "Hydraulic Core Drill %duration_if_any%"
     waila_format: "| %duration%"
+
+  diesel_core_drill:
+    name: "Diesel Core Drill"
+    lore: |-
+      <star> Multiblock
+      <arrow> Consumes diesel to mine deep core chunks
+      <arrow> <attr>Cycle time:</attr> %cycle-time%
+      <arrow> <attr>Output:</attr> %cycle-output%
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.diesel_core_drill.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
+      <diamond> 3x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 9x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 10x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Diesel Core Drill %duration_if_any%"
+    waila_format: "| %duration%"
+
+  iron_support_beam:
+    name: "Iron Support Beam"
+    lore: |-
+      <star> Multiblock component
+
+  steel_support_beam:
+    name: "Steel Support Beam"
+    lore: |-
+      <star> Multiblock component
 
   fluid_input_hatch:
     name: "Fluid Input Hatch"
@@ -1352,6 +1383,11 @@ item:
 
   intermediate_core_chunk:
     name: "Intermediate Core Chunk"
+    lore: |-
+      <arrow> A chunk of minerals from several layers below the surface
+
+  deep_core_chunk:
+    name: "Deep Core Chunk"
     lore: |-
       <arrow> A chunk of minerals from many layers below the surface
 
@@ -1402,6 +1438,9 @@ item:
 
   bronze_drill_bit:
     name: "Bronze Drill Bit"
+
+  steel_drill_bit:
+    name: "Steel Drill Bit"
 
   gypsum:
     name: "Gypsum"
@@ -1605,21 +1644,21 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.fermenter.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 2x <yellow>Block of Iron</yellow>
-      <diamond> 4x <yellow>Polished Deepslate Wall</yellow>
-      <diamond> 4x <yellow><lang:pylon.item.fermenter_core.name/></yellow>
-      <diamond> 31x <yellow><lang:pylon.item.fermenter_casing.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.reinforced_glass.name/></yellow>
+      <diamond> 31x <yellow><lang:pylon.item.reinforced_glass_casing.name/></yellow>
     waila: "Fermenter | %sugarcane-bar% %sugarcane-amount% sugarcane"
 
-  fermenter_core:
-    name: "Fermenter Core"
+  reinforced_glass:
+    name: "Reinforced Glass"
     lore: |-
-      <star> Fermenter multiblock component
+      <star> Multiblock component
 
-  fermenter_casing:
-    name: "Fermenter Casing"
+  reinforced_glass_casing:
+    name: "Reinforced Glass Casing"
     lore: |-
-      <star> Fermenter multiblock component
+      <star> Multiblock component
 
   biorefinery:
     name: "Biorefinery"
@@ -1636,37 +1675,42 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
-      <diamond> 6x <yellow><lang:pylon.item.biorefinery_foundation.name/></yellow>
-      <diamond> 4x <yellow><lang:pylon.item.biorefinery_tower_ring.name/></yellow>
-      <diamond> 9x <yellow><lang:pylon.item.biorefinery_smokestack_ring.name/></yellow>
-      <diamond> 2x <yellow><lang:pylon.item.biorefinery_smokestack_cap.name/></yellow>
-      <diamond> 24x <yellow><lang:pylon.item.biorefinery_plating.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.distillation_tower_ring.name/></yellow>
+      <diamond> 9x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
+      <diamond> 24x <yellow><lang:pylon.item.reinforced_plating.name/></yellow>
     waila: "Biorefinery | %info%"
 
-  biorefinery_foundation:
-    name: "Biorefinery Foundation"
+  bronze_foundation:
+    name: "Bronze Foundation"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_plating:
-    name: "Biorefinery Plating"
+  bronze_grating:
+    name: "Bronze Grating"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_tower_ring:
-    name: "Biorefinery Tower Ring"
+  reinforced_plating:
+    name: "Reinforced Plating"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_smokestack_ring:
-    name: "Biorefinery Smokestack Ring"
+  distillation_tower_ring:
+    name: "Distillation Tower Ring"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_smokestack_cap:
-    name: "Biorefinery Smokestack Cap"
+  smokestack_ring:
+    name: "Smokestack Ring"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
+
+  smokestack_cap:
+    name: "Smokestack Cap"
+    lore: |-
+      <star> Multiblock component
 
   cargo_duct:
     name: "<white>Cargo Duct"
@@ -2004,8 +2048,8 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
-  palladium_flight_ring:
-    name: "<white>Palladium Flight Ring"
+  flight_ring:
+    name: "<white>Flight Ring"
     lore: |-
       <arrow> Allows creative flight
 
@@ -2132,6 +2176,29 @@ item:
   fine_sediment:
     name: "Fine Sediment"
 
+  palladium_condenser:
+    name: "Palladium Condenser"
+    lore: |-
+      <arrow> Condenses Shimmer Dust II into Palladium Dust using Diesel and Hydraulic Fluid
+      <arrow> Outputs dirty hydraulic fluid
+      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
+      <arrow> <attr>Shimmer Dust II per cycle:</attr> %shimmer-dust-per-cycle%
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.palladium_condenser.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
+      <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Palladium Condenser | %duration-if-any%"
+    waila_format: "| %duration%"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2255,6 +2322,9 @@ research:
   assembling: "<#846e5a>Assembling"
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
+  palladium_protection: "<#2937e3>Palladium production"
+  creative_flight: "<#2937e3>Creative flight"
+  palladium_production: "<#2937e3>Palladium Production"
 
 guide:
   page:

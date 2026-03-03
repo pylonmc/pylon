@@ -5,14 +5,19 @@
 pylon:shallow_core_chunk:
   drill: pylon:manual_core_drill
   result: pylon:shallow_core_chunk
-  priority: 3
+  priority: 4
 
 pylon:subsurface_core_chunk:
   drill: pylon:improved_manual_core_drill
   result: pylon:subsurface_core_chunk
-  priority: 2
+  priority: 3
 
 pylon:intermediate_core_chunk:
   drill: pylon:hydraulic_core_drill
   result: pylon:intermediate_core_chunk
+  priority: 2
+
+pylon:deep_core_chunk:
+  drill: pylon:diesel_core_drill
+  result: pylon:deep_core_chunk
   priority: 1

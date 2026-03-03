@@ -1,4 +1,4 @@
-package io.github.pylonmc.pylon.content.machines.diesel.production;
+package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarFlowerPot;
@@ -11,13 +11,13 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 
-public class BiorefinerySmokestackCap extends RebarBlock implements RebarFlowerPot {
+public class SmokestackCap extends RebarBlock implements RebarFlowerPot {
 
-    public BiorefinerySmokestackCap(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public SmokestackCap(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
     }
 
-    public BiorefinerySmokestackCap(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public SmokestackCap(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 

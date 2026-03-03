@@ -7,14 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public final class PalladiumFlightRing extends Talisman {
-    public PalladiumFlightRing(@NotNull ItemStack stack) {
+public final class FlightRing extends Talisman {
+    public FlightRing(@NotNull ItemStack stack) {
         super(stack);
     }
 
     @Override
     public NamespacedKey getTalismanKey() {
-        return PylonKeys.PALLADIUM_FLIGHT_RING_KEY;
+        return PylonKeys.FLIGHT_RING_KEY;
     }
 
     @Override
