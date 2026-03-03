@@ -273,7 +273,7 @@ public final class PitKiln extends RebarBlock implements
                 case SOUL_FIRE -> MULTIPLIER_SOUL_FIRE;
                 default -> throw new AssertionError("Should not happen");
             };
-            startRecipe(recipe, (int) (PROCESSING_TIME_SECONDS * 20 * multiplier));
+            startRecipe(recipe, (int) (PROCESSING_TIME_SECONDS * 20 / multiplier));
             break;
         }
     }
