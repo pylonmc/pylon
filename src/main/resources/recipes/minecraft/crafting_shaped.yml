@@ -1666,12 +1666,12 @@ pylon:hunting_talisman_simple:
 
 pylon:experience_talisman_simple:
   pattern:
-    - "EEE"
-    - "EGE"
-    - "EEE"
+    - "LLL"
+    - "LGL"
+    - "LLL"
   key:
-    E: minecraft:ender_pearl
-    G: minecraft:ghast_tear
+    L: minecraft:lapis_lazuli
+    G: pylon:gold_dust
   result: pylon:experience_talisman_simple
   category: equipment
 
