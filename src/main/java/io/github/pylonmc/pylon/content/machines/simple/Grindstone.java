@@ -15,15 +15,20 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -195,6 +200,29 @@ public class Grindstone extends RebarBlock implements
                 getBlock().getLocation().toCenterLocation().add(0, 0.25, 0),
                 recipe.results().getRandom()
         );
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("info",
+                         getCurrentRecipe() == null
+                         ? Component.translatable("pylon.waila.grindstone.idle",
+                              RebarArgument.of("item", getItemDisplay().getItemStack().effectiveName()),
+                              RebarArgument.of("amount", getItemDisplay().getItemStack().getAmount())
+                         )
+                         : Component.translatable("pylon.waila.grindstone.processing",
+                              RebarArgument.of("item", getItemDisplay().getItemStack().effectiveName()),
+                              RebarArgument.of("amount", getItemDisplay().getItemStack().getAmount()),
+                              RebarArgument.of("bars", PylonUtils.createProgressBar(
+                                  getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
+                                  getCurrentRecipe().timeTicks(),
+                                  20,
+                                  TextColor.color(100, 255, 100)
+                              ))
+                         )
+                )
+        ));
     }
 
     public @NotNull ItemDisplay getItemDisplay() {
