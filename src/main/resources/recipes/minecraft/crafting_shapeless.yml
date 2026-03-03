@@ -109,3 +109,9 @@ pylon:gunpowder:
     - minecraft:charcoal
   result:
     minecraft:gunpowder: 3
+
+pylon:palladium_ingots_from_palladium_block:
+  ingredients:
+    - pylon:palladium_block
+  result:
+    pylon:palladium_ingot: 9
