@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.pylon.recipes.MeltingRecipe;
+import io.github.pylonmc.pylon.recipes.SmelteryMeltingPoint;
 import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
@@ -83,7 +84,8 @@ public final class SmelteryHopper extends SmelteryComponent implements
             }
             if (recipe == null) continue;
             double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
-            if (controller.getTemperature() >= recipe.temperature() && fluidAmountAfterAdding <= controller.getCapacity()) {
+            double temperature = SmelteryMeltingPoint.getMeltingPoint(recipe.result());
+            if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();
             }

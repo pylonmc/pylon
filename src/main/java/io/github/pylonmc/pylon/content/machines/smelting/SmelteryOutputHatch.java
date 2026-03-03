@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.pylon.recipes.SmelteryMeltingPoint;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -7,13 +8,13 @@ import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import kotlin.Pair;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
 
@@ -36,10 +37,9 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         SmelteryController controller = getController();
         if (controller == null) return Map.of();
 
-        Pair<RebarFluid, Double> supplied = controller.getBottomFluid();
-        return supplied == null
-                ? Map.of()
-                : Map.of(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
+        return controller.getFluids().entrySet().stream()
+                .filter(entry -> SmelteryMeltingPoint.getMeltingPoint(entry.getKey()) <= controller.getTemperature())
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
     }
 
     @Override
@@ -48,5 +48,4 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         if (controller == null) return;
         controller.removeFluid(fluid, amount);
     }
-
 }

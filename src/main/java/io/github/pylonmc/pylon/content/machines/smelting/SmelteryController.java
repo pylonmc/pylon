@@ -43,7 +43,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
@@ -393,13 +392,8 @@ public final class SmelteryController extends SmelteryComponent
         return sum;
     }
 
-    public @Nullable Pair<RebarFluid, Double> getBottomFluid() {
-        Object2DoubleMap.Entry<RebarFluid> lastEntry = null;
-        for (var entry : fluids.object2DoubleEntrySet()) {
-            lastEntry = entry;
-        }
-        if (lastEntry == null) return null;
-        return new Pair<>(lastEntry.getKey(), lastEntry.getDoubleValue());
+    public @NotNull Map<RebarFluid, Double> getFluids() {
+        return Collections.unmodifiableMap(fluids);
     }
     // </editor-fold>
 

@@ -1055,18 +1055,6 @@ pylon:smeltery_hopper:
   result: pylon:smeltery_hopper
   category: building
 
-pylon:smeltery_caster:
-  pattern:
-    - "BPB"
-    - "BFB"
-    - "BBB"
-  key:
-    B: pylon:refractory_brick
-    P: pylon:fluid_pipe_igneous_composite
-    F: minecraft:flower_pot
-  result: pylon:smeltery_caster
-  category: building
-
 pylon:smeltery_burner:
   pattern:
     - "BBB"

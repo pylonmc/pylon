@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
@@ -20,17 +21,11 @@ import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-/**
- * @param input the input item (assumed to have an amount of one)
- * @param result the output inputFluid, of which MELT_AMOUNT will is produced per recipe
- * @param temperature the minimum temperature the smeltery must be at
- */
 public record MeltingRecipe(
         @NotNull NamespacedKey key,
         @NotNull RecipeInput.Item input,
         @NotNull RebarFluid result,
-        double resultAmount,
-        double temperature
+        double resultAmount
 ) implements RebarRecipe {
 
     public static final RecipeType<MeltingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("melting")) {
@@ -40,8 +35,7 @@ public record MeltingRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("result", ConfigAdapter.REBAR_FLUID),
-                    section.getOrThrow("amount", ConfigAdapter.DOUBLE),
-                    section.getOrThrow("temperature", ConfigAdapter.DOUBLE)
+                    section.getOrThrow("amount", ConfigAdapter.DOUBLE)
             );
         }
     };
@@ -75,9 +69,9 @@ public record MeltingRecipe(
                 .addIngredient('h', ItemButton.from(PylonItems.SMELTERY_HOPPER))
                 .addIngredient('i', ItemButton.from(input))
                 .addIngredient('t', ItemStackBuilder.of(Material.BLAZE_POWDER)
-                        .name(net.kyori.adventure.text.Component.translatable(
+                        .name(Component.translatable(
                                 "pylon.guide.recipe.melting",
-                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature))
+                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(SmelteryMeltingPoint.getMeltingPoint(result)))
                         ))
                 )
                 .addIngredient('o', new FluidButton(resultAmount, result))

@@ -1,0 +1,31 @@
+pylon:sulfur:
+  fluid: pylon:sulfur
+  melting-point: 112.8
+
+pylon:copper:
+  fluid: pylon:copper
+  melting-point: 1083
+
+pylon:gold:
+  fluid: pylon:gold
+  melting-point: 1064
+
+pylon:iron:
+  fluid: pylon:iron
+  melting-point: 1538
+
+pylon:tin:
+  fluid: pylon:tin
+  melting-point: 231.9
+
+pylon:bronze:
+  fluid: pylon:bronze
+  melting-point: 950
+
+pylon:steel:
+  fluid: pylon:steel
+  melting-point: 1410
+
+pylon:palladium:
+  fluid: pylon:palladium
+  melting-point: 1555

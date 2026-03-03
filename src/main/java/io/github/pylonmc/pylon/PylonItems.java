@@ -46,7 +46,10 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
 
@@ -1704,13 +1707,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SMELTERY_HOPPER, PylonKeys.SMELTERY_HOPPER);
         PylonPages.SMELTING.addItem(SMELTERY_HOPPER);
-    }
-
-    public static final ItemStack SMELTERY_CASTER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMELTERY_CASTER)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, SMELTERY_CASTER, PylonKeys.SMELTERY_CASTER);
-        PylonPages.SMELTING.addItem(SMELTERY_CASTER);
     }
 
     public static final ItemStack SMELTERY_BURNER = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.SMELTERY_BURNER)

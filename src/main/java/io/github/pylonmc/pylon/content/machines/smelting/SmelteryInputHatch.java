@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.pylon.recipes.SmelteryMeltingPoint;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -31,7 +32,7 @@ public final class SmelteryInputHatch extends SmelteryComponent implements Rebar
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
         SmelteryController controller = getController();
-        if (controller == null || !fluid.hasTag(FluidTemperature.class)) return 0.0;
+        if (controller == null || !fluid.hasTag(FluidTemperature.class) || SmelteryMeltingPoint.getMeltingPoint(fluid) > controller.getTemperature()) return 0.0;
         return Math.min(controller.getCapacity() - controller.getTotalFluid(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20);
     }
 

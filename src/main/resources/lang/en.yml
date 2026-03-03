@@ -783,13 +783,6 @@ item:
       <arrow> <attr>Temperature:</attr> %temperature%
     waila: "Diesel Smeltery Heater | %bar%"
 
-  smeltery_caster:
-    name: "Smeltery Caster"
-    lore: |-
-      <star> Smeltery multiblock component
-      <arrow> Casts items from the smeltery
-      <arrow> <insn>Right click</insn> to open the smeltery casting GUI
-
   smeltery_controller:
     name: "Smeltery Controller"
     lore: |-

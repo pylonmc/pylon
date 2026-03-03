@@ -11,7 +11,6 @@ public class PylonRecipes {
 
     public static void initialize() {
         AssemblingRecipe.RECIPE_TYPE.register();
-        CastingRecipe.RECIPE_TYPE.register();
         DrillingDisplayRecipe.RECIPE_TYPE.register();
         ForgingDisplayRecipe.RECIPE_TYPE.register();
         BloomeryDisplayRecipe.RECIPE_TYPE.register();
@@ -28,5 +27,6 @@ public class PylonRecipes {
         PitKilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        SmelteryMeltingPoint.RECIPE_TYPE.register();
     }
 }
