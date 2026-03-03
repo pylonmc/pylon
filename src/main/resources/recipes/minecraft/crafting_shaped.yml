@@ -829,6 +829,17 @@ pylon:bronze_drill_bit:
   result: pylon:bronze_drill_bit
   category: misc
 
+pylon:steel_drill_bit:
+  pattern:
+    - "   "
+    - "BIB"
+    - " B "
+  key:
+    B: pylon:steel_ingot
+    I: pylon:steel_block
+  result: pylon:steel_drill_bit
+  category: misc
+
 pylon:water_pump:
   pattern:
     - " B "
@@ -1419,11 +1430,11 @@ pylon:recoil_arrow:
 pylon:manual_core_drill_lever:
   pattern:
     - " L "
-    - "LPL"
-    - " L "
+    - " I "
+    - "   "
   key:
     L: minecraft:lever
-    P: "#minecraft:planks"
+    I: minecraft:iron_ingot
   result: pylon:manual_core_drill_lever
   group: pylon:manual_core_drill_lever
   category: building
@@ -1463,6 +1474,20 @@ pylon:hydraulic_core_drill:
     P: pylon:fluid_pipe_bronze
     D: pylon:bronze_drill_bit
   result: pylon:hydraulic_core_drill
+  category: building
+
+pylon:diesel_core_drill:
+  pattern:
+    - "SES"
+    - "VEP"
+    - "SDS"
+  key:
+    S: pylon:steel_sheet
+    E: pylon:internal_combustion_engine
+    P: pylon:fluid_pipe_steel
+    D: pylon:steel_drill_bit
+    V: pylon:backflow_valve
+  result: pylon:diesel_core_drill
   category: building
 
 pylon:climbing_pick:
@@ -1807,9 +1832,9 @@ pylon:assembly_table:
 
 pylon:fluid_input_hatch:
   pattern:
-    - "BVB"
-    - " C "
-    - "BCB"
+    - "B B"
+    - "VCC"
+    - "B B"
   key:
     B: pylon:bronze_sheet
     C: pylon:fluid_pipe_copper
@@ -1825,15 +1850,15 @@ pylon:fluid_output_hatch:
   key:
     B: pylon:bronze_sheet
     C: pylon:fluid_pipe_copper
-    V: pylon:backflow_valve
+    V: pylon:leaf_valve
   result: pylon:fluid_output_hatch
   category: building
 
 pylon:item_input_hatch:
   pattern:
-    - "B B"
-    - "HCB"
-    - "B B"
+    - "BHB"
+    - " C "
+    - "BBB"
   key:
     B: pylon:bronze_sheet
     C: minecraft:chest
@@ -1843,9 +1868,9 @@ pylon:item_input_hatch:
 
 pylon:item_output_hatch:
   pattern:
-    - "B B"
-    - "BCH"
-    - "B B"
+    - "BBB"
+    - " C "
+    - "BHB"
   key:
     B: pylon:bronze_sheet
     C: minecraft:chest
@@ -1995,12 +2020,12 @@ pylon:fermenter:
     B: pylon:bronze_sheet
     I: pylon:iron_sheet
     P: pylon:fluid_pipe_bronze
-    C: pylon:fermenter_core
+    C: pylon:reinforced_glass
     V: pylon:backflow_valve
   result: pylon:fermenter
   category: building
 
-pylon:fermenter_core:
+pylon:reinforced_glass:
   pattern:
     - "   "
     - "SGS"
@@ -2008,10 +2033,10 @@ pylon:fermenter_core:
   key:
     S: pylon:steel_sheet
     G: minecraft:glass
-  result: pylon:fermenter_core
+  result: pylon:reinforced_glass
   category: building
 
-pylon:fermenter_casing:
+pylon:reinforced_glass_casing:
   pattern:
     - " P "
     - "PSP"
@@ -2020,7 +2045,7 @@ pylon:fermenter_casing:
     S: pylon:steel_sheet
     P: minecraft:glass_pane
   result:
-    pylon:fermenter_casing: 4
+    pylon:reinforced_glass_casing: 4
   category: building
 
 pylon:biorefinery:
@@ -2036,7 +2061,7 @@ pylon:biorefinery:
   result: pylon:biorefinery
   category: building
 
-pylon:biorefinery_foundation:
+pylon:bronze_foundation:
   pattern:
     - "   "
     - "SSS"
@@ -2046,11 +2071,22 @@ pylon:biorefinery_foundation:
     I: minecraft:iron_ingot
     B: minecraft:bricks
   result:
-    pylon:biorefinery_foundation: 3
+    pylon:bronze_foundation: 3
   category: building
 
+pylon:bronze_grating:
+  pattern:
+    - "   "
+    - "SNS"
+    - "NSN"
+  key:
+    S: pylon:bronze_sheet
+    N: minecraft:copper_nugget
+  result:
+    pylon:bronze_grating: 3
+  category: building
 
-pylon:biorefinery_plating:
+pylon:reinforced_plating:
   pattern:
     - "   "
     - "IS "
@@ -2059,10 +2095,10 @@ pylon:biorefinery_plating:
     I: pylon:iron_sheet
     S: pylon:steel_sheet
   result:
-    pylon:biorefinery_plating: 4
+    pylon:reinforced_plating: 4
   category: building
 
-pylon:biorefinery_tower_ring:
+pylon:distillation_tower_ring:
   pattern:
     - "R R"
     - "I I"
@@ -2070,10 +2106,10 @@ pylon:biorefinery_tower_ring:
   key:
     R: pylon:refractory_brick
     I: pylon:steel_ingot
-  result: pylon:biorefinery_tower_ring
+  result: pylon:distillation_tower_ring
   category: building
 
-pylon:biorefinery_smokestack_ring:
+pylon:smokestack_ring:
   pattern:
     - "B B"
     - "I I"
@@ -2082,10 +2118,10 @@ pylon:biorefinery_smokestack_ring:
     I: pylon:bronze_ingot
     B: minecraft:brick
   result:
-    pylon:biorefinery_smokestack_ring: 2
+    pylon:smokestack_ring: 2
   category: building
 
-pylon:biorefinery_smokestack_cap:
+pylon:smokestack_cap:
   pattern:
     - "   "
     - "B B"
@@ -2093,7 +2129,7 @@ pylon:biorefinery_smokestack_cap:
   key:
     F: pylon:filter_mesh
     B: minecraft:brick
-  result: pylon:biorefinery_smokestack_cap
+  result: pylon:smokestack_cap
   category: building
 
 pylon:collimator:
@@ -2421,3 +2457,40 @@ pylon:palladium_hoe:
   result:
     pylon:palladium_hoe: 1
   category: equipment
+
+pylon:iron_support_beam:
+  pattern:
+    - " N "
+    - " S "
+    - " N "
+  key:
+    S: pylon:iron_sheet
+    N: pylon:bronze_nugget
+  result:
+    pylon:steel_support_beam: 1
+  category: building
+
+pylon:steel_support_beam:
+  pattern:
+    - " N "
+    - " S "
+    - " N "
+  key:
+    S: pylon:steel_sheet
+    N: pylon:bronze_nugget
+  result:
+    pylon:steel_support_beam: 1
+  category: building
+
+pylon:palladium_condenser:
+  pattern:
+    - "SNS"
+    - "SCS"
+    - "SNS"
+  key:
+    S: pylon:steel_sheet
+    N: minecraft:nether_star
+    C: pylon:diesel_core_drill
+  result:
+    pylon:palladium_condenser: 1
+  category: building

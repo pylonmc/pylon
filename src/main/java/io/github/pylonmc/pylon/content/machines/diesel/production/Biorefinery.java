@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.diesel.production;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
@@ -9,7 +8,6 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarProcessor;
@@ -55,6 +53,11 @@ public class Biorefinery extends RebarBlock implements
     public final double ethanolPerMbOfBiodiesel = getSettings().getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
     public final double plantOilPerMbOfBiodiesel = getSettings().getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
 
+    public static final Vector3i FUEL_INPUT_HATCH = new Vector3i(1, 0, 3);
+    public static final Vector3i BIODIESEL_OUTPUT_HATCH = new Vector3i(0, 0, -1);
+    public static final Vector3i ETHANOL_INPUT_HATCH = new Vector3i(-1, 0, 0);
+    public static final Vector3i PLANT_OIL_INPUT_HATCH = new Vector3i(2, 0, 0);
+
     public static class Item extends RebarItem {
 
         public final double biodieselPerSecond = getSettings().getOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
@@ -91,103 +94,73 @@ public class Biorefinery extends RebarBlock implements
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
         // foundation
-        components.put(new Vector3i(0, 0, -1), new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
-        components.put(new Vector3i(2, 0, 0), new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
-        components.put(new Vector3i(0, 0, 2), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
-        components.put(new Vector3i(0, 0, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
-        components.put(new Vector3i(-1, 0, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
-        components.put(new Vector3i(1, 0, 3), new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(new Vector3i(0, 0, 4), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_FOUNDATION));
+        components.put(BIODIESEL_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(ETHANOL_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(PLANT_OIL_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(0, 0, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(0, 0, 3), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(-1, 0, 3), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(FUEL_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(new Vector3i(0, 0, 4), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
 
         // tower
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_TOWER_RING));
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_TOWER_RING));
-        components.put(new Vector3i(0, 3, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_TOWER_RING));
-        components.put(new Vector3i(0, 4, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_TOWER_RING));
-        components.put(new Vector3i(1, 1, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(1, 2, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(1, 3, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(1, 4, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(1, 5, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_CAP));
+        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.DISTILLATION_TOWER_RING));
+        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.DISTILLATION_TOWER_RING));
+        components.put(new Vector3i(0, 3, 0), new RebarMultiblockComponent(PylonKeys.DISTILLATION_TOWER_RING));
+        components.put(new Vector3i(0, 4, 0), new RebarMultiblockComponent(PylonKeys.DISTILLATION_TOWER_RING));
+        components.put(new Vector3i(1, 1, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(1, 2, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(1, 3, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(1, 4, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(1, 5, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_CAP));
 
         // burner smokestack
-        components.put(new Vector3i(0, 1, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(0, 2, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(0, 3, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_RING));
-        components.put(new Vector3i(0, 4, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_SMOKESTACK_CAP));
+        components.put(new Vector3i(0, 1, 3), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(0, 2, 3), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(0, 3, 3), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(0, 4, 3), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_CAP));
 
         // casing
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 1, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 1, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
+        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 1, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 1, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 1, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 1, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
+        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 1, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 1, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(2, 0, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(2, 1, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(2, 0, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(2, 1, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
+        components.put(new Vector3i(2, 0, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(2, 1, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(2, 0, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(2, 1, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(0, 1, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(0, 1, 2), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 1, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 1, 3), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(0, 1, 4), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
+        components.put(new Vector3i(0, 1, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(0, 1, 2), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 1, 3), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 1, 3), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(0, 1, 4), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(-1, 3, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 3, 0), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(-1, 3, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(0, 3, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 3, 1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(1, 3, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
-        components.put(new Vector3i(0, 3, -1), new RebarMultiblockComponent(PylonKeys.BIOREFINERY_PLATING));
+        components.put(new Vector3i(-1, 3, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 3, 0), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(-1, 3, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(0, 3, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 3, 1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(1, 3, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
+        components.put(new Vector3i(0, 3, -1), new RebarMultiblockComponent(PylonKeys.REINFORCED_PLATING));
 
         return components;
     }
 
     @Override
-    public boolean checkFormed() {
-        boolean formed = RebarSimpleMultiblock.super.checkFormed();
-        if (formed) {
-            getEthanolInputHatch().setFluidType(PylonFluids.ETHANOL);
-            getPlantOilInputHatch().setFluidType(PylonFluids.PLANT_OIL);
-            getBiodieselOutputHatch().setFluidType(PylonFluids.BIODIESEL);
-            for (Vector3i position : getComponents().keySet()) {
-                Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-                Location location = getBlock().getLocation().add(relative);
-                Waila.addWailaOverride(location.getBlock(), this::getWaila);
-            }
-        }
-        return formed;
-    }
-
-    @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch ethanolInputHatch = getEthanolInputHatch();
-        if (ethanolInputHatch != null) {
-            ethanolInputHatch.setFluidType(null);
-        }
-        FluidInputHatch plantOilInputHatch = getPlantOilInputHatch();
-        if (plantOilInputHatch != null) {
-            plantOilInputHatch.setFluidType(null);
-        }
-        FluidOutputHatch biodieselOutputHatch = getBiodieselOutputHatch();
-        if (biodieselOutputHatch != null) {
-            biodieselOutputHatch.setFluidType(null);
-        }
-        for (Vector3i position : getComponents().keySet()) {
-            Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(position, getFacing()));
-            Location location = getBlock().getLocation().add(relative);
-            Waila.removeWailaOverride(location.getBlock());
-        }
+    public void onMultiblockFormed() {
+        RebarSimpleMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
     @Override
@@ -199,13 +172,9 @@ public class Biorefinery extends RebarBlock implements
         // Tick production
         if (isProcessing()) {
             progressProcess(getTickInterval());
-            FluidInputHatch ethanolInputHatch = getEthanolInputHatch();
-            FluidInputHatch plantOilInputHatch = getPlantOilInputHatch();
-            FluidOutputHatch biodieselOutputHatch = getBiodieselOutputHatch();
-            Preconditions.checkState(ethanolInputHatch != null
-                    && plantOilInputHatch != null
-                    && biodieselOutputHatch != null
-            );
+            FluidInputHatch ethanolInputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH);
+            FluidInputHatch plantOilInputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH);
+            FluidOutputHatch biodieselOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
 
             double biodieselToProduce = Math.min(
                     biodieselOutputHatch.fluidSpaceRemaining(PylonFluids.BIODIESEL),
@@ -249,8 +218,7 @@ public class Biorefinery extends RebarBlock implements
 
         // Consume fuel
         if (!isProcessing()) {
-            ItemInputHatch fuelInputHatch = getFuelInputHatch();
-            Preconditions.checkState(fuelInputHatch != null);
+            ItemInputHatch fuelInputHatch = getMultiblockComponent(ItemInputHatch.class, FUEL_INPUT_HATCH);
             ItemStack input = fuelInputHatch.inventory.getItem(0);
             if (input != null) {
                 for (Fuel fuel : FUELS) {
@@ -283,30 +251,6 @@ public class Biorefinery extends RebarBlock implements
                     RebarArgument.of("info", Component.translatable("pylon.message.biorefinery.no_fuel"))
             ));
         }
-    }
-
-    public @Nullable ItemInputHatch getFuelInputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(1, 0, 3), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(ItemInputHatch.class, location);
-    }
-
-    public @Nullable FluidOutputHatch getBiodieselOutputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(0, 0, -1), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(FluidOutputHatch.class, location);
-    }
-
-    public @Nullable FluidInputHatch getEthanolInputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(-1, 0, 0), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(FluidInputHatch.class, location);
-    }
-
-    public @Nullable FluidInputHatch getPlantOilInputHatch() {
-        Vector relative = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(2, 0, 0), getFacing()));
-        Location location = getBlock().getLocation().add(relative);
-        return BlockStorage.getAs(FluidInputHatch.class, location);
     }
 
     public record Fuel(
