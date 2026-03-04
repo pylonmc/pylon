@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -39,7 +40,6 @@ import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -179,7 +179,7 @@ public class FluidAccumulator extends RebarBlock implements
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         if (getBlock().isBlockIndirectlyPowered()) {
             return RebarFluidTank.super.getSuppliedFluids();
         }
@@ -194,7 +194,7 @@ public class FluidAccumulator extends RebarBlock implements
             return RebarFluidTank.super.getSuppliedFluids();
         }
 
-        return Map.of();
+        return List.of();
     }
 
     public class AmountItem extends AbstractItem {
