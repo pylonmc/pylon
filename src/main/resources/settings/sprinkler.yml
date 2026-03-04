@@ -7,10 +7,10 @@ range:
   vertical: 2
 
 chances:
-  crops: 0.04
-  sugar-cane: 0.03
-  cactus: 0.04
-  sapling: 0.04
+  crops: 0.08
+  sugar-cane: 0.05
+  cactus: 0.08
+  sapling: 0.08
 
 particle-chance: 0.1
 sound:
