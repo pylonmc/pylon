@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -194,8 +195,8 @@ public class CargoFluidAccumulator extends RebarBlock implements
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
-        return allowFluidInputs ? Map.of() : RebarFluidTank.super.getSuppliedFluids();
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
+        return allowFluidInputs ? List.of() : RebarFluidTank.super.getSuppliedFluids();
     }
 
     @Override

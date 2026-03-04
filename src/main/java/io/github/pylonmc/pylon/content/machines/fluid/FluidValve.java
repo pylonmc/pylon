@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -152,9 +153,9 @@ public class FluidValve extends RebarBlock
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         if (!open) {
-            return Map.of();
+            return List.of();
         }
         return RebarFluidTank.super.getSuppliedFluids();
     }
