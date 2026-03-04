@@ -1528,7 +1528,7 @@ public final class PylonItems {
 
     //<editor-fold desc="Armour" defaultstate=collapsed>
 
-    public static final ItemStack BRONZE_HELMET = ItemStackBuilder.rebarHelmet(Material.CLAY_BALL, PylonKeys.BRONZE_HELMET, true)
+    public static final ItemStack BRONZE_HELMET = ItemStackBuilder.rebarHelmet(Material.LEATHER_HELMET, PylonKeys.BRONZE_HELMET, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_HELMET.getKey())
             .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
                     .assetId(Key.key("gold"))
@@ -1539,7 +1539,7 @@ public final class PylonItems {
         PylonPages.ARMOUR.addItem(BRONZE_HELMET);
     }
 
-    public static final ItemStack BRONZE_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.CLAY_BALL, PylonKeys.BRONZE_CHESTPLATE, true)
+    public static final ItemStack BRONZE_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.LEATHER_CHESTPLATE, PylonKeys.BRONZE_CHESTPLATE, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_CHESTPLATE.getKey())
             .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.CHEST)
                     .assetId(Key.key("gold"))
@@ -1550,7 +1550,7 @@ public final class PylonItems {
         PylonPages.ARMOUR.addItem(BRONZE_CHESTPLATE);
     }
 
-    public static final ItemStack BRONZE_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.CLAY_BALL, PylonKeys.BRONZE_LEGGINGS, true)
+    public static final ItemStack BRONZE_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.LEATHER_LEGGINGS, PylonKeys.BRONZE_LEGGINGS, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_LEGGINGS.getKey())
             .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.LEGS)
                     .assetId(Key.key("gold"))
@@ -1561,7 +1561,7 @@ public final class PylonItems {
         PylonPages.ARMOUR.addItem(BRONZE_LEGGINGS);
     }
 
-    public static final ItemStack BRONZE_BOOTS = ItemStackBuilder.rebarBoots(Material.GOLDEN_BOOTS, PylonKeys.BRONZE_BOOTS, true)
+    public static final ItemStack BRONZE_BOOTS = ItemStackBuilder.rebarBoots(Material.LEATHER_BOOTS, PylonKeys.BRONZE_BOOTS, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_BOOTS.getKey())
             .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.FEET)
                     .assetId(Key.key("gold"))
