@@ -533,20 +533,23 @@ public final class SmelteryController extends SmelteryComponent
             if (recipe.getTemperature() > temperature) continue;
 
             for (RebarFluid fluid : recipe.getFluidInputs().keySet()) {
-                if (getFluidAmount(fluid) == 0) continue recipeLoop;
+                if (!fluids.containsKey(fluid)) continue recipeLoop;
             }
 
-            double highestFluidAmount = getFluidAmount(recipe.getHighestFluid());
-            double consumptionRatio = highestFluidAmount / FLUID_REACTION_PER_TICK;
+            double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
+            double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
+            double maxFluidConsumption = FLUID_REACTION_PER_TICK * highestFluidRatio;
+            double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
+
             double currentTemperature = temperature;
             for (var entry : recipe.getFluidInputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 removeFluid(fluid, amount);
             }
             for (var entry : recipe.getFluidOutputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 addFluid(fluid, amount);
             }
             temperature = currentTemperature; // offset addFluid/removeFluid temperature change
