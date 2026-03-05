@@ -2489,7 +2489,7 @@ pylon:iron_support_beam:
     S: pylon:iron_sheet
     N: pylon:bronze_nugget
   result:
-    pylon:steel_support_beam: 1
+    pylon:iron_support_beam: 1
   category: building
 
 pylon:steel_support_beam:
