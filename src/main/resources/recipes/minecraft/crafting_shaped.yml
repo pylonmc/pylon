@@ -83,17 +83,6 @@ pylon:palladium_ingot_from_palladium_nuggets:
   category: misc
   priority: -2
 
-pylon:palladium_ingots_from_palladium_block:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:palladium_block
-  result: pylon:palladium_ingot: 9
-  category: misc
-  priority: -2
-
 pylon:palladium_block_from_palladium_ingots:
   pattern:
     - "NNN"
