@@ -45,6 +45,7 @@ public class PylonRecipes {
         //hardcoded
         initCollimator();
         initPalladiumCondenser();
+        initBiorefinery();
     }
 
     private static void initCollimator() {
@@ -110,6 +111,40 @@ public class PylonRecipes {
                         .addIngredient('s', ItemButton.from(dusts))
                         .addIngredient('p', ItemButton.from(PylonItems.PALLADIUM_DUST))
                         .addIngredient('D', new FluidButton((double) hydraulicUse, PylonFluids.DIRTY_HYDRAULIC_FLUID))
+                        ::build
+        ).register();
+    }
+
+    private static void initBiorefinery() {
+        NamespacedKey key = PylonKeys.BIOREFINERY;
+        Config setting = Settings.get(key);
+
+        double ethanolPerMbOfBiodiesel = setting.getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+        double plantOilPerMbOfBiodiesel = setting.getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+
+
+        RecipeInput.Fluid ethanol = RecipeInput.of(PylonFluids.ETHANOL, ethanolPerMbOfBiodiesel);
+        RecipeInput.Fluid plantOil = RecipeInput.of(PylonFluids.PLANT_OIL, plantOilPerMbOfBiodiesel);
+
+        FluidOrItem output = FluidOrItem.of(PylonFluids.BIODIESEL, 1);
+
+        new SingleRecipe(
+                key,
+                List.of(ethanol, plantOil),
+                List.of(output),
+                Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# p # # # # # # #",
+                                "# # # # x # # o #",
+                                "# e # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('x', ItemButton.from(PylonItems.BIOREFINERY))
+                        .addIngredient('o', new FluidButton(1.0, PylonFluids.BIODIESEL))
+                        .addIngredient('p', new FluidButton(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
+                        .addIngredient('e', new FluidButton(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
                         ::build
         ).register();
     }
