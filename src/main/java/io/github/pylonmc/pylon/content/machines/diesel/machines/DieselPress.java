@@ -12,6 +12,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -152,6 +153,17 @@ public class DieselPress extends RebarBlock implements
                 tryStartRecipe();
             }
         });
+    }
+
+    @Override
+    public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
+        double current = fluidAmount(fluid);
+        boolean output = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        if (amount < current) {
+            tryStartRecipe();
+        }
+
+        return output;
     }
 
     @Override
