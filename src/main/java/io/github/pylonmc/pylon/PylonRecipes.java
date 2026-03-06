@@ -44,6 +44,7 @@ public class PylonRecipes {
 
         //hardcoded
         initCollimator();
+        initPalladiumCondenser();
     }
 
     private static void initCollimator() {
@@ -66,6 +67,49 @@ public class PylonRecipes {
                         .addIngredient('i', new FluidButton(input.amountMillibuckets(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.from(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.from(PylonItems.COHESIVE_UNIT))
+                        ::build
+        ).register();
+    }
+
+    private static void initPalladiumCondenser() {
+        NamespacedKey key = PylonKeys.PALLADIUM_CONDENSER;
+        Config setting = Settings.get(key);
+
+        int totalTicks = setting.getOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER) * setting.getOrThrow("tick-interval", ConfigAdapter.INTEGER) / 20;
+        int hydraulicUse = setting.getOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER) * totalTicks;
+        int dieselUse = setting.getOrThrow("diesel-per-second", ConfigAdapter.INTEGER) * totalTicks;
+
+        ItemStack dusts = PylonItems.SHIMMER_DUST_2.asQuantity(setting.getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER));
+        var input = List.of(
+                RecipeInput.of(dusts),
+                RecipeInput.of(PylonFluids.BIODIESEL, dieselUse),
+                RecipeInput.of(PylonFluids.HYDRAULIC_FLUID, hydraulicUse)
+        );
+
+        var output = List.of(
+                FluidOrItem.of(PylonItems.PALLADIUM_DUST),
+                FluidOrItem.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicUse)
+        );
+
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# H # # # # # p #",
+                                "# d # # x # # # #",
+                                "# s # # # # # D #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('x', ItemButton.from(PylonItems.PALLADIUM_CONDENSER))
+                        .addIngredient('H', new FluidButton((double) dieselUse, PylonFluids.BIODIESEL))
+                        .addIngredient('d', new FluidButton((double) hydraulicUse, PylonFluids.HYDRAULIC_FLUID))
+                        .addIngredient('s', ItemButton.from(dusts))
+                        .addIngredient('p', ItemButton.from(PylonItems.PALLADIUM_DUST))
+                        .addIngredient('D', new FluidButton((double) hydraulicUse, PylonFluids.DIRTY_HYDRAULIC_FLUID))
                         ::build
         ).register();
     }
