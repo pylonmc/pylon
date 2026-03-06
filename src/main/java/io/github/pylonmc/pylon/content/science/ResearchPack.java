@@ -30,9 +30,7 @@ public class ResearchPack extends RebarItem implements RebarInteractor {
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
     public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
-        if (!event.getAction().isRightClick()
-                || (event.hasBlock() && event.useInteractedBlock() == Event.Result.ALLOW)
-                || event.useItemInHand() == Event.Result.DENY) {
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
 
