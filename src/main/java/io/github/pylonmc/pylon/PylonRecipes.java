@@ -9,6 +9,7 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
@@ -46,6 +47,7 @@ public class PylonRecipes {
         initCollimator();
         initPalladiumCondenser();
         initBiorefinery();
+        initFermenter();
     }
 
     private static void initCollimator() {
@@ -145,6 +147,35 @@ public class PylonRecipes {
                         .addIngredient('o', new FluidButton(1.0, PylonFluids.BIODIESEL))
                         .addIngredient('p', new FluidButton(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
                         .addIngredient('e', new FluidButton(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
+                        ::build
+        ).register();
+    }
+
+    private static void initFermenter() {
+        NamespacedKey key = PylonKeys.FERMENTER;
+        Config setting = Settings.get(key);
+
+        double ethanolPerSugarcane = setting.getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
+
+        RecipeInput.Item input = RecipeInput.of(ItemStack.of(Material.SUGAR_CANE));
+        FluidOrItem output = FluidOrItem.of(PylonFluids.ETHANOL, ethanolPerSugarcane);
+
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# i # # x # # o #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('i', ItemButton.from(ItemStack.of(Material.SUGAR_CANE)))
+                        .addIngredient('x', ItemButton.from(PylonItems.FERMENTER))
+                        .addIngredient('o', new FluidButton(ethanolPerSugarcane, PylonFluids.ETHANOL))
                         ::build
         ).register();
     }
