@@ -2043,6 +2043,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_WOOD
             = ItemStackBuilder.rebar(Material.BROWN_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_WOOD)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2056,6 +2057,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_COPPER
             = ItemStackBuilder.rebar(Material.ORANGE_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_COPPER)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2069,6 +2071,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_TIN
             = ItemStackBuilder.rebar(Material.GREEN_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_TIN)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2082,6 +2085,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_IRON
             = ItemStackBuilder.rebar(Material.LIGHT_GRAY_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_IRON)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2095,6 +2099,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_BRONZE
             = ItemStackBuilder.rebar(Material.ORANGE_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_BRONZE)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2108,6 +2113,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE
             = ItemStackBuilder.rebar(Material.BLACK_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2121,6 +2127,7 @@ public final class PylonItems {
     public static final ItemStack PORTABLE_FLUID_TANK_STEEL
             = ItemStackBuilder.rebar(Material.GRAY_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_STEEL)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(
@@ -2132,6 +2139,8 @@ public final class PylonItems {
     }
 
     public static final ItemStack PORTABLE_FLUID_TANK_PALLADIUM = ItemStackBuilder.rebar(Material.BLUE_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM)
+            .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
             .build();
     static {
         RebarItem.register(PortableFluidTank.Item.class, PORTABLE_FLUID_TANK_PALLADIUM, PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM);
