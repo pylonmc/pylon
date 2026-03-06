@@ -9,6 +9,7 @@ import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.BedRoll;
 import io.github.pylonmc.pylon.content.tools.ShimmerMagnet;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
+import io.github.pylonmc.pylon.content.tools.TapeMeasure;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.addon.RebarAddon;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -70,6 +71,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
 
         pm.registerEvents(new BedRoll.BedRollListener(), this);
+        pm.registerEvents(new TapeMeasure.EntityClear(), this);
     }
 
     @Override
