@@ -1661,7 +1661,7 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> Refines plant oil and ethanol into biodiesel
-      <arrow> Requires fuel to run
+      <arrow> Requires coal type fuel to run
       <arrow> Constantly consumes fuel even if not producing biodiesel
       <arrow> <attr>Biodiesel production rate:</attr> %biodiesel-per-second%
       <arrow> <attr>Ethanol per mb of biodiesel:</attr> %ethanol-per-mb-of-biodiesel%
