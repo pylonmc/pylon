@@ -85,9 +85,10 @@ public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, R
         maxFlowRate = minAmount;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public FluidLimiter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block);
+        this.maxFlowRate = pdc.get(MAX_FLOW_RATE_KEY, RebarSerializers.INTEGER);
     }
 
     @Override

@@ -17,6 +17,8 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -32,7 +34,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
@@ -65,8 +69,42 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
             return getStack().getPersistentDataContainer().getOrDefault(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0);
         }
 
+        @SuppressWarnings("UnstableApiUsage")
         public void setFluid(@Nullable RebarFluid fluid) {
             getStack().editPersistentDataContainer(pdc -> RebarUtils.setNullable(pdc, FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID, fluid));
+            CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
+
+            ArrayList<String> newStrings = getUpdatedStrings(fluid, data);
+            CustomModelData newData = CustomModelData.customModelData()
+                .addStrings(newStrings)
+                .addFlags(data.flags())
+                .addColors(data.colors())
+                .addFloats(data.floats())
+                .build();
+
+            getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
+        }
+
+        @SuppressWarnings("UnstableApiUsage")
+        private @NotNull ArrayList<String> getUpdatedStrings(@Nullable RebarFluid fluid, CustomModelData data) {
+            ArrayList<String> newStrings = new ArrayList<>(data.strings().size() + 1);
+            String fluidString = "pylon:fluid:" + Objects.toString(fluid, "empty");
+
+            boolean found = false;
+            for (var string : data.strings()) {
+                if (string.startsWith("pylon:fluid:")) {
+                    newStrings.add(fluidString);
+                    found = true;
+                } else {
+                    newStrings.add(string);
+                }
+            }
+
+            if (!found) {
+                newStrings.add(fluidString);
+            }
+
+            return newStrings;
         }
 
         public void setAmount(double amount) {
