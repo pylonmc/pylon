@@ -1,6 +1,5 @@
 package io.github.pylonmc.pylon.content.components;
 
-import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.waila.Waila;
@@ -40,7 +39,7 @@ public class ReinforcedGlassCasing extends RebarBlock {
     @Override
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
-        properties.put("position", new Pair<>(position.name().toLowerCase(), FluidTankCasing.Shape.values().length));
+        properties.put("position", new Pair<>(position.name().toLowerCase(), Position.values().length));
         return properties;
     }
 
