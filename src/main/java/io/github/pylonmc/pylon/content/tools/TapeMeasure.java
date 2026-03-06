@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -21,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,43 +78,23 @@ public class TapeMeasure extends RebarItem implements RebarBlockInteractor {
 
                 Location pos1Above = pos1.clone().add(0, 1, 0);
                 Location pos2Above = pos2.clone().add(0, 1, 0);
-
-
-                Vector midVec = pos1Above.toVector().add(pos2Above.toVector()).multiply(0.5);
-                Location mid = midVec.toLocation(pos1.getWorld());
+                pos2Above.setYaw(0);
+                pos2Above.setPitch(0);
 
                 player.sendMessage(Component.translatable("pylon.message.tape_measure.success", RebarArgument.of("distance", distance)));
-                BlockDisplay display = DISTANCE_ENTITIES.computeIfAbsent(player.getUniqueId(), (ignored) -> {
-                    return player.getWorld().spawn(mid, BlockDisplay.class, (entity) -> {
-                       entity.setVisibleByDefault(false);
-                       player.showEntity(Pylon.getInstance(), entity);
-                       entity.setBlock(Material.RED_CONCRETE.createBlockData());
-                   });
-                });
+                BlockDisplay display = DISTANCE_ENTITIES.computeIfAbsent(player.getUniqueId(), (ignored) -> player.getWorld().spawn(pos2Above, BlockDisplay.class, (entity) -> {
+                    entity.setVisibleByDefault(false);
+                    player.showEntity(Pylon.getInstance(), entity);
+                    entity.setBlock(Material.RED_CONCRETE.createBlockData());
+                }));
 
-                display.teleport(mid);
-
-                Vector dir = pos2Above.toVector().subtract(pos1Above.toVector()).normalize();
-
-                Vector up = new Vector(0,1,0);
-
-                Vector axis = up.clone().crossProduct(dir);
-                double dot = up.dot(dir);
-
-                double w = Math.sqrt(up.lengthSquared() * dir.lengthSquared()) + dot;
-
-                Quaternionf q = new Quaternionf(
-                        (float) axis.getX(),
-                        (float) axis.getY(),
-                        (float) axis.getZ(),
-                        (float) w
-                ).normalize();
-
+                display.teleport(pos2Above);
                 display.setTransformationMatrix(
-                        new TransformBuilder()
-                                .rotate(q)
-                                .translate(0, distance / 2.0, 0)
-                                .scale(0.3, distance, 0.3)
+                        new LineBuilder()
+                                .from(new Vector3f())
+                                .to(pos1Above.toVector().subtract(pos2Above.toVector()).normalize().toVector3f().mul((float) distance))
+                                .thickness(0.3)
+                                .build()
                                 .buildForBlockDisplay()
                 );
             }
