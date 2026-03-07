@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,6 +27,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
@@ -48,8 +50,14 @@ public final class CastingUnit extends RebarBlock implements
     private static final NamespacedKey QUEUED_CASTS_KEY = pylonKey("queued_casts");
     private static final NamespacedKey AUTO_CAST_KEY = pylonKey("auto_cast");
 
+    private static final NamespacedKey FLUID_TYPE_KEY = pylonKey("fluid_type");
+    private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
+
     private int queuedCasts;
     private boolean autoCast;
+
+    private @Nullable RebarFluid fluidType;
+    private double fluidAmount;
 
     private final VirtualInventory castInv = new VirtualInventory(1);
     private final VirtualInventory outputInv = new VirtualInventory(1);
@@ -62,6 +70,8 @@ public final class CastingUnit extends RebarBlock implements
 
         queuedCasts = 0;
         autoCast = false;
+        fluidType = null;
+        fluidAmount = 0;
     }
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
@@ -70,6 +80,8 @@ public final class CastingUnit extends RebarBlock implements
 
         queuedCasts = pdc.get(QUEUED_CASTS_KEY, RebarSerializers.INTEGER);
         autoCast = pdc.get(AUTO_CAST_KEY, RebarSerializers.BOOLEAN);
+        fluidType = pdc.get(FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID);
+        fluidAmount = pdc.get(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE);
     }
 
     @Override
@@ -77,11 +89,14 @@ public final class CastingUnit extends RebarBlock implements
         super.write(pdc);
         pdc.set(QUEUED_CASTS_KEY, RebarSerializers.INTEGER, queuedCasts);
         pdc.set(AUTO_CAST_KEY, RebarSerializers.BOOLEAN, autoCast);
+        RebarUtils.setNullable(pdc, FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID, fluidType);
+        pdc.set(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, fluidAmount);
     }
 
     @Override
     public void postInitialise() {
         castInv.addPreUpdateHandler(event -> {
+            if (event.getNewItem() == null) return;
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
                 if (recipe.cast().isSimilar(event.getNewItem())) {
                     return;
@@ -116,6 +131,14 @@ public final class CastingUnit extends RebarBlock implements
                     .name(Component.translatable("pylon.gui.casting-control.name"))
                     .lore(Component.translatable(
                             "pylon.gui.casting-control.lore",
+                            RebarArgument.of("casting", fluidType == null ?
+                                    Component.empty() :
+                                    Component.translatable(
+                                            "pylon.gui.casting-control.casting",
+                                            RebarArgument.of("fluid", fluidType.getName()),
+                                            RebarArgument.of("amount", UnitFormat.MILLIBUCKETS.format(fluidAmount).decimalPlaces(1))
+                                    )
+                            ),
                             RebarArgument.of("queued-casts", queuedCasts),
                             RebarArgument.of("auto-cast", Component.translatable(autoCast ? "pylon.gui.status.on" : "pylon.gui.status.off"))
                     ));
@@ -123,13 +146,16 @@ public final class CastingUnit extends RebarBlock implements
 
         @Override
         public void handleClick(@NonNull ClickType clickType, @NonNull Player player, @NonNull Click click) {
-            if (clickType.isLeftClick() && !autoCast) {
+            if (clickType == ClickType.LEFT && !autoCast) {
                 queuedCasts++;
-            } else if (clickType.isRightClick() && !autoCast && queuedCasts > 0) {
+            } else if (clickType ==  ClickType.RIGHT && !autoCast && queuedCasts > 0) {
                 queuedCasts--;
-            } else if (clickType == ClickType.MIDDLE) {
+            } else if (clickType == ClickType.SHIFT_LEFT) {
                 autoCast = !autoCast;
                 queuedCasts = 0;
+            } else if (clickType == ClickType.SHIFT_RIGHT) {
+                fluidType = null;
+                fluidAmount = 0;
             }
 
             notifyWindows();
@@ -163,20 +189,16 @@ public final class CastingUnit extends RebarBlock implements
     }
 
     @Override
-    public boolean requiresExactFluidAmount() {
-        return true;
-    }
-
-    @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
         if (queuedCasts == 0 && !autoCast) return 0;
+        if (fluidType != null && !fluidType.equals(fluid)) return 0;
         ItemStack castItem = castInv.getItem(0);
         if (castItem == null) return 0;
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
             if (recipe.isInput(fluid) && castItem.isSimilar(recipe.cast())) {
                 if (outputInv.simulateSingleAdd(recipe.result()) > 0) return 0;
-                return recipe.input().amountMillibuckets();
+                return recipe.input().amountMillibuckets() - fluidAmount;
             }
         }
 
@@ -186,16 +208,23 @@ public final class CastingUnit extends RebarBlock implements
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
         if (queuedCasts == 0 && !autoCast) throw new AssertionError("Should not happen");
+        if (fluidType != null && !fluidType.equals(fluid)) throw new AssertionError("Should not happen");
         ItemStack castItem = castInv.getItem(0);
         if (castItem == null) throw new AssertionError("Should not happen");
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
             if (recipe.isInput(fluid) && castItem.isSimilar(recipe.cast())) {
-                outputInv.addItem(new MachineUpdateReason(), recipe.result());
-                if (!autoCast) {
-                    queuedCasts--;
-                    castingControlItem.notifyWindows();
+                fluidType = fluid;
+                fluidAmount += amount;
+                if (Math.abs(fluidAmount - recipe.input().amountMillibuckets()) < 1e-6) {
+                    fluidType = null;
+                    fluidAmount = 0;
+                    outputInv.addItem(new MachineUpdateReason(), recipe.result());
+                    if (!autoCast) {
+                        queuedCasts--;
+                    }
                 }
+                castingControlItem.notifyWindows();
                 break;
             }
         }

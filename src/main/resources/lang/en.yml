@@ -2533,11 +2533,13 @@ gui:
   casting-control:
     name: "Casting Control"
     lore: |-
-      <arrow> <insn>Left click</insn> to queue a cast
+      %casting%<arrow> <insn>Left click</insn> to queue a cast
       <arrow> <insn>Right click</insn> to unqueue a cast
-      <arrow> <insn>Middle click</insn> to toggle automatic casting
+      <arrow> <insn>Shift left click</insn> to toggle automatic casting
+      <arrow> <insn>Shift right click</insn> to purge fluid
       <arrow> <attr>Queued casts:</attr> %queued-casts%
       <arrow> <attr>Automatic casting:</attr> %auto-cast%
+    casting: "Casting %fluid%: %amount%<br><br>"
 
 inventory:
   fuel: "Fuel"
