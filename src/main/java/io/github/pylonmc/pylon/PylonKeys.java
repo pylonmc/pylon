@@ -235,6 +235,11 @@ public class PylonKeys {
     public static final NamespacedKey SMELTERY_OUTPUT_HATCH = pylonKey("smeltery_output_hatch");
     public static final NamespacedKey SMELTERY_HOPPER = pylonKey("smeltery_hopper");
     public static final NamespacedKey SMELTERY_BURNER = pylonKey("smeltery_burner");
+    public static final NamespacedKey CASTING_UNIT = pylonKey("casting_unit");
+
+    public static final NamespacedKey NUGGET_CAST = pylonKey("cast_nugget");
+    public static final NamespacedKey INGOT_CAST = pylonKey("cast_ingot");
+    public static final NamespacedKey BLOCK_CAST = pylonKey("cast_block");
 
     public static final NamespacedKey PIT_KILN = pylonKey("pit_kiln");
 

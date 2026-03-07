@@ -86,6 +86,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SMELTERY_HOPPER, Material.HOPPER, SmelteryHopper.class);
         RebarBlock.register(PylonKeys.SMELTERY_BURNER, Material.FURNACE, SmelteryBurner.class);
         RebarBlock.register(PylonKeys.DIESEL_SMELTERY_HEATER, Material.FURNACE, DieselSmelteryHeater.class);
+        RebarBlock.register(PylonKeys.CASTING_UNIT, Material.BRICKS, CastingUnit.class);
         RebarBlock.register(PylonKeys.PIT_KILN, Material.DECORATED_POT, PitKiln.class);
         RebarBlock.register(PylonKeys.FLUID_STRAINER, Material.COPPER_GRATE, FluidStrainer.class);
         RebarBlock.register(PylonKeys.EXPLOSIVE_TARGET, Material.TARGET, ExplosiveTarget.class);

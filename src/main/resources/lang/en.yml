@@ -796,7 +796,6 @@ item:
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
       <diamond> 25 or more <yellow><lang:pylon.item.refractory_bricks.name/></yellow> (depending on size and components)
 
@@ -2109,6 +2108,29 @@ item:
   fine_sediment:
     name: "Fine Sediment"
 
+  casting_unit:
+    name: "Casting Unit"
+    lore: |-
+      <arrow> Used to cast metals into molds using casts
+
+  cast_nugget:
+    name: "Nugget Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a nugget
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
+
+  cast_ingot:
+    name: "Ingot Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
+  cast_block:
+    name: "Block Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>1296</unit>
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2465,13 +2487,6 @@ gui:
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
-  smeltery_caster:
-    cast: "Cast"
-    cannot_cast: "<red>Cannot cast"
-    too_cold: "<red>Temperature too low to cast, needs at least %temperature%"
-    not_enough: "<red>Not enough %fluid% to cast (%amount%/%needed%)"
-    click_to_cast: "<insn>Click</insn> to cast (%amount%/%needed%)"
-    auto_cast: "Auto cast: %status%"
   progress_bar:
     text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
   discrete_progress_bar:
@@ -2514,6 +2529,15 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  cast-border: "Cast Item"
+  casting-control:
+    name: "Casting Control"
+    lore: |-
+      <arrow> <insn>Left click</insn> to queue a cast
+      <arrow> <insn>Right click</insn> to unqueue a cast
+      <arrow> <insn>Middle click</insn> to toggle automatic casting
+      <arrow> <attr>Queued casts:</attr> %queued-casts%
+      <arrow> <attr>Automatic casting:</attr> %auto-cast%
 
 inventory:
   fuel: "Fuel"

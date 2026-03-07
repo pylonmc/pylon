@@ -1,0 +1,41 @@
+pylon:tin_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:tin: 16
+  result: pylon:tin_nugget
+  priority: -1
+  
+pylon:tin_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:tin: 144
+  result: pylon:tin_ingot
+  priority: -1
+  
+pylon:tin_block:
+  cast: pylon:cast_block
+  input:
+    pylon:tin: 1296
+  result: pylon:tin_block
+  priority: -1
+  
+pylon:bronze_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:bronze: 16
+  result: pylon:bronze_nugget
+  priority: -1
+
+pylon:bronze_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:bronze: 144
+  result: pylon:bronze_ingot
+  priority: -1
+
+pylon:bronze_block:
+  cast: pylon:cast_block
+  input:
+    pylon:bronze: 1296
+  result: pylon:bronze_block
+  priority: -1

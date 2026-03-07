@@ -1723,6 +1723,34 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(DIESEL_SMELTERY_HEATER);
     }
 
+    public static final ItemStack CASTING_UNIT = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.CASTING_UNIT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CASTING_UNIT, PylonKeys.CASTING_UNIT);
+        PylonPages.SMELTING.addItem(CASTING_UNIT);
+    }
+
+    public static final ItemStack NUGGET_CAST = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NUGGET_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NUGGET_CAST, PylonKeys.NUGGET_CAST);
+        PylonPages.SMELTING.addItem(NUGGET_CAST);
+    }
+
+    public static final ItemStack INGOT_CAST = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.INGOT_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INGOT_CAST, PylonKeys.INGOT_CAST);
+        PylonPages.SMELTING.addItem(INGOT_CAST);
+    }
+
+    public static final ItemStack BLOCK_CAST = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BLOCK_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BLOCK_CAST, PylonKeys.BLOCK_CAST);
+        PylonPages.SMELTING.addItem(BLOCK_CAST);
+    }
+
 
     //</editor-fold>
 
