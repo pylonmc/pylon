@@ -1751,6 +1751,20 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(BLOCK_CAST);
     }
 
+    public static final ItemStack SHEET_CAST = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SHEET_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SHEET_CAST, PylonKeys.SHEET_CAST);
+        PylonPages.SMELTING.addItem(SHEET_CAST);
+    }
+
+    public static final ItemStack PIPE_CAST = ItemStackBuilder.rebar(Material.BROWN_CONCRETE, PylonKeys.PIPE_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPE_CAST, PylonKeys.PIPE_CAST);
+        PylonPages.SMELTING.addItem(PIPE_CAST);
+    }
+
 
     //</editor-fold>
 

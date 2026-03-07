@@ -240,6 +240,8 @@ public class PylonKeys {
     public static final NamespacedKey NUGGET_CAST = pylonKey("cast_nugget");
     public static final NamespacedKey INGOT_CAST = pylonKey("cast_ingot");
     public static final NamespacedKey BLOCK_CAST = pylonKey("cast_block");
+    public static final NamespacedKey SHEET_CAST = pylonKey("cast_sheet");
+    public static final NamespacedKey PIPE_CAST = pylonKey("cast_pipe");
 
     public static final NamespacedKey PIT_KILN = pylonKey("pit_kiln");
 

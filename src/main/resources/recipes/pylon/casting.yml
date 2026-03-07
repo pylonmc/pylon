@@ -1,3 +1,10 @@
+pylon:sulfur:
+  cast: pylon:cast_ingot
+  input:
+    pylon:sulfur: 144
+  result: pylon:sulfur
+  priority: -1
+
 pylon:tin_nugget:
   cast: pylon:cast_nugget
   input:
@@ -19,6 +26,188 @@ pylon:tin_block:
   result: pylon:tin_block
   priority: -1
   
+pylon:tin_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:tin: 144
+  result: pylon:tin_sheet
+  priority: -1
+
+pylon:tin_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:tin: 108
+  result: pylon:fluid_pipe_tin
+  priority: -1
+  
+pylon:copper_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:copper: 16
+  result: minecraft:copper_nugget
+  priority: -1
+
+pylon:copper_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:copper: 144
+  result: minecraft:copper_ingot
+  priority: -1
+
+pylon:copper_block:
+  cast: pylon:cast_block
+  input:
+    pylon:copper: 1296
+  result: minecraft:copper_block
+  priority: -1
+
+pylon:copper_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:copper: 144
+  result: pylon:copper_sheet
+  priority: -1
+
+pylon:copper_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:copper: 108
+  result: pylon:fluid_pipe_copper
+  priority: -1
+  
+pylon:iron_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:iron: 16
+  result: minecraft:iron_nugget
+  priority: -1
+
+pylon:iron_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:iron: 144
+  result: minecraft:iron_ingot
+  priority: -1
+
+pylon:iron_block:
+  cast: pylon:cast_block
+  input:
+    pylon:iron: 1296
+  result: minecraft:iron_block
+  priority: -1
+
+pylon:iron_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:iron: 144
+  result: pylon:iron_sheet
+  priority: -1
+
+pylon:iron_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:iron: 108
+  result: pylon:fluid_pipe_iron
+  priority: -1
+  
+pylon:gold_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:gold: 16
+  result: minecraft:gold_nugget
+  priority: -1
+
+pylon:gold_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:gold: 144
+  result: minecraft:gold_ingot
+  priority: -1
+
+pylon:gold_block:
+  cast: pylon:cast_block
+  input:
+    pylon:gold: 1296
+  result: minecraft:gold_block
+  priority: -1
+
+pylon:gold_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:gold: 144
+  result: pylon:gold_sheet
+  priority: -1
+  
+pylon:steel_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:steel: 16
+  result: pylon:steel_nugget
+  priority: -1
+
+pylon:steel_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:steel: 144
+  result: pylon:steel_ingot
+  priority: -1
+
+pylon:steel_block:
+  cast: pylon:cast_block
+  input:
+    pylon:steel: 1296
+  result: pylon:steel_block
+  priority: -1
+
+pylon:steel_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:steel: 144
+  result: pylon:steel_sheet
+  priority: -1
+
+pylon:steel_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:steel: 108
+  result: pylon:fluid_pipe_steel
+  priority: -1
+  
+pylon:palladium_nugget:
+  cast: pylon:cast_nugget
+  input:
+    pylon:palladium: 16
+  result: pylon:palladium_nugget
+  priority: -1
+
+pylon:palladium_ingot:
+  cast: pylon:cast_ingot
+  input:
+    pylon:palladium: 144
+  result: pylon:palladium_ingot
+  priority: -1
+
+pylon:palladium_block:
+  cast: pylon:cast_block
+  input:
+    pylon:palladium: 1296
+  result: pylon:palladium_block
+  priority: -1
+
+pylon:palladium_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:palladium: 144
+  result: pylon:palladium_sheet
+  priority: -1
+
+pylon:palladium_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:palladium: 108
+  result: pylon:fluid_pipe_palladium
+  priority: -1
+  
 pylon:bronze_nugget:
   cast: pylon:cast_nugget
   input:
@@ -38,4 +227,18 @@ pylon:bronze_block:
   input:
     pylon:bronze: 1296
   result: pylon:bronze_block
+  priority: -1
+
+pylon:bronze_sheet:
+  cast: pylon:cast_sheet
+  input:
+    pylon:bronze: 144
+  result: pylon:bronze_sheet
+  priority: -1
+
+pylon:bronze_pipe:
+  cast: pylon:cast_pipe
+  input:
+    pylon:bronze: 108
+  result: pylon:fluid_pipe_bronze
   priority: -1

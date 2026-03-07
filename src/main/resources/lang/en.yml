@@ -2131,6 +2131,18 @@ item:
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>1296</unit>
 
+  cast_sheet:
+    name: "Sheet Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
+  cast_pipe:
+    name: "Pipe Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
