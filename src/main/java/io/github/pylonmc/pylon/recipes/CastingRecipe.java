@@ -1,12 +1,15 @@
 package io.github.pylonmc.pylon.recipes;
 
+import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.guide.button.FluidButton;
+import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
 
@@ -57,8 +60,21 @@ public record CastingRecipe(
     }
 
     @Override
-    public @Nullable Gui display() {
-        return null;
+    public Gui display() {
+        return Gui.builder()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# # # # c # # # #",
+                        "# # # f C r # # #",
+                        "# # # # # # # # #",
+                        "# # # # # # # # #"
+                )
+                .addIngredient('#', GuiItems.backgroundBlack())
+                .addIngredient('f', new FluidButton(input))
+                .addIngredient('c', new ItemButton(cast))
+                .addIngredient('C', new ItemButton(PylonItems.CASTING_UNIT))
+                .addIngredient('r', new ItemButton(result))
+                .build();
     }
 
     @Override
