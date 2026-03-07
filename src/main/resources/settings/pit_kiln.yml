@@ -1,10 +1,6 @@
-capacity: 18
 processing-time-seconds: 300
 speed-multipliers:
   campfire: 0.5
   soul-campfire: 1.0
   fire: 1.0
   soul-fire: 2.0
-item-multipliers:
-  coarse-dirt: 1.0
-  podzol: 2.0

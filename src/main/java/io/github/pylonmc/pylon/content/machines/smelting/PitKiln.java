@@ -8,48 +8,45 @@ import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
-import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Campfire;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.time.Duration;
 import java.util.*;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 public final class PitKiln extends RebarBlock implements
-        RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarBreakHandler, RebarNoVanillaContainerBlock {
+        RebarSimpleMultiblock,
+        RebarGuiBlock,
+        RebarTickingBlock,
+        RebarVirtualInventoryBlock,
+        RebarRecipeProcessor<PitKilnRecipe> {
 
-    public static final int CAPACITY = Settings.get(PylonKeys.PIT_KILN).getOrThrow("capacity", ConfigAdapter.INTEGER);
     public static final int PROCESSING_TIME_SECONDS =
             Settings.get(PylonKeys.PIT_KILN).getOrThrow("processing-time-seconds", ConfigAdapter.INTEGER);
 
@@ -57,9 +54,6 @@ public final class PitKiln extends RebarBlock implements
     private static final double MULTIPLIER_SOUL_CAMPFIRE = Settings.get(PylonKeys.PIT_KILN).getOrThrow("speed-multipliers.soul-campfire", ConfigAdapter.DOUBLE);
     private static final double MULTIPLIER_FIRE = Settings.get(PylonKeys.PIT_KILN).getOrThrow("speed-multipliers.fire", ConfigAdapter.DOUBLE);
     private static final double MULTIPLIER_SOUL_FIRE = Settings.get(PylonKeys.PIT_KILN).getOrThrow("speed-multipliers.soul-fire", ConfigAdapter.DOUBLE);
-
-    private static final double MULTIPLIER_DIRT = Settings.get(PylonKeys.PIT_KILN).getOrThrow("item-multipliers.coarse-dirt", ConfigAdapter.DOUBLE);
-    private static final double MULTIPLIER_PODZOL = Settings.get(PylonKeys.PIT_KILN).getOrThrow("item-multipliers.podzol", ConfigAdapter.DOUBLE);
 
     public static final class Item extends RebarItem {
 
@@ -70,54 +64,25 @@ public final class PitKiln extends RebarBlock implements
         @Override
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("capacity", CAPACITY),
                     RebarArgument.of("smelting_time", UnitFormat.formatDuration(Duration.ofSeconds(PROCESSING_TIME_SECONDS), false)),
                     RebarArgument.of("campfire", MULTIPLIER_CAMPFIRE),
                     RebarArgument.of("soul_campfire", MULTIPLIER_SOUL_CAMPFIRE),
                     RebarArgument.of("fire", MULTIPLIER_FIRE),
-                    RebarArgument.of("soul_fire", MULTIPLIER_SOUL_FIRE),
-                    RebarArgument.of("coarse_dirt", MULTIPLIER_DIRT),
-                    RebarArgument.of("podzol", MULTIPLIER_PODZOL)
+                    RebarArgument.of("soul_fire", MULTIPLIER_SOUL_FIRE)
             );
         }
     }
 
-    private static final NamespacedKey CONTENTS_KEY = pylonKey("contents");
-    private static final PersistentDataType<?, List<ItemStack>> CONTENTS_TYPE =
-            RebarSerializers.LIST.listTypeFrom(RebarSerializers.ITEM_STACK);
-    private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
-    private static final NamespacedKey PROCESSING_TIME_KEY = pylonKey("processing_time");
-
-    private final ArrayList<ItemStack> contents;
-    private final Set<ItemStack> processing;
-    private @Nullable Double processingTime;
+    private final VirtualInventory inventory = new VirtualInventory(3);
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        contents = new ArrayList<>();
-        processing = new HashSet<>();
-        processingTime = null;
     }
 
     @SuppressWarnings("unused")
     public PitKiln(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        contents = new ArrayList<>(pdc.get(CONTENTS_KEY, CONTENTS_TYPE));
-        processing = pdc.get(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK));
-        processingTime = pdc.get(PROCESSING_TIME_KEY, RebarSerializers.DOUBLE);
-    }
-
-    @Override
-    public void write(@NotNull PersistentDataContainer pdc) {
-        pdc.set(CONTENTS_KEY, CONTENTS_TYPE, contents);
-        pdc.set(PROCESSING_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.ITEM_STACK), processing);
-        RebarUtils.setNullable(pdc, PROCESSING_TIME_KEY, RebarSerializers.DOUBLE, processingTime);
-    }
-
-    @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        drops.addAll(contents);
     }
 
     @Override
@@ -126,111 +91,45 @@ public final class PitKiln extends RebarBlock implements
     }
 
     @Override
-    @MultiHandler(priorities = {EventPriority.NORMAL, EventPriority.MONITOR})
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY || event.getHand() != EquipmentSlot.HAND)
-            return;
-
-        if (priority == EventPriority.NORMAL) {
-            event.setUseItemInHand(Event.Result.DENY);
-            return;
-        } else {
-            event.setUseInteractedBlock(Event.Result.DENY);
-        }
-
-        event.getPlayer().swingHand(event.getHand());
-        if(!event.getPlayer().isSneaking()) {
-            ItemStack item = event.getItem();
-            if (item == null || item.isEmpty()) {
-                return;
-            }
-            addItem(item, true);
-        } else {
-            if(contents.isEmpty()){
-                return;
-            }
-            event.getPlayer().give(contents.removeLast());
-        }
+    public @NotNull Map<@NotNull String, @NotNull VirtualInventory> getVirtualInventories() {
+        return Map.of("inventory", inventory);
     }
 
-    public int countItems() {
-        int amount = 0;
-        for (ItemStack item : contents) {
-            amount += item.getAmount();
-        }
-        return amount;
-    }
-
-    /**
-     * Will add 1 of the type specified in the itemstack
-     *
-     * @param item          specified itemstack type
-     * @param directRemoval if item stack passed will be decreased
-     */
-    public void addItem(ItemStack item, boolean directRemoval) {
-        if (countItems() >= CAPACITY) return;
-
-        for (ItemStack contentItem : contents) {
-            if (contentItem.isSimilar(item)) {
-                contentItem.add();
-                if (directRemoval) item.subtract();
-                return;
-            }
-        }
-
-        contents.add(item.asOne());
-
-        if (directRemoval) item.subtract();
+    @Override
+    public @NotNull Gui createGui() {
+        return Gui.builder()
+                .setStructure("# # # x x x # # #")
+                .addIngredient('#', GuiItems.background())
+                .addIngredient('x', inventory)
+                .build();
     }
 
     @Override
     public void tick() {
         if (!isFormedAndFullyLoaded()) {
-            if (processingTime != null) {
-                processingTime = null;
-                processing.clear();
+            if (isProcessingRecipe()) {
+                stopRecipe();
             }
             return;
         }
-        if (processingTime == null) {
+        if (!isProcessingRecipe()) {
             tryStartProcessing();
         }
 
-        if (processingTime == null) return;
-        processingTime -= getTickInterval() / 20.0;
-        if (processingTime > 0) return;
+        if (!isProcessingRecipe()) return;
+        progressRecipe(getTickInterval());
+        if (Objects.requireNonNull(getRecipeTicksRemaining()) > 0) return;
 
-        processingTime = null;
-        double calcMultiplier = 0;
-        for (Vector3i top : TOP_POSITIONS) {
-            Block topBlock = getBlock().getRelative(top.x(), top.y(), top.z());
-            calcMultiplier += switch (topBlock.getType()) {
-                case PODZOL -> MULTIPLIER_PODZOL;
-                case COARSE_DIRT -> MULTIPLIER_DIRT;
-                default -> throw new AssertionError();
-            };
-            topBlock.setType(Material.COARSE_DIRT);
-        }
+        finishRecipe();
+    }
 
-        double multiplier = calcMultiplier / TOP_POSITIONS.size();
-
-        outputLoop:
-        for (ItemStack outputItem : processing) {
-            int addAmount = (int) Math.floor(outputItem.getAmount() * multiplier);
-            for (ItemStack contentItem : contents) {
-                if (contentItem.isSimilar(outputItem)) {
-                    contentItem.add(addAmount);
-                    continue outputLoop;
-                }
-            }
-            contents.add(outputItem.asQuantity(addAmount));
-        }
-        processing.clear();
+    @Override
+    @SuppressWarnings("UnstableApiUsage")
+    public void onRecipeFinished(@NonNull PitKilnRecipe recipe) {
+        // Remove blocks to consume
         for (Vector3i coal : COAL_POSITIONS) {
             Block coalBlock = getBlock().getRelative(coal.x(), coal.y(), coal.z());
-            if (!(new BlockBreakBlockEvent(coalBlock, getBlock(), List.of())).callEvent()) {
-                continue;
-            }
+            new BlockBreakBlockEvent(coalBlock, getBlock(), List.of()).callEvent();
             coalBlock.setType(Material.AIR);
         }
         Block fireBlock = getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z());
@@ -245,32 +144,76 @@ public final class PitKiln extends RebarBlock implements
                 fireBlock.setBlockData(campfireData);
                 break;
             default:
-                if (new BlockBreakBlockEvent(fireBlock, getBlock(), List.of()).callEvent()) {
-                    fireBlock.getWorld().playSound(fireBlock.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    fireBlock.setType(Material.AIR);
+                new BlockBreakBlockEvent(fireBlock, getBlock(), List.of()).callEvent();
+                fireBlock.getWorld().playSound(fireBlock.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                fireBlock.setType(Material.AIR);
+        }
+
+        // Determine amount of times to perform the recipe
+        Object2IntMap<ItemStack> amounts = countItems();
+        int ratio = Integer.MAX_VALUE;
+        for (RecipeInput.Item input : recipe.input()) {
+            for (var entry : amounts.object2IntEntrySet()) {
+                if (input.contains(entry.getKey())) {
+                    ratio = Math.min(ratio, entry.getIntValue() / input.getAmount());
+                    break;
                 }
+            }
+        }
+        if (ratio == 0) {
+            throw new IllegalStateException("Ratio was 0");
+        }
+
+        // Remove inputs
+        for (RecipeInput.Item input : recipe.input()) {
+            int remaining = input.getAmount() * ratio;
+            for (int slot = 0; slot < inventory.getSize(); slot++) {
+                ItemStack item = inventory.getItem(slot);
+                if (item == null || !input.contains(item)) continue;
+
+                int toTake = Math.min(remaining, item.getAmount());
+                inventory.setItemAmount(new MachineUpdateReason(), slot, item.getAmount() - toTake);
+
+                remaining -= toTake;
+                if (remaining == 0) break;
+            }
+            if (remaining > 0) {
+                throw new IllegalStateException("Had items remaining");
+            }
+        }
+
+        // Add outputs
+        List<ItemStack> extra = new ArrayList<>();
+        for (ItemStack output : recipe.output()) {
+            ItemStack item = output.asQuantity(output.getAmount() * ratio);
+            int amountLeft = inventory.addItem(new MachineUpdateReason(), item);
+            if (amountLeft > 0) {
+                extra.add(output.asQuantity(amountLeft));
+            }
+        }
+
+        // Drop outputs that didn't fit below (fire is out anyway)
+        Location down = getBlock().getRelative(BlockFace.DOWN).getLocation().toCenterLocation();
+        for (ItemStack item : extra) {
+            down.getWorld().dropItemNaturally(down, item);
         }
     }
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return getComponentWaila(player);
-    }
-
-    private WailaDisplay getComponentWaila(@NotNull Player player) {
-        Component status = processingTime != null
-                ? Component.translatable(
-                "pylon.waila.pit_kiln.smelting",
-                RebarArgument.of(
-                        "time",
-                        UnitFormat.formatDuration(Duration.ofSeconds(processingTime.longValue()), false)
-                )
-        )
-                : Component.translatable("pylon.waila.pit_kiln.invalid_recipe");
+        Integer processingTime = getRecipeTicksRemaining();
+        Component status = processingTime != null ?
+                Component.translatable(
+                        "pylon.waila.pit_kiln.smelting",
+                        RebarArgument.of(
+                                "time",
+                                UnitFormat.formatDuration(Duration.ofSeconds(processingTime / 20), false)
+                        )
+                ) :
+                Component.translatable("pylon.waila.pit_kiln.invalid_recipe");
         return new WailaDisplay(Component.translatable(
                 "pylon.item.pit_kiln.waila",
-                RebarArgument.of("info", status),
-                RebarArgument.of("nitems", countItems())
+                RebarArgument.of("info", status)
         ));
     }
 
@@ -279,7 +222,7 @@ public final class PitKiln extends RebarBlock implements
         RebarSimpleMultiblock.super.onMultiblockFormed();
         for (Vector3i relative : getComponents().keySet()) {
             BlockPosition block = new BlockPosition(getBlock()).addScalar(relative.x(), relative.y(), relative.z());
-            Waila.addWailaOverride(block, this::getComponentWaila);
+            Waila.addWailaOverride(block, this::getWaila);
         }
     }
 
@@ -296,51 +239,41 @@ public final class PitKiln extends RebarBlock implements
         }
     }
 
+    private Object2IntMap<ItemStack> countItems() {
+        Object2IntMap<ItemStack> amounts = new Object2IntOpenHashMap<>();
+        amounts.defaultReturnValue(0);
+        for (ItemStack item : inventory.getItems()) {
+            if (item == null) continue;
+            amounts.mergeInt(item.asOne(), item.getAmount(), Integer::sum);
+        }
+        return amounts;
+    }
+
     private void tryStartProcessing() {
-        if (processingTime != null || contents.isEmpty()) return;
+        if (isProcessingRecipe() || inventory.isEmpty()) return;
+        Object2IntMap<ItemStack> amounts = countItems();
         recipeLoop:
         for (PitKilnRecipe recipe : PitKilnRecipe.RECIPE_TYPE) {
-            int ratio = Integer.MAX_VALUE;
             for (RecipeInput.Item input : recipe.input()) {
-                int existing = 0;
-                for (ItemStack contentItem : contents) {
-                    if (input.contains(contentItem)) {
-                        existing = contentItem.getAmount();
+                boolean found = false;
+                for (var entry : amounts.object2IntEntrySet()) {
+                    if (input.contains(entry.getKey()) && entry.getIntValue() >= input.getAmount()) {
+                        found = true;
                         break;
                     }
                 }
-                int required = input.getAmount();
-                if (existing < required) {
+                if (!found) {
                     continue recipeLoop;
                 }
-                ratio = Math.min(ratio, existing / required);
             }
-            if (ratio <= 0) continue;
-
-            for (RecipeInput.Item input : recipe.input()) {
-                int removeAmount = input.getAmount() * ratio;
-                for (ItemStack contentItem : contents) {
-                    if (input.contains(contentItem)) {
-                        contentItem.subtract(removeAmount);
-                        break;
-                    }
-                }
-            }
-            Set<ItemStack> outputItems = new HashSet<>(recipe.output().size());
-            for (ItemStack outputItem : recipe.output()) {
-                ItemStack outputCopy = outputItem.asOne();
-                outputCopy.setAmount(outputItem.getAmount() * ratio);
-                outputItems.add(outputCopy);
-            }
-            processing.addAll(outputItems);
-            double multiplier = switch (getBlock().getRelative(FIRE_POSITION.x(), FIRE_POSITION.y(), FIRE_POSITION.z()).getType()) {
+            double multiplier = switch (getBlock().getRelative(BlockFace.DOWN).getType()) {
                 case CAMPFIRE -> MULTIPLIER_CAMPFIRE;
                 case SOUL_CAMPFIRE -> MULTIPLIER_SOUL_CAMPFIRE;
                 case FIRE -> MULTIPLIER_FIRE;
                 case SOUL_FIRE -> MULTIPLIER_SOUL_FIRE;
-                default -> throw new AssertionError();
+                default -> throw new AssertionError("Should not happen");
             };
-            processingTime = PROCESSING_TIME_SECONDS / multiplier;
+            startRecipe(recipe, (int) (PROCESSING_TIME_SECONDS * 20 / multiplier));
             break;
         }
     }
@@ -375,36 +308,18 @@ public final class PitKiln extends RebarBlock implements
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
         for (Vector3i coalPosition : COAL_POSITIONS) {
-            components.put(coalPosition, new MixedMultiblockComponent(
+            components.put(
+                    coalPosition,
+                    new MixedMultiblockComponent(
                             new VanillaMultiblockComponent(Material.COAL_BLOCK),
                             new RebarMultiblockComponent(PylonKeys.CHARCOAL_BLOCK)
                     )
             );
         }
-        for (Vector3i podzolPosition : TOP_POSITIONS) {
-            components.put(podzolPosition, new VanillaMultiblockComponent(Material.COARSE_DIRT, Material.PODZOL));
-        }
-        components.put(new Vector3i(-1, 0, -2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(0, 0, -2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(1, 0, -2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-1, 0, 2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(0, 0, 2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(1, 0, 2), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-2, 0, -1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-2, 0, 0), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-2, 0, 1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(2, 0, -1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(2, 0, 0), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(2, 0, 1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
 
-        components.put(new Vector3i(-1, -1, -1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(0, -1, -1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(1, -1, -1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-1, -1, 0), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(1, -1, 0), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(-1, -1, 1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(0, -1, 1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
-        components.put(new Vector3i(1, -1, 1), new VanillaMultiblockComponent(Material.COARSE_DIRT));
+        for (Vector3i topPosition : TOP_POSITIONS) {
+            components.put(topPosition, new VanillaMultiblockComponent(Material.COARSE_DIRT));
+        }
 
         components.put(FIRE_POSITION, new VanillaBlockdataMultiblockComponent(
                 Material.CAMPFIRE.createBlockData("[lit=true]"),
@@ -412,6 +327,7 @@ public final class PitKiln extends RebarBlock implements
                 Material.FIRE.createBlockData(),
                 Material.SOUL_FIRE.createBlockData()
         ));
+
         return components;
     }
     // </editor-fold>
