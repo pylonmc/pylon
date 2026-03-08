@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.i18n.RebarTranslator;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
 import io.github.pylonmc.rebar.util.MiningLevel;
@@ -75,12 +76,25 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         }
 
         for (HammerRecipe recipe : HammerRecipe.RECIPE_TYPE) {
-            if (!miningLevel.isAtLeast(recipe.level())) {
-                continue;
-            }
 
             for (Item item : items) {
                 if (!recipe.input().matches(item.getItemStack())) {
+                    continue;
+                }
+                if (!miningLevel.isAtLeast(recipe.level())) {
+                    if (player != null) {
+                        player.sendMessage(Component.translatable(
+                                "pylon.message.hammer.too-low-tier",
+                                RebarArgument.of(
+                                        "tier_needed",
+                                        Component.translatable("pylon.message.hammer.tier." + recipe.level().toString().toLowerCase())
+                                ),
+                                RebarArgument.of(
+                                        "item_name",
+                                        recipe.result().displayName()
+                                )
+                        ));
+                    }
                     continue;
                 }
 
@@ -108,7 +122,8 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         return false;
     }
 
-    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    @Override
+    @MultiHandler(priorities = {EventPriority.NORMAL, EventPriority.MONITOR})
     public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getHand() != EquipmentSlot.HAND
                 || event.getPlayer().isSneaking()

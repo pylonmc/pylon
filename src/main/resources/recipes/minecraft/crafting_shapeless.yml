@@ -57,7 +57,7 @@ pylon:shimmer_dust_1:
     - minecraft:flint
     - minecraft:clay_ball
   result:
-    pylon:shimmer_dust_1: 1
+    pylon:shimmer_dust_1: 3
   category: misc
 
 pylon:medkit:
@@ -101,3 +101,17 @@ pylon:liselette_anode:
   result:
     pylon:liselette_anode: 1
   category: misc
+
+pylon:gunpowder:
+  ingredients:
+    - pylon:sulfur
+    - pylon:gypsum
+    - minecraft:charcoal
+  result:
+    minecraft:gunpowder: 3
+
+pylon:palladium_ingots_from_palladium_block:
+  ingredients:
+    - pylon:palladium_block
+  result:
+    pylon:palladium_ingot: 9

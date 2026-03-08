@@ -233,7 +233,6 @@ public class HydraulicBreaker extends RebarBlock implements
     public void onMultiblockRefreshed() {
         if (isProcessing()) {
             stopProcess();
-            return;
         }
         tryStartDrilling();
     }

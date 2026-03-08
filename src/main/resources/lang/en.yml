@@ -144,7 +144,10 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> A device used for smelting steel from sponge iron
-      <arrow> <insn>Set fire to a block of coal with gypsum dust thrown on top</insn> to create
+      <arrow> Steps to create:
+      <arrow> 1 - <insn>Place a Block of Coal</insn>
+      <arrow> 2 - <insn>Drop one Gypsum Dust on top of it</insn>
+      <arrow> 3 - <insn>Ignite the top of the block</insn>
       <arrow> <insn>Right click</insn> to insert items
       <arrow> <insn>Right click with tongs</insn> to retrieve items safely
       
@@ -200,6 +203,7 @@ item:
     name: "Wooden Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -208,6 +212,7 @@ item:
     name: "Copper Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -216,6 +221,7 @@ item:
     name: "Tin Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -224,6 +230,7 @@ item:
     name: "Iron Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -232,6 +239,7 @@ item:
     name: "Bronze Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -240,6 +248,7 @@ item:
     name: "Igneous Composite Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -248,6 +257,7 @@ item:
     name: "Steel Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -256,6 +266,7 @@ item:
     name: "Palladium Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -264,6 +275,7 @@ item:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
       <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
       <arrow> You can only connect pipes of the same type
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -1282,13 +1294,44 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.hydraulic_core_drill.name/></yellow>
       <diamond> 1x <yellow>Cauldron</yellow>
-      <diamond> 1x <yellow>Chest</yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 6x <yellow>Iron Bars</yellow>
-      <diamond> 12x <yellow>Polished Deepslate Wall</yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 12x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
     waila: "Hydraulic Core Drill %duration_if_any%"
     waila_format: "| %duration%"
+
+  diesel_core_drill:
+    name: "Diesel Core Drill"
+    lore: |-
+      <star> Multiblock
+      <arrow> Consumes diesel to mine deep core chunks
+      <arrow> <attr>Cycle time:</attr> %cycle-time%
+      <arrow> <attr>Output:</attr> %cycle-output%
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.diesel_core_drill.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
+      <diamond> 3x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 9x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 10x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Diesel Core Drill %duration_if_any%"
+    waila_format: "| %duration%"
+
+  iron_support_beam:
+    name: "Iron Support Beam"
+    lore: |-
+      <star> Multiblock component
+
+  steel_support_beam:
+    name: "Steel Support Beam"
+    lore: |-
+      <star> Multiblock component
 
   fluid_input_hatch:
     name: "Fluid Input Hatch"
@@ -1333,6 +1376,11 @@ item:
   intermediate_core_chunk:
     name: "Intermediate Core Chunk"
     lore: |-
+      <arrow> A chunk of minerals from several layers below the surface
+
+  deep_core_chunk:
+    name: "Deep Core Chunk"
+    lore: |-
       <arrow> A chunk of minerals from many layers below the surface
 
   igneous_composite:
@@ -1352,6 +1400,9 @@ item:
 
   backflow_valve:
     name: "Backflow Valve"
+
+  leaf_valve:
+    name: "Leaf Valve"
 
   analogue_display:
     name: "Analogue Display"
@@ -1379,6 +1430,9 @@ item:
 
   bronze_drill_bit:
     name: "Bronze Drill Bit"
+
+  steel_drill_bit:
+    name: "Steel Drill Bit"
 
   gypsum:
     name: "Gypsum"
@@ -1582,21 +1636,21 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.fermenter.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 2x <yellow>Block of Iron</yellow>
-      <diamond> 4x <yellow>Polished Deepslate Wall</yellow>
-      <diamond> 4x <yellow><lang:pylon.item.fermenter_core.name/></yellow>
-      <diamond> 31x <yellow><lang:pylon.item.fermenter_casing.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.reinforced_glass.name/></yellow>
+      <diamond> 31x <yellow><lang:pylon.item.reinforced_glass_casing.name/></yellow>
     waila: "Fermenter | %sugarcane-bar% %sugarcane-amount% sugarcane"
 
-  fermenter_core:
-    name: "Fermenter Core"
+  reinforced_glass:
+    name: "Reinforced Glass"
     lore: |-
-      <star> Fermenter multiblock component
+      <star> Multiblock component
 
-  fermenter_casing:
-    name: "Fermenter Casing"
+  reinforced_glass_casing:
+    name: "Reinforced Glass Casing"
     lore: |-
-      <star> Fermenter multiblock component
+      <star> Multiblock component
 
   biorefinery:
     name: "Biorefinery"
@@ -1613,41 +1667,47 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
-      <diamond> 6x <yellow><lang:pylon.item.biorefinery_foundation.name/></yellow>
-      <diamond> 4x <yellow><lang:pylon.item.biorefinery_tower_ring.name/></yellow>
-      <diamond> 9x <yellow><lang:pylon.item.biorefinery_smokestack_ring.name/></yellow>
-      <diamond> 2x <yellow><lang:pylon.item.biorefinery_smokestack_cap.name/></yellow>
-      <diamond> 24x <yellow><lang:pylon.item.biorefinery_plating.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.distillation_tower_ring.name/></yellow>
+      <diamond> 9x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
+      <diamond> 24x <yellow><lang:pylon.item.reinforced_plating.name/></yellow>
     waila: "Biorefinery | %info%"
 
-  biorefinery_foundation:
-    name: "Biorefinery Foundation"
+  bronze_foundation:
+    name: "Bronze Foundation"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_plating:
-    name: "Biorefinery Plating"
+  bronze_grating:
+    name: "Bronze Grating"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_tower_ring:
-    name: "Biorefinery Tower Ring"
+  reinforced_plating:
+    name: "Reinforced Plating"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_smokestack_ring:
-    name: "Biorefinery Smokestack Ring"
+  distillation_tower_ring:
+    name: "Distillation Tower Ring"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
 
-  biorefinery_smokestack_cap:
-    name: "Biorefinery Smokestack Cap"
+  smokestack_ring:
+    name: "Smokestack Ring"
     lore: |-
-      <star> Biorefinery multiblock component
+      <star> Multiblock component
+
+  smokestack_cap:
+    name: "Smokestack Cap"
+    lore: |-
+      <star> Multiblock component
 
   cargo_duct:
     name: "<white>Cargo Duct"
     lore: |-
+      <arrow> <insn>Right click</insn> a placed cargo duct with a block to make it look like that block
       <arrow> Connects cargo blocks together
       <arrow> Adjacent cargo ducts will automatically connect to each other
 
@@ -1980,8 +2040,8 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
-  palladium_flight_ring:
-    name: "<white>Palladium Flight Ring"
+  flight_ring:
+    name: "<white>Flight Ring"
     lore: |-
       <arrow> Allows creative flight
 
@@ -2107,6 +2167,29 @@ item:
 
   fine_sediment:
     name: "Fine Sediment"
+
+  palladium_condenser:
+    name: "Palladium Condenser"
+    lore: |-
+      <arrow> Condenses Shimmer Dust II into Palladium Dust using Diesel and Hydraulic Fluid
+      <arrow> Outputs dirty hydraulic fluid
+      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
+      <arrow> <attr>Shimmer Dust II per cycle:</attr> %shimmer-dust-per-cycle%
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.palladium_condenser.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
+      <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Palladium Condenser | %duration-if-any%"
+    waila_format: "| %duration%"
 
   casting_unit:
     name: "Casting Unit"
@@ -2266,6 +2349,9 @@ research:
   assembling: "<#846e5a>Assembling"
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
+  palladium_protection: "<#2937e3>Palladium production"
+  creative_flight: "<#2937e3>Creative flight"
+  palladium_production: "<#2937e3>Palladium Production"
 
 guide:
   page:
@@ -2423,6 +2509,16 @@ message:
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
+  hammer:
+    too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
+    tier:
+      any: "any"
+      wood: "wood"
+      gold: "gold"
+      stone: "stone"
+      iron: "iron"
+      diamond: "diamond"
+      netherite: "netherite"
 
 gui:
   fluid-selector-title: "Select Fluid"

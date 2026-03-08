@@ -539,7 +539,7 @@ pylon:portable_fluid_tank_wood:
     - "CGC"
   key:
     C: "#minecraft:planks"
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_wood
   group: pylon:portable_fluid_tank_wood
   category: building
@@ -551,7 +551,7 @@ pylon:portable_fluid_tank_copper:
     - "CGC"
   key:
     C: pylon:copper_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_copper
   category: building
 
@@ -562,7 +562,7 @@ pylon:portable_fluid_tank_tin:
     - "CGC"
   key:
     C: pylon:tin_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_tin
   category: building
 
@@ -573,7 +573,7 @@ pylon:portable_fluid_tank_iron:
     - "CGC"
   key:
     C: pylon:iron_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_iron
   category: building
 
@@ -584,7 +584,7 @@ pylon:portable_fluid_tank_bronze:
     - "CGC"
   key:
     C: pylon:bronze_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_bronze
   category: building
 
@@ -595,7 +595,7 @@ pylon:portable_fluid_tank_igneous_composite:
     - "CGC"
   key:
     C: pylon:igneous_composite
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_igneous_composite
   category: building
 
@@ -606,118 +606,118 @@ pylon:portable_fluid_tank_steel:
     - "CGC"
   key:
     C: pylon:steel_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_steel
   category: building
 
 pylon:portable_fluid_tank_palladium:
   pattern:
-    - "PGP"
-    - "P P"
-    - "PGP"
+    - "CGC"
+    - "G G"
+    - "CGC"
   key:
-    P: pylon:palladium_sheet
-    G: minecraft:glass
+    C: pylon:palladium_sheet
+    G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_palladium
   category: building
 
 pylon:fluid_tank:
   pattern:
     - "   "
-    - "III"
+    - "   "
     - "IBI"
   key:
-    B: pylon:bronze_block
+    B: pylon:bronze_ingot
     I: pylon:iron_sheet
   result: pylon:fluid_tank
   category: building
 
 pylon:fluid_tank_casing_wood:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: "#minecraft:planks"
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_wood
   group: pylon:fluid_tank_casing_wood
   category: building
 
 pylon:fluid_tank_casing_copper:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:copper_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_copper
   category: building
 
 pylon:fluid_tank_casing_tin:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:tin_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_tin
   category: building
 
 pylon:fluid_tank_casing_iron:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:iron_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_iron
   category: building
 
 pylon:fluid_tank_casing_bronze:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:bronze_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_bronze
   category: building
 
 pylon:fluid_tank_casing_igneous_composite:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:igneous_composite
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_igneous_composite
   category: building
 
 pylon:fluid_tank_casing_steel:
   pattern:
-    - "C C"
     - "G G"
     - "C C"
+    - "G G"
   key:
     C: pylon:steel_sheet
-    G: minecraft:glass
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_steel
   category: building
 
 pylon:fluid_tank_casing_palladium:
   pattern:
-    - "P P"
     - "G G"
-    - "P P"
+    - "C C"
+    - "G G"
   key:
-    P: pylon:palladium_sheet
-    G: minecraft:glass
+    C: pylon:palladium_sheet
+    G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_palladium
   category: building
 
@@ -732,11 +732,24 @@ pylon:rotor:
   result: pylon:rotor
   category: misc
 
+pylon:leaf_valve:
+  pattern:
+    - " N "
+    - "PSP"
+    - "   "
+  key:
+    N: minecraft:iron_nugget
+    P: pylon:fluid_pipe_iron
+    S: pylon:iron_sheet
+  result:
+    pylon:leaf_valve: 3
+  category: misc
+
 pylon:backflow_valve:
   pattern:
-    - " R "
-    - "PSP"
-    - " R "
+    - " S "
+    - "PRP"
+    - " S "
   key:
     P: pylon:fluid_pipe_iron
     S: pylon:iron_sheet
@@ -811,7 +824,7 @@ pylon:sawblade:
     - "IBI"
     - " I "
   key:
-    B: pylon:bronze_block
+    B: minecraft:iron_bars
     I: pylon:bronze_ingot
   result: pylon:sawblade
   category: misc
@@ -849,13 +862,24 @@ pylon:bronze_drill_bit:
   result: pylon:bronze_drill_bit
   category: misc
 
+pylon:steel_drill_bit:
+  pattern:
+    - "   "
+    - "BIB"
+    - " B "
+  key:
+    B: pylon:steel_ingot
+    I: pylon:steel_block
+  result: pylon:steel_drill_bit
+  category: misc
+
 pylon:water_pump:
   pattern:
     - " B "
-    - "IRI"
+    - "I I"
     - "IPI"
   key:
-    I: pylon:iron_sheet
+    I: minecraft:iron_ingot
     P: pylon:fluid_pipe_copper
     B: minecraft:bucket
   result: pylon:water_pump
@@ -864,64 +888,67 @@ pylon:water_pump:
 pylon:fluid_valve:
   pattern:
     - " L "
-    - "BPB"
+    - "PVP"
     - "   "
   key:
     L: minecraft:lever
     P: pylon:fluid_pipe_tin
-    B: pylon:backflow_valve
-  result: pylon:fluid_valve
+    V: pylon:leaf_valve
+  result:
+    pylon:fluid_valve: 2
   category: building
 
 pylon:fluid_filter:
   pattern:
-    - " C "
-    - "PFB"
+    - " F "
+    - "PLP"
     - "   "
   key:
-    C: minecraft:comparator
     P: pylon:fluid_pipe_tin
     F: pylon:filter_mesh
-    B: pylon:backflow_valve
-  result: pylon:fluid_filter
+    L: pylon:leaf_valve
+  result:
+    pylon:fluid_filter: 2
   category: building
 
 pylon:fluid_limiter:
   pattern:
     - " C "
-    - "PBP"
+    - "PLP"
     - "   "
   key:
     C: minecraft:comparator
     P: pylon:fluid_pipe_tin
-    B: pylon:backflow_valve
-  result: pylon:fluid_limiter
+    L: pylon:leaf_valve
+  result:
+    pylon:fluid_limiter: 2
   category: building
 
 pylon:fluid_accumulator:
   pattern:
     - " C "
-    - "PTP"
-    - "BCB"
+    - "PTB"
+    - "   "
   key:
     C: minecraft:comparator
     P: pylon:fluid_pipe_tin
     B: pylon:backflow_valve
-    T: pylon:portable_fluid_tank_iron
-  result: pylon:fluid_accumulator
+    T: pylon:fluid_tank_casing_iron
+  result:
+    pylon:fluid_accumulator: 2
   category: building
 
 pylon:fluid_meter:
   pattern:
     - " A "
-    - "RFR"
-    - " B "
+    - "PBP"
+    - "   "
   key:
     A: pylon:analogue_display
-    F: pylon:fluid_filter
-    R: minecraft:repeater
-    B: minecraft:bucket
-  result: pylon:fluid_meter
+    P: pylon:fluid_pipe_tin
+    B: pylon:backflow_valve
+  result:
+    pylon:fluid_meter: 2
   category: building
 
 pylon:water_placer:
@@ -1007,9 +1034,10 @@ pylon:fluid_strainer:
   pattern:
     - "CBC"
     - " F "
-    - "C C"
+    - "CLC"
   key:
     B: pylon:backflow_valve
+    L: pylon:leaf_valve
     C: pylon:copper_sheet
     F: pylon:filter_mesh
   result: pylon:fluid_strainer
@@ -1018,13 +1046,12 @@ pylon:fluid_strainer:
 pylon:sprinkler:
   pattern:
     - " F "
+    - "B B"
     - "BUB"
-    - "BRB"
   key:
     B: minecraft:brick
     U: minecraft:bucket
     F: pylon:fluid_pipe_copper
-    R: minecraft:repeater
   result: pylon:sprinkler
   category: building
 
@@ -1198,12 +1225,12 @@ pylon:hydraulic_mixing_attachment:
   pattern:
     - "CCC"
     - "PEP"
-    - "CWC"
+    - "CRC"
   key:
     C: minecraft:chiseled_stone_bricks
     E: pylon:hydraulic_motor
     P: pylon:fluid_pipe_bronze
-    W: minecraft:light_gray_concrete
+    R: pylon:rotor
   result: pylon:hydraulic_mixing_attachment
   category: building
 
@@ -1222,7 +1249,7 @@ pylon:hydraulic_press_piston:
 
 pylon:hydraulic_hammer_head:
   pattern:
-    - "SWS"
+    - "SSS"
     - "PEP"
     - "SWS"
   key:
@@ -1278,7 +1305,7 @@ pylon:hydraulic_miner:
     - "PEP"
     - "CSC"
   key:
-    C: minecraft:copper_block
+    C: minecraft:copper_ingot
     S: pylon:copper_sheet
     E: pylon:hydraulic_motor
     P: pylon:fluid_pipe_bronze
@@ -1292,7 +1319,7 @@ pylon:hydraulic_breaker:
     - "PEP"
     - "CDC"
   key:
-    C: minecraft:copper_block
+    C: minecraft:copper_ingot
     S: pylon:copper_sheet
     E: pylon:hydraulic_motor
     P: pylon:fluid_pipe_bronze
@@ -1423,11 +1450,11 @@ pylon:recoil_arrow:
 pylon:manual_core_drill_lever:
   pattern:
     - " L "
-    - "LPL"
-    - " L "
+    - " I "
+    - "   "
   key:
     L: minecraft:lever
-    P: "#minecraft:planks"
+    I: minecraft:iron_ingot
   result: pylon:manual_core_drill_lever
   group: pylon:manual_core_drill_lever
   category: building
@@ -1467,6 +1494,20 @@ pylon:hydraulic_core_drill:
     P: pylon:fluid_pipe_bronze
     D: pylon:bronze_drill_bit
   result: pylon:hydraulic_core_drill
+  category: building
+
+pylon:diesel_core_drill:
+  pattern:
+    - "SES"
+    - "VEP"
+    - "SDS"
+  key:
+    S: pylon:steel_sheet
+    E: pylon:internal_combustion_engine
+    P: pylon:fluid_pipe_steel
+    D: pylon:steel_drill_bit
+    V: pylon:backflow_valve
+  result: pylon:diesel_core_drill
   category: building
 
 pylon:climbing_pick:
@@ -1811,9 +1852,9 @@ pylon:assembly_table:
 
 pylon:fluid_input_hatch:
   pattern:
-    - "BVB"
-    - " C "
-    - "BCB"
+    - "B B"
+    - "VCC"
+    - "B B"
   key:
     B: pylon:bronze_sheet
     C: pylon:fluid_pipe_copper
@@ -1829,15 +1870,15 @@ pylon:fluid_output_hatch:
   key:
     B: pylon:bronze_sheet
     C: pylon:fluid_pipe_copper
-    V: pylon:backflow_valve
+    V: pylon:leaf_valve
   result: pylon:fluid_output_hatch
   category: building
 
 pylon:item_input_hatch:
   pattern:
-    - "B B"
-    - "HCB"
-    - "B B"
+    - "BHB"
+    - " C "
+    - "BBB"
   key:
     B: pylon:bronze_sheet
     C: minecraft:chest
@@ -1847,9 +1888,9 @@ pylon:item_input_hatch:
 
 pylon:item_output_hatch:
   pattern:
-    - "B B"
-    - "BCH"
-    - "B B"
+    - "BBB"
+    - " C "
+    - "BHB"
   key:
     B: pylon:bronze_sheet
     C: minecraft:chest
@@ -1872,14 +1913,14 @@ pylon:diesel_grindstone:
 
 pylon:diesel_mixing_attachment:
   pattern:
-    - "SHS"
-    - "PEP"
     - "SSS"
+    - "PEP"
+    - "SRS"
   key:
     P: pylon:fluid_pipe_steel
     E: pylon:internal_combustion_engine
     S: pylon:iron_sheet
-    H: pylon:grindstone_handle
+    R: pylon:rotor
   result: pylon:diesel_mixing_attachment
   category: building
 
@@ -1899,7 +1940,7 @@ pylon:diesel_press:
 
 pylon:diesel_hammer_head:
   pattern:
-    - "SWS"
+    - "SSS"
     - "PEP"
     - "SWS"
   key:
@@ -1946,7 +1987,7 @@ pylon:diesel_miner:
     D: pylon:bronze_drill_bit
     E: pylon:internal_combustion_engine
     S: pylon:iron_sheet
-    B: minecraft:iron_block
+    B: minecraft:iron_ingot
   result: pylon:diesel_miner
   category: building
 
@@ -1960,7 +2001,7 @@ pylon:diesel_breaker:
     D: pylon:bronze_drill_bit
     E: pylon:internal_combustion_engine
     S: pylon:iron_sheet
-    B: minecraft:iron_block
+    B: minecraft:iron_ingot
   result: pylon:diesel_breaker
   category: building
 
@@ -1999,12 +2040,12 @@ pylon:fermenter:
     B: pylon:bronze_sheet
     I: pylon:iron_sheet
     P: pylon:fluid_pipe_bronze
-    C: pylon:fermenter_core
+    C: pylon:reinforced_glass
     V: pylon:backflow_valve
   result: pylon:fermenter
   category: building
 
-pylon:fermenter_core:
+pylon:reinforced_glass:
   pattern:
     - "   "
     - "SGS"
@@ -2012,10 +2053,10 @@ pylon:fermenter_core:
   key:
     S: pylon:steel_sheet
     G: minecraft:glass
-  result: pylon:fermenter_core
+  result: pylon:reinforced_glass
   category: building
 
-pylon:fermenter_casing:
+pylon:reinforced_glass_casing:
   pattern:
     - " P "
     - "PSP"
@@ -2024,7 +2065,7 @@ pylon:fermenter_casing:
     S: pylon:steel_sheet
     P: minecraft:glass_pane
   result:
-    pylon:fermenter_casing: 4
+    pylon:reinforced_glass_casing: 4
   category: building
 
 pylon:biorefinery:
@@ -2040,7 +2081,7 @@ pylon:biorefinery:
   result: pylon:biorefinery
   category: building
 
-pylon:biorefinery_foundation:
+pylon:bronze_foundation:
   pattern:
     - "   "
     - "SSS"
@@ -2050,11 +2091,22 @@ pylon:biorefinery_foundation:
     I: minecraft:iron_ingot
     B: minecraft:bricks
   result:
-    pylon:biorefinery_foundation: 3
+    pylon:bronze_foundation: 3
   category: building
 
+pylon:bronze_grating:
+  pattern:
+    - "   "
+    - "SNS"
+    - "NSN"
+  key:
+    S: pylon:bronze_sheet
+    N: minecraft:copper_nugget
+  result:
+    pylon:bronze_grating: 3
+  category: building
 
-pylon:biorefinery_plating:
+pylon:reinforced_plating:
   pattern:
     - "   "
     - "IS "
@@ -2063,10 +2115,10 @@ pylon:biorefinery_plating:
     I: pylon:iron_sheet
     S: pylon:steel_sheet
   result:
-    pylon:biorefinery_plating: 4
+    pylon:reinforced_plating: 4
   category: building
 
-pylon:biorefinery_tower_ring:
+pylon:distillation_tower_ring:
   pattern:
     - "R R"
     - "I I"
@@ -2074,10 +2126,10 @@ pylon:biorefinery_tower_ring:
   key:
     R: pylon:refractory_brick
     I: pylon:steel_ingot
-  result: pylon:biorefinery_tower_ring
+  result: pylon:distillation_tower_ring
   category: building
 
-pylon:biorefinery_smokestack_ring:
+pylon:smokestack_ring:
   pattern:
     - "B B"
     - "I I"
@@ -2086,10 +2138,10 @@ pylon:biorefinery_smokestack_ring:
     I: pylon:bronze_ingot
     B: minecraft:brick
   result:
-    pylon:biorefinery_smokestack_ring: 2
+    pylon:smokestack_ring: 2
   category: building
 
-pylon:biorefinery_smokestack_cap:
+pylon:smokestack_cap:
   pattern:
     - "   "
     - "B B"
@@ -2097,7 +2149,7 @@ pylon:biorefinery_smokestack_cap:
   key:
     F: pylon:filter_mesh
     B: minecraft:brick
-  result: pylon:biorefinery_smokestack_cap
+  result: pylon:smokestack_cap
   category: building
 
 pylon:collimator:
@@ -2130,10 +2182,10 @@ pylon:cargo_duct:
     - "CCC"
     - "SSS"
   key:
-    S: pylon:copper_sheet
+    S: pylon:iron_sheet
     C: pylon:liselette_conductor
   result:
-    pylon:cargo_duct: 6
+    pylon:cargo_duct: 12
   category: building
 
 pylon:cargo_extractor:
@@ -2309,6 +2361,19 @@ pylon:cargo_fluid_accumulator:
   result: pylon:cargo_fluid_accumulator
   category: building
 
+pylon:diesel_smeltery_heater:
+  pattern:
+    - "SIS"
+    - "R R"
+    - "SFS"
+  key:
+    S: pylon:steel_sheet
+    I: pylon:smeltery_input_hatch
+    R: pylon:refractory_bricks
+    F: minecraft:flint_and_steel
+  result: pylon:diesel_smeltery_heater
+  category: building
+
 pylon:palladium_helmet:
   pattern:
     - "PPP"
@@ -2412,6 +2477,44 @@ pylon:palladium_hoe:
   result:
     pylon:palladium_hoe: 1
   category: equipment
+
+pylon:iron_support_beam:
+  pattern:
+    - " N "
+    - " S "
+    - " N "
+  key:
+    S: pylon:iron_sheet
+    N: pylon:bronze_nugget
+  result:
+    pylon:iron_support_beam: 1
+  category: building
+
+pylon:steel_support_beam:
+  pattern:
+    - " N "
+    - " S "
+    - " N "
+  key:
+    S: pylon:steel_sheet
+    N: pylon:bronze_nugget
+  result:
+    pylon:steel_support_beam: 1
+  category: building
+
+pylon:palladium_condenser:
+  pattern:
+    - "SNS"
+    - "SCS"
+    - "SNS"
+  key:
+    S: pylon:steel_sheet
+    N: minecraft:nether_star
+    C: pylon:diesel_core_drill
+  result:
+    pylon:palladium_condenser: 1
+  category: building
+
 
 pylon:casting_unit:
   pattern:

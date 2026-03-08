@@ -9,7 +9,7 @@ pylon:shallow_core_chunk:
       weight: 0.3
   cycles: 6
   particle-data: minecraft:stone
-  priority: 3
+  priority: 4
 
 pylon:subsurface_core_chunk:
   input: pylon:subsurface_core_chunk
@@ -18,7 +18,7 @@ pylon:subsurface_core_chunk:
         minecraft:coal: 2
       weight: 0.3
     - value:
-        minecraft:raw_copper: 2
+        minecraft:raw_copper: 3
       weight: 0.25
     - value:
         pylon:raw_tin: 2
@@ -28,16 +28,16 @@ pylon:subsurface_core_chunk:
       weight: 0.4
   cycles: 8
   particle-data: minecraft:stone
-  priority: 2
+  priority: 3
 
 pylon:intermediate_core_chunk:
   input: pylon:intermediate_core_chunk
   results:
     - value:
-        minecraft:coal: 3
+        minecraft:coal: 4
       weight: 0.4
     - value:
-        minecraft:raw_copper: 2
+        minecraft:raw_copper: 3
       weight: 0.6
     - value:
         pylon:raw_tin: 2
@@ -50,6 +50,37 @@ pylon:intermediate_core_chunk:
     - value: pylon:gypsum
       weight: 0.1
   cycles: 10
+  particle-data: minecraft:stone
+  priority: 2
+
+pylon:deep_core_chunk:
+  input: pylon:deep_core_chunk
+  results:
+    - value:
+        minecraft:coal: 7
+      weight: 0.4
+    - value:
+        minecraft:raw_copper: 5
+      weight: 0.6
+    - value:
+        pylon:raw_tin: 3
+      weight: 0.5
+    - value:
+        minecraft:raw_iron: 4
+      weight: 0.3
+    - value:
+        minecraft:raw_gold: 2
+      weight: 0.25
+    - value:
+        pylon:gypsum: 2
+      weight: 0.15
+    - value:
+        minecraft:redstone: 4
+      weight: 0.2
+    - value:
+        minecraft:lapis_lazuli: 5
+      weight: 0.15
+  cycles: 20
   particle-data: minecraft:stone
   priority: 1
 

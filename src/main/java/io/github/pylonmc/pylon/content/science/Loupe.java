@@ -47,6 +47,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -157,7 +158,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         }
 
         RayTraceResult scan = player.getWorld().rayTrace(player.getEyeLocation(), player.getEyeLocation().getDirection(), 5,
-                player.isUnderWater() ? FluidCollisionMode.NEVER : FluidCollisionMode.SOURCE_ONLY, false, 0.25, hit -> hit != player);
+                player.isUnderWater() || player.isInLava() ? FluidCollisionMode.NEVER : FluidCollisionMode.SOURCE_ONLY, false, 0.25, hit -> hit != player);
         if (scan == null) {
             return;
         }
@@ -337,7 +338,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
 
     public static void markAlreadyExamined(Player player, LivingEntity entity) {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
-        List<UUID> examiners = pdc.getOrDefault(EXAMINED_KEY, EXAMINED_TYPE, new ArrayList<>());
+        List<UUID> examiners = new ArrayList<>(pdc.getOrDefault(EXAMINED_KEY, EXAMINED_TYPE, List.of()));
         examiners.add(player.getUniqueId());
         pdc.set(EXAMINED_KEY, EXAMINED_TYPE, examiners);
     }
