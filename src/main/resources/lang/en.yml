@@ -728,28 +728,24 @@ item:
     lore: |-
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
-      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   research_pack_2:
     name: "Research Pack II"
     lore: |-
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
-      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   research_pack_3:
     name: "Research Pack III"
     lore: |-
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
-      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   research_pack_4:
     name: "Research Pack IV"
     lore: |-
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
-      <arrow> <attr>Cooldown:</attr> %cooldown%
 
   rock_dust:
     name: "Rock Dust"

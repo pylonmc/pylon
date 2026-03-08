@@ -72,6 +72,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
+        RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));
     }
 
     @Override

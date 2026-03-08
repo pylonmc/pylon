@@ -60,13 +60,13 @@ pylon:deep_core_chunk:
         minecraft:coal: 7
       weight: 0.4
     - value:
-        minecraft:raw_copper: 5
+        minecraft:raw_copper: 6
       weight: 0.6
     - value:
-        pylon:raw_tin: 3
+        pylon:raw_tin: 4
       weight: 0.5
     - value:
-        minecraft:raw_iron: 4
+        minecraft:raw_iron: 5
       weight: 0.3
     - value:
         minecraft:raw_gold: 2
@@ -75,7 +75,7 @@ pylon:deep_core_chunk:
         pylon:gypsum: 2
       weight: 0.15
     - value:
-        minecraft:redstone: 4
+        minecraft:redstone: 8
       weight: 0.2
     - value:
         minecraft:lapis_lazuli: 5

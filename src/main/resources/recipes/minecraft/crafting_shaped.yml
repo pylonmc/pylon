@@ -694,7 +694,7 @@ pylon:rotor:
     - "ISI"
     - " I "
   key:
-    I: minecraft:iron_ingot
+    I: pylon:tin_sheet
     S: pylon:iron_sheet
   result: pylon:rotor
   category: misc
@@ -707,7 +707,7 @@ pylon:leaf_valve:
   key:
     N: minecraft:iron_nugget
     P: pylon:fluid_pipe_iron
-    S: pylon:iron_sheet
+    S: pylon:tin_sheet
   result:
     pylon:leaf_valve: 3
   category: misc
@@ -719,7 +719,7 @@ pylon:backflow_valve:
     - " S "
   key:
     P: pylon:fluid_pipe_iron
-    S: pylon:iron_sheet
+    S: pylon:tin_sheet
     R: minecraft:redstone
   result:
     pylon:backflow_valve: 2
@@ -746,7 +746,8 @@ pylon:filter_mesh:
   key:
     F: pylon:fiber
     B: minecraft:iron_bars
-  result: pylon:filter_mesh
+  result:
+    pylon:filter_mesh: 3
   category: misc
 
 pylon:nozzle:
@@ -1144,36 +1145,33 @@ pylon:immobilizer:
 pylon:elevator_1:
   pattern:
     - " S "
-    - "QPQ"
+    - "SQS"
     - " S "
   key:
     Q: minecraft:quartz_block
     S: pylon:shimmer_dust_1
-    P: minecraft:ender_pearl
   result: pylon:elevator_1
   category: misc
 
 pylon:elevator_2:
   pattern:
     - " S "
-    - "PEP"
+    - "SES"
     - " S "
   key:
     E: pylon:elevator_1
     S: pylon:shimmer_dust_2
-    P: minecraft:ender_pearl
   result: pylon:elevator_2
   category: building
 
 pylon:elevator_3:
   pattern:
     - " S "
-    - "PEP"
+    - "SES"
     - " S "
   key:
     E: pylon:elevator_2
     S: pylon:shimmer_dust_3
-    P: minecraft:ender_pearl
   result: pylon:elevator_3
   category: building
 
