@@ -1673,7 +1673,7 @@ item:
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
       <diamond> 6x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
       <diamond> 4x <yellow><lang:pylon.item.distillation_tower_ring.name/></yellow>
-      <diamond> 9x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
       <diamond> 2x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
       <diamond> 24x <yellow><lang:pylon.item.reinforced_plating.name/></yellow>
     waila: "Biorefinery | %info%"
@@ -2318,7 +2318,6 @@ research:
   assembling: "<#846e5a>Assembling"
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
-  palladium_protection: "<#2937e3>Palladium production"
   creative_flight: "<#2937e3>Creative flight"
   palladium_production: "<#2937e3>Palladium Production"
 
