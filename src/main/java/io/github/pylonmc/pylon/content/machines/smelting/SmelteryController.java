@@ -508,6 +508,8 @@ public final class SmelteryController extends SmelteryComponent
                     color.saturation(),
                     color.lightness() + value * LIGHTNESS_VARIATION
             );
+            entity.setInterpolationDuration(getTickInterval());
+            entity.setInterpolationDelay(0);
             entity.setBackgroundColor(newColor.toRgb());
 
 
