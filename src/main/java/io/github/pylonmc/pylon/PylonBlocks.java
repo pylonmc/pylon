@@ -18,6 +18,7 @@ import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.*;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
+import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
@@ -181,5 +182,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.BRONZE_SILO, Material.ORANGE_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.STEEL_SILO, Material.GRAY_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
     }
 }

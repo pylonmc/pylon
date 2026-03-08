@@ -63,7 +63,7 @@ public class PylonPages {
         RebarGuide.getRootPage().addPage(Material.APPLE, FOOD);
 
         MACHINES.addPage(PylonItems.PRESS, SIMPLE_MACHINES);
-        MACHINES.addPage(PylonItems.TIN_SILO, SIMPLE_MACHINES);
+        MACHINES.addPage(PylonItems.TIN_SILO, STORAGE);
         MACHINES.addPage(PylonItems.SMELTERY_CONTROLLER, SMELTING);
         MACHINES.addPage(PylonItems.FLUID_PIPE_COPPER, FLUID_PIPES_AND_TANKS);
         MACHINES.addPage(PylonItems.FLUID_METER, FLUID_MACHINES);

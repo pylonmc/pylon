@@ -431,6 +431,7 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
+    public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
     public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
     public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");
     public static final NamespacedKey TIN_SILO = pylonKey("tin_silo");

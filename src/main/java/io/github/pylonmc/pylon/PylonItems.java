@@ -1875,6 +1875,15 @@ public final class PylonItems {
 
     //</editor-fold>
 
+    //<editor-fold desc="Machines - Storage" defaultstate=collapsed>
+
+    public static final ItemStack SILO_CONVERTER = ItemStackBuilder.rebar(Material.STRIPPED_OAK_LOG, PylonKeys.SILO_CONVERTER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SILO_CONVERTER, PylonKeys.SILO_CONVERTER);
+        PylonPages.STORAGE.addItem(SILO_CONVERTER);
+    }
+
     public static final ItemStack WOODEN_SILO = ItemStackBuilder.rebar(Material.BROWN_TERRACOTTA, PylonKeys.WOODEN_SILO)
             .build();
     static {
@@ -1923,8 +1932,6 @@ public final class PylonItems {
         RebarItem.register(Silo.Item.class, PALLADIUM_SILO, PylonKeys.PALLADIUM_SILO);
         PylonPages.STORAGE.addItem(PALLADIUM_SILO);
     }
-
-    //<editor-fold desc="Machines - Simple Machines" defaultstate=collapsed>
 
     //</editor-fold>
 

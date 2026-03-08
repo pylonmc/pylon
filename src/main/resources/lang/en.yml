@@ -2286,6 +2286,11 @@ item:
       <arrow> <attr>Contents:</attr> %contents%
     waila: "Palladium Silo | %contents%"
 
+  silo_converter:
+    name: "Silo Converter"
+    lore: |-
+      <arrow> Converts silos to another silo type, preserving the contents
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2412,6 +2417,9 @@ research:
   palladium_protection: "<#2937e3>Palladium production"
   creative_flight: "<#2937e3>Creative flight"
   palladium_production: "<#2937e3>Palladium Production"
+  silos_1: "<#ea9335>Silos I"
+  silos_2: "<#ea9335>Silos II"
+  silos_3: "<#ea9335>Silos III"
 
 guide:
   page:
@@ -2428,6 +2436,7 @@ guide:
     talismans: "<white>Talismans"
     armour: "<white>Armour"
     machines_simple_machines: "<white>Simple machines"
+    machines_storage: "<white>Storage"
     machines_fluid_pipes_and_tanks: "<white>Fluid Pipes and Tanks"
     machines_fluid_machines: "<white>Fluid Machines"
     machines_hydraulic_machines: "<white>Hydraulic Machines"
@@ -2586,6 +2595,7 @@ message:
 gui:
   fluid-selector-title: "Select Fluid"
   hammer: "Hammer"
+  material: "Material"
   pickaxe: "Pickaxe"
   tool: "Tool"
   filtered: "Filtered"

@@ -147,6 +147,29 @@ pressing:
   unlocks:
     - pylon:press
 
+silos_1:
+  item: pylon:bronze_silo
+  cost: 5
+  unlocks:
+    - pylon:silo_converter
+    - pylon:wooden_silo
+    - pylon:copper_silo
+    - pylon:tin_silo
+
+silos_2:
+  item: pylon:bronze_silo
+  cost: 10
+  unlocks:
+    - pylon:iron_silo
+    - pylon:bronze_silo
+
+silos_3:
+  item: pylon:bronze_silo
+  cost: 15
+  unlocks:
+    - pylon:steel_silo
+    - pylon:palladium_silo
+
 pumps:
   item: pylon:water_pump
   cost: 5
