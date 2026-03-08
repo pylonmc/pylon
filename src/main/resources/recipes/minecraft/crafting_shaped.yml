@@ -694,7 +694,7 @@ pylon:rotor:
     - "ISI"
     - " I "
   key:
-    I: minecraft:tin_sheet
+    I: pylon:tin_sheet
     S: pylon:iron_sheet
   result: pylon:rotor
   category: misc
