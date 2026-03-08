@@ -35,12 +35,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
@@ -565,6 +567,16 @@ public final class SmelteryController extends SmelteryComponent
             }
             temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
             updateFluidDisplay();
+
+            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+            box.expand(BlockFace.UP, height);
+
+            double damage = Math.max(0, temperature / 100 + 1);
+
+            for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
+                if (!(entity instanceof LivingEntity livingEntity)) continue;
+                livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
+            }
         }
         infoItem.notifyWindows();
         contentsItem.notifyWindows();
