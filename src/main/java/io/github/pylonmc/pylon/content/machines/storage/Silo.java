@@ -13,10 +13,11 @@ import io.github.pylonmc.rebar.logistics.LogisticGroup;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -59,8 +60,9 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
                             ? Component.translatable("pylon.message.silo.empty")
                             : Component.translatable("pylon.message.silo.not-empty")
                             .arguments(
-                                    RebarArgument.of("item", stack.displayName()),
-                                    RebarArgument.of("amount", amount)
+                                    RebarArgument.of("item", stack.effectiveName()),
+                                    RebarArgument.of("amount", amount) ,
+                                    RebarArgument.of("capacity", capacityStacks * stack.getMaxStackSize())
                             )
                     )
             );
@@ -102,8 +104,9 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
             return;
         }
 
-        if (event.getAction().isLeftClick()) {
-            if (stack == null || amount == 0) {
+        ItemStack stackInHand = event.getItem();
+        if (event.getAction().isLeftClick() && (stackInHand == null || !getBlock().isPreferredTool(stackInHand))) {
+            if (stack == null || stack.isEmpty() || amount == 0) {
                 return;
             }
 
@@ -119,22 +122,23 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
         }
 
         if (event.getAction().isRightClick()) {
-            ItemStack stackInHand = event.getItem();
             if (stackInHand == null) {
                 return;
             }
 
-            if (stack == null) {
+            if (stack == null || stack.isEmpty()) {
                 stack = stackInHand.asOne();
-                amount = stack.getAmount();
-                return;
+                amount = 0;
             }
 
             if (stack.asOne().equals(stackInHand.asOne()) && amount != getCapacityItems()) {
                 int toTransfer = event.getPlayer().isSneaking()
-                        ? (int) Math.min(getCapacityItems() - amount, stack.getAmount())
+                        ? (int) Math.min(getCapacityItems() - amount, stackInHand.getAmount())
                         : 1;
-                amount = Math.min(getCapacityItems(), amount + toTransfer);
+                amount += toTransfer;
+                stackInHand.subtract(toTransfer);
+                event.setUseInteractedBlock(Event.Result.DENY);
+                event.setUseItemInHand(Event.Result.DENY);
             }
         }
     }
@@ -143,10 +147,27 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
     public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
         ItemStack stack = super.getDropItem(context);
         stack.editPersistentDataContainer(pdc -> {
-            pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, stack);
-            pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
+            if (this.stack != null) {
+                pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, this.stack);
+                pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
+            }
         });
         return stack;
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("contents", stack == null
+                        ? Component.translatable("pylon.message.silo.empty")
+                        : Component.translatable("pylon.message.silo.not-empty")
+                        .arguments(
+                                RebarArgument.of("item", stack.effectiveName()),
+                                RebarArgument.of("amount", amount),
+                                RebarArgument.of("capacity", getCapacityItems())
+                        )
+                )
+        ));
     }
 
     public long getCapacityItems() {

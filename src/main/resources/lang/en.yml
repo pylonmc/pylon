@@ -2206,6 +2206,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Wooden Silo | %contents%"
 
   copper_silo:
     name: "Copper Silo"
@@ -2218,6 +2219,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Copper Silo | %contents%"
 
   tin_silo:
     name: "Tin Silo"
@@ -2230,6 +2232,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Tin Silo | %contents%"
 
   iron_silo:
     name: "Iron Silo"
@@ -2242,6 +2245,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Iron Silo | %contents%"
 
   bronze_silo:
     name: "Bronze Silo"
@@ -2254,6 +2258,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Bronze Silo | %contents%"
 
   steel_silo:
     name: "Steel Silo"
@@ -2266,6 +2271,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Steel Silo | %contents%"
 
   palladium_silo:
     name: "Palladium Silo"
@@ -2278,6 +2284,7 @@ item:
       <arrow> <insn>Shift left click</insn> to remove a stack
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
+    waila: "Palladium Silo | %contents%"
 
 fluid:
   castable:
@@ -2574,7 +2581,7 @@ message:
       netherite: "netherite"
   silo:
     empty: "Empty"
-    not-empty: "<white>%item% <yellow>x%amount%"
+    not-empty: "<gray>%item% <white>(<yellow>%amount%<white>/<yellow>%capacity%<white>)"
 
 gui:
   fluid-selector-title: "Select Fluid"
