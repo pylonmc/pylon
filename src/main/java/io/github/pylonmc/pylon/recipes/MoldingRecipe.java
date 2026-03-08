@@ -32,8 +32,7 @@ public record MoldingRecipe(
             return new MoldingRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
-                    section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
-                            .asQuantity(section.getOrThrow("resultAmount", ConfigAdapter.INTEGER)),
+                    section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
         }
