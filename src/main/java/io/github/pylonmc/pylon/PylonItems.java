@@ -20,6 +20,7 @@ import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.smelting.PitKiln;
+import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.science.Loupe;
@@ -1871,6 +1872,59 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, COLLIMATOR_PILLAR, PylonKeys.COLLIMATOR_PILLAR);
         PylonPages.SIMPLE_MACHINES.addItem(COLLIMATOR_PILLAR);
     }
+
+    //</editor-fold>
+
+    public static final ItemStack WOODEN_SILO = ItemStackBuilder.rebar(Material.BROWN_TERRACOTTA, PylonKeys.WOODEN_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, WOODEN_SILO, PylonKeys.WOODEN_SILO);
+        PylonPages.STORAGE.addItem(WOODEN_SILO);
+    }
+
+    public static final ItemStack COPPER_SILO = ItemStackBuilder.rebar(Material.TERRACOTTA, PylonKeys.COPPER_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, COPPER_SILO, PylonKeys.COPPER_SILO);
+        PylonPages.STORAGE.addItem(COPPER_SILO);
+    }
+
+    public static final ItemStack TIN_SILO = ItemStackBuilder.rebar(Material.GREEN_TERRACOTTA, PylonKeys.TIN_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, TIN_SILO, PylonKeys.TIN_SILO);
+        PylonPages.STORAGE.addItem(TIN_SILO);
+    }
+
+    public static final ItemStack IRON_SILO = ItemStackBuilder.rebar(Material.LIGHT_GRAY_TERRACOTTA, PylonKeys.IRON_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, IRON_SILO, PylonKeys.IRON_SILO);
+        PylonPages.STORAGE.addItem(IRON_SILO);
+    }
+
+    public static final ItemStack BRONZE_SILO = ItemStackBuilder.rebar(Material.ORANGE_TERRACOTTA, PylonKeys.BRONZE_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, BRONZE_SILO, PylonKeys.BRONZE_SILO);
+        PylonPages.STORAGE.addItem(BRONZE_SILO);
+    }
+
+    public static final ItemStack STEEL_SILO = ItemStackBuilder.rebar(Material.GRAY_TERRACOTTA, PylonKeys.STEEL_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, STEEL_SILO, PylonKeys.STEEL_SILO);
+        PylonPages.STORAGE.addItem(STEEL_SILO);
+    }
+
+    public static final ItemStack PALLADIUM_SILO = ItemStackBuilder.rebar(Material.BLUE_TERRACOTTA, PylonKeys.PALLADIUM_SILO)
+            .build();
+    static {
+        RebarItem.register(Silo.Item.class, PALLADIUM_SILO, PylonKeys.PALLADIUM_SILO);
+        PylonPages.STORAGE.addItem(PALLADIUM_SILO);
+    }
+
+    //<editor-fold desc="Machines - Simple Machines" defaultstate=collapsed>
 
     //</editor-fold>
 
