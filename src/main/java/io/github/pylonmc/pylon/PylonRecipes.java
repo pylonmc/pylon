@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
 
 
@@ -28,5 +29,6 @@ public class PylonRecipes {
         PitKilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        HydraulicPurifier.PurificationRecipe.RECIPE_TYPE.register();
     }
 }

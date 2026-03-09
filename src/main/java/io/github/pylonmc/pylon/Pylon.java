@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon;
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
+import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
@@ -39,6 +40,9 @@ public class Pylon extends JavaPlugin implements RebarAddon {
 
         metrics = new Metrics(this, BSTATS_ID);
 
+        PluginManager pm = Bukkit.getPluginManager();
+        pm.registerEvents(new HydraulicPurifier.PurificationRecipe.Registrar(), this);
+
         registerWithRebar();
 
         saveDefaultConfig();
@@ -53,7 +57,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PylonFluids.initialize();
         PylonRecipes.initialize();
 
-        PluginManager pm = Bukkit.getPluginManager();
+
 
         pm.registerEvents(new Sprinkler.SprinklerPlaceListener(), this);
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
