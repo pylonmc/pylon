@@ -13,6 +13,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -69,42 +70,20 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
             return getStack().getPersistentDataContainer().getOrDefault(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0);
         }
 
-        @SuppressWarnings("UnstableApiUsage")
         public void setFluid(@Nullable RebarFluid fluid) {
             getStack().editPersistentDataContainer(pdc -> RebarUtils.setNullable(pdc, FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID, fluid));
-            CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
 
-            ArrayList<String> newStrings = getUpdatedStrings(fluid, data);
+            CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
+            List<String> newStrings = new ArrayList<>(data.strings());
+            newStrings.removeIf(s -> s.startsWith("pylon:fluid:"));
+            newStrings.add("pylon:fluid:" + Objects.toString(fluid, "empty"));
             CustomModelData newData = CustomModelData.customModelData()
                 .addStrings(newStrings)
                 .addFlags(data.flags())
                 .addColors(data.colors())
                 .addFloats(data.floats())
                 .build();
-
             getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
-        }
-
-        @SuppressWarnings("UnstableApiUsage")
-        private @NotNull ArrayList<String> getUpdatedStrings(@Nullable RebarFluid fluid, CustomModelData data) {
-            ArrayList<String> newStrings = new ArrayList<>(data.strings().size() + 1);
-            String fluidString = "pylon:fluid:" + Objects.toString(fluid, "empty");
-
-            boolean found = false;
-            for (var string : data.strings()) {
-                if (string.startsWith("pylon:fluid:")) {
-                    newStrings.add(fluidString);
-                    found = true;
-                } else {
-                    newStrings.add(string);
-                }
-            }
-
-            if (!found) {
-                newStrings.add(fluidString);
-            }
-
-            return newStrings;
         }
 
         public void setAmount(double amount) {
