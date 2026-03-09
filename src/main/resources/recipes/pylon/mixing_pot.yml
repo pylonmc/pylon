@@ -67,7 +67,7 @@ pylon:shimmer_dust_2:
   input-fluid:
     pylon:water: 500
   output:
-    pylon:shimmer_dust_2: 1
+    pylon:shimmer_dust_2: 2
 
 pylon:disinfectant:
   input-items:

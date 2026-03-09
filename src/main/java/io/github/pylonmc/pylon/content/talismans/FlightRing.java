@@ -7,19 +7,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public final class PalladiumFlightRing extends Talisman {
-    public PalladiumFlightRing(@NotNull ItemStack stack) {
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+public final class FlightRing extends Talisman {
+    private static final Set<UUID> cannotFlyPlayers = new HashSet<>();
+    public FlightRing(@NotNull ItemStack stack) {
         super(stack);
     }
 
     @Override
     public NamespacedKey getTalismanKey() {
-        return PylonKeys.PALLADIUM_FLIGHT_RING_KEY;
+        return PylonKeys.FLIGHT_RING_KEY;
     }
 
     @Override
     public void applyEffect(@NotNull Player player) {
         super.applyEffect(player);
+        if (!player.getAllowFlight()) {
+            cannotFlyPlayers.add(player.getUniqueId());
+            player.setAllowFlight(true);
+        }
         player.setFlying(true);
     }
 
@@ -29,7 +38,10 @@ public final class PalladiumFlightRing extends Talisman {
 
         var gm = player.getGameMode();
         if (gm != GameMode.CREATIVE && gm != GameMode.SPECTATOR) {
-            player.setFlying(false);
+            if (cannotFlyPlayers.contains(player.getUniqueId())) {
+                player.setAllowFlight(false);
+                cannotFlyPlayers.remove(player.getUniqueId());
+            }
         }
     }
 }

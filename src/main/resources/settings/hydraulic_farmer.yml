@@ -1,4 +1,4 @@
 radius: 4
-tick-interval: 80
-hydraulic-fluid-usage: 80
+tick-interval: 40
+hydraulic-fluid-usage: 20
 buffer: 500
