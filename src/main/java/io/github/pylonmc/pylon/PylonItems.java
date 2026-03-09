@@ -26,11 +26,13 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
+import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.fluid.FluidPipe;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.guide.button.MachineRecipesButton;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.RecipeType;
@@ -1784,6 +1786,8 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, GRINDSTONE, PylonKeys.GRINDSTONE);
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE);
+        RebarGuide.infoPage(PylonKeys.GRINDSTONE)
+                .addButton(new MachineRecipesButton(GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack GRINDSTONE_HANDLE = ItemStackBuilder.rebar(Material.OAK_FENCE, PylonKeys.GRINDSTONE_HANDLE)
@@ -1798,6 +1802,8 @@ public final class PylonItems {
     static {
         RebarItem.register(MixingPot.MixingPotItem.class, MIXING_POT, PylonKeys.MIXING_POT);
         PylonPages.SIMPLE_MACHINES.addItem(MIXING_POT);
+        RebarGuide.infoPage(PylonKeys.MIXING_POT)
+                .addButton(new MachineRecipesButton(GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack MANUAL_CORE_DRILL_LEVER = ItemStackBuilder.rebar(Material.LEVER, PylonKeys.MANUAL_CORE_DRILL_LEVER)
@@ -2894,7 +2900,7 @@ public final class PylonItems {
 
     static {
         PylonPages.initialise();
-        PylonGuides.initialise();
+        PylonHelpPages.initialise();
     }
 
     // Calling this method forces all the static blocks to run, which initializes our items
