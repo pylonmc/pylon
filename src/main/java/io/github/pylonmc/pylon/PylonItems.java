@@ -1521,6 +1521,38 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HUNTING_TALISMAN_PALLADIUM);
     }
 
+    public static final ItemStack EXPERIENCE_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.EXPERIENCE_TALISMAN_SIMPLE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
+            .build();
+    static {
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_SIMPLE);
+        PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_SIMPLE);
+    }
+
+    public static final ItemStack EXPERIENCE_TALISMAN_ADVANCED = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.EXPERIENCE_TALISMAN_ADVANCED)
+            .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
+            .build();
+    static {
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_ADVANCED);
+        PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_ADVANCED);
+    }
+
+    public static final ItemStack EXPERIENCE_TALISMAN_ULTIMATE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.EXPERIENCE_TALISMAN_ULTIMATE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
+            .build();
+    static {
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_ULTIMATE);
+        PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_ULTIMATE);
+    }
+
+    public static final ItemStack EXPERIENCE_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.EXPERIENCE_TALISMAN_PALLADIUM)
+            .set(DataComponentTypes.ITEM_MODEL, Material.EXPERIENCE_BOTTLE.getKey())
+            .build();
+    static {
+        RebarItem.register(ExperienceTalisman.class, EXPERIENCE_TALISMAN_PALLADIUM);
+        PylonPages.TALISMANS.addItem(EXPERIENCE_TALISMAN_PALLADIUM);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Armour" defaultstate=collapsed>
