@@ -204,23 +204,29 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        ItemStack stack = getItemDisplay().getItemStack();
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("info",
-                         getCurrentRecipe() == null
-                         ? Component.translatable("pylon.waila.grindstone.idle",
-                              RebarArgument.of("item", getItemDisplay().getItemStack().effectiveName()),
-                              RebarArgument.of("amount", getItemDisplay().getItemStack().getAmount())
-                         )
-                         : Component.translatable("pylon.waila.grindstone.processing",
-                              RebarArgument.of("item", getItemDisplay().getItemStack().effectiveName()),
-                              RebarArgument.of("amount", getItemDisplay().getItemStack().getAmount()),
-                              RebarArgument.of("bars", PylonUtils.createProgressBar(
-                                  getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
-                                  getCurrentRecipe().timeTicks(),
-                                  20,
-                                  TextColor.color(100, 255, 100)
-                              ))
-                         )
+                RebarArgument.of("contents",
+                        stack.isEmpty()
+                                ? Component.translatable("pylon.waila.grindstone.empty")
+                                : Component.translatable("pylon.waila.grindstone.not-empty")
+                                .arguments(
+                                        RebarArgument.of("item", stack.effectiveName()),
+                                        RebarArgument.of("amount", stack.getAmount())
+                                )
+                ),
+                RebarArgument.of("processing",
+                        getCurrentRecipe() == null
+                                ? Component.translatable("pylon.waila.grindstone.idle")
+                                : Component.translatable("pylon.waila.grindstone.processing")
+                                .arguments(
+                                        RebarArgument.of("bars", PylonUtils.createProgressBar(
+                                                getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
+                                                getCurrentRecipe().timeTicks(),
+                                                20,
+                                                TextColor.color(100, 255, 100)
+                                        ))
+                                )
                 )
         ));
     }
