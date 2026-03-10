@@ -130,7 +130,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_4, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_REFUELING_STATION, Material.WAXED_CUT_COPPER_SLAB, HydraulicRefuelingStation.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FARMER, Material.WAXED_EXPOSED_COPPER_BULB, HydraulicFarmer.class);
-        RebarBlock.register(PylonKeys.HYDRAULIC_MINER, Material.WAXED_EXPOSED_CHISELED_COPPER, HydraulicMiner.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_BREAKER, Material.WAXED_EXPOSED_CUT_COPPER, HydraulicBreaker.class);
         RebarBlock.register(PylonKeys.DIESEL_PIPE_BENDER, Material.IRON_BLOCK, DieselPipeBender.class);
         RebarBlock.register(PylonKeys.DIESEL_TABLE_SAW, Material.IRON_BLOCK, DieselTableSaw.class);

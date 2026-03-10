@@ -1525,18 +1525,6 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
     waila: "Hydraulic Farmer | %input-bar% | %output-bar%"
 
-  hydraulic_miner:
-    name: "Hydraulic Miner"
-    lore: |-
-      <arrow> Mines blocks in an area using the stored tool
-      <arrow> Only breaks blocks that can be broken by the stored tool
-      <arrow> Outputs dirty hydraulic fluid
-      <arrow> <attr>Speed:</attr> %speed%
-      <arrow> <attr>Mining area:</attr> %mining-area%
-      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-block% per block
-      <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Miner | %input-bar% | %output-bar%"
-
   diesel_pipe_bender:
     name: "Diesel Pipe Bender"
     lore: |-

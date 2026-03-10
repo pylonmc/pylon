@@ -2364,13 +2364,6 @@ public final class PylonItems {
         PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_FARMER);
     }
 
-    public static final ItemStack HYDRAULIC_MINER = ItemStackBuilder.rebar(Material.WAXED_EXPOSED_CHISELED_COPPER, PylonKeys.HYDRAULIC_MINER)
-            .build();
-    static {
-        RebarItem.register(HydraulicMiner.Item.class, HYDRAULIC_MINER, PylonKeys.HYDRAULIC_MINER);
-        PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_MINER);
-    }
-
     public static final ItemStack HYDRAULIC_BREAKER = ItemStackBuilder.rebar(Material.WAXED_EXPOSED_CUT_COPPER, PylonKeys.HYDRAULIC_BREAKER)
             .build();
     static {
