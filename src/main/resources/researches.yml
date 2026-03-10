@@ -26,6 +26,7 @@ talismans_1:
     - pylon:breeding_talisman_simple
     - pylon:enchanting_talisman_simple
     - pylon:hunting_talisman_simple
+    - pylon:experience_talisman_simple
 
 talismans_2:
   item: pylon:health_talisman_advanced
@@ -40,6 +41,7 @@ talismans_2:
     - pylon:breeding_talisman_advanced
     - pylon:enchanting_talisman_advanced
     - pylon:hunting_talisman_advanced
+    - pylon:experience_talisman_advanced
 
 talismans_3:
   item: pylon:health_talisman_ultimate
@@ -55,6 +57,7 @@ talismans_3:
     - pylon:water_breathing_talisman_ultimate
     - pylon:enchanting_talisman_ultimate
     - pylon:hunting_talisman_ultimate
+    - pylon:experience_talisman_ultimate
 
 talismans_4:
   item: pylon:health_talisman_palladium
@@ -70,6 +73,7 @@ talismans_4:
     - pylon:water_breathing_talisman_palladium
     - pylon:enchanting_talisman_palladium
     - pylon:hunting_talisman_palladium
+    - pylon:experience_talisman_palladium
 
 drilling_1:
   item: pylon:subsurface_core_chunk
@@ -80,12 +84,19 @@ drilling_1:
 
 drilling_2:
   item: pylon:subsurface_core_chunk
-  cost: 40
+  cost: 30
   unlocks:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
     - pylon:gypsum
     - pylon:gypsum_dust
+
+drilling_3:
+  item: pylon:deep_core_chunk
+  cost: 70
+  unlocks:
+    - pylon:diesel_core_drill
+    - pylon:deep_core_chunk
 
 smelting_1:
   item: pylon:smeltery_controller
@@ -136,7 +147,7 @@ smelting_3:
 
 pressing:
   item: pylon:press
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:press
 
@@ -159,7 +170,7 @@ irrigation:
 
 fluid_handling_1:
   item: pylon:fluid_pipe_copper
-  cost: 15
+  cost: 10
   unlocks:
     - pylon:fluid_pipe_copper
     - pylon:portable_fluid_tank_copper
@@ -170,7 +181,7 @@ fluid_handling_1:
 
 fluid_handling_2:
   item: pylon:fluid_pipe_copper
-  cost: 15
+  cost: 20
   unlocks:
     - pylon:fluid_pipe_bronze
     - pylon:portable_fluid_tank_bronze
@@ -199,7 +210,7 @@ fluid_handling_4:
 
 fluid_handling_5:
   item: pylon:fluid_pipe_palladium
-  cost: 60
+  cost: 200
   unlocks:
     - pylon:fluid_pipe_palladium
     - pylon:portable_fluid_tank_palladium
@@ -251,7 +262,7 @@ improved_hammers:
 
 elevators:
   item: pylon:elevator_1
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:elevator_1
     - pylon:elevator_2
@@ -377,7 +388,7 @@ igneous_magic:
 
 shimmer_field_manipulation:
   item: pylon:cohesive_unit
-  cost: 20
+  cost: 15
   unlocks:
     - pylon:collimator
     - pylon:collimator_pillar
@@ -388,7 +399,7 @@ shimmer_field_manipulation:
 
 assembling:
   item: pylon:assembly_table
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:assembly_table
     - pylon:copper_screwdriver
@@ -399,7 +410,7 @@ assembling:
 
 cargo_1:
   item: pylon:cargo_buffer
-  cost: 30
+  cost: 20
   unlocks:
     - pylon:cargo_duct
     - pylon:cargo_extractor
@@ -446,14 +457,7 @@ diesel_production:
   cost: 40
   unlocks:
     - pylon:fermenter
-    - pylon:fermenter_core
-    - pylon:fermenter_casing
     - pylon:biorefinery
-    - pylon:biorefinery_foundation
-    - pylon:biorefinery_plating
-    - pylon:biorefinery_tower_ring
-    - pylon:biorefinery_smokestack_ring
-    - pylon:biorefinery_smokestack_cap
 
 portable_workstations:
   item: pylon:portable_crafting_table
@@ -465,26 +469,20 @@ portable_workstations:
   - pylon:portable_ender_chest
 
 scientific_revolution_1:
-  item: pylon:research_pack_1
-  cost: 10
-  unlocks:
-  - pylon:research_pack_1
-
-scientific_revolution_2:
-  item: pylon:research_pack_1
-  cost: 40
+  item: pylon:research_pack_2
+  cost: 20
   unlocks:
   - pylon:research_pack_2
 
+scientific_revolution_2:
+  item: pylon:research_pack_1
+  cost: 50
+  unlocks:
+  - pylon:research_pack_3
+
 scientific_revolution_3:
   item: pylon:research_pack_3
-  cost: 70
-  unlocks:
-    - pylon:research_pack_3
-
-scientific_revolution_4:
-  item: pylon:research_pack_4
-  cost: 100
+  cost: 90
   unlocks:
     - pylon:research_pack_4
 
@@ -494,6 +492,7 @@ components_1:
   unlocks:
   - pylon:rotor
   - pylon:backflow_valve
+  - pylon:leaf_valve
   - pylon:analogue_display
   - pylon:filter_mesh
   - pylon:nozzle
@@ -509,6 +508,10 @@ components_1:
   - pylon:fluid_output_hatch
   - pylon:item_input_hatch
   - pylon:item_output_hatch
+  - pylon:iron_support_beam
+  - pylon:bronze_support_beam
+  - pylon:bronze_foundation
+  - pylon:bronze_grating
 
 components_2:
   item: pylon:steel_crankshaft
@@ -518,16 +521,25 @@ components_2:
     - pylon:steel_crankshaft
     - pylon:kinetic_control_mechanism
     - pylon:internal_combustion_engine
+    - pylon:cargo_controller
+    - pylon:steel_support_beam
+    - pylon:reinforced_glass
+    - pylon:reinforced_glass_casing
+    - pylon:reinforced_plating
+    - pylon:distillation_tower_ring
+    - pylon:smokestack_ring
+    - pylon:smokestack_cap
+    - pylon:steel_drill_bit
 
 straining:
   item: pylon:fluid_strainer
-  cost: 20
+  cost: 10
   unlocks:
   - pylon:fluid_strainer
 
 fletching:
   item: pylon:recoil_arrow
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:recoil_arrow
     - pylon:ice_arrow
@@ -570,7 +582,7 @@ wither_reactivation:
 
 palladium_tools:
   item: pylon:palladium_sword
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_sword
     - pylon:palladium_axe
@@ -580,9 +592,26 @@ palladium_tools:
 
 palladium_armor:
   item: pylon:palladium_chestplate
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_helmet
     - pylon:palladium_chestplate
     - pylon:palladium_leggings
     - pylon:palladium_boots
+
+palladium_production:
+  item: pylon:palladium_ingot
+  cost: 150
+  unlocks:
+    - pylon:palladium_condenser
+    - pylon:palladium_nugget
+    - pylon:palladium_ingot
+    - pylon:palladium_block
+    - pylon:palladium_dust
+    - pylon:palladium_sheet
+
+creative_flight:
+  item: pylon:flight_ring
+  cost: 1000
+  unlocks:
+    - pylon:flight_ring

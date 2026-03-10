@@ -23,6 +23,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Hopper;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.ClickType;
@@ -38,6 +39,7 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractBoundItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -158,16 +160,15 @@ public class VacuumHopper extends RebarBlock implements
         }
 
         // loops item entities to add
-        for (Entity entity : block.getLocation().toCenterLocation().getNearbyEntities(radius + 0.5, radius + 0.5, radius + 0.5)) {
-            if (!(entity instanceof org.bukkit.entity.Item item)) {
-                continue;
-            }
-
+        Collection<org.bukkit.entity.Item> items = block.getLocation().toCenterLocation().getNearbyEntitiesByType(
+                org.bukkit.entity.Item.class,
+                radius + 0.5,
+                radius + 0.5,
+                radius + 0.5,
+                item -> isFiltered(item.getItemStack())
+        );
+        for (org.bukkit.entity.Item item : items) {
             ItemStack stack = item.getItemStack();
-            if (!isFiltered(stack)) {
-                continue;
-            }
-
             int surplus = hopperInventory.addItem(new MachineUpdateReason(), stack);
             if (surplus == stack.getAmount()) {
                 // Could not add any items in the stack

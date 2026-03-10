@@ -37,7 +37,7 @@ public class PylonGuides {
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BLAST_FURNACE, Pylon.getInstance(), "info.progression.steel_age")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.PISTON, Pylon.getInstance(), "info.progression.diesel_machines")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.NETHERITE_INGOT, Pylon.getInstance(), "info.progression.palladium")));
-        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "info.progression.palladium_flight_ring")));
+        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "info.progression.flight_ring")));
         INFO.addPage(Material.BOOKSHELF, PROGRESSION);
 
         PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "info.pit_kiln.kiln")));

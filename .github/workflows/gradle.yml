@@ -30,23 +30,16 @@ jobs:
           git clone https://github.com/pylonmc/rebar
           cd rebar
           git fetch --all
-          echo "REBARCOMMIT=$(git rev-parse $(echo "$BRANCHNAME"))" >> $GITHUB_ENV
+          git checkout $BRANCHNAME
+          echo "REBARCOMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
           cd ..
           rm -rf rebar
 
-      - name: Parse [commit title
-        id: parsecommit
-        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, '[commit:')
-        run: |
-          prefixrm=$(echo "${{github.event.pull_request.title}}" | cut -c9-)
-          echo "REBARCOMMIT=$(echo "$prefixrm" | cut -d']' -f1)" >> $GITHUB_ENV
-
       - name: Get latest commit of Rebar master
-        if: steps.parseref.outcome == 'skipped' && steps.parsecommit.outcome == 'skipped'
+        if: steps.parseref.outcome == 'skipped'
         run: |
           git clone https://github.com/pylonmc/rebar
           cd rebar
-          git fetch --all
           echo "REBARCOMMIT=$(git rev-parse master)" >> $GITHUB_ENV
           cd ..
           rm -rf rebar
@@ -66,8 +59,8 @@ jobs:
           cd parallel-dev-repo
           ./gradlew
           cd rebar
-          git fetch origin $(echo "$CORECOMMIT")
-          git checkout $(echo "$CORECOMMIT")
+          git fetch origin $(echo "$REBARCOMMIT")
+          git checkout $(echo "$REBARCOMMIT")
           cd ../pylon
           git fetch origin ${{ github.sha }}
           git checkout ${{ github.sha }}

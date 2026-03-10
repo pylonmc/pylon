@@ -15,15 +15,21 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -174,6 +180,10 @@ public class Grindstone extends RebarBlock implements
                 double translation = isLast ? 0.8 : 0.5;
                 double rotation = (j / 4.0) * 2.0 * Math.PI;
                 Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                        return;
+                    }
+
                     PylonUtils.animate(getStoneDisplay(), CYCLE_DURATION_TICKS / 4, getStoneDisplayMatrix(translation, rotation));
                     new ParticleBuilder(Particle.BLOCK)
                         .data(nextRecipe.particleBlockData())
@@ -195,6 +205,35 @@ public class Grindstone extends RebarBlock implements
                 getBlock().getLocation().toCenterLocation().add(0, 0.25, 0),
                 recipe.results().getRandom()
         );
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        ItemStack stack = getItemDisplay().getItemStack();
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("contents",
+                        stack.isEmpty()
+                                ? Component.translatable("pylon.waila.grindstone.empty")
+                                : Component.translatable("pylon.waila.grindstone.not-empty")
+                                .arguments(
+                                        RebarArgument.of("item", stack.effectiveName()),
+                                        RebarArgument.of("amount", stack.getAmount())
+                                )
+                ),
+                RebarArgument.of("processing",
+                        getCurrentRecipe() == null
+                                ? Component.translatable("pylon.waila.grindstone.idle")
+                                : Component.translatable("pylon.waila.grindstone.processing")
+                                .arguments(
+                                        RebarArgument.of("bars", PylonUtils.createProgressBar(
+                                                getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
+                                                getCurrentRecipe().timeTicks(),
+                                                20,
+                                                TextColor.color(100, 255, 100)
+                                        ))
+                                )
+                )
+        ));
     }
 
     public @NotNull ItemDisplay getItemDisplay() {
