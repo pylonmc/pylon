@@ -60,7 +60,7 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
 
     @SuppressWarnings("unused")
     public FluidPlacer(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH, context, true);
         createFluidBuffer(fluid, buffer, true, false);
@@ -71,7 +71,7 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
 
     @SuppressWarnings("unused")
     public FluidPlacer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         Preconditions.checkState(getBlock().getBlockData() instanceof Directional);
         Directional directional = (Directional) getBlock().getBlockData();
         placeBlock = getBlock().getRelative(directional.getFacing());

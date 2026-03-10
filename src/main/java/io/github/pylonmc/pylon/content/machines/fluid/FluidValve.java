@@ -39,7 +39,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -76,7 +75,7 @@ public class FluidValve extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidValve(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         setCapacity(buffer);
         setFacing(context.getFacing());
@@ -96,7 +95,7 @@ public class FluidValve extends RebarBlock
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     public FluidValve(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
 
         open = pdc.get(ENABLED_KEY, RebarSerializers.BOOLEAN);
     }

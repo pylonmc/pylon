@@ -18,7 +18,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -30,12 +29,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class ShimmerAltar extends RebarBlock
         implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarRecipeProcessor<ShimmerAltarRecipe> {
@@ -50,7 +47,7 @@ public class ShimmerAltar extends RebarBlock
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         setTickInterval(tickInterval);
 
@@ -68,7 +65,7 @@ public class ShimmerAltar extends RebarBlock
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

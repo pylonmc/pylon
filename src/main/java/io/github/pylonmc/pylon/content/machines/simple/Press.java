@@ -72,7 +72,7 @@ public class Press extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setFacing(context.getFacing());
         addEntity("press_cover", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(Material.SPRUCE_PLANKS)
@@ -87,7 +87,7 @@ public class Press extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

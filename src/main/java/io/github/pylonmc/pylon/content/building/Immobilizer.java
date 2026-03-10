@@ -66,12 +66,14 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
         }
     }
 
+    @SuppressWarnings("unused")
     public Immobilizer(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
+    @SuppressWarnings("unused")
     public Immobilizer(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST, ignoreCancelled = true)
