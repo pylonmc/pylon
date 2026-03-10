@@ -22,7 +22,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ResearchPack extends RebarItem implements RebarInteractor {
 
     public final int points = getSettings().getOrThrow("points", ConfigAdapter.INTEGER);
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public ResearchPack(@NotNull ItemStack stack) {
         super(stack);
@@ -31,9 +30,7 @@ public class ResearchPack extends RebarItem implements RebarInteractor {
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
     public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
-        if (!event.getAction().isRightClick()
-                || (event.hasBlock() && event.useInteractedBlock() == Event.Result.ALLOW)
-                || event.useItemInHand() == Event.Result.DENY) {
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
 
@@ -54,15 +51,13 @@ public class ResearchPack extends RebarItem implements RebarInteractor {
                 RebarArgument.of("total", Research.getResearchPoints(player))
         ));
 
-        event.getPlayer().setCooldown(getStack(), cooldownTicks);
         event.getItem().subtract();
     }
 
     @Override
     public @NotNull List<RebarArgument> getPlaceholders() {
         return List.of(
-                RebarArgument.of("points", UnitFormat.RESEARCH_POINTS.format(points)),
-                RebarArgument.of("cooldown", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
+                RebarArgument.of("points", UnitFormat.RESEARCH_POINTS.format(points))
         );
     }
 }
