@@ -2569,10 +2569,10 @@ pylon:experience_fountain_spout:
 pylon:experience_fountain:
   pattern:
     - "BSB"
-    - "SCS"
+    - "SPS"
     - "BSB"
   key:
-    C: minecraft:end_crystal
+    P: minecraft:ender_pearl
     B: pylon:covalent_binder
     S: pylon:shimmer_bronze
   result: pylon:experience_fountain

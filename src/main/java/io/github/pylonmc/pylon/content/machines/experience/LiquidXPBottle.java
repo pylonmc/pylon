@@ -26,7 +26,7 @@ public class LiquidXPBottle extends RebarItem {
 
     public static class XPBottleListener implements Listener {
         @EventHandler
-        public void onPlayerInteract(@NotNull ExpBottleEvent event) {
+        public void onBottleBreak(@NotNull ExpBottleEvent event) {
             RebarItem item = RebarItem.fromStack(event.getEntity().getItem());
             if (!(item instanceof LiquidXPBottle bottle)) {
                 return;
