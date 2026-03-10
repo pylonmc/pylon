@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.content.machines.hydraulics.Miner;
+import io.github.pylonmc.pylon.content.machines.hydraulics.Quarry;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -21,7 +21,6 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -41,10 +40,9 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
-public class DieselMiner extends Miner implements
+public class DieselQuarry extends Quarry implements
         RebarTickingBlock,
         RebarDirectionalBlock,
         RebarFluidBufferBlock,
@@ -95,7 +93,7 @@ public class DieselMiner extends Miner implements
     public VirtualInventory outputInventory = new VirtualInventory(3);
 
     @SuppressWarnings("unused")
-    public DieselMiner(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public DieselQuarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
         setTickInterval(tickInterval);
@@ -143,7 +141,7 @@ public class DieselMiner extends Miner implements
     }
 
     @SuppressWarnings("unused")
-    public DieselMiner(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public DieselQuarry(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 

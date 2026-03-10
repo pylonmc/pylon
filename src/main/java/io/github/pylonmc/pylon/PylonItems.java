@@ -2660,7 +2660,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.YELLOW_TERRACOTTA.getKey())
             .build();
     static {
-        RebarItem.register(DieselMiner.Item.class, DIESEL_MINER, PylonKeys.DIESEL_MINER);
+        RebarItem.register(DieselQuarry.Item.class, DIESEL_MINER, PylonKeys.DIESEL_MINER);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_MINER);
     }
 

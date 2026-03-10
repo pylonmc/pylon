@@ -8,6 +8,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -17,87 +18,65 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public abstract class Miner extends RebarBlock implements RebarMultiblock, RebarProcessor {
+public abstract class Quarry extends RebarBlock implements RebarMultiblock, RebarProcessor {
 
-    public static final NamespacedKey INDEX_KEY = pylonKey("index");
-    public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
+    public static final NamespacedKey POSITION_KEY = pylonKey("position");
+    public static final NamespacedKey Y_KEY = pylonKey("y");
     public static final NamespacedKey CHUNK_POSITIONS_KEY = pylonKey("chunk_positions");
 
     public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
 
-    protected final List<BlockPosition> blockPositions;
+    protected int y;
+    protected boolean platformReady = false;
     protected final Set<ChunkPosition> chunkPositions;
-    protected int index;
+    protected Location position;
 
     @SuppressWarnings("unused")
-    public Miner(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public Quarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        WorldBorder border = block.getWorld().getWorldBorder();
-        index = 0;
-        blockPositions = new ArrayList<>();
+        World world = block.getWorld();
+        WorldBorder border = world.getWorldBorder();
+        y = block.getY() - 1;
+        position = new Location(world, block.getX() - radius, y, block.getZ() - radius);
         chunkPositions = new HashSet<>();
-        for (int y = radius; y >= -radius; y--) {
-            for (int x = -radius; x <= radius; x++) {
-                for (int z = -radius; z <= radius; z++) {
-                    Block neighbour = getBlock().getRelative(x, y, z);
-                    if (border.isInside(neighbour.getLocation())) {
-                        BlockPosition blockPosition = new BlockPosition(neighbour);
-                        blockPositions.add(blockPosition);
-                        chunkPositions.add(blockPosition.getChunk());
-                    }
+        for (int x = -radius; x <= radius; x += 16) {
+            for (int z = -radius; z <= radius; z += 16) {
+                Location location = new Location(world, x, y, z);
+                if (border.isInside(location)) {
+                    BlockPosition blockPosition = new BlockPosition(location);
+                    chunkPositions.add(blockPosition.getChunk());
                 }
             }
         }
     }
 
     @SuppressWarnings({"DataFlowIssue", "unused"})
-    public Miner(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public Quarry(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        index = pdc.get(INDEX_KEY, RebarSerializers.INTEGER);
-        blockPositions = pdc.get(BLOCK_POSITIONS_KEY, RebarSerializers.LIST.listTypeFrom(RebarSerializers.BLOCK_POSITION));
+        position = pdc.get(POSITION_KEY, RebarSerializers.LOCATION);
+        y = pdc.get(Y_KEY, RebarSerializers.INTEGER);
         chunkPositions = pdc.get(CHUNK_POSITIONS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.CHUNK_POSITION));
     }
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
-        pdc.set(INDEX_KEY, RebarSerializers.INTEGER, index);
-        pdc.set(BLOCK_POSITIONS_KEY, RebarSerializers.LIST.listTypeFrom(RebarSerializers.BLOCK_POSITION), blockPositions);
+        pdc.set(POSITION_KEY, RebarSerializers.LOCATION, position);
+        pdc.set(Y_KEY, RebarSerializers.INTEGER, y);
         pdc.set(CHUNK_POSITIONS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.CHUNK_POSITION), chunkPositions);
     }
 
-    private boolean checkBlocks() {
-        while (index < blockPositions.size() - 1) {
-            BlockPosition position = blockPositions.get(index);
-            if (!position.getChunk().isLoaded()) {
-                index++;
-                continue;
-            }
-
-            Integer breakTicks = getBreakTicks(position.getBlock());
-            if (breakTicks == null) {
-                index++;
-                continue;
-            }
-
-            startProcess(breakTicks);
-            return false;
-        }
-        index = 0;
-        return true;
-    }
-
     protected void updateMiner() {
-        if (checkBlocks()) {
+        Block block = getBlock();
+        if (y == block.getWorld().getMinHeight()) {
             // Finished mining; do one more pass in case something has changed in the meantime
-            checkBlocks();
+            y = block.getY() - 1;
+            platformReady = false;
         }
     }
 
