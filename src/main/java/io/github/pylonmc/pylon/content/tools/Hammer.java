@@ -10,14 +10,16 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.i18n.RebarTranslator;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -39,12 +41,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
+    private static final Map<BlockPosition, Pair<HammerRecipe, UUID>> lastHammeredItems = new HashMap<>();
     public static final Random random = new Random();
 
     public final Material baseBlock = getBaseBlock(getKey());
@@ -56,7 +61,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         super(stack);
     }
 
-    public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot, @NotNull BlockFace clickedFace) {
+    public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot) {
         if (baseBlock != block.getType()) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
@@ -64,62 +69,83 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             return false;
         }
 
-        if (clickedFace != BlockFace.UP) return false;
-
         Block blockAbove = block.getRelative(BlockFace.UP);
+        BoundingBox inputArea = BoundingBox.of(blockAbove);
+
+        BlockPosition blockPos = new BlockPosition(block);
+        Pair<HammerRecipe, UUID> lastHammered = lastHammeredItems.get(blockPos);
+        if (lastHammered != null && Bukkit.getEntity(lastHammered.getSecond()) instanceof Item item
+                && block.getWorld() == item.getWorld()
+                && inputArea.contains(item.getBoundingBox())
+                && tryDoRecipe(block, player, slot, lastHammered.getFirst(), item)) {
+            return true;
+        }
 
         List<Item> items = new ArrayList<>();
-        for (Entity e : block.getWorld().getNearbyEntities(BoundingBox.of(blockAbove))) {
+        for (Entity e : block.getWorld().getNearbyEntities(inputArea)) {
             if (e instanceof Item entity) {
                 items.add(entity);
             }
         }
 
         for (HammerRecipe recipe : HammerRecipe.RECIPE_TYPE) {
-
             for (Item item : items) {
-                if (!recipe.input().matches(item.getItemStack())) {
-                    continue;
+                if (tryDoRecipe(block, player, slot, recipe, item)) {
+                    return true;
                 }
-                if (!miningLevel.isAtLeast(recipe.level())) {
-                    if (player != null) {
-                        player.sendMessage(Component.translatable(
-                                "pylon.message.hammer.too-low-tier",
-                                RebarArgument.of(
-                                        "tier_needed",
-                                        Component.translatable("pylon.message.hammer.tier." + recipe.level().toString().toLowerCase())
-                                ),
-                                RebarArgument.of(
-                                        "item_name",
-                                        recipe.result().displayName()
-                                )
-                        ));
-                    }
-                    continue;
-                }
-
-                if (player != null) {
-                    player.setCooldown(getStack(), cooldownTicks);
-                    RebarUtils.damageItem(getStack(), 1, player, slot);
-                } else {
-                    RebarUtils.damageItem(getStack(), 1, block.getWorld());
-                }
-
-                if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
-                    return true; // recipe attempted but unsuccessful
-                }
-
-                int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
-                item.setItemStack(item.getItemStack().asQuantity(newAmount));
-                block.getWorld().dropItem(blockAbove.getLocation().add(0.5, 0.1, 0.5), recipe.result())
-                        .setVelocity(new Vector(0, 0, 0));
-                block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-
-                return true;
             }
         }
 
+        lastHammeredItems.remove(blockPos);
         return false;
+    }
+
+    private boolean tryDoRecipe(Block block, Player player, EquipmentSlot slot, HammerRecipe recipe, Item item) {
+        if (!recipe.input().matches(item.getItemStack())) {
+            return false;
+        }
+        if (!miningLevel.isAtLeast(recipe.level())) {
+            if (player != null) {
+                player.sendMessage(Component.translatable(
+                        "pylon.message.hammer.too-low-tier",
+                        RebarArgument.of(
+                                "tier_needed",
+                                Component.translatable("pylon.message.hammer.tier." + recipe.level().toString().toLowerCase())
+                        ),
+                        RebarArgument.of(
+                                "item_name",
+                                recipe.result().displayName()
+                        )
+                ));
+            }
+            return false;
+        }
+
+        if (player != null) {
+            player.setCooldown(getStack(), cooldownTicks);
+            RebarUtils.damageItem(getStack(), 1, player, slot);
+        } else {
+            RebarUtils.damageItem(getStack(), 1, block.getWorld());
+        }
+
+        if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
+            lastHammeredItems.put(new BlockPosition(block), new Pair<>(recipe, item.getUniqueId()));
+            return true; // recipe attempted but unsuccessful
+        }
+
+        int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
+        item.setItemStack(item.getItemStack().asQuantity(newAmount));
+        block.getWorld().dropItem(block.getLocation().add(0.5, 1.1, 0.5), recipe.result())
+                .setVelocity(new Vector(0, 0, 0));
+        block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
+
+        if (newAmount >= recipe.input().getAmount()) {
+            lastHammeredItems.put(new BlockPosition(block), new Pair<>(recipe, item.getUniqueId()));
+        } else {
+            lastHammeredItems.remove(new BlockPosition(block));
+        }
+
+        return true;
     }
 
     @Override
@@ -140,8 +166,8 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
 
         if (event.getAction().isLeftClick()) {
             tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
-        } else {
-            tryDoRecipe(event.getClickedBlock(), event.getPlayer(), event.getHand(), event.getBlockFace());
+        } else if (event.getBlockFace() != BlockFace.UP) {
+            tryDoRecipe(event.getClickedBlock(), event.getPlayer(), event.getHand());
         }
     }
 

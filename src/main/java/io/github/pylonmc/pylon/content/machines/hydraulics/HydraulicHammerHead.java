@@ -200,7 +200,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
+        if (!hammer.tryDoRecipe(baseBlock, null, null)) {
             return;
         }
 

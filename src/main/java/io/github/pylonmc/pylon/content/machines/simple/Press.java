@@ -21,8 +21,10 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.entity.EntityCompostItemEvent;
+import kotlin.Pair;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,11 +37,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class Press extends RebarBlock implements
@@ -69,6 +74,8 @@ public class Press extends RebarBlock implements
             );
         }
     }
+
+    private UUID lastPressedItem = null;
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -136,42 +143,72 @@ public class Press extends RebarBlock implements
             return false;
         }
 
-        List<Item> items = getBlock()
-                .getLocation()
-                .toCenterLocation()
-                .getNearbyEntities(0.5, 0.8, 0.5)
-                .stream()
-                .filter(Item.class::isInstance)
-                .map(Item.class::cast)
-                .toList();
+        double fluidSpaceRemaining = fluidSpaceRemaining(PylonFluids.PLANT_OIL);
+        if (fluidSpaceRemaining <= 0) {
+            return false;
+        }
 
-        List<ItemStack> stacks = items.stream()
-                .map(Item::getItemStack)
-                .toList();
+        Location center = getBlock().getLocation().toCenterLocation();
+        PressRecipe lastRecipe = getLastRecipe();
+        if (lastRecipe != null && lastPressedItem != null
+                && Bukkit.getEntity(lastPressedItem) instanceof Item item
+                && getBlock().getWorld() == item.getWorld()
+                && BoundingBox.of(center, 0.5, 0.8, 0.5).contains(item.getBoundingBox())
+                && tryStartRecipe(lastRecipe, new Pair<>(item, item.getItemStack()), fluidSpaceRemaining)) {
+            return true;
+        }
+
+        List<Pair<Item, ItemStack>> stacks = new ArrayList<>();
+        for (Item item : center.getNearbyEntitiesByType(Item.class, 0.5, 0.8, 0.5)) {
+            stacks.add(new Pair<>(item, item.getItemStack()));
+        }
+
+        if (stacks.isEmpty()) {
+            return false;
+        }
+
+        if (lastRecipe != null) {
+            for (Pair<Item, ItemStack> stack : stacks) {
+                if (tryStartRecipe(lastRecipe, stack, fluidSpaceRemaining)) {
+                    return true;
+                }
+            }
+        }
 
         for (PressRecipe recipe : PressRecipe.RECIPE_TYPE.getRecipes()) {
-            for (ItemStack stack : stacks) {
-                if (!recipe.input().contains(stack)
-                        || recipe.oilAmount() > fluidSpaceRemaining(PylonFluids.PLANT_OIL)) {
-                    continue;
+            for (Pair<Item, ItemStack> stack : stacks) {
+                if (tryStartRecipe(recipe, stack, fluidSpaceRemaining)) {
+                    return true;
                 }
-
-                stack.subtract();
-                startRecipe(recipe, TIME_PER_ITEM_TICKS);
-                PylonUtils.animate(getCover(), TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS, getCoverTransform(0.0));
-                Bukkit.getScheduler().runTaskLater(
-                        Pylon.getInstance(),
-                        () -> {
-                            PylonUtils.animate(getCover(), RETURN_TO_START_TIME_TICKS, getCoverTransform(0.4));
-                            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), this::finishRecipe, RETURN_TO_START_TIME_TICKS);
-                        },
-                        TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS
-                );
-                return true;
             }
         }
 
         return false;
+    }
+
+    private boolean tryStartRecipe(PressRecipe recipe, Pair<Item, ItemStack> stack, double fluidSpaceRemaining) {
+        if (recipe.oilAmount() > fluidSpaceRemaining || !recipe.input().contains(stack.getSecond())) {
+            return false;
+        }
+
+        stack.getSecond().subtract();
+        if (!stack.getSecond().isEmpty()) {
+            lastPressedItem = stack.getFirst().getUniqueId();
+        } else {
+            lastPressedItem = null;
+        }
+
+        startRecipe(recipe, TIME_PER_ITEM_TICKS);
+        PylonUtils.animate(getCover(), TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS, getCoverTransform(0.0));
+        Bukkit.getScheduler().runTaskLater(
+                Pylon.getInstance(),
+                () -> {
+                    PylonUtils.animate(getCover(), RETURN_TO_START_TIME_TICKS, getCoverTransform(0.4));
+                    Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), this::finishRecipe, RETURN_TO_START_TIME_TICKS);
+                },
+                TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS
+        );
+        return true;
     }
 
     @Override
