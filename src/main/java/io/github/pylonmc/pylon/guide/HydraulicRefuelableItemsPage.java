@@ -18,9 +18,9 @@ import java.util.List;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class RefuelableItemsPage extends SimpleDynamicGuidePage {
+public class HydraulicRefuelableItemsPage extends SimpleDynamicGuidePage {
 
-    private static final RefuelableItemsPage INSTANCE = new RefuelableItemsPage();
+    private static final HydraulicRefuelableItemsPage INSTANCE = new HydraulicRefuelableItemsPage();
     @Getter private static final Item button = new PageButton(
             ItemStackBuilder.of(PylonItems.HYDRAULIC_CANNON.clone())
                     .name(Component.translatable("pylon.guide.page.hydraulic_refuelable_items"))
@@ -28,8 +28,8 @@ public class RefuelableItemsPage extends SimpleDynamicGuidePage {
             INSTANCE
     );
 
-    public RefuelableItemsPage() {
-        super(pylonKey("hydraulic_refuelable_items"), RefuelableItemsPage::getButtons);
+    public HydraulicRefuelableItemsPage() {
+        super(pylonKey("hydraulic_refuelable_items"), HydraulicRefuelableItemsPage::getButtons);
     }
 
     private static @NonNull List<Item> getButtons() {

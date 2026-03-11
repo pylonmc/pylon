@@ -27,7 +27,7 @@ import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
-import io.github.pylonmc.pylon.guide.RefuelableItemsPage;
+import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.SmelteryBurnerFuelsPage;
 import io.github.pylonmc.pylon.recipes.CrucibleRecipe;
 import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
@@ -2463,7 +2463,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, HYDRAULIC_REFUELING_STATION, PylonKeys.HYDRAULIC_REFUELING_STATION);
         PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_REFUELING_STATION);
         RebarGuide.getOrCreateInfoPage(PylonKeys.HYDRAULIC_REFUELING_STATION)
-                .addButton(RefuelableItemsPage.getButton());
+                .addButton(HydraulicRefuelableItemsPage.getButton());
     }
 
     public static final ItemStack HYDRAULIC_CORE_DRILL = ItemStackBuilder.rebar(Material.WAXED_COPPER_BULB, PylonKeys.HYDRAULIC_CORE_DRILL)
