@@ -4,10 +4,12 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
+import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -41,7 +43,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public final class ElectricityPylon extends RebarBlock implements
         RebarInteractBlock,
         RebarBreakHandler,
-        Listener {
+        Listener,
+        RebarElectricBlock {
 
     private static final NamespacedKey CONNECTING_KEY = pylonKey("connecting");
     private static final NamespacedKey CONNECTING_ID_KEY = pylonKey("connecting_id");
@@ -58,6 +61,8 @@ public final class ElectricityPylon extends RebarBlock implements
     public ElectricityPylon(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         connectedPylons = new HashMap<>();
+
+        createElectricNode(getBlock().getLocation().toCenterLocation(), ElectricNode.Type.CONNECTOR);
     }
 
     @SuppressWarnings("unused")
