@@ -21,12 +21,12 @@ public class GrindstoneHandle extends RebarBlock implements RebarInteractBlock {
 
     @SuppressWarnings("unused")
     public GrindstoneHandle(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public GrindstoneHandle(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
