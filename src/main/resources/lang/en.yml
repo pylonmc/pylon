@@ -2227,6 +2227,11 @@ item:
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
+  electricity_pylon:
+    name: "Electricity Pylon"
+    lore: |-
+      TODO
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2381,6 +2386,7 @@ guide:
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
+    machines_electricity: "<white>Electricity"
     machines: "<white>Machines"
     assembling: "<white>Assembling"
     building: "<white>Building"

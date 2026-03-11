@@ -46,7 +46,10 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
 
@@ -2890,6 +2893,13 @@ public final class PylonItems {
                 .addIngredient(DISINFECTANT);
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
+    }
+
+    public static final ItemStack ELECTRICITY_PYLON = ItemStackBuilder.rebar(Material.SEA_LANTERN, PylonKeys.ELECTRICITY_PYLON)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_PYLON, PylonKeys.ELECTRICITY_PYLON);
+        PylonPages.ELECTRICITY.addItem(ELECTRICITY_PYLON);
     }
 
     static {
