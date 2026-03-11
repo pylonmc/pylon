@@ -26,6 +26,7 @@ talismans_1:
     - pylon:breeding_talisman_simple
     - pylon:enchanting_talisman_simple
     - pylon:hunting_talisman_simple
+    - pylon:experience_talisman_simple
 
 talismans_2:
   item: pylon:health_talisman_advanced
@@ -40,6 +41,7 @@ talismans_2:
     - pylon:breeding_talisman_advanced
     - pylon:enchanting_talisman_advanced
     - pylon:hunting_talisman_advanced
+    - pylon:experience_talisman_advanced
 
 talismans_3:
   item: pylon:health_talisman_ultimate
@@ -55,6 +57,7 @@ talismans_3:
     - pylon:water_breathing_talisman_ultimate
     - pylon:enchanting_talisman_ultimate
     - pylon:hunting_talisman_ultimate
+    - pylon:experience_talisman_ultimate
 
 talismans_4:
   item: pylon:health_talisman_palladium
@@ -70,6 +73,7 @@ talismans_4:
     - pylon:water_breathing_talisman_palladium
     - pylon:enchanting_talisman_palladium
     - pylon:hunting_talisman_palladium
+    - pylon:experience_talisman_palladium
 
 drilling_1:
   item: pylon:subsurface_core_chunk
@@ -80,7 +84,7 @@ drilling_1:
 
 drilling_2:
   item: pylon:subsurface_core_chunk
-  cost: 40
+  cost: 30
   unlocks:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
@@ -258,7 +262,7 @@ improved_hammers:
 
 elevators:
   item: pylon:elevator_1
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:elevator_1
     - pylon:elevator_2
@@ -384,7 +388,7 @@ igneous_magic:
 
 shimmer_field_manipulation:
   item: pylon:cohesive_unit
-  cost: 20
+  cost: 15
   unlocks:
     - pylon:collimator
     - pylon:collimator_pillar
@@ -395,7 +399,7 @@ shimmer_field_manipulation:
 
 assembling:
   item: pylon:assembly_table
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:assembly_table
     - pylon:copper_screwdriver
@@ -406,7 +410,7 @@ assembling:
 
 cargo_1:
   item: pylon:cargo_buffer
-  cost: 30
+  cost: 20
   unlocks:
     - pylon:cargo_duct
     - pylon:cargo_extractor
@@ -465,26 +469,20 @@ portable_workstations:
   - pylon:portable_ender_chest
 
 scientific_revolution_1:
-  item: pylon:research_pack_1
-  cost: 10
-  unlocks:
-  - pylon:research_pack_1
-
-scientific_revolution_2:
-  item: pylon:research_pack_1
-  cost: 40
+  item: pylon:research_pack_2
+  cost: 20
   unlocks:
   - pylon:research_pack_2
 
+scientific_revolution_2:
+  item: pylon:research_pack_1
+  cost: 50
+  unlocks:
+  - pylon:research_pack_3
+
 scientific_revolution_3:
   item: pylon:research_pack_3
-  cost: 70
-  unlocks:
-    - pylon:research_pack_3
-
-scientific_revolution_4:
-  item: pylon:research_pack_4
-  cost: 100
+  cost: 90
   unlocks:
     - pylon:research_pack_4
 

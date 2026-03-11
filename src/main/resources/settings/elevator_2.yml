@@ -1,4 +1,4 @@
-range: 20
+range: 50
 use-sound:
   sound: minecraft:entity.enderman.teleport
   source: block

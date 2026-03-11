@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -27,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 
+import java.util.List;
 import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
@@ -84,8 +86,8 @@ public class CreativeFluidSource extends RebarBlock implements
     }
 
     @Override
-    public @NotNull Map<RebarFluid, Double> getSuppliedFluids() {
-        return fluid == null ? Map.of() : Map.of(fluid, 1.0e9);
+    public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
+        return fluid == null ? List.of() : List.of(new Pair<>(fluid, 1.0e9));
     }
 
     @Override
