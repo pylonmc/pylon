@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -159,12 +160,12 @@ public class HydraulicRefuelingStation extends RebarBlock implements
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         HydraulicRefuelable refuelable = getHeldRefuelableItem();
         if (refuelable == null) {
-            return Map.of();
+            return List.of();
         }
-        return Map.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, refuelable.getDirtyHydraulicFluid());
+        return List.of(new Pair<>(PylonFluids.DIRTY_HYDRAULIC_FLUID, refuelable.getDirtyHydraulicFluid()));
     }
 
     @Override

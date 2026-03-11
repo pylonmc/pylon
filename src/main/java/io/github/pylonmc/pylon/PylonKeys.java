@@ -395,6 +395,11 @@ public class PylonKeys {
     public static final NamespacedKey HUNTING_TALISMAN_ULTIMATE = pylonKey("hunting_talisman_ultimate");
     public static final NamespacedKey HUNTING_TALISMAN_PALLADIUM = pylonKey("hunting_talisman_palladium");
 
+    public static final NamespacedKey EXPERIENCE_TALISMAN_SIMPLE = pylonKey("experience_talisman_simple");
+    public static final NamespacedKey EXPERIENCE_TALISMAN_ADVANCED = pylonKey("experience_talisman_advanced");
+    public static final NamespacedKey EXPERIENCE_TALISMAN_ULTIMATE = pylonKey("experience_talisman_ultimate");
+    public static final NamespacedKey EXPERIENCE_TALISMAN_PALLADIUM = pylonKey("experience_talisman_palladium");
+
     public static final NamespacedKey FLIGHT_RING_KEY = pylonKey("flight_ring");
 
     public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");

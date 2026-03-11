@@ -26,6 +26,7 @@ talismans_1:
     - pylon:breeding_talisman_simple
     - pylon:enchanting_talisman_simple
     - pylon:hunting_talisman_simple
+    - pylon:experience_talisman_simple
 
 talismans_2:
   item: pylon:health_talisman_advanced
@@ -40,6 +41,7 @@ talismans_2:
     - pylon:breeding_talisman_advanced
     - pylon:enchanting_talisman_advanced
     - pylon:hunting_talisman_advanced
+    - pylon:experience_talisman_advanced
 
 talismans_3:
   item: pylon:health_talisman_ultimate
@@ -55,6 +57,7 @@ talismans_3:
     - pylon:water_breathing_talisman_ultimate
     - pylon:enchanting_talisman_ultimate
     - pylon:hunting_talisman_ultimate
+    - pylon:experience_talisman_ultimate
 
 talismans_4:
   item: pylon:health_talisman_palladium
@@ -70,6 +73,7 @@ talismans_4:
     - pylon:water_breathing_talisman_palladium
     - pylon:enchanting_talisman_palladium
     - pylon:hunting_talisman_palladium
+    - pylon:experience_talisman_palladium
 
 drilling_1:
   item: pylon:subsurface_core_chunk

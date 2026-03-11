@@ -1687,6 +1687,17 @@ pylon:hunting_talisman_simple:
   result: pylon:hunting_talisman_simple
   category: equipment
 
+pylon:experience_talisman_simple:
+  pattern:
+    - "LLL"
+    - "LGL"
+    - "LLL"
+  key:
+    L: minecraft:lapis_lazuli
+    G: pylon:gold_dust
+  result: pylon:experience_talisman_simple
+  category: equipment
+
 pylon:enchanting_talisman_simple:
   pattern:
     - "LLL"

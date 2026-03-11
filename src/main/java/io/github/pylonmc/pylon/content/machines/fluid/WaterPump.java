@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import kotlin.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -54,10 +55,10 @@ public class WaterPump extends RebarBlock implements RebarFluidBlock {
     }
 
     @Override
-    public @NotNull Map<RebarFluid, Double> getSuppliedFluids() {
+    public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         return getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER
-                ? Map.of(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0)
-                : Map.of();
+                ? List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0))
+                : List.of();
     }
 
     @Override

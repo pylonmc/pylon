@@ -114,3 +114,9 @@ pylon:palladium_ingots_from_palladium_block:
     - pylon:palladium_block
   result:
     pylon:palladium_ingot: 9
+    
+pylon:palladium_nuggets_from_palladium_ingot:
+  ingredients:
+    - pylon:palladium_ingot: 1
+  result:
+    pylon:palladium_nugget: 9
