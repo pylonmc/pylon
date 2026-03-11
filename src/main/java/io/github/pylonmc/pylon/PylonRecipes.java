@@ -29,6 +29,6 @@ public class PylonRecipes {
         PitKilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
-        HydraulicPurifier.PurificationRecipe.RECIPE_TYPE.register();
+        HydraulicPurifier.RECIPE_TYPE.register();
     }
 }
