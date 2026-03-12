@@ -4,6 +4,7 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
+import io.github.pylonmc.pylon.content.components.ReinforcedGlassCasing;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -18,19 +19,15 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
@@ -127,13 +124,52 @@ public class Fermenter extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
+        onMultiblockRefreshed();
         getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
     }
 
     @Override
+    public void onMultiblockRefreshed() {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = 1 ; y <= 4; y++) {
+                for (int z = -1; z <= 1; z++) {
+                    Vector3i position = new Vector3i(x, y, z);
+                    ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
+                    if (casing == null) {
+                        continue;
+                    }
+
+                    if (y == 1) {
+                        casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
+                    } else if (y <= 3) {
+                        casing.setPosition(ReinforcedGlassCasing.Position.MIDDLE);
+                    } else {
+                        casing.setPosition(ReinforcedGlassCasing.Position.TOP);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+
+        for (int x = -1; x <= 1; x++) {
+            for (int y = 1 ; y <= 4; y++) {
+                for (int z = -1; z <= 1; z++) {
+                    Vector3i position = new Vector3i(x, y, z);
+                    ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
+                    if (casing == null) {
+                        continue;
+                    }
+
+                    casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
+                }
+            }
+        }
+
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);
     }
 
