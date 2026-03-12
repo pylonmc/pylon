@@ -2359,6 +2359,10 @@ research:
   palladium_production: "<#2937e3>Palladium Production"
 
 guide:
+  pressable_items: "<arrow> %plant-oil%"
+  smeltery_burner_fuels: |-
+    <arrow> <attr>Duration:</attr> %duration%
+    <arrow> <attr>Temperature:</attr> %temperature%
   page:
     science: "<white>Science"
     resources_metals: "<white>Metals"
@@ -2386,13 +2390,18 @@ guide:
     building: "<white>Building"
     creative_items: "<light_purple>Creative Items <#ff0000>(admin only)</#ff0000>"
     magic: "<white>Magic"
-    info: "<white>Pylon Info"
-    info_progression: "<white>Pylon Progression"
-    info_pit_kiln: "<white>Pit Kiln 101"
-    info_fluid_handling: "<white>Fluid handling 101"
-    info_hydraulics: "<white>Hydraulics 101"
-    info_bloomery: "<white>Forging 101: Bloomery"
-    info_smeltery: "<white>Forging 102: Smeltery"
+    help: "<white>Pylon Help"
+    help_progression: "<white>Pylon Progression"
+    help_pit_kiln: "<white>Pit Kiln 101"
+    help_fluid_handling: "<white>Fluid handling 101"
+    help_hydraulics: "<white>Hydraulics 101"
+    help_bloomery: "<white>Forging 101: Bloomery"
+    help_smeltery: "<white>Forging 102: Smeltery"
+    grindstone: "Grindstone"
+    hammer: "Hammer"
+    pressable_items: "Pressable items"
+    smeltery_burner_fuels: "Smeltery burner fuels"
+    hydraulic_refuelable_items: "Hydraulic refuelable items"
   recipe:
     grindstone:
       time: "<attr>Grinding time:</attr> %time%"
