@@ -134,7 +134,11 @@ public class HydraulicHammerHead extends RebarBlock implements
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         super.write(pdc);
-        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, hammer.getStack());
+        ItemStack stack = null;
+        if (hammer != null) {
+            stack = hammer.getStack();
+        }
+        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, stack);
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
