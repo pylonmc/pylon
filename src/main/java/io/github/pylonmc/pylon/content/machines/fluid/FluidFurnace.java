@@ -1,7 +1,6 @@
-package io.github.pylonmc.pylon.content.machines.diesel.machines;
+package io.github.pylonmc.pylon.content.machines.fluid;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
@@ -12,6 +11,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -42,11 +43,12 @@ import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 
-public class DieselFurnace extends RebarBlock implements
+public class FluidFurnace extends RebarBlock implements
         RebarGuiBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
@@ -56,11 +58,18 @@ public class DieselFurnace extends RebarBlock implements
         RebarFurnace,
         RebarRecipeProcessor<FurnaceRecipeWrapper> {
 
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+    public final double fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.DOUBLE);
+    public final double fluidConsumptionRate = getSettings().getOrThrow("input-fluid-per-second", ConfigAdapter.DOUBLE);
+    public final @Nullable Double fluidOutputRate = getSettings().get("output-fluid-per-second", ConfigAdapter.DOUBLE);
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
     public final int recipeTime = (int) Math.round(20 * 8 / speed);
+    public final @NotNull RebarFluid inputFluid = getSettings().getOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
+    public final @Nullable RebarFluid outputFluid = getSettings().get("output-fluid", ConfigAdapter.REBAR_FLUID);
+    public final int inputWailaNBars = getSettings().getOrThrow("input-waila-bar-length", ConfigAdapter.INTEGER);
+    public final @Nullable Integer outputWailaNBars = getSettings().get("output-waila-bar-length", ConfigAdapter.INTEGER);
+    public final TextColor inputWailaBarColor = getSettings().getOrThrow("input-waila-bar-color", ConfigAdapter.TEXT_COLOR);
+    public final @Nullable TextColor outputWailaBarColor = getSettings().get("output-waila-bar-color", ConfigAdapter.TEXT_COLOR);
 
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -74,9 +83,12 @@ public class DieselFurnace extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+        public final double fluidPerSecond = getSettings().getOrThrow("input-fluid-per-second", ConfigAdapter.DOUBLE);
+        public final double fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.DOUBLE);
         public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final @NotNull RebarFluid inputFluid = getSettings().getOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
+        public final @Nullable RebarFluid outputFluid = getSettings().get("output-fluid", ConfigAdapter.REBAR_FLUID);
+        public final @Nullable Double fluidOutputRate = getSettings().get("output-fluid-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -84,19 +96,26 @@ public class DieselFurnace extends RebarBlock implements
 
         @Override
         public @NotNull List<RebarArgument> getPlaceholders() {
-            return List.of(
-                    RebarArgument.of("diesel-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(dieselPerSecond)),
-                    RebarArgument.of("diesel-buffer", UnitFormat.MILLIBUCKETS.format(dieselBuffer)),
-                    RebarArgument.of("speed", UnitFormat.PERCENT.format(speed * 100))
-            );
+            ArrayList<RebarArgument> args = new ArrayList<>(List.of(RebarArgument.of("fluid-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidPerSecond)),
+                    RebarArgument.of("fluid-buffer", UnitFormat.MILLIBUCKETS.format(fluidBuffer)),
+                    RebarArgument.of("speed", UnitFormat.PERCENT.format(speed * 100)),
+                    RebarArgument.of("input-fluid", Component.translatable(inputFluid.getKey() + ".name"))));
+            if(outputFluid != null && fluidOutputRate != null){
+                args.add(RebarArgument.of("output-fluid", Component.translatable(outputFluid.getKey() + ".name")));
+                args.add(RebarArgument.of("fluid-output-rate", UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidOutputRate)));
+            }
+            return args;
         }
     }
 
     @SuppressWarnings("unused")
-    public DieselFurnace(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public FluidFurnace(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setTickInterval(tickInterval);
-        createFluidPoint(FluidPointType.INPUT, BlockFace.UP);
+        createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH);
+        if(outputFluid != null){
+            createFluidPoint(FluidPointType.OUTPUT, BlockFace.NORTH);
+        }
         setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
@@ -122,13 +141,16 @@ public class DieselFurnace extends RebarBlock implements
                         .scale(1.1, 0.8, 0.8))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
-        createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
+        createFluidBuffer(inputFluid, fluidBuffer, true, false);
+        if(outputFluid != null) {
+            createFluidBuffer(outputFluid, fluidBuffer, false, true);
+        }
         setRecipeType(FurnaceRecipeType.INSTANCE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
     @SuppressWarnings("unused")
-    public DieselFurnace(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public FluidFurnace(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 
@@ -153,11 +175,14 @@ public class DieselFurnace extends RebarBlock implements
 
     @Override
     public void tick() {
-        if (!isProcessingRecipe() || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * tickInterval / 20) {
+        if (!isProcessingRecipe() || fluidAmount(inputFluid) < fluidConsumptionRate * tickInterval / 20) {
             return;
         }
 
-        removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * tickInterval / 20);
+        removeFluid(inputFluid,fluidConsumptionRate * tickInterval / 20);
+        if(outputFluid != null && fluidOutputRate != null){
+            addFluid(outputFluid, fluidOutputRate * tickInterval / 20);
+        }
         Vector smokePosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
                 new Vector3d(0.4, 0.7, -0.4),
                 getFacing().getOppositeFace()
@@ -212,14 +237,30 @@ public class DieselFurnace extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
-                        fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                ))
+        RebarArgument inputBar = RebarArgument.of("inputBar", PylonUtils.createFluidAmountBar(
+                fluidAmount(inputFluid),
+                fluidCapacity(inputFluid),
+                inputWailaNBars,
+                inputWailaBarColor
         ));
+        if(outputFluid != null) {
+            if(outputWailaNBars == null || outputWailaBarColor == null) {
+                throw new RuntimeException("Output fluid was provided but either output-waila-bar-length or output-waila-bar-color was not set");
+            }
+            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                    inputBar,
+                    RebarArgument.of("outputBar", PylonUtils.createFluidAmountBar(
+                            fluidAmount(outputFluid),
+                            fluidCapacity(outputFluid),
+                            outputWailaNBars,
+                            outputWailaBarColor
+                    ))
+            ));
+        } else {
+            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                    inputBar
+            ));
+        }
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)

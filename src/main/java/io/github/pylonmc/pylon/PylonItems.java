@@ -2681,7 +2681,7 @@ public final class PylonItems {
     public static final ItemStack DIESEL_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.DIESEL_FURNACE)
             .build();
     static {
-        RebarItem.register(DieselFurnace.Item.class, DIESEL_FURNACE, PylonKeys.DIESEL_FURNACE);
+        RebarItem.register(FluidFurnace.Item.class, DIESEL_FURNACE, PylonKeys.DIESEL_FURNACE);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_FURNACE);
     }
 
@@ -2890,6 +2890,13 @@ public final class PylonItems {
                 .addIngredient(DISINFECTANT);
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
+    }
+
+    public static final ItemStack PLANT_OIL_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.PLANT_OIL_FURNACE)
+            .build();
+    static {
+        RebarItem.register(FluidFurnace.Item.class, PLANT_OIL_FURNACE, PylonKeys.PLANT_OIL_FURNACE);
+        PylonPages.FLUID_MACHINES.addItem(PLANT_OIL_FURNACE);
     }
 
     static {
