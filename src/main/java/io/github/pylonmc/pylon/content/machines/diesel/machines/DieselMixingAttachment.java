@@ -109,7 +109,7 @@ public class DieselMixingAttachment extends RebarBlock implements
                 .itemStack(sideStack2)
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
-                        .scale(0.9, 0.8, 1.1))
+                        .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("mixing_attachment_shaft", new ItemDisplayBuilder()

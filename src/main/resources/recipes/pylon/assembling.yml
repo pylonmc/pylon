@@ -2427,6 +2427,242 @@ pylon:hunting_talisman_palladium:
           position: [ 0.5, 0.3 ]
           scale: [ 0.3, 0.3, 0.3 ]
 
+pylon:experience_talisman_palladium:
+  inputs:
+    - pylon:experience_talisman_ultimate: 1
+    - pylon:palladium_ingot: 8
+    - pylon:shimmer_dust_3: 8
+  results:
+    - pylon:experience_talisman_palladium
+  steps:
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust1"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 0.0, 1.0 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+        - name: "talisman"
+          item: pylon:experience_talisman_ultimate
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust2"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 0.5, 1.0 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust3"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 1.0, 1.0 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust4"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 1.0, 0.5]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust5"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 1.0, 0.0 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust6"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 0.5, 0.0 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust7"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 0.0, 0.0]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "hammer"
+      icon: pylon:diamond_hammer
+      clicks: 1
+      add-displays:
+        - name: "pldust8"
+          item: minecraft:light_blue_concrete_powder
+          position: [ 0.0, 0.5 ]
+          scale: [ 0.25, 0.25, 0.25 ]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust1sol"
+          item: minecraft:light_blue_concrete
+          position: [ 0.0, 1.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust1"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust2sol"
+          item: minecraft:light_blue_concrete
+          position: [ 0.5, 1.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust2"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust3sol"
+          item: minecraft:light_blue_concrete
+          position: [ 1.0, 1.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust3"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust4sol"
+          item: minecraft:light_blue_concrete
+          position: [ 1.0, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust4"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust5sol"
+          item: minecraft:light_blue_concrete
+          position: [ 1.0, 0.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust5"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust6sol"
+          item: minecraft:light_blue_concrete
+          position: [ 0.5, 0.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust6"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust7sol"
+          item: minecraft:light_blue_concrete
+          position: [ 0.0, 0.0 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust7"
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 1
+      add-displays:
+        - name: "pldust8sol"
+          item: minecraft:light_blue_concrete
+          position: [ 0.0, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+      remove_displays:
+        - "pldust8"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust1sol"
+      add-displays:
+        - name: "pldust1fin"
+          item: minecraft:light_blue_concrete
+          position: [0.3, 0.7]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust2sol"
+      add-displays:
+        - name: "pldust2fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.5, 0.7 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust3sol"
+      add-displays:
+        - name: "pldust3fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.7, 0.7 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust4sol"
+      add-displays:
+        - name: "pldust4fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.7, 0.5 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust5sol"
+      add-displays:
+        - name: "pldust5fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.7, 0.3 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust6sol"
+      add-displays:
+        - name: "pldust6fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust7sol"
+      add-displays:
+        - name: "pldust7fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.3, 0.3 ]
+          scale: [ 0.3, 0.3, 0.3 ]
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      remove_displays:
+        - "pldust8sol"
+      add-displays:
+        - name: "pldust8fin"
+          item: minecraft:light_blue_concrete
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.3, 0.3, 0.3 ]
 
 pylon:flight_ring:
   inputs:

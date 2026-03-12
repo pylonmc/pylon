@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -38,7 +39,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -75,7 +75,7 @@ public class FluidValve extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidValve(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         setCapacity(buffer);
         setFacing(context.getFacing());
@@ -95,7 +95,7 @@ public class FluidValve extends RebarBlock
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     public FluidValve(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
 
         open = pdc.get(ENABLED_KEY, RebarSerializers.BOOLEAN);
     }
@@ -152,9 +152,9 @@ public class FluidValve extends RebarBlock
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         if (!open) {
-            return Map.of();
+            return List.of();
         }
         return RebarFluidTank.super.getSuppliedFluids();
     }

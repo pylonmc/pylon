@@ -17,6 +17,8 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -32,7 +34,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
@@ -67,6 +71,18 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
         public void setFluid(@Nullable RebarFluid fluid) {
             getStack().editPersistentDataContainer(pdc -> RebarUtils.setNullable(pdc, FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID, fluid));
+
+            CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
+            List<String> newStrings = new ArrayList<>(data.strings());
+            newStrings.removeIf(s -> s.startsWith("pylon:fluid:"));
+            newStrings.add("pylon:fluid:" + Objects.toString(fluid, "empty"));
+            CustomModelData newData = CustomModelData.customModelData()
+                .addStrings(newStrings)
+                .addFlags(data.flags())
+                .addColors(data.colors())
+                .addFloats(data.floats())
+                .build();
+            getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
         }
 
         public void setAmount(double amount) {
@@ -109,7 +125,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     @SuppressWarnings("unused")
     public PortableFluidTank(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidDisplay();
         createFluidPoint(FluidPointType.INPUT, BlockFace.UP);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.DOWN);
@@ -118,7 +134,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     @SuppressWarnings("unused")
     public PortableFluidTank(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
