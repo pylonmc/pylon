@@ -25,6 +25,17 @@ pylon:copper_from_block:
   amount: 1296
   priority: -1
 
+pylon:copper_from_sheet:
+  input: pylon:copper_sheet
+  result: pylon:copper
+  amount: 144
+  
+pylon:copper_from_pipe:
+  input: pylon:fluid_pipe_copper
+  result: pylon:copper
+  amount: 72
+  priority: -1
+
 pylon:gold_from_ingot:
   input: minecraft:gold_ingot
   result: pylon:gold
@@ -47,6 +58,11 @@ pylon:gold_from_block:
   amount: 1296
   priority: -1
 
+pylon:gold_from_sheet:
+  input: pylon:gold_sheet
+  result: pylon:gold
+  amount: 144
+
 pylon:iron_from_ingot:
   input: minecraft:iron_ingot
   result: pylon:iron
@@ -67,6 +83,17 @@ pylon:iron_from_block:
   input: minecraft:iron_block
   result: pylon:iron
   amount: 1296
+  priority: -1
+
+pylon:iron_from_sheet:
+  input: pylon:iron_sheet
+  result: pylon:iron
+  amount: 144
+
+pylon:iron_from_pipe:
+  input: pylon:fluid_pipe_iron
+  result: pylon:iron
+  amount: 72
   priority: -1
 
 pylon:tin_from_ingot:
@@ -91,6 +118,17 @@ pylon:tin_from_block:
   amount: 1296
   priority: -1
 
+pylon:tin_from_sheet:
+  input: pylon:tin_sheet
+  result: pylon:tin
+  amount: 144
+
+pylon:tin_from_pipe:
+  input: pylon:fluid_pipe_tin
+  result: pylon:tin
+  amount: 72
+  priority: -1
+
 pylon:bronze_from_ingot:
   input: pylon:bronze_ingot
   result: pylon:bronze
@@ -111,6 +149,17 @@ pylon:bronze_from_block:
   input: pylon:bronze_block
   result: pylon:bronze
   amount: 1296
+  priority: -1
+
+pylon:bronze_from_sheet:
+  input: pylon:bronze_sheet
+  result: pylon:bronze
+  amount: 144
+
+pylon:bronze_from_pipe:
+  input: pylon:fluid_pipe_bronze
+  result: pylon:bronze
+  amount: 72
   priority: -1
 
 pylon:steel_from_ingot:
@@ -135,6 +184,17 @@ pylon:steel_from_block:
   amount: 1296
   priority: -1
 
+pylon:steel_from_sheet:
+  input: pylon:steel_sheet
+  result: pylon:steel
+  amount: 144
+
+pylon:steel_from_pipe:
+  input: pylon:fluid_pipe_steel
+  result: pylon:steel
+  amount: 72
+  priority: -1
+
 pylon:palladium_from_ingot:
   input: pylon:palladium_ingot
   result: pylon:palladium
@@ -155,4 +215,15 @@ pylon:palladium_from_block:
   input: pylon:palladium_block
   result: pylon:palladium
   amount: 1296
+  priority: -1
+
+pylon:palladium_from_sheet:
+  input: pylon:palladium_sheet
+  result: pylon:palladium
+  amount: 144
+
+pylon:palladium_from_pipe:
+  input: pylon:fluid_pipe_palladium
+  result: pylon:palladium
+  amount: 72
   priority: -1

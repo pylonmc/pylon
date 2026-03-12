@@ -8,14 +8,13 @@ import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
+import kotlin.Pair;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
 
@@ -40,7 +39,8 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
 
         return controller.getFluids().entrySet().stream()
                 .filter(entry -> SmelteryMeltingPoint.getMeltingPoint(entry.getKey()) <= controller.getTemperature())
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
+                .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
+                .toList();
     }
 
     @Override
