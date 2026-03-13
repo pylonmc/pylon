@@ -64,7 +64,7 @@ pylon:sulfur_from_sulfur_block:
     - pylon:sulfur_block
   result:
     pylon:sulfur: 9
-  category: misc
+  category: building
   priority: -2
 
 pylon:gypsum_from_gypsum_block:
@@ -72,7 +72,7 @@ pylon:gypsum_from_gypsum_block:
     - pylon:gypsum_block
   result:
     pylon:gypsum: 9
-  category: misc
+  category: building
   priority: -2
 
 pylon:shimmer_dust_1:

@@ -111,7 +111,7 @@ pylon:sulfur_block_from_sulfur:
   key:
     N: pylon:sulfur
   result: pylon:sulfur_block
-  category: misc
+  category: building
 
 pylon:gypsum_block_from_gypsum:
   pattern:
@@ -121,7 +121,7 @@ pylon:gypsum_block_from_gypsum:
   key:
     N: pylon:gypsum
   result: pylon:gypsum_block
-  category: misc
+  category: building
 
 pylon:bronze_sword:
   pattern:
