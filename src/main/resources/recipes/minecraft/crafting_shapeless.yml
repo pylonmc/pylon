@@ -1,3 +1,11 @@
+pylon:raw_tin_from_raw_tin_block:
+  ingredients:
+    - pylon:raw_tin_block
+  result:
+    pylon:raw_tin: 9
+  category: misc
+  priority: -2
+
 pylon:tin_nuggets_from_tin_ingot:
   ingredients:
     - pylon:tin_ingot
@@ -49,6 +57,22 @@ pylon:steel_ingots_from_steel_block:
   result:
     pylon:steel_ingot: 9
   category: misc
+  priority: -2
+
+pylon:sulfur_from_sulfur_block:
+  ingredients:
+    - pylon:sulfur_block
+  result:
+    pylon:sulfur: 9
+  category: building
+  priority: -2
+
+pylon:gypsum_from_gypsum_block:
+  ingredients:
+    - pylon:gypsum_block
+  result:
+    pylon:gypsum: 9
+  category: building
   priority: -2
 
 pylon:shimmer_dust_1:
