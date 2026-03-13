@@ -546,7 +546,7 @@ public final class PylonItems {
     public static final ItemStack SULFUR_BLOCK = ItemStackBuilder.rebar(Material.YELLOW_TERRACOTTA, PylonKeys.SULFUR_BLOCK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, SULFUR_BLOCK);
+        RebarItem.register(RebarItem.class, SULFUR_BLOCK, PylonKeys.SULFUR_BLOCK);
         PylonPages.MISCELLANEOUS.addItem(SULFUR_BLOCK);
     }
 
