@@ -1442,6 +1442,9 @@ item:
   gypsum:
     name: "Gypsum"
 
+  gypsum_block:
+    name: "Gypsum Block"
+
   gypsum_dust:
     name: "Gypsum Dust"
 

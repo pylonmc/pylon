@@ -543,6 +543,13 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(GYPSUM);
     }
 
+    public static final ItemStack GYPSUM_BLOCK = ItemStackBuilder.rebar(Material.QUARTZ_BLOCK, PylonKeys.GYPSUM_BLOCK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GYPSUM_BLOCK, PylonKeys.GYPSUM_BLOCK);
+        PylonPages.MISCELLANEOUS.addItem(GYPSUM_BLOCK);
+    }
+
     public static final ItemStack GYPSUM_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.GYPSUM_DUST)
             .set(DataComponentTypes.ITEM_MODEL, Material.SUGAR.getKey())
             .build();

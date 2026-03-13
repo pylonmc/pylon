@@ -89,6 +89,7 @@ drilling_2:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
     - pylon:gypsum
+    - pylon:gypsum_block
     - pylon:gypsum_dust
 
 drilling_3:

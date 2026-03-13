@@ -17,6 +17,7 @@ public class PylonKeys {
     public static final NamespacedKey SULFUR = pylonKey("sulfur");
 
     public static final NamespacedKey GYPSUM = pylonKey("gypsum");
+    public static final NamespacedKey GYPSUM_BLOCK = pylonKey("gypsum_block");
     public static final NamespacedKey GYPSUM_DUST = pylonKey("gypsum_dust");
 
     public static final NamespacedKey COPPER_DUST = pylonKey("copper_dust");

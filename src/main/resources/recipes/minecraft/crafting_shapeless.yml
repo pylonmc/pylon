@@ -51,6 +51,14 @@ pylon:steel_ingots_from_steel_block:
   category: misc
   priority: -2
 
+pylon:gypsum_from_gypsum_block:
+  ingredients:
+    - pylon:gypsum_block
+  result:
+    pylon:gypsum: 9
+  category: misc
+  priority: -2
+
 pylon:shimmer_dust_1:
   ingredients:
     - pylon:copper_dust

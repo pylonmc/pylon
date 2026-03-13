@@ -93,6 +93,16 @@ pylon:charcoal_block_from_charcoal:
   result: pylon:charcoal_block
   category: building
 
+pylon:gypsum_block_from_gypsum:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:gypsum
+  result: pylon:gypsum_block
+  category: misc
+
 pylon:bronze_sword:
   pattern:
     - " I "
