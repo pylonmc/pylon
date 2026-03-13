@@ -28,5 +28,6 @@ public class PylonRecipes {
         PitKilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        SmelteryMeltingPoint.RECIPE_TYPE.register();
     }
 }

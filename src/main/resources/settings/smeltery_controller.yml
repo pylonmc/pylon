@@ -1,5 +1,5 @@
 tick-interval: 20
-fluid-reaction-per-tick: 100.0
+fluid-reaction-per-tick: 100.0 # max amount of ingredient per ingredient type to consume during reactions
 display:
   resolution: 8 # pixels per block; defines the resolution of the fluid display
   lightness-variation: 0.3 # defines the lightness variation of the fluid display; 0.0 is no variation, 1.0 is full variation

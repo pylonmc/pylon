@@ -792,13 +792,6 @@ item:
       <arrow> <attr>Temperature:</attr> %temperature%
     waila: "Diesel Smeltery Heater | %bar%"
 
-  smeltery_caster:
-    name: "Smeltery Caster"
-    lore: |-
-      <star> Smeltery multiblock component
-      <arrow> Casts items from the smeltery
-      <arrow> <insn>Right click</insn> to open the smeltery casting GUI
-
   smeltery_controller:
     name: "Smeltery Controller"
     lore: |-
@@ -812,7 +805,6 @@ item:
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
       <diamond> 25 or more <yellow><lang:pylon.item.refractory_bricks.name/></yellow> (depending on size and components)
 
@@ -2227,6 +2219,41 @@ item:
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
+  casting_unit:
+    name: "Casting Unit"
+    lore: |-
+      <arrow> Used to cast metals into molds using casts
+
+  cast_nugget:
+    name: "Nugget Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a nugget
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
+
+  cast_ingot:
+    name: "Ingot Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
+  cast_block:
+    name: "Block Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>1296</unit>
+
+  cast_sheet:
+    name: "Sheet Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
+  cast_pipe:
+    name: "Pipe Cast"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2600,13 +2627,6 @@ gui:
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
-  smeltery_caster:
-    cast: "Cast"
-    cannot_cast: "<red>Cannot cast"
-    too_cold: "<red>Temperature too low to cast, needs at least %temperature%"
-    not_enough: "<red>Not enough %fluid% to cast (%amount%/%needed%)"
-    click_to_cast: "<insn>Click</insn> to cast (%amount%/%needed%)"
-    auto_cast: "Auto cast: %status%"
   progress_bar:
     text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
   discrete_progress_bar:
@@ -2649,6 +2669,17 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  cast-border: "Cast Item"
+  casting-control:
+    name: "Casting Control"
+    lore: |-
+      %casting%<arrow> <insn>Left click</insn> to queue a cast
+      <arrow> <insn>Right click</insn> to unqueue a cast
+      <arrow> <insn>Shift left click</insn> to toggle automatic casting
+      <arrow> <insn>Shift right click</insn> to purge fluid
+      <arrow> <attr>Queued casts:</attr> %queued-casts%
+      <arrow> <attr>Automatic casting:</attr> %auto-cast%
+    casting: "Casting %fluid%: %amount%<br><br>"
 
 inventory:
   fuel: "Fuel"

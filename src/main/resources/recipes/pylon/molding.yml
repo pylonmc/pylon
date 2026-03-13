@@ -1,5 +1,9 @@
 pylon:unfired_refractory_brick:
   input: pylon:refractory_mix
   result: pylon:unfired_refractory_brick
-  resultAmount: 1
   cycles: 6
+
+pylon:nugget_cast:
+  input: minecraft:clay_ball
+  result: pylon:cast_nugget
+  cycles: 4

@@ -30,6 +30,9 @@ repositories {
     maven("https://maven.pvphub.me/tofaa") {
         name = "EntityLib"
     }
+    maven("https://repo.codemc.io/repository/maven-releases/") {
+        name = "CodeMC"
+    }
 }
 
 val rebarVersion = project.properties["rebar.version"] as String

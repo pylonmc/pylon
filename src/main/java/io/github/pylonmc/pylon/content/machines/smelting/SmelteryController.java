@@ -35,15 +35,16 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
@@ -393,13 +394,8 @@ public final class SmelteryController extends SmelteryComponent
         return sum;
     }
 
-    public @Nullable Pair<RebarFluid, Double> getBottomFluid() {
-        Object2DoubleMap.Entry<RebarFluid> lastEntry = null;
-        for (var entry : fluids.object2DoubleEntrySet()) {
-            lastEntry = entry;
-        }
-        if (lastEntry == null) return null;
-        return new Pair<>(lastEntry.getKey(), lastEntry.getDoubleValue());
+    public @NotNull Map<RebarFluid, Double> getFluids() {
+        return Collections.unmodifiableMap(fluids);
     }
     // </editor-fold>
 
@@ -510,6 +506,8 @@ public final class SmelteryController extends SmelteryComponent
                     color.saturation(),
                     color.lightness() + value * LIGHTNESS_VARIATION
             );
+            entity.setInterpolationDuration(getTickInterval());
+            entity.setInterpolationDelay(0);
             entity.setBackgroundColor(newColor.toRgb());
 
 
@@ -537,20 +535,23 @@ public final class SmelteryController extends SmelteryComponent
             if (recipe.getTemperature() > temperature) continue;
 
             for (RebarFluid fluid : recipe.getFluidInputs().keySet()) {
-                if (getFluidAmount(fluid) == 0) continue recipeLoop;
+                if (!fluids.containsKey(fluid)) continue recipeLoop;
             }
 
-            double highestFluidAmount = getFluidAmount(recipe.getHighestFluid());
-            double consumptionRatio = highestFluidAmount / FLUID_REACTION_PER_TICK;
+            double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
+            double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
+            double maxFluidConsumption = FLUID_REACTION_PER_TICK * highestFluidRatio;
+            double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
+
             double currentTemperature = temperature;
             for (var entry : recipe.getFluidInputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 removeFluid(fluid, amount);
             }
             for (var entry : recipe.getFluidOutputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 addFluid(fluid, amount);
             }
             temperature = currentTemperature; // offset addFluid/removeFluid temperature change
@@ -573,6 +574,16 @@ public final class SmelteryController extends SmelteryComponent
             avgTarget = -1;
             heaters = 0;
             updateFluidDisplay();
+
+            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+            box.expand(BlockFace.UP, height);
+
+            double damage = Math.max(0, temperature / 100 + 1);
+
+            for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
+                if (!(entity instanceof LivingEntity livingEntity)) continue;
+                livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
+            }
         }
         infoItem.notifyWindows();
         contentsItem.notifyWindows();

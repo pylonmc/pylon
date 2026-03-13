@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.pylon.recipes.SmelteryMeltingPoint;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -14,7 +15,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
 
@@ -37,10 +37,10 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         SmelteryController controller = getController();
         if (controller == null) return List.of();
 
-        Pair<RebarFluid, Double> supplied = controller.getBottomFluid();
-        return supplied == null
-                ? List.of()
-                : List.of(new Pair<>(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
+        return controller.getFluids().entrySet().stream()
+                .filter(entry -> SmelteryMeltingPoint.getMeltingPoint(entry.getKey()) <= controller.getTemperature())
+                .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
+                .toList();
     }
 
     @Override
@@ -49,5 +49,4 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         if (controller == null) return;
         controller.removeFluid(fluid, amount);
     }
-
 }

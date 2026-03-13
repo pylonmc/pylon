@@ -83,6 +83,7 @@ public final class Bloomery extends RebarBlock implements
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        drops.clear();
         ItemStack stack = getItemDisplay().getItemStack();
         if (!stack.isEmpty()) {
             drops.add(stack);

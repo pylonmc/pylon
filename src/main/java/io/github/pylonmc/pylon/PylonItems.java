@@ -46,7 +46,10 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
 
@@ -1957,13 +1960,6 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(SMELTERY_HOPPER);
     }
 
-    public static final ItemStack SMELTERY_CASTER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMELTERY_CASTER)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, SMELTERY_CASTER, PylonKeys.SMELTERY_CASTER);
-        PylonPages.SMELTING.addItem(SMELTERY_CASTER);
-    }
-
     public static final ItemStack SMELTERY_BURNER = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.SMELTERY_BURNER)
             .build();
     static {
@@ -1976,6 +1972,48 @@ public final class PylonItems {
     static {
         RebarItem.register(DieselSmelteryHeater.Item.class, DIESEL_SMELTERY_HEATER, PylonKeys.DIESEL_SMELTERY_HEATER);
         PylonPages.SMELTING.addItem(DIESEL_SMELTERY_HEATER);
+    }
+
+    public static final ItemStack CASTING_UNIT = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.CASTING_UNIT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CASTING_UNIT, PylonKeys.CASTING_UNIT);
+        PylonPages.SMELTING.addItem(CASTING_UNIT);
+    }
+
+    public static final ItemStack NUGGET_CAST = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NUGGET_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NUGGET_CAST, PylonKeys.NUGGET_CAST);
+        PylonPages.SMELTING.addItem(NUGGET_CAST);
+    }
+
+    public static final ItemStack INGOT_CAST = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.INGOT_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INGOT_CAST, PylonKeys.INGOT_CAST);
+        PylonPages.SMELTING.addItem(INGOT_CAST);
+    }
+
+    public static final ItemStack BLOCK_CAST = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BLOCK_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BLOCK_CAST, PylonKeys.BLOCK_CAST);
+        PylonPages.SMELTING.addItem(BLOCK_CAST);
+    }
+
+    public static final ItemStack SHEET_CAST = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SHEET_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SHEET_CAST, PylonKeys.SHEET_CAST);
+        PylonPages.SMELTING.addItem(SHEET_CAST);
+    }
+
+    public static final ItemStack PIPE_CAST = ItemStackBuilder.rebar(Material.BROWN_CONCRETE, PylonKeys.PIPE_CAST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPE_CAST, PylonKeys.PIPE_CAST);
+        PylonPages.SMELTING.addItem(PIPE_CAST);
     }
 
 
