@@ -106,6 +106,7 @@ smelting_1:
   - pylon:pit_kiln
   - pylon:carbon
   - pylon:sulfur
+  - pylon:sulfur_block
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet

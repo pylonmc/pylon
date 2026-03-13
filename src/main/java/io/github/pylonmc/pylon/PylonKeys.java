@@ -15,6 +15,7 @@ public class PylonKeys {
     public static final NamespacedKey CHARCOAL_BLOCK = pylonKey("charcoal_block");
 
     public static final NamespacedKey SULFUR = pylonKey("sulfur");
+    public static final NamespacedKey SULFUR_BLOCK = pylonKey("sulfur_block");
 
     public static final NamespacedKey GYPSUM = pylonKey("gypsum");
     public static final NamespacedKey GYPSUM_BLOCK = pylonKey("gypsum_block");
@@ -36,6 +37,7 @@ public class PylonKeys {
     public static final NamespacedKey EMERALD_DUST = pylonKey("emerald_dust");
 
     public static final NamespacedKey RAW_TIN = pylonKey("raw_tin");
+    public static final NamespacedKey RAW_TIN_BLOCK = pylonKey("raw_tin_block");
     public static final NamespacedKey TIN_DUST = pylonKey("tin_dust");
     public static final NamespacedKey CRUSHED_RAW_TIN = pylonKey("crushed_raw_tin");
     public static final NamespacedKey TIN_INGOT = pylonKey("tin_ingot");

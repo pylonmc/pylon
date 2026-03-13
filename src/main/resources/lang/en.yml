@@ -684,6 +684,9 @@ item:
   raw_tin:
     name: "Raw Tin"
 
+  raw_tin_block:
+    name: "Raw Tin Block"
+
   reactivated_wither_skull:
     name: "<white>Reactivated Wither Skull"
     lore: |-
@@ -893,6 +896,9 @@ item:
 
   sulfur:
     name: "Sulfur"
+
+  sulfur_block:
+    name: "Sulfur Block"
 
   tin_dust:
     name: "Tin Dust"

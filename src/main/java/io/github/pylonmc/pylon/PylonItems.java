@@ -172,6 +172,13 @@ public final class PylonItems {
         PylonPages.METALS.addItem(RAW_TIN);
     }
 
+    public static final ItemStack RAW_TIN_BLOCK = ItemStackBuilder.rebar(Material.RAW_IRON_BLOCK, PylonKeys.RAW_TIN_BLOCK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, RAW_TIN_BLOCK, PylonKeys.RAW_TIN_BLOCK);
+        PylonPages.METALS.addItem(RAW_TIN_BLOCK);
+    }
+
     public static final ItemStack TIN_INGOT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.TIN_INGOT)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_INGOT.getKey())
             .build();
@@ -534,6 +541,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SULFUR);
         PylonPages.MISCELLANEOUS.addItem(SULFUR);
+    }
+
+    public static final ItemStack SULFUR_BLOCK = ItemStackBuilder.rebar(Material.YELLOW_TERRACOTTA, PylonKeys.SULFUR_BLOCK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SULFUR_BLOCK);
+        PylonPages.MISCELLANEOUS.addItem(SULFUR_BLOCK);
     }
 
     public static final ItemStack GYPSUM = ItemStackBuilder.rebar(Material.QUARTZ, PylonKeys.GYPSUM)
