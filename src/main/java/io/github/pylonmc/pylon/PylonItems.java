@@ -1646,6 +1646,10 @@ public final class PylonItems {
 
     public static final ItemStack STEEL_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.STEEL_HELMET, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_HELMET.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
             .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
                     pylonKey("steel_helmet_knockback_resistance"),
                     Settings.get(PylonKeys.STEEL_HELMET).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
@@ -1660,6 +1664,10 @@ public final class PylonItems {
 
     public static final ItemStack STEEL_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.DIAMOND_CHESTPLATE, PylonKeys.STEEL_CHESTPLATE, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_CHESTPLATE.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.CHEST)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
             .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
                     pylonKey("steel_chestplate_knockback_resistance"),
                     Settings.get(PylonKeys.STEEL_CHESTPLATE).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
@@ -1674,6 +1682,10 @@ public final class PylonItems {
 
     public static final ItemStack STEEL_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.DIAMOND_LEGGINGS, PylonKeys.STEEL_LEGGINGS, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_LEGGINGS.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.LEGS)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
             .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
                     pylonKey("steel_leggings_knockback_resistance"),
                     Settings.get(PylonKeys.STEEL_LEGGINGS).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
@@ -1688,6 +1700,10 @@ public final class PylonItems {
 
     public static final ItemStack STEEL_BOOTS = ItemStackBuilder.rebarBoots(Material.DIAMOND_BOOTS, PylonKeys.STEEL_BOOTS, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_BOOTS.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.FEET)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
             .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
                     pylonKey("steel_boots_knockback_resistance"),
                     Settings.get(PylonKeys.STEEL_BOOTS).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
