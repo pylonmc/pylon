@@ -436,5 +436,8 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
+    public static final NamespacedKey POTION_PEDESTAL = pylonKey("potion_pedestal");
+    public static final NamespacedKey POTION_ALTAR = pylonKey("potion_altar");
+
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 }
