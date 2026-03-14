@@ -2495,7 +2495,7 @@ pylon:potion_pedestal:
   pattern:
     - " E "
     - "BPB"
-    - " E"
+    - " E "
   key:
     P: pylon:pedestal
     E: minecraft:end_stone

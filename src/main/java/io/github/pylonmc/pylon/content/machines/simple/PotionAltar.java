@@ -16,7 +16,6 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
-import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -28,10 +27,10 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -69,25 +68,18 @@ public class PotionAltar extends RebarBlock
         super(block, context);
 
         setTickInterval(tickInterval);
-        setRecipeType(PotionAltarRecipe.RECIPE_TYPE);
 
         addEntity("brewing_stand", new BlockDisplayBuilder()
                 .transformation(new TransformBuilder()
                                         .translate(0, 0.5, 0)
-                                        .scale(0.5)
-                                        .buildForItemDisplay()
+                                        .scale(0.9)
+                                        .buildForBlockDisplay()
                 )
                 .blockData(Material.BREWING_STAND.createBlockData())
                 .build(getBlock().getLocation().toCenterLocation())
         );
-        addEntity("item", new ItemDisplayBuilder()
-                .transformation(new TransformBuilder()
-                        .translate(0, 1, 0)
-                        .scale(0.5)
-                        .buildForItemDisplay()
-                )
-                .build(getBlock().getLocation().toCenterLocation())
-        );
+
+        setRecipeType(PotionAltarRecipe.RECIPE_TYPE);
     }
 
     @SuppressWarnings("unused")
@@ -128,14 +120,18 @@ public class PotionAltar extends RebarBlock
         ItemStack potion1 = getPedestal1().getItemDisplay().getItemStack();
         ItemStack potion2 = getPedestal2().getItemDisplay().getItemStack();
         if (isInvalidPotion(potion1) || isInvalidPotion(potion2)) {
-            event.getPlayer().sendMessage(Component.translatable("rebar.message.command.key.hover.invalid-potion"));
+            event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
             return;
         }
 
         if (potion1.getType() != potion2.getType()) {
-            event.getPlayer().sendMessage(Component.translatable("rebar.message.command.key.hover.not-same-type"));
+            event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.not-same-type"));
             return;
         }
+
+        // todo: add recipes for same potion types
+        // todo: add potion effects max size
+        // todo: rename fused potion
 
         getPedestal1().setLocked(true);
         getPedestal2().setLocked(true);
@@ -147,10 +143,10 @@ public class PotionAltar extends RebarBlock
 
     public boolean isInvalidPotion(ItemStack potion) {
         if (!PylonUtils.isPotion(potion.getType())) {
-            return false;
+            return true;
         }
 
-        return potion.hasData(DataComponentTypes.POTION_CONTENTS);
+        return !potion.hasData(DataComponentTypes.POTION_CONTENTS);
     }
 
     public ItemStack fusePotion(ItemStack potion1, ItemStack potion2) {
@@ -202,9 +198,10 @@ public class PotionAltar extends RebarBlock
         }
 
         new ParticleBuilder(Particle.DRAGON_BREATH)
-                .count(5)
+                .count(10)
                 .extra(0.02)
                 .location(getBlock().getLocation().toCenterLocation())
+                .data(1f)
                 .spawn();
 
         new ParticleBuilder(Particle.DUST)
@@ -223,15 +220,26 @@ public class PotionAltar extends RebarBlock
     }
 
     public Pedestal getPedestal1() {
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(-1, 0, 0));
+        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(-2, 0, 0));
     }
 
     public Pedestal getPedestal2() {
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(1, 0, 0));
+        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(2, 0, 0));
     }
 
-    public ItemDisplay getItemDisplay() {
-        return getHeldEntityOrThrow(ItemDisplay.class, "item");
+    public List<Block> getCandles() {
+        List<Block> candles = new ArrayList<>();
+        candles.add(getCandle1());
+        candles.add(getCandle2());
+        return candles;
+    }
+
+    public Block getCandle1() {
+        return getBlock().getRelative(-1, 0, 0);
+    }
+
+    public Block getCandle2() {
+        return getBlock().getRelative(1, 0, 0);
     }
 
     public void onRecipeFinished(@NotNull final PotionAltarRecipe recipe) {
@@ -239,14 +247,19 @@ public class PotionAltar extends RebarBlock
             pedestal.getItemDisplay().setItemStack(null);
             pedestal.setLocked(false);
         }
-        ItemStack result = recipe.result();
+        for (Block candle : getCandles()) {
+            candle.setBlockData(Material.ORANGE_CANDLE.createBlockData());
+        }
 
-        getItemDisplay().setItemStack(result);
+        Location location = getBlock().getLocation().toCenterLocation();
+        getBlock().getWorld().strikeLightningEffect(location);
+        getBlock().getWorld().dropItemNaturally(location, recipe.result());
 
         new ParticleBuilder(Particle.DRAGON_BREATH)
-                .count(20)
+                .count(40)
                 .extra(0.02)
                 .location(getBlock().getLocation().toCenterLocation())
+                .data(1f)
                 .spawn();
         getBlock().getWorld().playSound(FINISH_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
@@ -258,11 +271,13 @@ public class PotionAltar extends RebarBlock
             }
         }
 
-        new ParticleBuilder(Particle.WHITE_SMOKE)
-                .count(20)
-                .extra(0.05)
-                .location(getBlock().getLocation().toCenterLocation())
-                .spawn();
+        for (Block candle : getCandles()) {
+            new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
+                    .count(20)
+                    .extra(0.05)
+                    .location(candle.getLocation().toCenterLocation())
+                    .spawn();
+        }
 
         getBlock().getWorld().playSound(CANCEL_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
