@@ -171,6 +171,8 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ASSEMBLY_TABLE, Material.ANVIL, AssemblyTable.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_SOURCE, Material.STRUCTURE_VOID, CreativeItemSource.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
+        RebarBlock.register(PylonKeys.POTION_PEDESTAL, Material.END_STONE_BRICK_WALL, Pedestal.class);
+        RebarBlock.register(PylonKeys.POTION_ALTAR, Material.STONE_BRICK_SLAB, PotionAltar.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
     }

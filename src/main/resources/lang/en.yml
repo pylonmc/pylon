@@ -600,6 +600,27 @@ item:
       <arrow> <insn>Right click</insn> to set the displayed item
       <arrow> <insn>Shift right click</insn> to rotate the item
 
+  potion_altar:
+    name: "Potion Altar"
+    lore: |-
+      <star> Multiblock
+      <arrow> A standalone structure for potion effect fusion
+      <arrow> Add potions on the pedestals, then right click the altar to begin the ritual
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.potion_altar.name/></yellow>
+      <diamond> 2x <yellow>Lit Orange Candle</yellow>
+      <diamond> 2x <yellow><lang:pylon.item.potion_pedestal.name/></yellow>
+    waila: "Potion Altar%processing%"
+
+  potion_pedestal:
+    name: "Potion Pedestal"
+    lore: |-
+      <star> Potion Altar multiblock component
+      <arrow> <insn>Right click</insn> to set the displayed item
+      <arrow> <insn>Shift right click</insn> to rotate the item
+
+
   medkit:
     name: "Medkit"
     lore: |-
@@ -2141,7 +2162,7 @@ item:
       <u>Components</u>
       <diamond> 3x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
       
-      <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
+      <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leibar's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
     waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
 
   collimator_pillar:
@@ -2276,6 +2297,9 @@ waila:
   grindstone:
     empty: ""
     not-empty: " | %item% x%amount%"
+    idle: ""
+    processing: " | %bars%"
+  potion_altar:
     idle: ""
     processing: " | %bars%"
   cargo_splitter:
@@ -2514,6 +2538,9 @@ message:
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
+  potion_altar:
+    invalid-potion: "<red>You have to put 2 potions to fuse them"
+    not-same-type: "<red>You have to put 2 potions with same bottles"
   hammer:
     too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
     tier:

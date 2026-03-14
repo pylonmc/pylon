@@ -2870,6 +2870,20 @@ public final class PylonItems {
 
     //</editor-fold>
 
+    public static final ItemStack POTION_PEDESTAL = ItemStackBuilder.rebar(Material.END_STONE_BRICK_WALL, PylonKeys.POTION_PEDESTAL)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, POTION_PEDESTAL, PylonKeys.POTION_PEDESTAL);
+        PylonPages.SIMPLE_MACHINES.addItem(POTION_PEDESTAL);
+    }
+
+    public static final ItemStack POTION_ALTAR = ItemStackBuilder.rebar(Material.STONE_BRICK_SLAB, PylonKeys.POTION_ALTAR)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, POTION_ALTAR, PylonKeys.POTION_ALTAR);
+        PylonPages.SIMPLE_MACHINES.addItem(POTION_ALTAR);
+    }
+
     public static final ItemStack CLEANSING_POTION = ItemStackBuilder.rebar(Material.SPLASH_POTION, PylonKeys.CLEANSING_POTION)
             .set(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
                     .customColor(Color.FUCHSIA)
