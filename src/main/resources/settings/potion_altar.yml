@@ -1,0 +1,18 @@
+tick-interval: 10
+
+sound:
+  start:
+    name: minecraft:entity.ender_eye.launch
+    source: player
+    pitch: 1
+    volume: 1
+  finish:
+    name: minecraft:block.brewing_stand.brew
+    source: player
+    pitch: 1
+    volume: 1
+  cancel:
+    name: minecraft:entity.ender_eye.death
+    source: player
+    pitch: 1
+    volume: 1
