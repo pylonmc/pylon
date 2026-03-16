@@ -131,23 +131,18 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public void onMultiblockRefreshed() {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = 1 ; y <= 4; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    Vector3i position = new Vector3i(x, y, z);
-                    ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
-                    if (casing == null) {
-                        continue;
-                    }
+        for (var position : getComponents().keySet()) {
+            ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
+            if (casing == null) {
+                continue;
+            }
 
-                    if (y == 1) {
-                        casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
-                    } else if (y <= 3) {
-                        casing.setPosition(ReinforcedGlassCasing.Position.MIDDLE);
-                    } else {
-                        casing.setPosition(ReinforcedGlassCasing.Position.TOP);
-                    }
-                }
+            if (position.y == 1) {
+                casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
+            } else if (position.y <= 3) {
+                casing.setPosition(ReinforcedGlassCasing.Position.MIDDLE);
+            } else {
+                casing.setPosition(ReinforcedGlassCasing.Position.TOP);
             }
         }
     }
@@ -156,18 +151,14 @@ public class Fermenter extends RebarBlock implements
     public void onMultiblockUnformed(boolean partUnloaded) {
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
 
-        for (int x = -1; x <= 1; x++) {
-            for (int y = 1 ; y <= 4; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    Vector3i position = new Vector3i(x, y, z);
-                    ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
-                    if (casing == null) {
-                        continue;
-                    }
 
-                    casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
-                }
+        for (var position : getComponents().keySet()) {
+            ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
+            if (casing == null) {
+                continue;
             }
+
+            casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
         }
 
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);
