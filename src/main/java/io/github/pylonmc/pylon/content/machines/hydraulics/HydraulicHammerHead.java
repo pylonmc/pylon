@@ -23,6 +23,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -133,7 +134,11 @@ public class HydraulicHammerHead extends RebarBlock implements
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         super.write(pdc);
-        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, hammer.getStack());
+        ItemStack stack = null;
+        if (hammer != null) {
+            stack = hammer.getStack();
+        }
+        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, stack);
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -208,6 +213,10 @@ public class HydraulicHammerHead extends RebarBlock implements
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                return;
+            }
+
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 

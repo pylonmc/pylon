@@ -60,7 +60,7 @@ public class FluidDrainer extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidDrainer(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, true);
@@ -72,7 +72,7 @@ public class FluidDrainer extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidDrainer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         Preconditions.checkState(getBlock().getBlockData() instanceof Directional);
         Directional directional = (Directional) getBlock().getBlockData();
         drainBlock = getBlock().getRelative(directional.getFacing());

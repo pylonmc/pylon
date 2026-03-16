@@ -16,8 +16,10 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -133,6 +135,9 @@ public final class Bloomery extends RebarBlock implements
         if (!(RebarItem.fromStack(stack) instanceof IronBloom bloom)) return;
 
         Runnable particleSpawner = () -> {
+            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                return;
+            }
             Location pos = getBlock().getLocation().add(
                     ThreadLocalRandom.current().nextDouble(1),
                     1.2,
@@ -186,21 +191,23 @@ public final class Bloomery extends RebarBlock implements
         private void onSetFire(@NotNull BlockPlaceEvent event) {
             Block fire = event.getBlockPlaced();
             if (fire.getType() != Material.FIRE) return;
+
             Block against = event.getBlockAgainst();
             if (against.getType() != Material.COAL_BLOCK) return;
-            List<Item> items = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
+
+            Item gypsum = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
                     .filter(e -> e instanceof Item)
                     .map(e -> (Item) e)
-                    .toList();
-            if (items.isEmpty()) return;
-            Item gypsum = null;
-            for (Item item : items) {
-                if (item.getItemStack().isSimilar(PylonItems.GYPSUM_DUST)) {
-                    gypsum = item;
-                    break;
-                }
-            }
+                    .filter(item -> item.getItemStack().isSimilar(PylonItems.GYPSUM_DUST))
+                    .findFirst()
+                    .orElse(null);
             if (gypsum == null) return;
+
+            if (!Research.canPlayerPickUp(event.getPlayer(), RebarItem.fromStack(PylonItems.BLOOMERY), true)) {
+                event.setCancelled(true);
+                return;
+            }
+
             gypsum.remove();
             BlockStorage.placeBlock(against, PylonKeys.BLOOMERY);
             fire.setType(Material.AIR);

@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
@@ -131,10 +132,10 @@ public class FluidStrainer extends RebarBlock implements
     }
 
     @Override
-    public @NotNull Map<RebarFluid, Double> getSuppliedFluids() {
+    public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         return fluidType != null
-                ? Map.of(fluidType, fluidAmount)
-                : Map.of();
+                ? List.of(new Pair<>(fluidType, fluidAmount))
+                : List.of();
     }
 
     @Override

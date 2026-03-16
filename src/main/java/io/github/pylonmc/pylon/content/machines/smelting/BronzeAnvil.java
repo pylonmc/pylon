@@ -86,6 +86,15 @@ public final class BronzeAnvil extends RebarBlock implements
 
     @Override
     public void postInitialise() {
+        // handle falling case
+        if (getItemDisplay() == null) {
+            addEntity("item", new ItemDisplayBuilder()
+                .transformation(new Matrix4f(BASE_TRANSFORM)
+                    .rotateLocalY(getItemRotation(getBlockFace())))
+                .build(getBlock().getLocation().toCenterLocation())
+            );
+        }
+
         createLogisticGroup("inventory", LogisticGroupType.BOTH, new BronzeAnvilLogisticSLot(getItemDisplay()));
     }
 
@@ -235,11 +244,10 @@ public final class BronzeAnvil extends RebarBlock implements
 
         ItemStack stack = pdc.get(STORED_ITEM, RebarSerializers.ITEM_STACK);
         BlockFace face = pdc.get(DIRECTION_FALLING, RebarSerializers.BLOCK_FACE);
-        addEntity("item", new ItemDisplayBuilder()
-                .itemStack(stack)
-                .transformation(new Matrix4f(BASE_TRANSFORM)
-                        .rotateLocalY(getItemRotation(face)))
-                .build(getBlock().getLocation().toCenterLocation())
+        getItemDisplay().setItemStack(stack);
+        getItemDisplay().setTransformationMatrix(
+                new Matrix4f(BASE_TRANSFORM)
+                        .rotateLocalY(getItemRotation(face))
         );
     }
 

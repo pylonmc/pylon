@@ -71,7 +71,7 @@ public class FluidFilter extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidFilter(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         fluid = null;
 
@@ -107,7 +107,7 @@ public class FluidFilter extends RebarBlock
 
     @SuppressWarnings("unused")
     public FluidFilter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         fluid = pdc.get(FLUID_KEY, RebarSerializers.REBAR_FLUID);
     }
 

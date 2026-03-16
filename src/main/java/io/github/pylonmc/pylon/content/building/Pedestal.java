@@ -47,7 +47,7 @@ public class Pedestal extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Pedestal(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         addEntity("item", new ItemDisplayBuilder()
                 .transformation(transformBuilder().buildForItemDisplay())
@@ -60,7 +60,7 @@ public class Pedestal extends RebarBlock implements
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     public Pedestal(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         
         rotation = pdc.get(ROTATION_KEY, RebarSerializers.DOUBLE);
         locked = pdc.get(LOCKED_KEY, RebarSerializers.BOOLEAN);

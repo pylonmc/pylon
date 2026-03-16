@@ -1,4 +1,4 @@
-tick-interval: 10
+tick-interval: 80
 water-per-second: 350
 buffer: 1000
 
@@ -7,10 +7,10 @@ range:
   vertical: 2
 
 chances:
-  crops: 0.01
-  sugar-cane: 0.007
-  cactus: 0.01
-  sapling: 0.01
+  crops: 0.08
+  sugar-cane: 0.05
+  cactus: 0.08
+  sapling: 0.08
 
 particle-chance: 0.1
 sound:

@@ -13,6 +13,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
@@ -32,14 +33,14 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
     }
 
     @Override
-    public @NotNull Map<RebarFluid, Double> getSuppliedFluids() {
+    public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         SmelteryController controller = getController();
-        if (controller == null) return Map.of();
+        if (controller == null) return List.of();
 
         Pair<RebarFluid, Double> supplied = controller.getBottomFluid();
         return supplied == null
-                ? Map.of()
-                : Map.of(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
+                ? List.of()
+                : List.of(new Pair<>(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
     }
 
     @Override

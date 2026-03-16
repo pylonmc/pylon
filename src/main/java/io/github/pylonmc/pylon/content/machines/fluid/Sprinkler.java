@@ -66,7 +66,7 @@ public class Sprinkler extends RebarBlock
 
     @SuppressWarnings("unused")
     public Sprinkler(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setTickInterval(TICK_INTERVAL);
         createFluidPoint(FluidPointType.INPUT, BlockFace.UP, -0.15F);
         createFluidBuffer(PylonFluids.WATER, BUFFER, true, false);
@@ -74,7 +74,7 @@ public class Sprinkler extends RebarBlock
 
     @SuppressWarnings("unused")
     public Sprinkler(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
