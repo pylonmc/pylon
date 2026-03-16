@@ -131,7 +131,7 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public void onMultiblockRefreshed() {
-        for (var position : getComponents().keySet()) {
+        for (Vector3i position : getComponents().keySet()) {
             ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
             if (casing == null) {
                 continue;
@@ -151,8 +151,7 @@ public class Fermenter extends RebarBlock implements
     public void onMultiblockUnformed(boolean partUnloaded) {
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
 
-
-        for (var position : getComponents().keySet()) {
+        for (Vector3i position : getComponents().keySet()) {
             ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
             if (casing == null) {
                 continue;
