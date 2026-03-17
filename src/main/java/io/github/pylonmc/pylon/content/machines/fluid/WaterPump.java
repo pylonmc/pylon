@@ -15,6 +15,8 @@ import kotlin.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -55,9 +57,18 @@ public class WaterPump extends RebarBlock implements RebarFluidBlock {
 
     @Override
     public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
-        return getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER
-                ? List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0))
-                : List.of();
+        Block below = getBlock().getRelative(BlockFace.DOWN);
+        Material type = below.getType();
+        if (type == Material.WATER || type == Material.WATER_CAULDRON || type == Material.BUBBLE_COLUMN) {
+            return List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
+        }
+
+        BlockData data = below.getBlockData();
+        if (data instanceof Waterlogged waterlogged && waterlogged.isWaterlogged()) {
+            return List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
+        }
+
+        return List.of();
     }
 
     @Override
