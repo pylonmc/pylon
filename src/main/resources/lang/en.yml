@@ -2232,6 +2232,11 @@ item:
     lore: |-
       TODO
 
+  creative_power_source:
+    name: "<#ff00ff>Creative Power Source"
+    lore: |-
+      <arrow> Provides an infinite supply of power
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2547,23 +2552,6 @@ gui:
     lore: |-
       <arrow> The <lang:pylon.item.cargo_overflow_gate.name/> will always send items to this side unless it's full
       <arrow> <insn>Left click</insn> to cycle priority
-  threshold_button:
-    name: "Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  item_threshold_button:
-    name: "Item Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  fluid_threshold_button:
-    name: "Fluid Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Right click</insn> to decrease by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Shift left click</insn> to increase by <unit:milli:buckets>100</unit>
-      <arrow> <insn>Shift right click</insn> to decrease by <unit:milli:buckets>100</unit>
   whitelist-blacklist-toggle:
     whitelist:
       name: "Whitelist mode"
@@ -2626,27 +2614,6 @@ gui:
     name: "Current inventory: <yellow>%inventory%"
     lore: |-
       <arrow> <insn>Click</insn> to cycle
-  fluid_meter:
-    name: "<attr>Measurement duration:</attr> %measurement-duration%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_accumulator:
-    name: "<attr>Amount:</attr> %amount%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_limiter:
-    name: "<attr>Max flow rate:</attr> %max-flow-rate%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
   assembly_table:
     step: "<#adc5ce>Step %step_index%: <white>%tool% <gray>(x%clicks%)"
     no_recipe: "<red>No recipe"
@@ -2655,6 +2622,30 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  number-button:
+    name: "<white><attr>%name%:</attr> %value%"
+    lore: |-
+      <arrow> <insn>Left click</insn> to increase by <yellow>%increment%</yellow>
+      <arrow> <insn>Right click</insn> to decrease by <yellow>%increment%</yellow>
+      <arrow> <insn>Shift left click</insn> to increase by <yellow>%increment-shift%</yellow>
+      <arrow> <insn>Shift right click</insn> to decrease by <yellow>%increment-shift%</yellow>
+      <arrow> <insn>Press <key:key.drop/></insn> to enter the value manually
+    min: "<arrow> <attr>Minimum value:</attr> %min%"
+    max: "<arrow> <attr>Maximum value:</attr> %max%"
+    enter-value:
+      none: "Enter a new value:"
+      min: "Enter a new value (min: %min%):"
+      max: "Enter a new value (max: %max%):"
+      both: "Enter a new value (min: %min%, max: %max%):"
+      invalid: "<red>Invalid input, please enter an integer"
+  voltage: "Voltage"
+  power: "Power"
+  max-flow-rate: "Max flow rate"
+  amount: "Amount"
+  measurement-duration: "Measurement duration"
+  threshold: "Threshold"
+  item-threshold: "Item threshold"
+  fluid-threshold: "Fluid threshold"
 
 inventory:
   fuel: "Fuel"

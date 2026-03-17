@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -32,17 +33,12 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -186,7 +182,18 @@ public class FluidMeter extends RebarBlock implements
         return Gui.builder()
                 .setStructure("# # # # m # # # #")
                 .addIngredient('#', GuiItems.background())
-                .addIngredient('m', new MeasurementDurationItem())
+                .addIngredient('m', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.measurement-duration"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(minNumberOfMeasurements)
+                        .max(maxNumberOfMeasurements)
+                        .valueGetter(() -> numberOfMeasurements)
+                        .valueSetter(value -> numberOfMeasurements = value)
+                        .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
+                        .reopenWindow(this::openWindow)
+                        .build())
                 .build();
     }
 
@@ -238,31 +245,5 @@ public class FluidMeter extends RebarBlock implements
 
     public static Duration getDuration(int numberOfMeasurements) {
         return Duration.ofMillis((long) numberOfMeasurements * RebarConfig.FLUID_TICK_INTERVAL * 50);
-    }
-
-    public class MeasurementDurationItem extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NotNull Player viewer) {
-            return ItemStackBuilder.of(Material.WHITE_CONCRETE)
-                    .name(Component.translatable("pylon.gui.fluid_meter.name").arguments(
-                            RebarArgument.of("measurement-duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true))
-                    ))
-                    .lore(Component.translatable("pylon.gui.fluid_meter.lore"));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            int newValue;
-            if (clickType.isLeftClick()) {
-                newValue = numberOfMeasurements + (clickType.isShiftClick() ? 10 : 1);
-            } else if (clickType.isRightClick()) {
-                newValue = numberOfMeasurements + (clickType.isShiftClick() ? -10 : -1);
-            } else {
-                newValue = numberOfMeasurements;
-            }
-            numberOfMeasurements = Math.clamp(newValue, minNumberOfMeasurements, maxNumberOfMeasurements);
-            notifyWindows();
-        }
     }
 }

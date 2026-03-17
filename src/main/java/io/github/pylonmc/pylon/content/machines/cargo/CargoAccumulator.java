@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -26,17 +27,12 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,8 +62,6 @@ public class CargoAccumulator extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":input");
     public final ItemStackBuilder outputStack = ItemStackBuilder.of(Material.RED_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":output");
-    public final ItemStackBuilder thresholdButtonStack = ItemStackBuilder.gui(Material.WHITE_CONCRETE, getKey() + "threshold_button")
-            .lore(Component.translatable("pylon.gui.threshold_button.lore"));
 
     public static class Item extends RebarItem {
 
@@ -176,7 +170,17 @@ public class CargoAccumulator extends RebarBlock implements
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('o', outputInventory)
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', new ThresholdButton())
+                .addIngredient('t', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.threshold"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(1)
+                        .valueGetter(() -> threshold)
+                        .valueSetter(value -> threshold = value)
+                        .valueFormatter(UnitFormat.ITEMS::format)
+                        .reopenWindow(this::openWindow)
+                        .build())
                 .build();
     }
 
@@ -246,28 +250,6 @@ public class CargoAccumulator extends RebarBlock implements
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
             getHeldEntityOrThrow(BlockDisplay.class, "side2")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
-        }
-    }
-
-    public class ThresholdButton extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            return thresholdButtonStack
-                .name((Component.translatable("pylon.gui.threshold_button.name").arguments(
-                        RebarArgument.of("threshold", threshold)
-                )));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            if (clickType.isLeftClick()) {
-                threshold += 1;
-            } else {
-                threshold = Math.max(1, threshold - 1);
-            }
-            notifyWindows();
-            doTransfer();
         }
     }
 }

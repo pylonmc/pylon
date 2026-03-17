@@ -2902,6 +2902,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRICITY_PYLON);
     }
 
+    public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
+        PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
+    }
+
     static {
         PylonPages.initialise();
         PylonGuides.initialise();

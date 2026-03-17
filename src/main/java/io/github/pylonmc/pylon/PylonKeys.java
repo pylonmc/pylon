@@ -439,4 +439,5 @@ public class PylonKeys {
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 
     public static final NamespacedKey ELECTRICITY_PYLON = pylonKey("electricity_pylon");
+    public static final NamespacedKey CREATIVE_POWER_SOURCE = pylonKey("creative_power_source");
 }
