@@ -1822,6 +1822,7 @@ item:
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1830,6 +1831,7 @@ item:
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1838,6 +1840,7 @@ item:
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1846,6 +1849,7 @@ item:
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1854,6 +1858,7 @@ item:
     lore: |-
       <arrow> Get an extra drop when breaking a crop
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_advanced:
@@ -1861,6 +1866,7 @@ item:
     lore: |-
       <arrow> Get an extra drop when breaking a crop
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_ultimate:
@@ -1868,6 +1874,7 @@ item:
     lore: |-
       <arrow> Get an extra drop when breaking a crop
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_palladium:
@@ -1875,6 +1882,7 @@ item:
     lore: |-
       <arrow> Get an extra drop when breaking a crop
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   bartering_talisman_simple:
@@ -1882,6 +1890,7 @@ item:
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_advanced:
@@ -1889,6 +1898,7 @@ item:
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_ultimate:
@@ -1896,6 +1906,7 @@ item:
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_palladium:
@@ -1903,6 +1914,7 @@ item:
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   water_breathing_talisman_simple:
@@ -1910,6 +1922,7 @@ item:
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_advanced:
@@ -1917,6 +1930,7 @@ item:
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_ultimate:
@@ -1924,6 +1938,7 @@ item:
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_palladium:
@@ -1931,6 +1946,7 @@ item:
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
   luck_talisman_simple:
@@ -1938,6 +1954,7 @@ item:
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_advanced:
@@ -1945,6 +1962,7 @@ item:
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_ultimate:
@@ -1952,6 +1970,7 @@ item:
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_palladium:
@@ -1959,6 +1978,7 @@ item:
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   breeding_talisman_simple:
@@ -1966,6 +1986,7 @@ item:
     lore: |-
       <arrow> Bred children grow up instantly
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_advanced:
@@ -1973,6 +1994,7 @@ item:
     lore: |-
       <arrow> Bred children grow up instantly
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_ultimate:
@@ -1980,6 +2002,7 @@ item:
     lore: |-
       <arrow> Bred children grow up instantly
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_palladium:
@@ -1987,6 +2010,7 @@ item:
     lore: |-
       <arrow> Bred children grow up instantly
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   enchanting_talisman_simple:
@@ -1994,6 +2018,7 @@ item:
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_advanced:
@@ -2001,6 +2026,7 @@ item:
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_ultimate:
@@ -2008,6 +2034,7 @@ item:
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_palladium:
@@ -2015,6 +2042,7 @@ item:
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   hunting_talisman_simple:
@@ -2022,6 +2050,7 @@ item:
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_advanced:
@@ -2029,6 +2058,7 @@ item:
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_ultimate:
@@ -2036,6 +2066,7 @@ item:
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_palladium:
@@ -2043,16 +2074,21 @@ item:
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   flight_ring:
     name: "<white>Flight Ring"
+    lore: |-
+      <arrow> Allows creative flight
+      <arrow> Does not stack
 
   experience_talisman_simple:
     name: "Simple Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_advanced:
@@ -2060,6 +2096,7 @@ item:
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_ultimate:
@@ -2067,6 +2104,7 @@ item:
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_palladium:
@@ -2074,12 +2112,8 @@ item:
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Only works while in your inventory
+      <arrow> Does not stack
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
-
-  palladium_flight_ring:
-    name: "<white>Palladium Flight Ring"
-    lore: |-
-      <arrow> Allows creative flight
 
   assembly_table:
     name: "<white>Assembly Table"
