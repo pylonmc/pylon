@@ -5,7 +5,7 @@ import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -13,54 +13,42 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class ElectricityPylon extends RebarBlock implements
-        RebarInteractBlock,
         RebarBreakHandler,
         Listener,
         RebarElectricBlock,
-        RebarTickingBlock {
+        RebarTickingBlock,
+        RebarEntityHolderBlock {
 
     private static final NamespacedKey CONNECTING_KEY = pylonKey("connecting");
     private static final NamespacedKey CONNECTING_ID_KEY = pylonKey("connecting_id");
 
-    private static final NamespacedKey CONNECTED_KEY = pylonKey("connected");
-    private static final PersistentDataType<?, Map<UUID, UUID>> CONNECTED_TYPE = RebarSerializers.MAP.mapTypeFrom(
-            RebarSerializers.UUID,
-            RebarSerializers.UUID
-    );
-
-    private final Map<UUID, UUID> connected;
-
     @SuppressWarnings("unused")
     public ElectricityPylon(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
-        connected = new HashMap<>();
 
         setTickInterval(10);
         createElectricNode(getBlock().getLocation().toCenterLocation(), ElectricNode.Type.CONNECTOR);
@@ -69,31 +57,20 @@ public final class ElectricityPylon extends RebarBlock implements
     @SuppressWarnings("unused")
     public ElectricityPylon(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        connected = pdc.get(CONNECTED_KEY, CONNECTED_TYPE);
     }
 
     @Override
     public void postInitialise() {
         Bukkit.getPluginManager().registerEvents(this, Pylon.getInstance());
 
-        getElectricNode().onDisconnect((thisNode, otherNode) -> {
-            UUID displayId = connected.remove(otherNode.getId());
-            if (displayId == null) return;
-            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(displayId);
-            if (display != null) display.remove();
-        });
-    }
-
-    @Override
-    public void write(@NotNull PersistentDataContainer pdc) {
-        super.write(pdc);
-        pdc.set(CONNECTED_KEY, CONNECTED_TYPE, connected);
+        getElectricNode().onDisconnect((thisNode, otherNode) -> tryRemoveEntity(otherNode.getId().toString()));
     }
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         PlayerMoveEvent.getHandlerList().unregister(this);
         PlayerQuitEvent.getHandlerList().unregister(this);
+        PlayerInteractEvent.getHandlerList().unregister(this);
     }
 
     @Override
@@ -103,60 +80,6 @@ public final class ElectricityPylon extends RebarBlock implements
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
                 .receivers(32, true)
                 .spawn();
-    }
-
-    @Override
-    @MultiHandler(priorities = EventPriority.MONITOR)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        Player player = event.getPlayer();
-        if (player.isSneaking()
-                || event.getHand() != EquipmentSlot.HAND
-                || event.getAction() != Action.RIGHT_CLICK_BLOCK
-                || event.useInteractedBlock() == Event.Result.DENY
-        ) return;
-
-        BlockPosition thisPos = new BlockPosition(getBlock());
-        PersistentDataContainer playerPdc = player.getPersistentDataContainer();
-        BlockPosition connecting = playerPdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
-        if (connecting == null) {
-            Location blockLocation = getBlock().getLocation().toCenterLocation();
-            Location playerLocation = player.getEyeLocation().subtract(0, 0.5, 0);
-            ItemDisplay display = new ItemDisplayBuilder()
-                    .transformation(getDisplayTransform(blockLocation, playerLocation))
-                    .material(Material.COPPER_BLOCK)
-                    .build(blockLocation.add(playerLocation.subtract(blockLocation).multiply(0.5)));
-            playerPdc.set(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION, thisPos);
-            playerPdc.set(CONNECTING_ID_KEY, RebarSerializers.UUID, display.getUniqueId());
-        } else if (connecting.equals(thisPos)) {
-            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(playerPdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
-            assert display != null;
-            display.remove();
-            playerPdc.remove(CONNECTING_KEY);
-            playerPdc.remove(CONNECTING_ID_KEY);
-        } else {
-            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(playerPdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
-            assert display != null;
-
-            ElectricityPylon otherPylon = BlockStorage.getAs(ElectricityPylon.class, connecting);
-            assert otherPylon != null;
-            ElectricNode thisNode = getElectricNode();
-            ElectricNode otherNode = otherPylon.getElectricNode();
-            if (thisNode.isConnectedTo(otherNode)) {
-                // disconnect if already connected
-                display.remove();
-                thisNode.disconnect(otherNode);
-            } else {
-                Location thisCenter = getBlock().getLocation().toCenterLocation();
-                Location connectingLocation = connecting.getLocation().toCenterLocation();
-                display.setTransformationMatrix(getDisplayTransform(thisCenter, connectingLocation));
-                display.teleportAsync(thisCenter.add(connectingLocation.clone().subtract(thisCenter).multiply(0.5)));
-                thisNode.connect(otherNode);
-                connected.put(otherNode.getId(), display.getUniqueId());
-                otherPylon.connected.put(thisNode.getId(), display.getUniqueId());
-            }
-            playerPdc.remove(CONNECTING_KEY);
-            playerPdc.remove(CONNECTING_ID_KEY);
-        }
     }
 
     @EventHandler
@@ -201,5 +124,72 @@ public final class ElectricityPylon extends RebarBlock implements
                 .lookAlong(from, to)
                 .scale(0.05, 0.05, from.distance(to))
                 .buildForItemDisplay();
+    }
+
+    private static Location getMidpoint(Location a, Location b) {
+        return a.clone().add(b).multiply(0.5);
+    }
+
+    public static class InteractionListener implements Listener {
+        @EventHandler(ignoreCancelled = true)
+        private void onRightClickElectricBlock(PlayerInteractEvent event) {
+            if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
+
+            Block clickedBlock = event.getClickedBlock();
+            if (clickedBlock == null) return;
+            RebarElectricBlock electricBlock = BlockStorage.getAs(RebarElectricBlock.class, clickedBlock);
+            if (electricBlock == null) return;
+
+            BlockPosition clickedPos = new BlockPosition(clickedBlock);
+            Player player = event.getPlayer();
+            PersistentDataContainer playerPdc = player.getPersistentDataContainer();
+            BlockPosition connecting = playerPdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
+            if (connecting == null) {
+                if (electricBlock instanceof ElectricityPylon && !player.isSneaking() && event.getAction().isRightClick()) {
+                    Location connectionLocation = electricBlock.getElectricNodes().getFirst().getConnectionPoint();
+                    Location playerLocation = player.getEyeLocation().subtract(0, 0.5, 0);
+                    ItemDisplay display = new ItemDisplayBuilder()
+                            .transformation(getDisplayTransform(connectionLocation, playerLocation))
+                            .material(Material.COPPER_BLOCK)
+                            .build(getMidpoint(connectionLocation, playerLocation));
+                    playerPdc.set(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION, clickedPos);
+                    playerPdc.set(CONNECTING_ID_KEY, RebarSerializers.UUID, display.getUniqueId());
+                }
+                return;
+            }
+
+            event.setUseInteractedBlock(Event.Result.DENY);
+
+            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(playerPdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
+            assert display != null;
+            if (connecting.equals(clickedPos)) {
+                display.remove();
+                playerPdc.remove(CONNECTING_KEY);
+                playerPdc.remove(CONNECTING_ID_KEY);
+                return;
+            }
+
+            ElectricityPylon connectingBlock = BlockStorage.getAsOrThrow(ElectricityPylon.class, connecting);
+            ElectricNode connectingNode = connectingBlock.getElectricNodes().getFirst();
+            ElectricNode clickedNode = electricBlock.getElectricNodes().getFirst();
+            if (!clickedNode.getConnections().isEmpty() && clickedNode.getType() != ElectricNode.Type.CONNECTOR) {
+                player.sendActionBar(Component.translatable("pylon.message.electricity_pylon.already_connected"));
+                return;
+            }
+
+            if (connectingNode.isConnectedTo(clickedNode)) {
+                display.remove();
+                connectingNode.disconnect(clickedNode);
+            } else {
+                Location connectingLocation = connectingNode.getConnectionPoint();
+                Location clickedLocation = clickedNode.getConnectionPoint();
+                display.setTransformationMatrix(getDisplayTransform(connectingLocation, clickedLocation));
+                display.teleportAsync(getMidpoint(connectingLocation, clickedLocation));
+                connectingNode.connect(clickedNode);
+                connectingBlock.addEntity(clickedNode.getId().toString(), display);
+            }
+            playerPdc.remove(CONNECTING_KEY);
+            playerPdc.remove(CONNECTING_ID_KEY);
+        }
     }
 }
