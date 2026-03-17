@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
-import io.github.pylonmc.pylon.content.electricity.ElectricityPylon;
+import io.github.pylonmc.pylon.content.machines.electric.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;

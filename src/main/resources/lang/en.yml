@@ -2237,6 +2237,13 @@ item:
     lore: |-
       <arrow> Provides an infinite supply of power
 
+  electric_grindstone:
+    name: "Electric Grindstone"
+    lore: |-
+      <arrow> Grinds items using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"

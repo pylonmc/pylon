@@ -3,12 +3,13 @@ package io.github.pylonmc.pylon;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
-import io.github.pylonmc.pylon.content.electricity.CreativePowerSource;
-import io.github.pylonmc.pylon.content.electricity.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.electric.CreativePowerSource;
+import io.github.pylonmc.pylon.content.machines.electric.ElectricGrindstone;
+import io.github.pylonmc.pylon.content.machines.electric.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -171,5 +172,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
         RebarBlock.register(PylonKeys.ELECTRICITY_PYLON, Material.SEA_LANTERN, ElectricityPylon.class);
         RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
     }
 }
