@@ -1,13 +1,10 @@
 package io.github.pylonmc.pylon.content.electricity;
 
-import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
@@ -26,19 +23,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
-import java.util.List;
 import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class ElectricityPylon extends RebarBlock implements
-        RebarBreakHandler,
-        Listener,
         RebarElectricBlock,
         RebarTickingBlock,
         RebarEntityHolderBlock {
@@ -61,15 +54,7 @@ public final class ElectricityPylon extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-        Bukkit.getPluginManager().registerEvents(this, Pylon.getInstance());
-
         getElectricNode().onDisconnect((thisNode, otherNode) -> tryRemoveEntity(otherNode.getId().toString()));
-    }
-
-    @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        PlayerMoveEvent.getHandlerList().unregister(this);
-        PlayerQuitEvent.getHandlerList().unregister(this);
     }
 
     @Override
@@ -79,39 +64,6 @@ public final class ElectricityPylon extends RebarBlock implements
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
                 .receivers(32, true)
                 .spawn();
-    }
-
-    @EventHandler
-    private void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.hasChangedPosition()) return;
-        Player player = event.getPlayer();
-        PersistentDataContainer pdc = player.getPersistentDataContainer();
-        if (!pdc.has(CONNECTING_KEY)) return;
-        BlockPosition connecting = pdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
-        assert connecting != null;
-        Location connectingLocation = connecting.getLocation().toCenterLocation();
-        Location playerLocation = player.getEyeLocation().subtract(0, 0.5, 0);
-        ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(pdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
-        assert display != null;
-        display.setTeleportDuration(1);
-        display.setInterpolationDelay(0);
-        display.setInterpolationDuration(1);
-        display.setTransformationMatrix(getDisplayTransform(connectingLocation, playerLocation));
-        display.teleportAsync(connectingLocation.add(playerLocation.clone().subtract(connectingLocation).multiply(0.5)));
-    }
-
-    @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        PersistentDataContainer pdc = player.getPersistentDataContainer();
-        if (!pdc.has(CONNECTING_KEY)) return;
-        BlockPosition connecting = pdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
-        assert connecting != null;
-        ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(pdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
-        assert display != null;
-        display.remove();
-        pdc.remove(CONNECTING_KEY);
-        pdc.remove(CONNECTING_ID_KEY);
     }
 
     private ElectricNode getElectricNode() {
@@ -189,6 +141,39 @@ public final class ElectricityPylon extends RebarBlock implements
             }
             playerPdc.remove(CONNECTING_KEY);
             playerPdc.remove(CONNECTING_ID_KEY);
+        }
+
+        @EventHandler
+        private void onPlayerQuit(PlayerQuitEvent event) {
+            Player player = event.getPlayer();
+            PersistentDataContainer pdc = player.getPersistentDataContainer();
+            if (!pdc.has(CONNECTING_KEY)) return;
+            BlockPosition connecting = pdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
+            assert connecting != null;
+            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(pdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
+            assert display != null;
+            display.remove();
+            pdc.remove(CONNECTING_KEY);
+            pdc.remove(CONNECTING_ID_KEY);
+        }
+
+        @EventHandler
+        private void onPlayerMove(PlayerMoveEvent event) {
+            if (!event.hasChangedPosition()) return;
+            Player player = event.getPlayer();
+            PersistentDataContainer pdc = player.getPersistentDataContainer();
+            if (!pdc.has(CONNECTING_KEY)) return;
+            BlockPosition connecting = pdc.get(CONNECTING_KEY, RebarSerializers.BLOCK_POSITION);
+            assert connecting != null;
+            Location connectingLocation = connecting.getLocation().toCenterLocation();
+            Location playerLocation = player.getEyeLocation().subtract(0, 0.5, 0);
+            ItemDisplay display = (ItemDisplay) Bukkit.getEntity(Objects.requireNonNull(pdc.get(CONNECTING_ID_KEY, RebarSerializers.UUID)));
+            assert display != null;
+            display.setTeleportDuration(1);
+            display.setInterpolationDelay(0);
+            display.setInterpolationDuration(1);
+            display.setTransformationMatrix(getDisplayTransform(connectingLocation, playerLocation));
+            display.teleportAsync(connectingLocation.add(playerLocation.clone().subtract(connectingLocation).multiply(0.5)));
         }
     }
 }
