@@ -70,7 +70,6 @@ public final class ElectricityPylon extends RebarBlock implements
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         PlayerMoveEvent.getHandlerList().unregister(this);
         PlayerQuitEvent.getHandlerList().unregister(this);
-        PlayerInteractEvent.getHandlerList().unregister(this);
     }
 
     @Override
