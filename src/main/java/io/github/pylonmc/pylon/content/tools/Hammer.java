@@ -141,7 +141,6 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             }
 
             if (BlockStorage.getAs(RebarGuiBlock.class, clicked) != null || clicked.getState() instanceof BlockInventoryHolder) {
-                event.setUseInteractedBlock(Event.Result.ALLOW);
                 return;
             }
 
@@ -150,6 +149,9 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         } else if (event.getPlayer().hasCooldown(getStack())) {
             return;
         }
+
+        // if we are clicking on an inventory don't do anything
+        if (event.useInteractedBlock() == Event.Result.ALLOW) return;
 
         if (event.getAction().isLeftClick()) {
             tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
