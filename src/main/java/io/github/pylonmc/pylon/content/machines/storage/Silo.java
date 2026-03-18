@@ -69,6 +69,26 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
                     )
             );
         }
+
+        public @Nullable ItemStack getSiloStack() {
+            return getStack().getPersistentDataContainer().get(STACK_KEY, RebarSerializers.ITEM_STACK);
+        }
+
+        public @Nullable Long getSiloAmount() {
+            return getStack().getPersistentDataContainer().get(AMOUNT_KEY, RebarSerializers.LONG);
+        }
+
+        public void setSiloStack(ItemStack stack) {
+            getStack().editPersistentDataContainer(pdc -> {
+                pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, stack);
+            });
+        }
+
+        public void setSiloAmount(long amount) {
+            getStack().editPersistentDataContainer(pdc -> {
+                pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
+            });
+        }
     }
 
     public Silo(@NotNull Block block, @NotNull BlockCreateContext context) {

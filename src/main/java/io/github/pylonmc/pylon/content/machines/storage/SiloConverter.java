@@ -5,7 +5,6 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
@@ -88,39 +87,40 @@ public class SiloConverter extends RebarBlock implements RebarGuiBlock, RebarVir
         ItemStack input = inputInventory.getItem(0);
         ItemStack material = materialInventory.getItem(0);
 
-        if (material == null || !(RebarItem.fromStack(input) instanceof Silo.Item)) {
+        if (material == null || !(RebarItem.fromStack(input) instanceof Silo.Item inputSilo)) {
             outputInventory.setItem(new MachineUpdateReason(), 0, null);
             return;
         }
 
-        ItemStack siloStack = input.getPersistentDataContainer().get(Silo.STACK_KEY, RebarSerializers.ITEM_STACK);
-        Long siloAmount = input.getPersistentDataContainer().get(Silo.AMOUNT_KEY, RebarSerializers.LONG);
+        ItemStack inputSiloStack = inputSilo.getSiloStack();
+        Long inputSiloAmount = inputSilo.getSiloAmount();
 
         for (SiloConverterRecipe recipe : SiloConverterRecipe.RECIPE_TYPE) {
             if (!recipe.material().matches(material)) {
                 continue;
             }
 
-            ItemStack newSilo = recipe.result().clone();
+            Silo.Item newSilo = RebarItem.fromStack(recipe.result().clone(), Silo.Item.class);
 
-            if (RebarItem.fromStack(newSilo).getKey().equals(RebarItem.fromStack(input).getKey())) {
+            if (newSilo.getKey().equals(RebarItem.fromStack(input).getKey())) {
                 continue;
             }
 
-            if (siloStack != null && siloAmount != null) {
-                long newSiloCapacity = RebarItem.fromStack(newSilo, Silo.Item.class).capacityStacks * siloStack.getMaxStackSize();
-                if (siloAmount > newSiloCapacity) {
+            if (inputSiloStack != null && inputSiloAmount != null) {
+                long newSiloCapacity = newSilo.capacityStacks * inputSiloStack.getMaxStackSize();
+                if (inputSiloAmount > newSiloCapacity) {
                     continue;
                 }
             }
 
-            newSilo.editPersistentDataContainer(pdc -> {
-                if (siloStack != null && siloAmount != null) {
-                    pdc.set(Silo.STACK_KEY, RebarSerializers.ITEM_STACK, siloStack);
-                    pdc.set(Silo.AMOUNT_KEY, RebarSerializers.LONG, siloAmount);
-                }
-            });
-            outputInventory.setItem(new MachineUpdateReason(), 0, newSilo);
+            if (inputSiloStack != null) {
+                newSilo.setSiloStack(inputSiloStack);
+            }
+            if (inputSiloAmount != null) {
+                newSilo.setSiloAmount(inputSiloAmount);
+            }
+
+            outputInventory.setItem(new MachineUpdateReason(), 0, newSilo.getStack());
             break;
         }
     }
