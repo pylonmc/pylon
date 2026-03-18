@@ -14,6 +14,8 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -38,8 +40,8 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
     public static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
 
     public final long capacityStacks = getSettings().getOrThrow("capacity-stacks", ConfigAdapter.LONG);
-    public @Nullable ItemStack stack;
-    public long amount;
+    @Getter @Setter private @Nullable ItemStack stack;
+    @Getter @Setter private long amount;
 
     public static class Item extends RebarItem {
 
@@ -131,7 +133,7 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
                 amount = 0;
             }
 
-            if (stack.asOne().equals(stackInHand.asOne()) && amount != getCapacityItems()) {
+            if (stack.isSimilar(stackInHand) && amount != getCapacityItems()) {
                 int toTransfer = event.getPlayer().isSneaking()
                         ? (int) Math.min(getCapacityItems() - amount, stackInHand.getAmount())
                         : 1;

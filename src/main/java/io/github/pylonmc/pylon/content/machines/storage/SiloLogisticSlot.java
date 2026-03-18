@@ -16,12 +16,12 @@ public class SiloLogisticSlot implements LogisticSlot {
 
     @Override
     public @Nullable ItemStack getItemStack() {
-        return silo.stack;
+        return silo.getStack();
     }
 
     @Override
     public long getAmount() {
-        return silo.amount;
+        return silo.getAmount();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SiloLogisticSlot implements LogisticSlot {
 
     @Override
     public void set(@Nullable ItemStack stack, long amount) {
-        silo.stack = stack;
-        silo.amount = amount;
+        silo.setStack(stack);
+        silo.setAmount(amount);
     }
 }
