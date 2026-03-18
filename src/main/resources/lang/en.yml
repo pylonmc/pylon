@@ -1821,8 +1821,8 @@ item:
     name: "Simple Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1830,8 +1830,8 @@ item:
     name: "Advanced Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1839,8 +1839,8 @@ item:
     name: "Ultimate Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1848,8 +1848,8 @@ item:
     name: "Palladium Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
 
@@ -1857,224 +1857,224 @@ item:
     name: "Simple Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_advanced:
     name: "Advanced Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_ultimate:
     name: "Ultimate Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   farming_talisman_palladium:
     name: "Palladium Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
   bartering_talisman_simple:
     name: "Simple Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_advanced:
     name: "Advanced Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_ultimate:
     name: "Ultimate Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   bartering_talisman_palladium:
     name: "Palladium Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   water_breathing_talisman_simple:
     name: "<white>Simple Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_advanced:
     name: "<white>Advanced Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_ultimate:
     name: "<white>Ultimate Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_palladium:
     name: "<white>Palladium Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
   luck_talisman_simple:
     name: "Simple Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_advanced:
     name: "Advanced Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_ultimate:
     name: "Ultimate Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   luck_talisman_palladium:
     name: "Palladium Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
   breeding_talisman_simple:
     name: "Simple Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_advanced:
     name: "Advanced Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_ultimate:
     name: "Ultimate Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   breeding_talisman_palladium:
     name: "Palladium Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   enchanting_talisman_simple:
     name: "<white>Simple Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_advanced:
     name: "<white>Advanced Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_ultimate:
     name: "<white>Ultimate Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_palladium:
     name: "<white>Palladium Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   hunting_talisman_simple:
     name: "<white>Simple Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_advanced:
     name: "<white>Advanced Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_ultimate:
     name: "<white>Ultimate Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_palladium:
     name: "<white>Palladium Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   flight_ring:
@@ -2087,32 +2087,32 @@ item:
     name: "Simple Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_advanced:
     name: "Advanced Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_ultimate:
     name: "Ultimate Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   experience_talisman_palladium:
     name: "Palladium Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
-      <arrow> Only works while in your inventory
       <arrow> Does not stack
+      <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   assembly_table:
