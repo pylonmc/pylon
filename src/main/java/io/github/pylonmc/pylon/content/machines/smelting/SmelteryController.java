@@ -20,7 +20,6 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.nms.NmsAccessor;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -480,7 +479,7 @@ public final class SmelteryController extends SmelteryComponent
 
     private void updateFluidDisplay() {
         List<TextDisplay> pixels = getPixels();
-        if (pixels.isEmpty() || !RebarUtils.hasTrackers(pixels.getFirst())) {
+        if (pixels.isEmpty() || !RebarUtils.hasAnyTracker(pixels.getFirst())) {
             // Don't update the smeltery display if no one can see it.
             return;
         }
