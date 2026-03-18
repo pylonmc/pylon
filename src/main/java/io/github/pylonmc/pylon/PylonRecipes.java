@@ -58,7 +58,7 @@ public class PylonRecipes {
                 key,
                 input,
                 output,
-                Gui.builder()
+                () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
                                 "# # # # # # # # #",
@@ -70,7 +70,7 @@ public class PylonRecipes {
                         .addIngredient('i', new FluidButton(input.amountMillibuckets(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.from(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.from(PylonItems.COHESIVE_UNIT))
-                        ::build
+                        .build()
         ).register();
     }
 
@@ -98,7 +98,7 @@ public class PylonRecipes {
                 key,
                 input,
                 output,
-                Gui.builder()
+                () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
                                 "# H # # # # # p #",
@@ -113,7 +113,7 @@ public class PylonRecipes {
                         .addIngredient('s', ItemButton.from(dusts))
                         .addIngredient('p', ItemButton.from(PylonItems.PALLADIUM_DUST))
                         .addIngredient('D', new FluidButton((double) hydraulicUse, PylonFluids.DIRTY_HYDRAULIC_FLUID))
-                        ::build
+                        .build()
         ).register();
     }
 
@@ -134,7 +134,7 @@ public class PylonRecipes {
                 key,
                 List.of(ethanol, plantOil),
                 List.of(output),
-                Gui.builder()
+                () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
                                 "# p # # # # # # #",
@@ -147,7 +147,7 @@ public class PylonRecipes {
                         .addIngredient('o', new FluidButton(1.0, PylonFluids.BIODIESEL))
                         .addIngredient('p', new FluidButton(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
                         .addIngredient('e', new FluidButton(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
-                        ::build
+                        .build()
         ).register();
     }
 
@@ -164,7 +164,7 @@ public class PylonRecipes {
                 key,
                 input,
                 output,
-                Gui.builder()
+                () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
                                 "# # # # # # # # #",
@@ -176,7 +176,7 @@ public class PylonRecipes {
                         .addIngredient('i', ItemButton.from(ItemStack.of(Material.SUGAR_CANE)))
                         .addIngredient('x', ItemButton.from(PylonItems.FERMENTER))
                         .addIngredient('o', new FluidButton(ethanolPerSugarcane, PylonFluids.ETHANOL))
-                        ::build
+                        .build()
         ).register();
     }
 }
