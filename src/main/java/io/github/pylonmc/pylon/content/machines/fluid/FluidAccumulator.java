@@ -84,7 +84,7 @@ public class FluidAccumulator extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public FluidAccumulator(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         this.isDischarging = false;
 
@@ -114,7 +114,7 @@ public class FluidAccumulator extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public FluidAccumulator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
 
         this.isDischarging = pdc.get(IS_DISCHARGING_KEY, RebarSerializers.BOOLEAN);
     }

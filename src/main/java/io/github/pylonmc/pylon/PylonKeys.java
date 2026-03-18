@@ -421,6 +421,17 @@ public class PylonKeys {
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 
+    public static final NamespacedKey STEEL_HELMET = pylonKey("steel_helmet");
+    public static final NamespacedKey STEEL_CHESTPLATE = pylonKey("steel_chestplate");
+    public static final NamespacedKey STEEL_LEGGINGS = pylonKey("steel_leggings");
+    public static final NamespacedKey STEEL_BOOTS = pylonKey("steel_boots");
+
+    public static final NamespacedKey STEEL_SWORD = pylonKey("steel_sword");
+    public static final NamespacedKey STEEL_AXE = pylonKey("steel_axe");
+    public static final NamespacedKey STEEL_PICKAXE = pylonKey("steel_pickaxe");
+    public static final NamespacedKey STEEL_SHOVEL = pylonKey("steel_shovel");
+    public static final NamespacedKey STEEL_HOE = pylonKey("steel_hoe");
+
     public static final NamespacedKey PALLADIUM_HELMET = pylonKey("palladium_helmet");
     public static final NamespacedKey PALLADIUM_CHESTPLATE = pylonKey("palladium_chestplate");
     public static final NamespacedKey PALLADIUM_LEGGINGS = pylonKey("palladium_leggings");

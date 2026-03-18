@@ -64,7 +64,7 @@ public final class MixingPot extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public MixingPot(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidDisplay();
         setFacing(context.getFacing());
         setCapacity(1000.0);
@@ -74,7 +74,7 @@ public final class MixingPot extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public MixingPot(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

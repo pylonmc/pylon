@@ -47,12 +47,12 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {
