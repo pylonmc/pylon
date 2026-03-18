@@ -20,7 +20,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class WaterPump extends RebarBlock implements RebarFluidBlock {
@@ -45,13 +44,13 @@ public class WaterPump extends RebarBlock implements RebarFluidBlock {
 
     @SuppressWarnings("unused")
     public WaterPump(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.UP);
     }
 
     @SuppressWarnings("unused")
     public WaterPump(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

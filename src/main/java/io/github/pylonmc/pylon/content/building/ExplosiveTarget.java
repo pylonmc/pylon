@@ -42,12 +42,12 @@ public class ExplosiveTarget extends RebarBlock implements RebarTargetBlock {
 
     @SuppressWarnings("unused")
     public ExplosiveTarget(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public ExplosiveTarget(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)

@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.entity.EntityCompostItemEvent;
 import kotlin.Pair;
@@ -79,7 +80,7 @@ public class Press extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setFacing(context.getFacing());
         addEntity("press_cover", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(Material.SPRUCE_PLANKS)
@@ -94,7 +95,7 @@ public class Press extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
@@ -203,6 +204,10 @@ public class Press extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
+                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                        return;
+                    }
+
                     PylonUtils.animate(getCover(), RETURN_TO_START_TIME_TICKS, getCoverTransform(0.4));
                     Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), this::finishRecipe, RETURN_TO_START_TIME_TICKS);
                 },

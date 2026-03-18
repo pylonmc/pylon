@@ -70,7 +70,7 @@ public final class Crucible extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Crucible(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidDisplay();
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.NORTH, context, false);
         setCapacity(1000.0);
@@ -79,7 +79,7 @@ public final class Crucible extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Crucible(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         processingType = pdc.get(PROCESSING_KEY, RebarSerializers.ITEM_STACK);
         amount = pdc.get(AMOUNT_KEY, RebarSerializers.INTEGER);
     }
