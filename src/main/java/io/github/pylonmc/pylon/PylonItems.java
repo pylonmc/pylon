@@ -1822,7 +1822,7 @@ public final class PylonItems {
         RebarItem.register(MixingPot.MixingPotItem.class, MIXING_POT, PylonKeys.MIXING_POT);
         PylonPages.SIMPLE_MACHINES.addItem(MIXING_POT);
         RebarGuide.getOrCreateInfoPage(PylonKeys.MIXING_POT)
-                .addButton(new MachineRecipesButton(GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(MIXING_POT, GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack MANUAL_CORE_DRILL_LEVER = ItemStackBuilder.rebar(Material.LEVER, PylonKeys.MANUAL_CORE_DRILL_LEVER)
