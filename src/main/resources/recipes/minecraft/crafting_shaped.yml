@@ -2216,7 +2216,8 @@ pylon:cargo_extractor:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     C: pylon:liselette_cathode
-  result: pylon:cargo_extractor
+  result:
+    pylon:cargo_extractor: 2
   category: building
 
 pylon:cargo_inserter:
@@ -2228,7 +2229,8 @@ pylon:cargo_inserter:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     A: pylon:liselette_anode
-  result: pylon:cargo_inserter
+  result:
+    pylon:cargo_inserter: 2
   category: building
 
 pylon:cargo_valve:
@@ -2242,7 +2244,8 @@ pylon:cargo_valve:
     C: pylon:liselette_cathode
     L: minecraft:lever
     B: minecraft:chest
-  result: pylon:cargo_valve
+  result:
+    pylon:cargo_valve: 2
   category: building
 
 pylon:cargo_buffer:
@@ -2255,7 +2258,8 @@ pylon:cargo_buffer:
     A: pylon:liselette_anode
     C: pylon:liselette_cathode
     B: minecraft:barrel
-  result: pylon:cargo_buffer
+  result:
+    pylon:cargo_buffer: 2
   category: building
 
 pylon:cargo_monitor:
@@ -2268,7 +2272,8 @@ pylon:cargo_monitor:
     B: pylon:cargo_buffer
     R: minecraft:redstone
     C: minecraft:comparator
-  result: pylon:cargo_monitor
+  result:
+    pylon:cargo_monitor: 2
   category: building
 
 pylon:cargo_meter:
@@ -2281,7 +2286,8 @@ pylon:cargo_meter:
     R: minecraft:redstone
     E: minecraft:repeater
     C: minecraft:comparator
-  result: pylon:cargo_meter
+  result:
+    pylon:cargo_meter: 2
   category: building
 
 pylon:cargo_splitter:
@@ -2294,7 +2300,8 @@ pylon:cargo_splitter:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_splitter
+  result:
+    pylon:cargo_splitter: 2
   category: building
 
 pylon:cargo_merger:
@@ -2307,7 +2314,8 @@ pylon:cargo_merger:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_merger
+  result:
+    pylon:cargo_merger: 2
   category: building
 
 pylon:cargo_filter:
@@ -2321,7 +2329,8 @@ pylon:cargo_filter:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     F: pylon:filter_mesh
-  result: pylon:cargo_filter
+  result:
+    pylon:cargo_filter: 2
   category: building
 
 pylon:cargo_overflow_gate:
@@ -2335,7 +2344,8 @@ pylon:cargo_overflow_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_overflow_gate
+  result:
+    pylon:cargo_overflow_gate: 2
   category: building
 
 pylon:cargo_gate:
@@ -2349,7 +2359,8 @@ pylon:cargo_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_gate
+  result:
+    pylon:cargo_gate: 2
   category: building
 
 pylon:cargo_accumulator:
@@ -2364,7 +2375,8 @@ pylon:cargo_accumulator:
     C: pylon:liselette_cathode
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_accumulator
+  result:
+    pylon:cargo_accumulator: 2
   category: building
 
 pylon:cargo_fluid_accumulator:
@@ -2377,7 +2389,8 @@ pylon:cargo_fluid_accumulator:
     P: pylon:fluid_pipe_steel
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_fluid_accumulator
+  result:
+    pylon:cargo_fluid_accumulator: 2
   category: building
 
 pylon:diesel_smeltery_heater:
