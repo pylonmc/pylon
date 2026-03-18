@@ -1,3 +1,13 @@
+pylon:raw_tin_block_from_raw_tin:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:raw_tin
+  result: pylon:raw_tin_block
+  category: misc
+
 pylon:tin_ingot_from_tin_nuggets:
   pattern:
     - "NNN"
@@ -91,6 +101,26 @@ pylon:charcoal_block_from_charcoal:
   key:
     N: minecraft:charcoal
   result: pylon:charcoal_block
+  category: building
+
+pylon:sulfur_block_from_sulfur:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:sulfur
+  result: pylon:sulfur_block
+  category: building
+
+pylon:gypsum_block_from_gypsum:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:gypsum
+  result: pylon:gypsum_block
   category: building
 
 pylon:bronze_sword:
