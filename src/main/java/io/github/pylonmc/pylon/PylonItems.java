@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.armor.BronzeArmor;
 import io.github.pylonmc.pylon.content.armor.PalladiumArmor;
+import io.github.pylonmc.pylon.content.armor.SteelArmor;
 import io.github.pylonmc.pylon.content.assembling.RedstoneSolderingIron;
 import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
@@ -946,6 +947,39 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BRONZE_HOE);
     }
 
+    public static final ItemStack STEEL_AXE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_AXE, PylonKeys.STEEL_AXE, RebarUtils.axeMineable(), true, false, true)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_AXE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_AXE);
+        PylonPages.TOOLS.addItem(STEEL_AXE);
+    }
+
+    public static final ItemStack STEEL_PICKAXE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_PICKAXE, PylonKeys.STEEL_PICKAXE, RebarUtils.pickaxeMineable(), true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_PICKAXE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_PICKAXE);
+        PylonPages.TOOLS.addItem(STEEL_PICKAXE);
+    }
+
+    public static final ItemStack STEEL_SHOVEL = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_SHOVEL, PylonKeys.STEEL_SHOVEL, RebarUtils.shovelMineable(), true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_SHOVEL);
+        PylonPages.TOOLS.addItem(STEEL_SHOVEL);
+    }
+
+    public static final ItemStack STEEL_HOE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_HOE, PylonKeys.STEEL_HOE, RebarUtils.hoeMineable(), true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_HOE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_HOE);
+        PylonPages.TOOLS.addItem(STEEL_HOE);
+    }
+
+
     public static final ItemStack WATERING_CAN = ItemStackBuilder.rebar(Material.BUCKET, PylonKeys.WATERING_CAN)
             .build();
     static {
@@ -1121,6 +1155,15 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, BRONZE_SWORD);
         PylonPages.COMBAT.addItem(BRONZE_SWORD);
     }
+
+    public static final ItemStack STEEL_SWORD = ItemStackBuilder.rebarWeapon(Material.DIAMOND_SWORD, PylonKeys.STEEL_SWORD, true, false, false)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SWORD.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_SWORD);
+        PylonPages.COMBAT.addItem(STEEL_SWORD);
+    }
+
 
     public static final ItemStack BEHEADING_SWORD = ItemStackBuilder.rebar(Material.DIAMOND_SWORD, PylonKeys.BEHEADING_SWORD)
             .durability(Settings.get(PylonKeys.BEHEADING_SWORD).getOrThrow("durability", ConfigAdapter.INTEGER)) // todo: weapon stats?
@@ -1599,6 +1642,78 @@ public final class PylonItems {
     static {
         RebarItem.register(BronzeArmor.class, BRONZE_BOOTS);
         PylonPages.ARMOUR.addItem(BRONZE_BOOTS);
+    }
+
+    public static final ItemStack STEEL_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.STEEL_HELMET, true)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_HELMET.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
+            .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
+                    pylonKey("steel_helmet_knockback_resistance"),
+                    Settings.get(PylonKeys.STEEL_HELMET).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.HEAD
+            ))
+            .build();
+    static {
+        RebarItem.register(SteelArmor.class, STEEL_HELMET);
+        PylonPages.ARMOUR.addItem(STEEL_HELMET);
+    }
+
+    public static final ItemStack STEEL_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.DIAMOND_CHESTPLATE, PylonKeys.STEEL_CHESTPLATE, true)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_CHESTPLATE.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.CHEST)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
+            .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
+                    pylonKey("steel_chestplate_knockback_resistance"),
+                    Settings.get(PylonKeys.STEEL_CHESTPLATE).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.CHEST
+            ))
+            .build();
+    static {
+        RebarItem.register(SteelArmor.class, STEEL_CHESTPLATE);
+        PylonPages.ARMOUR.addItem(STEEL_CHESTPLATE);
+    }
+
+    public static final ItemStack STEEL_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.DIAMOND_LEGGINGS, PylonKeys.STEEL_LEGGINGS, true)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_LEGGINGS.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.LEGS)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
+            .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
+                    pylonKey("steel_leggings_knockback_resistance"),
+                    Settings.get(PylonKeys.STEEL_LEGGINGS).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.LEGS
+            ))
+            .build();
+    static {
+        RebarItem.register(SteelArmor.class, STEEL_LEGGINGS);
+        PylonPages.ARMOUR.addItem(STEEL_LEGGINGS);
+    }
+
+    public static final ItemStack STEEL_BOOTS = ItemStackBuilder.rebarBoots(Material.DIAMOND_BOOTS, PylonKeys.STEEL_BOOTS, true)
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_BOOTS.getKey())
+            .set(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.FEET)
+                    .assetId(Key.key("netherite"))
+                    .equipSound(Key.key("item.armor.equip_netherite"))
+                    .build())
+            .addAttributeModifier(Attribute.KNOCKBACK_RESISTANCE, new AttributeModifier(
+                    pylonKey("steel_boots_knockback_resistance"),
+                    Settings.get(PylonKeys.STEEL_BOOTS).getOrThrow("knockback-resistance", ConfigAdapter.DOUBLE),
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.FEET
+            ))
+            .build();
+    static {
+        RebarItem.register(SteelArmor.class, STEEL_BOOTS);
+        PylonPages.ARMOUR.addItem(STEEL_BOOTS);
     }
 
     public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET, true)

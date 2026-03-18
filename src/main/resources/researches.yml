@@ -580,6 +580,25 @@ wither_reactivation:
     - pylon:reactivated_wither_skull
     - pylon:hyper_activated_wither_skull
 
+steel_tools:
+  item: pylon:steel_sword
+  cost: 60
+  unlocks:
+    - pylon:steel_sword
+    - pylon:steel_axe
+    - pylon:steel_pickaxe
+    - pylon:steel_shovel
+    - pylon:steel_hoe
+
+steel_armor:
+  item: pylon:steel_chestplate
+  cost: 60
+  unlocks:
+    - pylon:steel_helmet
+    - pylon:steel_chestplate
+    - pylon:steel_leggings
+    - pylon:steel_boots
+
 palladium_tools:
   item: pylon:palladium_sword
   cost: 250
