@@ -50,7 +50,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
 
     protected CargoInteractor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
+        setFacing(context.getFacingVertical());
     }
 
     protected CargoInteractor(@NotNull Block block, @NotNull PersistentDataContainer pdc) {

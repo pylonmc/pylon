@@ -403,7 +403,7 @@ public class PylonKeys {
     public static final NamespacedKey EXPERIENCE_TALISMAN_ULTIMATE = pylonKey("experience_talisman_ultimate");
     public static final NamespacedKey EXPERIENCE_TALISMAN_PALLADIUM = pylonKey("experience_talisman_palladium");
 
-    public static final NamespacedKey FLIGHT_RING_KEY = pylonKey("flight_ring");
+    public static final NamespacedKey FLIGHT_RING = pylonKey("flight_ring");
 
     public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");
     public static final NamespacedKey COPPER_SCREWDRIVER = pylonKey("copper_screwdriver");
