@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.Settings;
@@ -42,6 +43,7 @@ public class PylonRecipes {
         PitKilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        HydraulicPurifier.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();
