@@ -2190,6 +2190,7 @@ item:
   collimator:
     name: "Collimator"
     lore: |-
+      <star> Multiblock
       <arrow> Slowly synthesizes Cohesive Units
       <arrow> Only works below <white>y = 0
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
