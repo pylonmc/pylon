@@ -2297,6 +2297,14 @@ item:
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
+  crude_alloy_furnace:
+    name: "Crude Alloy Furnace"
+    lore: |-
+      <arrow> Smelts alloys
+      <arrow> Crude and inefficient, but does the job
+    waila: "Crude Alloy Furnace%info%"
+    info: " | %progress%"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2608,6 +2616,7 @@ gui:
   left: "Left"
   right: "Right"
   none: "None"
+  fuel: "Fuel"
   side-priority:
     name: "Priority: <light_purple>%priority%"
     lore: |-
@@ -2733,3 +2742,5 @@ inventory:
   right: "Right"
   filtered: "Filtered"
   unfiltered: "Unfiltered"
+  input1: "Input 1"
+  input2: "Input 2"

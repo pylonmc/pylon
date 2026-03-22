@@ -1952,6 +1952,13 @@ public final class PylonItems {
 
     //<editor-fold desc="Machines - Simple Machines" defaultstate=collapsed>
 
+    public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
+        PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
+    }
+
     public static final ItemStack GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE_SLAB, PylonKeys.GRINDSTONE)
             .build();
     static {

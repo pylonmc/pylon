@@ -44,6 +44,7 @@ public class PylonRecipes {
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
+        CrudeAlloyFurnaceRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();

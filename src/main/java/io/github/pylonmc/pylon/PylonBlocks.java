@@ -176,5 +176,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
+        RebarBlock.register(PylonKeys.CRUDE_ALLOY_FURNACE, Material.BLAST_FURNACE, CrudeAlloyFurnace.class);
     }
 }

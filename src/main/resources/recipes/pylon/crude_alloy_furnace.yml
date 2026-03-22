@@ -1,0 +1,6 @@
+pylon:crude_bronze:
+  input1: minecraft:copper_ingot
+  input2: pylon:tin_ingot
+  result:
+    pylon:bronze_ingot: 2
+  time-ticks: 320

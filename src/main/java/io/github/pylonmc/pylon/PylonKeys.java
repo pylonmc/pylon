@@ -155,6 +155,7 @@ public class PylonKeys {
 
     public static final NamespacedKey GRINDSTONE = pylonKey("grindstone");
     public static final NamespacedKey GRINDSTONE_HANDLE = pylonKey("grindstone_handle");
+    public static final NamespacedKey CRUDE_ALLOY_FURNACE = pylonKey("crude_alloy_furnace");
 
     public static final NamespacedKey MIXING_POT = pylonKey("mixing_pot");
     public static final NamespacedKey CRUCIBLE = pylonKey("crucible");
