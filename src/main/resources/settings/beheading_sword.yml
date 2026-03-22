@@ -1,4 +1,4 @@
 durability: 300
 head-chance:
   normal-entity: 0.15
-  wither-skeleton: 0.025
+  wither-skeleton: 0.05
