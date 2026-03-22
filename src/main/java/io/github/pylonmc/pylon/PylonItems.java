@@ -926,6 +926,17 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(IRON_HAMMER);
     }
 
+    public static final ItemStack BRONZE_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.BRONZE_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, BRONZE_HAMMER);
+        PylonPages.TOOLS.addItem(BRONZE_HAMMER);
+    }
+
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
                     .cooldownGroup(PylonKeys.HAMMER)
@@ -934,6 +945,18 @@ public final class PylonItems {
     static {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
+    }
+
+
+    public static final ItemStack STEEL_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.STEEL_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, STEEL_HAMMER);
+        PylonPages.TOOLS.addItem(STEEL_HAMMER);
     }
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
