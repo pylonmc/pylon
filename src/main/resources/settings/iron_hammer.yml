@@ -4,6 +4,10 @@ attack-durability-damage: 1
 attack-speed: 0.5
 attack-damage: 3
 attack-knockback: 1.5
+
+anvil-block: minecraft:iron_block
+mining-level: IRON
+
 sound:
   sound: minecraft:block.anvil.use
   source: block

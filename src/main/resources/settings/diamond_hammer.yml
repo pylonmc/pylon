@@ -4,6 +4,10 @@ attack-durability-damage: 1
 attack-speed: 1
 attack-damage: 5
 attack-knockback: 2
+
+anvil-block: minecraft:diamond_block
+mining-level: DIAMOND
+
 sound:
   sound: minecraft:block.anvil.use
   source: block
