@@ -952,7 +952,7 @@ public final class PylonItems {
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
                     .cooldownGroup(PylonKeys.HAMMER)
                     .build())
-            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_PICKAXE.getKey())
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_PICKAXE.getKey())
             .noTool().build();
     static {
         RebarItem.register(Hammer.class, STEEL_HAMMER);
