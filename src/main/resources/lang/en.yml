@@ -2174,6 +2174,33 @@ item:
   cargo_controller:
     name: "Cargo Controller"
 
+  steel_helmet:
+    name: "Steel Helmet"
+
+  steel_chestplate:
+    name: "Steel Chestplate"
+
+  steel_leggings:
+    name: "Steel Leggings"
+
+  steel_boots:
+    name: "Steel Boots"
+
+  steel_sword:
+    name: "Steel Sword"
+
+  steel_axe:
+    name: "Steel Axe"
+
+  steel_pickaxe:
+    name: "Steel Pickaxe"
+
+  steel_shovel:
+    name: "Steel Shovel"
+
+  steel_hoe:
+    name: "Steel Hoe"
+
   palladium_helmet:
     name: "Palladium Helmet"
 
@@ -2353,6 +2380,8 @@ research:
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   assembling: "<#846e5a>Assembling"
+  steel_tools: "<gray>Steel tools"
+  steel_armor: "<gray>Steel armor"
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
   creative_flight: "<#2937e3>Creative flight"

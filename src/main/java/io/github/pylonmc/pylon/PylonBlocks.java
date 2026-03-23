@@ -144,7 +144,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_MINER, Material.IRON_BLOCK, DieselMiner.class);
         RebarBlock.register(PylonKeys.FERMENTER, Material.PINK_TERRACOTTA, Fermenter.class);
         RebarBlock.register(PylonKeys.REINFORCED_GLASS, Material.GRAY_STAINED_GLASS, RebarBlock.class);
-        RebarBlock.register(PylonKeys.REINFORCED_GLASS_CASING, Material.GRAY_STAINED_GLASS_PANE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.REINFORCED_GLASS_CASING, Material.GRAY_STAINED_GLASS_PANE, ReinforcedGlassCasing.class);
         RebarBlock.register(PylonKeys.BIOREFINERY, Material.PURPLE_TERRACOTTA, Biorefinery.class);
         RebarBlock.register(PylonKeys.BRONZE_FOUNDATION, Material.LIGHT_GRAY_CONCRETE, RebarBlock.class);
         RebarBlock.register(PylonKeys.BRONZE_GRATING, Material.WAXED_COPPER_BARS, RebarBlock.class);

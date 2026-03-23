@@ -2363,6 +2363,110 @@ pylon:diesel_smeltery_heater:
   result: pylon:diesel_smeltery_heater
   category: building
 
+pylon:steel_helmet:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_helmet: 1
+  category: equipment
+
+pylon:steel_chestplate:
+  pattern:
+    - "P P"
+    - "PPP"
+    - "PPP"
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_chestplate: 1
+  category: equipment
+
+pylon:steel_leggings:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "P P"
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_leggings: 1
+  category: equipment
+
+pylon:steel_boots:
+  pattern:
+    - "P P"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_boots: 1
+  category: equipment
+
+pylon:steel_sword:
+  pattern:
+    - " P "
+    - " P "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_sword: 1
+  category: equipment
+
+pylon:steel_axe:
+  pattern:
+    - "PP "
+    - "PS "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_axe: 1
+  category: equipment
+
+pylon:steel_pickaxe:
+  pattern:
+    - "PPP"
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_pickaxe: 1
+  category: equipment
+
+pylon:steel_shovel:
+  pattern:
+    - " P "
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_shovel: 1
+  category: equipment
+
+pylon:steel_hoe:
+  pattern:
+    - "PP "
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_hoe: 1
+  category: equipment
+
 pylon:palladium_helmet:
   pattern:
     - "PPP"
