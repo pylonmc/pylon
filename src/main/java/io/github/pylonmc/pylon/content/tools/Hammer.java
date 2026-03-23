@@ -7,6 +7,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -33,6 +34,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BoundingBox;
@@ -157,17 +159,30 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             return;
         }
 
+        Block clicked = event.getClickedBlock();
         if (priority == EventPriority.NORMAL) {
+            if (clicked == null) {
+                event.setUseInteractedBlock(Event.Result.DENY);
+                return;
+            }
+
+            if (BlockStorage.getAs(RebarGuiBlock.class, clicked) != null || clicked.getState() instanceof BlockInventoryHolder) {
+                return;
+            }
+
             event.setUseInteractedBlock(Event.Result.DENY);
             return;
         } else if (event.getPlayer().hasCooldown(getStack())) {
             return;
         }
 
+        // if we are clicking on an inventory don't do anything
+        if (event.useInteractedBlock() == Event.Result.ALLOW) return;
+
         if (event.getAction().isLeftClick()) {
             tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
-        } else if (event.getBlockFace() != BlockFace.UP) {
-            tryDoRecipe(event.getClickedBlock(), event.getPlayer(), event.getHand());
+        } else if (clicked != null && event.getBlockFace() != BlockFace.UP) {
+            tryDoRecipe(clicked, event.getPlayer(), event.getHand());
         }
     }
 

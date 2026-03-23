@@ -15,8 +15,10 @@ public class PylonKeys {
     public static final NamespacedKey CHARCOAL_BLOCK = pylonKey("charcoal_block");
 
     public static final NamespacedKey SULFUR = pylonKey("sulfur");
+    public static final NamespacedKey SULFUR_BLOCK = pylonKey("sulfur_block");
 
     public static final NamespacedKey GYPSUM = pylonKey("gypsum");
+    public static final NamespacedKey GYPSUM_BLOCK = pylonKey("gypsum_block");
     public static final NamespacedKey GYPSUM_DUST = pylonKey("gypsum_dust");
 
     public static final NamespacedKey COPPER_DUST = pylonKey("copper_dust");
@@ -35,6 +37,7 @@ public class PylonKeys {
     public static final NamespacedKey EMERALD_DUST = pylonKey("emerald_dust");
 
     public static final NamespacedKey RAW_TIN = pylonKey("raw_tin");
+    public static final NamespacedKey RAW_TIN_BLOCK = pylonKey("raw_tin_block");
     public static final NamespacedKey TIN_DUST = pylonKey("tin_dust");
     public static final NamespacedKey CRUSHED_RAW_TIN = pylonKey("crushed_raw_tin");
     public static final NamespacedKey TIN_INGOT = pylonKey("tin_ingot");
@@ -400,7 +403,7 @@ public class PylonKeys {
     public static final NamespacedKey EXPERIENCE_TALISMAN_ULTIMATE = pylonKey("experience_talisman_ultimate");
     public static final NamespacedKey EXPERIENCE_TALISMAN_PALLADIUM = pylonKey("experience_talisman_palladium");
 
-    public static final NamespacedKey FLIGHT_RING_KEY = pylonKey("flight_ring");
+    public static final NamespacedKey FLIGHT_RING = pylonKey("flight_ring");
 
     public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");
     public static final NamespacedKey COPPER_SCREWDRIVER = pylonKey("copper_screwdriver");
