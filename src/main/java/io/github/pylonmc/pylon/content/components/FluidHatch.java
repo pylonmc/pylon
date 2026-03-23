@@ -59,7 +59,7 @@ public abstract class FluidHatch extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
             List<RebarMultiblockComponent> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
+                if (schema.getItemClass().isAssignableFrom(FluidTankCasing.Item.class)) {
                     components.add(new RebarMultiblockComponent(schema.getKey()));
                 }
             }
