@@ -103,8 +103,7 @@ public class Grindstone extends RebarBlock implements
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getPlayer().isSneaking()
-                || event.getHand() != EquipmentSlot.HAND
+        if (event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
                 || event.useInteractedBlock() == Event.Result.DENY
         ) {
@@ -123,18 +122,31 @@ public class Grindstone extends RebarBlock implements
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack oldStack = itemDisplay.getItemStack();
         ItemStack newStack = event.getItem();
+        boolean isSneaking = event.getPlayer().isSneaking();
 
-        // drop old item
+        // item in grindstone
         if (!oldStack.isEmpty()) {
-            event.getPlayer().give(oldStack);
-            itemDisplay.setItemStack(null);
+            // no item in hand or different items -> drop old item
+            if (newStack == null || !newStack.isSimilar(oldStack)) {
+                event.getPlayer().give(oldStack);
+                itemDisplay.setItemStack(null);
+                return;
+            }
+            // sneaking -> add all; not sneaking -> add one more
+            int qty = Math.min(
+                isSneaking ? newStack.getAmount() : 1,
+                oldStack.getMaxStackSize() - oldStack.getAmount()
+            );
+            itemDisplay.setItemStack(oldStack.add(qty));
+            newStack.subtract(qty);
             return;
         }
 
         // insert new item
         if (newStack != null) {
-            itemDisplay.setItemStack(newStack.clone());
-            newStack.setAmount(0);
+            int qty = isSneaking ? newStack.getAmount() : 1;
+            itemDisplay.setItemStack(newStack.asQuantity(qty));
+            newStack.subtract(qty);
         }
     }
 
