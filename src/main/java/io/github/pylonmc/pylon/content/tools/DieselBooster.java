@@ -64,8 +64,9 @@ public class DieselBooster extends RebarItem implements RebarInteractor, DieselR
         Firework firework = player.getWorld().spawn(loc, Firework.class);
         firework.setShooter(player);
         FireworkMeta meta = firework.getFireworkMeta();
-        meta.setPower(2);
+        meta.setPower(4);
         firework.setFireworkMeta(meta);
+        firework.setAttachedTo(player);
 
         setDiesel(getDiesel() - dieselPerBoost);
     }
