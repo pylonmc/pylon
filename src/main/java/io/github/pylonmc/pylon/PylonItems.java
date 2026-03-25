@@ -2712,7 +2712,7 @@ public final class PylonItems {
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_CORE_DRILL);
     }
 
-    public static final ItemStack DIESEL_REFUELING_STATION = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_REFUELING_STATION)
+    public static final ItemStack DIESEL_REFUELING_STATION = ItemStackBuilder.rebar(Material.QUARTZ_SLAB, PylonKeys.DIESEL_REFUELING_STATION)
             .build();
     static {
         RebarItem.register(RebarItem.class, DIESEL_REFUELING_STATION, PylonKeys.DIESEL_REFUELING_STATION);
