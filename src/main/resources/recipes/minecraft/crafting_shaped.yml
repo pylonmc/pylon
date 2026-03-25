@@ -312,6 +312,20 @@ pylon:confetti_popper:
   result: pylon:confetti_popper
   category: tools
 
+pylon:diesel_booster:
+  pattern:
+    - "TKT"
+    - "CFC"
+    - " N "
+  key:
+    T: pylon:portable_fluid_tank_steel
+    C: pylon:steel_cylinder
+    K: pylon:kinetic_control_mechanism
+    F: minecraft:flint_and_steel
+    N: pylon:nozzle
+  result: pylon:diesel_booster
+  category: tools
+
 pylon:grindstone:
   pattern:
     - "STS"
@@ -2018,6 +2032,18 @@ pylon:diesel_brick_molder:
     S: pylon:iron_sheet
     B: pylon:brick_mold
   result: pylon:diesel_brick_molder
+  category: building
+
+pylon:diesel_refueling_station:
+  pattern:
+    - "   "
+    - "PGP"
+    - "CCC"
+  key:
+    C: pylon:iron_sheet
+    P: pylon:fluid_pipe_steel
+    G: minecraft:glass
+  result: pylon:diesel_refueling_station
   category: building
 
 pylon:fermenter:
