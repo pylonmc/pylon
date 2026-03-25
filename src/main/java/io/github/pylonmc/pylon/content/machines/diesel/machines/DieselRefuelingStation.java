@@ -19,13 +19,13 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
+import xyz.xenondevs.invui.inventory.event.UpdateReason;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -43,12 +43,13 @@ import java.util.Map;
 public class DieselRefuelingStation extends RebarBlock implements
         RebarFluidBlock,
         RebarDirectionalBlock,
-        RebarLogisticBlock,
         RebarGuiBlock,
+        RebarLogisticBlock,
         RebarVirtualInventoryBlock {
 
     private final VirtualInventory containerInventory = new VirtualInventory(1);
-    public final ItemStackBuilder containerStack = ItemStackBuilder.gui(Material.LIME_STAINED_GLASS_PANE, getKey() + ":container")
+    public final ItemStackBuilder containerStack = ItemStackBuilder
+            .gui(Material.LIME_STAINED_GLASS_PANE, getKey() + ":container")
             .name(Component.translatable("pylon.gui.container"));
 
     @SuppressWarnings("unused")
@@ -78,10 +79,24 @@ public class DieselRefuelingStation extends RebarBlock implements
 
     @Override
     public void postInitialise() {
+        containerInventory.addPreUpdateHandler(event -> updateDisplayItem(event.getNewItem()));
+        containerInventory.addPostUpdateHandler(event -> updateDisplayItem(event.getNewItem()));
         createLogisticGroup(
                 "tool",
                 LogisticGroupType.BOTH,
-                new RefuelingStationLogisticSlot(getHeldEntityOrThrow(ItemDisplay.class, "item")));
+                containerInventory);
+    }
+
+    public @NotNull ItemDisplay getDisplayItem() {
+        return getHeldEntityOrThrow(ItemDisplay.class, "item");
+    }
+
+    public void updateDisplayItem(ItemStack newItem) {
+        if (RebarItem.fromStack(newItem) instanceof DieselRefuelable) {
+            getDisplayItem().setItemStack(newItem.asOne());
+            return;
+        }
+        getDisplayItem().setItemStack(null);
     }
 
     public @Nullable DieselRefuelable getHeldRefuelableItem() {
@@ -98,14 +113,17 @@ public class DieselRefuelingStation extends RebarBlock implements
             return new WailaDisplay(
                     getDefaultWailaTranslationKey().arguments(RebarArgument.of("extra", "")));
         }
+
         return new WailaDisplay(
                 getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                refuelable.getDiesel(),
-                refuelable.getDieselCapacity(),
-                20,
-                TextColor.fromHexString("#eaa627")
-        ))));
+                        RebarArgument.of(
+                                "extra",
+                                Component.translatable("pylon.message.diesel_refueling_station.extra").arguments(
+                                        RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
+                                                refuelable.getDiesel(),
+                                                refuelable.getDieselCapacity(),
+                                                20,
+                                                TextColor.fromHexString("#eaa627")))))));
     }
 
     @Override
@@ -124,8 +142,9 @@ public class DieselRefuelingStation extends RebarBlock implements
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
         DieselRefuelable refuelable = getHeldRefuelableItem();
         refuelable.setDiesel(refuelable.getDiesel() + amount);
+        containerInventory.setItem(UpdateReason.SUPPRESSED, 0, ((RebarItem) refuelable).getStack());
     }
-    
+
     @Override
     public void onBreak(List<ItemStack> drops, BlockBreakContext context) {
         RebarFluidBlock.super.onBreak(drops, context);
@@ -149,20 +168,4 @@ public class DieselRefuelingStation extends RebarBlock implements
                 .addIngredient('x', containerInventory)
                 .build();
     }
-
-    private static class RefuelingStationLogisticSlot extends ItemDisplayLogisticSlot {
-
-        public RefuelingStationLogisticSlot(@NotNull ItemDisplay display) {
-            super(display);
-        }
-
-        @Override
-        public long getMaxAmount(@NotNull ItemStack stack) {
-            return RebarItem.fromStack(stack) instanceof DieselRefuelable
-                    ? 1
-                    : 0;
-        }
-        
-    }
-
 }

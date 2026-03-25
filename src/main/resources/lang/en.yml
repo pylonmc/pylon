@@ -1639,8 +1639,8 @@ item:
   diesel_refueling_station:
     name: "Diesel Refueling Station"
     lore: |-
-      <arrow> Refuels items with hydraulic fluid
-    waila: "Diesel Refueling Station | %bar%"
+      <arrow> Refuels items with diesel
+    waila: "Diesel Refueling Station %extra%"
 
   fermenter:
     name: "Fermenter"
@@ -2526,6 +2526,8 @@ message:
     success: "<red>Your item has been fire-proofed"
   hydraulic_refueling_station:
     extra: "| %hydraulic-fluid-bar% | %dirty-hydraulic-fluid-bar%"
+  diesel_refueling_station:
+    extra: "| %diesel-bar%"
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
