@@ -16,7 +16,6 @@ import net.kyori.adventure.text.format.TextColor;
 
 import java.util.List;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -24,6 +23,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class DieselBooster extends RebarItem implements RebarInteractor, DieselRefuelable {
@@ -60,13 +60,12 @@ public class DieselBooster extends RebarItem implements RebarInteractor, DieselR
             return;
         }
         
-        Location loc = player.getLocation();
-        Firework firework = player.getWorld().spawn(loc, Firework.class);
-        firework.setShooter(player);
-        FireworkMeta meta = firework.getFireworkMeta();
-        meta.setPower(4);
-        firework.setFireworkMeta(meta);
-        firework.setAttachedTo(player);
+        player.launchProjectile(Firework.class, new Vector(), firework -> {
+            FireworkMeta meta = firework.getFireworkMeta();
+            meta.setPower(4);
+            firework.setFireworkMeta(meta);
+            firework.setAttachedTo(player);
+        });
 
         setDiesel(getDiesel() - dieselPerBoost);
     }
