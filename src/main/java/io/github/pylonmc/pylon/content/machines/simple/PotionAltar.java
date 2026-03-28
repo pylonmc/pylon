@@ -395,3 +395,5 @@ public class PotionAltar extends RebarBlock
         ));
     }
 }
+
+// todo: test + catalyst recipes
