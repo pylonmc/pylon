@@ -89,6 +89,7 @@ drilling_2:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
     - pylon:gypsum
+    - pylon:gypsum_block
     - pylon:gypsum_dust
 
 drilling_3:
@@ -105,6 +106,7 @@ smelting_1:
   - pylon:pit_kiln
   - pylon:carbon
   - pylon:sulfur
+  - pylon:sulfur_block
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -579,6 +581,25 @@ wither_reactivation:
   unlocks:
     - pylon:reactivated_wither_skull
     - pylon:hyper_activated_wither_skull
+
+steel_tools:
+  item: pylon:steel_sword
+  cost: 60
+  unlocks:
+    - pylon:steel_sword
+    - pylon:steel_axe
+    - pylon:steel_pickaxe
+    - pylon:steel_shovel
+    - pylon:steel_hoe
+
+steel_armor:
+  item: pylon:steel_chestplate
+  cost: 60
+  unlocks:
+    - pylon:steel_helmet
+    - pylon:steel_chestplate
+    - pylon:steel_leggings
+    - pylon:steel_boots
 
 palladium_tools:
   item: pylon:palladium_sword

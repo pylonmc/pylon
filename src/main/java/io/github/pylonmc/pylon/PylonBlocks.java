@@ -30,11 +30,14 @@ public final class PylonBlocks {
     }
 
     public static void initialize() {
+        RebarBlock.register(PylonKeys.RAW_TIN_BLOCK, Material.RAW_IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.TIN_BLOCK, Material.IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.BRONZE_BLOCK, Material.COPPER_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.STEEL_BLOCK, Material.NETHERITE_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.PALLADIUM_BLOCK, Material.IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.CHARCOAL_BLOCK, Material.COAL_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.SULFUR_BLOCK, Material.YELLOW_TERRACOTTA, RebarBlock.class);
+        RebarBlock.register(PylonKeys.GYPSUM_BLOCK, Material.QUARTZ_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.SPRINKLER, Material.FLOWER_POT, Sprinkler.class);
         RebarBlock.register(PylonKeys.SHIMMER_PEDESTAL, Material.MOSSY_STONE_BRICK_WALL, Pedestal.class);
         RebarBlock.register(PylonKeys.PEDESTAL, Material.STONE_BRICK_WALL, Pedestal.class);
@@ -144,7 +147,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_MINER, Material.IRON_BLOCK, DieselMiner.class);
         RebarBlock.register(PylonKeys.FERMENTER, Material.PINK_TERRACOTTA, Fermenter.class);
         RebarBlock.register(PylonKeys.REINFORCED_GLASS, Material.GRAY_STAINED_GLASS, RebarBlock.class);
-        RebarBlock.register(PylonKeys.REINFORCED_GLASS_CASING, Material.GRAY_STAINED_GLASS_PANE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.REINFORCED_GLASS_CASING, Material.GRAY_STAINED_GLASS_PANE, ReinforcedGlassCasing.class);
         RebarBlock.register(PylonKeys.BIOREFINERY, Material.PURPLE_TERRACOTTA, Biorefinery.class);
         RebarBlock.register(PylonKeys.BRONZE_FOUNDATION, Material.LIGHT_GRAY_CONCRETE, RebarBlock.class);
         RebarBlock.register(PylonKeys.BRONZE_GRATING, Material.WAXED_COPPER_BARS, RebarBlock.class);

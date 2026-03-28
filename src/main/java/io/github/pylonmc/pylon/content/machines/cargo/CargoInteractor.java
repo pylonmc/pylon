@@ -50,7 +50,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
 
     protected CargoInteractor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
+        setFacing(context.getFacingVertical());
     }
 
     protected CargoInteractor(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
@@ -160,7 +160,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
             RebarBlock rebarBlock = BlockStorage.get(block);
             if (rebarBlock instanceof RebarLogisticBlock) {
                 displayName = Component.translatable(
-                        "pylon." + rebarBlock.getKey().getNamespace() + ".inventory." + targetLogisticGroup
+                        rebarBlock.getKey().getNamespace() + ".inventory." + targetLogisticGroup
                 );
             } else {
                 displayName = Component.translatable("pylon.inventory." + targetLogisticGroup);
