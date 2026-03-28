@@ -1,13 +1,16 @@
 package io.github.pylonmc.pylon.recipes;
 
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.content.tools.base.PotionCatalyst;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.recipe.RecipeType;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 
 import java.util.ArrayList;
@@ -16,13 +19,21 @@ import java.util.List;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
- * @param result the output (respects amount)
+ * For internal use only
+ *
+ * @param result
+ *         the output (respects amount)
+ *
+ * @author balugaq
  */
 public record PotionAltarRecipe(
+        @NotNull Player player,
         @NotNull RecipeInput.Item input1,
-        @NotNull RecipeInput.Item input2,
+        @Nullable RecipeInput.Item input2,
+        @Nullable PotionCatalyst catalyst,
         @NotNull ItemStack result,
-        int timeTicks
+        int timeTicks,
+        boolean catalystApplied
 ) implements RebarRecipe {
 
     @Override

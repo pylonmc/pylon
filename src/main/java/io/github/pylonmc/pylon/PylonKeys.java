@@ -452,6 +452,9 @@ public class PylonKeys {
 
     public static final NamespacedKey POTION_PEDESTAL = pylonKey("potion_pedestal");
     public static final NamespacedKey POTION_ALTAR = pylonKey("potion_altar");
+    public static final NamespacedKey ASCENDANT_EMBER = pylonKey("ascendant_ember");
+    public static final NamespacedKey CHRONICLE_RESIN = pylonKey("chronicle_resin");
+    public static final NamespacedKey EON_WEAVE_CRYSTAL = pylonKey("eon_weave_crystal");
 
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 }

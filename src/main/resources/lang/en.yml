@@ -605,12 +605,15 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> A standalone structure for potion effect fusion
-      <arrow> Add potions on the pedestals, then right click the altar to begin the ritual
+      <arrow> Add potions on the potion pedestals,
+      <arrow> Or add a more potion catalyst on the shimmer pedestal,
+      <arrow> then right click the altar to begin the ritual
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.potion_altar.name/></yellow>
       <diamond> 2x <yellow>Lit Orange Candle</yellow>
       <diamond> 2x <yellow><lang:pylon.item.potion_pedestal.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.shimmer_pedestal.name/></yellow>
     waila: "Potion Altar%processing%"
 
   potion_pedestal:
@@ -620,6 +623,30 @@ item:
       <arrow> <insn>Right click</insn> to set the displayed item
       <arrow> <insn>Shift right click</insn> to rotate the item
 
+  ascendant_ember:
+    name: "Ascendant Ember"
+    lore: |-
+      <star> Potion Altar Catalyst
+      <arrow> Upgrades 1 potion effect 
+      <arrow> <attr>Max amplifier:</attr> %max-amplifier%
+      <arrow> <attr>Duration shorten rate:</attr> %duration-shorten-rate%
+      <arrow> <attr>Success rate:</attr> %apply-success-rate%
+
+  chronicle_resin:
+    name: "Chronicle Resin"
+    lore: |-
+      <star> Potion Altar Catalyst
+      <arrow> Boosts the duration of 1 potion effect
+      <arrow> <attr>Duration boost:</attr> %duration-boost-seconds%
+      <arrow> <attr>Success rate:</attr> %apply-success-rate%
+
+  eon_weave_crystal:
+    name: "Eon Weave Crystal"
+    lore: |-
+      <star> Potion Altar Catalyst
+      <arrow> Multiples the duration of 1 potion effect
+      <arrow> <attr>Multiple rate:</attr> %multiple-rate%
+      <arrow> <attr>Success rate:</attr> %apply-success-rate%
 
   medkit:
     name: "Medkit"
@@ -2612,7 +2639,11 @@ message:
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
   potion_altar:
     invalid-potion: "<red>You have to put 2 potions to fuse them"
+    invalid-catalyst: "<red>You have to put a valid catalyst"
     not-same-type: "<red>You have to put 2 potions with same bottles"
+    too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
+  altar:
+    pedestal-locked: "<red>Pedestal is locked"
   hammer:
     too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
     tier:

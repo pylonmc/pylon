@@ -1,4 +1,5 @@
 tick-interval: 10
+max-effect-types: 10 # The max types the fused potion can contain, or 0 for unlimited
 
 sound:
   start:
@@ -13,6 +14,16 @@ sound:
     volume: 1
   cancel:
     name: minecraft:entity.ender_eye.death
+    source: player
+    pitch: 1
+    volume: 1
+  cannot_apply_catalyst:
+    name: minecraft:block.chorus_flower.death
+    source: player
+    pitch: 1
+    volume: 1
+  failed_apply_catalyst:
+    name: minecraft:entity.iron_golem.death
     source: player
     pitch: 1
     volume: 1
