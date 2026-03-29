@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.simple;
 
 import com.destroystokyo.paper.ParticleBuilder;
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.building.Pedestal;
 import io.github.pylonmc.pylon.content.tools.base.PotionCatalyst;
@@ -30,8 +31,10 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -40,6 +43,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -67,9 +71,11 @@ public class PotionAltar extends RebarBlock
     private static final Sound CANCEL_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.cancel", ConfigAdapter.SOUND);
     private static final Sound CANNOT_APPLY_CATALYST_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.cannot_apply_catalyst", ConfigAdapter.SOUND);
     private static final Sound FAILED_APPLY_CATALYST_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.failed_apply_catalyst", ConfigAdapter.SOUND);
+    private static final NamespacedKey FUSED_POTION_KEY = new NamespacedKey(Pylon.getInstance(), "fused-potion");
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
+    private int ticked = 0;
 
     @SuppressWarnings("unused")
     public PotionAltar(Block block, BlockCreateContext context) {
@@ -106,27 +112,27 @@ public class PotionAltar extends RebarBlock
         return map;
     }
 
-    private boolean checkPotions(@NotNull Player player, @NotNull ItemStack potion1, @NotNull ItemStack potion2, @Nullable PotionCatalyst catalyst) {
+    private boolean isInvalidRecipe(@NotNull Player player, @NotNull ItemStack potion1, @NotNull ItemStack potion2, @Nullable PotionCatalyst catalyst) {
         if (catalyst == null) {
             // 2 potions
             if (isInvalidPotion(potion1) || isInvalidPotion(potion2)) {
                 player.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
-                return false;
+                return true;
             }
 
             if (potion1.getType() != potion2.getType()) {
                 player.sendMessage(Component.translatable("pylon.message.potion_altar.not-same-type"));
-                return false;
+                return true;
             }
         } else {
             if (isInvalidPotion(potion1) && isInvalidPotion(potion2)) {
                 // 1 potion + catalyst
                 // both potions are invalid
                 player.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @NotNull
@@ -137,25 +143,17 @@ public class PotionAltar extends RebarBlock
         } else {
             Color color1 = contents1.computeEffectiveColor();
             Color color2 = contents1.computeEffectiveColor();
-            int srcA = color1.getAlpha();
-            int dstA = color2.getAlpha();
 
-            float computedA = 1 - (1 - srcA) * (1 - dstA);
-            if (computedA <= 0) {
-                mixedColor = Color.fromARGB(0);
-            } else {
-                int srcR = color1.getRed();
-                int srcG = color1.getGreen();
-                int srcB = color1.getBlue();
-                int dstR = color2.getRed();
-                int dstG = color2.getGreen();
-                int dstB = color2.getBlue();
-                int a = Math.clamp(Math.round(computedA * 255), 0, 255);
-                int r = Math.clamp(Math.round((srcR * srcA + dstR * dstA * (1 - srcA)) / computedA * 255), 0, 255);
-                int g = Math.clamp(Math.round((srcG * srcA + dstG * dstA * (1 - srcA)) / computedA * 255), 0, 255);
-                int b = Math.clamp(Math.round((srcB * srcA + dstB * dstA * (1 - srcA)) / computedA * 255), 0, 255);
-                mixedColor = Color.fromARGB(a, r, g, b);
-            }
+            int srcR = color1.getRed();
+            int srcG = color1.getGreen();
+            int srcB = color1.getBlue();
+            int dstR = color2.getRed();
+            int dstG = color2.getGreen();
+            int dstB = color2.getBlue();
+            int r = Math.clamp(Math.round((srcR + dstR) / 255), 0, 255);
+            int g = Math.clamp(Math.round((srcG + dstG) / 255), 0, 255);
+            int b = Math.clamp(Math.round((srcB + dstB) / 255), 0, 255);
+            mixedColor = Color.fromRGB(r, g, b);
         }
         return mixedColor;
     }
@@ -189,7 +187,7 @@ public class PotionAltar extends RebarBlock
         ItemStack catalystItem = getCatalystPedestal().getItemDisplay().getItemStack();
         RebarItem rebar = RebarItem.fromStack(catalystItem);
         @Nullable PotionCatalyst catalyst = null;
-        if (catalystItem != null && !catalystItem.getType().isAir()) {
+        if (!catalystItem.getType().isAir()) {
             if (rebar instanceof PotionCatalyst clyst) {
                 catalyst = clyst;
             } else {
@@ -204,7 +202,7 @@ public class PotionAltar extends RebarBlock
         // 2 potions,
         // 2 potions + catalyst
         // since catalyst is not required.
-        if (!checkPotions(event.getPlayer(), potion1, potion2, catalyst)) {
+        if (isInvalidRecipe(event.getPlayer(), potion1, potion2, catalyst)) {
             return;
         }
 
@@ -237,16 +235,23 @@ public class PotionAltar extends RebarBlock
         Color mixedColor = mixColor(contents1, contents2);
 
         PotionContents contents = PotionContents.potionContents().addCustomEffects(effects.values().stream().toList()).customColor(mixedColor).build();
-        ItemStack fusedPotion = new ItemStack(potion1.getType());
+        ItemStack fusedPotion = potion1.clone();
+        fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
         fusedPotion.setData(DataComponentTypes.POTION_CONTENTS, contents);
+        fusedPotion.editPersistentDataContainer(pdc -> pdc.set(FUSED_POTION_KEY, PersistentDataType.BOOLEAN, true));
+        // For unknown problem, when player pick up the fused potion, it turned into glass bottle
 
-        PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), RecipeInput.of(potion1), potion2 == null ? null : RecipeInput.of(potion2), catalyst, fusedPotion, 20 * 20, catalystApplied);
+        PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), RecipeInput.of(potion1), potion2.getType().isAir() ? null : RecipeInput.of(potion2), catalyst, fusedPotion, 20 * 20, catalystApplied);
         startRecipe(recipe, recipe.timeTicks());
         getBlock().getWorld().playSound(START_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
 
     private boolean isInvalidPotion(ItemStack potion) {
         if (!PylonUtils.isPotion(potion.getType())) {
+            return !potion.getPersistentDataContainer().has(FUSED_POTION_KEY);
+        }
+
+        if (RebarItem.isRebarItem(potion)) {
             return true;
         }
 
@@ -279,10 +284,12 @@ public class PotionAltar extends RebarBlock
             return;
         }
 
+        ticked += 1;
+
         new ParticleBuilder(Particle.DRAGON_BREATH)
                 .count(10)
                 .extra(0.02)
-                .location(getBlock().getLocation().toCenterLocation())
+                .location(getBlock().getLocation().toCenterLocation().add(Math.sin(10*Math.toRadians(ticked)), 0, Math.cos(10*Math.toRadians(ticked))))
                 .data(1f)
                 .spawn();
 
@@ -326,10 +333,7 @@ public class PotionAltar extends RebarBlock
         getPedestal1().setLocked(false);
         getPedestal2().getItemDisplay().setItemStack(null);
         getPedestal2().setLocked(false);
-
-        for (Block candle : getCandles()) {
-            candle.setBlockData(Material.ORANGE_CANDLE.createBlockData());
-        }
+        getCatalystPedestal().setLocked(false);
 
         Location location = getBlock().getLocation().toCenterLocation();
         getBlock().getWorld().strikeLightningEffect(location);
@@ -341,26 +345,34 @@ public class PotionAltar extends RebarBlock
                 .location(getBlock().getLocation().toCenterLocation())
                 .data(1f)
                 .spawn();
-        if (recipe.catalyst() != null) {
-            if (ThreadLocalRandom.current().nextDouble() < recipe.catalyst().getSettings().get("apply-success-rate", ConfigAdapter.DOUBLE, 0.0D)) {
-                if (!recipe.catalystApplied()) {
-                    recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.cannot-apply-catalyst"));
-                    getBlock().getWorld().playSound(CANNOT_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
-                }
-            } else {
-                recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.failed-apply-catalyst"));
-                getBlock().getWorld().playSound(FAILED_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
-                getCatalystPedestal().getItemDisplay().setItemStack(null);
-                getCatalystPedestal().setLocked(false);
-            }
-        } else {
+
+        if (recipe.catalyst() == null) {
             getBlock().getWorld().playSound(FINISH_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
+            return;
         }
+
+        if (ThreadLocalRandom.current().nextDouble() >= recipe.catalyst().getSettings().get("apply-success-rate", ConfigAdapter.DOUBLE, 0.0D)) {
+            recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.failed-apply-catalyst"));
+            getBlock().getWorld().playSound(FAILED_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
+            getCatalystPedestal().getItemDisplay().setItemStack(null);
+            return;
+        }
+
+        if (!recipe.catalystApplied()) {
+            recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.cannot-apply-catalyst"));
+            getBlock().getWorld().playSound(CANNOT_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
+            return;
+        }
+
+        // succeed applying catalyst
+        getCatalystPedestal().getItemDisplay().setItemStack(null);
+        getBlock().getWorld().playSound(FINISH_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
 
     public void cancelRecipe() {
         getPedestal1().setLocked(false);
-        getPedestal1().setLocked(true);
+        getPedestal2().setLocked(false);
+        getCatalystPedestal().setLocked(false);
 
         for (Block candle : getCandles()) {
             new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
@@ -396,4 +408,4 @@ public class PotionAltar extends RebarBlock
     }
 }
 
-// todo: test + catalyst recipes
+// todo: test

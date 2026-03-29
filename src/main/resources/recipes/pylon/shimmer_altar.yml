@@ -108,3 +108,40 @@ pylon:soulbound_rune:
     A: pylon:abyssal_catalyst
   result: pylon:soulbound_rune
   time-seconds: 45
+
+pylon:chronicle_resin:
+  shape:
+    - "SGS"
+    - "GAG"
+    - "SGS"
+  key:
+    S: pylon:shimmer_dust_1
+    A: pylon:abyssal_catalyst
+    G: minecraft:glowstone
+  result: pylon:chronicle_resin
+  time-seconds: 25
+
+pylon:eon_weave_crystal:
+  shape:
+    - "RSR"
+    - "SAS"
+    - "RSR"
+  key:
+    S: pylon:shimmer_dust_2
+    A: pylon:abyssal_catalyst
+    R: minecraft:redstone_block
+  result: pylon:eon_weave_crystal
+  time-seconds: 50
+
+pylon:ascendant_ember:
+  shape:
+    - "RSE"
+    - "SAS"
+    - "ESR"
+  key:
+    S: pylon:shimmer_dust_3
+    A: pylon:abyssal_catalyst
+    E: pylon:eon_weave_crystal
+    R: pylon:chronicle_resin
+  result: pylon:ascendant_ember
+  time-seconds: 125

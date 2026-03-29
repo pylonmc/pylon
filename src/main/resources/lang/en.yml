@@ -2642,6 +2642,7 @@ message:
     invalid-catalyst: "<red>You have to put a valid catalyst"
     not-same-type: "<red>You have to put 2 potions with same bottles"
     too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
+    fused-potion-name: "<green>Fused Potion"
   altar:
     pedestal-locked: "<red>Pedestal is locked"
   hammer:
