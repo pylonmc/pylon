@@ -150,9 +150,9 @@ public class PotionAltar extends RebarBlock
             int dstR = color2.getRed();
             int dstG = color2.getGreen();
             int dstB = color2.getBlue();
-            int r = Math.clamp(Math.round((srcR + dstR) / 255), 0, 255);
-            int g = Math.clamp(Math.round((srcG + dstG) / 255), 0, 255);
-            int b = Math.clamp(Math.round((srcB + dstB) / 255), 0, 255);
+            int r = Math.clamp(Math.round((srcR + dstR) / 255.0f), 0, 255);
+            int g = Math.clamp(Math.round((srcG + dstG) / 255.0f), 0, 255);
+            int b = Math.clamp(Math.round((srcB + dstB) / 255.0f), 0, 255);
             mixedColor = Color.fromRGB(r, g, b);
         }
         return mixedColor;
@@ -236,10 +236,11 @@ public class PotionAltar extends RebarBlock
 
         PotionContents contents = PotionContents.potionContents().addCustomEffects(effects.values().stream().toList()).customColor(mixedColor).build();
         ItemStack fusedPotion = potion1.clone();
-        fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
+        // For translator problem, when player pick up the fused potion, it turned into glass bottle
+        // fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
         fusedPotion.setData(DataComponentTypes.POTION_CONTENTS, contents);
         fusedPotion.editPersistentDataContainer(pdc -> pdc.set(FUSED_POTION_KEY, PersistentDataType.BOOLEAN, true));
-        // For unknown problem, when player pick up the fused potion, it turned into glass bottle
+
 
         PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), RecipeInput.of(potion1), potion2.getType().isAir() ? null : RecipeInput.of(potion2), catalyst, fusedPotion, 20 * 20, catalystApplied);
         startRecipe(recipe, recipe.timeTicks());

@@ -2661,7 +2661,7 @@ pylon:potion_altar:
     D: minecraft:diamond
     R: pylon:bronze_block
     B: minecraft:blaze_rod
-  result: pylon:shimmer_altar
+  result: pylon:potion_altar
   category: building
 
 pylon:palladium_condenser:
