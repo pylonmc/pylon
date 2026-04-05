@@ -310,7 +310,7 @@ pylon:confetti_popper:
     D: "#paper:dyes_settag"
     I: pylon:iron_sheet
   result: pylon:confetti_popper
-  category: tools
+  category: equipment
 
 pylon:diesel_booster:
   pattern:
@@ -324,7 +324,7 @@ pylon:diesel_booster:
     F: minecraft:flint_and_steel
     N: pylon:nozzle
   result: pylon:diesel_booster
-  category: tools
+  category: equipment
 
 pylon:grindstone:
   pattern:
