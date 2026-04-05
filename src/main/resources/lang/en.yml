@@ -1636,6 +1636,21 @@ item:
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
     waila: "Diesel Miner | %bar%"
 
+  diesel_booster:
+    name: "Diesel Booster"
+    lore: |-
+      <arrow> Uses diesel to boost elytra flight
+      <arrow> Refuel using the <white>Diesel Refueling Station
+      <arrow> <insn>Right click</insn> to boost
+      <arrow> <attr>Diesel per boost:</attr> %diesel-per-boost%
+      <arrow> <attr>Diesel:</attr> %diesel%
+
+  diesel_refueling_station:
+    name: "Diesel Refueling Station"
+    lore: |-
+      <arrow> Refuels items with diesel
+    waila: "Diesel Refueling Station %extra%"
+
   fermenter:
     name: "Fermenter"
     lore: |-
@@ -2422,6 +2437,7 @@ research:
   cargo_3: "<#e89888>Cargo III"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
+  diesel_booster: "<#e8c888>Diesel booster"
   assembling: "<#846e5a>Assembling"
   steel_tools: "<gray>Steel tools"
   steel_armor: "<gray>Steel armor"
@@ -2583,6 +2599,8 @@ message:
     success: "<red>Your item has been fire-proofed"
   hydraulic_refueling_station:
     extra: "| %hydraulic-fluid-bar% | %dirty-hydraulic-fluid-bar%"
+  diesel_refueling_station:
+    extra: "| %diesel-bar%"
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"

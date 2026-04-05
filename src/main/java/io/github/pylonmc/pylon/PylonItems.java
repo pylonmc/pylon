@@ -1091,6 +1091,18 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(SOULBOUND_RUNE);
     }
 
+    public static final ItemStack DIESEL_BOOSTER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.DIESEL_BOOSTER)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .set(DataComponentTypes.ITEM_MODEL, Material.FIREWORK_ROCKET.getKey())
+            .editPdc(pdc -> {
+                pdc.set(PylonFluids.BIODIESEL.getKey(), RebarSerializers.DOUBLE, 0.0);
+            })
+            .build();
+    static {
+        RebarItem.register(DieselBooster.class, DIESEL_BOOSTER, PylonKeys.DIESEL_BOOSTER);
+        PylonPages.TOOLS.addItem(DIESEL_BOOSTER);
+    }
+
     @SuppressWarnings("ConstantConditions")
     public static final ItemStack CONFETTI_POPPER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CONFETTI_POPPER)
             .set(DataComponentTypes.ITEM_MODEL, Material.FIREWORK_ROCKET.getKey())
@@ -2871,6 +2883,13 @@ public final class PylonItems {
     static {
         RebarItem.register(DieselCoreDrill.Item.class, DIESEL_CORE_DRILL, PylonKeys.DIESEL_CORE_DRILL);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_CORE_DRILL);
+    }
+
+    public static final ItemStack DIESEL_REFUELING_STATION = ItemStackBuilder.rebar(Material.QUARTZ_SLAB, PylonKeys.DIESEL_REFUELING_STATION)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, DIESEL_REFUELING_STATION, PylonKeys.DIESEL_REFUELING_STATION);
+        PylonPages.DIESEL_MACHINES.addItem(DIESEL_REFUELING_STATION);
     }
 
     public static final ItemStack PALLADIUM_CONDENSER = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.PALLADIUM_CONDENSER)

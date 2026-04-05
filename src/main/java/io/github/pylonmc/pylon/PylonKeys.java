@@ -322,6 +322,8 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
     public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
     public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
+    public static final NamespacedKey DIESEL_REFUELING_STATION = pylonKey("diesel_refueling_station");
+    public static final NamespacedKey DIESEL_BOOSTER = pylonKey("diesel_booster");
     public static final NamespacedKey PALLADIUM_CONDENSER = pylonKey("palladium_condenser");
 
     public static final NamespacedKey FERMENTER = pylonKey("fermenter");
