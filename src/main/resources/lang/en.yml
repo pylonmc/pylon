@@ -939,7 +939,7 @@ item:
       <arrow> <attr>Max health increase:</attr> %health-boost%
 
   health_talisman_ultimate:
-    name: "Ultimate Healing Talisman"
+    name: "Ultimate Health Talisman"
     lore: |-
       <arrow> Increases your maximum health
       <arrow> Does not stack
