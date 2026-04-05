@@ -221,8 +221,8 @@ public final class BronzeAnvil extends RebarBlock implements
         bloom.setDisplayGlowOn(itemDisplay);
         if (bloom.getWorking() >= -TOLERANCE && bloom.getWorking() <= TOLERANCE && newTemperature == 0) {
             itemDisplay.setItemStack(null);
-            Location centerLoc = getBlock().getLocation().toCenterLocation();
-            centerLoc.getWorld().dropItemNaturally(centerLoc, PylonItems.WROUGHT_IRON.clone());
+            Location dropLoc = getBlock().getLocation().toCenterLocation().add(0, 1, 0);
+            dropLoc.getWorld().dropItemNaturally(dropLoc, PylonItems.WROUGHT_IRON.clone());
             return;
         }
         itemDisplay.setItemStack(bloom.getStack());
