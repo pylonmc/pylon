@@ -604,9 +604,9 @@ item:
     name: "Potion Altar"
     lore: |-
       <star> Multiblock
-      <arrow> A standalone structure for potion effect fusion
-      <arrow> Add potions on the potion pedestals,
-      <arrow> Or add a more potion catalyst on the shimmer pedestal,
+      <arrow> A standalone structure for potion effect fusion/upgrading
+      <arrow> Add potions on the potion pedestals
+      <arrow> or add a more potion catalyst on the shimmer pedestal
       <arrow> then right click the altar to begin the ritual
       
       <u>Components</u>
