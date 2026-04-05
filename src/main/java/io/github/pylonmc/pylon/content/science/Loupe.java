@@ -293,7 +293,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             }
 
             // Permit unbreakable blocks, just don't try to break them
-            if (type.getHardness() >= 0) {
+            if (type.getHardness() >= 0 && player.getGameMode() != GameMode.ADVENTURE) {
                 BlockBreakEvent breakEvent = new BlockBreakEvent(hit, player);
                 breakEvent.setDropItems(false);
                 breakEvent.setExpToDrop(0);
@@ -303,9 +303,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
                 }
 
                 hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, hit.getBlockData());
-                if (player.getGameMode() != GameMode.ADVENTURE) {
-                    hit.setType(Material.AIR, true);
-                }
+                hit.setType(Material.AIR, true);
             } else {
                 // Prevents scanning the same instance of an unbreakable block again
                 markAlreadyExamined(player, hit);
