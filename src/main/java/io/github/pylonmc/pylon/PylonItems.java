@@ -1045,7 +1045,7 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(DieselBooster.class, DIESEL_BOOSTER, PylonKeys.DIESEL_BOOSTER);
-        PylonPages.DIESEL_MACHINES.addItem(DIESEL_BOOSTER);
+        PylonPages.TOOLS.addItem(DIESEL_BOOSTER);
     }
 
     @SuppressWarnings("ConstantConditions")
