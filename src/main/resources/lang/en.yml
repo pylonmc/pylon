@@ -805,9 +805,9 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.smeltery_controller.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
       <diamond> 25 or more <yellow><lang:pylon.item.refractory_bricks.name/></yellow> (depending on size and components)
 
@@ -2700,20 +2700,22 @@ gui:
   portable-dustbin: "Portable Dustbin"
   status:
     name: "Status"
-    toggle: "<insn>Click</insn> to toggle"
     "on": "<green>On"
     "off": "<yellow>Off"
     running: "<green>Running"
     not_running: "<yellow>Not running"
     incomplete: "<red>Multiblock incomplete"
-  smeltery:
-    height: "<attr>Height:</attr> %height%"
-    capacity: "<attr>Capacity:</attr> %capacity%"
-    temperature: "<attr>Temperature:</attr> %temperature%"
-    contents:
-      name: "Contents"
-      fluid: "%amount% of %fluid%"
-      empty: "Empty"
+  smeltery: |-
+    <attr>Status:</attr> %status%
+    <insn>Click</insn> to toggle
+    
+    <attr>Height:</attr> %height%
+    <attr>Capacity:</attr> %capacity%
+    <attr>Temperature:</attr> %temperature%
+  contents:
+    name: "Contents"
+    fluid: "%amount% of %fluid%"
+    empty: "Empty"
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"

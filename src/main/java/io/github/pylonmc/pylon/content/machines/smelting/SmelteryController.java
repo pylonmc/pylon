@@ -148,37 +148,20 @@ public final class SmelteryController extends SmelteryComponent
 
         @Override
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            Material material;
-            List<Component> lore = new ArrayList<>();
             if (isFormedAndFullyLoaded()) {
-                if (running) {
-                    material = Material.GREEN_STAINED_GLASS_PANE;
-                    lore.add(Component.translatable("pylon.gui.status.running"));
-                } else {
-                    material = Material.YELLOW_STAINED_GLASS_PANE;
-                    lore.add(Component.translatable("pylon.gui.status.not_running"));
-                }
-                lore.add(Component.translatable("pylon.gui.status.toggle"));
-                lore.add(Component.empty());
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.height",
-                        RebarArgument.of("height", UnitFormat.BLOCKS.format(height))
-                ));
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.capacity",
-                        RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0))
-                ));
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.temperature",
-                        RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature).decimalPlaces(1))
-                ));
+                return ItemStackBuilder.of(running ? Material.GREEN_STAINED_GLASS_PANE : Material.YELLOW_STAINED_GLASS_PANE)
+                        .lore(Component.translatable(
+                                "pylon.gui.smeltery",
+                                RebarArgument.of("status", Component.translatable(running ? "pylon.gui.status.running" : "pylon.gui.status.not_running")),
+                                RebarArgument.of("height", UnitFormat.BLOCKS.format(height)),
+                                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0)),
+                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature).decimalPlaces(0))
+                        ))
+                        .addCustomModelDataFloat((float) temperature);
             } else {
-                material = Material.RED_STAINED_GLASS_PANE;
-                lore.add(Component.translatable("pylon.gui.status.incomplete"));
+                return ItemStackBuilder.of(Material.RED_STAINED_GLASS_PANE)
+                        .lore(Component.translatable("pylon.gui.status.incomplete"));
             }
-            return ItemStackBuilder.of(material)
-                    .name(Component.translatable("pylon.gui.status.name"))
-                    .lore(lore);
         }
 
         @Override
@@ -607,7 +590,6 @@ public final class SmelteryController extends SmelteryComponent
         var properties = super.getBlockTextureProperties();
         properties.put("running", new Pair<>(String.valueOf(isFormedAndFullyLoaded() && running), 2));
         properties.put("level", new Pair<>(String.valueOf((int) (getTotalFluid() / capacity * 10)), 10));
-        properties.put("temperature", new Pair<>(String.valueOf((int) temperature), 10));
         return properties;
     }
 }
