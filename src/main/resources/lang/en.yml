@@ -2706,7 +2706,7 @@ gui:
     not_running: "<yellow>Not running"
     incomplete: "<red>Multiblock incomplete"
   smeltery: |-
-    <attr>Status:</attr> %status%
+    %status%
     <insn>Click</insn> to toggle
     
     <attr>Height:</attr> %height%

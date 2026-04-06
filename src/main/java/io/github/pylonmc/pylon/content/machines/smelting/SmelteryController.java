@@ -150,6 +150,7 @@ public final class SmelteryController extends SmelteryComponent
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
             if (isFormedAndFullyLoaded()) {
                 return ItemStackBuilder.of(running ? Material.GREEN_STAINED_GLASS_PANE : Material.YELLOW_STAINED_GLASS_PANE)
+                        .name(Component.translatable("pylon.gui.status.name"))
                         .lore(Component.translatable(
                                 "pylon.gui.smeltery",
                                 RebarArgument.of("status", Component.translatable(running ? "pylon.gui.status.running" : "pylon.gui.status.not_running")),
@@ -160,6 +161,7 @@ public final class SmelteryController extends SmelteryComponent
                         .addCustomModelDataFloat((float) temperature);
             } else {
                 return ItemStackBuilder.of(Material.RED_STAINED_GLASS_PANE)
+                        .name(Component.translatable("pylon.gui.status.name"))
                         .lore(Component.translatable("pylon.gui.status.incomplete"));
             }
         }
