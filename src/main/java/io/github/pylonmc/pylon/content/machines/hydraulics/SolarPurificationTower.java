@@ -7,7 +7,6 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -32,9 +31,9 @@ import java.util.Map;
 
 public class SolarPurificationTower extends RebarBlock implements
         RebarSimpleMultiblock,
-        RebarTickingBlock,
         RebarDirectionalBlock,
-        RebarFluidBufferBlock {
+        RebarFluidBufferBlock,
+        HydraulicPurifier {
 
     public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.DOUBLE);
     public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
@@ -122,6 +121,16 @@ public class SolarPurificationTower extends RebarBlock implements
 
         removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, toPurify);
         addFluid(PylonFluids.HYDRAULIC_FLUID, toPurify * purificationEfficiency);
+    }
+
+    @Override
+    public double getPurificationSpeed() {
+        return purificationSpeed;
+    }
+
+    @Override
+    public double getPurificationEfficiency() {
+        return purificationEfficiency;
     }
 
     @Override

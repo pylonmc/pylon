@@ -73,8 +73,6 @@ public class CargoInserter extends CargoInteractor implements
     public CargoInserter(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
-        setFacing(context.getFacing());
-
         addCargoLogisticGroup(getFacing(), "input");
         for (BlockFace face : RebarUtils.perpendicularImmediateFaces(getFacing())) {
             addCargoLogisticGroup(face, "input");

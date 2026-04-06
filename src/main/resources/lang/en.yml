@@ -684,6 +684,9 @@ item:
   raw_tin:
     name: "Raw Tin"
 
+  raw_tin_block:
+    name: "Block of Raw Tin"
+
   reactivated_wither_skull:
     name: "<white>Reactivated Wither Skull"
     lore: |-
@@ -886,6 +889,9 @@ item:
   sulfur:
     name: "Sulfur"
 
+  sulfur_block:
+    name: "Block of Sulfur"
+
   tin_dust:
     name: "Tin Dust"
 
@@ -925,7 +931,7 @@ item:
       <arrow> <attr>Max health increase:</attr> %health-boost%
 
   health_talisman_ultimate:
-    name: "Ultimate Healing Talisman"
+    name: "Ultimate Health Talisman"
     lore: |-
       <arrow> Increases your maximum health
       <arrow> Does not stack
@@ -1434,6 +1440,9 @@ item:
   gypsum:
     name: "Gypsum"
 
+  gypsum_block:
+    name: "Block of Gypsum"
+
   gypsum_dust:
     name: "Gypsum Dust"
 
@@ -1618,6 +1627,21 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-per-block% per block
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
     waila: "Diesel Miner | %bar%"
+
+  diesel_booster:
+    name: "Diesel Booster"
+    lore: |-
+      <arrow> Uses diesel to boost elytra flight
+      <arrow> Refuel using the <white>Diesel Refueling Station
+      <arrow> <insn>Right click</insn> to boost
+      <arrow> <attr>Diesel per boost:</attr> %diesel-per-boost%
+      <arrow> <attr>Diesel:</attr> %diesel%
+
+  diesel_refueling_station:
+    name: "Diesel Refueling Station"
+    lore: |-
+      <arrow> Refuels items with diesel
+    waila: "Diesel Refueling Station %extra%"
 
   fermenter:
     name: "Fermenter"
@@ -1813,6 +1837,7 @@ item:
     name: "Simple Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
@@ -1821,6 +1846,7 @@ item:
     name: "Advanced Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
@@ -1829,6 +1855,7 @@ item:
     name: "Ultimate Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
@@ -1837,6 +1864,7 @@ item:
     name: "Palladium Hunger Talisman"
     lore: |-
       <arrow> Increases your saturation and hunger every %period%
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Saturation increase:</attr> %saturation_increase%
       <arrow> <attr>Hunger increase:</attr> %hunger_increase%
@@ -1845,6 +1873,7 @@ item:
     name: "Simple Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
@@ -1852,6 +1881,7 @@ item:
     name: "Advanced Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
@@ -1859,6 +1889,7 @@ item:
     name: "Ultimate Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
@@ -1866,6 +1897,7 @@ item:
     name: "Palladium Farming Talisman"
     lore: |-
       <arrow> Get an extra drop when breaking a crop
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
@@ -1873,6 +1905,7 @@ item:
     name: "Simple Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
@@ -1880,6 +1913,7 @@ item:
     name: "Advanced Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
@@ -1887,6 +1921,7 @@ item:
     name: "Ultimate Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
@@ -1894,6 +1929,7 @@ item:
     name: "Palladium Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
@@ -1901,6 +1937,7 @@ item:
     name: "<white>Simple Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
@@ -1908,6 +1945,7 @@ item:
     name: "<white>Advanced Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
@@ -1915,6 +1953,7 @@ item:
     name: "<white>Ultimate Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
@@ -1922,6 +1961,7 @@ item:
     name: "<white>Palladium Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
@@ -1929,6 +1969,7 @@ item:
     name: "Simple Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
@@ -1936,6 +1977,7 @@ item:
     name: "Advanced Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
@@ -1943,6 +1985,7 @@ item:
     name: "Ultimate Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
@@ -1950,6 +1993,7 @@ item:
     name: "Palladium Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus luck:</attr> %bonus_luck%
 
@@ -1957,6 +2001,7 @@ item:
     name: "Simple Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
@@ -1964,6 +2009,7 @@ item:
     name: "Advanced Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
@@ -1971,6 +2017,7 @@ item:
     name: "Ultimate Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
@@ -1978,6 +2025,7 @@ item:
     name: "Palladium Breeding Talisman"
     lore: |-
       <arrow> Bred children grow up instantly
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
@@ -1985,6 +2033,7 @@ item:
     name: "<white>Simple Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
@@ -1992,6 +2041,7 @@ item:
     name: "<white>Advanced Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
@@ -1999,6 +2049,7 @@ item:
     name: "<white>Ultimate Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
@@ -2006,6 +2057,7 @@ item:
     name: "<white>Palladium Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
@@ -2013,6 +2065,7 @@ item:
     name: "<white>Simple Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
@@ -2020,6 +2073,7 @@ item:
     name: "<white>Advanced Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
@@ -2027,6 +2081,7 @@ item:
     name: "<white>Ultimate Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
@@ -2034,16 +2089,21 @@ item:
     name: "<white>Palladium Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   flight_ring:
     name: "<white>Flight Ring"
+    lore: |-
+      <arrow> Allows creative flight
+      <arrow> Does not stack
 
   experience_talisman_simple:
     name: "Simple Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
@@ -2051,6 +2111,7 @@ item:
     name: "Advanced Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
@@ -2058,6 +2119,7 @@ item:
     name: "Ultimate Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
@@ -2065,13 +2127,9 @@ item:
     name: "Palladium Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
+      <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
-
-  palladium_flight_ring:
-    name: "<white>Palladium Flight Ring"
-    lore: |-
-      <arrow> Allows creative flight
 
   assembly_table:
     name: "<white>Assembly Table"
@@ -2165,6 +2223,33 @@ item:
 
   cargo_controller:
     name: "Cargo Controller"
+
+  steel_helmet:
+    name: "Steel Helmet"
+
+  steel_chestplate:
+    name: "Steel Chestplate"
+
+  steel_leggings:
+    name: "Steel Leggings"
+
+  steel_boots:
+    name: "Steel Boots"
+
+  steel_sword:
+    name: "Steel Sword"
+
+  steel_axe:
+    name: "Steel Axe"
+
+  steel_pickaxe:
+    name: "Steel Pickaxe"
+
+  steel_shovel:
+    name: "Steel Shovel"
+
+  steel_hoe:
+    name: "Steel Hoe"
 
   palladium_helmet:
     name: "Palladium Helmet"
@@ -2379,7 +2464,10 @@ research:
   cargo_3: "<#e89888>Cargo III"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
+  diesel_booster: "<#e8c888>Diesel booster"
   assembling: "<#846e5a>Assembling"
+  steel_tools: "<gray>Steel tools"
+  steel_armor: "<gray>Steel armor"
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
   creative_flight: "<#2937e3>Creative flight"
@@ -2538,6 +2626,8 @@ message:
     success: "<red>Your item has been fire-proofed"
   hydraulic_refueling_station:
     extra: "| %hydraulic-fluid-bar% | %dirty-hydraulic-fluid-bar%"
+  diesel_refueling_station:
+    extra: "| %diesel-bar%"
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"

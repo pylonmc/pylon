@@ -4,7 +4,7 @@ import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.guide.button.AddonPageButton;
 import io.github.pylonmc.rebar.guide.button.PageButton;
 import io.github.pylonmc.rebar.guide.pages.base.SimpleStaticGuidePage;
-import io.github.pylonmc.rebar.guide.pages.info.sub.ResearchingInfoPage;
+import io.github.pylonmc.rebar.guide.pages.help.sub.ResearchingHelpPage;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import org.bukkit.Material;
 import xyz.xenondevs.invui.item.Item;
@@ -22,10 +22,10 @@ public class PylonGuides {
     public static final SimpleStaticGuidePage SMELTERY = new SimpleStaticGuidePage(pylonKey("info_smeltery"));
 
     public static void initialise() {
-        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.GLASS_PANE, Pylon.getInstance(), "info.loupe")));
-        ResearchingInfoPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.RED_BANNER, Pylon.getInstance(), "info.research_packs")));
+        ResearchingHelpPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.GLASS_PANE, Pylon.getInstance(), "info.loupe")));
+        ResearchingHelpPage.INSTANCE.addButton(Item.simple(ItemStackBuilder.guide(Material.RED_BANNER, Pylon.getInstance(), "info.research_packs")));
 
-        RebarGuide.getInfoPage().addButton(new AddonPageButton(Pylon.getInstance(), INFO));
+        RebarGuide.getHelpPage().addButton(new AddonPageButton(Pylon.getInstance(), INFO));
 
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.IRON_PICKAXE, Pylon.getInstance(), "info.progression.manual_core")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.CLOCK, Pylon.getInstance(), "info.loupe"))); // recycle loupe desc
