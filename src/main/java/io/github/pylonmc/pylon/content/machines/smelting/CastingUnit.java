@@ -1,5 +1,24 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import net.kyori.adventure.text.Component;
+
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+
+import java.util.List;
+import java.util.Map;
+
 import io.github.pylonmc.pylon.recipes.CastingRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -17,29 +36,12 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.OperationCategory;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.List;
-import java.util.Map;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class CastingUnit extends RebarBlock implements
         RebarFluidBlock,
@@ -127,7 +129,7 @@ public final class CastingUnit extends RebarBlock implements
 
         @Override
         public @NotNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            return ItemStackBuilder.gui(queuedCasts > 0 || autoCast ? Material.STRUCTURE_VOID : Material.BARRIER, pylonKey("casting_control"))
+            return ItemStackBuilder.gui(queuedCasts > 0 || autoCast ? Material.LAVA_BUCKET : Material.BUCKET, pylonKey("casting_control"))
                     .name(Component.translatable("pylon.gui.casting-control.name"))
                     .lore(Component.translatable(
                             "pylon.gui.casting-control.lore",

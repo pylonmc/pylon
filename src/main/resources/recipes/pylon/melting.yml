@@ -2,16 +2,19 @@ pylon:sulfur:
   input: pylon:sulfur
   result: pylon:sulfur
   amount: 144
+  priority: -1
 
 pylon:copper_from_ingot:
   input: minecraft:copper_ingot
   result: pylon:copper
   amount: 144
+  priority: -1
 
 pylon:copper_from_dust:
   input: pylon:copper_dust
   result: pylon:copper
   amount: 144
+  priority: -1
 
 pylon:copper_from_nugget:
   input: minecraft:copper_nugget
@@ -29,7 +32,8 @@ pylon:copper_from_sheet:
   input: pylon:copper_sheet
   result: pylon:copper
   amount: 144
-  
+  priority: -1
+
 pylon:copper_from_pipe:
   input: pylon:fluid_pipe_copper
   result: pylon:copper
@@ -40,12 +44,13 @@ pylon:gold_from_ingot:
   input: minecraft:gold_ingot
   result: pylon:gold
   amount: 144
+  priority: -1
 
 pylon:gold_from_dust:
   input: pylon:gold_dust
   result: pylon:gold
   amount: 144
-
+  priority: -1
 pylon:gold_from_nugget:
   input: minecraft:gold_nugget
   result: pylon:gold
@@ -62,16 +67,19 @@ pylon:gold_from_sheet:
   input: pylon:gold_sheet
   result: pylon:gold
   amount: 144
+  priority: -1
 
 pylon:iron_from_ingot:
   input: minecraft:iron_ingot
   result: pylon:iron
   amount: 144
+  priority: -1
 
 pylon:iron_from_dust:
   input: pylon:iron_dust
   result: pylon:iron
   amount: 144
+  priority: -1
 
 pylon:iron_from_nugget:
   input: minecraft:iron_nugget
@@ -89,6 +97,7 @@ pylon:iron_from_sheet:
   input: pylon:iron_sheet
   result: pylon:iron
   amount: 144
+  priority: -1
 
 pylon:iron_from_pipe:
   input: pylon:fluid_pipe_iron
@@ -100,11 +109,13 @@ pylon:tin_from_ingot:
   input: pylon:tin_ingot
   result: pylon:tin
   amount: 144
+  priority: -1
 
 pylon:tin_from_dust:
   input: pylon:tin_dust
   result: pylon:tin
   amount: 144
+  priority: -1
 
 pylon:tin_from_nugget:
   input: pylon:tin_nugget
@@ -122,6 +133,7 @@ pylon:tin_from_sheet:
   input: pylon:tin_sheet
   result: pylon:tin
   amount: 144
+  priority: -1
 
 pylon:tin_from_pipe:
   input: pylon:fluid_pipe_tin
@@ -133,11 +145,13 @@ pylon:bronze_from_ingot:
   input: pylon:bronze_ingot
   result: pylon:bronze
   amount: 144
+  priority: -1
 
 pylon:bronze_from_dust:
   input: pylon:bronze_dust
   result: pylon:bronze
   amount: 144
+  priority: -1
 
 pylon:bronze_from_nugget:
   input: pylon:bronze_nugget
@@ -155,6 +169,7 @@ pylon:bronze_from_sheet:
   input: pylon:bronze_sheet
   result: pylon:bronze
   amount: 144
+  priority: -1
 
 pylon:bronze_from_pipe:
   input: pylon:fluid_pipe_bronze
@@ -166,11 +181,13 @@ pylon:steel_from_ingot:
   input: pylon:steel_ingot
   result: pylon:steel
   amount: 144
+  priority: -1
 
 pylon:steel_from_dust:
   input: pylon:steel_dust
   result: pylon:steel
   amount: 144
+  priority: -1
 
 pylon:steel_from_nugget:
   input: pylon:steel_nugget
@@ -188,6 +205,7 @@ pylon:steel_from_sheet:
   input: pylon:steel_sheet
   result: pylon:steel
   amount: 144
+  priority: -1
 
 pylon:steel_from_pipe:
   input: pylon:fluid_pipe_steel
@@ -199,11 +217,13 @@ pylon:palladium_from_ingot:
   input: pylon:palladium_ingot
   result: pylon:palladium
   amount: 144
+  priority: -1
 
 pylon:palladium_from_dust:
   input: pylon:palladium_dust
   result: pylon:palladium
   amount: 144
+  priority: -1
 
 pylon:palladium_from_nugget:
   input: pylon:palladium_nugget
@@ -221,6 +241,7 @@ pylon:palladium_from_sheet:
   input: pylon:palladium_sheet
   result: pylon:palladium
   amount: 144
+  priority: -1
 
 pylon:palladium_from_pipe:
   input: pylon:fluid_pipe_palladium
