@@ -54,8 +54,9 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PylonFluids.initialize();
         PylonRecipes.initialize();
 
-        PluginManager pm = Bukkit.getPluginManager();
 
+
+        PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Sprinkler.SprinklerPlaceListener(), this);
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
         pm.registerEvents(new Rune.RuneListener(), this);

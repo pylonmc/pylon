@@ -238,7 +238,8 @@ public class CargoAccumulator extends RebarBlock implements
 
         if (inputTotal >= threshold) {
             List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
-            Preconditions.checkState(outputInventory.canHold(stacks));
+            if (!outputInventory.canHold(stacks)) return;
+
             for (ItemStack stack : stacks) {
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }

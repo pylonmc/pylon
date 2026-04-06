@@ -8,6 +8,8 @@ import io.github.pylonmc.rebar.recipe.IngredientCalculator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class PylonFluids {
@@ -239,7 +241,8 @@ public final class PylonFluids {
 
     public static final RebarFluid SPONGE_IRON_SLURRY = new Slurry(
             pylonKey("slurry_sponge_iron"),
-            PylonItems.SPONGE_IRON
+            PylonItems.SPONGE_IRON,
+            500
     ).addTag(FluidTemperature.NORMAL);
     static {
         SPONGE_IRON_SLURRY.register();

@@ -22,8 +22,11 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -42,21 +45,23 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class HydraulicHammerHead extends RebarBlock implements
         RebarTickingBlock,
-        RebarInteractBlock,
         RebarFluidBufferBlock,
+        RebarGuiBlock,
+        RebarVirtualInventoryBlock,
         RebarProcessor,
         RebarLogisticBlock,
         RebarDirectionalBlock {
-
-    public static final NamespacedKey HAMMER_KEY = pylonKey("hammer");
 
     public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
@@ -67,6 +72,9 @@ public class HydraulicHammerHead extends RebarBlock implements
     private final ItemStack emptyHammerTipStack = ItemStackBuilder.of(Material.AIR)
             .addCustomModelDataString(getKey() + ":hammer_tip:empty")
             .build();
+
+    public final ItemStackBuilder hammerStack = ItemStackBuilder.gui(Material.LIME_STAINED_GLASS_PANE, getKey() + ":hammer")
+            .name(Component.translatable("pylon.gui.hammer"));
 
     public static class Item extends RebarItem {
 
@@ -88,13 +96,11 @@ public class HydraulicHammerHead extends RebarBlock implements
         }
     }
 
-    public @Nullable Hammer hammer;
+    private final VirtualInventory hammerInventory = new VirtualInventory(1);
 
     @SuppressWarnings("unused")
     public HydraulicHammerHead(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
-        hammer = null;
 
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
@@ -122,49 +128,23 @@ public class HydraulicHammerHead extends RebarBlock implements
     @SuppressWarnings("unused")
     public HydraulicHammerHead(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        hammer = RebarItem.fromStack(pdc.get(HAMMER_KEY, RebarSerializers.ITEM_STACK), Hammer.class);
     }
 
     @Override
     public void postInitialise() {
-        createLogisticGroup("hammer", LogisticGroupType.INPUT, new HammerLogisticSlot());
+        hammerInventory.addPreUpdateHandler(event -> updateHammerTip(event.getNewItem()));
+        hammerInventory.addPostUpdateHandler(event -> updateHammerTip(event.getNewItem()));
+        createLogisticGroup("hammer", LogisticGroupType.INPUT, hammerInventory);
     }
 
-    @Override
-    public void write(@NotNull PersistentDataContainer pdc) {
-        super.write(pdc);
-        RebarUtils.setNullable(pdc, HAMMER_KEY, RebarSerializers.ITEM_STACK, hammer.getStack());
-    }
-
-    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
+    public void updateHammerTip(ItemStack newItem) {
+        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+            getHammerTip().setItemStack(null);
             return;
         }
-
-        if (priority == EventPriority.NORMAL) {
-            event.setUseItemInHand(Event.Result.DENY);
-            return;
-        }
-
-        if (hammer != null) {
-            event.getPlayer().give(hammer.getStack());
-            hammer = null;
-        } else {
-            ItemStack stack = event.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
-            if (RebarItem.fromStack(stack.asOne()) instanceof Hammer hammer) {
-                this.hammer = hammer;
-                stack.subtract();
-            } else {
-                return;
-            }
-        }
-
-        getHammerTip().setItemStack(hammer == null
-                ? emptyHammerTipStack
-                : ItemStackBuilder.of(hammer.baseBlock)
-                    .addCustomModelDataString(getKey() + ":hammer_tip:" + hammer.getKey().key())
-                    .build()
+        getHammerTip().setItemStack(ItemStackBuilder.of(hammer.baseBlock)
+                .addCustomModelDataString(getKey() + ":hammer_tip:" + hammer.getKey().key())
+                .build()
         );
     }
 
@@ -177,23 +157,13 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        if (hammer == null) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
             return;
         }
 
         Block baseBlock = getBlock().getRelative(BlockFace.DOWN, 3);
         if (BlockStorage.isRebarBlock(baseBlock) || baseBlock.getType() != hammer.baseBlock) {
             return;
-        }
-
-        if (hammer.getStack().getAmount() == 0) {
-            this.hammer = null;
-            getHammerTip().setItemStack(hammer == null
-                    ? emptyHammerTipStack
-                    : ItemStackBuilder.of(hammer.baseBlock)
-                    .addCustomModelDataString(getKey() + ":hammer_tip:" + hammer.getKey().key())
-                    .build()
-            );
         }
 
         if (fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerCraft) {
@@ -208,6 +178,10 @@ public class HydraulicHammerHead extends RebarBlock implements
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                return;
+            }
+
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
@@ -222,9 +196,8 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        if (hammer != null) {
-            drops.add(hammer.getStack());
-        }
+        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+        RebarFluidBufferBlock.super.onBreak(drops, context);
     }
 
     public @Nullable ItemDisplay getHammerHead() {
@@ -232,7 +205,7 @@ public class HydraulicHammerHead extends RebarBlock implements
     }
 
     public @Nullable ItemDisplay getHammerTip() {
-        return getHeldEntity(ItemDisplay.class, "hammer_tip");
+        return getHeldEntityOrThrow(ItemDisplay.class, "hammer_tip");
     }
 
     public static @NotNull Matrix4f getHeadTransformation(double translationY) {
@@ -267,29 +240,22 @@ public class HydraulicHammerHead extends RebarBlock implements
         ));
     }
 
-    private class HammerLogisticSlot implements LogisticSlot {
-        @Override
-        public @Nullable ItemStack getItemStack() {
-            return hammer == null ? null : hammer.getStack();
-        }
+    @Override
+    public @NotNull Gui createGui() {
+        return Gui.builder()
+                .setStructure(
+                        "# # # # H # # # #",
+                        "# # # # x # # # #",
+                        "# # # # H # # # #"
+                )
+                .addIngredient('#', GuiItems.background())
+                .addIngredient('H', hammerStack)
+                .addIngredient('x', hammerInventory)
+                .build();
+    }
 
-        @Override
-        public long getAmount() {
-            return hammer == null ? 0 : hammer.getStack().getAmount();
-        }
-
-        @Override
-        public long getMaxAmount(@NotNull ItemStack stack) {
-            return RebarItem.fromStack(stack) instanceof Hammer ? stack.getMaxStackSize() : 0;
-        }
-
-        @Override
-        public void set(@Nullable ItemStack stack, long amount) {
-            if (stack == null) {
-                hammer = null;
-                return;
-            }
-            hammer = (Hammer) RebarItem.fromStack(stack.asQuantity((int) amount));
-        }
+    @Override
+    public @NotNull Map<@NotNull String, @NotNull VirtualInventory> getVirtualInventories() {
+        return Map.of("hammer", hammerInventory);
     }
 }
