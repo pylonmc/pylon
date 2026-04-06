@@ -1,5 +1,13 @@
 package io.github.pylonmc.pylon.recipes;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -7,15 +15,7 @@ import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record CastingRecipe(
         @NotNull NamespacedKey key,
@@ -26,7 +26,7 @@ public record CastingRecipe(
 
     public static final RecipeType<CastingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("casting")) {
         @Override
-        protected @NonNull CastingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
+        protected @NotNull CastingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             ItemStack cast = section.getOrThrow("cast", ConfigAdapter.ITEM_STACK);
             RecipeInput.Fluid input = section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_FLUID);
 
