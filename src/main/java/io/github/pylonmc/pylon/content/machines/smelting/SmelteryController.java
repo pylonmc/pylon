@@ -1,6 +1,34 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 import com.google.common.base.Preconditions;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
@@ -28,36 +56,11 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
 import kotlin.Pair;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.damage.DamageType;
-import org.bukkit.entity.*;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.noise.SimplexOctaveGenerator;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3i;
-import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryController extends SmelteryComponent
         implements RebarGuiBlock, RebarMultiblock, RebarTickingBlock {
@@ -598,6 +601,8 @@ public final class SmelteryController extends SmelteryComponent
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
         properties.put("running", new Pair<>(String.valueOf(isFormedAndFullyLoaded() && running), 2));
+        properties.put("level", new Pair<>(String.valueOf((int) (getTotalFluid() / capacity * 10)), 10));
+        properties.put("temperature", new Pair<>(String.valueOf((int) temperature), 10));
         return properties;
     }
 }
