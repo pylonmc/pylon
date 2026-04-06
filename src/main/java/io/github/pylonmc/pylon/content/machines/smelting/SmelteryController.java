@@ -372,6 +372,7 @@ public final class SmelteryController extends SmelteryComponent
 
         double amountToAdd = Math.min(amount, capacity - getTotalFluid());
         fluids.mergeDouble(fluid, amountToAdd, Double::sum);
+        refreshBlockTextureItem();
     }
 
     public void removeFluid(@NotNull RebarFluid fluid, double amount) {
@@ -382,6 +383,7 @@ public final class SmelteryController extends SmelteryComponent
         if (fluids.getDouble(fluid) <= 0.001) { // Consider anything less than a nanobucket as empty
             fluids.removeDouble(fluid);
         }
+        refreshBlockTextureItem();
     }
 
     public double getFluidAmount(@NotNull RebarFluid fluid) {
@@ -568,6 +570,9 @@ public final class SmelteryController extends SmelteryComponent
             if (running) {
                 applyHeat();
                 performRecipes();
+            }
+            if (Math.abs(oldTemperature - temperature) < 1e-6) {
+                refreshBlockTextureItem();
             }
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
                 // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
