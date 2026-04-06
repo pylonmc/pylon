@@ -149,10 +149,10 @@ public final class SmelteryController extends SmelteryComponent
         @Override
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
             if (isFormedAndFullyLoaded()) {
-                return ItemStackBuilder.of(running ? Material.GREEN_STAINED_GLASS_PANE : Material.YELLOW_STAINED_GLASS_PANE)
+                return ItemStackBuilder.gui(running ? Material.GREEN_STAINED_GLASS_PANE : Material.YELLOW_STAINED_GLASS_PANE, pylonKey("smeltery-status"))
                         .name(Component.translatable("pylon.gui.status.name"))
                         .lore(Component.translatable(
-                                "pylon.gui.smeltery",
+                                "pylon.gui.smeltery.status",
                                 RebarArgument.of("status", Component.translatable(running ? "pylon.gui.status.running" : "pylon.gui.status.not_running")),
                                 RebarArgument.of("height", UnitFormat.BLOCKS.format(height)),
                                 RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0)),
@@ -160,7 +160,7 @@ public final class SmelteryController extends SmelteryComponent
                         ))
                         .addCustomModelDataFloat((float) temperature);
             } else {
-                return ItemStackBuilder.of(Material.RED_STAINED_GLASS_PANE)
+                return ItemStackBuilder.gui(Material.RED_STAINED_GLASS_PANE, pylonKey("smeltery-status"))
                         .name(Component.translatable("pylon.gui.status.name"))
                         .lore(Component.translatable("pylon.gui.status.incomplete"));
             }
@@ -198,7 +198,7 @@ public final class SmelteryController extends SmelteryComponent
                     )));
                 }
             }
-            return ItemStackBuilder.of(Material.LAVA_BUCKET)
+            return ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
                     .name(Component.translatable("pylon.gui.smeltery.contents.name"))
                     .lore(lore);
         }

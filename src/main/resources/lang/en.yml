@@ -2705,17 +2705,18 @@ gui:
     running: "<green>Running"
     not_running: "<yellow>Not running"
     incomplete: "<red>Multiblock incomplete"
-  smeltery: |-
-    %status%
-    <insn>Click</insn> to toggle
-    
-    <attr>Height:</attr> %height%
-    <attr>Capacity:</attr> %capacity%
-    <attr>Temperature:</attr> %temperature%
-  contents:
-    name: "Contents"
-    fluid: "%amount% of %fluid%"
-    empty: "Empty"
+  smeltery:
+    status: |-
+      %status%
+      <insn>Click</insn> to toggle
+      
+      <attr>Height:</attr> %height%
+      <attr>Capacity:</attr> %capacity%
+      <attr>Temperature:</attr> %temperature%
+    contents:
+      name: "Contents"
+      fluid: "%amount% of %fluid%"
+      empty: "Empty"
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
