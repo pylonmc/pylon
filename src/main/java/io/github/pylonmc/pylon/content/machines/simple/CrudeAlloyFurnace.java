@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -57,6 +58,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         RebarLogisticBlock,
         RebarRecipeProcessor<CrudeAlloyFurnaceRecipe> {
 
+    public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");
     public static final NamespacedKey FUEL_TICKS_REMAINING_KEY = pylonKey("fuel_ticks_remaining");
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
@@ -71,9 +73,14 @@ public class CrudeAlloyFurnace extends RebarBlock implements
     public final ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.GRAY_CONCRETE)
             .addCustomModelDataString(getKey() + ":chimney");
 
-    public final ItemStackBuilder fuelStack = ItemStackBuilder.gui(Material.BLACK_STAINED_GLASS_PANE, "fuel")
+    public final ItemStackBuilder burningStack = ItemStackBuilder.gui(Material.FLINT_AND_STEEL, getKey() + "fuel-left")
+            .name(Component.translatable("pylon.gui.fuel-left"));
+    public final ItemStackBuilder fuelStack = ItemStackBuilder.gui(Material.BLACK_STAINED_GLASS_PANE, getKey() + "fuel")
             .name(Component.translatable("pylon.gui.fuel"));
 
+    private final ProgressItem fuelProgressItem = new ProgressItem(GuiItems.background());
+
+    private int fuelTicksTotal;
     private int fuelTicksRemaining;
 
     @SuppressWarnings("unused")
@@ -85,29 +92,31 @@ public class CrudeAlloyFurnace extends RebarBlock implements
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
                         .lookAlong(getFacing())
-                        .translate(0.0, -0.1, -0.35)
+                        .translate(0.0, -0.5, -0.35)
                         .scale(0.2, 1.6, 0.2))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("chamber", new ItemDisplayBuilder()
                 .itemStack(chamberStack)
                 .transformation(new TransformBuilder()
-                        .translate(0, 0.1, 0)
+                        .translate(0, -0.1, 0)
                         .scale(0.6))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         setRecipeType(CrudeAlloyFurnaceRecipe.RECIPE_TYPE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
+        setRecipeProgressItem(new ProgressItem(GuiItems.background(), false));
     }
 
     @SuppressWarnings("unused")
     public CrudeAlloyFurnace(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+        fuelTicksTotal = pdc.get(FUEL_TICKS_TOTAL_KEY, RebarSerializers.INTEGER);
         fuelTicksRemaining = pdc.get(FUEL_TICKS_REMAINING_KEY, RebarSerializers.INTEGER);
     }
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
+        pdc.set(FUEL_TICKS_TOTAL_KEY, RebarSerializers.INTEGER, fuelTicksTotal);
         pdc.set(FUEL_TICKS_REMAINING_KEY, RebarSerializers.INTEGER, fuelTicksRemaining);
     }
 
@@ -137,9 +146,24 @@ public class CrudeAlloyFurnace extends RebarBlock implements
             return;
         }
 
-        progressRecipe(tickInterval);
+        if (fuelTicksRemaining <= 0) {
+            tryConsumeFuel();
+            if (fuelTicksRemaining <= 0) {
+                return;
+            }
+        }
+
+        fuelTicksRemaining -= getTickInterval();
+        fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
+        fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
+        if (fuelTicksRemaining <= 0) {
+            fuelProgressItem.setTotalTimeTicks(null);
+            fuelProgressItem.setItem(GuiItems.background());
+        }
+
+        progressRecipe(getTickInterval());
         Vector smokePosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
-                new Vector3d(0.0, 0.7, -0.35),
+                new Vector3d(0.0, 0.8, -0.35),
                 getFacing().getOppositeFace()
         ));
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
@@ -160,16 +184,17 @@ public class CrudeAlloyFurnace extends RebarBlock implements
             return;
         }
 
-        fuelTicksRemaining += Registry.ITEM.getOrThrow(fuel.getType().key()).getBurnDuration();
-        fuel.subtract();
+        // dividing by 10 due to suspected bug with getBurnDuration
+        fuelTicksTotal = Registry.ITEM.getOrThrow(fuel.getType().key()).getBurnDuration() / 10;
+        fuelTicksRemaining = fuelTicksTotal;
+        fuelProgressItem.setItem(burningStack);
+        fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
+        fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
+        fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
     }
 
     public void tryStartRecipe() {
-        if (fuelTicksRemaining <= 0) {
-            tryConsumeFuel();
-        }
-
-        if (fuelTicksRemaining <= 0 || !isProcessingRecipe()) {
+        if (isProcessingRecipe()) {
             return;
         }
 
@@ -177,20 +202,25 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         ItemStack input2 = inputInventory2.getItem(0);
 
         for (CrudeAlloyFurnaceRecipe recipe : CrudeAlloyFurnaceRecipe.RECIPE_TYPE) {
-            boolean matches = recipe.input1().matches(input1) && recipe.input2().matches(input2)
-                    || recipe.input1().matches(input2) && recipe.input2().matches(input1);
-            if (!matches || !outputInventory.canHold(recipe.result())) {
+            boolean matches = recipe.input1().matches(input1) && recipe.input2().matches(input2);
+            boolean matchesReversed = recipe.input1().matches(input2) && recipe.input2().matches(input1);
+            if ((!matches && !matchesReversed) || !outputInventory.canHold(recipe.result())) {
                 continue;
             }
 
             startRecipe(recipe, recipe.timeTicks());
             getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.result().asOne()).clearLore());
+
+            RecipeInput.Item recipeInputInInventory1 = matches ? recipe.input1() : recipe.input2();
+            RecipeInput.Item recipeInputInInventory2 = matches ? recipe.input2() : recipe.input1();
+
             if (input1 != null) {
-                inputInventory1.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
+                inputInventory1.setItem(new MachineUpdateReason(), 0, input1.subtract(recipeInputInInventory1.getAmount()));
             }
             if (input2 != null) {
-                inputInventory2.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input2().getAmount()));
+                inputInventory2.setItem(new MachineUpdateReason(), 0, input2.subtract(recipeInputInInventory2.getAmount()));
             }
+            tryConsumeFuel();
             break;
         }
     }
@@ -199,17 +229,18 @@ public class CrudeAlloyFurnace extends RebarBlock implements
     public void onRecipeFinished(@NotNull CrudeAlloyFurnaceRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
         outputInventory.addItem(new MachineUpdateReason(), recipe.result().clone());
+        tryStartRecipe();
     }
 
     @Override
     public @NotNull Gui createGui() {
         return Gui.builder()
                 .setStructure(
-                        "# I # I # # # O #",
-                        "# i # j # p # o #",
-                        "# I # I # # # O #",
-                        "# # # # # # # # #",
+                        "# # # # # # # O #",
+                        "I i j I # p # o #",
+                        "# # b # # # # O #",
                         "# F f F # # # # #",
+                        "# # # # # # # # #",
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.background())
@@ -221,6 +252,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
                 .addIngredient('o', outputInventory)
                 .addIngredient('f', fuelInventory)
                 .addIngredient('F', fuelStack)
+                .addIngredient('b', fuelProgressItem)
                 .build();
     }
 
@@ -232,7 +264,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
                                 ? Component.text("")
                                 : Component.translatable("pylon.item.crude_alloy_furnace.info").arguments(
                                 RebarArgument.of("progress", PylonUtils.createProgressBar(
-                                        progress,
+                                        1 - progress,
                                         20,
                                         NamedTextColor.WHITE
                                 ))

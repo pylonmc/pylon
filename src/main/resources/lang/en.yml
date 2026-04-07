@@ -2730,6 +2730,7 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  fuel-left: "Fuel left"
 
 inventory:
   fuel: "Fuel"
