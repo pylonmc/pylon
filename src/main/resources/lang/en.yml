@@ -8,6 +8,20 @@ item:
       <arrow> <insn>Right click</insn> to use
       <arrow> <attr>Heals:</attr> %heal-amount%
       <arrow> <attr>Apply time:</attr> %consume-seconds%
+      <arrow> Watermelon
+      <guidearrow> Watermelon
+      <diamond> Watermelon
+      <star> Watermelon
+      <insn>Right click</insn>
+      <guideinsn>Right click</guideinsn>
+      <attr>Watermelons:</attr> 5
+      <unit:seconds>1000</unit>
+      <nbsp>Watermelon</nbsp>
+      <item:pylon:bandage>
+      <entity:creeper>
+      <effect:speed>
+      <enchant:sharpness>
+      <biome:plains>
 
   beheading_sword:
     name: "Beheading Sword"
