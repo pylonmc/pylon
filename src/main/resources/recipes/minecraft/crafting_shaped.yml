@@ -1,3 +1,13 @@
+pylon:raw_tin_block_from_raw_tin:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:raw_tin
+  result: pylon:raw_tin_block
+  category: misc
+
 pylon:tin_ingot_from_tin_nuggets:
   pattern:
     - "NNN"
@@ -91,6 +101,26 @@ pylon:charcoal_block_from_charcoal:
   key:
     N: minecraft:charcoal
   result: pylon:charcoal_block
+  category: building
+
+pylon:sulfur_block_from_sulfur:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:sulfur
+  result: pylon:sulfur_block
+  category: building
+
+pylon:gypsum_block_from_gypsum:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:gypsum
+  result: pylon:gypsum_block
   category: building
 
 pylon:bronze_sword:
@@ -310,7 +340,21 @@ pylon:confetti_popper:
     D: "#paper:dyes_settag"
     I: pylon:iron_sheet
   result: pylon:confetti_popper
-  category: tools
+  category: equipment
+
+pylon:diesel_booster:
+  pattern:
+    - "TKT"
+    - "CFC"
+    - " N "
+  key:
+    T: pylon:portable_fluid_tank_steel
+    C: pylon:steel_cylinder
+    K: pylon:kinetic_control_mechanism
+    F: minecraft:flint_and_steel
+    N: pylon:nozzle
+  result: pylon:diesel_booster
+  category: equipment
 
 pylon:grindstone:
   pattern:
@@ -2020,6 +2064,18 @@ pylon:diesel_brick_molder:
   result: pylon:diesel_brick_molder
   category: building
 
+pylon:diesel_refueling_station:
+  pattern:
+    - "   "
+    - "PGP"
+    - "CCC"
+  key:
+    C: pylon:iron_sheet
+    P: pylon:fluid_pipe_steel
+    G: minecraft:glass
+  result: pylon:diesel_refueling_station
+  category: building
+
 pylon:fermenter:
   pattern:
     - "ICI"
@@ -2186,7 +2242,8 @@ pylon:cargo_extractor:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     C: pylon:liselette_cathode
-  result: pylon:cargo_extractor
+  result:
+    pylon:cargo_extractor: 2
   category: building
 
 pylon:cargo_inserter:
@@ -2198,7 +2255,8 @@ pylon:cargo_inserter:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     A: pylon:liselette_anode
-  result: pylon:cargo_inserter
+  result:
+    pylon:cargo_inserter: 2
   category: building
 
 pylon:cargo_valve:
@@ -2212,7 +2270,8 @@ pylon:cargo_valve:
     C: pylon:liselette_cathode
     L: minecraft:lever
     B: minecraft:chest
-  result: pylon:cargo_valve
+  result:
+    pylon:cargo_valve: 2
   category: building
 
 pylon:cargo_buffer:
@@ -2225,7 +2284,8 @@ pylon:cargo_buffer:
     A: pylon:liselette_anode
     C: pylon:liselette_cathode
     B: minecraft:barrel
-  result: pylon:cargo_buffer
+  result:
+    pylon:cargo_buffer: 2
   category: building
 
 pylon:cargo_monitor:
@@ -2238,7 +2298,8 @@ pylon:cargo_monitor:
     B: pylon:cargo_buffer
     R: minecraft:redstone
     C: minecraft:comparator
-  result: pylon:cargo_monitor
+  result:
+    pylon:cargo_monitor: 2
   category: building
 
 pylon:cargo_meter:
@@ -2251,7 +2312,8 @@ pylon:cargo_meter:
     R: minecraft:redstone
     E: minecraft:repeater
     C: minecraft:comparator
-  result: pylon:cargo_meter
+  result:
+    pylon:cargo_meter: 2
   category: building
 
 pylon:cargo_splitter:
@@ -2264,7 +2326,8 @@ pylon:cargo_splitter:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_splitter
+  result:
+    pylon:cargo_splitter: 2
   category: building
 
 pylon:cargo_merger:
@@ -2277,7 +2340,8 @@ pylon:cargo_merger:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_merger
+  result:
+    pylon:cargo_merger: 2
   category: building
 
 pylon:cargo_filter:
@@ -2291,7 +2355,8 @@ pylon:cargo_filter:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     F: pylon:filter_mesh
-  result: pylon:cargo_filter
+  result:
+    pylon:cargo_filter: 2
   category: building
 
 pylon:cargo_overflow_gate:
@@ -2305,7 +2370,8 @@ pylon:cargo_overflow_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_overflow_gate
+  result:
+    pylon:cargo_overflow_gate: 2
   category: building
 
 pylon:cargo_gate:
@@ -2319,7 +2385,8 @@ pylon:cargo_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_gate
+  result:
+    pylon:cargo_gate: 2
   category: building
 
 pylon:cargo_accumulator:
@@ -2334,7 +2401,8 @@ pylon:cargo_accumulator:
     C: pylon:liselette_cathode
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_accumulator
+  result:
+    pylon:cargo_accumulator: 2
   category: building
 
 pylon:cargo_fluid_accumulator:
@@ -2347,7 +2415,8 @@ pylon:cargo_fluid_accumulator:
     P: pylon:fluid_pipe_steel
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_fluid_accumulator
+  result:
+    pylon:cargo_fluid_accumulator: 2
   category: building
 
 pylon:diesel_smeltery_heater:
@@ -2362,6 +2431,110 @@ pylon:diesel_smeltery_heater:
     F: minecraft:flint_and_steel
   result: pylon:diesel_smeltery_heater
   category: building
+
+pylon:steel_helmet:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_helmet: 1
+  category: equipment
+
+pylon:steel_chestplate:
+  pattern:
+    - "P P"
+    - "PPP"
+    - "PPP"
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_chestplate: 1
+  category: equipment
+
+pylon:steel_leggings:
+  pattern:
+    - "PPP"
+    - "P P"
+    - "P P"
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_leggings: 1
+  category: equipment
+
+pylon:steel_boots:
+  pattern:
+    - "P P"
+    - "P P"
+    - "   "
+  key:
+    P: pylon:steel_ingot
+  result:
+    pylon:steel_boots: 1
+  category: equipment
+
+pylon:steel_sword:
+  pattern:
+    - " P "
+    - " P "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_sword: 1
+  category: equipment
+
+pylon:steel_axe:
+  pattern:
+    - "PP "
+    - "PS "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_axe: 1
+  category: equipment
+
+pylon:steel_pickaxe:
+  pattern:
+    - "PPP"
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_pickaxe: 1
+  category: equipment
+
+pylon:steel_shovel:
+  pattern:
+    - " P "
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_shovel: 1
+  category: equipment
+
+pylon:steel_hoe:
+  pattern:
+    - "PP "
+    - " S "
+    - " S "
+  key:
+    P: pylon:steel_ingot
+    S: minecraft:stick
+  result:
+    pylon:steel_hoe: 1
+  category: equipment
 
 pylon:palladium_helmet:
   pattern:
