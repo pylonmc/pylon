@@ -103,7 +103,8 @@ public class Grindstone extends RebarBlock implements
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getHand() != EquipmentSlot.HAND
+        if (!isFormedAndFullyLoaded()
+                || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
                 || event.useInteractedBlock() == Event.Result.DENY
         ) {
