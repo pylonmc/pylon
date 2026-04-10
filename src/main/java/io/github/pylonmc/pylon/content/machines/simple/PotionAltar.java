@@ -437,7 +437,7 @@ public class PotionAltar extends RebarBlock
      *
      * @author balugaq
      */
-    public record PotionAltarRecipe(
+    private record PotionAltarRecipe(
             @NotNull Player player,
             @Nullable PotionCatalyst catalyst,
             @NotNull ItemStack result,
