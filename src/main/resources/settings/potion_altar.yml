@@ -1,5 +1,5 @@
 tick-interval: 10
-max-effect-types: 10 # The max types the fused potion can contain, or 0 for unlimited
+max-effect-types: 10 # The max types the fused potion can contain
 
 sound:
   start:

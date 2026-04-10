@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.tools;
 import io.github.pylonmc.pylon.content.tools.base.PotionCatalyst;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -16,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author balugaq
  */
-public class ChronicleResin extends PotionCatalyst {
+public class ChronicleResin extends RebarItem implements PotionCatalyst {
     private final int durationBoostSeconds = getSettings().getOrThrow("duration-boost-seconds", ConfigAdapter.INTEGER);
     private final double applySuccessRate = getSettings().getOrThrow("apply-success-rate", ConfigAdapter.DOUBLE);
 
@@ -25,7 +26,7 @@ public class ChronicleResin extends PotionCatalyst {
     }
 
     @Override
-    public boolean apply(final Map<PotionEffectType, PotionEffect> effects) {
+    public boolean apply(final @NotNull Map<PotionEffectType, PotionEffect> effects) {
         // randomly choose one type
         PotionEffectType type = effects.keySet().stream().toList().get(ThreadLocalRandom.current().nextInt(effects.size()));
         PotionEffect effect = effects.get(type);

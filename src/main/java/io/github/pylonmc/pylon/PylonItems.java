@@ -3053,7 +3053,7 @@ public final class PylonItems {
     public static final ItemStack POTION_ALTAR = ItemStackBuilder.rebar(Material.STONE_BRICK_SLAB, PylonKeys.POTION_ALTAR)
             .build();
     static {
-        RebarItem.register(RebarItem.class, POTION_ALTAR, PylonKeys.POTION_ALTAR);
+        RebarItem.register(PotionAltar.Item.class, POTION_ALTAR, PylonKeys.POTION_ALTAR);
         PylonPages.SIMPLE_MACHINES.addItem(POTION_ALTAR);
     }
 

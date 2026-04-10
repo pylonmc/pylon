@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
-import io.github.pylonmc.pylon.content.machines.simple.PotionAltar;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.Settings;

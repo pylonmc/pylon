@@ -75,8 +75,25 @@ public class PotionAltar extends RebarBlock
     private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
     private int ticked = 0;
     private PotionAltarRecipe currentRecipe;
-    private Integer recipeTimeTicks;
     private Integer recipeTicksRemaining;
+
+    /**
+     * @author balugaq
+     */
+    public static class Item extends RebarItem {
+        private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
+
+        public Item(@NotNull ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public @NotNull List<RebarArgument> getPlaceholders() {
+            return List.of(
+                    RebarArgument.of("max-effect-types", maxEffectTypes)
+            );
+        }
+    }
 
     @SuppressWarnings("unused")
     public PotionAltar(Block block, BlockCreateContext context) {
@@ -180,8 +197,8 @@ public class PotionAltar extends RebarBlock
             return;
         }
 
-        ItemStack potion1 = getPedestal1().getItemDisplay().getItemStack();
-        ItemStack potion2 = getPedestal2().getItemDisplay().getItemStack();
+        ItemStack potion1 = getPotionPedestal1().getItemDisplay().getItemStack();
+        ItemStack potion2 = getPotionPedestal2().getItemDisplay().getItemStack();
         ItemStack catalystItem = getCatalystPedestal().getItemDisplay().getItemStack();
         RebarItem rebar = RebarItem.fromStack(catalystItem);
         @Nullable PotionCatalyst catalyst = null;
@@ -212,14 +229,14 @@ public class PotionAltar extends RebarBlock
         }
 
         // attempt to start recipe
-        getPedestal1().setLocked(true);
-        getPedestal2().setLocked(true);
-        getCatalystPedestal().setLocked(true);
+        for (Pedestal pedestal : getAllPedestals()) {
+            pedestal.setLocked(true);
+        }
 
         Map<PotionEffectType, PotionEffect> effects = new HashMap<>();
         if (contents1 != null) fuseEffects(effects, contents1.allEffects());
         if (contents2 != null) fuseEffects(effects, contents2.allEffects());
-        if (maxEffectTypes > 0 && effects.size() > maxEffectTypes) {
+        if (effects.size() > maxEffectTypes) {
             event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.too-many-effects", RebarArgument.of("max_effect_types", maxEffectTypes)));
             return;
         }
@@ -234,8 +251,7 @@ public class PotionAltar extends RebarBlock
 
         PotionContents contents = PotionContents.potionContents().addCustomEffects(effects.values().stream().toList()).customColor(mixedColor).build();
         ItemStack fusedPotion = potion1.clone();
-        // fixme: For translator problem, when player pick up the fused potion, it turned into glass bottle with an item model
-        // fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
+        fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
         fusedPotion.setData(DataComponentTypes.POTION_CONTENTS, contents);
         fusedPotion.editPersistentDataContainer(pdc -> pdc.set(FUSED_POTION_KEY, PersistentDataType.BOOLEAN, true));
 
@@ -247,7 +263,6 @@ public class PotionAltar extends RebarBlock
 
     private void startRecipe(PotionAltarRecipe recipe, int timeTicks) {
         currentRecipe = recipe;
-        recipeTimeTicks = timeTicks;
         recipeTicksRemaining = timeTicks;
     }
 
@@ -286,7 +301,6 @@ public class PotionAltar extends RebarBlock
             if (recipeTicksRemaining <= 0) {
                 onRecipeFinished(currentRecipe);
                 currentRecipe = null;
-                recipeTimeTicks = null;
                 recipeTicksRemaining = null;
             }
         }
@@ -318,39 +332,55 @@ public class PotionAltar extends RebarBlock
                 .spawn();
     }
 
-    public Pedestal getPedestal1() {
+    private List<Pedestal> getAllPedestals() {
+        List<Pedestal> pedestals = new ArrayList<>();
+        pedestals.add(getPotionPedestal1());
+        pedestals.add(getPotionPedestal2());
+        pedestals.add(getCatalystPedestal());
+        return pedestals;
+    }
+
+    private List<Pedestal> getPotionPedestals() {
+        List<Pedestal> pedestals = new ArrayList<>();
+        pedestals.add(getPotionPedestal1());
+        pedestals.add(getPotionPedestal2());
+        return pedestals;
+    }
+
+    private Pedestal getPotionPedestal1() {
         return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(-2, 0, 0));
     }
 
-    public Pedestal getPedestal2() {
+    private Pedestal getPotionPedestal2() {
         return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(2, 0, 0));
     }
 
-    public Pedestal getCatalystPedestal() {
+    private Pedestal getCatalystPedestal() {
         return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(0, 0, -2));
     }
 
-    public List<Block> getCandles() {
+    private List<Block> getCandles() {
         List<Block> candles = new ArrayList<>();
         candles.add(getCandle1());
         candles.add(getCandle2());
         return candles;
     }
 
-    public Block getCandle1() {
+    private Block getCandle1() {
         return getBlock().getRelative(-1, 0, 0);
     }
 
-    public Block getCandle2() {
+    private Block getCandle2() {
         return getBlock().getRelative(1, 0, 0);
     }
 
-    public void onRecipeFinished(@NotNull final PotionAltarRecipe recipe) {
-        getPedestal1().getItemDisplay().setItemStack(null);
-        getPedestal1().setLocked(false);
-        getPedestal2().getItemDisplay().setItemStack(null);
-        getPedestal2().setLocked(false);
-        getCatalystPedestal().setLocked(false);
+    private void onRecipeFinished(@NotNull final PotionAltarRecipe recipe) {
+        for (Pedestal pedestal : getPotionPedestals()) {
+            pedestal.getItemDisplay().setItemStack(null);
+        }
+        for (Pedestal pedestal : getAllPedestals()) {
+            pedestal.setLocked(false);
+        }
 
         Location location = getBlock().getLocation().toCenterLocation();
         getBlock().getWorld().strikeLightningEffect(location);
@@ -386,10 +416,12 @@ public class PotionAltar extends RebarBlock
         getBlock().getWorld().playSound(FINISH_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
 
-    public void cancelRecipe() {
-        if (getPedestal1() != null) getPedestal1().setLocked(false);
-        if (getPedestal2() != null) getPedestal2().setLocked(false);
-        if (getCatalystPedestal() != null) getCatalystPedestal().setLocked(false);
+    private void cancelRecipe() {
+        for (Pedestal pedestal : getAllPedestals()) {
+            if (pedestal != null) {
+                pedestal.setLocked(false);
+            }
+        }
 
         for (Block candle : getCandles()) {
             new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)

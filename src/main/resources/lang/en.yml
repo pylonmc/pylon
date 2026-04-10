@@ -605,9 +605,8 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> A standalone structure for potion effect fusion/upgrading
-      <arrow> Add potions on the potion pedestals
-      <arrow> or add a more potion catalyst on the shimmer pedestal
-      <arrow> then right click the altar to begin the ritual
+      <arrow> Add potions on the potion pedestals or add a more potion catalyst on the shimmer pedestal, then right click the altar to begin the ritual
+      <arrow> <attr>Max effect types:</attr> %max-effect-types%
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.potion_altar.name/></yellow>
@@ -626,7 +625,7 @@ item:
   ascendant_ember:
     name: "Ascendant Ember"
     lore: |-
-      <star> Potion Altar Catalyst
+      <star> Potion catalyst
       <arrow> Upgrades 1 potion effect 
       <arrow> <attr>Max amplifier:</attr> %max-amplifier%
       <arrow> <attr>Duration shorten rate:</attr> %duration-shorten-rate%
@@ -635,7 +634,7 @@ item:
   chronicle_resin:
     name: "Chronicle Resin"
     lore: |-
-      <star> Potion Altar Catalyst
+      <star> Potion catalyst
       <arrow> Boosts the duration of 1 potion effect
       <arrow> <attr>Duration boost:</attr> %duration-boost-seconds%
       <arrow> <attr>Success rate:</attr> %apply-success-rate%
@@ -643,7 +642,7 @@ item:
   eon_weave_crystal:
     name: "Eon Weave Crystal"
     lore: |-
-      <star> Potion Altar Catalyst
+      <star> Potion catalyst
       <arrow> Multiples the duration of 1 potion effect
       <arrow> <attr>Multiple rate:</attr> %multiple-rate%
       <arrow> <attr>Success rate:</attr> %apply-success-rate%
@@ -2232,7 +2231,7 @@ item:
       <u>Components</u>
       <diamond> 3x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
       
-      <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leibar's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
+      <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
     waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
 
   collimator_pillar:
