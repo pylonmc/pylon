@@ -1,5 +1,6 @@
 tick-interval: 10
 max-effect-types: 10 # The max types the fused potion can contain
+recipe-time-ticks: 400 # The time in ticks the fused potion takes to finish
 
 sound:
   start:

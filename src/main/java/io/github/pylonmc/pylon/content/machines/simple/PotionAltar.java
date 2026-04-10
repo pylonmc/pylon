@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.simple;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.building.Pedestal;
 import io.github.pylonmc.pylon.content.tools.base.PotionCatalyst;
+import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -30,7 +30,6 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -41,7 +40,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -69,9 +67,9 @@ public class PotionAltar extends RebarBlock
     private static final Sound CANCEL_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.cancel", ConfigAdapter.SOUND);
     private static final Sound CANNOT_APPLY_CATALYST_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.cannot_apply_catalyst", ConfigAdapter.SOUND);
     private static final Sound FAILED_APPLY_CATALYST_SOUND = Settings.get(PylonKeys.POTION_ALTAR).getOrThrow("sound.failed_apply_catalyst", ConfigAdapter.SOUND);
-    private static final NamespacedKey FUSED_POTION_KEY = new NamespacedKey(Pylon.getInstance(), "fused-potion");
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int recipeTimeTicks = getSettings().getOrThrow("recipe-time-ticks", ConfigAdapter.INTEGER);
     private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
     private int ticked = 0;
     private PotionAltarRecipe currentRecipe;
@@ -152,24 +150,20 @@ public class PotionAltar extends RebarBlock
     }
 
     @NotNull
-    private Color mixColor(PotionContents contents1, PotionContents contents2) {
+    private Color mixColor(@Nullable PotionContents contents1, @Nullable PotionContents contents2) {
         Color mixedColor;
         if (contents1 == null || contents2 == null) {
             mixedColor = contents1 != null ? contents1.computeEffectiveColor() : contents2.computeEffectiveColor();
         } else {
-            Color color1 = contents1.computeEffectiveColor();
-            Color color2 = contents2.computeEffectiveColor();
 
-            int srcR = color1.getRed();
-            int srcG = color1.getGreen();
-            int srcB = color1.getBlue();
-            int dstR = color2.getRed();
-            int dstG = color2.getGreen();
-            int dstB = color2.getBlue();
-            int r = Math.clamp(Math.round((srcR + dstR) / 255.0f), 0, 255);
-            int g = Math.clamp(Math.round((srcG + dstG) / 255.0f), 0, 255);
-            int b = Math.clamp(Math.round((srcB + dstB) / 255.0f), 0, 255);
-            mixedColor = Color.fromRGB(r, g, b);
+            HslColor color1 = HslColor.fromRgb(contents1.computeEffectiveColor());
+            HslColor color2 = HslColor.fromRgb(contents2.computeEffectiveColor());
+
+            mixedColor = new HslColor(
+                    color1.hue(),
+                    color1.saturation(),
+                    color1.lightness() + color2.lightness() / 2
+            ).toRgb();
         }
         return mixedColor;
     }
@@ -179,7 +173,7 @@ public class PotionAltar extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -253,24 +247,16 @@ public class PotionAltar extends RebarBlock
         ItemStack fusedPotion = potion1.clone();
         fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
         fusedPotion.setData(DataComponentTypes.POTION_CONTENTS, contents);
-        fusedPotion.editPersistentDataContainer(pdc -> pdc.set(FUSED_POTION_KEY, PersistentDataType.BOOLEAN, true));
 
+        PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), catalyst, fusedPotion, recipeTimeTicks, catalystApplied);
 
-        PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), catalyst, fusedPotion, 20 * 20, catalystApplied);
-        startRecipe(recipe, recipe.timeTicks());
+        // start recipe
+        currentRecipe = recipe;
+        recipeTicksRemaining = recipe.timeTicks();
         getBlock().getWorld().playSound(START_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
     }
 
-    private void startRecipe(PotionAltarRecipe recipe, int timeTicks) {
-        currentRecipe = recipe;
-        recipeTicksRemaining = timeTicks;
-    }
-
-    private boolean isInvalidPotion(ItemStack potion) {
-        if (!PylonUtils.isPotion(potion.getType())) {
-            return !potion.getPersistentDataContainer().has(FUSED_POTION_KEY);
-        }
-
+    private boolean isInvalidPotion(@NotNull ItemStack potion) {
         if (RebarItem.isRebarItem(potion)) {
             return true;
         }
@@ -278,7 +264,7 @@ public class PotionAltar extends RebarBlock
         return !potion.hasData(DataComponentTypes.POTION_CONTENTS);
     }
 
-    private void fuseEffects(Map<PotionEffectType, PotionEffect> origin, List<PotionEffect> effects) {
+    private void fuseEffects(@NotNull Map<PotionEffectType, PotionEffect> origin, @NotNull List<PotionEffect> effects) {
         for (PotionEffect effect : effects) {
             if (origin.containsKey(effect.getType())) {
                 origin.compute(effect.getType(), (k, originEffect) -> new PotionEffect(
@@ -332,6 +318,7 @@ public class PotionAltar extends RebarBlock
                 .spawn();
     }
 
+    @NotNull
     private List<Pedestal> getAllPedestals() {
         List<Pedestal> pedestals = new ArrayList<>();
         pedestals.add(getPotionPedestal1());
@@ -340,6 +327,7 @@ public class PotionAltar extends RebarBlock
         return pedestals;
     }
 
+    @NotNull
     private List<Pedestal> getPotionPedestals() {
         List<Pedestal> pedestals = new ArrayList<>();
         pedestals.add(getPotionPedestal1());
@@ -348,30 +336,31 @@ public class PotionAltar extends RebarBlock
     }
 
     private Pedestal getPotionPedestal1() {
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(-2, 0, 0));
+        Vector3i offset = getBlockOffsets(POTION_PEDESTAL_COMPONENT).get(0);
+        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
     }
 
     private Pedestal getPotionPedestal2() {
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(2, 0, 0));
+        Vector3i offset = getBlockOffsets(POTION_PEDESTAL_COMPONENT).get(1);
+        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
     }
 
     private Pedestal getCatalystPedestal() {
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(0, 0, -2));
+        Vector3i offset = getBlockOffsets(SHIMMER_PEDESTAL_COMPONENT).getFirst();
+        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
+    }
+
+    @NotNull
+    private List<Vector3i> getBlockOffsets(@NotNull MultiblockComponent component) {
+        return validStructures().getFirst().entrySet().stream().filter(entry -> entry.getValue() == component).map(Map.Entry::getKey).toList();
     }
 
     private List<Block> getCandles() {
         List<Block> candles = new ArrayList<>();
-        candles.add(getCandle1());
-        candles.add(getCandle2());
+        for (Vector3i offset : getBlockOffsets(LIT_ORANGE_CANDLE_COMPONENT)) {
+            candles.add(getBlock().getRelative(offset.x(), offset.y(), offset.z()));
+        }
         return candles;
-    }
-
-    private Block getCandle1() {
-        return getBlock().getRelative(-1, 0, 0);
-    }
-
-    private Block getCandle2() {
-        return getBlock().getRelative(1, 0, 0);
     }
 
     private void onRecipeFinished(@NotNull final PotionAltarRecipe recipe) {
