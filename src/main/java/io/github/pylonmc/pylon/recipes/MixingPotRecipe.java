@@ -102,16 +102,16 @@ public record MixingPotRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('f', new FluidButton(inputFluid))
-                .addIngredient('m', ItemButton.from(PylonItems.MIXING_POT))
+                .addIngredient('m', ItemButton.of(PylonItems.MIXING_POT))
                 .addIngredient('i', requiresEnrichedFire
-                        ? ItemButton.from(PylonItems.ENRICHED_SOUL_SOIL)
+                        ? ItemButton.of(PylonItems.ENRICHED_SOUL_SOIL)
                         : GuiItems.background()
                 );
 
         builder.addIngredient(
                 'o',
                 switch (output) {
-                    case FluidOrItem.Item item -> ItemButton.from(item.item());
+                    case FluidOrItem.Item item -> ItemButton.of(item.item());
                     case FluidOrItem.Fluid fluid -> new FluidButton(fluid.amountMillibuckets(), fluid.fluid());
                     default -> throw new AssertionError();
                 }
@@ -121,7 +121,7 @@ public record MixingPotRecipe(
 
         int i = 0;
         for (RecipeInput.Item input : inputItems) {
-            gui.setItem(10 + ((i / 3) * 9) + i % 3, ItemButton.from(input));
+            gui.setItem(10 + ((i / 3) * 9) + i % 3, ItemButton.of(input));
             i++;
         }
 

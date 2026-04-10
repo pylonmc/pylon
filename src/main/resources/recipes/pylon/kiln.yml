@@ -1,0 +1,77 @@
+pylon:sulfur:
+  input1: minecraft:redstone
+  output-fluid: pylon:sulfur
+  output-fluid-amount: 100
+  output-item: pylon:slag
+  temperature: 115
+  time-ticks: 80
+
+pylon:bronze:
+  input1:
+    minecraft:copper_ingot: 2
+  input2:
+    pylon:tin_ingot: 1
+  output-fluid: pylon:bronze
+  output-fluid-amount: 3000
+  output-item:
+    pylon:slag: 2
+  temperature: 950
+  time-ticks: 240
+  priority: 1
+
+pylon:coal_to_carbon:
+  input1:
+    pylon:coal_dust: 2
+  output-item: pylon:carbon
+  temperature: 1020
+  time-ticks: 180
+
+pylon:refractory_brick:
+  input1: pylon:unfired_refractory_brick
+  output-item: pylon:refractory_brick
+  temperature: 1180
+  time-ticks: 300
+
+pylon:tin_melting:
+  input1:
+    pylon:crushed_raw_tin: 2
+  output-fluid: pylon:tin
+  output-fluid-amount: 3000
+  output-item:
+    pylon:slag: 2
+  temperature: 230
+  time-ticks: 180
+  priority: 1
+
+pylon:copper_melting:
+  input1:
+    pylon:crushed_raw_copper: 2
+  output-fluid: pylon:copper
+  output-fluid-amount: 3000
+  output-item:
+    pylon:slag: 2
+  temperature: 1080
+  time-ticks: 180
+  priority: 1
+
+pylon:iron_melting:
+  input1:
+    pylon:crushed_raw_iron: 2
+  output-fluid: pylon:iron
+  output-fluid-amount: 3000
+  output-item:
+    pylon:slag: 2
+  temperature: 1060
+  time-ticks: 180
+  priority: 1
+
+pylon:gold_melting:
+  input1:
+    pylon:crushed_raw_gold: 2
+  output-fluid: pylon:iron
+  output-fluid-amount: 3000
+  output-item:
+    pylon:slag: 2
+  temperature: 1060
+  time-ticks: 180
+  priority: 1

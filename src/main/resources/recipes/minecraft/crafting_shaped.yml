@@ -510,6 +510,17 @@ pylon:fluid_pipe_bronze:
     pylon:fluid_pipe_bronze: 8
   category: building
 
+pylon:fluid_pipe_obsidian:
+  pattern:
+    - "OOO"
+    - "   "
+    - "OOO"
+  key:
+    O: minecraft:obsidian
+  result:
+    pylon:fluid_pipe_obsidian: 8
+  category: building
+
 pylon:fluid_pipe_igneous_composite:
   pattern:
     - "OOO"
@@ -597,6 +608,17 @@ pylon:portable_fluid_tank_bronze:
     C: pylon:bronze_sheet
     G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_bronze
+  category: building
+
+pylon:portable_fluid_tank_obsidian:
+  pattern:
+    - "CGC"
+    - "G G"
+    - "CGC"
+  key:
+    C: minecraft:obsidian
+    G: minecraft:glass_pane
+  result: pylon:portable_fluid_tank_obsidian
   category: building
 
 pylon:portable_fluid_tank_igneous_composite:
@@ -697,6 +719,17 @@ pylon:fluid_tank_casing_bronze:
     C: pylon:bronze_sheet
     G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_bronze
+  category: building
+
+pylon:fluid_tank_casing_obsidian:
+  pattern:
+    - "G G"
+    - "C C"
+    - "G G"
+  key:
+    C: minecraft:obsidian
+    G: minecraft:glass_pane
+  result: pylon:fluid_tank_casing_obsidian
   category: building
 
 pylon:fluid_tank_casing_igneous_composite:
@@ -1151,14 +1184,28 @@ pylon:smeltery_burner:
   result: pylon:smeltery_burner
   category: building
 
-pylon:pit_kiln:
+pylon:crude_alloy_furnace:
   pattern:
-    - "B B"
-    - "B B"
+    - "BBB"
+    - "CFC"
     - "BBB"
   key:
+    B: minecraft:brick
+    C: minecraft:copper_ingot
+    F: minecraft:blast_furnace
+  result: pylon:crude_alloy_furnace
+  category: building
+
+pylon:kiln:
+  pattern:
+    - "MBM"
+    - "BFB"
+    - "MBM"
+  key:
     B: minecraft:bricks
-  result: pylon:pit_kiln
+    M: minecraft:mud_bricks
+    F: minecraft:blast_furnace
+  result: pylon:kiln
   category: building
 
 pylon:explosive_target:

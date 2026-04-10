@@ -40,10 +40,11 @@ public class PylonRecipes {
         PipeBendingRecipe.RECIPE_TYPE.register();
         PressRecipe.RECIPE_TYPE.register();
         SmelteryRecipe.RECIPE_TYPE.register();
-        PitKilnRecipe.RECIPE_TYPE.register();
+        KilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
+        CrudeAlloyFurnaceRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();
@@ -70,8 +71,8 @@ public class PylonRecipes {
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
                         .addIngredient('i', new FluidButton(input.amountMillibuckets(), PylonFluids.OBSCYRA))
-                        .addIngredient('x', ItemButton.from(PylonItems.COLLIMATOR))
-                        .addIngredient('o', ItemButton.from(PylonItems.COHESIVE_UNIT))
+                        .addIngredient('x', ItemButton.of(PylonItems.COLLIMATOR))
+                        .addIngredient('o', ItemButton.of(PylonItems.COHESIVE_UNIT))
                         .build()
         ).register();
     }
@@ -109,11 +110,11 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('x', ItemButton.from(PylonItems.PALLADIUM_CONDENSER))
+                        .addIngredient('x', ItemButton.of(PylonItems.PALLADIUM_CONDENSER))
                         .addIngredient('H', new FluidButton((double) dieselUse, PylonFluids.BIODIESEL))
                         .addIngredient('d', new FluidButton((double) hydraulicUse, PylonFluids.HYDRAULIC_FLUID))
-                        .addIngredient('s', ItemButton.from(dusts))
-                        .addIngredient('p', ItemButton.from(PylonItems.PALLADIUM_DUST))
+                        .addIngredient('s', ItemButton.of(dusts))
+                        .addIngredient('p', ItemButton.of(PylonItems.PALLADIUM_DUST))
                         .addIngredient('D', new FluidButton((double) hydraulicUse, PylonFluids.DIRTY_HYDRAULIC_FLUID))
                         .build()
         ).register();
@@ -145,7 +146,7 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('x', ItemButton.from(PylonItems.BIOREFINERY))
+                        .addIngredient('x', ItemButton.of(PylonItems.BIOREFINERY))
                         .addIngredient('o', new FluidButton(1.0, PylonFluids.BIODIESEL))
                         .addIngredient('p', new FluidButton(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
                         .addIngredient('e', new FluidButton(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
@@ -175,8 +176,8 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', ItemButton.from(ItemStack.of(Material.SUGAR_CANE)))
-                        .addIngredient('x', ItemButton.from(PylonItems.FERMENTER))
+                        .addIngredient('i', ItemButton.of(ItemStack.of(Material.SUGAR_CANE)))
+                        .addIngredient('x', ItemButton.of(PylonItems.FERMENTER))
                         .addIngredient('o', new FluidButton(ethanolPerSugarcane, PylonFluids.ETHANOL))
                         .build()
         ).register();

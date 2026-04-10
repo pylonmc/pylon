@@ -125,7 +125,6 @@ public class PylonKeys {
     public static final NamespacedKey STONE_HAMMER = pylonKey("stone_hammer");
     public static final NamespacedKey IRON_HAMMER = pylonKey("iron_hammer");
     public static final NamespacedKey DIAMOND_HAMMER = pylonKey("diamond_hammer");
-    public static final NamespacedKey NETHERITE_HAMMER = pylonKey("netherite_hammer");
 
     public static final NamespacedKey WATERING_CAN = pylonKey("watering_can");
     public static final NamespacedKey SPRINKLER = pylonKey("sprinkler");
@@ -155,6 +154,8 @@ public class PylonKeys {
 
     public static final NamespacedKey GRINDSTONE = pylonKey("grindstone");
     public static final NamespacedKey GRINDSTONE_HANDLE = pylonKey("grindstone_handle");
+    public static final NamespacedKey CRUDE_ALLOY_FURNACE = pylonKey("crude_alloy_furnace");
+    public static final NamespacedKey KILN = pylonKey("kiln");
 
     public static final NamespacedKey MIXING_POT = pylonKey("mixing_pot");
     public static final NamespacedKey CRUCIBLE = pylonKey("crucible");
@@ -166,6 +167,7 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_PIPE_TIN = pylonKey("fluid_pipe_tin");
     public static final NamespacedKey FLUID_PIPE_BRONZE = pylonKey("fluid_pipe_bronze");
     public static final NamespacedKey FLUID_PIPE_IRON = pylonKey("fluid_pipe_iron");
+    public static final NamespacedKey FLUID_PIPE_OBSIDIAN = pylonKey("fluid_pipe_obsidian");
     public static final NamespacedKey FLUID_PIPE_IGNEOUS_COMPOSITE = pylonKey("fluid_pipe_igneous_composite");
     public static final NamespacedKey FLUID_PIPE_STEEL = pylonKey("fluid_pipe_steel");
     public static final NamespacedKey FLUID_PIPE_CREATIVE = pylonKey("fluid_pipe_creative");
@@ -175,6 +177,7 @@ public class PylonKeys {
     public static final NamespacedKey PORTABLE_FLUID_TANK_TIN =  pylonKey("portable_fluid_tank_tin");
     public static final NamespacedKey PORTABLE_FLUID_TANK_IRON =  pylonKey("portable_fluid_tank_iron");
     public static final NamespacedKey PORTABLE_FLUID_TANK_BRONZE =  pylonKey("portable_fluid_tank_bronze");
+    public static final NamespacedKey PORTABLE_FLUID_TANK_OBSIDIAN =  pylonKey("portable_fluid_tank_obsidian");
     public static final NamespacedKey PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE =  pylonKey("portable_fluid_tank_igneous_composite");
     public static final NamespacedKey PORTABLE_FLUID_TANK_STEEL =  pylonKey("portable_fluid_tank_steel");
 
@@ -184,6 +187,7 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_TIN = pylonKey("fluid_tank_casing_tin");
     public static final NamespacedKey FLUID_TANK_CASING_IRON = pylonKey("fluid_tank_casing_iron");
     public static final NamespacedKey FLUID_TANK_CASING_BRONZE = pylonKey("fluid_tank_casing_bronze");
+    public static final NamespacedKey FLUID_TANK_CASING_OBSIDIAN = pylonKey("fluid_tank_casing_obsidian");
     public static final NamespacedKey FLUID_TANK_CASING_IGNEOUS_COMPOSITE = pylonKey("fluid_tank_casing_igneous_composite");
     public static final NamespacedKey FLUID_TANK_CASING_STEEL = pylonKey("fluid_tank_casing_steel");
 
@@ -242,8 +246,6 @@ public class PylonKeys {
     public static final NamespacedKey SMELTERY_HOPPER = pylonKey("smeltery_hopper");
     public static final NamespacedKey SMELTERY_CASTER = pylonKey("smeltery_caster");
     public static final NamespacedKey SMELTERY_BURNER = pylonKey("smeltery_burner");
-
-    public static final NamespacedKey PIT_KILN = pylonKey("pit_kiln");
 
     public static final NamespacedKey EXPLOSIVE_TARGET = pylonKey("explosive_target");
     public static final NamespacedKey EXPLOSIVE_TARGET_FIERY = pylonKey("explosive_target_fiery");
@@ -453,4 +455,5 @@ public class PylonKeys {
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
+    public static final NamespacedKey SLAG = pylonKey("slag");
 }

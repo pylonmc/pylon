@@ -158,16 +158,16 @@ public record ShimmerAltarRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('m', ItemButton.from(PylonItems.SHIMMER_ALTAR))
-                .addIngredient('c', ItemButton.from(catalyst))
-                .addIngredient('0', ItemButton.from(inputs.get(0)))
-                .addIngredient('1', ItemButton.from(inputs.get(1)))
-                .addIngredient('2', ItemButton.from(inputs.get(2)))
-                .addIngredient('3', ItemButton.from(inputs.get(3)))
-                .addIngredient('4', ItemButton.from(inputs.get(4)))
-                .addIngredient('5', ItemButton.from(inputs.get(5)))
-                .addIngredient('6', ItemButton.from(inputs.get(6)))
-                .addIngredient('7', ItemButton.from(inputs.get(7)))
+                .addIngredient('m', ItemButton.of(PylonItems.SHIMMER_ALTAR))
+                .addIngredient('c', ItemButton.of(catalyst))
+                .addIngredient('0', ItemButton.of(inputs.get(0)))
+                .addIngredient('1', ItemButton.of(inputs.get(1)))
+                .addIngredient('2', ItemButton.of(inputs.get(2)))
+                .addIngredient('3', ItemButton.of(inputs.get(3)))
+                .addIngredient('4', ItemButton.of(inputs.get(4)))
+                .addIngredient('5', ItemButton.of(inputs.get(5)))
+                .addIngredient('6', ItemButton.of(inputs.get(6)))
+                .addIngredient('7', ItemButton.of(inputs.get(7)))
                 .addIngredient('t', GuiItems.progressCyclingItem((int) (timeSeconds * 20),
                         ItemStackBuilder.of(Material.CLOCK)
                                 .name(net.kyori.adventure.text.Component.translatable(
@@ -175,7 +175,7 @@ public record ShimmerAltarRecipe(
                                         RebarArgument.of("time", UnitFormat.SECONDS.format(timeSeconds))
                                 ))
                 ))
-                .addIngredient('r', ItemButton.from(result))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }

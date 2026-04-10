@@ -53,6 +53,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_TIN, Material.GREEN_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_IRON, Material.LIGHT_GRAY_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_BRONZE, Material.ORANGE_STAINED_GLASS, PortableFluidTank.class);
+        RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_OBSIDIAN, Material.BLACK_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE, Material.BLACK_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_STEEL, Material.GRAY_STAINED_GLASS, PortableFluidTank.class);
         RebarBlock.register(PylonKeys.PORTABLE_FLUID_TANK_PALLADIUM, Material.BLUE_STAINED_GLASS, PortableFluidTank.class);
@@ -62,6 +63,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_TIN, Material.GREEN_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_IRON, Material.LIGHT_GRAY_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_BRONZE, Material.ORANGE_STAINED_GLASS, FluidTankCasing.class);
+        RebarBlock.register(PylonKeys.FLUID_TANK_CASING_OBSIDIAN, Material.BLACK_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_IGNEOUS_COMPOSITE, Material.BLACK_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_STEEL, Material.GRAY_STAINED_GLASS, FluidTankCasing.class);
         RebarBlock.register(PylonKeys.FLUID_TANK_CASING_PALLADIUM, Material.BLUE_STAINED_GLASS, FluidTankCasing.class);
@@ -95,7 +97,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SMELTERY_CASTER, Material.BRICKS, SmelteryCaster.class);
         RebarBlock.register(PylonKeys.SMELTERY_BURNER, Material.FURNACE, SmelteryBurner.class);
         RebarBlock.register(PylonKeys.DIESEL_SMELTERY_HEATER, Material.FURNACE, DieselSmelteryHeater.class);
-        RebarBlock.register(PylonKeys.PIT_KILN, Material.DECORATED_POT, PitKiln.class);
         RebarBlock.register(PylonKeys.FLUID_STRAINER, Material.COPPER_GRATE, FluidStrainer.class);
         RebarBlock.register(PylonKeys.EXPLOSIVE_TARGET, Material.TARGET, ExplosiveTarget.class);
         RebarBlock.register(PylonKeys.EXPLOSIVE_TARGET_FIERY, Material.TARGET, ExplosiveTarget.class);
@@ -177,5 +178,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
+        RebarBlock.register(PylonKeys.CRUDE_ALLOY_FURNACE, Material.BLAST_FURNACE, CrudeAlloyFurnace.class);
+        RebarBlock.register(PylonKeys.KILN, Material.BLAST_FURNACE, Kiln.class);
     }
 }

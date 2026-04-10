@@ -20,7 +20,6 @@ import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
-import io.github.pylonmc.pylon.content.machines.smelting.PitKiln;
 import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.science.Loupe;
@@ -473,6 +472,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, FINE_SEDIMENT);
         PylonPages.MISCELLANEOUS.addItem(FINE_SEDIMENT);
+    }
+
+    public static final ItemStack SLAG = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.SLAG)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SLAG);
+        PylonPages.MISCELLANEOUS.addItem(SLAG);
     }
 
     public static final ItemStack QUARTZ_DUST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.QUARTZ_DUST)
@@ -1964,6 +1970,13 @@ public final class PylonItems {
 
     //<editor-fold desc="Machines - Simple Machines" defaultstate=collapsed>
 
+    public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
+        PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
+    }
+
     public static final ItemStack GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE_SLAB, PylonKeys.GRINDSTONE)
             .build();
     static {
@@ -2093,11 +2106,12 @@ public final class PylonItems {
     //</editor-fold>
 
     //<editor-fold desc="Machines - Smelting" defaultstate=collapsed>
-    public static final ItemStack PIT_KILN = ItemStackBuilder.rebar(Material.DECORATED_POT, PylonKeys.PIT_KILN)
+
+    public static final ItemStack KILN = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.KILN)
             .build();
     static {
-        RebarItem.register(PitKiln.Item.class, PIT_KILN, PylonKeys.PIT_KILN);
-        PylonPages.SMELTING.addItem(PIT_KILN);
+        RebarItem.register(RebarItem.class, KILN, PylonKeys.KILN);
+        PylonPages.SMELTING.addItem(KILN);
     }
 
     public static final ItemStack BLOOMERY = ItemStackBuilder.rebar(Material.MAGMA_BLOCK, PylonKeys.BLOOMERY)
@@ -2223,6 +2237,17 @@ public final class PylonItems {
         PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_PIPE_BRONZE);
     }
 
+    public static final ItemStack FLUID_PIPE_OBSIDIAN = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_PIPE_OBSIDIAN)
+            .set(
+                    DataComponentTypes.ITEM_MODEL,
+                    Settings.get(PylonKeys.FLUID_PIPE_OBSIDIAN).getOrThrow("material", ConfigAdapter.MATERIAL).key()
+            )
+            .build();
+    static {
+        RebarItem.register(FluidPipe.class, FLUID_PIPE_OBSIDIAN);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_PIPE_OBSIDIAN);
+    }
+
     public static final ItemStack FLUID_PIPE_IGNEOUS_COMPOSITE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_PIPE_IGNEOUS_COMPOSITE)
             .set(
                     DataComponentTypes.ITEM_MODEL,
@@ -2323,6 +2348,20 @@ public final class PylonItems {
         PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_BRONZE);
     }
 
+    public static final ItemStack PORTABLE_FLUID_TANK_OBSIDIAN
+            = ItemStackBuilder.rebar(Material.BLACK_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_OBSIDIAN)
+            .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
+            .addCustomModelDataString("pylon:fluid:empty")
+            .build();
+    static {
+        RebarItem.register(
+                PortableFluidTank.Item.class,
+                PORTABLE_FLUID_TANK_OBSIDIAN,
+                PylonKeys.PORTABLE_FLUID_TANK_OBSIDIAN
+        );
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(PORTABLE_FLUID_TANK_OBSIDIAN);
+    }
+
     public static final ItemStack PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE
             = ItemStackBuilder.rebar(Material.BLACK_STAINED_GLASS, PylonKeys.PORTABLE_FLUID_TANK_IGNEOUS_COMPOSITE)
             .editPdc(pdc -> pdc.set(PortableFluidTank.Item.FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, 0.0))
@@ -2406,6 +2445,14 @@ public final class PylonItems {
     static {
         RebarItem.register(FluidTankCasing.Item.class, FLUID_TANK_CASING_BRONZE, PylonKeys.FLUID_TANK_CASING_BRONZE);
         PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_TANK_CASING_BRONZE);
+    }
+
+    public static final ItemStack FLUID_TANK_CASING_OBSIDIAN
+            = ItemStackBuilder.rebar(Material.BLACK_STAINED_GLASS, PylonKeys.FLUID_TANK_CASING_OBSIDIAN)
+            .build();
+    static {
+        RebarItem.register(FluidTankCasing.Item.class, FLUID_TANK_CASING_OBSIDIAN, PylonKeys.FLUID_TANK_CASING_OBSIDIAN);
+        PylonPages.FLUID_PIPES_AND_TANKS.addItem(FLUID_TANK_CASING_OBSIDIAN);
     }
 
     public static final ItemStack FLUID_TANK_CASING_IGNEOUS_COMPOSITE

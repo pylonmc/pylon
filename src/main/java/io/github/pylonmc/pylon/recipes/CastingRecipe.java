@@ -81,7 +81,7 @@ public record CastingRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('c', ItemButton.from(PylonItems.SMELTERY_CASTER))
+                .addIngredient('c', ItemButton.of(PylonItems.SMELTERY_CASTER))
                 .addIngredient('i', new FluidButton(input))
                 .addIngredient('t', ItemStackBuilder.of(Material.BLAZE_POWDER)
                         .name(net.kyori.adventure.text.Component.translatable(
@@ -89,7 +89,7 @@ public record CastingRecipe(
                                 RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature))
                         ))
                 )
-                .addIngredient('o', ItemButton.from(result))
+                .addIngredient('o', ItemButton.of(result))
                 .build();
     }
 }

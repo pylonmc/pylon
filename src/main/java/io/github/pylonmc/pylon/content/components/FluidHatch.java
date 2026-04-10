@@ -138,13 +138,19 @@ public abstract class FluidHatch extends RebarBlock implements
         return result;
     }
 
+    public double fluidAmount() {
+        return fluid == null
+                ? 0.0
+                : fluidAmount(fluid);
+    }
+
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         Component info;
         if (!isFormedAndFullyLoaded()) {
             info = Component.translatable("pylon.message.fluid_hatch.no_casing");
         } else if (fluid == null) {
-            info = Component.translatable("pylon.message.fluid_hatch.no_multiblock");
+            info = Component.translatable("pylon.message.fluid_hatch.no_fluid");
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(
