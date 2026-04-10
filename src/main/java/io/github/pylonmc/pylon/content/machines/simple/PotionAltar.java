@@ -141,7 +141,7 @@ public class PotionAltar extends RebarBlock
             mixedColor = contents1 != null ? contents1.computeEffectiveColor() : contents2.computeEffectiveColor();
         } else {
             Color color1 = contents1.computeEffectiveColor();
-            Color color2 = contents1.computeEffectiveColor();
+            Color color2 = contents2.computeEffectiveColor();
 
             int srcR = color1.getRed();
             int srcG = color1.getGreen();
