@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -97,6 +98,10 @@ public class PylonUtils {
         int g = (int) Math.round(Color.GRAY.getGreen() + (thermalColor.getGreen() - Color.GRAY.getGreen()) * t);
         int b = (int) Math.round(Color.GRAY.getBlue() + (thermalColor.getBlue() - Color.GRAY.getBlue()) * t);
         return Color.fromRGB(r, g, b);
+    }
+
+    public @NotNull TextColor colorToTextColor(@NonNull Color color) {
+        return TextColor.color(color.getRed(), color.getGreen(), color.getBlue());
     }
 
     private int clampAndRound(double value) {

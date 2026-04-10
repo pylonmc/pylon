@@ -70,9 +70,9 @@ public record TableSawRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', ItemButton.from(input))
+                .addIngredient('i', ItemButton.of(input))
                 .addIngredient('s', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.of(PylonItems.HYDRAULIC_TABLE_SAW)))
-                .addIngredient('o', ItemButton.from(result))
+                .addIngredient('o', ItemButton.of(result))
                 .build();
     }
 }

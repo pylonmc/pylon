@@ -1137,14 +1137,28 @@ pylon:smeltery_burner:
   result: pylon:smeltery_burner
   category: building
 
-pylon:pit_kiln:
+pylon:crude_alloy_furnace:
   pattern:
-    - "B B"
-    - "B B"
+    - "BBB"
+    - "CFC"
     - "BBB"
   key:
+    B: minecraft:brick
+    C: minecraft:copper_ingot
+    F: minecraft:blast_furnace
+  result: pylon:crude_alloy_furnace
+  category: building
+
+pylon:kiln:
+  pattern:
+    - "MBM"
+    - "BFB"
+    - "MBM"
+  key:
     B: minecraft:bricks
-  result: pylon:pit_kiln
+    M: minecraft:mud_bricks
+    F: minecraft:blast_furnace
+  result: pylon:kiln
   category: building
 
 pylon:explosive_target:

@@ -185,7 +185,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         }
 
         // dividing by 10 due to suspected bug with getBurnDuration
-        fuelTicksTotal = Registry.ITEM.getOrThrow(fuel.getType().key()).getBurnDuration() / 10;
+        fuelTicksTotal = fuel.getType().asItemType().getBurnDuration() / 10;
         fuelTicksRemaining = fuelTicksTotal;
         fuelProgressItem.setItem(burningStack);
         fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);

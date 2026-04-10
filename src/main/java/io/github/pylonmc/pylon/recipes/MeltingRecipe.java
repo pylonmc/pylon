@@ -72,8 +72,8 @@ public record MeltingRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('h', ItemButton.from(PylonItems.SMELTERY_HOPPER))
-                .addIngredient('i', ItemButton.from(input))
+                .addIngredient('h', ItemButton.of(PylonItems.SMELTERY_HOPPER))
+                .addIngredient('i', ItemButton.of(input))
                 .addIngredient('t', ItemStackBuilder.of(Material.BLAZE_POWDER)
                         .name(net.kyori.adventure.text.Component.translatable(
                                 "pylon.guide.recipe.melting",

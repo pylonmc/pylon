@@ -93,8 +93,8 @@ public record GrindstoneRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('g', ItemButton.from(PylonItems.GRINDSTONE))
-                .addIngredient('i', ItemButton.from(input))
+                .addIngredient('g', ItemButton.of(PylonItems.GRINDSTONE))
+                .addIngredient('i', ItemButton.of(input))
                 .addIngredient('c', GuiItems.progressCyclingItem(cycles * Grindstone.CYCLE_DURATION_TICKS,
                         ItemStackBuilder.of(Material.CLOCK)
                                 .name(net.kyori.adventure.text.Component.translatable(
@@ -120,7 +120,7 @@ public record GrindstoneRecipe(
                             UnitFormat.PERCENT.format(Math.round(normalizedWeight * 100)).decimalPlaces(2))
             ));
             stack.lore(lore);
-            gui.addIngredient((char) ('0' + i), ItemButton.from(stack));
+            gui.addIngredient((char) ('0' + i), ItemButton.of(stack));
             i++;
         }
 
