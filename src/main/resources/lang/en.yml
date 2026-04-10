@@ -2640,7 +2640,7 @@ message:
   potion_altar:
     invalid-potion: "<red>You have to put 2 potions to fuse them"
     invalid-catalyst: "<red>You have to put a valid catalyst"
-    not-same-type: "<red>You have to put 2 potions with same bottles"
+    not-same-type: "<red>You have to put 2 potions with the same bottle type"
     too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
     fused-potion-name: "<green>Fused Potion"
   hammer:
