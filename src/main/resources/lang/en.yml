@@ -2312,6 +2312,102 @@ item:
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
+  wooden_silo:
+    name: "Wooden Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Wooden Silo | %contents%"
+
+  copper_silo:
+    name: "Copper Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Copper Silo | %contents%"
+
+  tin_silo:
+    name: "Tin Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Tin Silo | %contents%"
+
+  iron_silo:
+    name: "Iron Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Iron Silo | %contents%"
+
+  bronze_silo:
+    name: "Bronze Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Bronze Silo | %contents%"
+
+  steel_silo:
+    name: "Steel Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Steel Silo | %contents%"
+
+  palladium_silo:
+    name: "Palladium Silo"
+    lore: |-
+      <arrow> Stores one type of item
+      <arrow> Retains its contents when broken
+      <arrow> <insn>Right click</insn> to add one item
+      <arrow> <insn>Shift right click</insn> to add a stack
+      <arrow> <insn>Left click</insn> to remove one item
+      <arrow> <insn>Shift left click</insn> to remove a stack
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Contents:</attr> %contents%
+    waila: "Palladium Silo | %contents%"
+
+  silo_converter:
+    name: "Silo Converter"
+    lore: |-
+      <arrow> Converts silos to another silo type, preserving the contents
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2445,6 +2541,9 @@ research:
   palladium_armor: "<#2937e3>Palladium armor"
   creative_flight: "<#2937e3>Creative flight"
   palladium_production: "<#2937e3>Palladium Production"
+  silos_1: "<#ea9335>Silos I"
+  silos_2: "<#ea9335>Silos II"
+  silos_3: "<#ea9335>Silos III"
 
 guide:
   page:
@@ -2461,6 +2560,7 @@ guide:
     talismans: "<white>Talismans"
     armour: "<white>Armour"
     machines_simple_machines: "<white>Simple machines"
+    machines_storage: "<white>Storage"
     machines_fluid_pipes_and_tanks: "<white>Fluid Pipes and Tanks"
     machines_fluid_machines: "<white>Fluid Machines"
     machines_hydraulic_machines: "<white>Hydraulic Machines"
@@ -2614,10 +2714,14 @@ message:
       iron: "iron"
       diamond: "diamond"
       netherite: "netherite"
+  silo:
+    empty: "Empty"
+    not-empty: "<gray>%item% <white>(<yellow>%amount%<white>/<yellow>%capacity%<white>)"
 
 gui:
   fluid-selector-title: "Select Fluid"
   hammer: "Hammer"
+  material: "Material"
   pickaxe: "Pickaxe"
   tool: "Tool"
   filtered: "Filtered"
