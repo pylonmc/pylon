@@ -11,8 +11,9 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.papermc.paper.block.fluid.FluidData;
 import kotlin.Pair;
-import org.bukkit.Material;
+import org.bukkit.Fluid;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -20,12 +21,13 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class WaterPump extends RebarBlock implements RebarFluidBlock {
 
     public final double waterPerSecond = getSettings().getOrThrow("water-per-second", ConfigAdapter.DOUBLE);
+
+    private final List<Pair<RebarFluid, Double>> suppliedWater = List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
 
     public static class Item extends RebarItem {
 
@@ -45,20 +47,24 @@ public class WaterPump extends RebarBlock implements RebarFluidBlock {
 
     @SuppressWarnings("unused")
     public WaterPump(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.UP);
     }
 
     @SuppressWarnings("unused")
     public WaterPump(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
     public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
-        return getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER
-                ? List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0))
-                : List.of();
+        Block below = getBlock().getRelative(BlockFace.DOWN);
+        FluidData data = below.getWorld().getFluidData(below.getLocation());
+        if (data.getFluidType() == Fluid.WATER && data.isSource()) {
+            return suppliedWater;
+        }
+
+        return List.of();
     }
 
     @Override

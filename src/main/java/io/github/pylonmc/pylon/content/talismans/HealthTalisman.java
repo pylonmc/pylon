@@ -31,6 +31,6 @@ public class HealthTalisman extends AttributeTalisman {
 
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("health-boost", UnitFormat.HEARTS.format(attrBonus)));
+        return List.of(RebarArgument.of("health-boost", UnitFormat.HEARTS.format(attrBonus/2).decimalPlaces(1)));
     }
 }
