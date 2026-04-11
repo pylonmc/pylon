@@ -50,7 +50,7 @@ public class CoalFiredPurificationTower extends RebarBlock implements
         RebarGuiBlock,
         RebarVirtualInventoryBlock,
         RebarLogisticBlock,
-        RebarTickingBlock {
+        HydraulicPurifier {
 
     public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
     public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
@@ -255,5 +255,15 @@ public class CoalFiredPurificationTower extends RebarBlock implements
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         RebarFluidBufferBlock.super.onBreak(drops, context);
         RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    }
+
+    @Override
+    public double getPurificationSpeed() {
+        return purificationSpeed;
+    }
+
+    @Override
+    public double getPurificationEfficiency() {
+        return purificationEfficiency;
     }
 }

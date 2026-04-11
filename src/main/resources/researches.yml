@@ -89,6 +89,7 @@ drilling_2:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
     - pylon:gypsum
+    - pylon:gypsum_block
     - pylon:gypsum_dust
 
 drilling_3:
@@ -105,6 +106,7 @@ smelting_1:
   - pylon:pit_kiln
   - pylon:carbon
   - pylon:sulfur
+  - pylon:sulfur_block
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -474,6 +476,7 @@ diesel_machines:
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
+    - pylon:diesel_refueling_station
 
 diesel_production:
   item: pylon:biorefinery
@@ -481,6 +484,12 @@ diesel_production:
   unlocks:
     - pylon:fermenter
     - pylon:biorefinery
+
+diesel_booster:
+  item: pylon:diesel_booster
+  cost: 10
+  unlocks:
+    - pylon:diesel_booster
 
 portable_workstations:
   item: pylon:portable_crafting_table

@@ -157,6 +157,10 @@ public record AssemblingRecipe(
                                 RebarArgument.of("tool", Component.translatable("pylon.gui.assembly_table.tools." + step.tool)),
                                 RebarArgument.of("clicks", step.clicks)
                         ))
+                        .editMeta(meta -> {
+                            meta.setMaxStackSize(step.clicks);
+                        })
+                        .amount(step.clicks)
                         .clearLore()
                         .build();
                 stepItems.add(Item.simple(stack));
