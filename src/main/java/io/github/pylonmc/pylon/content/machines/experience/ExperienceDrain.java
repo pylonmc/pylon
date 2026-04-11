@@ -32,7 +32,6 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
-    public final double conversionRatio = getSettings().getOrThrow("conversion-ratio", ConfigAdapter.DOUBLE);
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
 
     public ExperienceDrain(@NotNull Block block, BlockCreateContext ctx) {
@@ -116,14 +115,13 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     public void tick() {
         for (Player player : getBlock().getWorld().getNearbyPlayers(getBlock().getLocation(), 1d, 5d, Player::isSneaking)) {
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
-            addFluid(PylonFluids.LIQUID_XP, actualSubtracted * conversionRatio);
+            addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
         }
     }
 
     public static class Item extends RebarItem {
         public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
         public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
-        public final double conversionRatio = getSettings().getOrThrow("conversion-ratio", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -131,7 +129,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
 
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(RebarArgument.of("conversion-ratio", Component.text(conversionRatio + ":1")),
+            return List.of(
                     RebarArgument.of("xp-drain-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) xpDrainAmount / ((double) xpDrainPeriodTicks / 20))));
         }
     }
