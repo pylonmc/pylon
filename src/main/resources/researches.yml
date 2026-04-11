@@ -647,9 +647,9 @@ creative_flight:
     - pylon:flight_ring
 
 
-experience_production:
+experience_liquefaction:
   item: pylon:experience_fountain
-  cost: 50
+  cost: 10
   unlocks:
     - pylon:experience_fountain
     - pylon:experience_fountain_spout

@@ -3092,21 +3092,21 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(ExperienceDrain.Item.class, EXPERIENCE_DRAIN, PylonKeys.EXPERIENCE_DRAIN);
-        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_DRAIN);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_DRAIN);
     }
 
     public static final ItemStack EXPERIENCE_FOUNTAIN = ItemStackBuilder.rebar(Material.END_STONE, PylonKeys.EXPERIENCE_FOUNTAIN)
             .build();
     static {
         RebarItem.register(ExperienceFountain.Item.class, EXPERIENCE_FOUNTAIN, PylonKeys.EXPERIENCE_FOUNTAIN);
-        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_FOUNTAIN);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_FOUNTAIN);
     }
 
     public static final ItemStack EXPERIENCE_FOUNTAIN_SPOUT = ItemStackBuilder.rebar(Material.END_ROD, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT)
             .build();
     static {
         RebarItem.register(RebarItem.class, EXPERIENCE_FOUNTAIN_SPOUT, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT);
-        PylonPages.LIQUID_EXPERIENCE_MACHINES.addItem(EXPERIENCE_FOUNTAIN_SPOUT);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_FOUNTAIN_SPOUT);
     }
 
     public static final ItemStack HYDRAULIC_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER)
