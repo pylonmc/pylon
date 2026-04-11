@@ -9,15 +9,16 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarUnloadBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.event.RebarBlockUnloadEvent;
+import io.github.pylonmc.rebar.event.RebarBlockSerializeEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -30,16 +31,20 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -57,8 +62,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarUnloadBlock {
+        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock {
 
+    private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
     private static final MultiblockComponent POTION_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.POTION_PEDESTAL);
     private static final MultiblockComponent LIT_ORANGE_CANDLE_COMPONENT = new VanillaBlockdataMultiblockComponent(Material.ORANGE_CANDLE.createBlockData("[lit=true]"));
@@ -72,8 +78,9 @@ public class PotionAltar extends RebarBlock
     private final int recipeTimeTicks = getSettings().getOrThrow("recipe-time-ticks", ConfigAdapter.INTEGER);
     private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
     private int ticked = 0;
-    private PotionAltarRecipe currentRecipe;
-    private Integer recipeTicksRemaining;
+    private @Nullable Player interactor;
+    private @Nullable PotionAltarRecipe currentRecipe;
+    private @Nullable Integer recipeTicksRemaining;
 
     /**
      * @author balugaq
@@ -113,6 +120,15 @@ public class PotionAltar extends RebarBlock
     @SuppressWarnings("unused")
     public PotionAltar(Block block, PersistentDataContainer pdc) {
         super(block, pdc);
+        // recover the recipe
+        int lastRecipeTicks = pdc.getOrDefault(RECIPE_TICKS_REMAINING_KEY, PersistentDataType.INTEGER, -1);
+        if (lastRecipeTicks > 0) {
+            currentRecipe = findRecipe(null);
+            if (currentRecipe != null) {
+                recipeTicksRemaining = lastRecipeTicks;
+            }
+            pdc.remove(RECIPE_TICKS_REMAINING_KEY);
+        }
     }
 
     @Override
@@ -126,23 +142,29 @@ public class PotionAltar extends RebarBlock
         return map;
     }
 
-    private boolean isInvalidRecipe(@NotNull Player player, @NotNull ItemStack potion1, @NotNull ItemStack potion2, @Nullable PotionCatalyst catalyst) {
+    private boolean isInvalidRecipe(@NotNull ItemStack potion1, @NotNull ItemStack potion2, @Nullable PotionCatalyst catalyst, @Nullable Player interactor) {
         if (catalyst == null) {
             // 2 potions
             if (isInvalidPotion(potion1) || isInvalidPotion(potion2)) {
-                player.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
+                if (interactor != null) {
+                    interactor.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
+                }
                 return true;
             }
 
             if (potion1.getType() != potion2.getType()) {
-                player.sendMessage(Component.translatable("pylon.message.potion_altar.not-same-type"));
+                if (interactor != null) {
+                    interactor.sendMessage(Component.translatable("pylon.message.potion_altar.not-same-type"));
+                }
                 return true;
             }
         } else {
             if (isInvalidPotion(potion1) && isInvalidPotion(potion2)) {
                 // 1 potion + catalyst
                 // both potions are invalid
-                player.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
+                if (interactor != null) {
+                    interactor.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
+                }
                 return true;
             }
         }
@@ -191,6 +213,18 @@ public class PotionAltar extends RebarBlock
             return;
         }
 
+        // start recipe
+        PotionAltarRecipe recipe = findRecipe(event.getPlayer());
+        if (recipe == null) {
+            return;
+        }
+        interactor = event.getPlayer();
+        currentRecipe = recipe;
+        recipeTicksRemaining = recipe.timeTicks();
+        getBlock().getWorld().playSound(START_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
+    }
+
+    private @Nullable PotionAltarRecipe findRecipe(@Nullable Player interactor) {
         ItemStack potion1 = getPotionPedestal1().getItemDisplay().getItemStack();
         ItemStack potion2 = getPotionPedestal2().getItemDisplay().getItemStack();
         ItemStack catalystItem = getCatalystPedestal().getItemDisplay().getItemStack();
@@ -201,8 +235,10 @@ public class PotionAltar extends RebarBlock
                 catalyst = clyst;
             } else {
                 // invalid catalyst
-                event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.invalid-catalyst"));
-                return;
+                if (interactor != null) {
+                    interactor.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-catalyst"));
+                }
+                return null;
             }
         }
 
@@ -211,15 +247,17 @@ public class PotionAltar extends RebarBlock
         // 2 potions,
         // 2 potions + catalyst
         // since catalyst is not required.
-        if (isInvalidRecipe(event.getPlayer(), potion1, potion2, catalyst)) {
-            return;
+        if (isInvalidRecipe(potion1, potion2, catalyst, interactor)) {
+            return null;
         }
 
         PotionContents contents1 = potion1.getData(DataComponentTypes.POTION_CONTENTS);
         PotionContents contents2 = potion2.getData(DataComponentTypes.POTION_CONTENTS);
         if (contents1 == null && contents2 == null) {
-            event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
-            return;
+            if (interactor != null) {
+                interactor.sendMessage(Component.translatable("pylon.message.potion_altar.invalid-potion"));
+            }
+            return null;
         }
 
         // attempt to start recipe
@@ -231,8 +269,10 @@ public class PotionAltar extends RebarBlock
         if (contents1 != null) fuseEffects(effects, contents1.allEffects());
         if (contents2 != null) fuseEffects(effects, contents2.allEffects());
         if (effects.size() > maxEffectTypes) {
-            event.getPlayer().sendMessage(Component.translatable("pylon.message.potion_altar.too-many-effects", RebarArgument.of("max_effect_types", maxEffectTypes)));
-            return;
+            if (interactor != null) {
+                interactor.sendMessage(Component.translatable("pylon.message.potion_altar.too-many-effects", RebarArgument.of("max_effect_types", maxEffectTypes)));
+            }
+            return null;
         }
         boolean catalystApplied = true;
         if (catalyst != null) {
@@ -248,12 +288,7 @@ public class PotionAltar extends RebarBlock
         fusedPotion.setData(DataComponentTypes.ITEM_NAME, Component.translatable("pylon.message.potion_altar.fused-potion-name"));
         fusedPotion.setData(DataComponentTypes.POTION_CONTENTS, contents);
 
-        PotionAltarRecipe recipe = new PotionAltarRecipe(event.getPlayer(), catalyst, fusedPotion, recipeTimeTicks, catalystApplied);
-
-        // start recipe
-        currentRecipe = recipe;
-        recipeTicksRemaining = recipe.timeTicks();
-        getBlock().getWorld().playSound(START_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
+        return new PotionAltarRecipe(catalyst, fusedPotion, recipeTimeTicks, catalystApplied);
     }
 
     private boolean isInvalidPotion(@NotNull ItemStack potion) {
@@ -388,14 +423,18 @@ public class PotionAltar extends RebarBlock
         }
 
         if (ThreadLocalRandom.current().nextDouble() >= recipe.catalyst().getSettings().get("apply-success-rate", ConfigAdapter.DOUBLE, 0.0D)) {
-            recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.failed-apply-catalyst"));
+            if (interactor != null) {
+                interactor.sendMessage(Component.translatable("pylon.message.potion_altar.failed-apply-catalyst"));
+            }
             getBlock().getWorld().playSound(FAILED_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
             getCatalystPedestal().getItemDisplay().setItemStack(null);
             return;
         }
 
         if (!recipe.catalystApplied()) {
-            recipe.player().sendMessage(Component.translatable("pylon.message.potion_altar.cannot-apply-catalyst"));
+            if (interactor != null) {
+                interactor.sendMessage(Component.translatable("pylon.message.potion_altar.cannot-apply-catalyst"));
+            }
             getBlock().getWorld().playSound(CANNOT_APPLY_CATALYST_SOUND, getBlock().getX() + 0.5, getBlock().getY() + 0.5, getBlock().getZ() + 0.5);
             return;
         }
@@ -445,11 +484,6 @@ public class PotionAltar extends RebarBlock
         ));
     }
 
-    @Override
-    public void onUnload(@NotNull final RebarBlockUnloadEvent event, @NotNull final EventPriority priority) {
-        cancelRecipe();
-    }
-
     /**
      * For internal use only
      *
@@ -459,10 +493,30 @@ public class PotionAltar extends RebarBlock
      * @author balugaq
      */
     private record PotionAltarRecipe(
-            @NotNull Player player,
             @Nullable PotionCatalyst catalyst,
             @NotNull ItemStack result,
             int timeTicks,
             boolean catalystApplied
     ) {}
+
+    /**
+     * {@link RebarRecipeProcessor} requires a unique recipe key to recover recipe after restarting server,
+     * while this altar doesn't have any static recipe to be loaded or be recovered, which produces tons of
+     * error logs for "Couldn't find recipe". So we have to recover recipe manually.
+     *
+     * @author balugaq
+     */
+    public static class ProgressRecoveringListener implements Listener {
+        @EventHandler
+        private void onSerialize(RebarBlockSerializeEvent event) {
+            RebarBlock block = event.getRebarBlock();
+            if (block instanceof PotionAltar altar) {
+                if (altar.recipeTicksRemaining != null) {
+                    // save progress
+                    event.getPdc().set(RECIPE_TICKS_REMAINING_KEY, RebarSerializers.INTEGER, altar.recipeTicksRemaining);
+                    altar.cancelRecipe();
+                }
+            }
+        }
+    }
 }
