@@ -1,0 +1,27 @@
+pylon:convert_to_wooden:
+  material: "#minecraft:planks"
+  result: pylon:wooden_silo
+
+pylon:convert_to_tin:
+  material: pylon:tin_ingot
+  result: pylon:tin_silo
+
+pylon:convert_to_copper:
+  material: minecraft:copper_ingot
+  result: pylon:copper_silo
+
+pylon:convert_to_iron:
+  material: minecraft:iron_ingot
+  result: pylon:iron_silo
+
+pylon:convert_to_bronze:
+  material: pylon:bronze_ingot
+  result: pylon:bronze_silo
+
+pylon:convert_to_steel:
+  material: pylon:steel_ingot
+  result: pylon:steel_silo
+
+pylon:convert_to_palladium:
+  material: pylon:palladium_ingot
+  result: pylon:palladium_silo

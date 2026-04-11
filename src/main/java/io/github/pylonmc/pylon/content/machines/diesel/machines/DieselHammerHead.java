@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -40,6 +41,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
+import xyz.xenondevs.invui.inventory.event.UpdateReason;
 
 import java.util.List;
 import java.util.Map;
@@ -203,11 +205,17 @@ public class DieselHammerHead extends RebarBlock implements
         if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
             return;
         }
+        // update hammer inv w/ damaged hammer
+        hammerInventory.setItem(UpdateReason.SUPPRESSED, 0, hammer.getStack());
 
         PylonUtils.animate(getHammerHead(), goDownTimeTicks, getHeadTransformation(-0.5));
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                return;
+            }
+
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 

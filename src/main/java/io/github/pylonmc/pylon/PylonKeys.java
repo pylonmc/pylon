@@ -15,8 +15,10 @@ public class PylonKeys {
     public static final NamespacedKey CHARCOAL_BLOCK = pylonKey("charcoal_block");
 
     public static final NamespacedKey SULFUR = pylonKey("sulfur");
+    public static final NamespacedKey SULFUR_BLOCK = pylonKey("sulfur_block");
 
     public static final NamespacedKey GYPSUM = pylonKey("gypsum");
+    public static final NamespacedKey GYPSUM_BLOCK = pylonKey("gypsum_block");
     public static final NamespacedKey GYPSUM_DUST = pylonKey("gypsum_dust");
 
     public static final NamespacedKey COPPER_DUST = pylonKey("copper_dust");
@@ -35,6 +37,7 @@ public class PylonKeys {
     public static final NamespacedKey EMERALD_DUST = pylonKey("emerald_dust");
 
     public static final NamespacedKey RAW_TIN = pylonKey("raw_tin");
+    public static final NamespacedKey RAW_TIN_BLOCK = pylonKey("raw_tin_block");
     public static final NamespacedKey TIN_DUST = pylonKey("tin_dust");
     public static final NamespacedKey CRUSHED_RAW_TIN = pylonKey("crushed_raw_tin");
     public static final NamespacedKey TIN_INGOT = pylonKey("tin_ingot");
@@ -319,6 +322,8 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
     public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
     public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
+    public static final NamespacedKey DIESEL_REFUELING_STATION = pylonKey("diesel_refueling_station");
+    public static final NamespacedKey DIESEL_BOOSTER = pylonKey("diesel_booster");
     public static final NamespacedKey PALLADIUM_CONDENSER = pylonKey("palladium_condenser");
 
     public static final NamespacedKey FERMENTER = pylonKey("fermenter");
@@ -400,7 +405,7 @@ public class PylonKeys {
     public static final NamespacedKey EXPERIENCE_TALISMAN_ULTIMATE = pylonKey("experience_talisman_ultimate");
     public static final NamespacedKey EXPERIENCE_TALISMAN_PALLADIUM = pylonKey("experience_talisman_palladium");
 
-    public static final NamespacedKey FLIGHT_RING_KEY = pylonKey("flight_ring");
+    public static final NamespacedKey FLIGHT_RING = pylonKey("flight_ring");
 
     public static final NamespacedKey ASSEMBLY_TABLE = pylonKey("assembly_table");
     public static final NamespacedKey COPPER_SCREWDRIVER = pylonKey("copper_screwdriver");
@@ -421,6 +426,17 @@ public class PylonKeys {
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 
+    public static final NamespacedKey STEEL_HELMET = pylonKey("steel_helmet");
+    public static final NamespacedKey STEEL_CHESTPLATE = pylonKey("steel_chestplate");
+    public static final NamespacedKey STEEL_LEGGINGS = pylonKey("steel_leggings");
+    public static final NamespacedKey STEEL_BOOTS = pylonKey("steel_boots");
+
+    public static final NamespacedKey STEEL_SWORD = pylonKey("steel_sword");
+    public static final NamespacedKey STEEL_AXE = pylonKey("steel_axe");
+    public static final NamespacedKey STEEL_PICKAXE = pylonKey("steel_pickaxe");
+    public static final NamespacedKey STEEL_SHOVEL = pylonKey("steel_shovel");
+    public static final NamespacedKey STEEL_HOE = pylonKey("steel_hoe");
+
     public static final NamespacedKey PALLADIUM_HELMET = pylonKey("palladium_helmet");
     public static final NamespacedKey PALLADIUM_CHESTPLATE = pylonKey("palladium_chestplate");
     public static final NamespacedKey PALLADIUM_LEGGINGS = pylonKey("palladium_leggings");
@@ -435,6 +451,15 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_PIPE_PALLADIUM = pylonKey("fluid_pipe_palladium");
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
+
+    public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
+    public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
+    public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");
+    public static final NamespacedKey TIN_SILO = pylonKey("tin_silo");
+    public static final NamespacedKey IRON_SILO = pylonKey("iron_silo");
+    public static final NamespacedKey BRONZE_SILO = pylonKey("bronze_silo");
+    public static final NamespacedKey STEEL_SILO = pylonKey("steel_silo");
+    public static final NamespacedKey PALLADIUM_SILO = pylonKey("palladium_silo");
 
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 }

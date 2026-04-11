@@ -4,7 +4,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarConsumable;
-import io.github.pylonmc.rebar.particles.ConfettiParticle;
+import io.github.pylonmc.rebar.util.ConfettiParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
