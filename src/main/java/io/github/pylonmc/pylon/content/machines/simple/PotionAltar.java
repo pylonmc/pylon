@@ -331,17 +331,38 @@ public class PotionAltar extends RebarBlock
     public void tick() {
         progressRecipe(tickInterval);
 
-        if (isProcessingRecipe() && !isFormedAndFullyLoaded()) {
-            cancelRecipe();
-            return;
+        if (isProcessingRecipe()) {
+            if (!isFormedAndFullyLoaded()) {
+                cancelRecipe();
+                return;
+            }
+
+            // flames on the candle
+            for (Block candle : getCandles()) {
+                new ParticleBuilder(Particle.FLAME)
+                        .count(10)
+                        .extra(0.02)
+                        .location(candle.getLocation().toCenterLocation())
+                        .offset(0, 2, 0)
+                        .spawn();
+            }
+
+            // sparks on the altar
+            new ParticleBuilder(Particle.ELECTRIC_SPARK)
+                    .location(getBlock().getLocation().toCenterLocation().add(0, 1, 0))
+                    .count(50)
+                    .extra(0.02)
+                    .offset(2, 2, 2)
+                    .spawn();
         }
 
         ticked += 1;
 
+        int speed = isProcessingRecipe() ? 30 : 10;
         new ParticleBuilder(Particle.DRAGON_BREATH)
                 .count(10)
                 .extra(0.02)
-                .location(getBlock().getLocation().toCenterLocation().add(Math.sin(10*Math.toRadians(ticked)), 0, Math.cos(10*Math.toRadians(ticked))))
+                .location(getBlock().getLocation().toCenterLocation().add(Math.sin(speed*Math.toRadians(ticked)), 0, Math.cos(speed*Math.toRadians(ticked))))
                 .data(1f)
                 .spawn();
 
