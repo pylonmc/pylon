@@ -520,7 +520,8 @@ item:
     lore: |-
       <star> Multiblock
       <arrow> Requires a Grindstone Handle on top
-      <arrow> <insn>Right click</insn> with an item to insert it
+      <arrow> <insn>Right click</insn> with an item to insert one
+      <arrow> <insn>Shift right click</insn> with an item to insert the entire stack
       <arrow> <insn>Right click</insn> the grindstone handle to grind the item
       
       <u>Components</u>
