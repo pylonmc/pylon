@@ -18,6 +18,11 @@ sound:
     source: player
     pitch: 1
     volume: 1
+  processing:
+    name: minecraft:entity.enderman.teleport
+    source: player
+    pitch: 1
+    volume: 1
   cannot_apply_catalyst:
     name: minecraft:block.chorus_flower.death
     source: player
