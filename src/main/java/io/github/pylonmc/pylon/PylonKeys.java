@@ -322,6 +322,8 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
     public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
     public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
+    public static final NamespacedKey DIESEL_REFUELING_STATION = pylonKey("diesel_refueling_station");
+    public static final NamespacedKey DIESEL_BOOSTER = pylonKey("diesel_booster");
     public static final NamespacedKey PALLADIUM_CONDENSER = pylonKey("palladium_condenser");
 
     public static final NamespacedKey FERMENTER = pylonKey("fermenter");
@@ -455,6 +457,14 @@ public class PylonKeys {
     public static final NamespacedKey ASCENDANT_EMBER = pylonKey("ascendant_ember");
     public static final NamespacedKey CHRONICLE_RESIN = pylonKey("chronicle_resin");
     public static final NamespacedKey EON_WEAVE_CRYSTAL = pylonKey("eon_weave_crystal");
+    public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
+    public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
+    public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");
+    public static final NamespacedKey TIN_SILO = pylonKey("tin_silo");
+    public static final NamespacedKey IRON_SILO = pylonKey("iron_silo");
+    public static final NamespacedKey BRONZE_SILO = pylonKey("bronze_silo");
+    public static final NamespacedKey STEEL_SILO = pylonKey("steel_silo");
+    public static final NamespacedKey PALLADIUM_SILO = pylonKey("palladium_silo");
 
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 }
