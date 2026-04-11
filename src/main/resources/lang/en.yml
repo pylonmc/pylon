@@ -2701,6 +2701,7 @@ research:
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
   potion_magic: "<#e5c4ef>Potion magic"
+  experience_liquefaction: "<#5024d1>Experience Liquefaction"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"
