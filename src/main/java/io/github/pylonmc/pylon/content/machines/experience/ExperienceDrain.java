@@ -53,7 +53,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
                         fluidAmount(PylonFluids.LIQUID_XP),
                         fluidCapacity(PylonFluids.LIQUID_XP),
                         20,
-                        TextColor.fromHexString("#5024d1")
+                        TextColor.fromHexString("#1dcE420")
                 ))
         ));
     }
