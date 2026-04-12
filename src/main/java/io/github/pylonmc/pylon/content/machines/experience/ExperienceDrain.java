@@ -32,7 +32,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
-    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
+    private static final MultiblockComponent PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.PEDESTAL);
 
     public ExperienceDrain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
@@ -60,14 +60,14 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(
-                new Vector3i(3, 0, 0), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(2, 0, 2), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(0, 0, 3), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(-2, 0, 2), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(-3, 0, 0), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(-2, 0, -2), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(0, 0, -3), SHIMMER_PEDESTAL_COMPONENT,
-                new Vector3i(2, 0, -2), SHIMMER_PEDESTAL_COMPONENT
+                new Vector3i(3, 0, 0), PEDESTAL_COMPONENT,
+                new Vector3i(2, 0, 2), PEDESTAL_COMPONENT,
+                new Vector3i(0, 0, 3), PEDESTAL_COMPONENT,
+                new Vector3i(-2, 0, 2), PEDESTAL_COMPONENT,
+                new Vector3i(-3, 0, 0), PEDESTAL_COMPONENT,
+                new Vector3i(-2, 0, -2), PEDESTAL_COMPONENT,
+                new Vector3i(0, 0, -3), PEDESTAL_COMPONENT,
+                new Vector3i(2, 0, -2), PEDESTAL_COMPONENT
         );
     }
 
