@@ -2408,6 +2408,69 @@ item:
     lore: |-
       <arrow> Converts silos to another silo type, preserving the contents
 
+  experience_drain:
+    name: "Experience Drain"
+    lore: |-
+      <arrow> Drains experience when you <insn>Sneak</insn> on top of the block
+      <arrow> <attr>Experience drain amount:</attr> %xp-drain-rate%
+      <arrow> <attr>Experience conversion ratio:</attr> %conversion-ratio%
+    waila: "Experience Drain | %bar%"
+
+  experience_fountain:
+    name: "Experience Fountain"
+    lore: |-
+      <arrow> Produces experience when connected to a liquid xp source
+      <arrow> <attr>Experience production rate:</attr> %production-rate%
+    waila: "Experience Fountain | %bar%"
+
+  experience_fountain_spout:
+    name: "Experience Fountain Spout"
+    waila: "Experience Fountain Spout"
+
+  liquid_xp_bottle:
+    name: "Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  liquid_xp_bottle_super:
+    name: "Super Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  liquid_xp_bottle_ultra:
+    name: "Ultra Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  hydraulic_experience_bottler:
+    name: "Hydraulic Experience Bottler"
+    lore: |-
+      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <lang:pylon.item.liquid_xp_bottle.name/>s from empty glass bottles
+      <arrow> <attr>Bottles per second:</attr> %production-rate%
+      <arrow> <attr>Hydraulic fluid consumption rate:</attr> %fluid-input-consumption%
+      <arrow> <attr>Dirty hydraulic fluid production rate:</attr> %fluid-output-production%
+      
+      <u>Components</u>
+            <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+            <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name></yellow>
+            <diamond> 4x <yellow>Iron Bars</yellow>
+    waila: "Hydraulic Experience Bottler | %xpbar%"
+
+  diesel_experience_bottler:
+    name: "Diesel Experience Bottler"
+    lore: |-
+      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <lang:pylon.item.liquid_xp_bottle.name/>s from empty glass bottles
+      <arrow> <attr>Bottles per second:</attr> %production-rate%
+      <arrow> <attr>Biodiesel consumption rate:</attr> %fluid-input-consumption%
+
+      <u>Components</u>
+            <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+            <diamond> 2x <yellow>Iron Bars</yellow>
+    waila: "Diesel Experience Bottler | %xpbar%"
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2440,6 +2503,7 @@ fluid:
   sugarcane: "<#a3ed2d>Sugarcane"
   ethanol: "<#d8d8d8>Ethanol"
   biodiesel: "<#eaa627>Biodiesel"
+  liquid_xp: "<#1dc420>Liquid Experience"
 
 waila:
   fluid_tank:
@@ -2544,6 +2608,7 @@ research:
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
+  experience_liquefaction: "<#1dc420>Experience Liquefaction"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"

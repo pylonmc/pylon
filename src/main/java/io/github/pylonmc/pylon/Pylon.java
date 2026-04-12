@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
+import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
@@ -62,6 +63,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);
         pm.registerEvents(new Bloomery.CreationListener(), this);
         pm.registerEvents(new Grindstone.PlaceListener(), this);
+        pm.registerEvents(new LiquidXPBottle.XPBottleListener(), this);
 
         new ShimmerMagnet.Ticker().runTaskTimer(this, 0, 10);
 

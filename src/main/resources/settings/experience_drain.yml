@@ -1,0 +1,4 @@
+xp-drain-period-ticks: 5
+xp-drain-amount: 10
+xp-buffer-amount: 250
+conversion-ratio: 1.0 # How much liquid xp for each vanilla XP. If this is more than 1, the machine is profitable

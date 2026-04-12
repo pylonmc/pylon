@@ -333,6 +333,7 @@ hydraulic_machines:
     - pylon:hydraulic_breaker
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
+    - pylon:hydraulic_experience_bottler
 
 hydraulic_purification_1:
   item: pylon:solar_purification_tower_1
@@ -476,6 +477,7 @@ diesel_machines:
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
+    - pylon:diesel_experience_bottler
     - pylon:diesel_refueling_station
 
 diesel_production:
@@ -666,3 +668,15 @@ creative_flight:
   cost: 1000
   unlocks:
     - pylon:flight_ring
+
+
+experience_liquefaction:
+  item: pylon:experience_fountain
+  cost: 10
+  unlocks:
+    - pylon:experience_fountain
+    - pylon:experience_fountain_spout
+    - pylon:experience_drain
+    - pylon:liquid_xp_bottle
+    - pylon:liquid_xp_bottle_super
+    - pylon:liquid_xp_bottle_ultra
