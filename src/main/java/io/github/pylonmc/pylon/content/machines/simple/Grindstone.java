@@ -60,7 +60,7 @@ public class Grindstone extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         addEntity("item", new ItemDisplayBuilder()
                 .transformation(new TransformBuilder()
                         .scale(0.3)
@@ -81,7 +81,7 @@ public class Grindstone extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

@@ -1,5 +1,5 @@
-input-fluid-per-second: 25
-fluid-buffer: 200
+input-fluid-per-second: 4
+fluid-buffer: 40
 tick-interval: 10
 speed: 1.5
 input-fluid: pylon:biodiesel

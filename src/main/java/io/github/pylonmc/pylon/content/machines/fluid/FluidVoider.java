@@ -47,7 +47,7 @@ public class FluidVoider extends RebarBlock implements RebarFluidBlock {
 
     @SuppressWarnings("unused")
     public FluidVoider(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidPoint(FluidPointType.INPUT, BlockFace.UP, (float) (mainDisplaySize / 2.0));
         addEntity("main", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(mainMaterial)
@@ -63,7 +63,7 @@ public class FluidVoider extends RebarBlock implements RebarFluidBlock {
 
     @SuppressWarnings("unused")
     public FluidVoider(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override

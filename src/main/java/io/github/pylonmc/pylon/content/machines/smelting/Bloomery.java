@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -134,6 +135,9 @@ public final class Bloomery extends RebarBlock implements
         if (!(RebarItem.fromStack(stack) instanceof IronBloom bloom)) return;
 
         Runnable particleSpawner = () -> {
+            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                return;
+            }
             Location pos = getBlock().getLocation().add(
                     ThreadLocalRandom.current().nextDouble(1),
                     1.2,

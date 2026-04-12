@@ -4,7 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarJumpBlock;
-import io.github.pylonmc.rebar.block.base.RebarSneakableBlock;
+import io.github.pylonmc.rebar.block.base.RebarSneakBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJumpBlock {
+public class Elevator extends RebarBlock implements RebarSneakBlock, RebarJumpBlock {
 
     public static class Item extends RebarItem {
 
@@ -47,12 +47,12 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {

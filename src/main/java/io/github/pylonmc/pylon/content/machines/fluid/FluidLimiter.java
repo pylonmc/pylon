@@ -57,7 +57,7 @@ public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, R
 
     @SuppressWarnings("unused")
     public FluidLimiter(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         setCapacity(buffer);
         setFacing(context.getFacing());
@@ -87,7 +87,7 @@ public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, R
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     public FluidLimiter(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
         this.maxFlowRate = pdc.get(MAX_FLOW_RATE_KEY, RebarSerializers.INTEGER);
     }
 
