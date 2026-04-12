@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,7 +48,6 @@ import java.util.Map;
 public class FluidExperienceBottler extends RebarBlock implements RebarFluidBufferBlock, RebarGuiBlock, RebarVirtualInventoryBlock, RebarTickingBlock, RebarLogisticBlock, RebarProcessor, RebarSimpleMultiblock, RebarDirectionalBlock {
 
     private static final int XP_AMOUNT = Settings.get(PylonKeys.LIQUID_XP_BOTTLE).getOrThrow("experience-amount", ConfigAdapter.INTEGER);
-    public final int xpBufferSize = getSettings().getOrThrow("liquid-xp-buffer-size", ConfigAdapter.INTEGER);
     public final int bottleProductionRateTicks = getSettings().getOrThrow("bottle-production-rate-ticks", ConfigAdapter.INTEGER);
 
     public final RebarFluid inputFluid = getSettings().getOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
@@ -63,21 +63,19 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     public FluidExperienceBottler(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
         setTickInterval(bottleProductionRateTicks);
-        createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, ctx, false, 0.5f);
-        if(outputFluid != null) {
-            if(fluidOutputBuffer == null || fluidOutputProductionRate == null) {
+        if (outputFluid != null) {
+            if (fluidOutputBuffer == null || fluidOutputProductionRate == null) {
                 throw new ExceptionInInitializerError("An output-fluid was provided, but at least one of output-fluid-buffer, output-fluid-per-second, output-wiala-bar-length, output-waila-bar-color are missing");
             }
         }
-        createFluidBuffer(PylonFluids.LIQUID_XP, xpBufferSize, true, false);
         setFacing(ctx.getFacing());
         setMultiblockDirection(ctx.getFacing());
     }
 
-    public FluidExperienceBottler(@NotNull Block block, PersistentDataContainer pdc){
+    public FluidExperienceBottler(@NotNull Block block, PersistentDataContainer pdc) {
         super(block, pdc);
-        if(outputFluid != null) {
-            if(fluidOutputBuffer == null || fluidOutputProductionRate == null) {
+        if (outputFluid != null) {
+            if (fluidOutputBuffer == null || fluidOutputProductionRate == null) {
                 throw new ExceptionInInitializerError("An output-fluid was provided, but at least one of output-fluid-buffer, output-fluid-per-second, output-wiala-bar-length, output-waila-bar-color are missing");
             }
         }
@@ -96,47 +94,60 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         RebarVirtualInventoryBlock.super.onBreak(drops, context);
     }
 
-    public @Nullable FluidInputHatch getFluidInputHatch(){
-        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(-1, 0, 2), getFacing()));
+    public @Nullable FluidInputHatch getFluidInputHatch() {
+        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(2, 1, 0), getFacing()));
         Location inputHatchLocation = getBlock().getLocation().add(relativeLocation);
         return BlockStorage.getAs(FluidInputHatch.class, inputHatchLocation);
     }
 
+    public @Nullable FluidInputHatch getExperienceInputHatch() {
+        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(0, 2, 0), getFacing()));
+        Location hatchLoc = getBlock().getLocation().add(relativeLocation);
+        return BlockStorage.getAs(FluidInputHatch.class, hatchLoc);
+    }
+
     public @Nullable FluidOutputHatch getFluidOutputHatch() {
-        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(1, 0, 2), getFacing()));
+        Vector relativeLocation = Vector.fromJOML(RebarUtils.rotateVectorToFace(new Vector3i(-2, 1, 0), getFacing()));
         Location inputHatchLocation = getBlock().getLocation().add(relativeLocation);
         return BlockStorage.getAs(FluidOutputHatch.class, inputHatchLocation);
     }
 
     @Override
     public void tick() {
-        if(!isFormedAndFullyLoaded()){
+        if (!isFormedAndFullyLoaded()) {
             return;
         }
         FluidInputHatch inputHatch = getFluidInputHatch();
         FluidOutputHatch outputHatch = getFluidOutputHatch();
-        if(inputHatch == null || outputHatch == null){
+        FluidInputHatch xpHatch = getExperienceInputHatch();
+        if (inputHatch == null || xpHatch == null) {
             return;
         }
-        if(!inputHatch.hasFluid(inputFluid)){
+        if(outputFluid != null && outputHatch == null){
             return;
         }
-        if(inputHatch.fluidAmount(inputFluid) < inputFluidConsumptionRate * bottleProductionRateTicks / 20 || fluidAmount(PylonFluids.LIQUID_XP) < XP_AMOUNT) {
+        if (!inputHatch.hasFluid(inputFluid) || !xpHatch.hasFluid(PylonFluids.LIQUID_XP)) {
             return;
         }
-        if(bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE){
+        if (inputHatch.fluidAmount(inputFluid) < inputFluidConsumptionRate * bottleProductionRateTicks / 20) {
+            return;
+        }
+        if(xpHatch.fluidAmount(PylonFluids.LIQUID_XP) < XP_AMOUNT){
+            return;
+        }
+        if (bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE) {
             return;
         }
         RebarItem bottleOutputItem = RebarItem.fromStack(bottleOutput.getItem(0));
-        if(bottleOutputItem != null && (!bottleOutputItem.getKey().equals(PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getStack().getAmount() == bottleOutputItem.getStack().getMaxStackSize())){
+        if (bottleOutputItem != null && (!bottleOutputItem.getKey().equals(PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getStack().getAmount() == bottleOutputItem.getStack().getMaxStackSize())) {
             return;
         }
-        if(outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < fluidOutputProductionRate * bottleProductionRateTicks / 20){
+        if (outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < fluidOutputProductionRate * bottleProductionRateTicks / 20) {
             return;
         }
         inputHatch.removeFluid(inputFluid, inputFluidConsumptionRate);
-        removeFluid(PylonFluids.LIQUID_XP, XP_AMOUNT);
-        if(outputFluid != null){
+        xpHatch.removeFluid(PylonFluids.LIQUID_XP, XP_AMOUNT);
+        if (outputFluid != null) {
             outputHatch.addFluid(outputFluid, fluidOutputProductionRate * bottleProductionRateTicks / 20);
         }
         bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
@@ -147,10 +158,15 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
         FluidInputHatch inputHatch = getFluidInputHatch();
-        FluidOutputHatch outputHatch = getFluidOutputHatch();
-        Preconditions.checkState(inputHatch != null && outputHatch != null);
+        FluidInputHatch xpHatch = getExperienceInputHatch();
+        Preconditions.checkState(inputHatch != null && xpHatch != null);
         inputHatch.setFluidType(inputFluid);
-        outputHatch.setFluidType(outputFluid);
+        xpHatch.setFluidType(PylonFluids.LIQUID_XP);
+        if(outputFluid != null){
+            FluidOutputHatch outputHatch = getFluidOutputHatch();
+            Preconditions.checkState(outputHatch != null);
+            outputHatch.setFluidType(outputFluid);
+        }
     }
 
     @Override
@@ -163,6 +179,10 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         FluidOutputHatch outputHatch = getFluidOutputHatch();
         if (outputHatch != null) {
             outputHatch.setFluidType(null);
+        }
+        FluidInputHatch xpHatch = getExperienceInputHatch();
+        if(xpHatch != null){
+            xpHatch.setFluidType(null);
         }
     }
 
@@ -189,24 +209,36 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(RebarArgument.of("xpbar", PylonUtils.createFluidAmountBar(
-                fluidAmount(PylonFluids.LIQUID_XP),
-                fluidCapacity(PylonFluids.LIQUID_XP),
-                20,
-                TextColor.fromHexString("#5024d1")
-        ))));
+        FluidInputHatch xpInputHatch = getExperienceInputHatch();
+        if(xpInputHatch != null && xpInputHatch.hasFluid(PylonFluids.LIQUID_XP)) {
+            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(RebarArgument.of("xpbar", PylonUtils.createFluidAmountBar(
+                    xpInputHatch.fluidAmount(PylonFluids.LIQUID_XP),
+                    xpInputHatch.fluidCapacity(PylonFluids.LIQUID_XP),
+                    20,
+                    TextColor.fromHexString("#1dc420")
+            ))));
+        } else {
+            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(RebarArgument.of("xpbar", PylonUtils.createFluidAmountBar(
+                    0,
+                    0,
+                    20,
+                    TextColor.fromHexString("#1dc420")
+            ))));
+        }
     }
 
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<@NotNull Vector3i, @NotNull MultiblockComponent> map = new HashMap<>();
-        map.put(new Vector3i(-1, 0, 1), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
-        map.put(new Vector3i(-1, 0, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
-        map.put(new Vector3i(-1, 0, 2), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        map.put(new Vector3i(0, 1, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
+        map.put(new Vector3i(0, 2, 0), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        map.put(new Vector3i(1, 1, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
+        map.put(new Vector3i(1, 0, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
+        map.put(new Vector3i(2, 1, 0), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
         if(outputFluid != null){
-            map.put(new Vector3i(1, 0, 1), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
-            map.put(new Vector3i(1, 0, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
-            map.put(new Vector3i(1, 0, 2), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        map.put(new Vector3i(-1, 1, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
+        map.put(new Vector3i(-1, 0, 0), new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.IRON_BARS));
+        map.put(new Vector3i(-2, 1, 0), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
         }
         return map;
     }
@@ -223,9 +255,9 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             List<RebarArgument> list = new ArrayList<>();
-            list.add(RebarArgument.of("production-rate", UnitFormat.ITEMS_PER_SECOND.format((double)bottleProductionRateTicks / 20)));
+            list.add(RebarArgument.of("production-rate", UnitFormat.ITEMS_PER_SECOND.format((double) bottleProductionRateTicks / 20)));
             list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS_PER_SECOND.format(inputFluidConsumptionRate)));
-            if(fluidOutputProductionRate != null){
+            if (fluidOutputProductionRate != null) {
                 list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidOutputProductionRate)));
             }
             return list;

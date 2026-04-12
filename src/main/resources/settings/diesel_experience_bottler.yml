@@ -1,4 +1,3 @@
-liquid-xp-buffer-size: 1000
 bottle-production-rate-ticks: 20
 input-fluid: pylon:biodiesel
 input-fluid-buffer-size: 1000
