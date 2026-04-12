@@ -2735,7 +2735,7 @@ pylon:experience_fountain_spout:
   key:
     S: pylon:sprinkler
     B: minecraft:iron_bars
-    D: pylon:shimmer_dust_2
+    D: pylon:shimmer_dust_1
   result: pylon:experience_fountain_spout
   category: building
 
@@ -2746,22 +2746,19 @@ pylon:experience_fountain:
     - "BSB"
   key:
     P: minecraft:ender_pearl
-    B: pylon:covalent_binder
+    B: minecraft:stone
     S: pylon:shimmer_bronze
   result: pylon:experience_fountain
   category: building
 
 pylon:experience_drain:
   pattern:
-    - "LLL"
-    - "CBA"
+    - "SSS"
+    - "SPS"
     - "DSD"
   key:
     S: minecraft:stone_slab
-    D: pylon:shimmer_dust_2
-    B: pylon:covalent_binder
-    C: pylon:liselette_cathode
-    A: pylon:liselette_anode
-    L: pylon:liselette_conductor
+    D: pylon:shimmer_dust_1
+    P: minecraft:ender_pearl
   result: pylon:experience_drain
   category: building
