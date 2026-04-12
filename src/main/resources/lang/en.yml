@@ -1619,11 +1619,11 @@ item:
   diesel_furnace:
     name: "Diesel Furnace"
     lore: |-
-      <arrow> Smelts items
-      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
-      <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
+      <arrow> Smelts items using %input-fluid%
+      <arrow> <attr>%input-fluid% usage:</attr> %fluid-usage%
+      <arrow> <attr>%input-fluid% buffer:</attr> %fluid-buffer%
       <arrow> <attr>Speed:</attr> %speed%
-    waila: "Diesel Furnace | %bar%"
+    waila: "Diesel Furnace | %inputBar%"
 
   diesel_miner:
     name: "Diesel Miner"
@@ -2407,6 +2407,15 @@ item:
     name: "Silo Converter"
     lore: |-
       <arrow> Converts silos to another silo type, preserving the contents
+
+  plant_oil_furnace:
+    name: "Plant Oil Furnace"
+    lore: |-
+      <arrow> Smelts items using %input-fluid%
+      <arrow> <attr>%input-fluid% usage:</attr> %fluid-usage%
+      <arrow> <attr>%input-fluid% buffer:</attr> %fluid-buffer%
+      <arrow> <attr>Speed:</attr> %speed%
+    waila: "Plant Oil Furnace | %inputBar%"
 
 fluid:
   castable:

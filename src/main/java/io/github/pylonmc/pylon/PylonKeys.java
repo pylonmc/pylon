@@ -462,4 +462,6 @@ public class PylonKeys {
     public static final NamespacedKey PALLADIUM_SILO = pylonKey("palladium_silo");
 
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
+
+    public static final NamespacedKey PLANT_OIL_FURNACE = pylonKey("plant_oil_furnace");
 }

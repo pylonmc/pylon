@@ -1,0 +1,7 @@
+input-fluid-per-second: 25
+fluid-buffer: 200
+tick-interval: 10
+speed: 1.2
+input-fluid: pylon:plant_oil
+input-waila-bar-length: 20
+input-waila-bar-color: c4b352

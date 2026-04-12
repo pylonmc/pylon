@@ -1,4 +1,7 @@
-diesel-per-second: 4
-diesel-buffer: 40
+input-fluid-per-second: 4
+fluid-buffer: 40
 tick-interval: 10
-speed: 1.2
+speed: 1.5
+input-fluid: pylon:biodiesel
+input-waila-bar-length: 20
+input-waila-bar-color: eaa627
