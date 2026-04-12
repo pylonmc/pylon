@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
-    private static final MultiblockComponent PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.PEDESTAL);
+    private static final MultiblockComponent PEDESTAL_COMPONENT = new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.COBBLESTONE_WALL);
 
     public ExperienceDrain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
