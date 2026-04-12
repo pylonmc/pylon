@@ -250,7 +250,7 @@ public final class PylonFluids {
 
     public static final RebarFluid LIQUID_XP = new RebarFluid(
             pylonKey("liquid_xp"),
-            Material.PURPLE_CONCRETE
+            Material.GREEN_CONCRETE
     ).addTag(FluidTemperature.NORMAL);
     static {
         LIQUID_XP.register();

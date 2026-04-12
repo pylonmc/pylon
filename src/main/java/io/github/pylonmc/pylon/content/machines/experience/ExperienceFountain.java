@@ -66,7 +66,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
                         fluidAmount(PylonFluids.LIQUID_XP),
                         fluidCapacity(PylonFluids.LIQUID_XP),
                         20,
-                        TextColor.fromHexString("#5024d1")
+                        TextColor.fromHexString("#1dc420")
                 ))
         ));
     }
