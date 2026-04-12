@@ -1,4 +1,3 @@
-liquid-xp-buffer-size: 1000
 bottle-production-rate-ticks: 50
 input-fluid: pylon:hydraulic_fluid
 input-fluid-buffer-size: 500
