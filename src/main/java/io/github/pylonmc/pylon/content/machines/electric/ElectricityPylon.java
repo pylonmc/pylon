@@ -1,17 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
-import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.electricity.ElectricNode;
-import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
-import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 import net.kyori.adventure.text.Component;
+
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -29,10 +21,21 @@ import org.joml.Matrix4f;
 
 import java.util.Objects;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
+import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
+import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.electricity.ElectricNetwork;
+import io.github.pylonmc.rebar.electricity.ElectricNode;
+import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 
 public final class ElectricityPylon extends RebarBlock implements
-        RebarElectricBlock,
+        RebarElectricBlock.Connector,
         RebarTickingBlock,
         RebarEntityHolderBlock {
 
@@ -58,12 +61,20 @@ public final class ElectricityPylon extends RebarBlock implements
     }
 
     @Override
+    public double getCurrentLimit(@NotNull ElectricNode otherNode) {
+        return 100;
+    }
+
+    @Override
     public void tick() {
-        Particle.DUST.builder()
-                .color(Color.fromARGB(getElectricNode().getNetwork().hashCode()))
-                .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .receivers(32, true)
-                .spawn();
+        ElectricNetwork network = getElectricNode().getNetwork();
+        for (ElectricNode node : network.getNodes()) {
+            Particle.DUST.builder()
+                    .color(Color.fromARGB(network.hashCode()))
+                    .location(node.getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
+                    .receivers(32, true)
+                    .spawn();
+        }
     }
 
     private ElectricNode getElectricNode() {
@@ -123,7 +134,7 @@ public final class ElectricityPylon extends RebarBlock implements
             ElectricityPylon connectingBlock = BlockStorage.getAsOrThrow(ElectricityPylon.class, connecting);
             ElectricNode connectingNode = connectingBlock.getElectricNodes().getFirst();
             ElectricNode clickedNode = electricBlock.getElectricNodes().getFirst();
-            if (!clickedNode.getConnections().isEmpty() && clickedNode.getType() != ElectricNode.Type.CONNECTOR) {
+            if (!clickedNode.getConnections().isEmpty() && !clickedNode.isConnectedTo(connectingNode) && clickedNode.getType() != ElectricNode.Type.CONNECTOR) {
                 player.sendActionBar(Component.translatable("pylon.message.electricity_pylon.already_connected"));
                 return;
             }

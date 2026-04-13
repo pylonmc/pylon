@@ -1,5 +1,16 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
@@ -10,16 +21,7 @@ import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.MetricPrefix;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class CreativePowerSource extends RebarBlock implements
         RebarElectricBlock.Producer,
@@ -58,6 +60,11 @@ public final class CreativePowerSource extends RebarBlock implements
     @Override
     public double getVoltage() {
         return voltage;
+    }
+
+    @Override
+    public double getPower() {
+        return power;
     }
 
     @Override

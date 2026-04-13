@@ -1,5 +1,15 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
+import net.kyori.adventure.text.Component;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
 import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -9,12 +19,6 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import it.unimi.dsi.fastutil.doubles.DoubleDoublePair;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class ElectricGrindstone extends AbstractGrindstone implements
         RebarElectricBlock.Consumer {
@@ -39,9 +43,9 @@ public class ElectricGrindstone extends AbstractGrindstone implements
         }
     }
 
-    public final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-    public final double voltageMin = getSettings().getOrThrow("voltage-range.min", ConfigAdapter.DOUBLE);
-    public final double voltageMax = getSettings().getOrThrow("voltage-range.max", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double voltageMin = getSettings().getOrThrow("voltage-range.min", ConfigAdapter.DOUBLE);
+    private final double voltageMax = getSettings().getOrThrow("voltage-range.max", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -61,7 +65,12 @@ public class ElectricGrindstone extends AbstractGrindstone implements
     }
 
     @Override
-    public void tick() {
+    public double getRequiredPower() {
+        return powerUsage;
+    }
 
+    @Override
+    public void tick() {
+        Bukkit.broadcast(Component.text(isPowered() ? "This better be 100% free-range electricity" : "WHERES MAH POWER"));
     }
 }
