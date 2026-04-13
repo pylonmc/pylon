@@ -36,7 +36,7 @@ pylon:tin_sheet:
 pylon:tin_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:tin: 108
+    pylon:tin: 72
   result: pylon:fluid_pipe_tin
   priority: -1
   
@@ -71,7 +71,7 @@ pylon:copper_sheet:
 pylon:copper_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:copper: 108
+    pylon:copper: 72
   result: pylon:fluid_pipe_copper
   priority: -1
   
@@ -106,7 +106,7 @@ pylon:iron_sheet:
 pylon:iron_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:iron: 108
+    pylon:iron: 72
   result: pylon:fluid_pipe_iron
   priority: -1
   
@@ -169,7 +169,7 @@ pylon:steel_sheet:
 pylon:steel_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:steel: 108
+    pylon:steel: 72
   result: pylon:fluid_pipe_steel
   priority: -1
   
@@ -204,7 +204,7 @@ pylon:palladium_sheet:
 pylon:palladium_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:palladium: 108
+    pylon:palladium: 72
   result: pylon:fluid_pipe_palladium
   priority: -1
   
@@ -239,6 +239,6 @@ pylon:bronze_sheet:
 pylon:bronze_pipe:
   cast: pylon:cast_pipe
   input:
-    pylon:bronze: 108
+    pylon:bronze: 72
   result: pylon:fluid_pipe_bronze
   priority: -1
