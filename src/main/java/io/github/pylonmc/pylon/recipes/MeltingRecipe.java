@@ -1,6 +1,17 @@
 package io.github.pylonmc.pylon.recipes;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import net.kyori.adventure.text.Component;
+
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import io.github.pylonmc.pylon.PylonItems;
+import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
@@ -11,15 +22,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record MeltingRecipe(
         @NotNull NamespacedKey key,
@@ -71,7 +74,7 @@ public record MeltingRecipe(
                 .addIngredient('t', ItemStackBuilder.of(Material.BLAZE_POWDER)
                         .name(Component.translatable(
                                 "pylon.guide.recipe.melting",
-                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(SmelteryMeltingPoint.getMeltingPoint(result)))
+                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(result.getTag(MeltingPoint.class).temperature()))
                         ))
                 )
                 .addIngredient('o', new FluidButton(resultAmount, result))

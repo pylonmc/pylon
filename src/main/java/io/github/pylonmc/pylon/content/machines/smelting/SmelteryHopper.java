@@ -1,16 +1,5 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import io.github.pylonmc.pylon.recipes.MeltingRecipe;
-import io.github.pylonmc.pylon.recipes.SmelteryMeltingPoint;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVanillaContainerBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventPriority;
@@ -20,6 +9,18 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.recipes.MeltingRecipe;
+import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
+import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
+import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.base.RebarVanillaContainerBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 
 public final class SmelteryHopper extends SmelteryComponent implements
         RebarTickingBlock,
@@ -84,7 +85,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
             }
             if (recipe == null) continue;
             double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
-            double temperature = SmelteryMeltingPoint.getMeltingPoint(recipe.result());
+            double temperature = recipe.result().getTag(MeltingPoint.class).temperature();
             if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();

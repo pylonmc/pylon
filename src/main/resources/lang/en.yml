@@ -2437,8 +2437,8 @@ item:
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
 fluid:
-  castable:
-    display-text: "<arrow> <gray>Casts into <white>%result%"
+  tag:
+    melting-point: "Melting point: %temperature%"
   bronze: "<#8d6f64>Liquid Bronze"
   copper: "<#b5591b>Liquid Copper"
   gold: "<gold>Liquid Gold"
