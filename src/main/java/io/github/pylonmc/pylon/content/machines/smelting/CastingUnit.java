@@ -139,7 +139,7 @@ public final class CastingUnit extends RebarBlock implements
                                     )
                             ),
                             RebarArgument.of("queued-casts", queuedCasts),
-                            RebarArgument.of("auto-mold", Component.translatable(autoCast ? "pylon.gui.status.on" : "pylon.gui.status.off"))
+                            RebarArgument.of("auto-cast", Component.translatable(autoCast ? "pylon.gui.status.on" : "pylon.gui.status.off"))
                     ));
         }
 
