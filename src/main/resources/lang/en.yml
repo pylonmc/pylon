@@ -2436,6 +2436,11 @@ item:
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
+  forming_table:
+    name: "Forming Table"
+    lore: |-
+      <arrow> Used to create casts for casting liquid metals in a <lang:pylon.item.casting_unit.name/>
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"

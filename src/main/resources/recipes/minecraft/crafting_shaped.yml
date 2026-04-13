@@ -123,39 +123,6 @@ pylon:gypsum_block_from_gypsum:
   result: pylon:gypsum_block
   category: building
 
-pylon:ingot_cast_from_nugget_casts:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:cast_nugget
-  result:
-    pylon:cast_ingot: 4
-  category: equipment
-
-pylon:block_cast_from_ingot_casts:
-  pattern:
-    - "III"
-    - "III"
-    - "III"
-  key:
-    I: pylon:cast_ingot
-  result:
-    pylon:cast_block: 4
-  category: equipment
-
-pylon:pipe_cast_from_sheet_casts:
-  pattern:
-    - "SSS"
-    - "   "
-    - "SSS"
-  key:
-    S: pylon:cast_sheet
-  result:
-    pylon:cast_sheet: 4
-  category: equipment
-
 pylon:bronze_sword:
   pattern:
     - " I "
@@ -2696,7 +2663,6 @@ pylon:palladium_condenser:
   result:
     pylon:palladium_condenser: 1
   category: building
-
 
 pylon:casting_unit:
   pattern:
