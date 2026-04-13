@@ -2262,39 +2262,39 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(FORMING_TABLE);
     }
 
-    public static final ItemStack NUGGET_CAST = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NUGGET_CAST)
+    public static final ItemStack NUGGET_MOLD = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NUGGET_MOLD)
             .build();
     static {
-        RebarItem.register(RebarItem.class, NUGGET_CAST, PylonKeys.NUGGET_CAST);
-        PylonPages.SMELTING.addItem(NUGGET_CAST);
+        RebarItem.register(RebarItem.class, NUGGET_MOLD, PylonKeys.NUGGET_MOLD);
+        PylonPages.SMELTING.addItem(NUGGET_MOLD);
     }
 
-    public static final ItemStack INGOT_CAST = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.INGOT_CAST)
+    public static final ItemStack INGOT_MOLD = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.INGOT_MOLD)
             .build();
     static {
-        RebarItem.register(RebarItem.class, INGOT_CAST, PylonKeys.INGOT_CAST);
-        PylonPages.SMELTING.addItem(INGOT_CAST);
+        RebarItem.register(RebarItem.class, INGOT_MOLD, PylonKeys.INGOT_MOLD);
+        PylonPages.SMELTING.addItem(INGOT_MOLD);
     }
 
-    public static final ItemStack BLOCK_CAST = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BLOCK_CAST)
+    public static final ItemStack BLOCK_MOLD = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BLOCK_MOLD)
             .build();
     static {
-        RebarItem.register(RebarItem.class, BLOCK_CAST, PylonKeys.BLOCK_CAST);
-        PylonPages.SMELTING.addItem(BLOCK_CAST);
+        RebarItem.register(RebarItem.class, BLOCK_MOLD, PylonKeys.BLOCK_MOLD);
+        PylonPages.SMELTING.addItem(BLOCK_MOLD);
     }
 
-    public static final ItemStack SHEET_CAST = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SHEET_CAST)
+    public static final ItemStack SHEET_MOLD = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SHEET_MOLD)
             .build();
     static {
-        RebarItem.register(RebarItem.class, SHEET_CAST, PylonKeys.SHEET_CAST);
-        PylonPages.SMELTING.addItem(SHEET_CAST);
+        RebarItem.register(RebarItem.class, SHEET_MOLD, PylonKeys.SHEET_MOLD);
+        PylonPages.SMELTING.addItem(SHEET_MOLD);
     }
 
-    public static final ItemStack PIPE_CAST = ItemStackBuilder.rebar(Material.BROWN_CONCRETE, PylonKeys.PIPE_CAST)
+    public static final ItemStack PIPE_MOLD = ItemStackBuilder.rebar(Material.BROWN_CONCRETE, PylonKeys.PIPE_MOLD)
             .build();
     static {
-        RebarItem.register(RebarItem.class, PIPE_CAST, PylonKeys.PIPE_CAST);
-        PylonPages.SMELTING.addItem(PIPE_CAST);
+        RebarItem.register(RebarItem.class, PIPE_MOLD, PylonKeys.PIPE_MOLD);
+        PylonPages.SMELTING.addItem(PIPE_MOLD);
     }
 
 

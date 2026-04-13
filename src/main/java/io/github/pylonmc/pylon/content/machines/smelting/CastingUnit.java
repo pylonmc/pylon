@@ -1,24 +1,5 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
-import net.kyori.adventure.text.Component;
-
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-
-import java.util.List;
-import java.util.Map;
-
 import io.github.pylonmc.pylon.recipes.CastingRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -36,12 +17,28 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.List;
+import java.util.Map;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.OperationCategory;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class CastingUnit extends RebarBlock implements
         RebarFluidBlock,
@@ -100,7 +97,7 @@ public final class CastingUnit extends RebarBlock implements
         castInv.addPreUpdateHandler(event -> {
             if (event.getNewItem() == null) return;
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-                if (recipe.cast().isSimilar(event.getNewItem())) {
+                if (recipe.mold().isSimilar(event.getNewItem())) {
                     return;
                 }
             }
@@ -120,7 +117,7 @@ public final class CastingUnit extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull String, @NotNull VirtualInventory> getVirtualInventories() {
         return Map.of(
-                "cast", castInv,
+                "mold", castInv,
                 "output", outputInv
         );
     }
@@ -142,7 +139,7 @@ public final class CastingUnit extends RebarBlock implements
                                     )
                             ),
                             RebarArgument.of("queued-casts", queuedCasts),
-                            RebarArgument.of("auto-cast", Component.translatable(autoCast ? "pylon.gui.status.on" : "pylon.gui.status.off"))
+                            RebarArgument.of("auto-mold", Component.translatable(autoCast ? "pylon.gui.status.on" : "pylon.gui.status.off"))
                     ));
         }
 
@@ -166,8 +163,8 @@ public final class CastingUnit extends RebarBlock implements
 
     private final CastingControlItem castingControlItem = new CastingControlItem();
 
-    private static final ItemStack CAST_BORDER = ItemStackBuilder.gui(Material.GREEN_STAINED_GLASS_PANE, pylonKey("cast"))
-            .name(Component.translatable("pylon.gui.cast-border"))
+    private static final ItemStack CAST_BORDER = ItemStackBuilder.gui(Material.GREEN_STAINED_GLASS_PANE, pylonKey("mold"))
+            .name(Component.translatable("pylon.gui.mold-border"))
             .build();
 
     @Override
@@ -198,7 +195,7 @@ public final class CastingUnit extends RebarBlock implements
         if (castItem == null) return 0;
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.cast())) {
+            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.mold())) {
                 if (outputInv.simulateSingleAdd(recipe.result()) > 0) return 0;
                 return recipe.input().amountMillibuckets() - fluidAmount;
             }
@@ -215,7 +212,7 @@ public final class CastingUnit extends RebarBlock implements
         if (castItem == null) throw new AssertionError("Should not happen");
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.cast())) {
+            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.mold())) {
                 fluidType = fluid;
                 fluidAmount += amount;
                 if (Math.abs(fluidAmount - recipe.input().amountMillibuckets()) < 1e-6) {

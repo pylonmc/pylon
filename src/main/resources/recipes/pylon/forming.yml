@@ -1,19 +1,19 @@
-pylon:nugget_cast:
+pylon:nugget_mold:
   input: minecraft:clay_ball
-  result: pylon:cast_nugget
+  result: pylon:mold_nugget
 
-pylon:ingot_cast:
+pylon:ingot_mold:
   input: minecraft:clay_ball
-  result: pylon:cast_ingot
+  result: pylon:mold_ingot
 
-pylon:block_cast:
+pylon:block_mold:
   input: minecraft:clay_ball
-  result: pylon:cast_block
+  result: pylon:mold_block
 
-pylon:sheet_cast:
+pylon:sheet_mold:
   input: minecraft:clay_ball
-  result: pylon:cast_sheet
+  result: pylon:mold_sheet
 
-pylon:pipe_cast:
+pylon:pipe_mold:
   input: minecraft:clay_ball
-  result: pylon:cast_pipe
+  result: pylon:mold_pipe

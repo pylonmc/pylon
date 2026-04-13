@@ -244,11 +244,11 @@ public class PylonKeys {
     public static final NamespacedKey CASTING_UNIT = pylonKey("casting_unit");
     public static final NamespacedKey FORMING_TABLE = pylonKey("forming_table");
 
-    public static final NamespacedKey NUGGET_CAST = pylonKey("cast_nugget");
-    public static final NamespacedKey INGOT_CAST = pylonKey("cast_ingot");
-    public static final NamespacedKey BLOCK_CAST = pylonKey("cast_block");
-    public static final NamespacedKey SHEET_CAST = pylonKey("cast_sheet");
-    public static final NamespacedKey PIPE_CAST = pylonKey("cast_pipe");
+    public static final NamespacedKey NUGGET_MOLD = pylonKey("mold_nugget");
+    public static final NamespacedKey INGOT_MOLD = pylonKey("mold_ingot");
+    public static final NamespacedKey BLOCK_MOLD = pylonKey("mold_block");
+    public static final NamespacedKey SHEET_MOLD = pylonKey("mold_sheet");
+    public static final NamespacedKey PIPE_MOLD = pylonKey("mold_pipe");
 
     public static final NamespacedKey PIT_KILN = pylonKey("pit_kiln");
 

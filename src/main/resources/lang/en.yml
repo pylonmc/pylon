@@ -2406,32 +2406,32 @@ item:
     lore: |-
       <arrow> Used to cast metals into molds using casts
 
-  cast_nugget:
-    name: "Nugget Cast"
+  mold_nugget:
+    name: "Nugget Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a nugget
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
 
-  cast_ingot:
-    name: "Ingot Cast"
+  mold_ingot:
+    name: "Ingot Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
-  cast_block:
-    name: "Block Cast"
+  mold_block:
+    name: "Block Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>1296</unit>
 
-  cast_sheet:
-    name: "Sheet Cast"
+  mold_sheet:
+    name: "Sheet Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
-  cast_pipe:
-    name: "Pipe Cast"
+  mold_pipe:
+    name: "Pipe Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
       <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
@@ -2439,7 +2439,7 @@ item:
   forming_table:
     name: "Forming Table"
     lore: |-
-      <arrow> Used to create casts for casting liquid metals in a <lang:pylon.item.casting_unit.name/>
+      <arrow> Used for forming items out of clay
 
 fluid:
   tag:
@@ -2881,7 +2881,7 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
-  cast-border: "Cast Item"
+  cast-border: "Mold Item"
   casting-control:
     name: "Casting Control"
     lore: |-

@@ -76,8 +76,8 @@ pylon:palladium_sheet:
   chance: 0.25
 
 pylon:sheet_cast:
-  input: pylon:cast_ingot
-  result: pylon:cast_sheet
+  input: pylon:mold_ingot
+  result: pylon:mold_sheet
   mining-level: stone
   chance: 1
 
