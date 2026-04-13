@@ -452,6 +452,15 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
+    public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
+    public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
+    public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");
+    public static final NamespacedKey TIN_SILO = pylonKey("tin_silo");
+    public static final NamespacedKey IRON_SILO = pylonKey("iron_silo");
+    public static final NamespacedKey BRONZE_SILO = pylonKey("bronze_silo");
+    public static final NamespacedKey STEEL_SILO = pylonKey("steel_silo");
+    public static final NamespacedKey PALLADIUM_SILO = pylonKey("palladium_silo");
+
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
 
     public static final NamespacedKey ELECTRICITY_PYLON = pylonKey("electricity_pylon");

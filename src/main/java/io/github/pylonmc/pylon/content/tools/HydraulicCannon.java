@@ -109,8 +109,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
         player.setCooldown(getStack(), cooldownTicks);
         Vector direction = player.getEyeLocation().getDirection();
         Location source = player.getEyeLocation()
-                .subtract(0, 0.5, 0)
-                .add(direction.clone().multiply(1.5));
+                .subtract(0, 0.5, 0);
         EntityStorage.add(new DisplayProjectile(
                 player,
                 PylonKeys.TIN_PROJECTILE,

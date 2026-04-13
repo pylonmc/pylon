@@ -97,7 +97,7 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
         }
 
         Optional<Damageable> maybeHitEntity = nearbyEntities.stream()
-                .filter(Damageable.class::isInstance)
+                .filter(e -> Damageable.class.isInstance(e) && !e.getUniqueId().equals(player.getUniqueId()))
                 .map(Damageable.class::cast)
                 .findFirst();
         maybeHitEntity.ifPresent(hitEntity -> {
