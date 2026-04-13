@@ -2404,7 +2404,7 @@ item:
   casting_unit:
     name: "Casting Unit"
     lore: |-
-      <arrow> Used to cast metals into molds using casts
+      <arrow> Used to cast metals into molds
 
   mold_nugget:
     name: "Nugget Mold"
