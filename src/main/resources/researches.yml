@@ -149,7 +149,6 @@ smelting_3:
     - pylon:smeltery_controller
     - pylon:smeltery_burner
     - pylon:diesel_smeltery_heater
-    - pylon:smeltery_caster
     - pylon:smeltery_hopper
     - pylon:smeltery_input_hatch
     - pylon:smeltery_output_hatch
