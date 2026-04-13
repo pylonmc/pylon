@@ -2709,3 +2709,98 @@ pylon:casting_unit:
     S: pylon:bronze_sheet
   result: pylon:casting_unit
   category: building
+pylon:silo_converter:
+  pattern:
+    - "SSS"
+    - "W W"
+    - "WWW"
+  key:
+    S: "#minecraft:wooden_slabs"
+    W: "#minecraft:planks"
+  result:
+    pylon:silo_converter: 1
+  category: building
+
+pylon:wooden_silo:
+  pattern:
+    - " P "
+    - "PBP"
+    - " P "
+  key:
+    B: minecraft:barrel
+    P: "#minecraft:planks"
+  result:
+    pylon:wooden_silo: 4
+  category: building
+
+pylon:tin_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:tin_ingot
+  result:
+    pylon:tin_silo: 4
+  category: building
+
+pylon:copper_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:copper_ingot
+  result:
+    pylon:copper_silo: 4
+  category: building
+
+pylon:iron_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:iron_ingot
+  result:
+    pylon:iron_silo: 4
+  category: building
+
+pylon:bronze_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:bronze_ingot
+  result:
+    pylon:bronze_silo: 4
+  category: building
+
+pylon:steel_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:steel_ingot
+  result:
+    pylon:steel_silo: 4
+  category: building
+
+pylon:palladium_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:palladium_ingot
+  result:
+    pylon:palladium_silo: 4
+  category: building
