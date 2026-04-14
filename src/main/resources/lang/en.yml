@@ -2414,6 +2414,11 @@ item:
     lore: |-
       TODO
 
+  multimeter:
+    name: "Multimeter"
+    lore: |-
+      <arrow> Measures the current of a wire
+
   creative_power_source:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
