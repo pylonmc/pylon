@@ -106,24 +106,6 @@ pylon:abyssal_catalyst:
     pylon:abyssal_catalyst: 1
   requires-enriched-fire: true
 
-pylon:fluid_voider_2:
-  input-items:
-    - pylon:fluid_voider_1
-  input-fluid:
-    pylon:obscyra: 500
-  output:
-    pylon:fluid_voider_2: 1
-  requires-enriched-fire: true
-
-pylon:fluid_voider_3:
-  input-items:
-    - pylon:fluid_voider_2
-  input-fluid:
-    pylon:obscyra: 500
-  output:
-    pylon:fluid_voider_3: 1
-  requires-enriched-fire: true
-
 pylon:research_pack_2:
   input-items:
     - pylon:hydraulic_motor

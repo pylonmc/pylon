@@ -258,7 +258,6 @@ fluid_machines_3:
   unlocks:
     - pylon:fluid_meter
     - pylon:fluid_accumulator
-    - pylon:fluid_voider_3
 
 bronze_equipment:
   item: pylon:bronze_pickaxe

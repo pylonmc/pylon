@@ -2588,14 +2588,6 @@ public final class PylonItems {
         PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_2);
     }
 
-    public static final ItemStack FLUID_VOIDER_3 = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.FLUID_VOIDER_3)
-            .set(DataComponentTypes.ITEM_MODEL, Material.BLACK_TERRACOTTA.getKey())
-            .build();
-    static {
-        RebarItem.register(FluidVoider.Item.class, FLUID_VOIDER_3, PylonKeys.FLUID_VOIDER_3);
-        PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_3);
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="Machines - Hydraulic Machines" defaultstate=collapsed>

@@ -435,12 +435,6 @@ item:
       <arrow> Destroys all fluids piped into it
       <arrow> <attr>Void rate:</attr> %void_rate%
 
-  fluid_voider_3:
-    name: "<white>Fluid Voider <light_purple>III"
-    lore: |-
-      <arrow> Destroys all fluids piped into it
-      <arrow> <attr>Void rate:</attr> %void_rate%
-
   creative_fluid_voider:
     name: "<#ff00ff>Creative Fluid Voider"
     lore: |-

@@ -218,7 +218,6 @@ public class PylonKeys {
 
     public static final NamespacedKey FLUID_VOIDER_1 = pylonKey("fluid_voider_1");
     public static final NamespacedKey FLUID_VOIDER_2 = pylonKey("fluid_voider_2");
-    public static final NamespacedKey FLUID_VOIDER_3 = pylonKey("fluid_voider_3");
 
     public static final NamespacedKey CREATIVE_FLUID_VOIDER = pylonKey("creative_fluid_voider");
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");

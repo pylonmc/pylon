@@ -83,7 +83,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.LAVA_DRAINER, Material.DISPENSER, FluidDrainer.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_1, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_2, Material.STRUCTURE_VOID, FluidVoider.class);
-        RebarBlock.register(PylonKeys.FLUID_VOIDER_3, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_VOIDER, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_SOURCE, Material.PINK_CONCRETE, CreativeFluidSource.class);
         RebarBlock.register(PylonKeys.REFRACTORY_MIX, Material.SMOOTH_RED_SANDSTONE, RefractoryMix.class);

@@ -1022,13 +1022,25 @@ pylon:lava_drainer:
 pylon:fluid_voider_1:
   pattern:
     - " P "
-    - "IAI"
+    - "SPS"
     - " I "
   key:
     I: pylon:igneous_composite
     P: pylon:fluid_pipe_tin
-    A: pylon:abyssal_catalyst
+    S: pylon:shimmer_dust_1
   result: pylon:fluid_voider_1
+  category: building
+
+pylon:fluid_voider_2:
+  pattern:
+    - " P "
+    - "SPS"
+    - " A "
+  key:
+    A: pylon:abyssal_catalyst
+    P: pylon:fluid_pipe_tin
+    S: pylon:shimmer_dust_2
+  result: pylon:fluid_voider_2
   category: building
 
 pylon:loupe:
