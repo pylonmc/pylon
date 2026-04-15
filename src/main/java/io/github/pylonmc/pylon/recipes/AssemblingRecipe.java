@@ -178,7 +178,7 @@ public record AssemblingRecipe(
                 .addIngredient('#', GuiItems.background())
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', PylonItems.ASSEMBLY_TABLE)
+                .addIngredient('t', new ItemButton(PylonItems.ASSEMBLY_TABLE))
                 .addIngredient('x', PagedGui.itemsBuilder()
                         .setStructure("< x x x x x x x >")
                         .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
