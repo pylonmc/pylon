@@ -126,7 +126,9 @@ public final class MixingPot extends RebarBlock implements
             return;
         }
 
-        tryDoRecipe();
+        if (priority == EventPriority.MONITOR) {
+            tryDoRecipe();
+        }
     }
 
     public boolean tryDoRecipe() {
@@ -159,6 +161,13 @@ public final class MixingPot extends RebarBlock implements
             doRecipe(recipe, items);
             return true;
         }
+
+        new ParticleBuilder(Particle.SMOKE)
+                .count(50)
+                .extra(0)
+                .offset(0.1, 0, 0.1)
+                .location(getBlock().getLocation().toCenterLocation().add(0, 0.4, 0))
+                .spawn();
 
         return false;
     }
