@@ -115,14 +115,17 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_PIPE_BENDER, Material.WAXED_CHISELED_COPPER, HydraulicPipeBender.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_TABLE_SAW, Material.WAXED_CUT_COPPER, HydraulicTableSaw.class);
         RebarBlock.register(PylonKeys.SOLAR_LENS, Material.GLASS_PANE, RebarBlock.class);
-        RebarBlock.register(PylonKeys.PURIFICATION_TOWER_GLASS, Material.LIGHT_GRAY_STAINED_GLASS, RebarBlock.class);
-        RebarBlock.register(PylonKeys.PURIFICATION_TOWER_CAP, Material.QUARTZ_SLAB, RebarBlock.class);
-        RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_1, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);
-        RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_2, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);
-        RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_3, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);
-        RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_4, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);
-        RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_5, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);
-        RebarBlock.register(PylonKeys.COAL_FIRED_PURIFICATION_TOWER, Material.BLAST_FURNACE, CoalFiredPurificationTower.class);
+        RebarBlock.register(PylonKeys.MANUAL_HYDRAULIC_PURIFIER, Material.DECORATED_POT, ManualHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.COPPER_FRAMED_GLASS, Material.ORANGE_STAINED_GLASS, RebarBlock.class);
+        RebarBlock.register(PylonKeys.QUARTZ_CAP, Material.QUARTZ_SLAB, RebarBlock.class);
+        RebarBlock.register(PylonKeys.SOLAR_HYDRAULIC_PURIFIER_1, Material.WAXED_COPPER_BLOCK, SolarHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.SOLAR_HYDRAULIC_PURIFIER_2, Material.WAXED_COPPER_BLOCK, SolarHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.SOLAR_HYDRAULIC_PURIFIER_3, Material.WAXED_COPPER_BLOCK, SolarHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.SOLAR_HYDRAULIC_PURIFIER_4, Material.WAXED_COPPER_BLOCK, SolarHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.SOLAR_HYDRAULIC_PURIFIER_5, Material.WAXED_COPPER_BLOCK, SolarHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.BURNER_HYDRAULIC_PURIFIER, Material.BLAST_FURNACE, BurnerHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.CONVECTION_HYDRAULIC_PURIFIER, Material.SMOOTH_STONE, ConvectionHydraulicPurifier.class);
+        RebarBlock.register(PylonKeys.LISELETTE_HYDRAULIC_PURIFIER, Material.OCHRE_FROGLIGHT, LiseletteHydraulicPurifier.class);
         RebarBlock.register(PylonKeys.MANUAL_CORE_DRILL_LEVER, Material.LEVER, ManualCoreDrillLever.class);
         RebarBlock.register(PylonKeys.MANUAL_CORE_DRILL, Material.CHISELED_STONE_BRICKS, ManualCoreDrill.class);
         RebarBlock.register(PylonKeys.IMPROVED_MANUAL_CORE_DRILL, Material.WAXED_OXIDIZED_COPPER, ImprovedManualCoreDrill.class);
@@ -187,5 +190,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.STEEL_SILO, Material.GRAY_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
+        RebarBlock.register(PylonKeys.LISELETTE_COLLECTOR, Material.STRUCTURE_VOID, LiseletteCollector.class);
     }
 }

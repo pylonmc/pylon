@@ -1,7 +1,7 @@
 pylon:obscyra:
   input-items:
-    - pylon:obsidian_chip: 5
-    - minecraft:blaze_powder: 2
+    - pylon:obsidian_chip: 3
+    - minecraft:blaze_powder: 1
   input-fluid:
     pylon:water: 1000
   output:
@@ -169,9 +169,9 @@ pylon:explosive_target_super_fiery:
 
 pylon:solar_lens:
   input-items:
-    - minecraft:glass_pane: 4
+    - minecraft:glass_pane: 2
   input-fluid:
-    pylon:reflector_fluid: 250
+    pylon:reflector_fluid: 125
   output:
     pylon:solar_lens: 1
 

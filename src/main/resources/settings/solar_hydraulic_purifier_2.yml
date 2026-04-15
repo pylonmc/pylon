@@ -1,5 +1,5 @@
-purification-speed: 60 # mb/s
-purification-efficiency: 0.92
+purification-speed: 120 # mb/s
+purification-efficiency: 0.95
 buffer: 240 # mb
 rain-speed-fraction: 0.6
 lens-layers: 2

@@ -1,0 +1,4 @@
+hydraulic-fluid-per-cycle: 160
+cycle-duration: 40 # ticks
+purification-efficiency: 0.95
+buffer: 320 # mb

@@ -1060,21 +1060,26 @@ item:
 
   solar_lens:
     name: "Solar Lens"
-    lore: |-
-      <star> Solar Purification Tower multiblock component
 
-  purification_tower_glass:
-    name: "Purification Tower Glass"
-    lore: |-
-      <star> Purification Tower multiblock component
+  copper_framed_glass:
+    name: "Copper framed glass"
 
-  purification_tower_cap:
-    name: "Purification Tower Cap"
-    lore: |-
-      <star> Purification Tower multiblock component
+  quartz_cap:
+    name: "Quartz Cap"
 
-  solar_purification_tower_1:
-    name: "Solar Purification Tower I"
+  manual_hydraulic_purifier:
+    name: "Manual Hydraulic Purifier"
+    lore: |-
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> <insn>Right click</insn> to operate
+      <arrow> <attr>Hydraulic fluid purified per cycle:</attr> %hydraulic-fluid-per-cycle%
+      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
+      <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
+      <arrow> <attr>Buffer:</attr> %buffer%
+    waila: "Manual Hydrualic Purifier | %input-bar% | %output-bar%"
+
+  solar_hydraulic_purifier_1:
+    name: "Solar Hydraulic Purifier I"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1085,14 +1090,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_1.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_1.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 3x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 16x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower I | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier I | %input-bar% | %output-bar%"
 
-  solar_purification_tower_2:
-    name: "Solar Purification Tower II"
+  solar_hydraulic_purifier_2:
+    name: "Solar Hydraulic Purifier II"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1103,14 +1108,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_2.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_2.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 48x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower II | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier II | %input-bar% | %output-bar%"
 
-  solar_purification_tower_3:
-    name: "Solar Purification Tower III"
+  solar_hydraulic_purifier_3:
+    name: "Solar Hydraulic Purifier III"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1121,14 +1126,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_3.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_3.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 5x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 96x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower III | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier III | %input-bar% | %output-bar%"
 
-  solar_purification_tower_4:
-    name: "Solar Purification Tower IV"
+  solar_hydraulic_purifier_4:
+    name: "Solar Hydraulic Purifier IV"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1139,14 +1144,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_4.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_4.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 160x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower IV | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier IV | %input-bar% | %output-bar%"
 
-  solar_purification_tower_5:
-    name: "Solar Purification Tower V"
+  solar_hydraulic_purifier_5:
+    name: "Solar Hydraulic Purifier V"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1157,30 +1162,77 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_5.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_5.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 240x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower V | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier V | %input-bar% | %output-bar%"
 
-  coal_fired_purification_tower:
-    name: "Coal-fired Purification Tower"
+  burner_hydraulic_purifier:
+    name: "Burner Hydraulic Purifier"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
-      <arrow> Burns coal or charcoal
+      <arrow> Burns fuel
       <arrow> <attr>Purification speed:</attr> %purification_speed%
       <arrow> <attr>Purification efficiency:</attr> %purification_efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.coal_fired_purification_tower.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 5x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
-    waila: "Coal-fired Purification Tower | %input-bar% | %output-bar%"
-    progress_item:
-      running: "<green>Running"
-      idle: "<yellow>Idle"
+      <diamond> 1x <yellow><lang:pylon.item.burner_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
+      <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Burner Hydraulic Purifier | %fuel-bar%"
+
+  convection_hydraulic_purifier:
+    name: "Convection Hydraulic Purifier"
+    lore: |-
+      <star> Multiblock
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> Uses the temperature difference between lava and water (but does not consume either)
+      <arrow> The more lava and water is provided, the higher the efficiency
+      <arrow> <attr>Minimum lava/water amount:</attr> %min-fluid-amount%
+      <arrow> <attr>Maximum lava/water amount:</attr> %max-fluid-amount%
+      <arrow> <attr>Base purification efficiency:</attr> %base-purification-efficiency%
+      <arrow> <attr>Maximum purification efficiency:</attr> %max-purification-efficiency%
+      <arrow> <attr>Purification speed:</attr> %purification-speed%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.convection_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_tank.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Convection Hydraulic Purifier | %efficiency%"
+
+  liselette_hydraulic_purifier:
+    name: "Liselette Hydraulic Purifier"
+    lore: |-
+      <star> Multiblock
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> Works faster the deeper underground it is
+      <arrow> Seems to produce more hydraulic fluid than it consumes...
+      <arrow> <attr>Maximum height:</attr> %max-height%
+      <arrow> <attr>Maximum purification speed:</attr> %max-purification-speed%
+      <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.liselette_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
+      <diamond> 5x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.liselette_collector.name/></yellow>
+
+  liselette_collector:
+    name: "<white>Liselette Collector"
 
   fireproof_rune:
     name: "Fireproof Rune"
@@ -2507,9 +2559,10 @@ research:
   runes: "<#ad2e2e>Runes"
   hydraulic_machines: "<#446be2>Hydraulic Machines"
   hydraulic_combat: "<#5297ff>Hydraulic combat"
-  hydraulic_purification_1: "<#2e7df4>Hydraulic purification I"
-  hydraulic_purification_2: "<#2e7df4>Hydraulic purification II"
-  hydraulic_purification_3: "<#2e7df4>Hydraulic purification III"
+  manual_hydraulic_purification: "<#2e7df4>Manual hydraulic purification"
+  solar_hydraulic_purification: "<#2e7df4>Solar hydraulic purification"
+  thermal_hydraulic_purification: "<#2e7df4>Thermal hydraulic purification"
+  liselette_hydraulic_purification: "<#2e7df4>Liselette hydraulic purification"
   magnetism: "<#144cbc>Magnetism"
   fluid_voiding_1: "<#2a3360>Fluid voiding I"
   fluid_voiding_2: "<#2a3360>Fluid voiding II"

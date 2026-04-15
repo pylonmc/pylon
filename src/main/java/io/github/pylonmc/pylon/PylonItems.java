@@ -917,6 +917,35 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(SMOKESTACK_CAP);
     }
 
+    public static final ItemStack COPPER_FRAMED_GLASS = ItemStackBuilder.rebar(Material.ORANGE_STAINED_GLASS, PylonKeys.COPPER_FRAMED_GLASS)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, COPPER_FRAMED_GLASS, PylonKeys.COPPER_FRAMED_GLASS);
+        PylonPages.COMPONENTS.addItem(COPPER_FRAMED_GLASS);
+    }
+
+    public static final ItemStack QUARTZ_CAP = ItemStackBuilder.rebar(Material.QUARTZ_SLAB, PylonKeys.QUARTZ_CAP)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, QUARTZ_CAP, PylonKeys.QUARTZ_CAP);
+        PylonPages.COMPONENTS.addItem(QUARTZ_CAP);
+    }
+
+    public static final ItemStack SOLAR_LENS = ItemStackBuilder.rebar(Material.GLASS_PANE, PylonKeys.SOLAR_LENS)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SOLAR_LENS, PylonKeys.SOLAR_LENS);
+        PylonPages.COMPONENTS.addItem(SOLAR_LENS);
+    }
+
+    public static final ItemStack LISELETTE_COLLECTOR = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.LISELETTE_COLLECTOR)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BLACK_CONCRETE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LISELETTE_COLLECTOR, PylonKeys.LISELETTE_COLLECTOR);
+        PylonPages.COMPONENTS.addItem(LISELETTE_COLLECTOR);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
@@ -2723,67 +2752,67 @@ public final class PylonItems {
 
     //<editor-fold desc="Machines - Hydraulic Purification" defaultstate="collapsed">
 
-    public static final ItemStack COAL_FIRED_PURIFICATION_TOWER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.COAL_FIRED_PURIFICATION_TOWER)
+    public static final ItemStack MANUAL_HYDRAULIC_PURIFIER = ItemStackBuilder.rebar(Material.DECORATED_POT, PylonKeys.MANUAL_HYDRAULIC_PURIFIER)
             .build();
     static {
-        RebarItem.register(CoalFiredPurificationTower.Item.class, COAL_FIRED_PURIFICATION_TOWER, PylonKeys.COAL_FIRED_PURIFICATION_TOWER);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(COAL_FIRED_PURIFICATION_TOWER);
+        RebarItem.register(ManualHydraulicPurifier.Item.class, MANUAL_HYDRAULIC_PURIFIER, PylonKeys.MANUAL_HYDRAULIC_PURIFIER);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(MANUAL_HYDRAULIC_PURIFIER);
     }
 
-    public static final ItemStack SOLAR_PURIFICATION_TOWER_1 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_PURIFICATION_TOWER_1)
+    public static final ItemStack SOLAR_HYDRAULIC_PURIFIER_1 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_1)
             .build();
     static {
-        RebarItem.register(SolarPurificationTower.Item.class, SOLAR_PURIFICATION_TOWER_1, PylonKeys.SOLAR_PURIFICATION_TOWER_1);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_PURIFICATION_TOWER_1);
+        RebarItem.register(SolarHydraulicPurifier.Item.class, SOLAR_HYDRAULIC_PURIFIER_1, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_1);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_HYDRAULIC_PURIFIER_1);
     }
 
-    public static final ItemStack SOLAR_PURIFICATION_TOWER_2 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_PURIFICATION_TOWER_2)
+    public static final ItemStack SOLAR_HYDRAULIC_PURIFIER_2 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_2)
             .build();
     static {
-        RebarItem.register(SolarPurificationTower.Item.class, SOLAR_PURIFICATION_TOWER_2, PylonKeys.SOLAR_PURIFICATION_TOWER_2);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_PURIFICATION_TOWER_2);
+        RebarItem.register(SolarHydraulicPurifier.Item.class, SOLAR_HYDRAULIC_PURIFIER_2, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_2);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_HYDRAULIC_PURIFIER_2);
     }
 
-    public static final ItemStack SOLAR_PURIFICATION_TOWER_3 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_PURIFICATION_TOWER_3)
+    public static final ItemStack SOLAR_HYDRAULIC_PURIFIER_3 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_3)
             .build();
     static {
-        RebarItem.register(SolarPurificationTower.Item.class, SOLAR_PURIFICATION_TOWER_3, PylonKeys.SOLAR_PURIFICATION_TOWER_3);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_PURIFICATION_TOWER_3);
+        RebarItem.register(SolarHydraulicPurifier.Item.class, SOLAR_HYDRAULIC_PURIFIER_3, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_3);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_HYDRAULIC_PURIFIER_3);
     }
 
-    public static final ItemStack SOLAR_PURIFICATION_TOWER_4 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_PURIFICATION_TOWER_4)
+    public static final ItemStack SOLAR_HYDRAULIC_PURIFIER_4 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_4)
             .build();
     static {
-        RebarItem.register(SolarPurificationTower.Item.class, SOLAR_PURIFICATION_TOWER_4, PylonKeys.SOLAR_PURIFICATION_TOWER_4);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_PURIFICATION_TOWER_4);
+        RebarItem.register(SolarHydraulicPurifier.Item.class, SOLAR_HYDRAULIC_PURIFIER_4, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_4);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_HYDRAULIC_PURIFIER_4);
     }
 
-    public static final ItemStack SOLAR_PURIFICATION_TOWER_5 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_PURIFICATION_TOWER_5)
+    public static final ItemStack SOLAR_HYDRAULIC_PURIFIER_5 = ItemStackBuilder.rebar(Material.WAXED_COPPER_BLOCK, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_5)
             .build();
     static {
-        RebarItem.register(SolarPurificationTower.Item.class, SOLAR_PURIFICATION_TOWER_5, PylonKeys.SOLAR_PURIFICATION_TOWER_5);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_PURIFICATION_TOWER_5);
+        RebarItem.register(SolarHydraulicPurifier.Item.class, SOLAR_HYDRAULIC_PURIFIER_5, PylonKeys.SOLAR_HYDRAULIC_PURIFIER_5);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_HYDRAULIC_PURIFIER_5);
     }
 
-    public static final ItemStack SOLAR_LENS = ItemStackBuilder.rebar(Material.GLASS_PANE, PylonKeys.SOLAR_LENS)
+    public static final ItemStack BURNER_HYDRAULIC_PURIFIER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BURNER_HYDRAULIC_PURIFIER)
             .build();
     static {
-        RebarItem.register(RebarItem.class, SOLAR_LENS, PylonKeys.SOLAR_LENS);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(SOLAR_LENS);
+        RebarItem.register(BurnerHydraulicPurifier.Item.class, BURNER_HYDRAULIC_PURIFIER, PylonKeys.BURNER_HYDRAULIC_PURIFIER);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(BURNER_HYDRAULIC_PURIFIER);
     }
 
-    public static final ItemStack PURIFICATION_TOWER_GLASS = ItemStackBuilder.rebar(Material.LIGHT_GRAY_STAINED_GLASS, PylonKeys.PURIFICATION_TOWER_GLASS)
+    public static final ItemStack CONVECTION_HYDRAULIC_PURIFIER = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.CONVECTION_HYDRAULIC_PURIFIER)
             .build();
     static {
-        RebarItem.register(RebarItem.class, PURIFICATION_TOWER_GLASS, PylonKeys.PURIFICATION_TOWER_GLASS);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(PURIFICATION_TOWER_GLASS);
+        RebarItem.register(ConvectionHydraulicPurifier.Item.class, CONVECTION_HYDRAULIC_PURIFIER, PylonKeys.CONVECTION_HYDRAULIC_PURIFIER);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(CONVECTION_HYDRAULIC_PURIFIER);
     }
 
-    public static final ItemStack PURIFICATION_TOWER_CAP = ItemStackBuilder.rebar(Material.QUARTZ_SLAB, PylonKeys.PURIFICATION_TOWER_CAP)
+    public static final ItemStack LISELETTE_HYDRAULIC_PURIFIER = ItemStackBuilder.rebar(Material.OCHRE_FROGLIGHT, PylonKeys.LISELETTE_HYDRAULIC_PURIFIER)
             .build();
     static {
-        RebarItem.register(RebarItem.class, PURIFICATION_TOWER_CAP, PylonKeys.PURIFICATION_TOWER_CAP);
-        PylonPages.HYDRAULIC_PURIFICATION.addItem(PURIFICATION_TOWER_CAP);
+        RebarItem.register(LiseletteHydraulicPurifier.Item.class, LISELETTE_HYDRAULIC_PURIFIER, PylonKeys.LISELETTE_HYDRAULIC_PURIFIER);
+        PylonPages.HYDRAULIC_PURIFICATION.addItem(LISELETTE_HYDRAULIC_PURIFIER);
     }
 
     //</editor-fold>
