@@ -83,7 +83,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.LAVA_DRAINER, Material.DISPENSER, FluidDrainer.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_1, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_2, Material.STRUCTURE_VOID, FluidVoider.class);
-        RebarBlock.register(PylonKeys.FLUID_VOIDER_3, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_VOIDER, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_SOURCE, Material.PINK_CONCRETE, CreativeFluidSource.class);
         RebarBlock.register(PylonKeys.REFRACTORY_MIX, Material.SMOOTH_RED_SANDSTONE, RefractoryMix.class);
@@ -114,7 +113,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_HAMMER_HEAD, Material.STONE_BRICKS, HydraulicHammerHead.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_PIPE_BENDER, Material.WAXED_CHISELED_COPPER, HydraulicPipeBender.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_TABLE_SAW, Material.WAXED_CUT_COPPER, HydraulicTableSaw.class);
-        RebarBlock.register(PylonKeys.SOLAR_LENS, Material.GLASS_PANE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.SOLAR_LENS, Material.GLASS_PANE, SolarLens.class);
         RebarBlock.register(PylonKeys.PURIFICATION_TOWER_GLASS, Material.LIGHT_GRAY_STAINED_GLASS, RebarBlock.class);
         RebarBlock.register(PylonKeys.PURIFICATION_TOWER_CAP, Material.QUARTZ_SLAB, RebarBlock.class);
         RebarBlock.register(PylonKeys.SOLAR_PURIFICATION_TOWER_1, Material.WAXED_COPPER_BLOCK, SolarPurificationTower.class);

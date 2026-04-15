@@ -218,7 +218,6 @@ public class PylonKeys {
 
     public static final NamespacedKey FLUID_VOIDER_1 = pylonKey("fluid_voider_1");
     public static final NamespacedKey FLUID_VOIDER_2 = pylonKey("fluid_voider_2");
-    public static final NamespacedKey FLUID_VOIDER_3 = pylonKey("fluid_voider_3");
 
     public static final NamespacedKey CREATIVE_FLUID_VOIDER = pylonKey("creative_fluid_voider");
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");
@@ -359,11 +358,6 @@ public class PylonKeys {
     public static final NamespacedKey HEALTH_TALISMAN_ADVANCED = pylonKey("health_talisman_advanced");
     public static final NamespacedKey HEALTH_TALISMAN_ULTIMATE = pylonKey("health_talisman_ultimate");
     public static final NamespacedKey HEALTH_TALISMAN_PALLADIUM = pylonKey("health_talisman_palladium");
-
-    public static final NamespacedKey HUNGER_TALISMAN_SIMPLE = pylonKey("hunger_talisman_simple");
-    public static final NamespacedKey HUNGER_TALISMAN_ADVANCED = pylonKey("hunger_talisman_advanced");
-    public static final NamespacedKey HUNGER_TALISMAN_ULTIMATE = pylonKey("hunger_talisman_ultimate");
-    public static final NamespacedKey HUNGER_TALISMAN_PALLADIUM = pylonKey("hunger_talisman_palladium");
 
     public static final NamespacedKey FARMING_TALISMAN_SIMPLE = pylonKey("farming_talisman_simple");
     public static final NamespacedKey FARMING_TALISMAN_ADVANCED = pylonKey("farming_talisman_advanced");

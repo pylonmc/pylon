@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -44,11 +45,20 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
 
         moldable.doMoldingClick();
         event.getPlayer().setCooldown(getStack(), cooldownTicks);
-        new ParticleBuilder(Particle.BLOCK)
-                .count(20)
+
+        ItemStack particleType;
+        RebarBlock rebarBlock = BlockStorage.get(event.getClickedBlock());
+        if (rebarBlock != null) {
+            particleType = rebarBlock.getDefaultItem().getItemStack();
+        } else {
+            particleType = new ItemStack(event.getClickedBlock().getType());
+        }
+        new ParticleBuilder(Particle.ITEM)
+                .count(50)
+                .extra(0.1)
                 .offset(0.2, 0.2, 0.2)
                 .location(event.getClickedBlock().getLocation().toCenterLocation())
-                .data(event.getClickedBlock().getBlockData())
+                .data(particleType)
                 .spawn();
 
         if (moldable.isMoldingFinished()) {

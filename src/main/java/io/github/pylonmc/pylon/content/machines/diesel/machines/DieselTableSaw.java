@@ -63,6 +63,8 @@ public class DieselTableSaw extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":side2");
     public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":chimney");
+    public final ItemStackBuilder sawItem = ItemStackBuilder.of(Material.IRON_BARS)
+            .addCustomModelDataString(getKey() + ":saw");
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory outputInventory = new VirtualInventory(1);
@@ -120,10 +122,9 @@ public class DieselTableSaw extends RebarBlock implements
                         .scale(0.3))
                 .build(block.getLocation().toCenterLocation().add(0, 0.65, 0))
         );
-        addEntity("saw", new BlockDisplayBuilder()
-                .blockData(Material.IRON_BARS.createBlockData("[east=true,west=true]"))
+        addEntity("saw", new ItemDisplayBuilder()
+                .itemStack(sawItem)
                 .transformation(new TransformBuilder()
-                        .rotate(0, RebarUtils.faceToYaw(getFacing()), 0)
                         .scale(0.6, 0.4, 0.4))
                 .build(block.getLocation().toCenterLocation().add(0, 0.7, 0))
         );

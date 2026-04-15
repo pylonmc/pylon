@@ -1388,42 +1388,6 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_PALLADIUM);
     }
 
-    public static final ItemStack HUNGER_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_SIMPLE)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_SIMPLE);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_SIMPLE);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_ADVANCED = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_ADVANCED)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_ADVANCED);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ADVANCED);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_ULTIMATE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_ULTIMATE)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_ULTIMATE);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ULTIMATE);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_PALLADIUM)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_PALLADIUM);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_PALLADIUM);
-    }
-
     public static final ItemStack FARMING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_SIMPLE)
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .build();
@@ -1810,9 +1774,6 @@ public final class PylonItems {
 
     public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET, true)
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("durability", ConfigAdapter.INTEGER))
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_helmet_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1826,9 +1787,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_chestplate_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1842,9 +1800,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_leggings_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1858,10 +1813,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_BOOTS = ItemStackBuilder.rebarBoots(Material.DIAMOND_BOOTS, PylonKeys.PALLADIUM_BOOTS, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .add(Enchantment.FROST_WALKER, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("frost-walker-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_boots_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -2622,14 +2573,6 @@ public final class PylonItems {
     static {
         RebarItem.register(FluidVoider.Item.class, FLUID_VOIDER_2, PylonKeys.FLUID_VOIDER_2);
         PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_2);
-    }
-
-    public static final ItemStack FLUID_VOIDER_3 = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.FLUID_VOIDER_3)
-            .set(DataComponentTypes.ITEM_MODEL, Material.BLACK_TERRACOTTA.getKey())
-            .build();
-    static {
-        RebarItem.register(FluidVoider.Item.class, FLUID_VOIDER_3, PylonKeys.FLUID_VOIDER_3);
-        PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_3);
     }
 
     //</editor-fold>

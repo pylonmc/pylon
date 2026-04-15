@@ -40,13 +40,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.UUID;
+
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
     public static final Random random = new Random();
+
+    // We do not use the item's PDC because this leads to the item not stacking
+    // Some entries will persist in this map and never be removed until the server restarts, this
+    // is fine because the memory usage is so tiny and it would be very annoying to fix
+    public static final Map<UUID, Integer> remainingUseMap = new HashMap<>();
 
     public final Material baseBlock = getBaseBlock(getKey());
     public final MiningLevel miningLevel = getMiningLevel(getKey());
@@ -107,10 +114,21 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                     RebarUtils.damageItem(getStack(), 1, block.getWorld());
                 }
 
-                if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
+                new ParticleBuilder(Particle.ITEM)
+                        .count(20)
+                        .extra(0.1)
+                        .data(item.getItemStack())
+                        .location(item.getLocation().add(0, 0.2, 0))
+                        .spawn();
+
+                int remainingUses = remainingUseMap.computeIfAbsent(item.getUniqueId(), unused -> recipe.uses()) - 1;
+                if (remainingUses > 0) {
                     block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-                    return true; // recipe attempted but unsuccessful
+                    remainingUseMap.put(item.getUniqueId(), remainingUses);
+                    return true; // recipe not finished
                 }
+
+                remainingUseMap.remove(item.getUniqueId());
 
                 int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
                 item.setItemStack(item.getItemStack().asQuantity(newAmount));

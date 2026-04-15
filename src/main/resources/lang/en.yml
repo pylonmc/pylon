@@ -435,12 +435,6 @@ item:
       <arrow> Destroys all fluids piped into it
       <arrow> <attr>Void rate:</attr> %void_rate%
 
-  fluid_voider_3:
-    name: "<white>Fluid Voider <light_purple>III"
-    lore: |-
-      <arrow> Destroys all fluids piped into it
-      <arrow> <attr>Void rate:</attr> %void_rate%
-
   creative_fluid_voider:
     name: "<#ff00ff>Creative Fluid Voider"
     lore: |-
@@ -593,6 +587,8 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.shimmer_altar.name/></yellow>
       <diamond> 8x <yellow><lang:pylon.item.shimmer_pedestal.name/></yellow>
+    waila: "Shimmer Altar%progress%"
+    progress: "| %progress%"
 
   shimmer_pedestal:
     name: "Shimmer Pedestal"
@@ -1842,42 +1838,6 @@ item:
     lore: |-
       <arrow> Destroys any items piped into it
 
-  hunger_talisman_simple:
-    name: "Simple Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_advanced:
-    name: "Advanced Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_ultimate:
-    name: "Ultimate Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_palladium:
-    name: "Palladium Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
   farming_talisman_simple:
     name: "Simple Farming Talisman"
     lore: |-
@@ -2601,7 +2561,7 @@ guide:
     casting: "<attr>Temperature:</attr> %temperature%"
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
-    hammer: "<attr>Chance:</attr> %chance%"
+    hammer: "<attr>Uses:</attr> %uses%"
   button:
     info:
       loupe:
