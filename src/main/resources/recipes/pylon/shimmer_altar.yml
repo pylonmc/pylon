@@ -108,3 +108,15 @@ pylon:soulbound_rune:
     A: pylon:abyssal_catalyst
   result: pylon:soulbound_rune
   time-seconds: 45
+
+pylon:liselette_collector:
+  shape:
+    - "CDC"
+    - "CSC"
+    - "CDC"
+  key:
+    C: pylon:liselette_cathode
+    D: pylon:liselette_conductor
+    S: pylon:shimmer_bronze
+  result: pylon:liselette_collector
+  time-seconds: 15

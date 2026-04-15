@@ -1,0 +1,7 @@
+min-fluid: 2000
+base-purification-efficiency: 0.95
+max-purification-efficiency: 1.0
+purification-speed: 220
+fluid-at-max-efficiency: 100000
+tick-interval: 20
+lava-particle-chance: 0.2
