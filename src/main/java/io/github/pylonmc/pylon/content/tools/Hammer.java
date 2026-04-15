@@ -183,7 +183,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
 
         if (event.getAction().isLeftClick()) {
             tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
-        } else if (clicked != null && event.getBlockFace() != BlockFace.UP) {
+        } else if (clicked != null && event.getBlockFace() == BlockFace.UP) {
             tryDoRecipe(clicked, event.getPlayer(), event.getHand());
         }
     }
