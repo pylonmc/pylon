@@ -1774,9 +1774,6 @@ public final class PylonItems {
 
     public static final ItemStack PALLADIUM_HELMET = ItemStackBuilder.rebarHelmet(Material.DIAMOND_HELMET, PylonKeys.PALLADIUM_HELMET, true)
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("durability", ConfigAdapter.INTEGER))
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_HELMET).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_helmet_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1790,9 +1787,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_CHESTPLATE = ItemStackBuilder.rebarChestplate(Material.DIAMOND_CHESTPLATE, PylonKeys.PALLADIUM_CHESTPLATE, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_CHESTPLATE).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_chestplate_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1806,9 +1800,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_LEGGINGS = ItemStackBuilder.rebarLeggings(Material.DIAMOND_LEGGINGS, PylonKeys.PALLADIUM_LEGGINGS, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_LEGGINGS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_leggings_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
@@ -1822,10 +1813,6 @@ public final class PylonItems {
     }
 
     public static final ItemStack PALLADIUM_BOOTS = ItemStackBuilder.rebarBoots(Material.DIAMOND_BOOTS, PylonKeys.PALLADIUM_BOOTS, true)
-            .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
-                    .add(Enchantment.PROTECTION, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("prot-level", ConfigAdapter.INTEGER))
-                    .add(Enchantment.FROST_WALKER, Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("frost-walker-level", ConfigAdapter.INTEGER))
-                    .build())
             .addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(
                     pylonKey("palladium_boots_speed"),
                     Settings.get(PylonKeys.PALLADIUM_BOOTS).getOrThrow("speed-percentage-increase", ConfigAdapter.DOUBLE),
