@@ -58,6 +58,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
     public final MiningLevel miningLevel = getMiningLevel(getKey());
     public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final RandomizedSound sound = getSettings().getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound failSound = getSettings().getOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     public Hammer(@NotNull ItemStack stack) {
         super(stack);
@@ -131,6 +132,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         }
 
         if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
+            block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
             lastHammeredItems.put(new BlockPosition(block), new Pair<>(recipe, item.getUniqueId()));
             return true; // recipe attempted but unsuccessful
         }

@@ -340,7 +340,21 @@ pylon:confetti_popper:
     D: "#paper:dyes_settag"
     I: pylon:iron_sheet
   result: pylon:confetti_popper
-  category: tools
+  category: equipment
+
+pylon:diesel_booster:
+  pattern:
+    - "TKT"
+    - "CFC"
+    - " N "
+  key:
+    T: pylon:portable_fluid_tank_steel
+    C: pylon:steel_cylinder
+    K: pylon:kinetic_control_mechanism
+    F: minecraft:flint_and_steel
+    N: pylon:nozzle
+  result: pylon:diesel_booster
+  category: equipment
 
 pylon:grindstone:
   pattern:
@@ -2050,6 +2064,18 @@ pylon:diesel_brick_molder:
   result: pylon:diesel_brick_molder
   category: building
 
+pylon:diesel_refueling_station:
+  pattern:
+    - "   "
+    - "PGP"
+    - "CCC"
+  key:
+    C: pylon:iron_sheet
+    P: pylon:fluid_pipe_steel
+    G: minecraft:glass
+  result: pylon:diesel_refueling_station
+  category: building
+
 pylon:fermenter:
   pattern:
     - "ICI"
@@ -2649,4 +2675,100 @@ pylon:palladium_condenser:
     C: pylon:diesel_core_drill
   result:
     pylon:palladium_condenser: 1
+  category: building
+
+pylon:silo_converter:
+  pattern:
+    - "SSS"
+    - "W W"
+    - "WWW"
+  key:
+    S: "#minecraft:wooden_slabs"
+    W: "#minecraft:planks"
+  result:
+    pylon:silo_converter: 1
+  category: building
+
+pylon:wooden_silo:
+  pattern:
+    - " P "
+    - "PBP"
+    - " P "
+  key:
+    B: minecraft:barrel
+    P: "#minecraft:planks"
+  result:
+    pylon:wooden_silo: 4
+  category: building
+
+pylon:tin_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:tin_ingot
+  result:
+    pylon:tin_silo: 4
+  category: building
+
+pylon:copper_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:copper_ingot
+  result:
+    pylon:copper_silo: 4
+  category: building
+
+pylon:iron_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:iron_ingot
+  result:
+    pylon:iron_silo: 4
+  category: building
+
+pylon:bronze_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:bronze_ingot
+  result:
+    pylon:bronze_silo: 4
+  category: building
+
+pylon:steel_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:steel_ingot
+  result:
+    pylon:steel_silo: 4
+  category: building
+
+pylon:palladium_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:palladium_ingot
+  result:
+    pylon:palladium_silo: 4
   category: building

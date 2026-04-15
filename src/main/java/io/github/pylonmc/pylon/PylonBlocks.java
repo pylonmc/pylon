@@ -17,6 +17,8 @@ import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.*;
+import io.github.pylonmc.pylon.content.machines.storage.Silo;
+import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
@@ -145,6 +147,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_FURNACE, Material.FURNACE, DieselFurnace.class);
         RebarBlock.register(PylonKeys.DIESEL_BREAKER, Material.DROPPER, DieselBreaker.class);
         RebarBlock.register(PylonKeys.DIESEL_MINER, Material.IRON_BLOCK, DieselMiner.class);
+        RebarBlock.register(PylonKeys.DIESEL_REFUELING_STATION, Material.QUARTZ_SLAB, DieselRefuelingStation.class);
         RebarBlock.register(PylonKeys.FERMENTER, Material.PINK_TERRACOTTA, Fermenter.class);
         RebarBlock.register(PylonKeys.REINFORCED_GLASS, Material.GRAY_STAINED_GLASS, RebarBlock.class);
         RebarBlock.register(PylonKeys.REINFORCED_GLASS_CASING, Material.GRAY_STAINED_GLASS_PANE, ReinforcedGlassCasing.class);
@@ -176,5 +179,13 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
+        RebarBlock.register(PylonKeys.WOODEN_SILO, Material.BROWN_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.COPPER_SILO, Material.TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.TIN_SILO, Material.GREEN_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.IRON_SILO, Material.LIGHT_GRAY_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.BRONZE_SILO, Material.ORANGE_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.STEEL_SILO, Material.GRAY_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
+        RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
     }
 }

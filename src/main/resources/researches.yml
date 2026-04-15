@@ -153,6 +153,29 @@ pressing:
   unlocks:
     - pylon:press
 
+silos_1:
+  item: pylon:bronze_silo
+  cost: 5
+  unlocks:
+    - pylon:silo_converter
+    - pylon:wooden_silo
+    - pylon:copper_silo
+    - pylon:tin_silo
+
+silos_2:
+  item: pylon:bronze_silo
+  cost: 10
+  unlocks:
+    - pylon:iron_silo
+    - pylon:bronze_silo
+
+silos_3:
+  item: pylon:bronze_silo
+  cost: 15
+  unlocks:
+    - pylon:steel_silo
+    - pylon:palladium_silo
+
 pumps:
   item: pylon:water_pump
   cost: 5
@@ -453,6 +476,7 @@ diesel_machines:
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
+    - pylon:diesel_refueling_station
 
 diesel_production:
   item: pylon:biorefinery
@@ -460,6 +484,12 @@ diesel_production:
   unlocks:
     - pylon:fermenter
     - pylon:biorefinery
+
+diesel_booster:
+  item: pylon:diesel_booster
+  cost: 10
+  unlocks:
+    - pylon:diesel_booster
 
 portable_workstations:
   item: pylon:portable_crafting_table
