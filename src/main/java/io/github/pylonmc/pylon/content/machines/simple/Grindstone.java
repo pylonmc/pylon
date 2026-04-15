@@ -180,6 +180,8 @@ public class Grindstone extends RebarBlock implements
             return false;
         }
 
+        ItemStack particleItem = input.clone();
+
         itemDisplay.setItemStack(input.subtract(nextRecipe.input().getAmount()));
 
         startRecipe(nextRecipe, nextRecipe.timeTicks());
@@ -198,11 +200,12 @@ public class Grindstone extends RebarBlock implements
                     }
 
                     PylonUtils.animate(getStoneDisplay(), CYCLE_DURATION_TICKS / 4, getStoneDisplayMatrix(translation, rotation));
-                    new ParticleBuilder(Particle.BLOCK)
-                        .data(nextRecipe.particleBlockData())
-                        .count(10)
-                        .location(getBlock().getLocation().toCenterLocation())
-                        .spawn();
+                    new ParticleBuilder(Particle.ITEM)
+                            .data(particleItem)
+                            .count(20)
+                            .extra(0.1)
+                            .location(getBlock().getLocation().toCenterLocation())
+                            .spawn();
 
                     progressRecipe(CYCLE_DURATION_TICKS / 4);
                 }, (long) ((i + j/4.0) * CYCLE_DURATION_TICKS));
