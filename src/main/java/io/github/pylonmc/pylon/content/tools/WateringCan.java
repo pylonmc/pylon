@@ -88,18 +88,18 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
     private static boolean tryGrowBlock(Block block, BlockData blockData, WateringSettings settings) {
         Material material = blockData.getMaterial();
         if (material == Material.CACTUS) {
-            return growTallBlockWithRandomTick(block, material, settings.cactusChance(), settings.particleChance());
+            return growTallBlockWithRandomTick(block, material, settings.cactusChance(), settings.cactusTicks(), settings.particleChance());
         } else if (material == Material.SUGAR_CANE) {
-            return growTallBlockWithRandomTick(block, material, settings.sugarCaneChance(), settings.particleChance());
+            return growTallBlockWithRandomTick(block, material, settings.sugarCaneChance(), settings.sugarCaneTicks(), settings.particleChance());
         } else if (Tag.BEE_GROWABLES.isTagged(material)) {
-            return growWithBonemeal(block, settings.cropChance(), settings.particleChance());
+            return growWithBonemeal(block, settings.cropChance(), settings.cropTicks(), settings.particleChance());
         } else if (Tag.SAPLINGS.isTagged(material)) {
-            return growWithBonemeal(block, settings.saplingChance(), settings.particleChance());
+            return growWithBonemeal(block, settings.saplingChance(), settings.saplingTicks(), settings.particleChance());
         }
         return false;
     }
 
-    private static boolean growTallBlockWithRandomTick(@NotNull Block block, Material material, double tickChance, double particleChance) {
+    private static boolean growTallBlockWithRandomTick(@NotNull Block block, Material material, double tickChance, int ticks, double particleChance) {
         Block topBlock = block.getRelative(BlockFace.UP);
         while (topBlock.getType() == material) {
             topBlock = topBlock.getRelative(BlockFace.UP);
@@ -119,13 +119,15 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         }
 
         if (random.nextDouble() < tickChance) {
-            topBlock.randomTick();
+            for (int i = 0; i < ticks; i++) {
+                topBlock.randomTick();
+            }
         }
 
         return true;
     }
 
-    private static boolean growWithBonemeal(@NotNull Block block, double boneMealChance, double particleChance) {
+    private static boolean growWithBonemeal(@NotNull Block block, double boneMealChance, int ticks, double particleChance) {
         if (random.nextDouble() < particleChance) {
             new ParticleBuilder(Particle.SPLASH)
                     .count(3)
@@ -135,7 +137,9 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         }
 
         if (random.nextDouble() < boneMealChance) {
-            block.applyBoneMeal(BlockFace.UP);
+            for (int i = 0; i < ticks; i++) {
+                block.applyBoneMeal(BlockFace.UP);
+            }
         }
 
         return true;
