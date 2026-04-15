@@ -6,7 +6,7 @@ projectile:
     material: gray_concrete
     thickness: 0.08
     length: 0.12
-    speed-blocks-per-second: 16
-    damage: 6
+    speed-blocks-per-second: 24
+    damage: 8
     tick-interval: 1
-    lifetime-ticks: 50
+    lifetime-ticks: 100
