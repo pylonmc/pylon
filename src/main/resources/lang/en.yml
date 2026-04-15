@@ -593,6 +593,8 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.shimmer_altar.name/></yellow>
       <diamond> 8x <yellow><lang:pylon.item.shimmer_pedestal.name/></yellow>
+    waila: "Shimmer Altar%progress%"
+    progress: "| %progress%"
 
   shimmer_pedestal:
     name: "Shimmer Pedestal"
