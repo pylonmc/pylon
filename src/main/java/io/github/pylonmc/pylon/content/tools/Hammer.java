@@ -9,6 +9,7 @@ import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -43,9 +44,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
+    public static final NamespacedKey REMAINING_USES = pylonKey("hammer_remaining_uses");
+
     public static final Random random = new Random();
 
     public final Material baseBlock = getBaseBlock(getKey());
@@ -107,9 +112,19 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                     RebarUtils.damageItem(getStack(), 1, block.getWorld());
                 }
 
-                if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
+                int remainingUses = item.getItemStack().getPersistentDataContainer().getOrDefault(
+                        REMAINING_USES,
+                        RebarSerializers.INTEGER,
+                        recipe.uses()
+                ) - 1;
+                if (remainingUses > 0) {
                     block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-                    return true; // recipe attempted but unsuccessful
+                    item.getItemStack().editPersistentDataContainer(pdc -> pdc.set(
+                            REMAINING_USES,
+                            RebarSerializers.INTEGER,
+                            remainingUses
+                    ));
+                    return true; // recipe not finished
                 }
 
                 int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();

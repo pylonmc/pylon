@@ -2565,7 +2565,7 @@ guide:
     casting: "<attr>Temperature:</attr> %temperature%"
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
-    hammer: "<attr>Chance:</attr> %chance%"
+    hammer: "<attr>Uses:</attr> %uses%"
   button:
     info:
       loupe:
