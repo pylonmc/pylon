@@ -26,6 +26,9 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import kotlin.Pair;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -51,10 +54,6 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -437,7 +436,7 @@ public final class SmelteryController extends SmelteryComponent
     private void spawnPixels() {
         pixels.clear();
 
-        Location location = center.getLocation().add(-1, 0, -1);
+        Location location = center.toLocation().add(-1, 0, -1);
         for (int x = 0; x < PIXELS_PER_SIDE; x++) {
             for (int z = 0; z < PIXELS_PER_SIDE; z++) {
                 Location relative = location.clone().add((double) x / RESOLUTION, 0, (double) z / RESOLUTION);

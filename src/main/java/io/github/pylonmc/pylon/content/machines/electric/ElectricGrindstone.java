@@ -1,27 +1,24 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
+import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
+import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.electricity.VoltageRange;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
+import java.util.List;
 import net.kyori.adventure.text.Component;
-
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
-import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.electricity.ElectricNode;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import it.unimi.dsi.fastutil.doubles.DoubleDoublePair;
-
 public class ElectricGrindstone extends AbstractGrindstone implements
-        RebarElectricBlock.Consumer {
+        RebarElectricConsumerBlock {
 
     public static class Item extends RebarItem {
 
@@ -50,8 +47,6 @@ public class ElectricGrindstone extends AbstractGrindstone implements
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
-        createElectricNode(getBlock().getLocation().toCenterLocation(), ElectricNode.Type.CONSUMER);
     }
 
     @SuppressWarnings("unused")
@@ -60,8 +55,8 @@ public class ElectricGrindstone extends AbstractGrindstone implements
     }
 
     @Override
-    public @NotNull DoubleDoublePair getVoltageRange() {
-        return DoubleDoublePair.of(voltageMin, voltageMax);
+    public @NotNull VoltageRange getVoltageRange() {
+        return new VoltageRange(voltageMin, voltageMax);
     }
 
     @Override
@@ -71,6 +66,6 @@ public class ElectricGrindstone extends AbstractGrindstone implements
 
     @Override
     public void tick() {
-        Bukkit.broadcast(Component.text(isPowered() ? "This better be 100% free-range electricity" : "WHERES MAH POWER"));
+        Bukkit.broadcast(Component.text(new BlockPosition(getBlock()) + (isPowered() ? "This better be 100% free-range electricity" : "WHERES MAH POWER")));
     }
 }
