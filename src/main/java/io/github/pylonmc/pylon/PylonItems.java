@@ -1388,42 +1388,6 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(HEALTH_TALISMAN_PALLADIUM);
     }
 
-    public static final ItemStack HUNGER_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_SIMPLE)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_SIMPLE);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_SIMPLE);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_ADVANCED = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_ADVANCED)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_ADVANCED);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ADVANCED);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_ULTIMATE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_ULTIMATE)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_ULTIMATE);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_ULTIMATE);
-    }
-
-    public static final ItemStack HUNGER_TALISMAN_PALLADIUM = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HUNGER_TALISMAN_PALLADIUM)
-            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
-            .set(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(Material.GOLDEN_APPLE.getDefaultData(DataComponentTypes.ITEM_MODEL)))
-            .build();
-    static {
-        RebarItem.register(HungerTalisman.class, HUNGER_TALISMAN_PALLADIUM);
-        PylonPages.TALISMANS.addItem(HUNGER_TALISMAN_PALLADIUM);
-    }
-
     public static final ItemStack FARMING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.BOWL, PylonKeys.FARMING_TALISMAN_SIMPLE)
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .build();

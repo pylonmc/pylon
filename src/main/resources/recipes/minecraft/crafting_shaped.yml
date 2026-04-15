@@ -1696,17 +1696,6 @@ pylon:breeding_talisman_simple:
   result: pylon:breeding_talisman_simple
   category: equipment
 
-pylon:hunger_talisman_simple:
-  pattern:
-    - "AAA"
-    - "AGA"
-    - "AAA"
-  key:
-    A: minecraft:apple
-    G: minecraft:golden_apple
-  result: pylon:hunger_talisman_simple
-  category: equipment
-
 pylon:luck_talisman_simple:
   pattern:
     - "GGG"

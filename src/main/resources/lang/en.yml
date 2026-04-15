@@ -1842,42 +1842,6 @@ item:
     lore: |-
       <arrow> Destroys any items piped into it
 
-  hunger_talisman_simple:
-    name: "Simple Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_advanced:
-    name: "Advanced Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_ultimate:
-    name: "Ultimate Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_palladium:
-    name: "Palladium Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
   farming_talisman_simple:
     name: "Simple Farming Talisman"
     lore: |-

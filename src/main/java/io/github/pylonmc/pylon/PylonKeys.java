@@ -360,11 +360,6 @@ public class PylonKeys {
     public static final NamespacedKey HEALTH_TALISMAN_ULTIMATE = pylonKey("health_talisman_ultimate");
     public static final NamespacedKey HEALTH_TALISMAN_PALLADIUM = pylonKey("health_talisman_palladium");
 
-    public static final NamespacedKey HUNGER_TALISMAN_SIMPLE = pylonKey("hunger_talisman_simple");
-    public static final NamespacedKey HUNGER_TALISMAN_ADVANCED = pylonKey("hunger_talisman_advanced");
-    public static final NamespacedKey HUNGER_TALISMAN_ULTIMATE = pylonKey("hunger_talisman_ultimate");
-    public static final NamespacedKey HUNGER_TALISMAN_PALLADIUM = pylonKey("hunger_talisman_palladium");
-
     public static final NamespacedKey FARMING_TALISMAN_SIMPLE = pylonKey("farming_talisman_simple");
     public static final NamespacedKey FARMING_TALISMAN_ADVANCED = pylonKey("farming_talisman_advanced");
     public static final NamespacedKey FARMING_TALISMAN_ULTIMATE = pylonKey("farming_talisman_ultimate");

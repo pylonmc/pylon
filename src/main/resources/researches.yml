@@ -18,7 +18,6 @@ talismans_1:
   cost: 10
   unlocks:
     - pylon:health_talisman_simple
-    - pylon:hunger_talisman_simple
     - pylon:farming_talisman_simple
     - pylon:bartering_talisman_simple
     - pylon:water_breathing_talisman_simple
@@ -33,7 +32,6 @@ talismans_2:
   cost: 25
   unlocks:
     - pylon:health_talisman_advanced
-    - pylon:hunger_talisman_advanced
     - pylon:farming_talisman_advanced
     - pylon:bartering_talisman_advanced
     - pylon:water_breathing_talisman_advanced
@@ -48,7 +46,6 @@ talismans_3:
   cost: 60
   unlocks:
     - pylon:health_talisman_ultimate
-    - pylon:hunger_talisman_ultimate
     - pylon:farming_talisman_ultimate
     - pylon:bartering_talisman_ultimate
     - pylon:water_breathing_talisman_ultimate
@@ -64,7 +61,6 @@ talismans_4:
   cost: 175
   unlocks:
     - pylon:health_talisman_palladium
-    - pylon:hunger_talisman_palladium
     - pylon:farming_talisman_palladium
     - pylon:bartering_talisman_palladium
     - pylon:water_breathing_talisman_palladium
