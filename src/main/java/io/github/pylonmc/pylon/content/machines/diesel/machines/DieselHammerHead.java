@@ -155,7 +155,7 @@ public class DieselHammerHead extends RebarBlock implements
     }
 
     public void updateHammerTip(ItemStack newItem) {
-        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(newItem, Hammer.class) instanceof Hammer hammer)) {
             getHammerTip().setItemStack(null);
             return;
         }
@@ -188,7 +188,7 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0), Hammer.class) instanceof Hammer hammer)) {
             return;
         }
 

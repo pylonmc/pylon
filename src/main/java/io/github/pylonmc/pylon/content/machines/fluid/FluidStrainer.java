@@ -141,7 +141,7 @@ public class FluidStrainer extends RebarBlock implements
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
         fluidAmount -= amount;
-        if (fluidAmount < 1.0e-6) {
+        if (fluidAmount < RebarUtils.FLUID_EPSILON) {
             fluidType = null;
         }
     }

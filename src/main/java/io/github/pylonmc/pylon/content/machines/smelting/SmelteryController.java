@@ -479,7 +479,7 @@ public final class SmelteryController extends SmelteryComponent
 
     private void updateFluidDisplay() {
         List<TextDisplay> pixels = getPixels();
-        if (pixels.isEmpty() || !RebarUtils.hasAnyTracker(pixels.getFirst())) {
+        if (pixels.isEmpty() || !RebarUtils.hasTracker(pixels.getFirst())) {
             // Don't update the smeltery display if no one can see it.
             return;
         }

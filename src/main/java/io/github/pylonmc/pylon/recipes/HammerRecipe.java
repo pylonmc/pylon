@@ -97,20 +97,20 @@ public record HammerRecipe(
     private List<ItemStack> getHammers() {
         List<ItemStack> hammers = new ArrayList<>();
         for (RebarItemSchema itemSchema : RebarRegistry.ITEMS.getValues()) {
+            Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
+            if (hammer == null) continue;
+
             ItemStack stack = itemSchema.getItemStack();
-            RebarItem item = RebarItem.fromStack(stack);
-            if (item instanceof Hammer hammer) {
-                float chance = Math.min(1, getChanceFor(hammer.miningLevel));
-                if (chance <= 0f) continue;
-                List<Component> lore = stack.lore();
-                Preconditions.checkNotNull(lore);
-                lore.add(Component.empty());
-                lore.add(Component.translatable("pylon.guide.recipe.hammer",
-                        RebarArgument.of("chance", UnitFormat.PERCENT.format(chance * 100f).significantFigures(3))
-                ));
-                stack.lore(lore);
-                hammers.add(stack);
-            }
+            float chance = Math.min(1, getChanceFor(hammer.miningLevel));
+            if (chance <= 0f) continue;
+            List<Component> lore = stack.lore();
+            Preconditions.checkNotNull(lore);
+            lore.add(Component.empty());
+            lore.add(Component.translatable("pylon.guide.recipe.hammer",
+                    RebarArgument.of("chance", UnitFormat.PERCENT.format(chance * 100f).significantFigures(3))
+            ));
+            stack.lore(lore);
+            hammers.add(stack);
         }
         return hammers;
     }

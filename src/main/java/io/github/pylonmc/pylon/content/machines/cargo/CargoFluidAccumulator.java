@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -291,12 +292,12 @@ public class CargoFluidAccumulator extends RebarBlock implements
             getLogisticGroupOrThrow("input").setFilter(stack -> false);
         }
 
-        if (outputTotal == 0 && getFluidAmount() < 1.0e-3) {
+        if (outputTotal == 0 && getFluidAmount() < RebarUtils.FLUID_EPSILON) {
             getLogisticGroupOrThrow("input").setFilter(null);
             allowFluidInputs = true;
         }
 
-        if (inputTotal >= itemThreshold && getFluidAmount() >= (fluidThreshold - 1.0e-6)) {
+        if (inputTotal >= itemThreshold && getFluidAmount() >= (fluidThreshold - RebarUtils.FLUID_EPSILON)) {
             List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
             Preconditions.checkState(outputInventory.canHold(stacks));
             for (ItemStack stack : stacks) {

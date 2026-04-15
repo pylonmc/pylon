@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -145,7 +146,7 @@ public class Press extends RebarBlock implements
         }
 
         double fluidSpaceRemaining = fluidSpaceRemaining(PylonFluids.PLANT_OIL);
-        if (fluidSpaceRemaining <= 0) {
+        if (fluidSpaceRemaining <= RebarUtils.FLUID_EPSILON) {
             return false;
         }
 

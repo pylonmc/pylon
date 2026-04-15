@@ -125,7 +125,7 @@ public abstract class FluidHatch extends RebarBlock implements
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         boolean result = RebarFluidBufferBlock.super.setFluid(fluid, amount);
         float scale = (float) (0.9 * fluidAmount(fluid) / fluidCapacity(fluid));
-        if (scale < 1.0e-9) {
+        if (scale < RebarUtils.FLUID_EPSILON) {
             getFluidDisplay().setItemStack(null);
         } else {
             getFluidDisplay().setItemStack(fluid.getItem());
