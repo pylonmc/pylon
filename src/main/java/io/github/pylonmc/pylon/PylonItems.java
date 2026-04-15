@@ -1084,6 +1084,7 @@ public final class PylonItems {
 
     public static final ItemStack SHIMMER_MAGNET = ItemStackBuilder.rebar(Material.BREEZE_ROD, PylonKeys.SHIMMER_MAGNET)
         .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+        .addCustomModelDataFlag(true)
         .build();
     static {
         RebarItem.register(ShimmerMagnet.class, SHIMMER_MAGNET);
