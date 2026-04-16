@@ -533,10 +533,24 @@ item:
     name: "Grindstone Handle"
     lore: "<star> Grindstone multiblock component"
 
+  steel_hammer:
+    name: "Steel Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of steel</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
   diamond_hammer:
     name: "Diamond Hammer"
     lore: |-
       <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of diamond</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  bronze_hammer:
+    name: "Bronze Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of bronze</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
@@ -2192,6 +2206,7 @@ item:
   collimator:
     name: "Collimator"
     lore: |-
+      <star> Multiblock
       <arrow> Slowly synthesizes Cohesive Units
       <arrow> Only works below <white>y = 0
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%

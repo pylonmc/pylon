@@ -13,6 +13,7 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
+import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -21,6 +22,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
+import org.bukkit.Registry;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -39,17 +41,14 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
     public static final Random random = new Random();
 
-    public final Material baseBlock = getBaseBlock(getKey());
-    public final MiningLevel miningLevel = getMiningLevel(getKey());
+    public final HammerAnvil baseBlock = HammerAnvil.of(getSettings().getOrThrow("anvil-block", ConfigAdapter.NAMESPACED_KEY));
+    public final MiningLevel miningLevel = MiningLevel.valueOf(getSettings().getOrThrow("mining-level", ConfigAdapter.STRING).toUpperCase(Locale.ROOT));
     public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final RandomizedSound sound = getSettings().getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
     public final RandomizedSound failSound = getSettings().getOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
@@ -59,7 +58,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
     }
 
     public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot, @NotNull BlockFace clickedFace) {
-        if (baseBlock != block.getType()) {
+        if (!baseBlock.isValid(block)) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
             }
@@ -215,19 +214,47 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         );
     }
 
-    private static Material getBaseBlock(@NotNull NamespacedKey key) {
-        return Map.of(
-                PylonKeys.STONE_HAMMER, Material.STONE,
-                PylonKeys.IRON_HAMMER, Material.IRON_BLOCK,
-                PylonKeys.DIAMOND_HAMMER, Material.DIAMOND_BLOCK
-        ).get(key);
+     public interface HammerAnvil {
+        boolean isValid(Block block);
+
+        ItemStack getBlockItem();
+
+        static HammerAnvil of(NamespacedKey key) {
+            if (key.getNamespace().equals(NamespacedKey.MINECRAFT)) {
+                var material = Registry.MATERIAL.getOrThrow(key);
+                return new VanillaAnvil(material);
+            } else {
+                return new PylonAnvil(key);
+            }
+        }
     }
 
-    private static MiningLevel getMiningLevel(@NotNull NamespacedKey key) {
-        return Map.of(
-                PylonKeys.STONE_HAMMER, MiningLevel.STONE,
-                PylonKeys.IRON_HAMMER, MiningLevel.IRON,
-                PylonKeys.DIAMOND_HAMMER, MiningLevel.DIAMOND
-        ).get(key);
+    public record VanillaAnvil(Material material) implements HammerAnvil {
+
+        @Override
+        public boolean isValid(Block block) {
+            return block.getType() == material;
+        }
+
+        @Override
+        public ItemStack getBlockItem() {
+            return new ItemStack(material);
+        }
+    }
+
+    public record PylonAnvil(NamespacedKey key) implements HammerAnvil {
+
+        @Override
+        public boolean isValid(Block block) {
+            var rebarBlock = BlockStorage.get(block);
+            if (rebarBlock == null) return false;
+
+            return rebarBlock.getKey().equals(key);
+        }
+
+        @Override
+        public ItemStack getBlockItem() {
+            return RebarRegistry.ITEMS.getOrThrow(key).getItemStack();
+        }
     }
 }

@@ -59,7 +59,7 @@ public record ForgingDisplayRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('h', new ItemButton(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
+                .addIngredient('h', new ItemButton(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.BRONZE_HAMMER, PylonItems.TONGS))
                 .addIngredient('i', new ItemButton(input))
                 .addIngredient('b', new ItemButton(PylonItems.BRONZE_ANVIL))
                 .addIngredient('r', new ItemButton(result))

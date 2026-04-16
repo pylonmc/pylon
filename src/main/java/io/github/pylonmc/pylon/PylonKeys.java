@@ -124,8 +124,9 @@ public class PylonKeys {
     public static final NamespacedKey HAMMER = pylonKey("hammer");
     public static final NamespacedKey STONE_HAMMER = pylonKey("stone_hammer");
     public static final NamespacedKey IRON_HAMMER = pylonKey("iron_hammer");
+    public static final NamespacedKey BRONZE_HAMMER = pylonKey("bronze_hammer");
     public static final NamespacedKey DIAMOND_HAMMER = pylonKey("diamond_hammer");
-    public static final NamespacedKey NETHERITE_HAMMER = pylonKey("netherite_hammer");
+    public static final NamespacedKey STEEL_HAMMER = pylonKey("steel_hammer");
 
     public static final NamespacedKey WATERING_CAN = pylonKey("watering_can");
     public static final NamespacedKey SPRINKLER = pylonKey("sprinkler");

@@ -4,6 +4,10 @@ attack-durability-damage: 1
 attack-speed: 0.33
 attack-damage: 1
 attack-knockback: 1
+
+anvil-block: minecraft:stone
+mining-level: STONE
+
 sound:
   sound: minecraft:block.anvil.use
   source: block

@@ -1,0 +1,15 @@
+cooldown-ticks: 28
+durability: 453
+attack-durability-damage: 1
+attack-speed: 0.75
+attack-damage: 4
+attack-knockback: 1.75
+
+anvil-block: pylon:bronze_block
+mining-level: DIAMOND
+
+sound:
+  sound: minecraft:block.anvil.use
+  source: block
+  volume: 0.5
+  pitch: 0.5
