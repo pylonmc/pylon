@@ -12,6 +12,12 @@ chances:
   cactus: 0.08
   sapling: 0.08
 
+ticks:
+  crops: 1
+  sugar-cane: 18
+  cactus: 18
+  sapling: 1
+
 particle-chance: 0.1
 sound:
   sound: minecraft:weather.rain

@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -105,7 +106,7 @@ public final class Bloomery extends RebarBlock implements
         ItemStack oldStack = itemDisplay.getItemStack();
         if (oldStack.isEmpty()) {
             if (placedItem != null) {
-                if (RebarItem.fromStack(placedItem) instanceof IronBloom bloom) {
+                if (RebarItem.fromStack(placedItem, IronBloom.class) instanceof IronBloom bloom) {
                     bloom.setDisplayGlowOn(itemDisplay);
                 }
                 itemDisplay.setItemStack(placedItem.asOne());
@@ -132,7 +133,7 @@ public final class Bloomery extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(stack) instanceof IronBloom bloom)) return;
+        if (!(RebarItem.fromStack(stack, IronBloom.class) instanceof IronBloom bloom)) return;
 
         Runnable particleSpawner = () -> {
             if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
@@ -196,14 +197,14 @@ public final class Bloomery extends RebarBlock implements
             if (against.getType() != Material.COAL_BLOCK) return;
 
             Item gypsum = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
-                    .filter(e -> e instanceof Item)
-                    .map(e -> (Item) e)
+                    .filter(Item.class::isInstance)
+                    .map(Item.class::cast)
                     .filter(item -> item.getItemStack().isSimilar(PylonItems.GYPSUM_DUST))
                     .findFirst()
                     .orElse(null);
             if (gypsum == null) return;
 
-            if (!Research.canPlayerPickUp(event.getPlayer(), RebarItem.fromStack(PylonItems.BLOOMERY), true)) {
+            if (!Research.canPlayerUse(event.getPlayer(), RebarItemSchema.fromStack(PylonItems.BLOOMERY), true)) {
                 event.setCancelled(true);
                 return;
             }

@@ -4,9 +4,15 @@ range:
 
 chances:
   crops: 0.01
-  sugar-cane: 0.007
-  cactus: 0.01
+  sugar-cane: 0.14
+  cactus: 0.2
   sapling: 0.01
+
+ticks:
+  crops: 1
+  sugar-cane: 4
+  cactus: 4
+  sapling: 1
 
 particle-chance: 0.5
 sound:

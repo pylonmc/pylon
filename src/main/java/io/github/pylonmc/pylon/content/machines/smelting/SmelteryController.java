@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
@@ -477,6 +478,12 @@ public final class SmelteryController extends SmelteryComponent
     private double lastHeight = 0;
 
     private void updateFluidDisplay() {
+        List<TextDisplay> pixels = getPixels();
+        if (pixels.isEmpty() || !RebarUtils.hasTracker(pixels.getFirst())) {
+            // Don't update the smeltery display if no one can see it.
+            return;
+        }
+
         HslColor color = HslColor.fromRgb(PylonUtils.colorFromTemperature(temperature));
         double fill = getTotalFluid() / capacity;
         if (Double.isNaN(fill) || Double.isInfinite(fill)) {
@@ -490,7 +497,6 @@ public final class SmelteryController extends SmelteryComponent
         double finalHeight = center.getY() + height * fill - 0.01;
         boolean decreased = lastHeight > finalHeight;
 
-        List<TextDisplay> pixels = getPixels();
         for (int i = 0; i < pixels.size(); i++) {
             TextDisplay entity = pixels.get(i);
             if (!entity.isValid()) continue;

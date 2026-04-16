@@ -88,7 +88,7 @@ public class IronBloom extends RebarItem implements RebarInventoryTicker {
     }
 
     @Override
-    public long getTickInterval() {
+    public long getBaseTickInterval() {
         return DAMAGE_INTERVAL;
     }
 

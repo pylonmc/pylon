@@ -196,23 +196,30 @@ public class DieselGrindstone extends RebarBlock implements
             return;
         }
 
-        recipeLoop:
-        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
-            if (!recipe.input().matches(stack)) {
-                continue;
-            }
-
-            for (ItemStack output : recipe.results().getElements()) {
-                if (!outputInventory.canHold(output)) {
-                    break recipeLoop;
-                }
-            }
-
-            startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
+            return;
         }
+
+        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
+            if (tryStartRecipe(recipe, stack)) {
+                return;
+            }
+        }
+    }
+
+    private boolean tryStartRecipe(GrindstoneRecipe recipe, ItemStack stack) {
+        if (!recipe.input().matches(stack)) {
+            return false;
+        }
+
+        if (!outputInventory.canHold(List.copyOf(recipe.results().getElements()))) {
+            return true;
+        }
+
+        startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override

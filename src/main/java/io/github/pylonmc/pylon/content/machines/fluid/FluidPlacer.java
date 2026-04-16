@@ -3,17 +3,20 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarDispenser;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -23,6 +26,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.FluidLevelChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -32,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
-public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarNoVanillaContainerBlock {
+public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarNoVanillaContainerBlock, RebarDispenser {
 
     public static class Item extends RebarItem {
 
@@ -107,5 +111,10 @@ public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, Re
         if (new FluidLevelChangeEvent(placeBlock, material.createBlockData()).callEvent()) {
             placeBlock.setType(material);
         }
+    }
+
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onPreDispense(@NotNull BlockPreDispenseEvent event, @NotNull EventPriority priority) {
+        event.setCancelled(true);
     }
 }

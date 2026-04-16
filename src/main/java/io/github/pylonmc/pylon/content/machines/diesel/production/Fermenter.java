@@ -18,7 +18,9 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -174,7 +176,7 @@ public class Fermenter extends RebarBlock implements
 
         ItemStack sugarcane = inputHatch.inventory.getItem(0);
         if (sugarcane != null
-                && RebarItem.fromStack(sugarcane) == null
+                && RebarItemSchema.fromStack(sugarcane) == null
                 && sugarcane.getType() == Material.SUGAR_CANE
                 && fluidSpaceRemaining(PylonFluids.SUGARCANE) > ethanolPerSugarcane
         ) {
@@ -187,7 +189,7 @@ public class Fermenter extends RebarBlock implements
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
         double outputSpaceRemaining = outputHatch.fluidSpaceRemaining(PylonFluids.ETHANOL);
         double ethanolToOutput = Math.min(outputSpaceRemaining, sugarcaneProportion * maxEthanolOutputRate * getTickInterval() / 20);
-        if (ethanolToOutput > 1.0e-6) {
+        if (ethanolToOutput > RebarUtils.FLUID_EPSILON) {
             removeFluid(PylonFluids.SUGARCANE, ethanolToOutput);
             outputHatch.addFluid(PylonFluids.ETHANOL, ethanolToOutput);
         }
@@ -211,7 +213,7 @@ public class Fermenter extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
-        int sugarcaneAmount = sugarcaneProportion < 1.0e-3
+        int sugarcaneAmount = sugarcaneProportion < RebarUtils.FLUID_EPSILON
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(

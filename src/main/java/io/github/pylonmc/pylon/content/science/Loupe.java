@@ -177,7 +177,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             SCANNING.put(player.getUniqueId(), scan);
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
-            if (RebarItem.fromStack(stack) != null) {
+            if (RebarItem.isRebarItem(stack)) {
                 player.sendActionBar(message("is_pylon"));
             } else if (!stack.getPersistentDataContainer().isEmpty()) {
                 player.sendActionBar(message("is_other_plugin"));
@@ -250,7 +250,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
             Material type = stack.getType();
-            if (RebarItem.fromStack(stack) != null || !stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
+            if (!stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
                 player.sendMessage(message("examine_failed", RebarArgument.of("object", stack.effectiveName())));
                 return;
             }

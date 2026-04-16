@@ -187,7 +187,7 @@ public class Biorefinery extends RebarBlock implements
                     )
             );
 
-            if (biodieselToProduce > 1.0e-3) {
+            if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
                 ethanolInputHatch.removeFluid(PylonFluids.ETHANOL, biodieselToProduce * ethanolPerMbOfBiodiesel);
                 plantOilInputHatch.removeFluid(PylonFluids.PLANT_OIL, biodieselToProduce * plantOilPerMbOfBiodiesel);
                 biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);

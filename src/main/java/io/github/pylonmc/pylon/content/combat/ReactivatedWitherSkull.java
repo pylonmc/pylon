@@ -42,8 +42,8 @@ public class ReactivatedWitherSkull extends RebarItem implements RebarInteractor
 
         if (player.getGameMode() != GameMode.CREATIVE) {
             getStack().damage(1, player);
-            player.setCooldown(getStack(), cooldownTicks);
         }
+        player.setCooldown(getStack(), cooldownTicks);
 
         player.launchProjectile(WitherSkull.class, player.getEyeLocation().getDirection().multiply(skullSpeed / 20.0), witherSkull -> {
             witherSkull.setCharged(chargedSkulls);
