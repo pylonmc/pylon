@@ -587,7 +587,7 @@ item:
     lore: |- 
       <star> Multiblock
       <arrow> A self-contained structure for performing shimmer rituals
-      <arrow> Add items on the pedestals, then right click the altar with the catalyst to begin the ritual
+      <arrow> Add items on the pedestals, then <insn>right click</insn> the altar with the catalyst to begin the ritual
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.shimmer_altar.name/></yellow>
@@ -604,8 +604,8 @@ item:
     name: "Potion Altar"
     lore: |-
       <star> Multiblock
-      <arrow> A standalone structure for potion effect fusion/upgrading
-      <arrow> Add potions on the potion pedestals or add a more potion catalyst on the shimmer pedestal, then right click the altar to begin the ritual
+      <arrow> Allows potions to be fused and upgraded
+      <arrow> Add potions on the potion pedestals or add a more potion catalyst on the shimmer pedestal, then <insn>right click</insn> the altar to begin the ritual
       <arrow> <attr>Max effect types:</attr> %max-effect-types%
       
       <u>Components</u>
@@ -2594,6 +2594,7 @@ research:
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
+  potion_magic: "<#e5c4ef>Potion magic"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"
@@ -2769,6 +2770,10 @@ message:
     not-same-type: "<red>You have to put 2 potions with the same bottle type"
     too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
     fused-potion-name: "<green>Fused Potion"
+    failed-apply-catalyst: "<red>Failed to apply catalyst"
+    cannot-apply-catalyst: "<red>Cannot to apply catalyst"
+  potion_pedestal:
+    not-potion: "<red>You have to put a potion"
   hammer:
     too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
     tier:

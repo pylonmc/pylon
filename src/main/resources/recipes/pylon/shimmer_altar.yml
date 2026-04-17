@@ -116,10 +116,10 @@ pylon:chronicle_resin:
     - "SGS"
   key:
     S: pylon:shimmer_dust_1
-    A: pylon:abyssal_catalyst
+    A: pylon:covalent_binder
     G: minecraft:glowstone
   result: pylon:chronicle_resin
-  time-seconds: 25
+  time-seconds: 20
 
 pylon:eon_weave_crystal:
   shape:
@@ -128,10 +128,10 @@ pylon:eon_weave_crystal:
     - "RSR"
   key:
     S: pylon:shimmer_dust_2
-    A: pylon:abyssal_catalyst
+    A: pylon:covalent_binder
     R: minecraft:redstone_block
   result: pylon:eon_weave_crystal
-  time-seconds: 50
+  time-seconds: 30
 
 pylon:ascendant_ember:
   shape:
@@ -140,8 +140,8 @@ pylon:ascendant_ember:
     - "ESR"
   key:
     S: pylon:shimmer_dust_3
-    A: pylon:abyssal_catalyst
+    A: pylon:covalent_binder
     E: pylon:eon_weave_crystal
     R: pylon:chronicle_resin
   result: pylon:ascendant_ember
-  time-seconds: 125
+  time-seconds: 100
