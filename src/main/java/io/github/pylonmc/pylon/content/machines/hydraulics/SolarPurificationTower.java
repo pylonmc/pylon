@@ -84,17 +84,17 @@ public class SolarPurificationTower extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 3, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 4, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_CAP));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.PURIFICATION_TOWER_GLASS));
+        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.PURIFICATION_TOWER_GLASS));
+        components.put(new Vector3i(0, 3, 0), MultiblockComponent.of(PylonKeys.PURIFICATION_TOWER_GLASS));
+        components.put(new Vector3i(0, 4, 0), MultiblockComponent.of(PylonKeys.PURIFICATION_TOWER_CAP));
 
         for (int j = 1; j < lensLayers + 1; j++) {
             for (int i = 0; i < 1 + 4*j; i++) {
-                components.put(new Vector3i(2*j, 1, i - 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(-2*j, 1, i - 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(i - 2*j, 1, 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(i - 2*j, 1, -2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(2*j, 1, i - 2*j), MultiblockComponent.of(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(-2*j, 1, i - 2*j), MultiblockComponent.of(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(i - 2*j, 1, 2*j), MultiblockComponent.of(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(i - 2*j, 1, -2*j), MultiblockComponent.of(PylonKeys.SOLAR_LENS));
             }
         }
 

@@ -94,23 +94,23 @@ public class Fermenter extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(INPUT_HATCH, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(-1, 0, -1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, -1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, 1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
 
         for (int x = -1; x <= 1; x++) {
             for (int y = 1 ; y <= 4; y++) {
                 for (int z = -1; z <= 1; z++) {
                     Vector3i position = new Vector3i(x, y, z);
                     if (x == 0 && z == 0) {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS));
+                        components.put(position, MultiblockComponent.of(PylonKeys.REINFORCED_GLASS));
                     } else {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS_CASING));
+                        components.put(position, MultiblockComponent.of(PylonKeys.REINFORCED_GLASS_CASING));
                     }
                 }
             }

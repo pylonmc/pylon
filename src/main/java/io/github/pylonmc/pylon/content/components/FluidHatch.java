@@ -50,20 +50,20 @@ public abstract class FluidHatch extends RebarBlock implements
 
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
 
-    private static MixedMultiblockComponent component = null;
+    private static MultiblockComponent component;
 
     public @Nullable RebarFluid fluid;
 
     static {
         // run on first tick after all addons registered
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            List<RebarMultiblockComponent> components = new ArrayList<>();
+            List<NamespacedKey> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
                 if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
-                    components.add(new RebarMultiblockComponent(schema.getKey()));
+                    components.add(schema.getKey());
                 }
             }
-            component = new MixedMultiblockComponent(components);
+            component = MultiblockComponent.of(components.toArray(new NamespacedKey[0]));
         }, 0);
     }
 

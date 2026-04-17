@@ -98,7 +98,7 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
-        return Map.of(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.GRINDSTONE_HANDLE));
+        return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.GRINDSTONE_HANDLE));
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })

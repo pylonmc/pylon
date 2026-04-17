@@ -179,10 +179,10 @@ public final class Bloomery extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(
-                new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(1, 1, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(-1, 1, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(0, 1, 1), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS)
+                new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(1, 1, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(-1, 1, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(0, 1, 1), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS)
         );
     }
 
