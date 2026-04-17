@@ -27,9 +27,9 @@ public class PotionPedestal extends Pedestal {
     public boolean isIllegalItem(@NotNull final Player player, @NotNull final ItemStack stack) {
         if (!PylonUtils.isPotion(stack.getType())) {
             player.sendMessage(Component.translatable("pylon.message.potion_pedestal.not-potion"));
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

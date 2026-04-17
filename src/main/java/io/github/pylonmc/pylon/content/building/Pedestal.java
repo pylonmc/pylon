@@ -104,10 +104,6 @@ public class Pedestal extends RebarBlock implements
         ItemStack oldStack = display.getItemStack();
         ItemStack newStack = event.getItem();
 
-        if (isIllegalItem(event.getPlayer(), newStack)) {
-            return;
-        }
-
         if (!oldStack.getType().isAir()) {
             player.give(oldStack);
             display.setItemStack(null);
@@ -116,6 +112,10 @@ public class Pedestal extends RebarBlock implements
 
         // insert new item
         if (newStack != null) {
+            if (isIllegalItem(event.getPlayer(), newStack)) {
+                return;
+            }
+
             ItemStack stackToInsert = newStack.asQuantity(1);
             display.setItemStack(stackToInsert);
             newStack.subtract();
