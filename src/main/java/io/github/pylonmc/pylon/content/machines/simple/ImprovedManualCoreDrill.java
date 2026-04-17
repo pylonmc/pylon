@@ -27,19 +27,19 @@ public class ImprovedManualCoreDrill extends ManualCoreDrill {
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 0, -1), new RebarMultiblockComponent(PylonKeys.MANUAL_CORE_DRILL_LEVER));
+        components.put(new Vector3i(0, 0, -1), MultiblockComponent.of(PylonKeys.MANUAL_CORE_DRILL_LEVER));
 
-        components.put(new Vector3i(1, 0, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(1, -1, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(1, -2, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(1, -1, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(1, -2, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
 
-        components.put(new Vector3i(-1, 0, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(-1, -1, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(-1, -2, 0), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(-1, -1, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(-1, -2, 0), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
 
-        components.put(new Vector3i(0, 0, 1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(0, -1, 1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
-        components.put(new Vector3i(0, -2, 1), new VanillaMultiblockComponent(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(0, 0, 1), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(0, -1, 1), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
+        components.put(new Vector3i(0, -2, 1), MultiblockComponent.of(Material.POLISHED_DEEPSLATE_WALL));
 
         return components;
     }

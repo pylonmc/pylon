@@ -143,9 +143,9 @@ public class Collimator extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(
-                new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.COLLIMATOR_PILLAR),
-                new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.COLLIMATOR_PILLAR),
-                new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.COLLIMATOR_PILLAR)
+                new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.COLLIMATOR_PILLAR),
+                new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.COLLIMATOR_PILLAR),
+                new Vector3i(0, 0, 1), MultiblockComponent.of(PylonKeys.COLLIMATOR_PILLAR)
         );
     }
 
