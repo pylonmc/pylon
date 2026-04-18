@@ -151,22 +151,21 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             return;
         }
 
-        // if we are clicking on an inventory don't do anything
-        if (event.useInteractedBlock() == Event.Result.ALLOW) return;
-
-        if (event.getAction().isLeftClick()) {
-            tryUseAssemblyTable(event.getClickedBlock(), event.getPlayer());
-        } else if (clicked != null) {
-            tryDoRecipe(clicked, event.getPlayer(), event.getHand(), event.getBlockFace());
-        }
-    }
-
-    public void tryUseAssemblyTable(Block clickedBlock, Player player) {
-        RebarBlock rebarBlock = BlockStorage.get(clickedBlock);
-        if (!(rebarBlock instanceof AssemblyTable assemblyTable)) {
+        // do assembling recipes
+        RebarBlock rebarBlock = BlockStorage.get(clicked);
+        if (event.getAction().isLeftClick() && rebarBlock instanceof AssemblyTable assemblyTable) {
+            useAssemblyTable(assemblyTable, event.getPlayer());
             return;
         }
 
+        // interacts vanilla blocks, if we are clicking on an inventory don't do anything
+        if (event.useInteractedBlock() == Event.Result.ALLOW) return;
+
+        // do hammer recipes
+        tryDoRecipe(clicked, event.getPlayer(), event.getHand(), event.getBlockFace());
+    }
+
+    public void useAssemblyTable(AssemblyTable assemblyTable, Player player) {
         List<BlockData> possibleBlockDatas = new ArrayList<>();
         for (String name : assemblyTable.getHeldEntities().keySet()) {
             if (!name.startsWith("recipe_display")) {
@@ -175,9 +174,9 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
 
             try {
                 possibleBlockDatas.add(assemblyTable.getHeldEntityOrThrow(ItemDisplay.class, name)
-                        .getItemStack()
-                        .getType()
-                        .createBlockData()
+                                               .getItemStack()
+                                               .getType()
+                                               .createBlockData()
                 );
             } catch (RuntimeException ignored) {
                 // Some items don't have block data
