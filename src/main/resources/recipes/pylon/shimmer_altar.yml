@@ -135,11 +135,10 @@ pylon:eon_weave_crystal:
 
 pylon:ascendant_ember:
   shape:
-    - "RSE"
-    - "SAS"
-    - "ESR"
+    - "R E"
+    - " A "
+    - "E R"
   key:
-    S: pylon:shimmer_dust_3
     A: pylon:covalent_binder
     E: pylon:eon_weave_crystal
     R: pylon:chronicle_resin

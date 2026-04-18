@@ -9,6 +9,7 @@ import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
@@ -63,7 +64,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock {
+        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
@@ -106,6 +107,8 @@ public class PotionAltar extends RebarBlock
         super(block, context);
 
         setTickInterval(tickInterval);
+        setFacing(context.getFacing());
+        setMultiblockDirection(getFacing());
 
         addEntity("brewing_stand", new BlockDisplayBuilder()
                 .transformation(new TransformBuilder()
@@ -141,7 +144,7 @@ public class PotionAltar extends RebarBlock
         map.put(new Vector3i(2, 0, 0), POTION_PEDESTAL_COMPONENT);
         map.put(new Vector3i(-1, 0, 0), LIT_ORANGE_CANDLE_COMPONENT);
         map.put(new Vector3i(-2, 0, 0), POTION_PEDESTAL_COMPONENT);
-        map.put(new Vector3i(0, 0, -2), SHIMMER_PEDESTAL_COMPONENT);
+        map.put(new Vector3i(0, 0, 2), SHIMMER_PEDESTAL_COMPONENT);
         return map;
     }
 
