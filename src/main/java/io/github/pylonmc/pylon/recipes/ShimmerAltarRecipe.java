@@ -110,7 +110,8 @@ public record ShimmerAltarRecipe(
             boolean allIngredientsMatch = true;
             for (int j = 0; j < ShimmerAltar.PEDESTAL_COUNT; j++) {
                 RecipeInput.Item input = this.inputs.get(j);
-                if (input != null && !input.matches(ingredients.get(j))) {
+                if ((input == null && ingredients.get(i) != null)
+                        || (input != null && !input.matches(ingredients.get(j)))) {
                     allIngredientsMatch = false;
                     break;
                 }

@@ -8,10 +8,12 @@ import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -35,7 +37,7 @@ import org.joml.Vector3i;
 import java.util.*;
 
 public class ShimmerAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarRecipeProcessor<ShimmerAltarRecipe> {
+        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarRecipeProcessor<ShimmerAltarRecipe>, RebarBreakHandler {
 
     public static final int PEDESTAL_COUNT = 8;
 
@@ -228,5 +230,12 @@ public class ShimmerAltar extends RebarBlock
                 .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
+    }
+
+    @Override
+    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        if (!getItemDisplay().getItemStack().getType().isAir()) {
+            drops.add(getItemDisplay().getItemStack());
+        }
     }
 }
