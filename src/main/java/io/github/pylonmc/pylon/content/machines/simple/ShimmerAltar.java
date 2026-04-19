@@ -237,5 +237,8 @@ public class ShimmerAltar extends RebarBlock
         if (!getItemDisplay().getItemStack().getType().isAir()) {
             drops.add(getItemDisplay().getItemStack());
         }
+        for (Pedestal pedestal : getPedestals()) {
+            pedestal.setLocked(false);
+        }
     }
 }
