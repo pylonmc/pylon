@@ -9,11 +9,13 @@ import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -64,7 +66,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock {
+        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock, RebarBreakHandler {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
@@ -563,6 +565,15 @@ public class PotionAltar extends RebarBlock
     public void write(@NotNull PersistentDataContainer pdc) {
         if (altarProgress != null) {
             pdc.set(RECIPE_TICKS_REMAINING_KEY, RebarSerializers.INTEGER, altarProgress.ticksRemaining);
+        }
+    }
+
+    @Override
+    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        for (Pedestal pedestal : getAllPedestals()) {
+            if (pedestal != null) {
+                pedestal.setLocked(false);
+            }
         }
     }
 }
