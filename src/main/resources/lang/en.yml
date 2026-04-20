@@ -1532,18 +1532,6 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
     waila: "Hydraulic Farmer | %input-bar% | %output-bar%"
 
-  hydraulic_miner:
-    name: "Hydraulic Miner"
-    lore: |-
-      <arrow> Mines blocks in an area using the stored tool
-      <arrow> Only breaks blocks that can be broken by the stored tool
-      <arrow> Outputs dirty hydraulic fluid
-      <arrow> <attr>Speed:</attr> %speed%
-      <arrow> <attr>Mining area:</attr> %mining-area%
-      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-block% per block
-      <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Miner | %input-bar% | %output-bar%"
-
   diesel_pipe_bender:
     name: "Diesel Pipe Bender"
     lore: |-
@@ -1626,16 +1614,16 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
     waila: "Diesel Furnace | %bar%"
 
-  diesel_miner:
-    name: "Diesel Miner"
+  diesel_quarry:
+    name: "Diesel Quarry"
     lore: |-
-      <arrow> Mines blocks in an area using the stored tool
+      <arrow> Mines blocks in an area from world height to bedrock using the stored tool
       <arrow> Only breaks blocks that can be broken by the stored tool
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Mining area:</attr> %mining-area%
       <arrow> <attr>Diesel usage:</attr> %diesel-per-block% per block
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Miner | %bar%"
+    waila: "Diesel Quarry | %bar%"
 
   diesel_booster:
     name: "Diesel Booster"
@@ -2460,6 +2448,7 @@ waila:
     not-empty: " | %item% x%amount%"
     idle: ""
     processing: " | %bars%"
+    invalid_recipe: " | <red>Invalid recipe"
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"

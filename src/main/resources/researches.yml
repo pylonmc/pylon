@@ -329,7 +329,6 @@ hydraulic_machines:
     - pylon:hydraulic_hammer_head
     - pylon:hydraulic_pipe_bender
     - pylon:hydraulic_table_saw
-    - pylon:hydraulic_miner
     - pylon:hydraulic_breaker
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
@@ -472,7 +471,7 @@ diesel_machines:
     - pylon:diesel_hammer_head
     - pylon:diesel_pipe_bender
     - pylon:diesel_table_saw
-    - pylon:diesel_miner
+    - pylon:diesel_quarry
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder

@@ -9,3 +9,21 @@ pylon:steel_blasting:
   result: pylon:steel_ingot
   experience: 0.7
   category: misc
+
+pylon:recycle_bronze_equipment_blasting:
+  ingredient: "#pylon:bronze_equipment"
+  result: pylon:bronze_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_steel_equipment_blasting:
+  ingredient: "#pylon:steel_equipment"
+  result: pylon:steel_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_palladium_equipment_blasting:
+  ingredient: "#pylon:palladium_equipment"
+  result: pylon:palladium_nugget
+  experience: 0.1
+  category: misc

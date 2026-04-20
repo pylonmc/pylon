@@ -135,7 +135,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.VACUUM_HOPPER_4, Material.HOPPER, VacuumHopper.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_REFUELING_STATION, Material.WAXED_CUT_COPPER_SLAB, HydraulicRefuelingStation.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FARMER, Material.WAXED_EXPOSED_COPPER_BULB, HydraulicFarmer.class);
-        RebarBlock.register(PylonKeys.HYDRAULIC_MINER, Material.WAXED_EXPOSED_CHISELED_COPPER, HydraulicMiner.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_BREAKER, Material.WAXED_EXPOSED_CUT_COPPER, HydraulicBreaker.class);
         RebarBlock.register(PylonKeys.DIESEL_PIPE_BENDER, Material.IRON_BLOCK, DieselPipeBender.class);
         RebarBlock.register(PylonKeys.DIESEL_TABLE_SAW, Material.IRON_BLOCK, DieselTableSaw.class);
@@ -146,7 +145,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_MIXING_ATTACHMENT, Material.IRON_BLOCK, DieselMixingAttachment.class);
         RebarBlock.register(PylonKeys.DIESEL_FURNACE, Material.FURNACE, DieselFurnace.class);
         RebarBlock.register(PylonKeys.DIESEL_BREAKER, Material.DROPPER, DieselBreaker.class);
-        RebarBlock.register(PylonKeys.DIESEL_MINER, Material.IRON_BLOCK, DieselMiner.class);
+        RebarBlock.register(PylonKeys.DIESEL_QUARRY, Material.IRON_BLOCK, DieselQuarry.class);
         RebarBlock.register(PylonKeys.DIESEL_REFUELING_STATION, Material.QUARTZ_SLAB, DieselRefuelingStation.class);
         RebarBlock.register(PylonKeys.FERMENTER, Material.PINK_TERRACOTTA, Fermenter.class);
         RebarBlock.register(PylonKeys.REINFORCED_GLASS, Material.GRAY_STAINED_GLASS, RebarBlock.class);

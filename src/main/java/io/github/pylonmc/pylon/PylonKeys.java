@@ -302,7 +302,6 @@ public class PylonKeys {
     public static final NamespacedKey HYDRAULIC_REFUELING_STATION = pylonKey("hydraulic_refueling_station");
 
     public static final NamespacedKey HYDRAULIC_FARMER = pylonKey("hydraulic_farmer");
-    public static final NamespacedKey HYDRAULIC_MINER = pylonKey("hydraulic_miner");
     public static final NamespacedKey HYDRAULIC_BREAKER = pylonKey("hydraulic_breaker");
 
     public static final NamespacedKey REACTIVATED_WITHER_SKULL = pylonKey("reactivated_wither_skull");
@@ -320,7 +319,7 @@ public class PylonKeys {
     public static final NamespacedKey DIESEL_SMELTERY_HEATER = pylonKey("diesel_smeltery_heater");
     public static final NamespacedKey DIESEL_FURNACE = pylonKey("diesel_furnace");
     public static final NamespacedKey DIESEL_BREAKER = pylonKey("diesel_breaker");
-    public static final NamespacedKey DIESEL_MINER = pylonKey("diesel_miner");
+    public static final NamespacedKey DIESEL_QUARRY = pylonKey("diesel_quarry");
     public static final NamespacedKey DIESEL_CORE_DRILL = pylonKey("diesel_core_drill");
     public static final NamespacedKey DIESEL_REFUELING_STATION = pylonKey("diesel_refueling_station");
     public static final NamespacedKey DIESEL_BOOSTER = pylonKey("diesel_booster");
