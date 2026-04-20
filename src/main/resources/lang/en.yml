@@ -1617,7 +1617,7 @@ item:
   diesel_quarry:
     name: "Diesel Quarry"
     lore: |-
-      <arrow> Mines blocks in an area using the stored tool
+      <arrow> Mines blocks in an area from world height to bedrock using the stored tool
       <arrow> Only breaks blocks that can be broken by the stored tool
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Mining area:</attr> %mining-area%

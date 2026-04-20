@@ -71,7 +71,7 @@ public class DieselQuarry extends Quarry implements
             int diameter = 2 * radius + 1;
             return List.of(
                     RebarArgument.of("speed", UnitFormat.PERCENT.format(speed * 100.0)),
-                    RebarArgument.of("mining-area", diameter + "x" + diameter + "x" + diameter),
+                    RebarArgument.of("mining-area", diameter + "x" + diameter),
                     RebarArgument.of("diesel-per-block", UnitFormat.MILLIBUCKETS.format(dieselPerBlock)),
                     RebarArgument.of("diesel-buffer", UnitFormat.MILLIBUCKETS.format(dieselBuffer))
             );
