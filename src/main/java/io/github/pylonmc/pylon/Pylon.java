@@ -52,7 +52,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PylonEntities.initialize();
         PylonFluids.initialize();
         PylonRecipes.initialize();
-
+        PylonTags.initialize();
 
 
         PluginManager pm = Bukkit.getPluginManager();
