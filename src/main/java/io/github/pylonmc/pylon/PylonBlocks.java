@@ -1,17 +1,11 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
-import io.github.pylonmc.pylon.content.building.Elevator;
-import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
-import io.github.pylonmc.pylon.content.building.Immobilizer;
-import io.github.pylonmc.pylon.content.building.Pedestal;
-import io.github.pylonmc.pylon.content.building.WitherProofBlock;
+import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
-import io.github.pylonmc.pylon.content.machines.diesel.machines.DieselCoreDrill;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
-import io.github.pylonmc.pylon.content.components.SmokestackCap;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
@@ -94,9 +88,10 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SMELTERY_INPUT_HATCH, Material.LIGHT_BLUE_TERRACOTTA, SmelteryInputHatch.class);
         RebarBlock.register(PylonKeys.SMELTERY_OUTPUT_HATCH, Material.ORANGE_TERRACOTTA, SmelteryOutputHatch.class);
         RebarBlock.register(PylonKeys.SMELTERY_HOPPER, Material.HOPPER, SmelteryHopper.class);
-        RebarBlock.register(PylonKeys.SMELTERY_CASTER, Material.BRICKS, SmelteryCaster.class);
         RebarBlock.register(PylonKeys.SMELTERY_BURNER, Material.FURNACE, SmelteryBurner.class);
         RebarBlock.register(PylonKeys.DIESEL_SMELTERY_HEATER, Material.FURNACE, DieselSmelteryHeater.class);
+        RebarBlock.register(PylonKeys.CASTING_UNIT, Material.BRICKS, CastingUnit.class);
+        RebarBlock.register(PylonKeys.FORMING_TABLE, Material.CRAFTING_TABLE, FormingTable.class);
         RebarBlock.register(PylonKeys.PIT_KILN, Material.DECORATED_POT, PitKiln.class);
         RebarBlock.register(PylonKeys.FLUID_STRAINER, Material.COPPER_GRATE, FluidStrainer.class);
         RebarBlock.register(PylonKeys.EXPLOSIVE_TARGET, Material.TARGET, ExplosiveTarget.class);

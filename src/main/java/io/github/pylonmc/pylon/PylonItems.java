@@ -28,18 +28,10 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
-import io.github.pylonmc.pylon.guide.PressableItemsPage;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
+import io.github.pylonmc.pylon.guide.PressableItemsPage;
 import io.github.pylonmc.pylon.guide.SmelteryBurnerFuelsPage;
-import io.github.pylonmc.pylon.recipes.CrucibleRecipe;
-import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
-import io.github.pylonmc.pylon.recipes.HammerRecipe;
-import io.github.pylonmc.pylon.recipes.MoldingRecipe;
-import io.github.pylonmc.pylon.recipes.PipeBendingRecipe;
-import io.github.pylonmc.pylon.recipes.PitKilnRecipe;
-import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
-import io.github.pylonmc.pylon.recipes.StrainingRecipe;
-import io.github.pylonmc.pylon.recipes.TableSawRecipe;
+import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.fluid.FluidPipe;
@@ -56,16 +48,18 @@ import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
+import java.util.Objects;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
-
-import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -2238,13 +2232,6 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(SMELTERY_HOPPER);
     }
 
-    public static final ItemStack SMELTERY_CASTER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMELTERY_CASTER)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, SMELTERY_CASTER, PylonKeys.SMELTERY_CASTER);
-        PylonPages.SMELTING.addItem(SMELTERY_CASTER);
-    }
-
     public static final ItemStack SMELTERY_BURNER = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.SMELTERY_BURNER)
             .build();
     static {
@@ -2259,6 +2246,55 @@ public final class PylonItems {
     static {
         RebarItem.register(DieselSmelteryHeater.Item.class, DIESEL_SMELTERY_HEATER, PylonKeys.DIESEL_SMELTERY_HEATER);
         PylonPages.SMELTING.addItem(DIESEL_SMELTERY_HEATER);
+    }
+
+    public static final ItemStack CASTING_UNIT = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.CASTING_UNIT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CASTING_UNIT, PylonKeys.CASTING_UNIT);
+        PylonPages.SMELTING.addItem(CASTING_UNIT);
+    }
+
+    public static final ItemStack FORMING_TABLE = ItemStackBuilder.rebar(Material.CRAFTING_TABLE, PylonKeys.FORMING_TABLE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FORMING_TABLE, PylonKeys.FORMING_TABLE);
+        PylonPages.SMELTING.addItem(FORMING_TABLE);
+    }
+
+    public static final ItemStack NUGGET_MOLD = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NUGGET_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NUGGET_MOLD, PylonKeys.NUGGET_MOLD);
+        PylonPages.SMELTING.addItem(NUGGET_MOLD);
+    }
+
+    public static final ItemStack INGOT_MOLD = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.INGOT_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INGOT_MOLD, PylonKeys.INGOT_MOLD);
+        PylonPages.SMELTING.addItem(INGOT_MOLD);
+    }
+
+    public static final ItemStack BLOCK_MOLD = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BLOCK_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BLOCK_MOLD, PylonKeys.BLOCK_MOLD);
+        PylonPages.SMELTING.addItem(BLOCK_MOLD);
+    }
+
+    public static final ItemStack SHEET_MOLD = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SHEET_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SHEET_MOLD, PylonKeys.SHEET_MOLD);
+        PylonPages.SMELTING.addItem(SHEET_MOLD);
+    }
+
+    public static final ItemStack PIPE_MOLD = ItemStackBuilder.rebar(Material.BROWN_CONCRETE, PylonKeys.PIPE_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPE_MOLD, PylonKeys.PIPE_MOLD);
+        PylonPages.SMELTING.addItem(PIPE_MOLD);
     }
 
 

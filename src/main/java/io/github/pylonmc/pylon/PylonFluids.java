@@ -1,16 +1,16 @@
 package io.github.pylonmc.pylon;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.IngredientCalculator;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class PylonFluids {
 
@@ -106,7 +106,7 @@ public final class PylonFluids {
     public static final RebarFluid SULFUR = new RebarFluid(
             pylonKey("sulfur"),
             Material.YELLOW_TERRACOTTA
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(112.8));
     static {
         SULFUR.register();
     }
@@ -122,7 +122,7 @@ public final class PylonFluids {
     public static final RebarFluid COPPER = new RebarFluid(
             pylonKey("copper"),
             Material.TERRACOTTA
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1083));
     static {
         COPPER.register();
     }
@@ -130,7 +130,7 @@ public final class PylonFluids {
     public static final RebarFluid IRON = new RebarFluid(
             pylonKey("iron"),
             Material.RED_TERRACOTTA
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1538));
     static {
         IRON.register();
     }
@@ -138,7 +138,7 @@ public final class PylonFluids {
     public static final RebarFluid GOLD = new RebarFluid(
             pylonKey("gold"),
             Material.YELLOW_CONCRETE
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1064));
     static {
         GOLD.register();
     }
@@ -146,7 +146,7 @@ public final class PylonFluids {
     public static final RebarFluid TIN = new RebarFluid(
             pylonKey("tin"),
             Material.GREEN_TERRACOTTA
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(231.9));
     static {
         TIN.register();
     }
@@ -154,7 +154,7 @@ public final class PylonFluids {
     public static final RebarFluid BRONZE = new RebarFluid(
             pylonKey("bronze"),
             Material.BROWN_CONCRETE
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(950));
     static {
         BRONZE.register();
     }
@@ -162,7 +162,7 @@ public final class PylonFluids {
     public static final RebarFluid STEEL = new RebarFluid(
             pylonKey("steel"),
             Material.GRAY_CONCRETE
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1410));
     static {
         STEEL.register();
     }
@@ -170,7 +170,7 @@ public final class PylonFluids {
     public static final RebarFluid PALLADIUM = new RebarFluid(
             pylonKey("palladium"),
             Material.LIGHT_BLUE_TERRACOTTA
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1555));
     static {
         PALLADIUM.register();
     }

@@ -1079,38 +1079,37 @@ pylon:refractory_bricks:
 
 pylon:smeltery_controller:
   pattern:
-    - "RBR"
+    - "RAR"
     - "BFB"
     - "RBR"
   key:
+    A: pylon:analogue_display # brits...
     B: pylon:refractory_bricks
     F: minecraft:blast_furnace
-    R: pylon:bronze_block
+    R: pylon:steel_sheet
   result: pylon:smeltery_controller
   category: building
 
 pylon:smeltery_input_hatch:
   pattern:
-    - "IBI"
-    - "PVB"
-    - "IBI"
+    - "BPB"
+    - " F "
+    - "B B"
   key:
     B: pylon:refractory_brick
-    I: pylon:iron_sheet
-    V: pylon:backflow_valve
+    F: pylon:fluid_input_hatch
     P: pylon:fluid_pipe_igneous_composite
   result: pylon:smeltery_input_hatch
   category: building
 
 pylon:smeltery_output_hatch:
   pattern:
-    - "IBI"
-    - "BVP"
-    - "IBI"
+    - "BPB"
+    - " F "
+    - "B B"
   key:
     B: pylon:refractory_brick
-    I: pylon:iron_sheet
-    V: pylon:backflow_valve
+    F: pylon:fluid_output_hatch
     P: pylon:fluid_pipe_igneous_composite
   result: pylon:smeltery_output_hatch
   category: building
@@ -1125,18 +1124,6 @@ pylon:smeltery_hopper:
     H: minecraft:hopper
     C: minecraft:chest
   result: pylon:smeltery_hopper
-  category: building
-
-pylon:smeltery_caster:
-  pattern:
-    - "BPB"
-    - "BFB"
-    - "BBB"
-  key:
-    B: pylon:refractory_brick
-    P: pylon:fluid_pipe_igneous_composite
-    F: minecraft:flower_pot
-  result: pylon:smeltery_caster
   category: building
 
 pylon:smeltery_burner:
@@ -2677,6 +2664,17 @@ pylon:palladium_condenser:
     pylon:palladium_condenser: 1
   category: building
 
+pylon:casting_unit:
+  pattern:
+    - "R R"
+    - " B "
+    - "RSR"
+  key:
+    R: pylon:refractory_bricks
+    B: minecraft:bucket
+    S: pylon:bronze_sheet
+  result: pylon:casting_unit
+  category: building
 pylon:silo_converter:
   pattern:
     - "SSS"
