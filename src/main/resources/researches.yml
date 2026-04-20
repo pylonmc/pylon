@@ -135,11 +135,11 @@ smelting_2:
     - pylon:steel_block
     - pylon:steel_sheet
     - pylon:casting_unit
-    - pylon:cast_nugget
-    - pylon:cast_ingot
-    - pylon:cast_block
-    - pylon:cast_sheet
-    - pylon:cast_pipe
+    - pylon:mold_nugget
+    - pylon:mold_ingot
+    - pylon:mold_block
+    - pylon:mold_sheet
+    - pylon:mold_pipe
     - pylon:forming_table
 
 smelting_3:

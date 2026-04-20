@@ -164,7 +164,7 @@ public final class CastingUnit extends RebarBlock implements
     private final CastingControlItem castingControlItem = new CastingControlItem();
 
     private static final ItemStack CAST_BORDER = ItemStackBuilder.gui(Material.GREEN_STAINED_GLASS_PANE, pylonKey("mold"))
-            .name(Component.translatable("pylon.gui.mold-border"))
+            .name(Component.translatable("pylon.gui.casting-control.mold-border"))
             .build();
 
     @Override

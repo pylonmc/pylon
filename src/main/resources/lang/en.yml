@@ -2416,25 +2416,21 @@ item:
     name: "Ingot Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
-      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
   mold_block:
     name: "Block Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
-      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>1296</unit>
 
   mold_sheet:
     name: "Sheet Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
-      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
   mold_pipe:
     name: "Pipe Mold"
     lore: |-
       <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
-      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>144</unit>
 
   forming_table:
     name: "Forming Table"
@@ -2892,6 +2888,7 @@ gui:
       <arrow> <attr>Queued casts:</attr> %queued-casts%
       <arrow> <attr>Automatic casting:</attr> %auto-cast%
     casting: "Casting %fluid%: %amount%<br><br>"
+    mold-border: "Mold"
 
 inventory:
   fuel: "Fuel"
