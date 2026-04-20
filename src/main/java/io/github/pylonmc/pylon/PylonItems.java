@@ -3201,6 +3201,14 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRICITY_PYLON);
     }
 
+    public static final ItemStack TRANSFORMER = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.TRANSFORMER)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.key())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, TRANSFORMER, PylonKeys.TRANSFORMER);
+        PylonPages.ELECTRICITY.addItem(TRANSFORMER);
+    }
+
     public static final ItemStack MULTIMETER = ItemStackBuilder.rebar(Material.CLOCK, PylonKeys.MULTIMETER)
             .build();
     static {

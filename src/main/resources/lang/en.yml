@@ -2414,6 +2414,11 @@ item:
     lore: |-
       TODO
 
+  transformer:
+    name: "Transformer"
+    lore: |-
+      TODO
+
   multimeter:
     name: "Multimeter"
     lore: |-
