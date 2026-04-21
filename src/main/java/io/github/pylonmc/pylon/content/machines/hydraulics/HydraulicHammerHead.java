@@ -179,6 +179,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             new ParticleBuilder(Particle.ITEM)
                     .data(attempt.hammeredItem().getItemStack())
                     .count(20)
+                    .extra(0.05)
                     .location(attempt.hammeredItem().getLocation())
                     .spawn();
             startProcess((int)(hammer.cooldownTicks / speed));

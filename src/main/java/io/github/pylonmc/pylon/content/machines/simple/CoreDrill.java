@@ -146,6 +146,7 @@ public abstract class CoreDrill extends RebarBlock implements
                 if (spawnBlockParticles) {
                     new ParticleBuilder(Particle.ITEM)
                             .count(5)
+                            .extra(0.05)
                             .data(new ItemStack(getBlock().getRelative(BlockFace.DOWN, 3).getType()))
                             .location(getBlock()
                                     .getRelative(BlockFace.DOWN, 2)

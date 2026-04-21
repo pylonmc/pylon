@@ -198,6 +198,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             }
             new ParticleBuilder(Particle.ITEM)
                     .count(10)
+                    .extra(0.05)
                     .location(assemblyTable.getWorkspaceCenter())
                     .offset(0.1, 0, 0.1)
                     .data(data)

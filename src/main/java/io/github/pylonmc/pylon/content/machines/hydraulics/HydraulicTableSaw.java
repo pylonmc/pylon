@@ -152,6 +152,7 @@ public class HydraulicTableSaw extends RebarBlock implements
         if (isProcessingRecipe()) {
             new ParticleBuilder(Particle.ITEM)
                     .count(5)
+                    .extra(0.05)
                     .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
                     .data(getCurrentRecipe().particleItem())
                     .spawn();

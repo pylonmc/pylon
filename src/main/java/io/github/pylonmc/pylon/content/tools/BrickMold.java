@@ -46,6 +46,7 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
         event.getPlayer().setCooldown(getStack(), cooldownTicks);
         new ParticleBuilder(Particle.ITEM)
                 .count(20)
+                .extra(0.05)
                 .offset(0.2, 0.2, 0.2)
                 .location(event.getClickedBlock().getLocation().toCenterLocation())
                 .data(new ItemStack(event.getClickedBlock().getType()))
