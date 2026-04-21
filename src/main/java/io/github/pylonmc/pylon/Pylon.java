@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
-import io.github.pylonmc.pylon.content.machines.electric.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
@@ -13,6 +12,8 @@ import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.addon.RebarAddon;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import java.util.Locale;
+import java.util.Set;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -20,9 +21,6 @@ import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-import java.util.Set;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -73,7 +71,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new EnchantingTalisman.EnchantingListener(), this);
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
         pm.registerEvents(new ExperienceTalisman.XPTalismanListener(), this);
-        pm.registerEvents(new ElectricityPylon.InteractionListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
         RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));

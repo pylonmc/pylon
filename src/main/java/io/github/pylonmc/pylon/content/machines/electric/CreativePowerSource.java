@@ -23,6 +23,7 @@ public final class CreativePowerSource extends RebarBlock implements
     @SuppressWarnings("unused")
     public CreativePowerSource(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        setFacing(context.getFacing());
     }
 
     @SuppressWarnings({"unused", "DataFlowIssue"})

@@ -3209,6 +3209,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(TRANSFORMER);
     }
 
+    public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_1_GAUGE)
+            .build();
+    static {
+        RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
+        PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
+    }
+
     public static final ItemStack MULTIMETER = ItemStackBuilder.rebar(Material.CLOCK, PylonKeys.MULTIMETER)
             .build();
     static {

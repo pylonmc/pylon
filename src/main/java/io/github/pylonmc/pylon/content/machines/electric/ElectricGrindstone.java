@@ -47,6 +47,7 @@ public class ElectricGrindstone extends AbstractGrindstone implements
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        setFacing(context.getFacing());
     }
 
     @SuppressWarnings("unused")

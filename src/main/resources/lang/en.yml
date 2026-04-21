@@ -2436,6 +2436,12 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
 
+  wire_1_gauge:
+    name: "1 Gauge Wire"
+    lore: |-
+      <arrow> Transmits electricity
+      <arrow> <attr>Current limit:</attr> %current-limit%
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2691,8 +2697,6 @@ guide:
           lore: ""
 
 message:
-  electricity_pylon:
-    already_connected: "<red>This block is already connected to an electricity pylon"
   assembly_table:
     full: "<red>Output full!"
   fluid_selector:
