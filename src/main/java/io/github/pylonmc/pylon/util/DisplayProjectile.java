@@ -122,12 +122,12 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
                     damage
             );
             if (event.callEvent()) {
-                hitEntity.damage(damage);
+                hitEntity.damage(damage, player);
                 hitEntity.setVelocity(locationStep.clone().normalize().multiply(0.2));
                 if (hitSound != null) {
                     player.getWorld().playSound(hitSound, hitEntity);
                 }
-                if (hitEntity instanceof Player) {
+                if (hitEntity instanceof Player && playerHitSound != null) {
                     player.playSound(playerHitSound, player);
                 }
             }

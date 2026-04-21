@@ -34,7 +34,7 @@ no-ammo-sound:
 hit-sound:
   sound: minecraft:block.netherite_block.hit
   source: player
-  volume: 2
+  volume: 1.75
   pitch: 1
 player-hit-sound:
   sound: minecraft:entity.arrow.hit_player
