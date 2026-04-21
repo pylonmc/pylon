@@ -1288,6 +1288,7 @@ item:
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
       <diamond> 6x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
       <diamond> 12x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
+      <diamond> 2 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Hydraulic Core Drill %duration_if_any%"
     waila_format: "| %duration%"
 
@@ -1309,6 +1310,7 @@ item:
       <diamond> 4x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
       <diamond> 9x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
       <diamond> 10x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Diesel Core Drill %duration_if_any%"
     waila_format: "| %duration%"
 
@@ -1639,6 +1641,7 @@ item:
       <diamond> 4x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
       <diamond> 4x <yellow><lang:pylon.item.reinforced_glass.name/></yellow>
       <diamond> 31x <yellow><lang:pylon.item.reinforced_glass_casing.name/></yellow>
+      <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Fermenter | %sugarcane-bar% %sugarcane-amount% sugarcane"
 
   reinforced_glass:
@@ -1667,6 +1670,7 @@ item:
       <diamond> 7x <yellow><lang:pylon.item.smokestack_ring.name/></yellow>
       <diamond> 2x <yellow><lang:pylon.item.smokestack_cap.name/></yellow>
       <diamond> 24x <yellow><lang:pylon.item.reinforced_plating.name/></yellow>
+      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Biorefinery | %info%"
 
   bronze_foundation:
@@ -2263,6 +2267,7 @@ item:
       <diamond> 8x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
       <diamond> 8x <yellow><lang:pylon.item.collimator_pillar.name/></yellow>
       <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
