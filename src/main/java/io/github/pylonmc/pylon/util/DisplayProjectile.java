@@ -17,10 +17,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 
 import java.util.List;
 import java.util.Optional;
+import net.kyori.adventure.sound.Sound;
 
 
 public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements RebarTickingEntity {
@@ -29,6 +31,8 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
     private final double damage;
     private final Vector locationStep;
     private int remainingLifetimeTicks;
+    private final @Nullable Sound hitSound;
+    private final @Nullable Sound playerHitSound;
 
     public DisplayProjectile(
             Player player,
@@ -40,7 +44,9 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
             float speedBlockPerSecond,
             double damage,
             int tickInterval,
-            int remainingLifetimeTicks
+            int remainingLifetimeTicks,
+            @Nullable Sound hitSound,
+            @Nullable Sound playerHitSound
     ) {
         super(PylonKeys.DISPLAY_PROJECTILE, new ItemDisplayBuilder()
             .transformation(new LineBuilder()
@@ -57,6 +63,8 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
         this.damage = damage;
         this.locationStep = direction.clone().multiply(speedBlockPerSecond * tickInterval / 20.0);
         this.remainingLifetimeTicks = remainingLifetimeTicks;
+        this.hitSound = hitSound;
+        this.playerHitSound = playerHitSound;
         setTickInterval(tickInterval);
         getEntity().setPersistent(false);
     }
@@ -73,6 +81,14 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
         remainingLifetimeTicks -= getTickInterval();
 
         entity.setTeleportDuration(getTickInterval());
+
+        entity.getWorld().spawnParticle(
+            Particle.FLAME,
+            entity.getLocation(),
+            2,
+            0.1, 0.1, 0.1,
+            0.01
+        );
 
         Location teleportTo = entity.getLocation().add(locationStep);
         if (!teleportTo.getBlock().isPassable()) {
@@ -108,6 +124,12 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
             if (event.callEvent()) {
                 hitEntity.damage(damage);
                 hitEntity.setVelocity(locationStep.clone().normalize().multiply(0.2));
+                if (hitSound != null) {
+                    player.getWorld().playSound(hitSound, hitEntity);
+                }
+                if (hitEntity instanceof Player) {
+                    player.playSound(playerHitSound, player);
+                }
             }
             entity.remove();
         });

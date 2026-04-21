@@ -10,3 +10,29 @@ projectile:
     damage: 6
     tick-interval: 1
     lifetime-ticks: 50
+
+sound:
+  sound: minecraft:entity.generic.explode
+  source: player
+  volume: 0.5
+  pitch: 2
+empty-sound:
+  sound: minecraft:block.piston.extend
+  source: player
+  volume: 0.5
+  pitch: 2
+full-sound:
+  sound: minecraft:block.piston.contract
+  source: player
+  volume: 0.5
+  pitch: 2
+hit-sound:
+  sound: minecraft:block.netherite_block.hit
+  source: player
+  volume: 1
+  pitch: 1
+player-hit-sound:
+  sound: minecraft:entity.arrow.hit_player
+  source: player
+  volume: 0.18
+  pitch: 0.45
