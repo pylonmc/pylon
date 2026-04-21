@@ -14,7 +14,6 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -37,7 +36,7 @@ public record GrindstoneRecipe(
         @NotNull RecipeInput.Item input,
         @NotNull WeightedSet<ItemStack> results,
         int cycles,
-        @NotNull BlockData particleBlockData
+        @NotNull ItemStack particleItem
 ) implements RebarRecipe {
 
     @Override
@@ -53,7 +52,7 @@ public record GrindstoneRecipe(
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER),
-                    section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA)
+                    section.getOrThrow("particle-data", ConfigAdapter.ITEM_STACK)
             );
         }
 

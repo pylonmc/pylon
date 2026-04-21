@@ -23,7 +23,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemDisplay;
@@ -167,17 +166,16 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             return;
         }
 
-        List<BlockData> possibleBlockDatas = new ArrayList<>();
+        List<ItemStack> possibleParticleDatas = new ArrayList<>();
         for (String name : assemblyTable.getHeldEntities().keySet()) {
             if (!name.startsWith("recipe_display")) {
                 continue;
             }
 
             try {
-                possibleBlockDatas.add(assemblyTable.getHeldEntityOrThrow(ItemDisplay.class, name)
-                        .getItemStack()
-                        .getType()
-                        .createBlockData()
+                possibleParticleDatas.add(assemblyTable
+                    .getHeldEntityOrThrow(ItemDisplay.class, name)
+                    .getItemStack()
                 );
             } catch (RuntimeException ignored) {
                 // Some items don't have block data
@@ -188,13 +186,13 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             getStack().damage(1, player);
             player.setCooldown(getStack(), cooldownTicks);
 
-            BlockData data;
-            if (possibleBlockDatas.isEmpty()) {
-                data = Material.CYAN_CONCRETE.createBlockData();
+            ItemStack data;
+            if (possibleParticleDatas.isEmpty()) {
+                data = new ItemStack(Material.CYAN_CONCRETE);
             } else {
-                data = possibleBlockDatas.get(random.nextInt(possibleBlockDatas.size()));
+                data = possibleParticleDatas.get(random.nextInt(possibleParticleDatas.size()));
             }
-            new ParticleBuilder(Particle.BLOCK)
+            new ParticleBuilder(Particle.ITEM)
                     .count(10)
                     .location(assemblyTable.getWorkspaceCenter())
                     .offset(0.1, 0, 0.1)

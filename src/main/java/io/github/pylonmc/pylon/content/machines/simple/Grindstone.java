@@ -198,8 +198,8 @@ public class Grindstone extends RebarBlock implements
                     }
 
                     PylonUtils.animate(getStoneDisplay(), CYCLE_DURATION_TICKS / 4, getStoneDisplayMatrix(translation, rotation));
-                    new ParticleBuilder(Particle.BLOCK)
-                        .data(nextRecipe.particleBlockData())
+                    new ParticleBuilder(Particle.ITEM)
+                        .data(nextRecipe.particleItem())
                         .count(10)
                         .location(getBlock().getLocation().toCenterLocation())
                         .spawn();

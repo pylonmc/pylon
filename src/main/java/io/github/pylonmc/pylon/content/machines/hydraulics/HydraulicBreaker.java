@@ -22,7 +22,6 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -167,10 +166,10 @@ public class HydraulicBreaker extends RebarBlock implements
 
         progressProcess(tickInterval);
         Block drilling = getBlock().getRelative(getFacing());
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .data(drilling.getBlockData())
+                .data(new ItemStack(drilling.getType()))
                 .spawn();
     }
 

@@ -197,14 +197,14 @@ pylon:flour:
   input: minecraft:wheat
   results: pylon:flour
   cycles: 1
-  particle-data: minecraft:wheat[age=7]
+  particle-data: minecraft:wheat
 
 pylon:string_from_bamboo:
   input:
     minecraft:bamboo: 4
   results: minecraft:string
   cycles: 3
-  particle-data: minecraft:bamboo[age=1]
+  particle-data: minecraft:bamboo
 
 pylon:blaze_powder:
   input: minecraft:blaze_rod

@@ -44,11 +44,11 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
 
         moldable.doMoldingClick();
         event.getPlayer().setCooldown(getStack(), cooldownTicks);
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(20)
                 .offset(0.2, 0.2, 0.2)
                 .location(event.getClickedBlock().getLocation().toCenterLocation())
-                .data(event.getClickedBlock().getBlockData())
+                .data(new ItemStack(event.getClickedBlock().getType()))
                 .spawn();
 
         if (moldable.isMoldingFinished()) {
