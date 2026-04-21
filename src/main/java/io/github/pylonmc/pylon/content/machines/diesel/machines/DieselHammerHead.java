@@ -222,10 +222,10 @@ public class DieselHammerHead extends RebarBlock implements
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
             new ParticleBuilder(Particle.ITEM)
-                    .data(attempt.hammeredItem().getItemStack())
+                    .data(attempt.hammeredItem())
                     .count(20)
                     .extra(0.05)
-                    .location(attempt.hammeredItem().getLocation())
+                    .location(attempt.hammeredLocation())
                     .spawn();
             startProcess((int)(hammer.cooldownTicks / speed));
         }, goDownTimeTicks);

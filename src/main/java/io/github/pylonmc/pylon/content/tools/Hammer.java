@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -46,7 +47,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
-    public record HammerAttempt(@Nullable Item hammeredItem, boolean recipeInProgress, boolean recipeSuccess) {}
+    public record HammerAttempt(@Nullable ItemStack hammeredItem, @Nullable Location hammeredLocation, boolean recipeInProgress, boolean recipeSuccess) {}
 
     public static final Random random = new Random();
 
@@ -61,7 +62,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
     }
 
     public @Nonnull HammerAttempt tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot, @NotNull BlockFace clickedFace) {
-        HammerAttempt fail = new HammerAttempt(null, false, false);
+        HammerAttempt fail = new HammerAttempt(null, null, false, false);
         if (baseBlock != block.getType()) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
@@ -112,7 +113,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
 
                 if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
                     block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-                    return new HammerAttempt(item, true, false); // recipe attempted but unsuccessful
+                    return new HammerAttempt(item.getItemStack(), item.getLocation(), true, false); // recipe attempted but unsuccessful
                 }
 
                 int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
@@ -121,7 +122,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                         .setVelocity(new Vector(0, 0, 0));
                 block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
 
-                return new HammerAttempt(item, false, true);
+                return new HammerAttempt(item.getItemStack(), item.getLocation(), false, true);
             }
         }
 
