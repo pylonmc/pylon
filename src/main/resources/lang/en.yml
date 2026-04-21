@@ -2417,7 +2417,7 @@ item:
   transformer:
     name: "Transformer"
     lore: |-
-      TODO
+      <arrow> Sets the voltage of any current crossing through it to a specific value
 
   multimeter:
     name: "Multimeter"
@@ -2437,10 +2437,10 @@ item:
       <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
 
   wire_1_gauge:
-    name: "1 Gauge Wire"
+    name: "1-Gauge Wire"
     lore: |-
       <arrow> Transmits electricity
-      <arrow> <attr>Current limit:</attr> %current-limit%
+      <arrow> <attr>Max current:</attr> %max-current%
 
 fluid:
   castable:
@@ -2462,7 +2462,7 @@ fluid:
   slurry_raw_iron: "<gray>Raw Iron Slurry"
   slurry_raw_tin: "<gray>Raw Tin Slurry"
   steel: "<gray>Liquid Steel"
-  sulfur: "<yellow>Sulfur"
+  sulfur: "<yellow>Liquid Sulfur"
   tin: "<gray>Liquid Tin"
   water: "<blue>Water"
   palladium: "<#b642f5>Liquid Palladium"

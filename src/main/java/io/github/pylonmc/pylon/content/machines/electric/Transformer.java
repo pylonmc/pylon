@@ -1,11 +1,23 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
+import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
+import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.electricity.ElectricNode;
+import io.github.pylonmc.rebar.electricity.ElectricityManager;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
+import java.util.UUID;
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.block.Block;
@@ -14,10 +26,24 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import xyz.xenondevs.invui.gui.Gui;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Transformer extends RebarBlock implements
         RebarDirectionalBlock,
-        RebarEntityHolderBlock {
+        RebarElectricBlock,
+        RebarGuiBlock {
+
+    private static final NamespacedKey VOLTAGE_KEY = pylonKey("voltage");
+    private static final NamespacedKey INPUT_NODE_KEY = pylonKey("input_node");
+    private static final NamespacedKey OUTPUT_NODE_KEY = pylonKey("output_node");
+
+    private ElectricNode.Connector inputNode;
+    private ElectricNode.Connector outputNode;
+
+    @Getter
+    private double voltage;
 
     @SuppressWarnings("unused")
     public Transformer(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -136,10 +162,65 @@ public class Transformer extends RebarBlock implements
                 )
                 .build(block.getLocation().toCenterLocation())
         );
+
+        voltage = 0;
+
+        inputNode = addElectricPort(getFacing(), new ElectricNode.Connector(new BlockPosition(block)));
+        outputNode = addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Connector(new BlockPosition(block)));
+        inputNode.connect(outputNode);
+        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public Transformer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+
+        voltage = pdc.get(VOLTAGE_KEY, RebarSerializers.DOUBLE);
+    }
+
+    @Override
+    protected void postLoad(@NotNull PersistentDataContainer pdc) {
+        UUID inputNodeId = pdc.get(INPUT_NODE_KEY, RebarSerializers.UUID);
+        UUID outputNodeId = pdc.get(OUTPUT_NODE_KEY, RebarSerializers.UUID);
+        inputNode = (ElectricNode.Connector) getElectricNodes().stream()
+                .filter(node -> node.getId().equals(inputNodeId))
+                .findFirst()
+                .orElseThrow();
+        outputNode = (ElectricNode.Connector) getElectricNodes().stream()
+                .filter(node -> node.getId().equals(outputNodeId))
+                .findFirst()
+                .orElseThrow();
+        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
+    }
+
+    @Override
+    public void write(@NotNull PersistentDataContainer pdc) {
+        pdc.set(VOLTAGE_KEY, RebarSerializers.DOUBLE, voltage);
+        pdc.set(INPUT_NODE_KEY, RebarSerializers.UUID, inputNode.getId());
+        pdc.set(OUTPUT_NODE_KEY, RebarSerializers.UUID, outputNode.getId());
+    }
+
+    @Override
+    public @NotNull Gui createGui() {
+        return Gui.builder()
+                .setStructure("# # # # v # # # #")
+                .addIngredient('#', GuiItems.background())
+                .addIngredient('v', NumberInputButton.builder()
+                        .material(Material.REDSTONE)
+                        .name(Component.translatable("pylon.gui.voltage"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(0)
+                        .valueGetter(() -> (int) getVoltage())
+                        .valueSetter(this::setVoltage)
+                        .valueFormatter(UnitFormat.VOLTS::format)
+                        .reopenWindow(this::openWindow)
+                        .build())
+                .build();
+    }
+
+    public void setVoltage(double voltage) {
+        this.voltage = voltage;
+        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
     }
 }

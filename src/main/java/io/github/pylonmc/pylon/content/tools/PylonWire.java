@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PylonWire extends RebarItem implements RebarWire {
 
-    private final double currentLimit = getSettings().getOrThrow("current-limit", ConfigAdapter.DOUBLE);
+    private final double currentLimit = getSettings().getOrThrow("max-current", ConfigAdapter.DOUBLE);
 
     public PylonWire(@NotNull ItemStack stack) {
         super(stack);
@@ -20,11 +20,11 @@ public class PylonWire extends RebarItem implements RebarWire {
 
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("current-limit", UnitFormat.AMPRERES.format(currentLimit)));
+        return List.of(RebarArgument.of("max-current", UnitFormat.AMPRERES.format(currentLimit)));
     }
 
     @Override
-    public double getCurrentLimit() {
+    public double getMaxCurrent() {
         return currentLimit;
     }
 

@@ -21,6 +21,8 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -43,9 +45,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3i;
-
-import java.util.List;
-import java.util.Map;
 
 
 public class Grindstone extends RebarBlock implements
@@ -90,7 +89,7 @@ public class Grindstone extends RebarBlock implements
     }
 
     @Override
-    protected void postLoad() {
+    protected void postLoad(@NotNull PersistentDataContainer pdc) {
         if (isProcessingRecipe()) {
             finishRecipe();
         }
