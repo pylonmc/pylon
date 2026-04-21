@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -68,6 +69,8 @@ public class BarteringTalisman extends Talisman {
             Item item = event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), event.getInput().clone());
             if (!new EntityDropItemEvent(event.getEntity(), item).callEvent()) {
                 item.remove();
+            } else {
+                item.getWorld().playSound(PylonConfig.BARTERING_TALISMAN_TRIGGER_SOUND.create(), item);
             }
         }
     }

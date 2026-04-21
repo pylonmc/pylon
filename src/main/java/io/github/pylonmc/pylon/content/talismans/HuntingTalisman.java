@@ -1,10 +1,12 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,6 +77,8 @@ public class HuntingTalisman extends Talisman {
                     continue;
                 }
                 drop.setAmount(drop.getAmount() + 1);
+                Entity source = event.getEntity();
+                source.getWorld().playSound(PylonConfig.HUNTING_TALISMAN_TRIGGER_SOUND.create(), source);
             }
         }
     }

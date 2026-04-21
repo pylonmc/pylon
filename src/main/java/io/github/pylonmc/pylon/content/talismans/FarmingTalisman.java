@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -65,6 +66,7 @@ public class FarmingTalisman extends Talisman {
                     continue;
                 }
                 additionalDrops.add(drop.getWorld().dropItem(drop.getLocation(), drop.getItemStack().clone()));
+                drop.getWorld().playSound(PylonConfig.FARMING_TALISMAN_TRIGGER_SOUND.create(), drop);
             }
             event.getItems().addAll(additionalDrops);
         }

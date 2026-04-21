@@ -2,3 +2,30 @@ rune-check-range: 1.75
 # This number multiplied by the inventory ticker base rate in the core config.yml equals the update rate for talismans
 # eg if this is 4 and the inventory ticker base rate is 10, then talismans update every 40 ticks
 default-talisman-tick-interval: 4
+
+talismans:
+  bartering-trigger-sound:
+    sound: minecraft:block.amethyst_block.resonate
+    source: neutral
+    volume: 1
+    pitch: 2
+  enchanting-trigger-sound:
+    sound: minecraft:block.beacon.power_select
+    source: player
+    volume: 0.5
+    pitch: 2
+  experience-trigger-sound:
+    sound: minecraft:entity.experience_orb.pickup
+    source: player
+    volume: 0.15
+    pitch: 2
+  farming-trigger-sound:
+    sound: minecraft:block.gravel.break
+    source: block
+    volume: 1
+    pitch: 1.1
+  hunting-trigger-sound:
+    sound: minecraft:block.dispenser.dispense
+    source: player
+    volume: 0.5
+    pitch: 2
