@@ -4,6 +4,7 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.tools.Hammer;
+import io.github.pylonmc.pylon.content.tools.Hammer.HammerAttempt;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -202,7 +203,8 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
+        HammerAttempt attempt = hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP);
+        if (!attempt.recipeSuccess() && !attempt.recipeInProgress()) {
             return;
         }
         // update hammer inv w/ damaged hammer
@@ -220,9 +222,9 @@ public class DieselHammerHead extends RebarBlock implements
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
             new ParticleBuilder(Particle.ITEM)
-                    .data(new ItemStack(baseBlock.getType()))
+                    .data(attempt.hammeredItem().getItemStack())
                     .count(20)
-                    .location(baseBlock.getLocation().toCenterLocation().add(0, 0.6, 0))
+                    .location(attempt.hammeredItem().getLocation())
                     .spawn();
             startProcess((int)(hammer.cooldownTicks / speed));
         }, goDownTimeTicks);
