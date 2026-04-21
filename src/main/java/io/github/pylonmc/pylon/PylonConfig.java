@@ -12,7 +12,6 @@ public final class PylonConfig {
     public static final long DEFAULT_TALISMAN_TICK_INTERVAL = config.getOrThrow("default-talisman-tick-interval", ConfigAdapter.LONG);
     public static final RandomizedSound BARTERING_TALISMAN_TRIGGER_SOUND = config.getOrThrow("talismans.bartering-trigger-sound", ConfigAdapter.RANDOMIZED_SOUND);
     public static final RandomizedSound ENCHANTING_TALISMAN_TRIGGER_SOUND = config.getOrThrow("talismans.enchanting-trigger-sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public static final RandomizedSound EXPERIENCE_TALISMAN_TRIGGER_SOUND = config.getOrThrow("talismans.experience-trigger-sound", ConfigAdapter.RANDOMIZED_SOUND);
     public static final RandomizedSound FARMING_TALISMAN_TRIGGER_SOUND = config.getOrThrow("talismans.farming-trigger-sound", ConfigAdapter.RANDOMIZED_SOUND);
     public static final RandomizedSound HUNTING_TALISMAN_TRIGGER_SOUND = config.getOrThrow("talismans.hunting-trigger-sound", ConfigAdapter.RANDOMIZED_SOUND);
 

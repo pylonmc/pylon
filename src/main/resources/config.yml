@@ -8,16 +8,11 @@ talismans:
     sound: minecraft:block.amethyst_block.resonate
     source: neutral
     volume: 1
-    pitch: 2
+    pitch: 1.5
   enchanting-trigger-sound:
     sound: minecraft:block.beacon.power_select
     source: player
     volume: 0.5
-    pitch: 2
-  experience-trigger-sound:
-    sound: minecraft:entity.experience_orb.pickup
-    source: player
-    volume: 0.15
     pitch: 2
   farming-trigger-sound:
     sound: minecraft:block.gravel.break

@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.talismans;
 
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
-import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -59,8 +58,6 @@ public class ExperienceTalisman extends Talisman {
             event.getExperienceOrb().setExperience(
                     Math.round(event.getExperienceOrb().getExperience() * xpMultiplier)
             );
-            Player player = event.getPlayer();
-            player.playSound(PylonConfig.EXPERIENCE_TALISMAN_TRIGGER_SOUND.create(), player);
         }
     }
 }
