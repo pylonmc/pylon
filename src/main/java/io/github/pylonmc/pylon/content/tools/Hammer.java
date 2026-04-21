@@ -110,19 +110,19 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                 } else {
                     RebarUtils.damageItem(getStack(), 1, block.getWorld());
                 }
-
+                ItemStack itemStack = item.getItemStack();
                 if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
                     block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-                    return new HammerAttempt(item.getItemStack(), item.getLocation(), true, false); // recipe attempted but unsuccessful
+                    return new HammerAttempt(itemStack, item.getLocation(), true, false); // recipe attempted but unsuccessful
                 }
 
-                int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
-                item.setItemStack(item.getItemStack().asQuantity(newAmount));
+                int newAmount = itemStack.getAmount() - recipe.input().getAmount();
+                item.setItemStack(itemStack.asQuantity(newAmount));
                 block.getWorld().dropItem(blockAbove.getLocation().add(0.5, 0.1, 0.5), recipe.result())
                         .setVelocity(new Vector(0, 0, 0));
                 block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
 
-                return new HammerAttempt(item.getItemStack(), item.getLocation(), false, true);
+                return new HammerAttempt(itemStack, item.getLocation(), false, true);
             }
         }
 
