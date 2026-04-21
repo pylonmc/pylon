@@ -29,7 +29,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param results the result items and their corresponding probabilities
  *                (respects item amount) (maximum 9 items)
  * @param cycles the number of full rotations needed to complete the recipe
- * @param particleItem the block data to use for the particles shown while grinding
+ * @param particleItem the item to use for the particles shown while grinding
  */
 public record GrindstoneRecipe(
         @NotNull NamespacedKey key,
@@ -52,7 +52,7 @@ public record GrindstoneRecipe(
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER),
-                    section.getOrThrow("particle-data", ConfigAdapter.ITEM_STACK)
+                    section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK)
             );
         }
 

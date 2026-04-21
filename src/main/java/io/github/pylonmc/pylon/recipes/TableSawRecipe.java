@@ -19,7 +19,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 /**
  * @param input the input item (respects amount)
  * @param result the output item (respects amount)
- * @param particleItem the block data to use for particles
+ * @param particleItem the item to use for particles
  * @param timeTicks the recipe time in ticks
  */
 public record TableSawRecipe(
@@ -42,7 +42,7 @@ public record TableSawRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
-                    section.getOrThrow("particle-data", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
             );
         }
