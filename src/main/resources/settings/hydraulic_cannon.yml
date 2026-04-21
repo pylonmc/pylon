@@ -1,15 +1,15 @@
 cooldown-ticks: 20
-
+recoil-velocity: 0.25
 hydraulic-fluid-per-shot: 40
 
 projectile:
-    material: gray_concrete
-    thickness: 0.08
-    length: 0.12
-    speed-blocks-per-second: 16
-    damage: 6
-    tick-interval: 1
-    lifetime-ticks: 50
+  material: gray_concrete
+  thickness: 0.08
+  length: 0.12
+  speed-blocks-per-second: 16
+  damage: 6
+  tick-interval: 1
+  lifetime-ticks: 50
 
 sound:
   sound: minecraft:entity.generic.explode
@@ -26,10 +26,15 @@ full-sound:
   source: player
   volume: 0.5
   pitch: 2
+no-ammo-sound:
+  sound: minecraft:block.anvil.land
+  source: player
+  volume: 0.5
+  pitch: 2
 hit-sound:
   sound: minecraft:block.netherite_block.hit
   source: player
-  volume: 1
+  volume: 2
   pitch: 1
 player-hit-sound:
   sound: minecraft:entity.arrow.hit_player

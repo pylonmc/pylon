@@ -40,6 +40,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     private final Config settings = getSettings();
 
     public final int cooldownTicks = settings.getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final double recoilVelocity = settings.getOrThrow("recoil-velocity", ConfigAdapter.DOUBLE);
     public final double hydraulicFluidPerShot = settings.getOrThrow("hydraulic-fluid-per-shot", ConfigAdapter.DOUBLE);
     public final Material projectileMaterial = settings.getOrThrow("projectile.material", ConfigAdapter.MATERIAL);
     public final float projectileThickness = settings.getOrThrow("projectile.thickness", ConfigAdapter.FLOAT);
@@ -48,11 +49,12 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     public final double projectileDamage = settings.getOrThrow("projectile.damage", ConfigAdapter.DOUBLE);
     public final int projectileTickInterval = settings.getOrThrow("projectile.tick-interval", ConfigAdapter.INTEGER);
     public final int projectileLifetimeTicks = settings.getOrThrow("projectile.lifetime-ticks", ConfigAdapter.INTEGER);
-    public final RandomizedSound sound = getSettings().getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound emptySound = getSettings().getOrThrow("empty-sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound fullSound = getSettings().getOrThrow("full-sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound hitSound = getSettings().getOrThrow("hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound playerHitSound = getSettings().getOrThrow("player-hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound sound = settings.getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound emptySound = settings.getOrThrow("empty-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound fullSound = settings.getOrThrow("full-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound noAmmoSound = settings.getOrThrow("no-ammo-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound hitSound = settings.getOrThrow("hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound playerHitSound = settings.getOrThrow("player-hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     @SuppressWarnings("unused")
     public HydraulicCannon(@NotNull ItemStack stack) {
@@ -110,6 +112,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
         }
 
         if (projectile == null) {
+            source.getWorld().playSound(noAmmoSound.create(), source.getX(), source.getY(), source.getZ());
             return;
         }
 
@@ -139,7 +142,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
                 playerHitSound.create()
         ));
         source.getWorld().playSound(sound.create(), source.getX(), source.getY(), source.getZ());
-        player.setVelocity(player.getVelocity().subtract(direction.multiply(0.5)));
+        player.setVelocity(player.getVelocity().subtract(direction.clone().multiply(recoilVelocity)));
     }
 
     @Override
