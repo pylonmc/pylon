@@ -19,7 +19,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 /**
  * @param input the input item (respects amount)
  * @param result the output item (respects amount)
- * @param particleData the block data to use for particles
+ * @param particleItem the block data to use for particles
  * @param timeTicks the recipe time in ticks
  */
 public record TableSawRecipe(
