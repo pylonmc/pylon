@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +59,11 @@ public class FarmingTalisman extends Talisman {
         public void onBlockBreak(BlockDropItemEvent event) {
             BlockState block = event.getBlockState();
             Location loc = block.getLocation();
-            if (!Tag.CROPS.isTagged(block.getType()) || !event.getPlayer().getPersistentDataContainer().has(FARMING_TALISMAN_CHANCE_KEY)) {
+            if (!Tag.CROPS.isTagged(block.getType())
+                    || !event.getPlayer().getPersistentDataContainer().has(FARMING_TALISMAN_CHANCE_KEY)
+                    || !(block.getBlockData() instanceof Ageable ageable)
+                    || ageable.getAge() != ageable.getMaximumAge())
+            {
                 return;
             }
             List<Item> additionalDrops = new ArrayList<>();
