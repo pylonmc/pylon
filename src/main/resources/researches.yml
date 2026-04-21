@@ -666,3 +666,9 @@ creative_flight:
   cost: 1000
   unlocks:
     - pylon:flight_ring
+
+village_doctor:
+  item: pylon:cleansing_potion
+  cost: 60
+  unlocks:
+    - pylon:cleansing_potion

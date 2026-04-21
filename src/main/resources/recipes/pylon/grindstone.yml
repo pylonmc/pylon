@@ -8,7 +8,7 @@ pylon:shallow_core_chunk:
     - value: pylon:raw_tin
       weight: 0.3
   cycles: 6
-  particle-data: minecraft:stone
+  particle-item: minecraft:stone
   priority: 4
 
 pylon:subsurface_core_chunk:
@@ -27,7 +27,7 @@ pylon:subsurface_core_chunk:
         minecraft:raw_iron: 2
       weight: 0.4
   cycles: 8
-  particle-data: minecraft:stone
+  particle-item: minecraft:stone
   priority: 3
 
 pylon:intermediate_core_chunk:
@@ -50,7 +50,7 @@ pylon:intermediate_core_chunk:
     - value: pylon:gypsum
       weight: 0.1
   cycles: 10
-  particle-data: minecraft:stone
+  particle-item: minecraft:stone
   priority: 2
 
 pylon:deep_core_chunk:
@@ -81,141 +81,141 @@ pylon:deep_core_chunk:
         minecraft:lapis_lazuli: 5
       weight: 0.15
   cycles: 20
-  particle-data: minecraft:stone
+  particle-item: minecraft:stone
   priority: 1
 
 pylon:rock_dust:
   input: "#rebar:rocks"
   results: pylon:rock_dust
   cycles: 2
-  particle-data: minecraft:cobblestone
+  particle-item: minecraft:cobblestone
 
 pylon:sand:
   input: minecraft:gravel
   results: minecraft:sand
   cycles: 2
-  particle-data: minecraft:sand
+  particle-item: minecraft:sand
 
 pylon:coal_dust:
   input: "#minecraft:coals"
   results: pylon:coal_dust
   cycles: 2
-  particle-data: minecraft:coal_block
+  particle-item: minecraft:coal_block
 
 pylon:gypsum_dust_from_gypsum:
   input: pylon:gypsum
   results: pylon:gypsum_dust
   cycles: 8
-  particle-data: minecraft:quartz_block
+  particle-item: minecraft:quartz_block
 
 pylon:quartz_dust_from_quartz:
   input: minecraft:quartz
   results: pylon:quartz_dust
   cycles: 4
-  particle-data: minecraft:quartz_block
+  particle-item: minecraft:quartz_block
 
 pylon:diamond_dust_from_diamond:
   input: minecraft:diamond
   results: pylon:diamond_dust
   cycles: 6
-  particle-data: minecraft:diamond_block
+  particle-item: minecraft:diamond_block
 
 pylon:emerald_dust_from_emerald:
   input: minecraft:emerald
   results: pylon:emerald_dust
   cycles: 6
-  particle-data: minecraft:emerald_block
+  particle-item: minecraft:emerald_block
 
 pylon:copper_dust_from_copper_ingot:
   input: minecraft:copper_ingot
   results: pylon:copper_dust
   cycles: 2
-  particle-data: minecraft:copper_block
+  particle-item: minecraft:copper_block
 
 pylon:copper_dust_from_raw_copper:
   input: minecraft:raw_copper
   results: pylon:copper_dust
   cycles: 4
-  particle-data: minecraft:copper_block
+  particle-item: minecraft:copper_block
 
 pylon:iron_dust_from_iron_ingot:
   input: minecraft:iron_ingot
   results: pylon:iron_dust
   cycles: 2
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
 
 pylon:iron_dust_from_raw_iron:
   input: minecraft:raw_iron
   results: pylon:iron_dust
   cycles: 4
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
 
 pylon:gold_dust_from_gold_ingot:
   input: minecraft:gold_ingot
   results: pylon:gold_dust
   cycles: 2
-  particle-data: minecraft:gold_block
+  particle-item: minecraft:gold_block
 
 pylon:gold_dust_from_raw_gold:
   input: minecraft:raw_gold
   results: pylon:gold_dust
   cycles: 4
-  particle-data: minecraft:gold_block
+  particle-item: minecraft:gold_block
 
 pylon:tin_dust_from_tin_ingot:
   input: pylon:tin_ingot
   results: pylon:tin_dust
   cycles: 2
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
 
 pylon:tin_dust_from_raw_tin:
   input: pylon:raw_tin
   results: pylon:tin_dust
   cycles: 4
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
 
 pylon:bronze_dust_from_bronze_ingot:
   input: pylon:bronze_ingot
   results: pylon:bronze_dust
   cycles: 2
-  particle-data: minecraft:gold_block
+  particle-item: minecraft:gold_block
 
 pylon:steel_dust_from_steel_ingot:
   input: pylon:steel_ingot
   results: pylon:steel_dust
   cycles: 2
-  particle-data: minecraft:netherite_block
+  particle-item: minecraft:netherite_block
 
 pylon:fiber:
   input: minecraft:string
   results:
     pylon:fiber: 2
   cycles: 2
-  particle-data: minecraft:white_wool
+  particle-item: minecraft:white_wool
 
 pylon:flour:
   input: minecraft:wheat
   results: pylon:flour
   cycles: 1
-  particle-data: minecraft:wheat[age=7]
+  particle-item: minecraft:wheat
 
 pylon:string_from_bamboo:
   input:
     minecraft:bamboo: 4
   results: minecraft:string
   cycles: 3
-  particle-data: minecraft:bamboo[age=1]
+  particle-item: minecraft:bamboo
 
 pylon:blaze_powder:
   input: minecraft:blaze_rod
   results:
     minecraft:blaze_powder: 3
   cycles: 5
-  particle-data: minecraft:yellow_concrete
+  particle-item: minecraft:yellow_concrete
 
 pylon:fine_sediment:
   input: minecraft:sand
   results:
     pylon:fine_sediment: 3
   cycles: 1
-  particle-data: minecraft:sand
+  particle-item: minecraft:sand
