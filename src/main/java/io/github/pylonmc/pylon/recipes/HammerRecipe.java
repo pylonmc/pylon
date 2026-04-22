@@ -13,14 +13,13 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -97,7 +96,7 @@ public record HammerRecipe(
     private List<ItemStack> getHammers() {
         List<ItemStack> hammers = new ArrayList<>();
         for (RebarItemSchema itemSchema : RebarRegistry.ITEMS.getValues()) {
-            ItemStack stack = itemSchema.getItemStack();
+            ItemStack stack = itemSchema.createNewItem();
             RebarItem item = RebarItem.fromStack(stack);
             if (item instanceof Hammer hammer) {
                 float chance = Math.min(1, getChanceFor(hammer.miningLevel));

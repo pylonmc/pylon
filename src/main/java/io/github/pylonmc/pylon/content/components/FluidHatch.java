@@ -22,6 +22,7 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -34,12 +35,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -59,7 +54,7 @@ public abstract class FluidHatch extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
             List<RebarMultiblockComponent> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
+                if (RebarItem.fromStack(schema.createNewItem()) instanceof FluidTankCasing.Item) {
                     components.add(new RebarMultiblockComponent(schema.getKey()));
                 }
             }
