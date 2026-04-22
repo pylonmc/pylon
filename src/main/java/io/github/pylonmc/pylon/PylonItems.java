@@ -16,6 +16,7 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.electric.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electric.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.electric.Multimeter;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
@@ -3207,6 +3208,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, TRANSFORMER, PylonKeys.TRANSFORMER);
         PylonPages.ELECTRICITY.addItem(TRANSFORMER);
+    }
+
+    public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)
+            .build();
+    static {
+        RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
+        PylonPages.ELECTRICITY.addItem(CAPACITOR_1_KJ);
     }
 
     public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_1_GAUGE)

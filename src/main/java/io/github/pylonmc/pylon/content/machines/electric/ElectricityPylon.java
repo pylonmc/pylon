@@ -24,9 +24,9 @@ public final class ElectricityPylon extends RebarBlock implements
         super(block, context);
 
         setTickInterval(10);
-        ElectricNode.Connector centralNode = addElectricNode(new ElectricNode.Connector(new BlockPosition(block)));
+        ElectricNode.Connector centralNode = addElectricNode(new ElectricNode.Connector("center", new BlockPosition(block)));
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            ElectricNode.Connector port = addElectricPort(face, new ElectricNode.Connector(new BlockPosition(block)));
+            ElectricNode.Connector port = addElectricPort(face, new ElectricNode.Connector(face.name(), new BlockPosition(block)));
             centralNode.connect(port);
         }
     }

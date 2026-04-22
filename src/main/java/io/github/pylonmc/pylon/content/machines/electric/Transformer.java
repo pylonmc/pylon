@@ -14,7 +14,6 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
-import java.util.UUID;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -36,11 +35,6 @@ public class Transformer extends RebarBlock implements
         RebarGuiBlock {
 
     private static final NamespacedKey VOLTAGE_KEY = pylonKey("voltage");
-    private static final NamespacedKey INPUT_NODE_KEY = pylonKey("input_node");
-    private static final NamespacedKey OUTPUT_NODE_KEY = pylonKey("output_node");
-
-    private ElectricNode.Connector inputNode;
-    private ElectricNode.Connector outputNode;
 
     @Getter
     private double voltage;
@@ -165,10 +159,9 @@ public class Transformer extends RebarBlock implements
 
         voltage = 0;
 
-        inputNode = addElectricPort(getFacing(), new ElectricNode.Connector(new BlockPosition(block)));
-        outputNode = addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Connector(new BlockPosition(block)));
-        inputNode.connect(outputNode);
-        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
+        ElectricNode first = addElectricPort(getFacing(), new ElectricNode.Connector("first", new BlockPosition(block)));
+        ElectricNode second = addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Connector("second", new BlockPosition(block)));
+        first.connect(second);
     }
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
@@ -179,25 +172,13 @@ public class Transformer extends RebarBlock implements
     }
 
     @Override
-    protected void postLoad(@NotNull PersistentDataContainer pdc) {
-        UUID inputNodeId = pdc.get(INPUT_NODE_KEY, RebarSerializers.UUID);
-        UUID outputNodeId = pdc.get(OUTPUT_NODE_KEY, RebarSerializers.UUID);
-        inputNode = (ElectricNode.Connector) getElectricNodes().stream()
-                .filter(node -> node.getId().equals(inputNodeId))
-                .findFirst()
-                .orElseThrow();
-        outputNode = (ElectricNode.Connector) getElectricNodes().stream()
-                .filter(node -> node.getId().equals(outputNodeId))
-                .findFirst()
-                .orElseThrow();
-        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
+    public void postInitialise() {
+        setVoltage(voltage);
     }
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         pdc.set(VOLTAGE_KEY, RebarSerializers.DOUBLE, voltage);
-        pdc.set(INPUT_NODE_KEY, RebarSerializers.UUID, inputNode.getId());
-        pdc.set(OUTPUT_NODE_KEY, RebarSerializers.UUID, outputNode.getId());
     }
 
     @Override
@@ -221,6 +202,8 @@ public class Transformer extends RebarBlock implements
 
     public void setVoltage(double voltage) {
         this.voltage = voltage;
-        ElectricityManager.setTransformerEdge(inputNode, outputNode, voltage);
+        ElectricNode.Connector first = (ElectricNode.Connector) getElectricNodeOrThrow("first");
+        ElectricNode.Connector second = (ElectricNode.Connector) getElectricNodeOrThrow("second");
+        ElectricityManager.setTransformerEdge(first, second, voltage);
     }
 }
