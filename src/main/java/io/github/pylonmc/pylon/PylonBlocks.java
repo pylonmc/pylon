@@ -186,6 +186,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.TRANSFORMER, Material.STRUCTURE_VOID, Transformer.class);
         RebarBlock.register(PylonKeys.CAPACITOR_1_KJ, Material.BLUE_GLAZED_TERRACOTTA, Capacitor.class);
         RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
+        RebarBlock.register(PylonKeys.BOILER, Material.BLAST_FURNACE, Boiler.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
     }
 }

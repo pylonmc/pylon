@@ -16,6 +16,7 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.electric.Boiler;
 import io.github.pylonmc.pylon.content.machines.electric.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electric.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.electric.Multimeter;
@@ -3236,6 +3237,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
+    }
+    
+    public static final ItemStack BOILER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BOILER)
+            .build();
+    static {
+        RebarItem.register(Boiler.Item.class, BOILER, PylonKeys.BOILER);
+        PylonPages.ELECTRICITY.addItem(BOILER);
     }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)

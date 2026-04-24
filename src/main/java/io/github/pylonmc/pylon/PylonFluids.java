@@ -8,8 +8,6 @@ import io.github.pylonmc.rebar.recipe.IngredientCalculator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class PylonFluids {
@@ -17,6 +15,8 @@ public final class PylonFluids {
     private PylonFluids() {
         throw new AssertionError("Utility class");
     }
+
+    public static final double WATER_TO_STEAM_RATIO = 1.0 / 10.0;
 
     public static final RebarFluid WATER = new RebarFluid(
             pylonKey("water"),
@@ -36,6 +36,14 @@ public final class PylonFluids {
         IngredientCalculator.addBaseIngredient(LAVA);
     }
 
+    public static final RebarFluid STEAM = new RebarFluid(
+            pylonKey("steam"),
+            Material.WHITE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT);
+    static {
+        STEAM.register();
+    }
+
     public static final RebarFluid PLANT_OIL = new RebarFluid(
             pylonKey("plant_oil"),
             Material.YELLOW_CONCRETE_POWDER
@@ -52,7 +60,6 @@ public final class PylonFluids {
     static {
         HYDRAULIC_FLUID.register();
     }
-
 
     public static final RebarFluid DIRTY_HYDRAULIC_FLUID = new RebarFluid(
             pylonKey("dirty_hydraulic_fluid"),

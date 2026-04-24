@@ -2436,6 +2436,13 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
 
+  boiler:
+    name: "Boiler"
+    lore: |-
+      <arrow> Burns fuel to produce steam
+      <arrow> <attr>Water usage:</attr> %water-usage%
+      <arrow> <attr>Steam production:</attr> %steam-production%
+
   wire_1_gauge:
     name: "1-Gauge Wire"
     lore: |-
@@ -2473,6 +2480,7 @@ fluid:
   sulfur: "<yellow>Liquid Sulfur"
   tin: "<gray>Liquid Tin"
   water: "<blue>Water"
+  steam: "<#d8d8d8>Steam"
   palladium: "<#b642f5>Liquid Palladium"
   plant_oil: "<#c4b352>Plant Oil"
   hydraulic_fluid: "<#212d99>Hydraulic Fluid"
@@ -2826,7 +2834,7 @@ gui:
       name: "Contents"
       fluid: "%amount% of %fluid%"
       empty: "Empty"
-  smeltery_burner:
+  burning:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
   smeltery_caster:
