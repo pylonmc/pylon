@@ -1,5 +1,5 @@
 tick-interval: 10
-steam-per-second: 100
+steam-per-second: 500
 
 # map of fluid to burn amount in seconds
 fuels:

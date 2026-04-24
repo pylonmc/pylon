@@ -153,22 +153,22 @@ RebarDirectionalBlock,
         // bottom layer
         for (int x = -1; x <= 1; x++) {
             for (int z = 0; z <= 2; z++) {
-                components.put(new Vector3i(x, -1, z), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
+                components.put(new Vector3i(x, -1, z), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
             }
         }
 
         // middle layer
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
-        components.put(new Vector3i(-1, 0, 2), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
-        components.put(new Vector3i(0, 0, 2), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
-        components.put(new Vector3i(1, 0, 2), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
+        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(-1, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(0, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(1, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
 
         // top layer
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
+        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
         for (int x = -1; x <= 1; x++) {
             for (int z = 1; z <= 2; z++) {
-                components.put(new Vector3i(x, 1, z), new RebarMultiblockComponent(PylonKeys.STEEL_BLOCK));
+                components.put(new Vector3i(x, 1, z), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
             }
         }
 

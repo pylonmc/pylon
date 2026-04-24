@@ -3196,6 +3196,7 @@ public final class PylonItems {
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
     }
 
+    // <editor-fold desc="Electricity" defaultstate=collapsed>
     public static final ItemStack ELECTRICITY_PYLON = ItemStackBuilder.rebar(Material.SEA_LANTERN, PylonKeys.ELECTRICITY_PYLON)
             .build();
     static {
@@ -3238,6 +3239,13 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
     }
+
+    public static final ItemStack BOILER_CASING = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.BOILER_CASING)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BOILER_CASING, PylonKeys.BOILER_CASING);
+        PylonPages.COMPONENTS.addItem(BOILER_CASING);
+    }
     
     public static final ItemStack BOILER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BOILER)
             .build();
@@ -3252,6 +3260,7 @@ public final class PylonItems {
         RebarItem.register(ElectricGrindstone.Item.class, ELECTRIC_GRINDSTONE, PylonKeys.ELECTRIC_GRINDSTONE);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
     }
+    // </editor-fold>
 
     static {
         PylonPages.initialise();

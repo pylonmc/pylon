@@ -469,6 +469,7 @@ public class PylonKeys {
     public static final NamespacedKey MULTIMETER = pylonKey("multimeter");
     public static final NamespacedKey WIRE_1_GAUGE = pylonKey("wire_1_gauge");
     public static final NamespacedKey CREATIVE_POWER_SOURCE = pylonKey("creative_power_source");
+    public static final NamespacedKey BOILER_CASING = pylonKey("boiler_casing");
     public static final NamespacedKey BOILER = pylonKey("boiler");
     public static final NamespacedKey ELECTRIC_GRINDSTONE = pylonKey("electric_grindstone");
 }

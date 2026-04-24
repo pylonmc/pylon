@@ -2436,12 +2436,22 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
 
+  boiler_casing:
+    name: "Boiler Casing"
+
   boiler:
     name: "Boiler"
     lore: |-
       <arrow> Burns fuel to produce steam
       <arrow> <attr>Water usage:</attr> %water-usage%
       <arrow> <attr>Steam production:</attr> %steam-production%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:boiler/></yellow>
+      <diamond> 20x <yellow><item:pylon:boiler_casing/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
   wire_1_gauge:
     name: "1-Gauge Wire"
