@@ -126,7 +126,7 @@ public class Pedestal extends RebarBlock implements
      * This method is called when an item is inserted into the pedestal. It can be used to check if the item is
      * allowed to be inserted.
      *
-     * @return true if the item is illegal, false otherwise
+     * @return true if the item can be inserted into the pedestal, false otherwise
      */
     public boolean isIllegalItem(Player player, ItemStack stack) {
         return false;
