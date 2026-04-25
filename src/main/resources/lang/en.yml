@@ -2771,7 +2771,7 @@ message:
     too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
     fused-potion-name: "<green>Fused Potion"
     failed-apply-catalyst: "<red>Failed to apply catalyst"
-    cannot-apply-catalyst: "<red>Cannot to apply catalyst"
+    cannot-apply-catalyst: "<red>Cannot apply catalyst"
   potion_pedestal:
     not-potion: "<red>You have to put a potion"
   hammer:
