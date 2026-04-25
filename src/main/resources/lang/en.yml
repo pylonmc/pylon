@@ -629,7 +629,7 @@ item:
       <arrow> Upgrades 1 potion effect 
       <arrow> <attr>Max amplifier:</attr> %max-amplifier%
       <arrow> <attr>Duration shorten rate:</attr> %duration-shorten-rate%
-      <arrow> <attr>Success rate:</attr> %apply-success-rate%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
 
   chronicle_resin:
     name: "Chronicle Resin"
@@ -637,7 +637,7 @@ item:
       <star> Potion catalyst
       <arrow> Boosts the duration of 1 potion effect
       <arrow> <attr>Duration boost:</attr> %duration-boost-seconds%
-      <arrow> <attr>Success rate:</attr> %apply-success-rate%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
 
   eon_weave_crystal:
     name: "Eon Weave Crystal"
@@ -645,7 +645,7 @@ item:
       <star> Potion catalyst
       <arrow> Multiples the duration of 1 potion effect
       <arrow> <attr>Multiple rate:</attr> %multiple-rate%
-      <arrow> <attr>Success rate:</attr> %apply-success-rate%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
 
   medkit:
     name: "Medkit"

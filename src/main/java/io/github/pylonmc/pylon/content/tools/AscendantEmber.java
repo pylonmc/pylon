@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AscendantEmber extends RebarItem implements PotionCatalyst {
     private final int maxAmplifier = getSettings().getOrThrow("max-amplifier", ConfigAdapter.INTEGER);
     private final double durationShortenRate = getSettings().getOrThrow("duration-shorten-rate", ConfigAdapter.DOUBLE);
-    private final double applySuccessRate = getSettings().getOrThrow("apply-success-rate", ConfigAdapter.DOUBLE);
+    private final double applicationSuccessRate = getSettings().getOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
 
     public AscendantEmber(final @NotNull ItemStack stack) {
         super(stack);
@@ -44,7 +44,7 @@ public class AscendantEmber extends RebarItem implements PotionCatalyst {
         return List.of(
                 RebarArgument.of("max-amplifier", maxAmplifier),
                 RebarArgument.of("duration-shorten-rate", UnitFormat.PERCENT.format(durationShortenRate * 100).decimalPlaces(2)),
-                RebarArgument.of("apply-success-rate", UnitFormat.PERCENT.format(applySuccessRate * 100).decimalPlaces(2))
+                RebarArgument.of("application-success-rate", UnitFormat.PERCENT.format(applicationSuccessRate * 100).decimalPlaces(2))
         );
     }
 }

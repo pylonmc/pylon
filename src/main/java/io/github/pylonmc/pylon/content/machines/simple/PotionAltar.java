@@ -458,7 +458,7 @@ public class PotionAltar extends RebarBlock
         }
 
         // catalysts
-        if (ThreadLocalRandom.current().nextDouble() >= recipe.catalyst.getSettings().get("apply-success-rate", ConfigAdapter.DOUBLE, 0.0D)) {
+        if (ThreadLocalRandom.current().nextDouble() >= recipe.catalyst.getApplicationSuccessRate()) {
             sendMessage("failed-apply-catalyst");
             playSound(FAILED_APPLY_CATALYST_SOUND);
             getCatalystPedestal().getItemDisplay().setItemStack(null);
