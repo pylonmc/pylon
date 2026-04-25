@@ -452,6 +452,11 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
+    public static final NamespacedKey POTION_PEDESTAL = pylonKey("potion_pedestal");
+    public static final NamespacedKey POTION_ALTAR = pylonKey("potion_altar");
+    public static final NamespacedKey ASCENDANT_EMBER = pylonKey("ascendant_ember");
+    public static final NamespacedKey CHRONICLE_RESIN = pylonKey("chronicle_resin");
+    public static final NamespacedKey EON_WEAVE_CRYSTAL = pylonKey("eon_weave_crystal");
     public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
     public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
     public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");

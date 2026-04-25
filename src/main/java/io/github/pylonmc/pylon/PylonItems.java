@@ -3176,6 +3176,42 @@ public final class PylonItems {
 
     //</editor-fold>
 
+    public static final ItemStack POTION_PEDESTAL = ItemStackBuilder.rebar(Material.END_STONE_BRICK_WALL, PylonKeys.POTION_PEDESTAL)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, POTION_PEDESTAL, PylonKeys.POTION_PEDESTAL);
+        PylonPages.SIMPLE_MACHINES.addItem(POTION_PEDESTAL);
+    }
+
+    public static final ItemStack POTION_ALTAR = ItemStackBuilder.rebar(Material.STONE_BRICK_SLAB, PylonKeys.POTION_ALTAR)
+            .build();
+    static {
+        RebarItem.register(PotionAltar.Item.class, POTION_ALTAR, PylonKeys.POTION_ALTAR);
+        PylonPages.SIMPLE_MACHINES.addItem(POTION_ALTAR);
+    }
+
+    public static final ItemStack ASCENDANT_EMBER = ItemStackBuilder.rebar(Material.BLAZE_POWDER, PylonKeys.ASCENDANT_EMBER)
+            .build();
+    static {
+        RebarItem.register(AscendantEmber.class, ASCENDANT_EMBER, PylonKeys.ASCENDANT_EMBER);
+        PylonPages.MAGIC.addItem(ASCENDANT_EMBER);
+    }
+
+    public static final ItemStack CHRONICLE_RESIN = ItemStackBuilder.rebar(Material.RESIN_CLUMP, PylonKeys.CHRONICLE_RESIN)
+            .build();
+    static {
+        RebarItem.register(ChronicleResin.class, CHRONICLE_RESIN, PylonKeys.CHRONICLE_RESIN);
+        PylonPages.MAGIC.addItem(CHRONICLE_RESIN);
+    }
+
+    public static final ItemStack EON_WEAVE_CRYSTAL = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.EON_WEAVE_CRYSTAL)
+            .set(DataComponentTypes.ITEM_MODEL, Material.END_CRYSTAL.getKey())
+            .build();
+    static {
+        RebarItem.register(EonWeaveCrystal.class, EON_WEAVE_CRYSTAL, PylonKeys.EON_WEAVE_CRYSTAL);
+        PylonPages.MAGIC.addItem(EON_WEAVE_CRYSTAL);
+    }
+
     public static final ItemStack CLEANSING_POTION = ItemStackBuilder.rebar(Material.SPLASH_POTION, PylonKeys.CLEANSING_POTION)
             .set(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
                     .customColor(Color.FUCHSIA)

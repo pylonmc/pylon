@@ -422,6 +422,16 @@ shimmer_field_manipulation:
     - pylon:liselette_cathode
     - pylon:liselette_anode
 
+potion_magic:
+  item: pylon:potion_altar
+  cost: 20
+  unlocks:
+    - pylon:potion_pedestal
+    - pylon:potion_altar
+    - pylon:ascendant_ember
+    - pylon:chronicle_resin
+    - pylon:eon_weave_crystal
+
 assembling:
   item: pylon:assembly_table
   cost: 5

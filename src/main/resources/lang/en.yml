@@ -588,7 +588,7 @@ item:
     lore: |- 
       <star> Multiblock
       <arrow> A self-contained structure for performing shimmer rituals
-      <arrow> Add items on the pedestals, then right click the altar with the catalyst to begin the ritual
+      <arrow> Add items on the pedestals, then <insn>right click</insn> the altar with the catalyst to begin the ritual
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.shimmer_altar.name/></yellow>
@@ -600,6 +600,53 @@ item:
       <star> Shimmer Altar multiblock component
       <arrow> <insn>Right click</insn> to set the displayed item
       <arrow> <insn>Shift right click</insn> to rotate the item
+
+  potion_altar:
+    name: "Potion Altar"
+    lore: |-
+      <star> Multiblock
+      <arrow> Allows potions to be fused and upgraded
+      <arrow> Add potions on the potion pedestals or add a more potion catalyst on the shimmer pedestal, then <insn>right click</insn> the altar to begin the ritual
+      <arrow> <attr>Max effect types:</attr> %max-effect-types%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.potion_altar.name/></yellow>
+      <diamond> 2x <yellow>Lit Orange Candle</yellow>
+      <diamond> 2x <yellow><lang:pylon.item.potion_pedestal.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.shimmer_pedestal.name/></yellow>
+    waila: "Potion Altar%processing%"
+
+  potion_pedestal:
+    name: "Potion Pedestal"
+    lore: |-
+      <star> Potion Altar multiblock component
+      <arrow> <insn>Right click</insn> to set the displayed item
+      <arrow> <insn>Shift right click</insn> to rotate the item
+
+  ascendant_ember:
+    name: "Ascendant Ember"
+    lore: |-
+      <star> Potion catalyst
+      <arrow> Upgrades 1 potion effect 
+      <arrow> <attr>Max amplifier:</attr> %max-amplifier%
+      <arrow> <attr>Duration shorten rate:</attr> %duration-shorten-rate%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
+
+  chronicle_resin:
+    name: "Chronicle Resin"
+    lore: |-
+      <star> Potion catalyst
+      <arrow> Boosts the duration of 1 potion effect
+      <arrow> <attr>Duration boost:</attr> %duration-boost-seconds%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
+
+  eon_weave_crystal:
+    name: "Eon Weave Crystal"
+    lore: |-
+      <star> Potion catalyst
+      <arrow> Multiples the duration of 1 potion effect
+      <arrow> <attr>Multiple rate:</attr> %multiple-rate%
+      <arrow> <attr>Success rate:</attr> %application-success-rate%
 
   medkit:
     name: "Medkit"
@@ -2460,6 +2507,9 @@ waila:
     not-empty: " | %item% x%amount%"
     idle: ""
     processing: " | %bars%"
+  potion_altar:
+    idle: ""
+    processing: " | %bars%"
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"
@@ -2545,6 +2595,7 @@ research:
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
+  potion_magic: "<#e5c4ef>Potion magic"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"
@@ -2714,6 +2765,16 @@ message:
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
+  potion_altar:
+    invalid-potion: "<red>You have to put 2 potions to fuse them"
+    invalid-catalyst: "<red>You have to put a valid catalyst"
+    not-same-type: "<red>You have to put 2 potions with the same bottle type"
+    too-many-effects: "<red>You have to put 2 potions with less than %max_effect_types% different effects"
+    fused-potion-name: "<green>Fused Potion"
+    failed-apply-catalyst: "<red>Failed to apply catalyst"
+    cannot-apply-catalyst: "<red>Cannot apply catalyst"
+  potion_pedestal:
+    not-potion: "<red>You have to put a potion"
   hammer:
     too-low-tier: "<red>Hammer too low tier to craft %item_name% (%tier_needed% required)"
     tier:
