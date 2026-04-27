@@ -188,6 +188,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
         RebarBlock.register(PylonKeys.BOILER_CASING, Material.NETHERITE_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.BOILER, Material.BLAST_FURNACE, Boiler.class);
+        RebarBlock.register(PylonKeys.STEAM_ENGINE, Material.IRON_BLOCK, SteamEngine.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
     }
 }

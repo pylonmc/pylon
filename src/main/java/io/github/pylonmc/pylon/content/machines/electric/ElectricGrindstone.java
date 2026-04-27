@@ -8,10 +8,7 @@ import io.github.pylonmc.rebar.electricity.VoltageRange;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -19,6 +16,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ElectricGrindstone extends AbstractGrindstone implements
         RebarElectricConsumerBlock {
+
+    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double voltageMin = getSettings().getOrThrow("voltage-range.min", ConfigAdapter.DOUBLE);
+    private final double voltageMax = getSettings().getOrThrow("voltage-range.max", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
@@ -39,10 +40,6 @@ public class ElectricGrindstone extends AbstractGrindstone implements
             );
         }
     }
-
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-    private final double voltageMin = getSettings().getOrThrow("voltage-range.min", ConfigAdapter.DOUBLE);
-    private final double voltageMax = getSettings().getOrThrow("voltage-range.max", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -67,6 +64,7 @@ public class ElectricGrindstone extends AbstractGrindstone implements
 
     @Override
     public void tick() {
-        Bukkit.broadcast(Component.text(new BlockPosition(getBlock()) + (isPowered() ? "This better be 100% free-range electricity" : "WHERES MAH POWER")));
+        if (!isProcessingRecipe() || !isPowered()) return;
+        progressRecipe(tickInterval);
     }
 }

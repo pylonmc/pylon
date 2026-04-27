@@ -2453,6 +2453,20 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
+  steam_engine:
+    name: "Steam Engine"
+    lore: |-
+      <arrow> Uses steam to produce power
+      <arrow> <attr>Steam usage:</attr> %steam-usage%
+      <arrow> <attr>Steam capacity:</attr> %steam-capacity%
+      <arrow> <attr>Power production:</attr> %power-production%
+      <arrow> <attr>Output voltage:</attr> %output-voltage%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
+      <diamond> 5000000x <yellow>TODO</yellow>
+    waila: "Steam Engine | %bar% | %power%"
+
   wire_1_gauge:
     name: "1-Gauge Wire"
     lore: |-
@@ -2502,9 +2516,8 @@ fluid:
   biodiesel: "<#eaa627>Biodiesel"
 
 waila:
-  fluid_tank:
-    empty: "(empty)"
-    filled: "| %bar%/%capacity% of %fluid%"
+  electric:
+    producer: "Producing %power% at %voltage%"
   crucible:
     item:
       empty: "| No items |"

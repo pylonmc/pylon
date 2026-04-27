@@ -39,7 +39,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Boiler extends RebarBlock implements
         RebarSimpleMultiblock,
-RebarDirectionalBlock,
+        RebarDirectionalBlock,
         RebarProcessor,
         RebarTickingBlock,
         RebarVirtualInventoryBlock,

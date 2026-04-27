@@ -16,10 +16,7 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
-import io.github.pylonmc.pylon.content.machines.electric.Boiler;
-import io.github.pylonmc.pylon.content.machines.electric.Capacitor;
-import io.github.pylonmc.pylon.content.machines.electric.ElectricGrindstone;
-import io.github.pylonmc.pylon.content.machines.electric.Multimeter;
+import io.github.pylonmc.pylon.content.machines.electric.*;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -3252,6 +3249,13 @@ public final class PylonItems {
     static {
         RebarItem.register(Boiler.Item.class, BOILER, PylonKeys.BOILER);
         PylonPages.ELECTRICITY.addItem(BOILER);
+    }
+
+    public static final ItemStack STEAM_ENGINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.STEAM_ENGINE)
+            .build();
+    static {
+        RebarItem.register(SteamEngine.Item.class, STEAM_ENGINE, PylonKeys.STEAM_ENGINE);
+        PylonPages.ELECTRICITY.addItem(STEAM_ENGINE);
     }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
