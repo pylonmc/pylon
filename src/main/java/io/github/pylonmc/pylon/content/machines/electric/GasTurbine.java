@@ -63,8 +63,7 @@ public class GasTurbine extends RebarBlock implements
 
         components.put(FLUID_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
         components.put(FLUID_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        // TODO: electricity output hatch
-        components.put(ELECTRICITY_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(ELECTRICITY_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ELECTRICITY_OUTPUT_HATCH));
 
         return components;
     }

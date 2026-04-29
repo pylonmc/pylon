@@ -45,21 +45,13 @@ public class ElectricGrindstone extends AbstractGrindstone implements
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
+        setVoltageRange(new VoltageRange(voltageMin, voltageMax));
+        setRequiredPower(powerUsage);
     }
 
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-    }
-
-    @Override
-    public @NotNull VoltageRange getVoltageRange() {
-        return new VoltageRange(voltageMin, voltageMax);
-    }
-
-    @Override
-    public double getRequiredPower() {
-        return powerUsage;
     }
 
     @Override

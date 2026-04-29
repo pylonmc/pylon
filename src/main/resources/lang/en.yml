@@ -2430,6 +2430,16 @@ item:
     lore: |-
       <arrow> Provides an infinite supply of power
 
+  electricity_input_hatch:
+    name: "Electricity Input Hatch"
+    lore: |-
+      <arrow> Accepts power from wires
+
+  electricity_output_hatch:
+    name: "Electricity Output Hatch"
+    lore: |-
+      <arrow> Outputs power to wires
+
   electric_grindstone:
     name: "Electric Grindstone"
     lore: |-

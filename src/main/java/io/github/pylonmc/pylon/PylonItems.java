@@ -3236,6 +3236,20 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
     }
+    
+    public static final ItemStack ELECTRICITY_INPUT_HATCH = ItemStackBuilder.rebar(Material.GREEN_CONCRETE, PylonKeys.ELECTRICITY_INPUT_HATCH)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_INPUT_HATCH, PylonKeys.ELECTRICITY_INPUT_HATCH);
+        PylonPages.COMPONENTS.addItem(ELECTRICITY_INPUT_HATCH);
+    }
+
+    public static final ItemStack ELECTRICITY_OUTPUT_HATCH = ItemStackBuilder.rebar(Material.ORANGE_CONCRETE, PylonKeys.ELECTRICITY_OUTPUT_HATCH)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_OUTPUT_HATCH, PylonKeys.ELECTRICITY_OUTPUT_HATCH);
+        PylonPages.COMPONENTS.addItem(ELECTRICITY_OUTPUT_HATCH);
+    }
 
     public static final ItemStack BOILER_CASING = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.BOILER_CASING)
             .build();
