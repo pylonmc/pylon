@@ -472,5 +472,6 @@ public class PylonKeys {
     public static final NamespacedKey BOILER_CASING = pylonKey("boiler_casing");
     public static final NamespacedKey BOILER = pylonKey("boiler");
     public static final NamespacedKey STEAM_ENGINE = pylonKey("steam_engine");
+    public static final NamespacedKey GAS_TURBINE = pylonKey("gas_turbine");
     public static final NamespacedKey ELECTRIC_GRINDSTONE = pylonKey("electric_grindstone");
 }

@@ -1,0 +1,6 @@
+pylon:steam:
+  input:
+    pylon:steam: 10
+  output:
+    pylon:water: 1
+  power-production: 10

@@ -3257,6 +3257,13 @@ public final class PylonItems {
         RebarItem.register(SteamEngine.Item.class, STEAM_ENGINE, PylonKeys.STEAM_ENGINE);
         PylonPages.ELECTRICITY.addItem(STEAM_ENGINE);
     }
+    
+    public static final ItemStack GAS_TURBINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.GAS_TURBINE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GAS_TURBINE, PylonKeys.GAS_TURBINE);
+        PylonPages.ELECTRICITY.addItem(GAS_TURBINE);
+    }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
             .build();

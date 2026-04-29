@@ -2412,7 +2412,8 @@ item:
   electricity_pylon:
     name: "Electricity Pylon"
     lore: |-
-      TODO
+      <arrow> Acts as a multidirectional bus for wires to connect to
+      <arrow> Power may be transmitted from any port to any other port
 
   transformer:
     name: "Transformer"
@@ -2464,8 +2465,24 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
-      <diamond> 5000000x <yellow>TODO</yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
     waila: "Steam Engine | %bar% | %power%"
+
+  gas_turbine:
+    name: "Gas Turbine"
+    lore: |-
+      <arrow> Uses hot gases to produce power
+      <arrow> The more hot gases piped into it, the more power it produces
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:gas_turbine/></yellow>
+      <diamond> 9x <yellow><item:pylon:reinforced_glass/></yellow>
+      <diamond> 3x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 1x <yellow><item:pylon:bronze_foundation/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
+    waila: "Gas Turbine | %power%"
 
   wire_1_gauge:
     name: "1-Gauge Wire"
@@ -2912,6 +2929,7 @@ gui:
   threshold: "Threshold"
   item-threshold: "Item threshold"
   fluid-threshold: "Fluid threshold"
+  watts-per-mb: "<attr>Power production:</attr> %power%"
 
 inventory:
   fuel: "Fuel"

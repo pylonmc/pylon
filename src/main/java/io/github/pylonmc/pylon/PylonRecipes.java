@@ -5,17 +5,17 @@ import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
 
 
 public class PylonRecipes {
@@ -45,6 +45,7 @@ public class PylonRecipes {
         TableSawRecipe.RECIPE_TYPE.register();
         SiloConverterRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
+        GasTurbineRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();
@@ -73,6 +74,31 @@ public class PylonRecipes {
                         .addIngredient('i', new FluidButton(input.amountMillibuckets(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.from(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.from(PylonItems.COHESIVE_UNIT))
+                        .build()
+        ).register();
+    }
+
+    private static void initBoiler() {
+        NamespacedKey key = PylonKeys.BOILER;
+        double steamPerSecond = Settings.get(key).getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
+        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.WATER, steamPerSecond * PylonFluids.WATER_TO_STEAM_RATIO);
+        FluidWithAmount output = new FluidWithAmount(PylonFluids.STEAM, steamPerSecond);
+        new SingleRecipe(
+                key,
+                input,
+                output.asFluidOrItem(),
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# i # # x # # o #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('i', new FluidButton(input))
+                        .addIngredient('x', ItemButton.from(PylonItems.BOILER))
+                        .addIngredient('o', new FluidButton(output))
                         .build()
         ).register();
     }
