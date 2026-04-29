@@ -1,6 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.content.components.FluidInputHatch;
+import io.github.pylonmc.pylon.recipes.GasTurbineRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
@@ -9,6 +11,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -72,5 +75,12 @@ public class GasTurbine extends RebarBlock implements
         components.put(new Vector3i(x, y, 0), new RebarMultiblockComponent(key));
         components.put(new Vector3i(x, y, 1), new RebarMultiblockComponent(key));
         components.put(new Vector3i(x, y, -1), new RebarMultiblockComponent(key));
+    }
+
+    @Override
+    public void onMultiblockFormed() {
+        RebarSimpleMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
+                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().fluids().stream()).collect(Collectors.toSet()));
     }
 }

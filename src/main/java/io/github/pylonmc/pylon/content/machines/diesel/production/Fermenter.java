@@ -21,6 +21,9 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,10 +34,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Fermenter extends RebarBlock implements
         RebarSimpleMultiblock,
@@ -125,7 +124,6 @@ public class Fermenter extends RebarBlock implements
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
         onMultiblockRefreshed();
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
     }
 
@@ -185,7 +183,7 @@ public class Fermenter extends RebarBlock implements
         }
 
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
-        double outputSpaceRemaining = outputHatch.fluidSpaceRemaining(PylonFluids.ETHANOL);
+        double outputSpaceRemaining = outputHatch.getFluidSpaceRemaining();
         double ethanolToOutput = Math.min(outputSpaceRemaining, sugarcaneProportion * maxEthanolOutputRate * getTickInterval() / 20);
         if (ethanolToOutput > 1.0e-6) {
             removeFluid(PylonFluids.SUGARCANE, ethanolToOutput);

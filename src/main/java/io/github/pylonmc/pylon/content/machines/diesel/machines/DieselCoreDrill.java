@@ -11,17 +11,16 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class DieselCoreDrill extends CoreDrill {
@@ -114,7 +113,7 @@ public class DieselCoreDrill extends CoreDrill {
         FluidInputHatch fluidInputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH);
         ItemOutputHatch itemOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH);
 
-        if (fluidInputHatch.fluidAmount(PylonFluids.BIODIESEL) < dieselPerRotation || !itemOutputHatch.inventory.canHold(output)) {
+        if (fluidInputHatch.getFluidAmount() < dieselPerRotation || !itemOutputHatch.inventory.canHold(output)) {
             return;
         }
 
@@ -145,6 +144,6 @@ public class DieselCoreDrill extends CoreDrill {
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setFluidType(PylonFluids.BIODIESEL);
+                .setAllowedFluids(PylonFluids.BIODIESEL);
     }
 }

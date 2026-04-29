@@ -180,8 +180,7 @@ public class Boiler extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH).setFluidType(PylonFluids.WATER);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, STEAM_OUTPUT_HATCH).setFluidType(PylonFluids.STEAM);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH).setAllowedFluids(PylonFluids.WATER);
     }
 
     private void tryStartProcessing() {
@@ -210,7 +209,7 @@ public class Boiler extends RebarBlock implements
         double waterConsumption = steamProduction * PylonFluids.WATER_TO_STEAM_RATIO;
         FluidInputHatch waterInput = getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH);
         FluidOutputHatch steamOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, STEAM_OUTPUT_HATCH);
-        double toRemove = Math.min(Math.min(waterInput.fluidAmount(PylonFluids.WATER), waterConsumption), steamOutput.fluidSpaceRemaining(PylonFluids.STEAM) * PylonFluids.WATER_TO_STEAM_RATIO);
+        double toRemove = Math.min(Math.min(waterInput.getFluidAmount(), waterConsumption), steamOutput.getFluidSpaceRemaining() * PylonFluids.WATER_TO_STEAM_RATIO);
         if (toRemove > 0) {
             waterInput.removeFluid(PylonFluids.WATER, toRemove);
             steamOutput.addFluid(PylonFluids.STEAM, toRemove / PylonFluids.WATER_TO_STEAM_RATIO);
