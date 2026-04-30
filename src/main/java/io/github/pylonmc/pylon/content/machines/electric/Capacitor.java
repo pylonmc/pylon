@@ -1,11 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electric;
 
-import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
@@ -57,7 +55,7 @@ public class Capacitor extends RebarBlock implements
         setFacing(context.getFacing());
 
         addElectricPort(getFacing(), new ElectricNode.Acceptor("input", new BlockPosition(block)));
-        addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0, 0));
+        addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0));
 
         addEntity("text_0", new TextDisplayBuilder()
                 .transformation(new TransformBuilder()
@@ -110,8 +108,6 @@ public class Capacitor extends RebarBlock implements
         storedEnergy = energy;
         getHeldEntityOrThrow(TextDisplay.class, "text_0").text(UnitFormat.JOULES.format(storedEnergy).decimalPlaces(1).asComponent());
         getHeldEntityOrThrow(TextDisplay.class, "text_1").text(UnitFormat.JOULES.format(storedEnergy).decimalPlaces(1).asComponent());
-        double maxCurrent = Settings.get(PylonKeys.WIRE_1_GAUGE).getOrThrow("max-current", ConfigAdapter.DOUBLE);
         output.setPower(storedEnergy);
-        output.setVoltage(storedEnergy / maxCurrent);
     }
 }

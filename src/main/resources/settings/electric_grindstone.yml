@@ -1,5 +1,2 @@
-power-usage: 20
-voltage-range:
-  min: 50
-  max: 200
 tick-interval: 10
+power-usage: 20

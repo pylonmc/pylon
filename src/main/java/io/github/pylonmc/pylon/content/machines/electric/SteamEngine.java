@@ -71,7 +71,7 @@ public class SteamEngine extends RebarBlock implements
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, context.getFacing());
         createFluidBuffer(PylonFluids.STEAM, steamCapacity, true, false);
-        addElectricPort(context.getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0, 0));
+        addElectricPort(context.getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0));
     }
 
     @SuppressWarnings("unused")
@@ -93,12 +93,10 @@ public class SteamEngine extends RebarBlock implements
     public void tick() {
         double adjustedSteamUsage = tickInterval / 20.0 * steamUsage;
         if (fluidAmount(PylonFluids.STEAM) < adjustedSteamUsage) {
-            node.setVoltage(0);
             node.setPower(0);
             return;
         }
         removeFluid(PylonFluids.STEAM, adjustedSteamUsage);
-        node.setVoltage(outputVoltage);
         node.setPower(powerProduction);
 
         Particle.CAMPFIRE_SIGNAL_SMOKE.builder()
@@ -120,10 +118,8 @@ public class SteamEngine extends RebarBlock implements
                 )),
                 RebarArgument.of("power", Component.translatable(
                         "pylon.waila.electric.producer",
-                        RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower())),
-                        RebarArgument.of("voltage", UnitFormat.VOLTS.format(node.getVoltage())
-                        ))
-                )
+                        RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()))
+                ))
         ));
     }
 }

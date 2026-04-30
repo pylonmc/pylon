@@ -183,7 +183,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
         RebarBlock.register(PylonKeys.ELECTRICITY_PYLON, Material.SEA_LANTERN, ElectricityPylon.class);
-        RebarBlock.register(PylonKeys.TRANSFORMER, Material.STRUCTURE_VOID, Transformer.class);
         RebarBlock.register(PylonKeys.CAPACITOR_1_KJ, Material.BLUE_GLAZED_TERRACOTTA, Capacitor.class);
         RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
         RebarBlock.register(PylonKeys.ELECTRICITY_INPUT_HATCH, Material.GREEN_CONCRETE, ElectricityInputHatch.class);

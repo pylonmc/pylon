@@ -2415,15 +2415,10 @@ item:
       <arrow> Acts as a multidirectional bus for wires to connect to
       <arrow> Power may be transmitted from any port to any other port
 
-  transformer:
-    name: "Transformer"
-    lore: |-
-      <arrow> Sets the voltage of any current crossing through it to a specific value
-
   multimeter:
     name: "Multimeter"
     lore: |-
-      <arrow> Measures the current of a wire
+      <arrow> Measures the power passing through a wire
 
   creative_power_source:
     name: "<#ff00ff>Creative Power Source"
@@ -2445,7 +2440,6 @@ item:
     lore: |-
       <arrow> Grinds items using electricity
       <arrow> <attr>Power usage:</attr> %power-usage%
-      <arrow> <attr>Voltage range:</attr> %min-voltage% to %max-voltage%
 
   boiler_casing:
     name: "Boiler Casing"
@@ -2471,7 +2465,6 @@ item:
       <arrow> <attr>Steam usage:</attr> %steam-usage%
       <arrow> <attr>Steam capacity:</attr> %steam-capacity%
       <arrow> <attr>Power production:</attr> %power-production%
-      <arrow> <attr>Output voltage:</attr> %output-voltage%
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
@@ -2498,14 +2491,13 @@ item:
     name: "1-Gauge Wire"
     lore: |-
       <arrow> Transmits electricity
-      <arrow> <attr>Max current:</attr> %max-current%
+      <arrow> <attr>Max power:</attr> %max-power%
 
   capacitor_1_kj:
     name: "1 kJ Capacitor"
     lore: |-
       <arrow> Stores electricity
       <arrow> Capacitors have a lower priority than most electric blocks, so they will only take excess power that other blocks can't use
-      <arrow> The output voltage is such that the entire charge can be passed through a <item:pylon:wire_1_gauge/> in one tick
       <arrow> <attr>Capacity:</attr> %capacity%
 
 fluid:
@@ -2544,7 +2536,7 @@ fluid:
 
 waila:
   electric:
-    producer: "Producing %power% at %voltage%"
+    producer: "Producing %power%"
   crucible:
     item:
       empty: "| No items |"
