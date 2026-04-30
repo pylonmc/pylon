@@ -3269,6 +3269,8 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, GAS_TURBINE, PylonKeys.GAS_TURBINE);
         PylonPages.ELECTRICITY.addItem(GAS_TURBINE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
+                .addButton(new MachineRecipesButton(GAS_TURBINE, GasTurbineRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
@@ -3276,6 +3278,8 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricGrindstone.Item.class, ELECTRIC_GRINDSTONE, PylonKeys.ELECTRIC_GRINDSTONE);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_GRINDSTONE)
+                .addButton(new MachineRecipesButton(ELECTRIC_GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
     }
     // </editor-fold>
 

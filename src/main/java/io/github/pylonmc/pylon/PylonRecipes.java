@@ -52,6 +52,7 @@ public class PylonRecipes {
         initPalladiumCondenser();
         initBiorefinery();
         initFermenter();
+        initBoiler();
     }
 
     private static void initCollimator() {
