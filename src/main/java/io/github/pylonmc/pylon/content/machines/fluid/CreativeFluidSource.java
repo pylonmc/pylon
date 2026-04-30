@@ -46,7 +46,9 @@ public class CreativeFluidSource extends RebarBlock implements
     public CreativeFluidSource(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        createFluidPoint(FluidPointType.OUTPUT, BlockFace.NORTH, context, true, 0.55F);
+        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
+            createFluidPoint(FluidPointType.OUTPUT, face, context, false, 0.55F);
+        }
         addEntity("fluid-1", new ItemDisplayBuilder()
                 .material(Material.RED_TERRACOTTA)
                 .transformation(new TransformBuilder()
