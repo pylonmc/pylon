@@ -15,21 +15,21 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.Vector3fs;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -109,6 +109,22 @@ public class GasTurbine extends RebarBlock implements
                     }
                 }, i * (tickInterval / stepsPerTick));
             }
+        }
+
+        Vector3f acrossDirection = new Vector3f(direction).cross(Vector3fs.positiveY()).normalize();
+        Vector3f veryBack = new Vector3f(direction).mul(-1.5f).sub(0, 0.5f, 0).sub(new Vector3f(acrossDirection).mul(0.5f));
+        int particles = (int) Math.ceil(Math.log(inputAmount));
+        for (int i = 0; i < particles; i++) {
+            Vector3f randomOffset = new Vector3f(acrossDirection).mul(ThreadLocalRandom.current().nextFloat()).add(0, ThreadLocalRandom.current().nextFloat(), 0);
+            Location spawnLocation = getBlock().getLocation().toCenterLocation().add(Vector.fromJOML(new Vector3f(veryBack).add(randomOffset)));
+            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+                Particle.POOF.builder()
+                        .count(0)
+                        .offset(direction.x, direction.y, direction.z)
+                        .extra(0.5)
+                        .location(spawnLocation)
+                        .spawn();
+            }, ThreadLocalRandom.current().nextInt(tickInterval));
         }
     }
 
