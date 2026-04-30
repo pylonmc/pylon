@@ -16,7 +16,6 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import java.util.Map;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -56,8 +55,7 @@ public class SteamEngine extends RebarBlock implements
             return List.of(
                     RebarArgument.of("steam-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(steamUsage)),
                     RebarArgument.of("steam-capacity", UnitFormat.MILLIBUCKETS.format(steamCapacity)),
-                    RebarArgument.of("power-production", UnitFormat.WATTS.format(powerProduction)),
-                    RebarArgument.of("output-voltage", UnitFormat.VOLTS.format(outputVoltage))
+                    RebarArgument.of("power-production", UnitFormat.WATTS.format(powerProduction))
             );
         }
     }
@@ -116,10 +114,7 @@ public class SteamEngine extends RebarBlock implements
                         20,
                         TextColor.fromHexString("#d8d8d8")
                 )),
-                RebarArgument.of("power", Component.translatable(
-                        "pylon.waila.electric.producer",
-                        RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()))
-                ))
+                RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()))
         ));
     }
 }

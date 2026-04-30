@@ -20,7 +20,7 @@ public class PylonWire extends RebarItem implements RebarWire {
 
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("max-power", UnitFormat.AMPRERES.format(maxPower)));
+        return List.of(RebarArgument.of("max-power", UnitFormat.WATTS.format(maxPower)));
     }
 
     @Override

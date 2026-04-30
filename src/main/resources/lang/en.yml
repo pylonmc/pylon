@@ -2469,7 +2469,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
       <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
-    waila: "Steam Engine | %bar% | %power%"
+    waila: "Steam Engine | %bar% | producing %power%"
 
   gas_turbine:
     name: "Gas Turbine"
@@ -2485,7 +2485,7 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
-    waila: "Gas Turbine | %power%"
+    waila: "Gas Turbine | producing %power%"
 
   wire_1_gauge:
     name: "1-Gauge Wire"
@@ -2535,8 +2535,6 @@ fluid:
   biodiesel: "<#eaa627>Biodiesel"
 
 waila:
-  electric:
-    producer: "Producing %power%"
   crucible:
     item:
       empty: "| No items |"
