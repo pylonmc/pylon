@@ -99,7 +99,6 @@ public class PalladiumCondenser extends RebarBlock implements
     public PalladiumCondenser(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(getFacing());
         setTickInterval(tickInterval);
     }
 

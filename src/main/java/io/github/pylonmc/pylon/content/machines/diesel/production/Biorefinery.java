@@ -82,7 +82,6 @@ public class Biorefinery extends RebarBlock implements
     public Biorefinery(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
     }
 

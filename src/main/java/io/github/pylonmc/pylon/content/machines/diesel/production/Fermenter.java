@@ -73,7 +73,6 @@ public class Fermenter extends RebarBlock implements
     public Fermenter(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         createFluidBuffer(PylonFluids.SUGARCANE, ethanolPerSugarcane * sugarcaneCapacity, false, false);
         addEntity("sugarcane", new ItemDisplayBuilder()

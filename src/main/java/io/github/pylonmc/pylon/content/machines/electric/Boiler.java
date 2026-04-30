@@ -94,7 +94,6 @@ public class Boiler extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
     }
 
     @SuppressWarnings("unused")
