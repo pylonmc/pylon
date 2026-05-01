@@ -65,7 +65,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
 
         new ShimmerMagnet.Ticker().runTaskTimer(this, 0, 10);
 
-        pm.registerEvents(new HungerTalisman.JoinListener(), this);
         pm.registerEvents(new FarmingTalisman.FarmingTalismanListener(), this);
         pm.registerEvents(new BarteringTalisman.BarteringTalismanListener(), this);
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);
