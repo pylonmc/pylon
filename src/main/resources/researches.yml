@@ -134,6 +134,13 @@ smelting_2:
     - pylon:steel_nugget
     - pylon:steel_block
     - pylon:steel_sheet
+    - pylon:casting_unit
+    - pylon:mold_nugget
+    - pylon:mold_ingot
+    - pylon:mold_block
+    - pylon:mold_sheet
+    - pylon:mold_pipe
+    - pylon:forming_table
 
 smelting_3:
   item: pylon:smeltery_controller
@@ -142,7 +149,6 @@ smelting_3:
     - pylon:smeltery_controller
     - pylon:smeltery_burner
     - pylon:diesel_smeltery_heater
-    - pylon:smeltery_caster
     - pylon:smeltery_hopper
     - pylon:smeltery_input_hatch
     - pylon:smeltery_output_hatch

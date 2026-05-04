@@ -796,13 +796,6 @@ item:
       <arrow> <attr>Temperature:</attr> %temperature%
     waila: "Diesel Smeltery Heater | %bar%"
 
-  smeltery_caster:
-    name: "Smeltery Caster"
-    lore: |-
-      <star> Smeltery multiblock component
-      <arrow> Casts items from the smeltery
-      <arrow> <insn>Right click</insn> to open the smeltery casting GUI
-
   smeltery_controller:
     name: "Smeltery Controller"
     lore: |-
@@ -813,10 +806,9 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.smeltery_controller.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
       <diamond> 25 or more <yellow><lang:pylon.item.refractory_bricks.name/></yellow> (depending on size and components)
 
@@ -2409,9 +2401,45 @@ item:
     lore: |-
       <arrow> Converts silos to another silo type, preserving the contents
 
+  casting_unit:
+    name: "Casting Unit"
+    lore: |-
+      <arrow> Used to cast metals into molds
+
+  mold_nugget:
+    name: "Nugget Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a nugget
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
+
+  mold_ingot:
+    name: "Ingot Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
+
+  mold_block:
+    name: "Block Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
+
+  mold_sheet:
+    name: "Sheet Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
+
+  mold_pipe:
+    name: "Pipe Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
+
+  forming_table:
+    name: "Forming Table"
+    lore: |-
+      <arrow> Used for forming items out of clay
+
 fluid:
-  castable:
-    display-text: "<arrow> <gray>Casts into <white>%result%"
+  tag:
+    melting-point: "Melting point: %temperature%"
   bronze: "<#8d6f64>Liquid Bronze"
   copper: "<#b5591b>Liquid Copper"
   gold: "<gold>Liquid Gold"
@@ -2787,16 +2815,19 @@ gui:
   portable-dustbin: "Portable Dustbin"
   status:
     name: "Status"
-    toggle: "<insn>Click</insn> to toggle"
     "on": "<green>On"
     "off": "<yellow>Off"
     running: "<green>Running"
     not_running: "<yellow>Not running"
     incomplete: "<red>Multiblock incomplete"
   smeltery:
-    height: "<attr>Height:</attr> %height%"
-    capacity: "<attr>Capacity:</attr> %capacity%"
-    temperature: "<attr>Temperature:</attr> %temperature%"
+    status: |-
+      %status%
+      <insn>Click</insn> to toggle
+      
+      <attr>Height:</attr> %height%
+      <attr>Capacity:</attr> %capacity%
+      <attr>Temperature:</attr> %temperature%
     contents:
       name: "Contents"
       fluid: "%amount% of %fluid%"
@@ -2804,13 +2835,6 @@ gui:
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
-  smeltery_caster:
-    cast: "Cast"
-    cannot_cast: "<red>Cannot cast"
-    too_cold: "<red>Temperature too low to cast, needs at least %temperature%"
-    not_enough: "<red>Not enough %fluid% to cast (%amount%/%needed%)"
-    click_to_cast: "<insn>Click</insn> to cast (%amount%/%needed%)"
-    auto_cast: "Auto cast: %status%"
   progress_bar:
     text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
   discrete_progress_bar:
@@ -2853,6 +2877,18 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  cast-border: "Mold Item"
+  casting-control:
+    name: "Casting Control"
+    lore: |-
+      %casting%<arrow> <insn>Left click</insn> to queue a cast
+      <arrow> <insn>Right click</insn> to unqueue a cast
+      <arrow> <insn>Shift left click</insn> to toggle automatic casting
+      <arrow> <insn>Shift right click</insn> to purge fluid
+      <arrow> <attr>Queued casts:</attr> %queued-casts%
+      <arrow> <attr>Automatic casting:</attr> %auto-cast%
+    casting: "Casting %fluid%: %amount%<br><br>"
+    mold-border: "Mold"
 
 inventory:
   fuel: "Fuel"

@@ -240,8 +240,15 @@ public class PylonKeys {
     public static final NamespacedKey SMELTERY_INPUT_HATCH = pylonKey("smeltery_input_hatch");
     public static final NamespacedKey SMELTERY_OUTPUT_HATCH = pylonKey("smeltery_output_hatch");
     public static final NamespacedKey SMELTERY_HOPPER = pylonKey("smeltery_hopper");
-    public static final NamespacedKey SMELTERY_CASTER = pylonKey("smeltery_caster");
     public static final NamespacedKey SMELTERY_BURNER = pylonKey("smeltery_burner");
+    public static final NamespacedKey CASTING_UNIT = pylonKey("casting_unit");
+    public static final NamespacedKey FORMING_TABLE = pylonKey("forming_table");
+
+    public static final NamespacedKey NUGGET_MOLD = pylonKey("mold_nugget");
+    public static final NamespacedKey INGOT_MOLD = pylonKey("mold_ingot");
+    public static final NamespacedKey BLOCK_MOLD = pylonKey("mold_block");
+    public static final NamespacedKey SHEET_MOLD = pylonKey("mold_sheet");
+    public static final NamespacedKey PIPE_MOLD = pylonKey("mold_pipe");
 
     public static final NamespacedKey PIT_KILN = pylonKey("pit_kiln");
 
