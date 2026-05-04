@@ -255,6 +255,22 @@ public final class PylonFluids {
         SPONGE_IRON_SLURRY.register();
     }
 
+    public static final RebarFluid VERY_HOT_EXHAUST = new RebarFluid(
+            pylonKey("very_hot_exhaust"),
+            Material.RED_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT);
+    static {
+        VERY_HOT_EXHAUST.register();
+    }
+
+    public static final RebarFluid HOT_EXHAUST = new RebarFluid(
+            pylonKey("hot_exhaust"),
+            Material.ORANGE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT);
+    static {
+        HOT_EXHAUST.register();
+    }
+
     /**
      * Calling this function will run the static blocks
      */

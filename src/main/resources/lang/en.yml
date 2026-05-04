@@ -2481,11 +2481,32 @@ item:
       <diamond> 1x <yellow><item:pylon:gas_turbine/></yellow>
       <diamond> 9x <yellow><item:pylon:reinforced_glass/></yellow>
       <diamond> 3x <yellow><item:pylon:steel_support_beam/></yellow>
-      <diamond> 1x <yellow><item:pylon:bronze_foundation/></yellow>
+      <diamond> 10x <yellow><item:pylon:bronze_foundation/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
     waila: "Gas Turbine | producing %power%"
+
+  combustion_tower:
+    name: "Combustion Tower"
+    lore: |-
+      <arrow> Burns diesel to produce very hot exhaust
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Very hot exhaust production:</attr> %exhaust-production%
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
+    waila: "Combustion Tower | %diesel% | %exhaust%"
+
+  heat_exchanger:
+    name: "Heat Exchanger"
+    lore: |-
+      <arrow> Exchanges heat between two fluids
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:heat_exchanger/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
   wire_1_gauge:
     name: "1-Gauge Wire"
@@ -2533,6 +2554,8 @@ fluid:
   sugarcane: "<#a3ed2d>Sugarcane"
   ethanol: "<#d8d8d8>Ethanol"
   biodiesel: "<#eaa627>Biodiesel"
+  very_hot_exhaust: "<#ff2b0f>Very Hot Exhaust"
+  hot_exhaust: "<#ff6b0f>Hot Exhaust"
 
 waila:
   crucible:

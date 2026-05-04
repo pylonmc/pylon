@@ -3272,6 +3272,13 @@ public final class PylonItems {
         RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
                 .addButton(new MachineRecipesButton(GAS_TURBINE, GasTurbineRecipe.RECIPE_TYPE));
     }
+    
+    public static final ItemStack COMBUSTION_TOWER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.COMBUSTION_TOWER)
+            .build();
+    static {
+        RebarItem.register(CombustionTower.Item.class, COMBUSTION_TOWER, PylonKeys.COMBUSTION_TOWER);
+        PylonPages.ELECTRICITY.addItem(COMBUSTION_TOWER);
+    }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
             .build();

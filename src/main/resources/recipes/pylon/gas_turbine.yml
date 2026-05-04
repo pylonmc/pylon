@@ -4,3 +4,10 @@ pylon:steam:
   output:
     pylon:water: 1
   power-production: 10
+
+pylon:exhaust:
+  input:
+    pylon:very_hot_exhaust: 10
+  output:
+    pylon:hot_exhaust: 5
+  power-production: 10
