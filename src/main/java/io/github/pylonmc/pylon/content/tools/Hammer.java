@@ -176,14 +176,9 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             if (!name.startsWith("recipe_display")) {
                 continue;
             }
-
-            try {
-                possibleParticleDatas.add(assemblyTable
-                    .getHeldEntityOrThrow(ItemDisplay.class, name)
-                    .getItemStack()
-                );
-            } catch (RuntimeException ignored) {
-                // Some items don't have block data
+            ItemDisplay display = assemblyTable.getHeldEntity(ItemDisplay.class, name);
+            if (display != null) {
+                possibleParticleDatas.add(display.getItemStack());
             }
         }
 
