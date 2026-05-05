@@ -18,12 +18,12 @@ import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemDisplay;
@@ -44,8 +44,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.annotation.Nonnull;
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
+    public record HammerAttempt(@Nullable ItemStack hammeredItem, @Nullable Location hammeredLocation, boolean recipeInProgress, boolean recipeSuccess) {}
+
     public static final Random random = new Random();
 
     public final Material baseBlock = getBaseBlock(getKey());
@@ -58,15 +61,16 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         super(stack);
     }
 
-    public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot, @NotNull BlockFace clickedFace) {
+    public @Nonnull HammerAttempt tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot, @NotNull BlockFace clickedFace) {
+        HammerAttempt fail = new HammerAttempt(null, null, false, false);
         if (baseBlock != block.getType()) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
             }
-            return false;
+            return fail;
         }
 
-        if (clickedFace != BlockFace.UP) return false;
+        if (clickedFace != BlockFace.UP) return fail;
 
         Block blockAbove = block.getRelative(BlockFace.UP);
 
@@ -106,23 +110,23 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                 } else {
                     RebarUtils.damageItem(getStack(), 1, block.getWorld());
                 }
-
+                ItemStack itemStack = item.getItemStack();
                 if (ThreadLocalRandom.current().nextFloat() > recipe.getChanceFor(miningLevel)) {
                     block.getWorld().playSound(failSound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
-                    return true; // recipe attempted but unsuccessful
+                    return new HammerAttempt(itemStack, item.getLocation(), true, false); // recipe attempted but unsuccessful
                 }
 
-                int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
-                item.setItemStack(item.getItemStack().asQuantity(newAmount));
+                int newAmount = itemStack.getAmount() - recipe.input().getAmount();
+                item.setItemStack(itemStack.asQuantity(newAmount));
                 block.getWorld().dropItem(blockAbove.getLocation().add(0.5, 0.1, 0.5), recipe.result())
                         .setVelocity(new Vector(0, 0, 0));
                 block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
 
-                return true;
+                return new HammerAttempt(itemStack, item.getLocation(), false, true);
             }
         }
 
-        return false;
+        return fail;
     }
 
     @Override
@@ -167,20 +171,14 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             return;
         }
 
-        List<BlockData> possibleBlockDatas = new ArrayList<>();
+        List<ItemStack> possibleParticleDatas = new ArrayList<>();
         for (String name : assemblyTable.getHeldEntities().keySet()) {
             if (!name.startsWith("recipe_display")) {
                 continue;
             }
-
-            try {
-                possibleBlockDatas.add(assemblyTable.getHeldEntityOrThrow(ItemDisplay.class, name)
-                        .getItemStack()
-                        .getType()
-                        .createBlockData()
-                );
-            } catch (RuntimeException ignored) {
-                // Some items don't have block data
+            ItemDisplay display = assemblyTable.getHeldEntity(ItemDisplay.class, name);
+            if (display != null) {
+                possibleParticleDatas.add(display.getItemStack());
             }
         }
 
@@ -188,14 +186,15 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
             getStack().damage(1, player);
             player.setCooldown(getStack(), cooldownTicks);
 
-            BlockData data;
-            if (possibleBlockDatas.isEmpty()) {
-                data = Material.CYAN_CONCRETE.createBlockData();
+            ItemStack data;
+            if (possibleParticleDatas.isEmpty()) {
+                data = new ItemStack(Material.CYAN_CONCRETE);
             } else {
-                data = possibleBlockDatas.get(random.nextInt(possibleBlockDatas.size()));
+                data = possibleParticleDatas.get(random.nextInt(possibleParticleDatas.size()));
             }
-            new ParticleBuilder(Particle.BLOCK)
+            new ParticleBuilder(Particle.ITEM)
                     .count(10)
+                    .extra(0.05)
                     .location(assemblyTable.getWorkspaceCenter())
                     .offset(0.1, 0, 0.1)
                     .data(data)
