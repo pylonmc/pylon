@@ -22,6 +22,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.entity.EntityCompostItemEvent;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -39,8 +40,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
-
-import java.util.List;
 
 
 public class Press extends RebarBlock implements
@@ -92,7 +91,7 @@ public class Press extends RebarBlock implements
     }
 
     @Override
-    public void postLoad() {
+    public void postLoad(@NotNull PersistentDataContainer pdc) {
         if (isProcessingRecipe()) {
             finishRecipe();
         }

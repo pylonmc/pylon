@@ -7,7 +7,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
+import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -22,6 +22,9 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.*;
+import kotlin.Pair;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -35,31 +38,38 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public abstract class FluidHatch extends RebarBlock implements
-        RebarFluidBufferBlock,
+        RebarFluidBlock,
         RebarSimpleMultiblock,
         RebarDirectionalBlock {
 
+    private static final NamespacedKey ALLOWED_FLUIDS_KEY = pylonKey("allowed_fluids");
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
+    private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
+    private static final NamespacedKey CAPACITY_KEY = pylonKey("capacity");
 
     private static MixedMultiblockComponent component = null;
 
-    public @Nullable RebarFluid fluid;
+    @Getter
+    private Set<RebarFluid> allowedFluids = new HashSet<>();
+
+    @Getter
+    private @Nullable RebarFluid fluid;
+
+    @Getter
+    private double fluidAmount = 0;
+
+    @Getter
+    private double capacity = 0;
 
     static {
         // run on first tick after all addons registered
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
             List<RebarMultiblockComponent> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
+                if (RebarItem.fromStack(schema.createNewItem()) instanceof FluidTankCasing.Item) {
                     components.add(new RebarMultiblockComponent(schema.getKey()));
                 }
             }
@@ -77,14 +87,21 @@ public abstract class FluidHatch extends RebarBlock implements
         );
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public FluidHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+        allowedFluids = pdc.get(ALLOWED_FLUIDS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.REBAR_FLUID));
         fluid = pdc.get(FLUID_KEY, RebarSerializers.REBAR_FLUID);
+        fluidAmount = pdc.get(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE);
+        capacity = pdc.get(CAPACITY_KEY, RebarSerializers.DOUBLE);
     }
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
+        pdc.set(ALLOWED_FLUIDS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.REBAR_FLUID), allowedFluids);
         RebarUtils.setNullable(pdc, FLUID_KEY, RebarSerializers.REBAR_FLUID, fluid);
+        pdc.set(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, fluidAmount);
+        pdc.set(CAPACITY_KEY, RebarSerializers.DOUBLE, capacity);
     }
 
     @Override
@@ -100,10 +117,7 @@ public abstract class FluidHatch extends RebarBlock implements
         if (formed) {
             FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
             Preconditions.checkState(casing != null);
-            Waila.addWailaOverride(casing.getBlock(), this::getWaila);
-            if (fluid != null) {
-                setFluidCapacity(fluid, casing.capacity);
-            }
+            setCapacity(casing.capacity);
         }
         return formed;
     }
@@ -113,7 +127,7 @@ public abstract class FluidHatch extends RebarBlock implements
         RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
         if (fluid != null) {
-            setFluidCapacity(fluid, 0);
+            setCapacity(0);
             getFluidDisplay().setTransformationMatrix(new TransformBuilder()
                     .scale(0, 0, 0)
                     .buildForItemDisplay()
@@ -122,10 +136,49 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     @Override
-    public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
-        boolean result = RebarFluidBufferBlock.super.setFluid(fluid, amount);
-        float scale = (float) (0.9 * fluidAmount(fluid) / fluidCapacity(fluid));
+    public @NotNull List<@NotNull Pair<RebarFluid, Double>> getSuppliedFluids() {
+        if (fluid == null || fluidAmount <= 1e-6) {
+            return List.of();
+        }
+        return List.of(new Pair<>(fluid, fluidAmount));
+    }
+
+    @Override
+    public double fluidAmountRequested(@NotNull RebarFluid fluid) {
+        if (Objects.equals(this.fluid, fluid)) {
+            return capacity - fluidAmount;
+        } else if (allowedFluids.contains(fluid)) {
+            return capacity;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
+        setFluid(fluid, fluidAmount + amount);
+    }
+
+    @Override
+    public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
+        setFluid(fluid, fluidAmount - amount);
+    }
+
+    public void addFluid(@NotNull RebarFluid fluid, double amount) {
+        onFluidAdded(fluid, amount);
+    }
+
+    public void removeFluid(@NotNull RebarFluid fluid, double amount) {
+        onFluidRemoved(fluid, amount);
+    }
+
+    public void setFluid(@NotNull RebarFluid fluid, double amount) {
+        this.fluid = fluid;
+        this.fluidAmount = Math.min(amount, capacity);
+        float scale = (float) (0.9 * fluidAmount / capacity);
         if (scale < 1.0e-9) {
+            this.fluid = null;
+            this.fluidAmount = 0;
             getFluidDisplay().setItemStack(null);
         } else {
             getFluidDisplay().setItemStack(fluid.getItem());
@@ -135,7 +188,14 @@ public abstract class FluidHatch extends RebarBlock implements
                 .scale(0.9, scale, 0.9)
                 .buildForItemDisplay()
         );
-        return result;
+    }
+
+    public double getFluidSpaceRemaining() {
+        if (fluid == null) {
+            return capacity;
+        } else {
+            return capacity - fluidAmount;
+        }
     }
 
     @Override
@@ -144,13 +204,13 @@ public abstract class FluidHatch extends RebarBlock implements
         if (!isFormedAndFullyLoaded()) {
             info = Component.translatable("pylon.message.fluid_hatch.no_casing");
         } else if (fluid == null) {
-            info = Component.translatable("pylon.message.fluid_hatch.no_multiblock");
+            info = Component.translatable("pylon.message.fluid_hatch.empty");
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(
                             RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                                    fluidAmount(fluid),
-                                    fluidCapacity(fluid),
+                                    fluidAmount,
+                                    capacity,
                                     20,
                                     TextColor.color(200, 255, 255)
                             )),
@@ -162,27 +222,28 @@ public abstract class FluidHatch extends RebarBlock implements
         ));
     }
 
-    public void setFluidType(@Nullable RebarFluid fluid) {
-        if (Objects.equals(this.fluid, fluid)) {
-            return;
-        }
-        
-        if (this.fluid != null) {
-            deleteFluidBuffer(this.fluid);
+    public void setAllowedFluids(@NotNull RebarFluid @NotNull ... fluids) {
+        setAllowedFluids(Set.of(fluids));
+    }
+
+    public void setAllowedFluids(@NotNull Set<RebarFluid> fluids) {
+        this.allowedFluids = fluids;
+
+        if (this.fluid != null && !fluids.contains(this.fluid)) {
+            fluid = null;
+            setCapacity(0);
             getFluidDisplay().setTransformationMatrix(new TransformBuilder()
                     .scale(0, 0, 0)
                     .buildForItemDisplay()
             );
+            this.fluid = null;
         }
-        this.fluid = fluid;
-        if (fluid != null) {
-            createFluidBuffer(fluid, 0, true, true);
-        }
-        if (isFormedAndFullyLoaded() && fluid != null) {
-            FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
-            Preconditions.checkState(casing != null);
-            setFluidCapacity(fluid, casing.capacity);
-        }
+        checkFormed();
+    }
+
+    private void setCapacity(double capacity) {
+        this.capacity = capacity;
+        this.fluidAmount = Math.min(this.fluidAmount, capacity);
     }
 
     public @NotNull ItemDisplay getFluidDisplay() {
@@ -191,7 +252,6 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public void postBreak(@NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.postBreak(context);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
     }
 }

@@ -21,6 +21,11 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Particle;
@@ -31,12 +36,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class PalladiumCondenser extends RebarBlock implements
@@ -100,7 +99,6 @@ public class PalladiumCondenser extends RebarBlock implements
     public PalladiumCondenser(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(getFacing());
         setTickInterval(tickInterval);
     }
 
@@ -180,9 +178,9 @@ public class PalladiumCondenser extends RebarBlock implements
         FluidOutputHatch dirtyHydraulicFluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH);
         ItemOutputHatch palladiumDustOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, PALLADIUM_DUST_OUTPUT_HATCH);
 
-        if (biodieselInputHatch.fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * getTickInterval() / 20
-                || hydraulicFluidInputHatch.fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerSecond * getTickInterval() / 20
-                || dirtyHydraulicFluidOutputHatch.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerSecond * getTickInterval() / 20
+        if (biodieselInputHatch.getFluidAmount() < dieselPerSecond * getTickInterval() / 20
+                || hydraulicFluidInputHatch.getFluidAmount() < hydraulicFluidPerSecond * getTickInterval() / 20
+                || dirtyHydraulicFluidOutputHatch.getFluidSpaceRemaining() < hydraulicFluidPerSecond * getTickInterval() / 20
                 || !palladiumDustOutputHatch.inventory.canHold(PylonItems.PALLADIUM_DUST)
         ) {
             return;
@@ -243,11 +241,9 @@ public class PalladiumCondenser extends RebarBlock implements
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, BIODIESEL_INPUT_HATCH)
-                .setFluidType(PylonFluids.BIODIESEL);
+                .setAllowedFluids(PylonFluids.BIODIESEL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH)
-                .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+                .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
     }
 
     @Override

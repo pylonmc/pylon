@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -33,9 +34,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
-
-import java.time.Duration;
-import java.util.List;
 
 public abstract class CoreDrill extends RebarBlock implements
         RebarSimpleMultiblock,
@@ -74,7 +72,6 @@ public abstract class CoreDrill extends RebarBlock implements
     protected CoreDrill(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(getFacing());
         addEntity("drill", new ItemDisplayBuilder()
                 .itemStack(drillStack)
                 .transformation(new TransformBuilder()

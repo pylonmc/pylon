@@ -2772,3 +2772,25 @@ pylon:palladium_silo:
   result:
     pylon:palladium_silo: 4
   category: building
+
+pylon:boiler_casing:
+  pattern:
+    - "SSS"
+    - "S S"
+    - "SSS"
+  key:
+    S: pylon:steel_sheet
+  result:
+    pylon:boiler_casing: 4
+  category: building
+
+pylon:boiler:
+  pattern:
+    - " C "
+    - "CFC"
+    - " C "
+  key:
+    C: pylon:boiler_casing
+    F: minecraft:furnace
+  result: pylon:boiler
+  category: building

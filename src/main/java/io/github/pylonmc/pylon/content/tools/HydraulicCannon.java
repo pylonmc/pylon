@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,8 +27,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 
 public class HydraulicCannon extends RebarItem implements RebarInteractor, HydraulicRefuelable {
@@ -113,6 +112,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
                 .subtract(0, 0.5, 0);
         EntityStorage.add(new DisplayProjectile(
                 player,
+                PylonKeys.TIN_PROJECTILE,
                 projectileMaterial,
                 source,
                 direction,

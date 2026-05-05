@@ -8,12 +8,11 @@ import io.github.pylonmc.rebar.guide.pages.base.SimpleDynamicGuidePage;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
+import java.util.List;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.item.Item;
-
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -34,8 +33,8 @@ public class HydraulicRefuelableItemsPage extends SimpleDynamicGuidePage {
 
     private static @NonNull List<Item> getButtons() {
         return RebarRegistry.ITEMS.stream()
-                .filter(item -> RebarItem.fromStack(item.getItemStack()) instanceof HydraulicRefuelable)
-                .map(item -> (Item) new ItemButton(item.getItemStack()))
+                .filter(item -> RebarItem.fromStack(item.createNewItem()) instanceof HydraulicRefuelable)
+                .map(item -> (Item) new ItemButton(item.createNewItem()))
                 .toList();
     }
 }

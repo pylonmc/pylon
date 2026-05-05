@@ -1,18 +1,13 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
-import io.github.pylonmc.pylon.content.building.Elevator;
-import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
-import io.github.pylonmc.pylon.content.building.Immobilizer;
-import io.github.pylonmc.pylon.content.building.Pedestal;
-import io.github.pylonmc.pylon.content.building.WitherProofBlock;
+import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
-import io.github.pylonmc.pylon.content.machines.diesel.machines.DieselCoreDrill;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
-import io.github.pylonmc.pylon.content.components.SmokestackCap;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.electric.*;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -187,5 +182,16 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.STEEL_SILO, Material.GRAY_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
+        RebarBlock.register(PylonKeys.ELECTRICITY_PYLON, Material.SEA_LANTERN, ElectricityPylon.class);
+        RebarBlock.register(PylonKeys.CAPACITOR_1_KJ, Material.BLUE_GLAZED_TERRACOTTA, Capacitor.class);
+        RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
+        RebarBlock.register(PylonKeys.ELECTRICITY_INPUT_HATCH, Material.GREEN_CONCRETE, ElectricityInputHatch.class);
+        RebarBlock.register(PylonKeys.ELECTRICITY_OUTPUT_HATCH, Material.ORANGE_CONCRETE, ElectricityOutputHatch.class);
+        RebarBlock.register(PylonKeys.BOILER_CASING, Material.NETHERITE_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.BOILER, Material.BLAST_FURNACE, Boiler.class);
+        RebarBlock.register(PylonKeys.STEAM_ENGINE, Material.IRON_BLOCK, SteamEngine.class);
+        RebarBlock.register(PylonKeys.GAS_TURBINE, Material.IRON_BLOCK, GasTurbine.class);
+        RebarBlock.register(PylonKeys.COMBUSTION_TOWER, Material.BRICKS, CombustionTower.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
     }
 }

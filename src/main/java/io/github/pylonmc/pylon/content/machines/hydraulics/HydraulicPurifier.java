@@ -12,13 +12,12 @@ import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -75,7 +74,7 @@ public interface HydraulicPurifier extends RebarTickingBlock {
             RebarItemSchema itemSchema = RebarRegistry.ITEMS.get(blockSchema.getKey());
             if (itemSchema == null) continue; // should never happen
 
-            purifiers.add(itemSchema.getItemStack());
+            purifiers.add(itemSchema.createNewItem());
         }
 
         return purifiers;

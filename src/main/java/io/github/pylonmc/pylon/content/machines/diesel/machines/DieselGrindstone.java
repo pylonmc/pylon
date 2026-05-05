@@ -2,11 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
-import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
+import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
+import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -17,11 +16,7 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -38,32 +33,20 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class DieselGrindstone extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
+public class DieselGrindstone extends AbstractGrindstone implements
         RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<GrindstoneRecipe> {
+        RebarDirectionalBlock {
 
     public static final NamespacedKey STONE_ROTATION_KEY = pylonKey("stone_rotation");
 
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(3);
     private double stoneRotation;
 
     public static class Item extends RebarItem {
@@ -96,7 +79,7 @@ public class DieselGrindstone extends RebarBlock implements
     @SuppressWarnings("unused")
     public DieselGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
+
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.55F);
         setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
@@ -128,12 +111,10 @@ public class DieselGrindstone extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
         stoneRotation = 0;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public DieselGrindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         stoneRotation = pdc.get(STONE_ROTATION_KEY, RebarSerializers.DOUBLE);
@@ -142,19 +123,6 @@ public class DieselGrindstone extends RebarBlock implements
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
         pdc.set(STONE_ROTATION_KEY, RebarSerializers.DOUBLE, stoneRotation);
-    }
-
-    @Override
-    public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, inputInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        outputInventory.addPostUpdateHandler(event -> tryStartRecipe());
-        inputInventory.addPostUpdateHandler(event -> {
-            if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
-                tryStartRecipe();
-            }
-        });
     }
 
     @Override
@@ -186,58 +154,6 @@ public class DieselGrindstone extends RebarBlock implements
         );
     }
 
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
-            return;
-        }
-
-        recipeLoop:
-        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
-            if (!recipe.input().matches(stack)) {
-                continue;
-            }
-
-            for (ItemStack output : recipe.results().getElements()) {
-                if (!outputInventory.canHold(output)) {
-                    break recipeLoop;
-                }
-            }
-
-            startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
-        }
-    }
-
-    @Override
-    public void onRecipeFinished(@NotNull GrindstoneRecipe recipe) {
-        getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(null, recipe.results().getRandom());
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# I # # # O O O #",
-                        "# i # p # o o o #",
-                        "# I # # # O O O #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('O', GuiItems.output())
-                .addIngredient('o', outputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .build();
-    }
-
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
@@ -252,15 +168,7 @@ public class DieselGrindstone extends RebarBlock implements
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+        super.onBreak(drops, context);
         RebarFluidBufferBlock.super.onBreak(drops, context);
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "input", inputInventory,
-                "output", outputInventory
-        );
     }
 }

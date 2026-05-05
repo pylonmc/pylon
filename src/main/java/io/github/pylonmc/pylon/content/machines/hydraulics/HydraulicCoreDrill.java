@@ -11,17 +11,16 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class HydraulicCoreDrill extends CoreDrill {
 
@@ -105,8 +104,8 @@ public class HydraulicCoreDrill extends CoreDrill {
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
         ItemOutputHatch itemOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH);
 
-        if (inputHatch.fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerRotation
-                || outputHatch.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerRotation
+        if (inputHatch.getFluidAmount() < hydraulicFluidPerRotation
+                || outputHatch.getFluidSpaceRemaining() < hydraulicFluidPerRotation
                 || !itemOutputHatch.inventory.canHold(output)
         ) {
             return;
@@ -133,8 +132,6 @@ public class HydraulicCoreDrill extends CoreDrill {
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
-                .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+                .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
     }
 }

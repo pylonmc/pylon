@@ -1,17 +1,17 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.pylon.PylonItems;
+import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
+import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import java.util.Map;
 import kotlin.Pair;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -47,13 +45,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     private @Nullable Fuel fuel;
 
-    private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
-            .name(Component.translatable("pylon.gui.smeltery_burner.not_burning"));
-    private final ItemStackBuilder burningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
-            .name(Component.translatable("pylon.gui.smeltery_burner.burning"));
-
-    private final VirtualInventory inventory = new VirtualInventory(3);
-    private final ProgressItem progressItem = new ProgressItem(notBurningProgressItem);
+    private final VirtualInventory fuelInventory = new VirtualInventory(3);
+    private final BurnerProgressItem progressItem = new BurnerProgressItem();
 
     @SuppressWarnings("unused")
     public SmelteryBurner(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -79,13 +72,13 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public void postInitialise() {
         setProcessProgressItem(progressItem);
-        createLogisticGroup("fuel", LogisticGroupType.INPUT, inventory);
+        createLogisticGroup("fuel", LogisticGroupType.INPUT, fuelInventory);
     }
 
     @Override
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
-        properties.put("lit", new Pair<>(fuel != null ? "true" : "false", 2));
+        properties.put("lit", new Pair<>(String.valueOf(fuel != null), 2));
         return properties;
     }
 
@@ -94,14 +87,27 @@ public final class SmelteryBurner extends SmelteryComponent implements
         return Gui.builder()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # # f # # # #",
-                        "# # # x x x # # #",
+                        "# # # i p i # # #",
+                        "# # # i x i # # #",
+                        "# # # i i i # # #",
                         "# # # # # # # # #"
                 )
-                .addIngredient('f', progressItem)
-                .addIngredient('x', inventory)
                 .addIngredient('#', GuiItems.background())
+                .addIngredient('i', GuiItems.input())
+                .addIngredient('p', progressItem)
+                .addIngredient('x', fuelInventory)
                 .build();
+    }
+
+    private void tryStartProcessing() {
+        for (Fuel fuel : FUELS) {
+            if (fuelInventory.removeFirstSimilar(new MachineUpdateReason(), 1, fuel.material()) > 0) {
+                this.fuel = fuel;
+                startProcess(fuel.burnTimeSeconds() * 20);
+                refreshBlockTextureItem();
+                return;
+            }
+        }
     }
 
     @Override
@@ -111,45 +117,30 @@ public final class SmelteryBurner extends SmelteryComponent implements
             return;
         }
 
+        if (!isProcessing()) {
+            tryStartProcessing();
+        }
+
+        if (!isProcessing()) return;
+
         progressProcess(getTickInterval());
 
         if (fuel != null) {
             controller.heatAsymptotically(fuel.temperature);
             return;
         }
-
-        itemLoop:
-        for (int i = 0; i < inventory.getSize(); i++) {
-            ItemStack item = inventory.getItem(i);
-            if (item == null) {
-                continue;
-            }
-
-            for (Fuel fuel : FUELS) {
-                if (!item.isSimilar(fuel.material)) {
-                    continue;
-                }
-
-                this.fuel = fuel;
-                progressItem.setItem(burningProgressItem);
-                inventory.setItem(null, i, item.subtract());
-                startProcess(Math.round(fuel.burnTimeSeconds * 20));
-                refreshBlockTextureItem();
-                break itemLoop;
-            }
-        }
     }
 
     @Override
     public void onProcessFinished() {
-        progressItem.setItem(notBurningProgressItem);
         refreshBlockTextureItem();
         fuel = null;
+        tryStartProcessing();
     }
 
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of("fuels", inventory);
+        return Map.of("fuels", fuelInventory);
     }
 
     // TODO display fuels
@@ -157,7 +148,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
             @NotNull NamespacedKey key,
             @NotNull ItemStack material,
             double temperature,
-            long burnTimeSeconds
+            int burnTimeSeconds
     ) implements Keyed {
         @Override
         public @NotNull NamespacedKey getKey() {

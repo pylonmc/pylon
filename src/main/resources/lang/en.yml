@@ -2409,6 +2409,118 @@ item:
     lore: |-
       <arrow> Converts silos to another silo type, preserving the contents
 
+  electricity_pylon:
+    name: "Electricity Pylon"
+    lore: |-
+      <arrow> Acts as a multidirectional bus for wires to connect to
+      <arrow> Power may be transmitted from any port to any other port
+
+  multimeter:
+    name: "Multimeter"
+    lore: |-
+      <arrow> Measures the power passing through a wire
+
+  creative_power_source:
+    name: "<#ff00ff>Creative Power Source"
+    lore: |-
+      <arrow> Provides an infinite supply of power
+
+  electricity_input_hatch:
+    name: "Electricity Input Hatch"
+    lore: |-
+      <arrow> Accepts power from wires
+
+  electricity_output_hatch:
+    name: "Electricity Output Hatch"
+    lore: |-
+      <arrow> Outputs power to wires
+
+  electric_grindstone:
+    name: "Electric Grindstone"
+    lore: |-
+      <arrow> Grinds items using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
+  boiler_casing:
+    name: "Boiler Casing"
+
+  boiler:
+    name: "Boiler"
+    lore: |-
+      <arrow> Burns fuel to produce steam
+      <arrow> <attr>Water usage:</attr> %water-usage%
+      <arrow> <attr>Steam production:</attr> %steam-production%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:boiler/></yellow>
+      <diamond> 20x <yellow><item:pylon:boiler_casing/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+
+  steam_engine:
+    name: "Steam Engine"
+    lore: |-
+      <arrow> Uses steam to produce power
+      <arrow> <attr>Steam usage:</attr> %steam-usage%
+      <arrow> <attr>Steam capacity:</attr> %steam-capacity%
+      <arrow> <attr>Power production:</attr> %power-production%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+    waila: "Steam Engine | %bar% | producing %power%"
+
+  gas_turbine:
+    name: "Gas Turbine"
+    lore: |-
+      <arrow> Uses hot gases to produce power
+      <arrow> The more hot gases piped into it, the more power it produces
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:gas_turbine/></yellow>
+      <diamond> 9x <yellow><item:pylon:reinforced_glass/></yellow>
+      <diamond> 3x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 10x <yellow><item:pylon:bronze_foundation/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
+    waila: "Gas Turbine | producing %power%"
+
+  combustion_tower:
+    name: "Combustion Tower"
+    lore: |-
+      <arrow> Burns diesel to produce very hot exhaust
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Very hot exhaust production:</attr> %exhaust-production%
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
+    waila: "Combustion Tower | %diesel% | %exhaust%"
+
+  heat_exchanger:
+    name: "Heat Exchanger"
+    lore: |-
+      <arrow> Exchanges heat between two fluids
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:heat_exchanger/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
+
+  wire_1_gauge:
+    name: "1-Gauge Wire"
+    lore: |-
+      <arrow> Transmits electricity
+      <arrow> <attr>Max power:</attr> %max-power%
+
+  capacitor_1_kj:
+    name: "1 kJ Capacitor"
+    lore: |-
+      <arrow> Stores electricity
+      <arrow> Capacitors have a lower priority than most electric blocks, so they will only take excess power that other blocks can't use
+      <arrow> <attr>Capacity:</attr> %capacity%
+
 fluid:
   castable:
     display-text: "<arrow> <gray>Casts into <white>%result%"
@@ -2429,9 +2541,10 @@ fluid:
   slurry_raw_iron: "<gray>Raw Iron Slurry"
   slurry_raw_tin: "<gray>Raw Tin Slurry"
   steel: "<gray>Liquid Steel"
-  sulfur: "<yellow>Sulfur"
+  sulfur: "<yellow>Liquid Sulfur"
   tin: "<gray>Liquid Tin"
   water: "<blue>Water"
+  steam: "<#d8d8d8>Steam"
   palladium: "<#b642f5>Liquid Palladium"
   plant_oil: "<#c4b352>Plant Oil"
   hydraulic_fluid: "<#212d99>Hydraulic Fluid"
@@ -2441,11 +2554,10 @@ fluid:
   sugarcane: "<#a3ed2d>Sugarcane"
   ethanol: "<#d8d8d8>Ethanol"
   biodiesel: "<#eaa627>Biodiesel"
+  very_hot_exhaust: "<#ff2b0f>Very Hot Exhaust"
+  hot_exhaust: "<#ff6b0f>Hot Exhaust"
 
 waila:
-  fluid_tank:
-    empty: "(empty)"
-    filled: "| %bar%/%capacity% of %fluid%"
   crucible:
     item:
       empty: "| No items |"
@@ -2574,6 +2686,7 @@ guide:
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
+    machines_electricity: "<white>Electricity"
     machines: "<white>Machines"
     assembling: "<white>Assembling"
     building: "<white>Building"
@@ -2670,7 +2783,7 @@ message:
     clear: "<white>Clear"
   fluid_hatch:
     no_casing: "<red>No casing"
-    no_multiblock: "<red>No multiblock"
+    empty: "Empty"
     working: "%bars% (%fluid%)"
   biorefinery:
     no_fuel: "<red>No fuel"
@@ -2745,23 +2858,6 @@ gui:
     lore: |-
       <arrow> The <lang:pylon.item.cargo_overflow_gate.name/> will always send items to this side unless it's full
       <arrow> <insn>Left click</insn> to cycle priority
-  threshold_button:
-    name: "Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  item_threshold_button:
-    name: "Item Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  fluid_threshold_button:
-    name: "Fluid Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Right click</insn> to decrease by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Shift left click</insn> to increase by <unit:milli:buckets>100</unit>
-      <arrow> <insn>Shift right click</insn> to decrease by <unit:milli:buckets>100</unit>
   whitelist-blacklist-toggle:
     whitelist:
       name: "Whitelist mode"
@@ -2801,7 +2897,7 @@ gui:
       name: "Contents"
       fluid: "%amount% of %fluid%"
       empty: "Empty"
-  smeltery_burner:
+  burning:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
   smeltery_caster:
@@ -2824,27 +2920,6 @@ gui:
     name: "Current inventory: <yellow>%inventory%"
     lore: |-
       <arrow> <insn>Click</insn> to cycle
-  fluid_meter:
-    name: "<attr>Measurement duration:</attr> %measurement-duration%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_accumulator:
-    name: "<attr>Amount:</attr> %amount%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_limiter:
-    name: "<attr>Max flow rate:</attr> %max-flow-rate%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
   assembly_table:
     step: "<#adc5ce>Step %step_index%: <white>%tool% <gray>(x%clicks%)"
     no_recipe: "<red>No recipe"
@@ -2853,6 +2928,31 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  number-button:
+    name: "<white><attr>%name%:</attr> %value%"
+    lore: |-
+      <arrow> <insn>Left click</insn> to increase by <yellow>%increment%</yellow>
+      <arrow> <insn>Right click</insn> to decrease by <yellow>%increment%</yellow>
+      <arrow> <insn>Shift left click</insn> to increase by <yellow>%increment-shift%</yellow>
+      <arrow> <insn>Shift right click</insn> to decrease by <yellow>%increment-shift%</yellow>
+      <arrow> <insn>Press <key:key.drop/></insn> to enter the value manually
+    min: "<arrow> <attr>Minimum value:</attr> %min%"
+    max: "<arrow> <attr>Maximum value:</attr> %max%"
+    enter-value:
+      none: "Enter a new value:"
+      min: "Enter a new value (min: %min%):"
+      max: "Enter a new value (max: %max%):"
+      both: "Enter a new value (min: %min%, max: %max%):"
+      invalid: "<red>Invalid input, please enter an integer"
+  voltage: "Voltage"
+  power: "Power"
+  max-flow-rate: "Max flow rate"
+  amount: "Amount"
+  measurement-duration: "Measurement duration"
+  threshold: "Threshold"
+  item-threshold: "Item threshold"
+  fluid-threshold: "Fluid threshold"
+  watts-per-mb: "<attr>Power production:</attr> %power%"
 
 inventory:
   fuel: "Fuel"

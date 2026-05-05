@@ -1,0 +1,9 @@
+tick-interval: 10
+steam-per-second: 500
+
+# map of fluid to burn amount in seconds
+fuels:
+  minecraft:coal: 30
+  minecraft:charcoal: 30
+  minecraft:coal_block: 270
+  pylon:charcoal_block: 270
