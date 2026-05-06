@@ -3036,7 +3036,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(ASSEMBLY_TABLE);
     }
 
-    public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_SCREWDRIVER)
+    public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.COPPER_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3052,7 +3052,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(COPPER_SCREWDRIVER);
     }
 
-    public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.IRON_SCREWDRIVER)
+    public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.IRON_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3068,7 +3068,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(IRON_SCREWDRIVER);
     }
 
-    public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_SCREWDRIVER)
+    public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.BRONZE_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3084,7 +3084,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(BRONZE_SCREWDRIVER);
     }
 
-    public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_SCREWDRIVER)
+    public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.STEEL_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
