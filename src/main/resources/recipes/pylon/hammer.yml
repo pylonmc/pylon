@@ -87,6 +87,20 @@ pylon:flint_from_gravel:
   mining-level: stone
   chance: 0.5
 
+pylon:sand_from_sandstone:
+  input: minecraft:sandstone
+  result:
+    minecraft:sand: 4
+  mining-level: stone
+  chance: 0.5
+
+pylon:red_sand_from_red_sandstone:
+  input: minecraft:red_sandstone
+  result:
+    minecraft:red_sand: 4
+  mining-level: stone
+  chance: 0.5
+
 pylon:liselette_conductor:
   input: pylon:cohesive_unit
   result:

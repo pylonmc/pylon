@@ -21,3 +21,39 @@ pylon:steel_furnace:
   result: pylon:steel_ingot
   experience: 0.7
   category: misc
+
+pylon:recycle_copper_screwdriver_furnace:
+  ingredient: pylon:copper_screwdriver
+  result: minecraft:copper_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_iron_screwdriver_furnace:
+  ingredient: pylon:iron_screwdriver
+  result: minecraft:iron_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_iron_hammer_furnace:
+  ingredient: pylon:iron_hammer
+  result: minecraft:iron_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_bronze_equipment_furnace:
+  ingredient: "#pylon:bronze_equipment"
+  result: pylon:bronze_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_steel_equipment_furnace:
+  ingredient: "#pylon:steel_equipment"
+  result: pylon:steel_nugget
+  experience: 0.1
+  category: misc
+
+pylon:recycle_palladium_equipment_furnace:
+  ingredient: "#pylon:palladium_equipment"
+  result: pylon:palladium_nugget
+  experience: 0.1
+  category: misc

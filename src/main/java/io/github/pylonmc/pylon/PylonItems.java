@@ -2689,13 +2689,6 @@ public final class PylonItems {
         PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_FARMER);
     }
 
-    public static final ItemStack HYDRAULIC_MINER = ItemStackBuilder.rebar(Material.WAXED_EXPOSED_CHISELED_COPPER, PylonKeys.HYDRAULIC_MINER)
-            .build();
-    static {
-        RebarItem.register(HydraulicMiner.Item.class, HYDRAULIC_MINER, PylonKeys.HYDRAULIC_MINER);
-        PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_MINER);
-    }
-
     public static final ItemStack HYDRAULIC_BREAKER = ItemStackBuilder.rebar(Material.WAXED_EXPOSED_CUT_COPPER, PylonKeys.HYDRAULIC_BREAKER)
             .build();
     static {
@@ -2960,12 +2953,12 @@ public final class PylonItems {
                 .addButton(new MachineRecipesButton(DIESEL_TABLE_SAW, TableSawRecipe.RECIPE_TYPE));
     }
 
-    public static final ItemStack DIESEL_MINER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_MINER)
+    public static final ItemStack DIESEL_QUARRY = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_QUARRY)
             .set(DataComponentTypes.ITEM_MODEL, Material.YELLOW_TERRACOTTA.getKey())
             .build();
     static {
-        RebarItem.register(DieselMiner.Item.class, DIESEL_MINER, PylonKeys.DIESEL_MINER);
-        PylonPages.DIESEL_MACHINES.addItem(DIESEL_MINER);
+        RebarItem.register(DieselQuarry.Item.class, DIESEL_QUARRY, PylonKeys.DIESEL_QUARRY);
+        PylonPages.DIESEL_MACHINES.addItem(DIESEL_QUARRY);
     }
 
     public static final ItemStack DIESEL_BREAKER = ItemStackBuilder.rebar(Material.DROPPER, PylonKeys.DIESEL_BREAKER)
@@ -3043,7 +3036,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(ASSEMBLY_TABLE);
     }
 
-    public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_SCREWDRIVER)
+    public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.COPPER_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3059,7 +3052,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(COPPER_SCREWDRIVER);
     }
 
-    public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.IRON_SCREWDRIVER)
+    public static final ItemStack IRON_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.IRON_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3075,7 +3068,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(IRON_SCREWDRIVER);
     }
 
-    public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_SCREWDRIVER)
+    public static final ItemStack BRONZE_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.BRONZE_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)
@@ -3091,7 +3084,7 @@ public final class PylonItems {
         PylonPages.ASSEMBLING.addItem(BRONZE_SCREWDRIVER);
     }
 
-    public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_SCREWDRIVER)
+    public static final ItemStack STEEL_SCREWDRIVER = ItemStackBuilder.rebar(Material.FLINT, PylonKeys.STEEL_SCREWDRIVER)
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .set(DataComponentTypes.DAMAGE, 0)

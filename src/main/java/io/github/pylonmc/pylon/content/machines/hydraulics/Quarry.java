@@ -9,7 +9,6 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -25,7 +24,7 @@ import java.util.Set;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public abstract class Miner extends RebarBlock implements RebarMultiblock, RebarProcessor {
+public abstract class Quarry extends RebarBlock implements RebarMultiblock, RebarProcessor {
 
     public static final NamespacedKey INDEX_KEY = pylonKey("index");
     public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
@@ -38,13 +37,13 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
     protected int index;
 
     @SuppressWarnings("unused")
-    public Miner(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public Quarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         WorldBorder border = block.getWorld().getWorldBorder();
         index = 0;
         blockPositions = new ArrayList<>();
         chunkPositions = new HashSet<>();
-        for (int y = radius; y >= -radius; y--) {
+        for (int y = block.getWorld().getMaxHeight() - block.getY(); y >= block.getWorld().getMinHeight() - block.getY(); y--) {
             for (int x = -radius; x <= radius; x++) {
                 for (int z = -radius; z <= radius; z++) {
                     Block neighbour = getBlock().getRelative(x, y, z);
@@ -59,7 +58,7 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
     }
 
     @SuppressWarnings({"DataFlowIssue", "unused"})
-    public Miner(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public Quarry(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         index = pdc.get(INDEX_KEY, RebarSerializers.INTEGER);
         blockPositions = pdc.get(BLOCK_POSITIONS_KEY, RebarSerializers.LIST.listTypeFrom(RebarSerializers.BLOCK_POSITION));
@@ -94,7 +93,7 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
         return true;
     }
 
-    protected void updateMiner() {
+    protected void updateQuarry() {
         if (checkBlocks()) {
             // Finished mining; do one more pass in case something has changed in the meantime
             checkBlocks();
@@ -121,7 +120,7 @@ public abstract class Miner extends RebarBlock implements RebarMultiblock, Rebar
 
     @Override
     public void onMultiblockRefreshed() {
-        updateMiner();
+        updateQuarry();
     }
 
     protected abstract @Nullable Integer getBreakTicks(@NotNull Block block);

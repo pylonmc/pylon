@@ -219,3 +219,10 @@ pylon:fine_sediment:
     pylon:fine_sediment: 3
   cycles: 1
   particle-data: minecraft:sand
+
+pylon:clay_ball_from_clay:
+  input: minecraft:clay
+  results:
+    minecraft:clay_ball: 4
+  cycles: 1
+  particle-data: minecraft:clay

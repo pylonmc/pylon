@@ -1321,20 +1321,6 @@ pylon:hydraulic_farmer:
   result: pylon:hydraulic_farmer
   category: building
 
-pylon:hydraulic_miner:
-  pattern:
-    - "CDC"
-    - "PEP"
-    - "CSC"
-  key:
-    C: minecraft:copper_ingot
-    S: pylon:copper_sheet
-    E: pylon:hydraulic_motor
-    P: pylon:fluid_pipe_bronze
-    D: pylon:bronze_drill_bit
-  result: pylon:hydraulic_miner
-  category: building
-
 pylon:hydraulic_breaker:
   pattern:
     - "SSS"
@@ -2010,7 +1996,7 @@ pylon:diesel_table_saw:
   result: pylon:diesel_table_saw
   category: building
 
-pylon:diesel_miner:
+pylon:diesel_quarry:
   pattern:
     - "BDB"
     - "PEP"
@@ -2021,7 +2007,7 @@ pylon:diesel_miner:
     E: pylon:internal_combustion_engine
     S: pylon:iron_sheet
     B: minecraft:iron_ingot
-  result: pylon:diesel_miner
+  result: pylon:diesel_quarry
   category: building
 
 pylon:diesel_breaker:
