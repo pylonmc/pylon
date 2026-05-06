@@ -6,7 +6,6 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarConsumable;
 import io.github.pylonmc.rebar.util.ConfettiParticle;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -47,9 +46,8 @@ public class ConfettiPopper extends RebarItem implements RebarConsumable {
             Vector offset = direction.clone().multiply(distance).add(new Vector(spreadX, spreadY, spreadZ));
             Vector targetPos = startLocation.toVector().add(offset);
             Vector velocity = targetPos.subtract(startLocation.toVector()).multiply(0.35);
-            Material mat = ConfettiParticle.CONCRETES.get(RANDOM.nextInt(ConfettiParticle.CONCRETES.size()));
 
-            new ConfettiParticle(startLocation, velocity, lifetime, mat);
+            new ConfettiParticle(startLocation, velocity, lifetime, ConfettiParticle.randomMaterial());
         }
     }
 }
