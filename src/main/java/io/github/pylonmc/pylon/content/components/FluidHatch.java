@@ -59,7 +59,7 @@ public abstract class FluidHatch extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
             List<RebarMultiblockComponent> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
+                if (schema.getItemClass().isAssignableFrom(FluidTankCasing.Item.class)) {
                     components.add(new RebarMultiblockComponent(schema.getKey()));
                 }
             }
@@ -125,7 +125,7 @@ public abstract class FluidHatch extends RebarBlock implements
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         boolean result = RebarFluidBufferBlock.super.setFluid(fluid, amount);
         float scale = (float) (0.9 * fluidAmount(fluid) / fluidCapacity(fluid));
-        if (scale < 1.0e-9) {
+        if (scale < RebarUtils.FLUID_EPSILON) {
             getFluidDisplay().setItemStack(null);
         } else {
             getFluidDisplay().setItemStack(fluid.getItem());
