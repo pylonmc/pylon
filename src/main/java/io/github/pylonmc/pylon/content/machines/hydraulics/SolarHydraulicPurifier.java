@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
+import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -29,11 +30,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SolarPurificationTower extends RebarBlock implements
+public class SolarHydraulicPurifier extends RebarBlock implements
         RebarSimpleMultiblock,
         RebarDirectionalBlock,
         RebarFluidBufferBlock,
-        HydraulicPurifier {
+        HydraulicPurifier,
+        RebarTickingBlock {
 
     public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.DOUBLE);
     public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
@@ -65,7 +67,7 @@ public class SolarPurificationTower extends RebarBlock implements
     }
 
     @SuppressWarnings("unused")
-    public SolarPurificationTower(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public SolarHydraulicPurifier(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
@@ -76,7 +78,7 @@ public class SolarPurificationTower extends RebarBlock implements
     }
 
     @SuppressWarnings("unused")
-    public SolarPurificationTower(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public SolarHydraulicPurifier(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 
@@ -84,17 +86,37 @@ public class SolarPurificationTower extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 3, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_GLASS));
-        components.put(new Vector3i(0, 4, 0), new RebarMultiblockComponent(PylonKeys.PURIFICATION_TOWER_CAP));
+        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
+        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
+        int k = 0;
+        while (k < lensLayers) {
+            components.put(new Vector3i(0, 3 + k, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
+            k += 1;
+        }
+        components.put(new Vector3i(0, 3 + k, 0), new RebarMultiblockComponent(PylonKeys.QUARTZ_CAP));
 
         for (int j = 1; j < lensLayers + 1; j++) {
-            for (int i = 0; i < 1 + 4*j; i++) {
-                components.put(new Vector3i(2*j, 1, i - 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(-2*j, 1, i - 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(i - 2*j, 1, 2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
-                components.put(new Vector3i(i - 2*j, 1, -2*j), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+            // straight
+            for (int i = -j; i <= j; i++) {
+                components.put(new Vector3i(i, 1, j*2), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(i, 1, -j*2), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(j*2, 1, i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(-j*2, 1, i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+            }
+
+            // diagonal
+            for (int i = 1; i <= j; i++) {
+                components.put(new Vector3i(j + i - 1, 1, j*2 - i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(j + i, 1, j*2 - i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+
+                components.put(new Vector3i(-(j + i - 1), 1, j*2 - i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(-(j + i), 1, j*2 - i), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+
+                components.put(new Vector3i(j + i - 1, 1, -(j*2 - i)), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(j + i, 1, -(j*2 - i)), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+
+                components.put(new Vector3i(-(j + i - 1), 1, -(j*2 - i)), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
+                components.put(new Vector3i(-(j + i), 1, -(j*2 - i)), new RebarMultiblockComponent(PylonKeys.SOLAR_LENS));
             }
         }
 
@@ -121,16 +143,6 @@ public class SolarPurificationTower extends RebarBlock implements
 
         removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, toPurify);
         addFluid(PylonFluids.HYDRAULIC_FLUID, toPurify * purificationEfficiency);
-    }
-
-    @Override
-    public double getPurificationSpeed() {
-        return purificationSpeed;
-    }
-
-    @Override
-    public double getPurificationEfficiency() {
-        return purificationEfficiency;
     }
 
     @Override
