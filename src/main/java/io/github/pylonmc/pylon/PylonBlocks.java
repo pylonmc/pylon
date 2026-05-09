@@ -46,7 +46,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SHIMMER_ALTAR, Material.SMOOTH_STONE_SLAB, ShimmerAltar.class);
         RebarBlock.register(PylonKeys.GRINDSTONE, Material.SMOOTH_STONE_SLAB, Grindstone.class);
         RebarBlock.register(PylonKeys.GRINDSTONE_HANDLE, Material.OAK_FENCE, GrindstoneHandle.class);
-        RebarBlock.register(PylonKeys.ENRICHED_SOUL_SOIL, Material.SOUL_SOIL, EnrichedSoulSoil.class);
+        RebarBlock.register(PylonKeys.ENRICHED_SOUL_SOIL, Material.SOUL_SOIL, RebarBlock.class);
         RebarBlock.register(PylonKeys.MIXING_POT, Material.CAULDRON, MixingPot.class);
         RebarBlock.register(PylonKeys.CRUCIBLE, Material.CAULDRON, Crucible.class);
         RebarBlock.register(PylonKeys.IGNEOUS_COMPOSITE, Material.OBSIDIAN, WitherProofBlock.class);

@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -246,9 +247,9 @@ public class CoalFiredPurificationTower extends RebarBlock implements
     public boolean isRunning() {
         return isProcessing()
                 // input buffer not empty
-                && fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID) > 1.0e-3
+                && fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID) > RebarUtils.FLUID_EPSILON
                 // output buffer not full
-                && fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID) > 1.0e-3;
+                && fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID) > RebarUtils.FLUID_EPSILON;
     }
 
     @Override

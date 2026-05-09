@@ -79,6 +79,8 @@ public class Grindstone extends RebarBlock implements
         setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
     }
 
+    private GrindstoneRecipe lastRecipe = null;
+
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
@@ -166,9 +168,13 @@ public class Grindstone extends RebarBlock implements
             return null;
         }
 
+        if (lastRecipe != null && lastRecipe.input().matches(input)) {
+            return lastRecipe;
+        }
+
         return GrindstoneRecipe.RECIPE_TYPE.getRecipes()
                 .stream()
-                .filter(recipe -> recipe.input().matches(input) && input.getAmount() >= recipe.input().getAmount())
+                .filter(recipe -> recipe.input().matches(input))
                 .findFirst()
                 .orElse(null);
     }
