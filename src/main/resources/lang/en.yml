@@ -89,7 +89,7 @@ item:
     waila: "Dimensional Barrel"
 
   disinfectant:
-    name: "<white>Disinfectant"
+    name: "Disinfectant"
     lore: |-
       <arrow> A cocktail of chemicals that, when applied, removes all effects
       <arrow> <insn>Right click</insn> to use
@@ -368,14 +368,14 @@ item:
     waila: "Palladium Portable Fluid Tank | %bars% (%fluid%)"
 
   fluid_valve:
-    name: "<white>Fluid Valve"
+    name: "Fluid Valve"
     lore: |-
       <arrow> <insn>Right click</insn> a fluid valve to toggle it
       <arrow> <attr>Buffer:</attr> %buffer%
     waila: "Fluid Valve | %bars% (%fluid%) | %status%"
 
   fluid_filter:
-    name: "<white>Fluid Filter"
+    name: "Fluid Filter"
     lore: |-
       <arrow> Only lets a certain fluid through
       <arrow> <insn>Right click</insn> a fluid filter to change the filtered fluid
@@ -384,7 +384,7 @@ item:
     gui: "Fluid Filter"
 
   fluid_limiter:
-    name: "<white>Fluid Limiter"
+    name: "Fluid Limiter"
     lore: |-
       <arrow> Limits the speed of fluid transfer
       <arrow> <insn>Right click</insn> to change the fluid transfer limit
@@ -397,7 +397,7 @@ item:
     waila: "Fluid Limiter | %bars% (%fluid%)"
 
   fluid_accumulator:
-    name: "<white>Fluid Accumulator"
+    name: "Fluid Accumulator"
     lore: |-
       <arrow> Accumulates the specified amount of fluid before releasing it all at once
       <arrow> Power with redstone to flush all fluid to the output and prevent more fluid from being inputted
@@ -407,7 +407,7 @@ item:
     waila: "Fluid Accumulator | %bars% (%fluid%)"
 
   fluid_meter:
-    name: "<white>Fluid Meter"
+    name: "Fluid Meter"
     lore: |-
       <arrow> Measures and displays how much fluid is passing through
       <arrow> <insn>Right click</insn> a fluid meter to configure the measurement time
@@ -424,13 +424,13 @@ item:
     waila: "Fluid Strainer%info%"
 
   fluid_voider_1:
-    name: "<white>Fluid Voider <light_purple>I"
+    name: "Fluid Voider <light_purple>I"
     lore: |-
       <arrow> Destroys all fluids piped into it
       <arrow> <attr>Void rate:</attr> %void_rate%
 
   fluid_voider_2:
-    name: "<white>Fluid Voider <light_purple>II"
+    name: "Fluid Voider <light_purple>II"
     lore: |-
       <arrow> Destroys all fluids piped into it
       <arrow> <attr>Void rate:</attr> %void_rate%
@@ -685,7 +685,7 @@ item:
     name: "Block of Raw Tin"
 
   reactivated_wither_skull:
-    name: "<white>Reactivated Wither Skull"
+    name: "Reactivated Wither Skull"
     lore: |-
       <arrow> <insn>Right click</insn> to shoot a wither skull in the direction you are looking
       <arrow> Skulls are %chargedskulls%
@@ -695,7 +695,7 @@ item:
       false: "not charged"
 
   hyper_activated_wither_skull:
-    name: "<white>Hyper Activated Wither Skull"
+    name: "Hyper Activated Wither Skull"
     lore: |-
       <arrow> <insn>Right click</insn> to shoot a wither skull in the direction you are looking
       <arrow> Skulls are %chargedskulls%
@@ -767,12 +767,12 @@ item:
       <arrow> Some kind of force keeps the grains of dust together; the further they are pulled from the rest, the more strongly they resist...
 
   shimmer_bronze:
-    name: "<white>Shimmer Bronze"
+    name: "Shimmer Bronze"
     lore: |-
       <arrow> Stronger yet more brittle than normal bronze
 
   shimmer_skull:
-    name: "<white>Shimmer Skull"
+    name: "Shimmer Skull"
     lore: |-
       <arrow> An infusion of shimmer dust does to a wither skeleton skull more than meets the eye...
 
@@ -1220,7 +1220,7 @@ item:
       <diamond> 8x <yellow>Liselette Collector</yellow>
 
   liselette_collector:
-    name: "<white>Liselette Collector"
+    name: "Liselette Collector"
 
   fireproof_rune:
     name: "Fireproof Rune"
@@ -1775,65 +1775,65 @@ item:
       <star> Multiblock component
 
   cargo_duct:
-    name: "<white>Cargo Duct"
+    name: "Cargo Duct"
     lore: |-
       <arrow> <insn>Right click</insn> a placed cargo duct with a block to make it look like that block
       <arrow> Connects cargo blocks together
       <arrow> Adjacent cargo ducts will automatically connect to each other
 
   cargo_buffer:
-    name: "<white>Cargo Buffer"
+    name: "Cargo Buffer"
     lore: |-
       <arrow> A one-stack item buffer
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_extractor:
-    name: "<white>Cargo Extractor"
+    name: "Cargo Extractor"
     lore: |-
       <arrow> Extracts items from chests, furnaces, machines, and other compatible blocks
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_inserter:
-    name: "<white>Cargo Inserter"
+    name: "Cargo Inserter"
     lore: |-
       <arrow> Inserts items into chests, furnaces, machines, and other compatible blocks
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_splitter:
-    name: "<white>Cargo Splitter"
+    name: "Cargo Splitter"
     lore: |-
       <arrow> Splits items between two outputs according to a configurable ratio
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
     waila: "Cargo Splitter | <#efae15>%left%<white>-<#2386c4>%right% <white>| %side%"
 
   cargo_merger:
-    name: "<white>Cargo Merger"
+    name: "Cargo Merger"
     lore: |-
       <arrow> Merges incoming items into one output
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_valve:
-    name: "<white>Cargo Valve"
+    name: "Cargo Valve"
     lore: |-
       <arrow> <insn>Shift right click</insn> a cargo valve to toggle it
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
     waila: "Cargo Valve | %status%"
 
   cargo_filter:
-    name: "<white>Cargo Filter"
+    name: "Cargo Filter"
     lore: |-
       <arrow> Sends items matching the filter left
       <arrow> Sends items that do not match the filter right
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_monitor:
-    name: "<white>Cargo Monitor"
+    name: "Cargo Monitor"
     lore: |-
       <arrow> Displays a hologram of its contents
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
 
   cargo_meter:
-    name: "<white>Cargo Meter"
+    name: "Cargo Meter"
     lore: |-
       <arrow> Measures and displays how many items are passing through
       <arrow> <attr>Measurement range:</attr> %min-measurement-time% to %max-measurement-time%
@@ -1841,14 +1841,14 @@ item:
     waila: "Cargo Meter | %duration%"
 
   cargo_gate:
-    name: "<white>Cargo Gate"
+    name: "Cargo Gate"
     lore: |-
       <arrow> Waits for a certain number of items to come from the left before sending on one item from the right
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
     waila: "Cargo Gate | <light_purple>%threshold% <white>| %side%"
 
   cargo_accumulator:
-    name: "<white>Cargo Accumulator"
+    name: "Cargo Accumulator"
     lore: |-
       <arrow> Waits for a certain number of items to arrive before sending them all onwards at once
       <arrow> New items cannot enter while there are still items in the output
@@ -1856,7 +1856,7 @@ item:
     waila: "Cargo Accumulator | <light_purple>%threshold%"
 
   cargo_fluid_accumulator:
-    name: "<white>Cargo Fluid Accumulator"
+    name: "Cargo Fluid Accumulator"
     lore: |-
       <arrow> Waits for a certain amount of items AND fluid to arrive before sending the items and fluid onwards all on at once
       <arrow> New items or fluid cannot enter while there are still items in the output
@@ -1865,7 +1865,7 @@ item:
     waila: "Cargo Fluid Accumulator | <light_purple>%item-threshold%</light_purple> <white>| <light_purple>%fluid-threshold%</light_purple> <white>| %bars%"
 
   cargo_overflow_gate:
-    name: "<white>Cargo Overflow Gate"
+    name: "Cargo Overflow Gate"
     lore: |-
       <arrow> Splits items evenly between two outputs
       <arrow> If one side is full, all items go to the other side
@@ -1947,7 +1947,7 @@ item:
       <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
 
   water_breathing_talisman_simple:
-    name: "<white>Simple Water Breathing Talisman"
+    name: "Simple Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Does not stack
@@ -1955,7 +1955,7 @@ item:
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_advanced:
-    name: "<white>Advanced Water Breathing Talisman"
+    name: "Advanced Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Does not stack
@@ -1963,7 +1963,7 @@ item:
       <arrow> <attr>Bonus oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_ultimate:
-    name: "<white>Ultimate Water Breathing Talisman"
+    name: "Ultimate Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Does not stack
@@ -1971,7 +1971,7 @@ item:
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
   water_breathing_talisman_palladium:
-    name: "<white>Palladium Water Breathing Talisman"
+    name: "Palladium Water Breathing Talisman"
     lore: |-
       <arrow> Allows you to breathe longer underwater
       <arrow> Does not stack
@@ -2043,7 +2043,7 @@ item:
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
   enchanting_talisman_simple:
-    name: "<white>Simple Enchanting Talisman"
+    name: "Simple Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2051,7 +2051,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_advanced:
-    name: "<white>Advanced Enchanting Talisman"
+    name: "Advanced Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2059,7 +2059,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_ultimate:
-    name: "<white>Ultimate Enchanting Talisman"
+    name: "Ultimate Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2067,7 +2067,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   enchanting_talisman_palladium:
-    name: "<white>Palladium Enchanting Talisman"
+    name: "Palladium Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2075,7 +2075,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_level_chance%
 
   hunting_talisman_simple:
-    name: "<white>Simple Hunting Talisman"
+    name: "Simple Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Does not stack
@@ -2083,7 +2083,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_advanced:
-    name: "<white>Advanced Hunting Talisman"
+    name: "Advanced Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Does not stack
@@ -2091,7 +2091,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_ultimate:
-    name: "<white>Ultimate Hunting Talisman"
+    name: "Ultimate Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Does not stack
@@ -2099,7 +2099,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   hunting_talisman_palladium:
-    name: "<white>Palladium Hunting Talisman"
+    name: "Palladium Hunting Talisman"
     lore: |-
       <arrow> Get an extra item for each drop when you kill a mob
       <arrow> Does not stack
@@ -2107,7 +2107,7 @@ item:
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
   flight_ring:
-    name: "<white>Flight Ring"
+    name: "Flight Ring"
     lore: |-
       <arrow> Allows creative flight
       <arrow> Does not stack
@@ -2145,7 +2145,7 @@ item:
       <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
 
   assembly_table:
-    name: "<white>Assembly Table"
+    name: "Assembly Table"
     lore: |-
       <arrow> A table for assembling complex components
       <arrow> <insn>Insert items</insn> to start a recipe
@@ -2170,28 +2170,28 @@ item:
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   steel_screwdriver:
-    name: "<white>Steel Screwdriver"
+    name: "Steel Screwdriver"
     lore: |-
       <arrow> <insn>Left click</insn> on an assembly table to use
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   redstone_soldering_iron:
-    name: "<white>Redstone Soldering Iron"
+    name: "Redstone Soldering Iron"
     lore: |-
       <arrow> <insn>Left click</insn> on an assembly table to use
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   steel_cylinder:
-    name: "<white>Steel Cylinder"
+    name: "Steel Cylinder"
 
   steel_crankshaft:
-    name: "<white>Steel Crankshaft"
+    name: "Steel Crankshaft"
 
   kinetic_control_mechanism:
-    name: "<white>Kinetic Control Mechanism"
+    name: "Kinetic Control Mechanism"
 
   internal_combustion_engine:
-    name: "<white>Internal Combustion Engine"
+    name: "Internal Combustion Engine"
 
   collimator:
     name: "Collimator"
