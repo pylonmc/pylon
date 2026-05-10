@@ -1,6 +1,34 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 import com.google.common.base.Preconditions;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
@@ -20,6 +48,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
@@ -28,35 +57,11 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
 import kotlin.Pair;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.noise.SimplexOctaveGenerator;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3i;
-import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryController extends SmelteryComponent
         implements RebarGuiBlock, RebarMultiblock, RebarTickingBlock {
@@ -144,37 +149,22 @@ public final class SmelteryController extends SmelteryComponent
 
         @Override
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            Material material;
-            List<Component> lore = new ArrayList<>();
             if (isFormedAndFullyLoaded()) {
-                if (running) {
-                    material = Material.GREEN_STAINED_GLASS_PANE;
-                    lore.add(Component.translatable("pylon.gui.status.running"));
-                } else {
-                    material = Material.YELLOW_STAINED_GLASS_PANE;
-                    lore.add(Component.translatable("pylon.gui.status.not_running"));
-                }
-                lore.add(Component.translatable("pylon.gui.status.toggle"));
-                lore.add(Component.empty());
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.height",
-                        RebarArgument.of("height", UnitFormat.BLOCKS.format(height))
-                ));
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.capacity",
-                        RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0))
-                ));
-                lore.add(Component.translatable(
-                        "pylon.gui.smeltery.temperature",
-                        RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature).decimalPlaces(1))
-                ));
+                return ItemStackBuilder.gui(running ? Material.GREEN_STAINED_GLASS_PANE : Material.YELLOW_STAINED_GLASS_PANE, pylonKey("smeltery-status"))
+                        .name(Component.translatable("pylon.gui.status.name"))
+                        .lore(Component.translatable(
+                                "pylon.gui.smeltery.status",
+                                RebarArgument.of("status", Component.translatable(running ? "pylon.gui.status.running" : "pylon.gui.status.not_running")),
+                                RebarArgument.of("height", UnitFormat.BLOCKS.format(height)),
+                                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0)),
+                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature).decimalPlaces(0))
+                        ))
+                        .addCustomModelDataFloat((float) temperature);
             } else {
-                material = Material.RED_STAINED_GLASS_PANE;
-                lore.add(Component.translatable("pylon.gui.status.incomplete"));
+                return ItemStackBuilder.gui(Material.RED_STAINED_GLASS_PANE, pylonKey("smeltery-status"))
+                        .name(Component.translatable("pylon.gui.status.name"))
+                        .lore(Component.translatable("pylon.gui.status.incomplete"));
             }
-            return ItemStackBuilder.of(material)
-                    .name(Component.translatable("pylon.gui.status.name"))
-                    .lore(lore);
         }
 
         @Override
@@ -209,7 +199,7 @@ public final class SmelteryController extends SmelteryComponent
                     )));
                 }
             }
-            return ItemStackBuilder.of(Material.LAVA_BUCKET)
+            return ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
                     .name(Component.translatable("pylon.gui.smeltery.contents.name"))
                     .lore(lore);
         }
@@ -368,6 +358,7 @@ public final class SmelteryController extends SmelteryComponent
 
         double amountToAdd = Math.min(amount, capacity - getTotalFluid());
         fluids.mergeDouble(fluid, amountToAdd, Double::sum);
+        refreshBlockTextureItem();
     }
 
     public void removeFluid(@NotNull RebarFluid fluid, double amount) {
@@ -378,6 +369,7 @@ public final class SmelteryController extends SmelteryComponent
         if (fluids.getDouble(fluid) <= 0.001) { // Consider anything less than a nanobucket as empty
             fluids.removeDouble(fluid);
         }
+        refreshBlockTextureItem();
     }
 
     public double getFluidAmount(@NotNull RebarFluid fluid) {
@@ -393,13 +385,8 @@ public final class SmelteryController extends SmelteryComponent
         return sum;
     }
 
-    public @Nullable Pair<RebarFluid, Double> getBottomFluid() {
-        Object2DoubleMap.Entry<RebarFluid> lastEntry = null;
-        for (var entry : fluids.object2DoubleEntrySet()) {
-            lastEntry = entry;
-        }
-        if (lastEntry == null) return null;
-        return new Pair<>(lastEntry.getKey(), lastEntry.getDoubleValue());
+    public @NotNull Map<RebarFluid, Double> getFluids() {
+        return Collections.unmodifiableMap(fluids);
     }
     // </editor-fold>
 
@@ -477,6 +464,12 @@ public final class SmelteryController extends SmelteryComponent
     private double lastHeight = 0;
 
     private void updateFluidDisplay() {
+        List<TextDisplay> pixels = getPixels();
+        if (pixels.isEmpty() || !RebarUtils.hasTracker(pixels.getFirst())) {
+            // Don't update the smeltery display if no one can see it.
+            return;
+        }
+
         HslColor color = HslColor.fromRgb(PylonUtils.colorFromTemperature(temperature));
         double fill = getTotalFluid() / capacity;
         if (Double.isNaN(fill) || Double.isInfinite(fill)) {
@@ -490,7 +483,6 @@ public final class SmelteryController extends SmelteryComponent
         double finalHeight = center.getY() + height * fill - 0.01;
         boolean decreased = lastHeight > finalHeight;
 
-        List<TextDisplay> pixels = getPixels();
         for (int i = 0; i < pixels.size(); i++) {
             TextDisplay entity = pixels.get(i);
             if (!entity.isValid()) continue;
@@ -510,6 +502,8 @@ public final class SmelteryController extends SmelteryComponent
                     color.saturation(),
                     color.lightness() + value * LIGHTNESS_VARIATION
             );
+            entity.setInterpolationDuration(getTickInterval());
+            entity.setInterpolationDelay(0);
             entity.setBackgroundColor(newColor.toRgb());
 
 
@@ -537,20 +531,23 @@ public final class SmelteryController extends SmelteryComponent
             if (recipe.getTemperature() > temperature) continue;
 
             for (RebarFluid fluid : recipe.getFluidInputs().keySet()) {
-                if (getFluidAmount(fluid) == 0) continue recipeLoop;
+                if (!fluids.containsKey(fluid)) continue recipeLoop;
             }
 
-            double highestFluidAmount = getFluidAmount(recipe.getHighestFluid());
-            double consumptionRatio = highestFluidAmount / FLUID_REACTION_PER_TICK;
+            double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
+            double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
+            double maxFluidConsumption = FLUID_REACTION_PER_TICK * highestFluidRatio;
+            double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
+
             double currentTemperature = temperature;
             for (var entry : recipe.getFluidInputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 removeFluid(fluid, amount);
             }
             for (var entry : recipe.getFluidOutputs().entrySet()) {
                 RebarFluid fluid = entry.getKey();
-                double amount = entry.getValue() * consumptionRatio;
+                double amount = trueMaxConsumption * entry.getValue();
                 addFluid(fluid, amount);
             }
             temperature = currentTemperature; // offset addFluid/removeFluid temperature change
@@ -565,6 +562,9 @@ public final class SmelteryController extends SmelteryComponent
                 applyHeat();
                 performRecipes();
             }
+            if (Math.abs(oldTemperature - temperature) < 1e-6) {
+                refreshBlockTextureItem();
+            }
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
                 // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
                 // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
@@ -573,6 +573,16 @@ public final class SmelteryController extends SmelteryComponent
             avgTarget = -1;
             heaters = 0;
             updateFluidDisplay();
+
+            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+            box.expand(BlockFace.UP, height);
+
+            double damage = Math.max(0, temperature / 100 + 1);
+
+            for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
+                if (!(entity instanceof LivingEntity livingEntity)) continue;
+                livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
+            }
         }
         infoItem.notifyWindows();
         contentsItem.notifyWindows();
@@ -587,6 +597,7 @@ public final class SmelteryController extends SmelteryComponent
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
         properties.put("running", new Pair<>(String.valueOf(isFormedAndFullyLoaded() && running), 2));
+        properties.put("level", new Pair<>(String.valueOf((int) (getTotalFluid() / capacity * 10)), 10));
         return properties;
     }
 }
