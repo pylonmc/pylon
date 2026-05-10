@@ -12,7 +12,7 @@ pylon:bronze:
   input2:
     pylon:tin_ingot: 1
   output-fluid: pylon:bronze
-  output-fluid-amount: 3000
+  output-fluid-amount: 432
   output-item:
     pylon:slag: 2
   temperature: 950
@@ -36,7 +36,7 @@ pylon:tin_melting:
   input1:
     pylon:crushed_raw_tin: 2
   output-fluid: pylon:tin
-  output-fluid-amount: 3000
+  output-fluid-amount: 432
   output-item:
     pylon:slag: 2
   temperature: 230
@@ -47,7 +47,7 @@ pylon:copper_melting:
   input1:
     pylon:crushed_raw_copper: 2
   output-fluid: pylon:copper
-  output-fluid-amount: 3000
+  output-fluid-amount: 432
   output-item:
     pylon:slag: 2
   temperature: 1080
@@ -58,7 +58,7 @@ pylon:iron_melting:
   input1:
     pylon:crushed_raw_iron: 2
   output-fluid: pylon:iron
-  output-fluid-amount: 3000
+  output-fluid-amount: 432
   output-item:
     pylon:slag: 2
   temperature: 1060
@@ -69,7 +69,7 @@ pylon:gold_melting:
   input1:
     pylon:crushed_raw_gold: 2
   output-fluid: pylon:iron
-  output-fluid-amount: 3000
+  output-fluid-amount: 432
   output-item:
     pylon:slag: 2
   temperature: 1060

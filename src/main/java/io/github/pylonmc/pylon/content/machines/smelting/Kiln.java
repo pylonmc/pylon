@@ -188,6 +188,7 @@ public class Kiln extends RebarBlock implements
         Furnace furnace = (Furnace) getBlock().getBlockData();
         furnace.setLit(fuelTicksRemaining > 0);
         getBlock().setBlockData(furnace);
+        refreshBlockTextureItem();
 
         int level = Math.clamp((int) Math.round(15 * temperature / maxTemperature), 0, 15);
         Block light = getLight();
@@ -358,7 +359,7 @@ public class Kiln extends RebarBlock implements
     }
 
     public @NotNull Block getLight() {
-        return getBlock().getRelative(LIGHT.x, LIGHT.y, LIGHT.z);
+        return getMultiblockBlock(LIGHT);
     }
 
     @Override
@@ -370,6 +371,10 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (!isFormedAndFullyLoaded()) {
+            return super.getWaila(player);
+        }
+
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("temperature-bar", PylonUtils.createBar(
                         temperature / maxTemperature,
