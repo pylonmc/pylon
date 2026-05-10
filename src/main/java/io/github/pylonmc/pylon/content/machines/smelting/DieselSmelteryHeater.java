@@ -1,5 +1,18 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import net.kyori.adventure.text.format.TextColor;
+
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
+
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -13,16 +26,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
+import kotlin.Pair;
 
 
 public class DieselSmelteryHeater extends SmelteryComponent implements
@@ -35,6 +39,8 @@ public class DieselSmelteryHeater extends SmelteryComponent implements
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double temperature = getSettings().getOrThrow("temperature", ConfigAdapter.DOUBLE);
+
+    private boolean lit = false;
 
     public static class Item extends RebarItem {
 
@@ -77,11 +83,26 @@ public class DieselSmelteryHeater extends SmelteryComponent implements
                 || !controller.isRunning()
                 || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * tickInterval / 20
         ) {
+            if (lit) {
+                lit = false;
+                refreshBlockTextureItem();
+            }
             return;
         }
 
+        if (!lit) {
+            lit = true;
+            refreshBlockTextureItem();
+        }
         removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * tickInterval / 20);
         controller.heatAsymptotically(temperature);
+    }
+
+    @Override
+    public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
+        var properties = super.getBlockTextureProperties();
+        properties.put("lit", new Pair<>(String.valueOf(lit), 2));
+        return properties;
     }
 
     @Override

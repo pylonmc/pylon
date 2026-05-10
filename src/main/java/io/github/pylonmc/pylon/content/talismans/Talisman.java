@@ -62,7 +62,7 @@ public abstract class Talisman extends RebarItem implements RebarInventoryEffect
     }
 
     @Override
-    public long getTickInterval() {
+    public long getBaseTickInterval() {
         return PylonConfig.DEFAULT_TALISMAN_TICK_INTERVAL;
     }
 

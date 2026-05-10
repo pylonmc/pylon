@@ -66,6 +66,8 @@ public class FluidMeter extends RebarBlock implements
     private final List<Double> measurements;
     private int numberOfMeasurements;
 
+    private int lastAverage;
+
     public static class Item extends RebarItem {
 
         public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
@@ -206,10 +208,16 @@ public class FluidMeter extends RebarBlock implements
                 measurements.removeFirst();
             }
         }
+
         double total = measurements.stream()
                 .mapToDouble(x -> x)
                 .sum();
-        double average = (total / measurements.size()) * 20.0 / getTickInterval();
+        int average = (int) ((total / measurements.size()) * 20.0 / getTickInterval());
+        if (average == lastAverage) {
+            return;
+        }
+        lastAverage = average;
+
         Component component = UnitFormat.MILLIBUCKETS_PER_SECOND.format(average).decimalPlaces(0).asComponent();
         getHeldEntityOrThrow(TextDisplay.class, "flow_rate").text(component);
     }

@@ -1,5 +1,21 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import net.kyori.adventure.text.Component;
+
+import org.bukkit.Keyed;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -11,22 +27,8 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import kotlin.Pair;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Keyed;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.Map;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryBurner extends SmelteryComponent implements
         RebarGuiBlock,
@@ -47,7 +49,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     private @Nullable Fuel fuel;
 
-    private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
+    private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.CHARCOAL)
             .name(Component.translatable("pylon.gui.smeltery_burner.not_burning"));
     private final ItemStackBuilder burningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
             .name(Component.translatable("pylon.gui.smeltery_burner.burning"));
@@ -85,7 +87,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
-        properties.put("lit", new Pair<>(fuel != null ? "true" : "false", 2));
+        properties.put("lit", new Pair<>(String.valueOf(fuel != null), 2));
         return properties;
     }
 
@@ -106,12 +108,12 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     @Override
     public void tick() {
+        progressProcess(getTickInterval());
+
         SmelteryController controller = getController();
         if (controller == null || !controller.isRunning()) {
             return;
         }
-
-        progressProcess(getTickInterval());
 
         if (fuel != null) {
             controller.heatAsymptotically(fuel.temperature);
@@ -143,8 +145,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public void onProcessFinished() {
         progressItem.setItem(notBurningProgressItem);
-        refreshBlockTextureItem();
         fuel = null;
+        refreshBlockTextureItem();
     }
 
     @Override
