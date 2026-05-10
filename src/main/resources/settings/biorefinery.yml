@@ -1,4 +1,4 @@
 tick-interval: 10
-biodiesel-per-second: 150
+biodiesel-per-second: 30
 ethanol-per-mb-of-biodiesel: 0.8
 plant-oil-per-mb-of-biodiesel: 0.2

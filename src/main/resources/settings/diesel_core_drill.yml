@@ -2,5 +2,5 @@ rotation-duration-ticks: 16 # must be a multiple of 4
 rotations-per-cycle: 20
 output: "pylon:deep_core_chunk"
 drill-material: gray_concrete
-diesel-usage: 95
+diesel-usage: 20
 spawn-block-particles: false

@@ -177,7 +177,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             SCANNING.put(player.getUniqueId(), scan);
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
-            if (RebarItem.fromStack(stack) != null) {
+            if (RebarItem.isRebarItem(stack)) {
                 player.sendActionBar(message("is_pylon"));
             } else if (!stack.getPersistentDataContainer().isEmpty()) {
                 player.sendActionBar(message("is_other_plugin"));
@@ -250,7 +250,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
             Material type = stack.getType();
-            if (RebarItem.fromStack(stack) != null || !stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
+            if (!stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
                 player.sendMessage(message("examine_failed", RebarArgument.of("object", stack.effectiveName())));
                 return;
             }
@@ -263,11 +263,13 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
 
             new ParticleBuilder(Particle.ITEM).data(stack).extra(0.05).count(16).location(hit.getLocation().add(0, hit.getHeight() / 2, 0)).spawn();
             hit.getWorld().playSound(Sound.sound(SoundEventKeys.ENTITY_ITEM_BREAK, Sound.Source.PLAYER, 0.5f, 1f), hit.getX(), hit.getY(), hit.getZ());
-            if (stack.getAmount() == 1) {
-                hit.remove();
-            } else {
-                stack.subtract();
-                hit.setItemStack(stack);
+            if (player.getGameMode() != GameMode.ADVENTURE) {
+                if (stack.getAmount() == 1) {
+                    hit.remove();
+                } else {
+                    stack.subtract();
+                    hit.setItemStack(stack);
+                }
             }
             addEntry(player, stack.effectiveName(), type.getKey(), getEntryConfig(type));
             player.setCooldown(getStack(), cooldownTicks);
@@ -291,7 +293,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             }
 
             // Permit unbreakable blocks, just don't try to break them
-            if (type.getHardness() >= 0) {
+            if (type.getHardness() >= 0 && player.getGameMode() != GameMode.ADVENTURE) {
                 BlockBreakEvent breakEvent = new BlockBreakEvent(hit, player);
                 breakEvent.setDropItems(false);
                 breakEvent.setExpToDrop(0);

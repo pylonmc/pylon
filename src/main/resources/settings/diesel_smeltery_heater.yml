@@ -1,4 +1,4 @@
-diesel-buffer: 200
-diesel-per-second: 35
+diesel-buffer: 40
+diesel-per-second: 7
 tick-interval: 10
 temperature: 1600

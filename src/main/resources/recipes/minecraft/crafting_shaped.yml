@@ -340,7 +340,21 @@ pylon:confetti_popper:
     D: "#paper:dyes_settag"
     I: pylon:iron_sheet
   result: pylon:confetti_popper
-  category: tools
+  category: equipment
+
+pylon:diesel_booster:
+  pattern:
+    - "TKT"
+    - "CFC"
+    - " N "
+  key:
+    T: pylon:portable_fluid_tank_steel
+    C: pylon:steel_cylinder
+    K: pylon:kinetic_control_mechanism
+    F: minecraft:flint_and_steel
+    N: pylon:nozzle
+  result: pylon:diesel_booster
+  category: equipment
 
 pylon:grindstone:
   pattern:
@@ -1382,29 +1396,29 @@ pylon:hydraulic_breaker:
   result: pylon:hydraulic_breaker
   category: building
 
-pylon:purification_tower_glass:
+pylon:copper_framed_glass:
   pattern:
-    - "GCG"
-    - "GCG"
-    - "GCG"
+    - "CCC"
+    - "CGC"
+    - "CCC"
   key:
-    C: pylon:copper_sheet
+    C: minecraft:copper_nugget
     G: minecraft:glass
-  result: pylon:purification_tower_glass
+  result: pylon:copper_framed_glass
   category: building
 
-pylon:purification_tower_cap:
+pylon:quartz_cap:
   pattern:
     - "   "
     - "SSS"
     - "GSG"
   key:
     G: minecraft:glass
-    S: pylon:copper_sheet
-  result: pylon:purification_tower_cap
+    S: minecraft:quartz
+  result: pylon:quartz_cap
   category: building
 
-pylon:solar_purification_tower_1:
+pylon:solar_hydraulic_purifier_1:
   pattern:
     - "CPC"
     - "FPF"
@@ -1414,68 +1428,80 @@ pylon:solar_purification_tower_1:
     S: pylon:bronze_sheet
     P: pylon:fluid_pipe_bronze
     F: pylon:fluid_filter
-  result: pylon:solar_purification_tower_1
+  result: pylon:solar_hydraulic_purifier_1
   category: building
 
-pylon:solar_purification_tower_2:
+pylon:solar_hydraulic_purifier_2:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_1
+    P: pylon:solar_hydraulic_purifier_1
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_2
+  result: pylon:solar_hydraulic_purifier_2
   category: building
 
-pylon:solar_purification_tower_3:
+pylon:solar_hydraulic_purifier_3:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_2
+    P: pylon:solar_hydraulic_purifier_2
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_3
+  result: pylon:solar_hydraulic_purifier_3
   category: building
 
-pylon:solar_purification_tower_4:
+pylon:solar_hydraulic_purifier_4:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_3
+    P: pylon:solar_hydraulic_purifier_3
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_4
+  result: pylon:solar_hydraulic_purifier_4
   category: building
 
-pylon:solar_purification_tower_5:
+pylon:solar_hydraulic_purifier_5:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_4
+    P: pylon:solar_hydraulic_purifier_4
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_5
+  result: pylon:solar_hydraulic_purifier_5
   category: building
 
-pylon:coal_fired_purification_tower:
+pylon:burner_hydraulic_purifier:
   pattern:
-    - "CPC"
-    - "FPF"
-    - "CUC"
+    - "FIF"
+    - "C C"
+    - "CBC"
   key:
     C: minecraft:copper_ingot
-    P: pylon:fluid_pipe_bronze
+    I: pylon:fluid_pipe_iron
     F: pylon:fluid_filter
-    U: minecraft:blast_furnace
-  result: pylon:coal_fired_purification_tower
+    B: minecraft:blast_furnace
+  result: pylon:burner_hydraulic_purifier
+  category: building
+
+pylon:convection_hydraulic_purifier:
+  pattern:
+    - "IPI"
+    - "VPV"
+    - "IPI"
+  key:
+    P: pylon:fluid_pipe_copper
+    I: pylon:bronze_sheet
+    V: pylon:backflow_valve
+  result: pylon:convection_hydraulic_purifier
   category: building
 
 pylon:ice_arrow:
@@ -2097,6 +2123,18 @@ pylon:diesel_brick_molder:
   result: pylon:diesel_brick_molder
   category: building
 
+pylon:diesel_refueling_station:
+  pattern:
+    - "   "
+    - "PGP"
+    - "CCC"
+  key:
+    C: pylon:iron_sheet
+    P: pylon:fluid_pipe_steel
+    G: minecraft:glass
+  result: pylon:diesel_refueling_station
+  category: building
+
 pylon:fermenter:
   pattern:
     - "ICI"
@@ -2263,7 +2301,8 @@ pylon:cargo_extractor:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     C: pylon:liselette_cathode
-  result: pylon:cargo_extractor
+  result:
+    pylon:cargo_extractor: 2
   category: building
 
 pylon:cargo_inserter:
@@ -2275,7 +2314,8 @@ pylon:cargo_inserter:
     S: pylon:copper_sheet
     D: pylon:cargo_duct
     A: pylon:liselette_anode
-  result: pylon:cargo_inserter
+  result:
+    pylon:cargo_inserter: 2
   category: building
 
 pylon:cargo_valve:
@@ -2289,7 +2329,8 @@ pylon:cargo_valve:
     C: pylon:liselette_cathode
     L: minecraft:lever
     B: minecraft:chest
-  result: pylon:cargo_valve
+  result:
+    pylon:cargo_valve: 2
   category: building
 
 pylon:cargo_buffer:
@@ -2302,7 +2343,8 @@ pylon:cargo_buffer:
     A: pylon:liselette_anode
     C: pylon:liselette_cathode
     B: minecraft:barrel
-  result: pylon:cargo_buffer
+  result:
+    pylon:cargo_buffer: 2
   category: building
 
 pylon:cargo_monitor:
@@ -2315,7 +2357,8 @@ pylon:cargo_monitor:
     B: pylon:cargo_buffer
     R: minecraft:redstone
     C: minecraft:comparator
-  result: pylon:cargo_monitor
+  result:
+    pylon:cargo_monitor: 2
   category: building
 
 pylon:cargo_meter:
@@ -2328,7 +2371,8 @@ pylon:cargo_meter:
     R: minecraft:redstone
     E: minecraft:repeater
     C: minecraft:comparator
-  result: pylon:cargo_meter
+  result:
+    pylon:cargo_meter: 2
   category: building
 
 pylon:cargo_splitter:
@@ -2341,7 +2385,8 @@ pylon:cargo_splitter:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_splitter
+  result:
+    pylon:cargo_splitter: 2
   category: building
 
 pylon:cargo_merger:
@@ -2354,7 +2399,8 @@ pylon:cargo_merger:
     O: pylon:cargo_controller
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
-  result: pylon:cargo_merger
+  result:
+    pylon:cargo_merger: 2
   category: building
 
 pylon:cargo_filter:
@@ -2368,7 +2414,8 @@ pylon:cargo_filter:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     F: pylon:filter_mesh
-  result: pylon:cargo_filter
+  result:
+    pylon:cargo_filter: 2
   category: building
 
 pylon:cargo_overflow_gate:
@@ -2382,7 +2429,8 @@ pylon:cargo_overflow_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_overflow_gate
+  result:
+    pylon:cargo_overflow_gate: 2
   category: building
 
 pylon:cargo_gate:
@@ -2396,7 +2444,8 @@ pylon:cargo_gate:
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
-  result: pylon:cargo_gate
+  result:
+    pylon:cargo_gate: 2
   category: building
 
 pylon:cargo_accumulator:
@@ -2411,7 +2460,8 @@ pylon:cargo_accumulator:
     C: pylon:liselette_cathode
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_accumulator
+  result:
+    pylon:cargo_accumulator: 2
   category: building
 
 pylon:cargo_fluid_accumulator:
@@ -2424,7 +2474,8 @@ pylon:cargo_fluid_accumulator:
     P: pylon:fluid_pipe_steel
     R: minecraft:repeater
     D: minecraft:redstone
-  result: pylon:cargo_fluid_accumulator
+  result:
+    pylon:cargo_fluid_accumulator: 2
   category: building
 
 pylon:diesel_smeltery_heater:
@@ -2683,4 +2734,125 @@ pylon:palladium_condenser:
     C: pylon:diesel_core_drill
   result:
     pylon:palladium_condenser: 1
+  category: building
+
+pylon:silo_converter:
+  pattern:
+    - "SSS"
+    - "W W"
+    - "WWW"
+  key:
+    S: "#minecraft:wooden_slabs"
+    W: "#minecraft:planks"
+  result:
+    pylon:silo_converter: 1
+  category: building
+
+pylon:wooden_silo:
+  pattern:
+    - " P "
+    - "PBP"
+    - " P "
+  key:
+    B: minecraft:barrel
+    P: "#minecraft:planks"
+  result:
+    pylon:wooden_silo: 4
+  category: building
+
+pylon:tin_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:tin_ingot
+  result:
+    pylon:tin_silo: 4
+  category: building
+
+pylon:copper_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:copper_ingot
+  result:
+    pylon:copper_silo: 4
+  category: building
+
+pylon:iron_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: minecraft:iron_ingot
+  result:
+    pylon:iron_silo: 4
+  category: building
+
+pylon:bronze_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:bronze_ingot
+  result:
+    pylon:bronze_silo: 4
+  category: building
+
+pylon:steel_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:steel_ingot
+  result:
+    pylon:steel_silo: 4
+  category: building
+
+pylon:palladium_silo:
+  pattern:
+    - " S "
+    - "SBS"
+    - " S "
+  key:
+    B: minecraft:barrel
+    S: pylon:palladium_ingot
+  result:
+    pylon:palladium_silo: 4
+  category: building
+
+pylon:manual_hydraulic_purifier:
+  pattern:
+    - "BCB"
+    - "P P"
+    - "BBB"
+  key:
+    B: minecraft:brick
+    P: pylon:fluid_pipe_copper
+    C: minecraft:copper_ingot
+  result: pylon:manual_hydraulic_purifier
+  category: building
+
+pylon:liselette_hydraulic_purifier:
+  pattern:
+    - "ASA"
+    - "P V"
+    - "ASA"
+  key:
+    S: pylon:steel_block
+    P: pylon:fluid_pipe_steel
+    V: pylon:backflow_valve
+    A: pylon:liselette_anode
+  result: pylon:liselette_hydraulic_purifier
   category: building

@@ -1,5 +1,5 @@
 shimmer-dust-per-cycle: 8
-diesel-per-second: 250
+diesel-per-second: 50
 hydraulic-fluid-per-second: 500
 machine-ticks-per-cycle: 360
 tick-interval: 10

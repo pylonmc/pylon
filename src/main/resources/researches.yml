@@ -159,6 +159,29 @@ pressing:
   unlocks:
     - pylon:press
 
+silos_1:
+  item: pylon:bronze_silo
+  cost: 5
+  unlocks:
+    - pylon:silo_converter
+    - pylon:wooden_silo
+    - pylon:copper_silo
+    - pylon:tin_silo
+
+silos_2:
+  item: pylon:bronze_silo
+  cost: 10
+  unlocks:
+    - pylon:iron_silo
+    - pylon:bronze_silo
+
+silos_3:
+  item: pylon:bronze_silo
+  cost: 15
+  unlocks:
+    - pylon:steel_silo
+    - pylon:palladium_silo
+
 pumps:
   item: pylon:water_pump
   cost: 5
@@ -320,29 +343,34 @@ hydraulic_machines:
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
 
-hydraulic_purification_1:
-  item: pylon:solar_purification_tower_1
+manual_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 5
+  unlocks:
+    - pylon:manual_hydraulic_purifier
+
+solar_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 10
   unlocks:
-    - pylon:solar_purification_tower_1
-    - pylon:solar_purification_tower_2
-    - pylon:purification_tower_glass
-    - pylon:purification_tower_cap
-    - pylon:solar_lens
+    - pylon:solar_hydraulic_purifier_1
+    - pylon:solar_hydraulic_purifier_2
+    - pylon:solar_hydraulic_purifier_3
+    - pylon:solar_hydraulic_purifier_4
+    - pylon:solar_hydraulic_purifier_5
 
-hydraulic_purification_2:
-  item: pylon:coal_fired_purification_tower
-  cost: 15
-  unlocks:
-    - pylon:coal_fired_purification_tower
-    - pylon:solar_purification_tower_3
-
-hydraulic_purification_3:
-  item: pylon:solar_purification_tower_5
+thermal_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 20
   unlocks:
-    - pylon:solar_purification_tower_4
-    - pylon:solar_purification_tower_5
+    - pylon:burner_hydraulic_purifier
+    - pylon:convection_hydraulic_purifier
+
+liselette_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 40
+  unlocks:
+    - pylon:liselette_hydraulic_purifier
 
 hydraulic_combat:
   item: pylon:hydraulic_cannon
@@ -407,6 +435,7 @@ shimmer_field_manipulation:
     - pylon:liselette_conductor
     - pylon:liselette_cathode
     - pylon:liselette_anode
+    - pylon:liselette_collector
 
 assembling:
   item: pylon:assembly_table
@@ -462,6 +491,7 @@ diesel_machines:
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
+    - pylon:diesel_refueling_station
 
 diesel_production:
   item: pylon:biorefinery
@@ -469,6 +499,12 @@ diesel_production:
   unlocks:
     - pylon:fermenter
     - pylon:biorefinery
+
+diesel_booster:
+  item: pylon:diesel_booster
+  cost: 10
+  unlocks:
+    - pylon:diesel_booster
 
 portable_workstations:
   item: pylon:portable_crafting_table
@@ -523,6 +559,9 @@ components_1:
   - pylon:bronze_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
+  - pylon:copper_framed_glass
+  - pylon:quartz_cap
+  - pylon:solar_lens
 
 components_2:
   item: pylon:steel_crankshaft

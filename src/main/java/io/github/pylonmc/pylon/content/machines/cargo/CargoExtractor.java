@@ -269,7 +269,8 @@ public class CargoExtractor extends CargoInteractor implements
             } else {
                 outputInventory.setItem(new MachineUpdateReason(), 0, output.add());
             }
-            slot.set(slotStack, slot.getAmount() - 1);
+            long newAmount = slot.getAmount() - 1;
+            slot.set(newAmount == 0 ? null : slotStack, newAmount);
             return;
         }
     }

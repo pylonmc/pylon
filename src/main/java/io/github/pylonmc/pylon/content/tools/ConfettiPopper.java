@@ -4,9 +4,8 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarConsumable;
-import io.github.pylonmc.rebar.particles.ConfettiParticle;
+import io.github.pylonmc.rebar.util.ConfettiParticle;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -33,24 +32,22 @@ public class ConfettiPopper extends RebarItem implements RebarConsumable {
     public void onConsumed(@NotNull PlayerItemConsumeEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
         Location eyeLocation = player.getEyeLocation();
-        Vector direction = eyeLocation.getDirection().normalize();
+        Vector direction = eyeLocation.getDirection();
+        Location startLocation = eyeLocation.clone().add(direction.clone().multiply(0.5));
 
         player.playSound(player, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1f, 1.6f);
         player.playSound(player, Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1f, 1.5f);
         for (int i = 0; i < amount; i++) {
             double distance = RANDOM.nextDouble(1, length);
-
             double spreadX = (RANDOM.nextDouble() - 0.5) * 2 * size;
             double spreadY = (RANDOM.nextDouble() - 0.5) * 2 * size;
             double spreadZ = (RANDOM.nextDouble() - 0.5) * 2 * size;
 
             Vector offset = direction.clone().multiply(distance).add(new Vector(spreadX, spreadY, spreadZ));
-            Vector spawnPos = eyeLocation.toVector().add(offset);
+            Vector targetPos = startLocation.toVector().add(offset);
+            Vector velocity = targetPos.subtract(startLocation.toVector()).multiply(0.35);
 
-            int index = RANDOM.nextInt(ConfettiParticle.CONCRETES.size());
-            Material mat = ConfettiParticle.CONCRETES.get(index);
-
-            new ConfettiParticle(spawnPos.toLocation(player.getWorld()), direction, lifetime, mat);
+            new ConfettiParticle(startLocation, velocity, lifetime, ConfettiParticle.randomMaterial());
         }
     }
 }

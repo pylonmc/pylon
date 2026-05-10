@@ -160,7 +160,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
             RebarBlock rebarBlock = BlockStorage.get(block);
             if (rebarBlock instanceof RebarLogisticBlock) {
                 displayName = Component.translatable(
-                        "pylon." + rebarBlock.getKey().getNamespace() + ".inventory." + targetLogisticGroup
+                        rebarBlock.getKey().getNamespace() + ".inventory." + targetLogisticGroup
                 );
             } else {
                 displayName = Component.translatable("pylon.inventory." + targetLogisticGroup);

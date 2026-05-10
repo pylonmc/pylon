@@ -126,31 +126,31 @@ public class Kiln extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 0, 1), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(new Vector3i(0, 0, 2), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(ITEM_INPUT_HATCH_1, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(ITEM_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_OUTPUT_HATCH));
-        components.put(new Vector3i(1, 0, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 0, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(1, 0, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 0, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(0, 0, 1), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(ITEM_INPUT_HATCH_1, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(ITEM_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.ITEM_OUTPUT_HATCH));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(1, 0, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 0, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(ITEM_INPUT_HATCH_2, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(FLUID_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(0, 1, 2), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(new Vector3i(1, 1, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 1, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(1, 1, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 1, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(ITEM_INPUT_HATCH_2, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(FLUID_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(new Vector3i(1, 1, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 1, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(1, 1, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 1, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
 
-        components.put(new Vector3i(0, 2, 0), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(new Vector3i(1, 2, 1), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(new Vector3i(0, 2, 2), new VanillaMultiblockComponent(Material.MUD_BRICKS));
-        components.put(new Vector3i(1, 2, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 2, 0), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(1, 2, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
-        components.put(new Vector3i(-1, 2, 2), new VanillaMultiblockComponent(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(new Vector3i(1, 2, 1), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(new Vector3i(0, 2, 2), MultiblockComponent.of(Material.MUD_BRICKS));
+        components.put(new Vector3i(1, 2, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 2, 0), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(1, 2, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
+        components.put(new Vector3i(-1, 2, 2), MultiblockComponent.of(Material.MUD_BRICK_WALL));
 
         return components;
     }

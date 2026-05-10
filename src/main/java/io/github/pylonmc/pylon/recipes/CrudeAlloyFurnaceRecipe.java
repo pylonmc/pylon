@@ -75,7 +75,7 @@ public record CrudeAlloyFurnaceRecipe(
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', ItemButton.of(input1))
                 .addIngredient('j', ItemButton.of(input2))
-                .addIngredient('b', PylonItems.KILN)
+                .addIngredient('b', PylonItems.CRUDE_ALLOY_FURNACE)
                 .addIngredient('o', ItemButton.of(result))
                 .build();
     }

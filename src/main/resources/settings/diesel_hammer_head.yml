@@ -1,5 +1,5 @@
 tick-interval: 10
 go-down-time-ticks: 1
-diesel-per-craft: 100
+diesel-per-craft: 20
 speed: 1.0
-diesel-buffer: 200
+diesel-buffer: 40

@@ -2,5 +2,5 @@ tick-interval: 10
 down-animation-time-ticks: 3
 up-animation-time-ticks: 17
 cooldown-ticks: 100
-diesel-per-craft: 100
-diesel-buffer: 200
+diesel-per-craft: 20
+diesel-buffer: 40

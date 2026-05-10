@@ -62,35 +62,35 @@ public class HydraulicCoreDrill extends CoreDrill {
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 0, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -1, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -2, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 0, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -1, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -2, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(1, -1, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(1, -2, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, -1, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, -2, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, -1, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, -2, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, -1, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, -2, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -1, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -2, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 0, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -1, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -2, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(-1, -2, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, -2, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, -2, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, -2, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, -2, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, -2, 1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, -2, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, -2, 1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
 
-        components.put(new Vector3i(-1, -2, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, -2, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, -2, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, -2, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
 
-        components.put(new Vector3i(0, -2, 3), new VanillaMultiblockComponent(Material.CAULDRON));
-        components.put(FLUID_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(FLUID_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(0, -2, 3), MultiblockComponent.of(Material.CAULDRON));
+        components.put(FLUID_INPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(FLUID_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
 
-        components.put(ITEM_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_OUTPUT_HATCH));
+        components.put(ITEM_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.ITEM_OUTPUT_HATCH));
 
         return components;
     }
