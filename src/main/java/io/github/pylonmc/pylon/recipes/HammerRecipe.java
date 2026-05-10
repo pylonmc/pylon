@@ -89,21 +89,21 @@ public record HammerRecipe(
     private @NonNull List<ItemStack> getHammers() {
         List<ItemStack> hammers = new ArrayList<>();
         for (RebarItemSchema itemSchema : RebarRegistry.ITEMS.getValues()) {
+            Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
+            if (hammer == null) continue;
+
             ItemStack stack = itemSchema.getItemStack();
-            RebarItem item = RebarItem.fromStack(stack);
-            if (item instanceof Hammer hammer) {
-                if (!hammer.miningLevel.isAtLeast(level)) {
-                    continue;
-                }
-                List<Component> lore = stack.lore();
-                Preconditions.checkNotNull(lore);
-                lore.add(Component.empty());
-                lore.add(Component.translatable("pylon.guide.recipe.hammer",
-                        RebarArgument.of("uses", uses)
-                ));
-                stack.lore(lore);
-                hammers.add(stack);
+            if (!hammer.miningLevel.isAtLeast(level)) {
+                continue;
             }
+            List<Component> lore = stack.lore();
+            Preconditions.checkNotNull(lore);
+            lore.add(Component.empty());
+            lore.add(Component.translatable("pylon.guide.recipe.hammer",
+                    RebarArgument.of("uses", uses)
+            ));
+            stack.lore(lore);
+            hammers.add(stack);
         }
         return hammers;
     }

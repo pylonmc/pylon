@@ -10,12 +10,11 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
 
 
 public class PylonRecipes {
@@ -45,6 +44,7 @@ public class PylonRecipes {
         TableSawRecipe.RECIPE_TYPE.register();
         SiloConverterRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
+        FormingRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();
