@@ -4,7 +4,6 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.tools.Hammer;
-import io.github.pylonmc.pylon.content.tools.Hammer.HammerAttempt;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -157,7 +156,7 @@ public class DieselHammerHead extends RebarBlock implements
     }
 
     public void updateHammerTip(ItemStack newItem) {
-        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(newItem, Hammer.class) instanceof Hammer hammer)) {
             getHammerTip().setItemStack(null);
             return;
         }
@@ -190,7 +189,7 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0), Hammer.class) instanceof Hammer hammer)) {
             return;
         }
 
@@ -203,8 +202,7 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        HammerAttempt attempt = hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP);
-        if (!attempt.recipeSuccess() && !attempt.recipeInProgress()) {
+        if (!hammer.tryDoRecipe(baseBlock, null, null)) {
             return;
         }
         // update hammer inv w/ damaged hammer
@@ -221,11 +219,10 @@ public class DieselHammerHead extends RebarBlock implements
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
-            new ParticleBuilder(Particle.ITEM)
-                    .data(attempt.hammeredItem())
+            new ParticleBuilder(Particle.BLOCK)
+                    .data(baseBlock.getBlockData())
                     .count(20)
-                    .extra(0.05)
-                    .location(attempt.hammeredLocation())
+                    .location(baseBlock.getLocation().toCenterLocation().add(0, 0.6, 0))
                     .spawn();
             startProcess((int)(hammer.cooldownTicks / speed));
         }, goDownTimeTicks);

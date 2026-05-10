@@ -1,32 +1,14 @@
 package io.github.pylonmc.pylon.content.science;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.Pylon;
-import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.event.LoupeCompleteScanningEvent;
-import io.github.pylonmc.pylon.event.LoupeStartScanningEvent;
-import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.config.Config;
-import io.github.pylonmc.rebar.config.ConfigSection;
-import io.github.pylonmc.rebar.config.Settings;
-import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarConsumable;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
-import io.github.pylonmc.rebar.item.research.Research;
-import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.registry.RegistryKey;
-import io.papermc.paper.registry.TypedKey;
-import io.papermc.paper.registry.keys.SoundEventKeys;
-import io.papermc.paper.registry.tag.Tag;
-import io.papermc.paper.registry.tag.TagKey;
+
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
+
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -50,7 +32,28 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+import io.github.pylonmc.pylon.Pylon;
+import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.api.event.LoupeCompleteScanningEvent;
+import io.github.pylonmc.pylon.api.event.LoupeStartScanningEvent;
+import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.config.Config;
+import io.github.pylonmc.rebar.config.ConfigSection;
+import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.base.RebarConsumable;
+import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.research.Research;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.keys.SoundEventKeys;
+import io.papermc.paper.registry.tag.Tag;
+import io.papermc.paper.registry.tag.TagKey;
 
 
 @SuppressWarnings("UnstableApiUsage")
@@ -176,7 +179,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
             SCANNING.put(player.getUniqueId(), scan);
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
-            if (RebarItem.fromStack(stack) != null) {
+            if (RebarItem.isRebarItem(stack)) {
                 player.sendActionBar(message("is_pylon"));
             } else if (!stack.getPersistentDataContainer().isEmpty()) {
                 player.sendActionBar(message("is_other_plugin"));
@@ -249,7 +252,7 @@ public final class Loupe extends RebarItem implements RebarInteractor, RebarCons
         } else if (scan.getHitEntity() instanceof Item hit) {
             ItemStack stack = hit.getItemStack();
             Material type = stack.getType();
-            if (RebarItem.fromStack(stack) != null || !stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
+            if (!stack.getPersistentDataContainer().isEmpty() || !hasUses(player, type)) {
                 player.sendMessage(message("examine_failed", RebarArgument.of("object", stack.effectiveName())));
                 return;
             }

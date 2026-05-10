@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -29,14 +30,12 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param results the result items and their corresponding probabilities
  *                (respects item amount) (maximum 9 items)
  * @param cycles the number of full rotations needed to complete the recipe
- * @param particleItem the item to use for the particles shown while grinding
  */
 public record GrindstoneRecipe(
         @NotNull NamespacedKey key,
         @NotNull RecipeInput.Item input,
         @NotNull WeightedSet<ItemStack> results,
-        int cycles,
-        @NotNull ItemStack particleItem
+        int cycles
 ) implements RebarRecipe {
 
     @Override
@@ -51,8 +50,7 @@ public record GrindstoneRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
-                    section.getOrThrow("cycles", ConfigAdapter.INTEGER),
-                    section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK)
+                    section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
         }
 

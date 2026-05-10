@@ -144,3 +144,9 @@ pylon:palladium_nuggets_from_palladium_ingot:
     - pylon:palladium_ingot: 1
   result:
     pylon:palladium_nugget: 9
+
+pylon:forming_table:
+  ingredients:
+    - minecraft:crafting_table
+    - minecraft:clay_ball
+  result: pylon:forming_table

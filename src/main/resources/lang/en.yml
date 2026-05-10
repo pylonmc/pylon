@@ -435,12 +435,6 @@ item:
       <arrow> Destroys all fluids piped into it
       <arrow> <attr>Void rate:</attr> %void_rate%
 
-  fluid_voider_3:
-    name: "<white>Fluid Voider <light_purple>III"
-    lore: |-
-      <arrow> Destroys all fluids piped into it
-      <arrow> <attr>Void rate:</attr> %void_rate%
-
   creative_fluid_voider:
     name: "<#ff00ff>Creative Fluid Voider"
     lore: |-
@@ -593,6 +587,8 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.shimmer_altar.name/></yellow>
       <diamond> 8x <yellow><lang:pylon.item.shimmer_pedestal.name/></yellow>
+    waila: "Shimmer Altar%progress%"
+    progress: "| %progress%"
 
   shimmer_pedestal:
     name: "Shimmer Pedestal"
@@ -792,12 +788,6 @@ item:
       <arrow> <attr>Temperature:</attr> %temperature%
     waila: "Diesel Smeltery Heater | %bar%"
 
-  smeltery_caster:
-    name: "Smeltery Caster"
-    lore: |-
-      <arrow> Casts items from the smeltery
-      <arrow> <insn>Right click</insn> to open the smeltery casting GUI
-
   smeltery_controller:
     name: "Smeltery Controller"
     lore: |-
@@ -808,10 +798,9 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.smeltery_controller.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
-      <diamond> 1 or more <yellow><lang:pylon.item.smeltery_caster.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_input_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_output_hatch.name/></yellow>
+      <diamond> 0 or more <yellow><lang:pylon.item.smeltery_hopper.name/></yellow>
       <diamond> 1 or more <yellow><lang:pylon.item.smeltery_burner.name/></yellow>
       <diamond> 25 or more <yellow><lang:pylon.item.refractory_bricks.name/></yellow> (depending on size and components)
 
@@ -1053,14 +1042,25 @@ item:
   solar_lens:
     name: "Solar Lens"
 
-  purification_tower_glass:
-    name: "Purification Tower Glass"
+  copper_framed_glass:
+    name: "Copper framed glass"
 
-  purification_tower_cap:
-    name: "Purification Tower Cap"
+  quartz_cap:
+    name: "Quartz Cap"
 
-  solar_purification_tower_1:
-    name: "Solar Purification Tower I"
+  manual_hydraulic_purifier:
+    name: "Manual Hydraulic Purifier"
+    lore: |-
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> <insn>Right click</insn> to operate
+      <arrow> <attr>Hydraulic fluid purified per cycle:</attr> %hydraulic-fluid-per-cycle%
+      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
+      <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
+      <arrow> <attr>Buffer:</attr> %buffer%
+    waila: "Manual Hydraulic Purifier | %input-bar% | %output-bar%"
+
+  solar_hydraulic_purifier_1:
+    name: "Solar Hydraulic Purifier I"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1071,14 +1071,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_1.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_1.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 3x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 16x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower I | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier I | %input-bar% | %output-bar%"
 
-  solar_purification_tower_2:
-    name: "Solar Purification Tower II"
+  solar_hydraulic_purifier_2:
+    name: "Solar Hydraulic Purifier II"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1089,14 +1089,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_2.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_2.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 4x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 48x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower II | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier II | %input-bar% | %output-bar%"
 
-  solar_purification_tower_3:
-    name: "Solar Purification Tower III"
+  solar_hydraulic_purifier_3:
+    name: "Solar Hydraulic Purifier III"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1107,14 +1107,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_3.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_3.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 5x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 96x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower III | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier III | %input-bar% | %output-bar%"
 
-  solar_purification_tower_4:
-    name: "Solar Purification Tower IV"
+  solar_hydraulic_purifier_4:
+    name: "Solar Hydraulic Purifier IV"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1125,14 +1125,14 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_4.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_4.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 6x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 160x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower IV | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier IV | %input-bar% | %output-bar%"
 
-  solar_purification_tower_5:
-    name: "Solar Purification Tower V"
+  solar_hydraulic_purifier_5:
+    name: "Solar Hydraulic Purifier V"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
@@ -1143,30 +1143,77 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.solar_purification_tower_5.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 3x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.solar_hydraulic_purifier_5.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.quartz_cap.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
       <diamond> 240x <yellow><lang:pylon.item.solar_lens.name/></yellow>
-    waila: "Solar Purification Tower V | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier V | %input-bar% | %output-bar%"
 
-  coal_fired_purification_tower:
-    name: "Coal-fired Purification Tower"
+  burner_hydraulic_purifier:
+    name: "Burner Hydraulic Purifier"
     lore: |-
       <star> Multiblock
       <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
-      <arrow> Burns coal or charcoal
+      <arrow> Burns fuel
       <arrow> <attr>Purification speed:</attr> %purification_speed%
       <arrow> <attr>Purification efficiency:</attr> %purification_efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.coal_fired_purification_tower.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.purification_tower_cap.name/></yellow>
-      <diamond> 5x <yellow><lang:pylon.item.purification_tower_glass.name/></yellow>
-    waila: "Coal-fired Purification Tower | %input-bar% | %output-bar%"
-    progress_item:
-      running: "<green>Running"
-      idle: "<yellow>Idle"
+      <diamond> 1x <yellow><lang:pylon.item.burner_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
+      <diamond> 8x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
+      <diamond> 16x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Burner Hydraulic Purifier | %fuel-bar%"
+
+  convection_hydraulic_purifier:
+    name: "Convection Hydraulic Purifier"
+    lore: |-
+      <star> Multiblock
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> Uses the temperature difference between lava and water (but does not consume either)
+      <arrow> The more lava and water is provided, the higher the efficiency
+      <arrow> <attr>Minimum lava/water amount:</attr> %min-fluid-amount%
+      <arrow> <attr>Maximum lava/water amount:</attr> %max-fluid-amount%
+      <arrow> <attr>Base purification efficiency:</attr> %base-purification-efficiency%
+      <arrow> <attr>Maximum purification efficiency:</attr> %max-purification-efficiency%
+      <arrow> <attr>Purification speed:</attr> %purification-speed%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.convection_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_tank.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.bronze_foundation.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.iron_support_beam.name/></yellow>
+      <diamond> 7x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+    waila: "Convection Hydraulic Purifier | %efficiency%"
+
+  liselette_hydraulic_purifier:
+    name: "Liselette Hydraulic Purifier"
+    lore: |-
+      <star> Multiblock
+      <arrow> Converts dirty hydraulic fluid back into hydraulic fluid
+      <arrow> Works faster the deeper underground it is
+      <arrow> Seems to produce more hydraulic fluid than it consumes...
+      <arrow> <attr>Maximum height:</attr> %max-height%
+      <arrow> <attr>Maximum purification speed:</attr> %max-purification-speed%
+      <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.liselette_hydraulic_purifier.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.copper_framed_glass.name/></yellow>
+      <diamond> 5x <yellow><lang:pylon.item.steel_support_beam.name/></yellow>
+      <diamond> 8x <yellow>Liselette Collector</yellow>
+
+  liselette_collector:
+    name: "<white>Liselette Collector"
 
   fireproof_rune:
     name: "Fireproof Rune"
@@ -1799,42 +1846,6 @@ item:
     lore: |-
       <arrow> Destroys any items piped into it
 
-  hunger_talisman_simple:
-    name: "Simple Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_advanced:
-    name: "Advanced Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_ultimate:
-    name: "Ultimate Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
-  hunger_talisman_palladium:
-    name: "Palladium Hunger Talisman"
-    lore: |-
-      <arrow> Increases your saturation and hunger every %period%
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Saturation increase:</attr> %saturation_increase%
-      <arrow> <attr>Hunger increase:</attr> %hunger_increase%
-
   farming_talisman_simple:
     name: "Simple Farming Talisman"
     lore: |-
@@ -2367,9 +2378,45 @@ item:
     lore: |-
       <arrow> Converts silos to another silo type, preserving the contents
 
+  casting_unit:
+    name: "Casting Unit"
+    lore: |-
+      <arrow> Used to cast metals into molds
+
+  mold_nugget:
+    name: "Nugget Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a nugget
+      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
+
+  mold_ingot:
+    name: "Ingot Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast an ingot
+
+  mold_block:
+    name: "Block Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a block
+
+  mold_sheet:
+    name: "Sheet Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a sheet
+
+  mold_pipe:
+    name: "Pipe Mold"
+    lore: |-
+      <arrow> Used in a <lang:pylon.item.casting_unit.name/> to cast a pipe
+
+  forming_table:
+    name: "Forming Table"
+    lore: |-
+      <arrow> Used for forming items out of clay
+
 fluid:
-  castable:
-    display-text: "<arrow> <gray>Casts into <white>%result%"
+  tag:
+    melting-point: "Melting point: %temperature%"
   bronze: "<#8d6f64>Liquid Bronze"
   copper: "<#b5591b>Liquid Copper"
   gold: "<gold>Liquid Gold"
@@ -2465,9 +2512,10 @@ research:
   runes: "<#ad2e2e>Runes"
   hydraulic_machines: "<#446be2>Hydraulic Machines"
   hydraulic_combat: "<#5297ff>Hydraulic combat"
-  hydraulic_purification_1: "<#2e7df4>Hydraulic purification I"
-  hydraulic_purification_2: "<#2e7df4>Hydraulic purification II"
-  hydraulic_purification_3: "<#2e7df4>Hydraulic purification III"
+  manual_hydraulic_purification: "<#2e7df4>Manual hydraulic purification"
+  solar_hydraulic_purification: "<#2e7df4>Solar hydraulic purification"
+  thermal_hydraulic_purification: "<#2e7df4>Thermal hydraulic purification"
+  liselette_hydraulic_purification: "<#2e7df4>Liselette hydraulic purification"
   magnetism: "<#144cbc>Magnetism"
   fluid_voiding_1: "<#2a3360>Fluid voiding I"
   fluid_voiding_2: "<#2a3360>Fluid voiding II"
@@ -2560,7 +2608,7 @@ guide:
     casting: "<attr>Temperature:</attr> %temperature%"
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
-    hammer: "<attr>Chance:</attr> %chance%"
+    hammer: "<attr>Uses:</attr> %uses%"
   button:
     info:
       loupe:
@@ -2746,16 +2794,19 @@ gui:
   portable-dustbin: "Portable Dustbin"
   status:
     name: "Status"
-    toggle: "<insn>Click</insn> to toggle"
     "on": "<green>On"
     "off": "<yellow>Off"
     running: "<green>Running"
     not_running: "<yellow>Not running"
     incomplete: "<red>Multiblock incomplete"
   smeltery:
-    height: "<attr>Height:</attr> %height%"
-    capacity: "<attr>Capacity:</attr> %capacity%"
-    temperature: "<attr>Temperature:</attr> %temperature%"
+    status: |-
+      %status%
+      <insn>Click</insn> to toggle
+      
+      <attr>Height:</attr> %height%
+      <attr>Capacity:</attr> %capacity%
+      <attr>Temperature:</attr> %temperature%
     contents:
       name: "Contents"
       fluid: "%amount% of %fluid%"
@@ -2763,13 +2814,6 @@ gui:
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
-  smeltery_caster:
-    cast: "Cast"
-    cannot_cast: "<red>Cannot cast"
-    too_cold: "<red>Temperature too low to cast, needs at least %temperature%"
-    not_enough: "<red>Not enough %fluid% to cast (%amount%/%needed%)"
-    click_to_cast: "<insn>Click</insn> to cast (%amount%/%needed%)"
-    auto_cast: "Auto cast: %status%"
   progress_bar:
     text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
   discrete_progress_bar:
@@ -2812,6 +2856,18 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  cast-border: "Mold Item"
+  casting-control:
+    name: "Casting Control"
+    lore: |-
+      %casting%<arrow> <insn>Left click</insn> to queue a cast
+      <arrow> <insn>Right click</insn> to unqueue a cast
+      <arrow> <insn>Shift left click</insn> to toggle automatic casting
+      <arrow> <insn>Shift right click</insn> to purge fluid
+      <arrow> <attr>Queued casts:</attr> %queued-casts%
+      <arrow> <attr>Automatic casting:</attr> %auto-cast%
+    casting: "Casting %fluid%: %amount%<br><br>"
+    mold-border: "Mold"
 
 inventory:
   fuel: "Fuel"

@@ -63,6 +63,8 @@ public class DieselTableSaw extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":side2");
     public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":chimney");
+    public final ItemStackBuilder sawItem = ItemStackBuilder.of(Material.IRON_BARS)
+            .addCustomModelDataString(getKey() + ":saw");
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory outputInventory = new VirtualInventory(1);
@@ -120,10 +122,9 @@ public class DieselTableSaw extends RebarBlock implements
                         .scale(0.3))
                 .build(block.getLocation().toCenterLocation().add(0, 0.65, 0))
         );
-        addEntity("saw", new BlockDisplayBuilder()
-                .blockData(Material.IRON_BARS.createBlockData("[east=true,west=true]"))
+        addEntity("saw", new ItemDisplayBuilder()
+                .itemStack(sawItem)
                 .transformation(new TransformBuilder()
-                        .rotate(0, RebarUtils.faceToYaw(getFacing()), 0)
                         .scale(0.6, 0.4, 0.4))
                 .build(block.getLocation().toCenterLocation().add(0, 0.7, 0))
         );
@@ -188,25 +189,35 @@ public class DieselTableSaw extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
-            double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
-            if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
-                    || !recipe.input().isSimilar(stack)
-                    || !outputInventory.canHold(recipe.result())
-            ) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, recipe.timeTicks());
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
+        double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
+        if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
+                || !recipe.input().isSimilar(stack)
+                || !outputInventory.canHold(recipe.result())
+        ) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.timeTicks());
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override

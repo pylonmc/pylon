@@ -3,93 +3,93 @@ pylon:obsidian_chip:
   result:
     pylon:obsidian_chip: 3
   mining-level: diamond
-  chance: 0.2
+  uses: 4
 
 pylon:crushed_raw_copper:
   input: minecraft:raw_copper
   result:
     pylon:crushed_raw_copper: 2
   mining-level: stone
-  chance: 0.75
+  uses: 1
 
 pylon:crushed_raw_iron:
   input: minecraft:raw_iron
   result:
     pylon:crushed_raw_iron: 2
   mining-level: stone
-  chance: 0.75
+  uses: 1
 
 pylon:crushed_raw_gold:
   input: minecraft:raw_gold
   result:
     pylon:crushed_raw_gold: 2
   mining-level: iron
-  chance: 0.75
+  uses: 1
 
 pylon:crushed_raw_tin:
   input: pylon:raw_tin
   result:
     pylon:crushed_raw_tin: 2
   mining-level: stone
-  chance: 0.75
+  uses: 1
 
 pylon:copper_sheet:
   input: minecraft:copper_ingot
   result: pylon:copper_sheet
   mining-level: stone
-  chance: 0.25
+  uses: 2
 
 pylon:gold_sheet:
   input: minecraft:gold_ingot
   result: pylon:gold_sheet
   mining-level: stone
-  chance: 0.25
+  uses: 2
 
 pylon:iron_sheet:
   input: minecraft:iron_ingot
   result: pylon:iron_sheet
   mining-level: iron
-  chance: 0.25
+  uses: 2
 
 pylon:tin_sheet:
   input: pylon:tin_ingot
   result: pylon:tin_sheet
   mining-level: iron
-  chance: 0.25
+  uses: 2
 
 pylon:bronze_sheet:
   input: pylon:bronze_ingot
   result: pylon:bronze_sheet
   mining-level: iron
-  chance: 0.25
+  uses: 2
 
 pylon:steel_sheet:
   input: pylon:steel_ingot
   result: pylon:steel_sheet
   mining-level: diamond
-  chance: 0.25
+  uses: 2
 
 pylon:palladium_sheet:
   input: pylon:palladium_ingot
   result: pylon:palladium_sheet
   mining-level: diamond
-  chance: 0.25
+  uses: 2
 
 pylon:gravel_from_rocks:
   input: "#rebar:rocks"
   result: minecraft:gravel
   mining-level: stone
-  chance: 0.5
+  uses: 1
 
 pylon:flint_from_gravel:
   input: minecraft:gravel
   result: minecraft:flint
   mining-level: stone
-  chance: 0.5
+  uses: 1
 
 pylon:liselette_conductor:
   input: pylon:cohesive_unit
   result:
     pylon:liselette_conductor: 2
   mining-level: iron
-  chance: 0.5
+  uses: 3

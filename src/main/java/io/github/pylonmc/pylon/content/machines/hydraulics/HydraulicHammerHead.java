@@ -4,7 +4,6 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.tools.Hammer;
-import io.github.pylonmc.pylon.content.tools.Hammer.HammerAttempt;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -12,13 +11,17 @@ import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
@@ -27,11 +30,16 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +50,8 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 import java.util.List;
 import java.util.Map;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class HydraulicHammerHead extends RebarBlock implements
@@ -128,7 +138,7 @@ public class HydraulicHammerHead extends RebarBlock implements
     }
 
     public void updateHammerTip(ItemStack newItem) {
-        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(newItem, Hammer.class) instanceof Hammer hammer)) {
             getHammerTip().setItemStack(null);
             return;
         }
@@ -147,7 +157,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0), Hammer.class) instanceof Hammer hammer)) {
             return;
         }
 
@@ -160,8 +170,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        HammerAttempt attempt = hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP);
-        if (!attempt.recipeSuccess() && !attempt.recipeInProgress()) {
+        if (!hammer.tryDoRecipe(baseBlock, null, null)) {
             return;
         }
 
@@ -176,11 +185,10 @@ public class HydraulicHammerHead extends RebarBlock implements
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
-            new ParticleBuilder(Particle.ITEM)
-                    .data(attempt.hammeredItem())
+            new ParticleBuilder(Particle.BLOCK)
+                    .data(baseBlock.getBlockData())
                     .count(20)
-                    .extra(0.05)
-                    .location(attempt.hammeredLocation())
+                    .location(baseBlock.getLocation().toCenterLocation().add(0, 0.6, 0))
                     .spawn();
             startProcess((int)(hammer.cooldownTicks / speed));
         }, goDownTimeTicks);
