@@ -4,11 +4,13 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
+import io.github.pylonmc.rebar.block.base.RebarDispenser;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -16,6 +18,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -23,6 +26,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +36,7 @@ import java.util.List;
 
 
 public class FluidDrainer extends RebarBlock
-        implements RebarFluidBufferBlock, RebarDirectionalBlock, RebarTickingBlock, RebarNoVanillaContainerBlock {
+        implements RebarFluidBufferBlock, RebarDirectionalBlock, RebarTickingBlock, RebarNoVanillaContainerBlock, RebarDispenser {
 
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final RebarFluid fluid = getSettings().getOrThrow("fluid", ConfigAdapter.REBAR_FLUID);
@@ -102,5 +106,10 @@ public class FluidDrainer extends RebarBlock
             drainBlock.setType(Material.AIR);
             addFluid(fluid, 1000.0);
         }
+    }
+
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onPreDispense(@NotNull BlockPreDispenseEvent event, @NotNull EventPriority priority) {
+        event.setCancelled(true);
     }
 }

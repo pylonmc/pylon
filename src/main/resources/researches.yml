@@ -334,29 +334,34 @@ hydraulic_machines:
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
 
-hydraulic_purification_1:
-  item: pylon:solar_purification_tower_1
+manual_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 5
+  unlocks:
+    - pylon:manual_hydraulic_purifier
+
+solar_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 10
   unlocks:
-    - pylon:solar_purification_tower_1
-    - pylon:solar_purification_tower_2
-    - pylon:purification_tower_glass
-    - pylon:purification_tower_cap
-    - pylon:solar_lens
+    - pylon:solar_hydraulic_purifier_1
+    - pylon:solar_hydraulic_purifier_2
+    - pylon:solar_hydraulic_purifier_3
+    - pylon:solar_hydraulic_purifier_4
+    - pylon:solar_hydraulic_purifier_5
 
-hydraulic_purification_2:
-  item: pylon:coal_fired_purification_tower
-  cost: 15
-  unlocks:
-    - pylon:coal_fired_purification_tower
-    - pylon:solar_purification_tower_3
-
-hydraulic_purification_3:
-  item: pylon:solar_purification_tower_5
+thermal_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 20
   unlocks:
-    - pylon:solar_purification_tower_4
-    - pylon:solar_purification_tower_5
+    - pylon:burner_hydraulic_purifier
+    - pylon:convection_hydraulic_purifier
+
+liselette_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 40
+  unlocks:
+    - pylon:liselette_hydraulic_purifier
 
 hydraulic_combat:
   item: pylon:hydraulic_cannon
@@ -421,6 +426,7 @@ shimmer_field_manipulation:
     - pylon:liselette_conductor
     - pylon:liselette_cathode
     - pylon:liselette_anode
+    - pylon:liselette_collector
 
 assembling:
   item: pylon:assembly_table
@@ -544,6 +550,9 @@ components_1:
   - pylon:bronze_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
+  - pylon:copper_framed_glass
+  - pylon:quartz_cap
+  - pylon:solar_lens
 
 components_2:
   item: pylon:steel_crankshaft

@@ -5,6 +5,7 @@ import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,7 +41,7 @@ public interface FluidTankWithDisplayEntity extends RebarFluidTank {
     default boolean setFluid(double amount) {
         double oldAmount = getFluidAmount();
         boolean wasFluidSet = RebarFluidTank.super.setFluid(amount);
-        if (!wasFluidSet || Math.abs(oldAmount - amount) < 1.0e-6) {
+        if (!wasFluidSet || Math.abs(oldAmount - amount) < RebarUtils.FLUID_EPSILON) {
             return false;
         }
 

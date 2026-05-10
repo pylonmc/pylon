@@ -1349,29 +1349,29 @@ pylon:hydraulic_breaker:
   result: pylon:hydraulic_breaker
   category: building
 
-pylon:purification_tower_glass:
+pylon:copper_framed_glass:
   pattern:
-    - "GCG"
-    - "GCG"
-    - "GCG"
+    - "CCC"
+    - "CGC"
+    - "CCC"
   key:
-    C: pylon:copper_sheet
+    C: minecraft:copper_nugget
     G: minecraft:glass
-  result: pylon:purification_tower_glass
+  result: pylon:copper_framed_glass
   category: building
 
-pylon:purification_tower_cap:
+pylon:quartz_cap:
   pattern:
     - "   "
     - "SSS"
     - "GSG"
   key:
     G: minecraft:glass
-    S: pylon:copper_sheet
-  result: pylon:purification_tower_cap
+    S: minecraft:quartz
+  result: pylon:quartz_cap
   category: building
 
-pylon:solar_purification_tower_1:
+pylon:solar_hydraulic_purifier_1:
   pattern:
     - "CPC"
     - "FPF"
@@ -1381,68 +1381,80 @@ pylon:solar_purification_tower_1:
     S: pylon:bronze_sheet
     P: pylon:fluid_pipe_bronze
     F: pylon:fluid_filter
-  result: pylon:solar_purification_tower_1
+  result: pylon:solar_hydraulic_purifier_1
   category: building
 
-pylon:solar_purification_tower_2:
+pylon:solar_hydraulic_purifier_2:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_1
+    P: pylon:solar_hydraulic_purifier_1
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_2
+  result: pylon:solar_hydraulic_purifier_2
   category: building
 
-pylon:solar_purification_tower_3:
+pylon:solar_hydraulic_purifier_3:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_2
+    P: pylon:solar_hydraulic_purifier_2
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_3
+  result: pylon:solar_hydraulic_purifier_3
   category: building
 
-pylon:solar_purification_tower_4:
+pylon:solar_hydraulic_purifier_4:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_3
+    P: pylon:solar_hydraulic_purifier_3
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_4
+  result: pylon:solar_hydraulic_purifier_4
   category: building
 
-pylon:solar_purification_tower_5:
+pylon:solar_hydraulic_purifier_5:
   pattern:
     - "CSC"
     - "SPS"
     - "CSC"
   key:
-    P: pylon:solar_purification_tower_4
+    P: pylon:solar_hydraulic_purifier_4
     C: minecraft:copper_ingot
     S: pylon:bronze_sheet
-  result: pylon:solar_purification_tower_5
+  result: pylon:solar_hydraulic_purifier_5
   category: building
 
-pylon:coal_fired_purification_tower:
+pylon:burner_hydraulic_purifier:
   pattern:
-    - "CPC"
-    - "FPF"
-    - "CUC"
+    - "FIF"
+    - "C C"
+    - "CBC"
   key:
     C: minecraft:copper_ingot
-    P: pylon:fluid_pipe_bronze
+    I: pylon:fluid_pipe_iron
     F: pylon:fluid_filter
-    U: minecraft:blast_furnace
-  result: pylon:coal_fired_purification_tower
+    B: minecraft:blast_furnace
+  result: pylon:burner_hydraulic_purifier
+  category: building
+
+pylon:convection_hydraulic_purifier:
+  pattern:
+    - "IPI"
+    - "VPV"
+    - "IPI"
+  key:
+    P: pylon:fluid_pipe_copper
+    I: pylon:bronze_sheet
+    V: pylon:backflow_valve
+  result: pylon:convection_hydraulic_purifier
   category: building
 
 pylon:ice_arrow:
@@ -2771,4 +2783,29 @@ pylon:palladium_silo:
     S: pylon:palladium_ingot
   result:
     pylon:palladium_silo: 4
+  category: building
+
+pylon:manual_hydraulic_purifier:
+  pattern:
+    - "BCB"
+    - "P P"
+    - "BBB"
+  key:
+    B: minecraft:brick
+    P: pylon:fluid_pipe_copper
+    C: minecraft:copper_ingot
+  result: pylon:manual_hydraulic_purifier
+  category: building
+
+pylon:liselette_hydraulic_purifier:
+  pattern:
+    - "ASA"
+    - "P V"
+    - "ASA"
+  key:
+    S: pylon:steel_block
+    P: pylon:fluid_pipe_steel
+    V: pylon:backflow_valve
+    A: pylon:liselette_anode
+  result: pylon:liselette_hydraulic_purifier
   category: building
