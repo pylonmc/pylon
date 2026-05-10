@@ -52,7 +52,7 @@ public class FluidStrainer extends RebarBlock implements
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
     public @Nullable RebarFluid fluidType;
     public double fluidAmount;
-    private final VirtualInventory inventory = new VirtualInventory(9 * 3);
+    private final VirtualInventory inventory = new VirtualInventory(5);
 
     public static class Item extends RebarItem {
 

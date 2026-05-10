@@ -17,11 +17,16 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -30,6 +35,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
 import java.util.*;
@@ -228,5 +234,20 @@ public class ShimmerAltar extends RebarBlock
                 .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("progress", getCurrentRecipe() == null
+                        ? Component.empty()
+                        : Component.translatable("pylon.item.shimmer_altar.progress")
+                        .arguments(RebarArgument.of("progress", PylonUtils.createProgressBar(
+                                        1.0 - (getRecipeTicksRemaining() / 20.0) / getCurrentRecipe().timeSeconds(),
+                                20,
+                                TextColor.color(255, 255, 255)
+                        )))
+                )
+        ));
     }
 }

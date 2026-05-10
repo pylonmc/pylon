@@ -62,8 +62,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);
         pm.registerEvents(new Bloomery.CreationListener(), this);
         pm.registerEvents(new Grindstone.PlaceListener(), this);
-
-        pm.registerEvents(new HungerTalisman.JoinListener(), this);
         pm.registerEvents(new FarmingTalisman.FarmingTalismanListener(), this);
         pm.registerEvents(new BarteringTalisman.BarteringTalismanListener(), this);
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);

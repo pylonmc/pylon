@@ -79,7 +79,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.LAVA_DRAINER, Material.DISPENSER, FluidDrainer.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_1, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.FLUID_VOIDER_2, Material.STRUCTURE_VOID, FluidVoider.class);
-        RebarBlock.register(PylonKeys.FLUID_VOIDER_3, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_VOIDER, Material.STRUCTURE_VOID, FluidVoider.class);
         RebarBlock.register(PylonKeys.CREATIVE_FLUID_SOURCE, Material.PINK_CONCRETE, CreativeFluidSource.class);
         RebarBlock.register(PylonKeys.REFRACTORY_MIX, Material.SMOOTH_RED_SANDSTONE, RefractoryMix.class);
@@ -110,7 +109,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_HAMMER_HEAD, Material.STONE_BRICKS, HydraulicHammerHead.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_PIPE_BENDER, Material.WAXED_CHISELED_COPPER, HydraulicPipeBender.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_TABLE_SAW, Material.WAXED_CUT_COPPER, HydraulicTableSaw.class);
-        RebarBlock.register(PylonKeys.SOLAR_LENS, Material.GLASS_PANE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.SOLAR_LENS, Material.GLASS_PANE, SolarLens.class);
         RebarBlock.register(PylonKeys.MANUAL_HYDRAULIC_PURIFIER, Material.DECORATED_POT, ManualHydraulicPurifier.class);
         RebarBlock.register(PylonKeys.COPPER_FRAMED_GLASS, Material.ORANGE_STAINED_GLASS, RebarBlock.class);
         RebarBlock.register(PylonKeys.QUARTZ_CAP, Material.QUARTZ_SLAB, RebarBlock.class);
@@ -176,6 +175,8 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ASSEMBLY_TABLE, Material.ANVIL, AssemblyTable.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_SOURCE, Material.STRUCTURE_VOID, CreativeItemSource.class);
         RebarBlock.register(PylonKeys.CREATIVE_ITEM_VOIDER, Material.STRUCTURE_VOID, CreativeItemVoider.class);
+        RebarBlock.register(PylonKeys.POTION_PEDESTAL, Material.END_STONE_BRICK_WALL, PotionPedestal.class);
+        RebarBlock.register(PylonKeys.POTION_ALTAR, Material.STONE_BRICK_SLAB, PotionAltar.class);
         RebarBlock.register(PylonKeys.COLLIMATOR, Material.OBSIDIAN, Collimator.class);
         RebarBlock.register(PylonKeys.COLLIMATOR_PILLAR, Material.DEEPSLATE_TILE_WALL, CollimatorPillar.class);
         RebarBlock.register(PylonKeys.CRUDE_ALLOY_FURNACE, Material.BLAST_FURNACE, CrudeAlloyFurnace.class);

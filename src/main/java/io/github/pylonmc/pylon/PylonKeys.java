@@ -222,7 +222,6 @@ public class PylonKeys {
 
     public static final NamespacedKey FLUID_VOIDER_1 = pylonKey("fluid_voider_1");
     public static final NamespacedKey FLUID_VOIDER_2 = pylonKey("fluid_voider_2");
-    public static final NamespacedKey FLUID_VOIDER_3 = pylonKey("fluid_voider_3");
 
     public static final NamespacedKey CREATIVE_FLUID_VOIDER = pylonKey("creative_fluid_voider");
     public static final NamespacedKey CREATIVE_FLUID_SOURCE = pylonKey("creative_fluid_source");
@@ -372,11 +371,6 @@ public class PylonKeys {
     public static final NamespacedKey HEALTH_TALISMAN_ULTIMATE = pylonKey("health_talisman_ultimate");
     public static final NamespacedKey HEALTH_TALISMAN_PALLADIUM = pylonKey("health_talisman_palladium");
 
-    public static final NamespacedKey HUNGER_TALISMAN_SIMPLE = pylonKey("hunger_talisman_simple");
-    public static final NamespacedKey HUNGER_TALISMAN_ADVANCED = pylonKey("hunger_talisman_advanced");
-    public static final NamespacedKey HUNGER_TALISMAN_ULTIMATE = pylonKey("hunger_talisman_ultimate");
-    public static final NamespacedKey HUNGER_TALISMAN_PALLADIUM = pylonKey("hunger_talisman_palladium");
-
     public static final NamespacedKey FARMING_TALISMAN_SIMPLE = pylonKey("farming_talisman_simple");
     public static final NamespacedKey FARMING_TALISMAN_ADVANCED = pylonKey("farming_talisman_advanced");
     public static final NamespacedKey FARMING_TALISMAN_ULTIMATE = pylonKey("farming_talisman_ultimate");
@@ -465,6 +459,11 @@ public class PylonKeys {
     public static final NamespacedKey FLUID_TANK_CASING_PALLADIUM = pylonKey("fluid_tank_casing_palladium");
     public static final NamespacedKey PORTABLE_FLUID_TANK_PALLADIUM = pylonKey("portable_fluid_tank_palladium");
 
+    public static final NamespacedKey POTION_PEDESTAL = pylonKey("potion_pedestal");
+    public static final NamespacedKey POTION_ALTAR = pylonKey("potion_altar");
+    public static final NamespacedKey ASCENDANT_EMBER = pylonKey("ascendant_ember");
+    public static final NamespacedKey CHRONICLE_RESIN = pylonKey("chronicle_resin");
+    public static final NamespacedKey EON_WEAVE_CRYSTAL = pylonKey("eon_weave_crystal");
     public static final NamespacedKey SILO_CONVERTER = pylonKey("silo_converter");
     public static final NamespacedKey WOODEN_SILO = pylonKey("wooden_silo");
     public static final NamespacedKey COPPER_SILO = pylonKey("copper_silo");

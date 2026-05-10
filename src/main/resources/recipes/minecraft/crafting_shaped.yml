@@ -1055,13 +1055,25 @@ pylon:lava_drainer:
 pylon:fluid_voider_1:
   pattern:
     - " P "
-    - "IAI"
+    - "SPS"
     - " I "
   key:
     I: pylon:igneous_composite
     P: pylon:fluid_pipe_tin
-    A: pylon:abyssal_catalyst
+    S: pylon:shimmer_dust_1
   result: pylon:fluid_voider_1
+  category: building
+
+pylon:fluid_voider_2:
+  pattern:
+    - " P "
+    - "SPS"
+    - " A "
+  key:
+    A: pylon:abyssal_catalyst
+    P: pylon:fluid_pipe_tin
+    S: pylon:shimmer_dust_2
+  result: pylon:fluid_voider_2
   category: building
 
 pylon:loupe:
@@ -1740,17 +1752,6 @@ pylon:breeding_talisman_simple:
     H: minecraft:iron_hoe
     W: minecraft:wheat
   result: pylon:breeding_talisman_simple
-  category: equipment
-
-pylon:hunger_talisman_simple:
-  pattern:
-    - "AAA"
-    - "AGA"
-    - "AAA"
-  key:
-    A: minecraft:apple
-    G: minecraft:golden_apple
-  result: pylon:hunger_talisman_simple
   category: equipment
 
 pylon:luck_talisman_simple:
@@ -2708,6 +2709,32 @@ pylon:steel_support_beam:
     N: pylon:bronze_nugget
   result:
     pylon:steel_support_beam: 1
+  category: building
+
+pylon:potion_pedestal:
+  pattern:
+    - " E "
+    - "BPB"
+    - " E "
+  key:
+    P: pylon:pedestal
+    E: minecraft:end_stone
+    B: pylon:bronze_ingot
+  result: pylon:potion_pedestal
+  category: building
+
+pylon:potion_altar:
+  pattern:
+    - " B "
+    - "DSD"
+    - "ROR"
+  key:
+    O: minecraft:obsidian
+    S: minecraft:brewing_stand
+    D: minecraft:diamond
+    R: pylon:bronze_block
+    B: minecraft:blaze_rod
+  result: pylon:potion_altar
   category: building
 
 pylon:palladium_condenser:
