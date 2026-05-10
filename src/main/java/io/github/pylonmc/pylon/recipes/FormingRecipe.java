@@ -53,9 +53,9 @@ public record FormingRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', ItemButton.from(input))
-                .addIngredient('m', ItemButton.from(PylonItems.FORMING_TABLE))
-                .addIngredient('o', ItemButton.from(result))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('m', ItemButton.of(PylonItems.FORMING_TABLE))
+                .addIngredient('o', ItemButton.of(result))
                 .build();
     }
 
