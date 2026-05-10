@@ -41,7 +41,7 @@ public class ShimmerAltar extends RebarBlock
 
     private static final Random random = new Random();
 
-    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
+    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 

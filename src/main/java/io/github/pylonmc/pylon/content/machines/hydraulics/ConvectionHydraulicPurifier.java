@@ -137,32 +137,32 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, 1, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(0, 0, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 1, 1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
 
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(1, 0, 1), MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(-1, 0, 1), MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
 
-        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(2, 0, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(2, 0, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-2, 0, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-2, 0, -1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(2, 0, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(2, 0, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-2, 0, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-2, 0, -1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(1, 1, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 1, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(2, 1, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(2, 1, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-2, 1, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-2, 1, -1), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 1, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 1, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(2, 1, 1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(2, 1, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-2, 1, 1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-2, 1, -1), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
 
-        components.put(LEFT_INPUT, new RebarMultiblockComponent(PylonKeys.FLUID_TANK));
-        components.put(RIGHT_INPUT, new RebarMultiblockComponent(PylonKeys.FLUID_TANK));
-        components.put(HYDRAULIC_FLUID_INPUT, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(HYDRAULIC_FLUID_OUTPUT, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(LEFT_INPUT, MultiblockComponent.of(PylonKeys.FLUID_TANK));
+        components.put(RIGHT_INPUT, MultiblockComponent.of(PylonKeys.FLUID_TANK));
+        components.put(HYDRAULIC_FLUID_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(HYDRAULIC_FLUID_OUTPUT, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
 
         return components;
     }

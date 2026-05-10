@@ -100,21 +100,21 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, -1, 0), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -2, 0), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(0, -3, 0), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -1, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -2, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(0, -3, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
 
-        components.put(OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(INPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
 
-        components.put(new Vector3i(1, 2, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
-        components.put(new Vector3i(-1, 2, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
+        components.put(new Vector3i(1, 2, 0), MultiblockComponent.of(PylonKeys.COPPER_FRAMED_GLASS));
+        components.put(new Vector3i(-1, 2, 0), MultiblockComponent.of(PylonKeys.COPPER_FRAMED_GLASS));
 
         for (Vector3i position : COLLECTORS) {
-            components.put(position, new RebarMultiblockComponent(PylonKeys.LISELETTE_COLLECTOR));
+            components.put(position, MultiblockComponent.of(PylonKeys.LISELETTE_COLLECTOR));
         }
 
         return components;

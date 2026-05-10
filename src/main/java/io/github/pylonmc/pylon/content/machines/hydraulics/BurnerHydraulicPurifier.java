@@ -95,39 +95,39 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 0, 1), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(ITEM_INPUT, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(FLUID_INPUT, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(FLUID_OUTPUT, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(0, 0, 1), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(ITEM_INPUT, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(FLUID_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(FLUID_OUTPUT, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
-        components.put(new Vector3i(0, 1, 2), new RebarMultiblockComponent(PylonKeys.COPPER_FRAMED_GLASS));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.COPPER_FRAMED_GLASS));
+        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(PylonKeys.COPPER_FRAMED_GLASS));
 
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, 2, 2), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 2, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, 2, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, 3, 0), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(0, 3, 2), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 3, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, 3, 1), new RebarMultiblockComponent(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 2, 2), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 2, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 2, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 3, 0), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(0, 3, 2), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 3, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 3, 1), MultiblockComponent.of(PylonKeys.IRON_SUPPORT_BEAM));
 
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 0, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 0, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 1, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 1, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 1, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 1, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 2, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 2, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 2, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 2, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 3, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 3, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(1, 3, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
-        components.put(new Vector3i(-1, 3, 2), new RebarMultiblockComponent(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 0, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 0, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 1, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 1, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 1, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 1, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 2, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 2, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 2, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 2, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 3, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 3, 0), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(1, 3, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
+        components.put(new Vector3i(-1, 3, 2), MultiblockComponent.of(PylonKeys.BRONZE_GRATING));
 
         return components;
     }
