@@ -1,4 +1,0 @@
-purification-speed: 50 # mb/s
-purification-efficiency: 0.93
-buffer: 200 # mb
-tick-interval: 20
