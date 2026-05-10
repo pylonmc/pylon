@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.talismans;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarRejoinHandler;
+import io.github.pylonmc.rebar.item.base.RebarJoinHandler;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public final class FlightRing extends Talisman implements RebarRejoinHandler {
+public final class FlightRing extends Talisman implements RebarJoinHandler {
     private static final Set<UUID> cannotFlyPlayers = new HashSet<>();
     public FlightRing(@NotNull ItemStack stack) {
         super(stack);

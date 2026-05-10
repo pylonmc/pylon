@@ -5,7 +5,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarRejoinHandler;
+import io.github.pylonmc.rebar.item.base.RebarJoinHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-public class HungerTalisman extends Talisman implements RebarRejoinHandler {
+public class HungerTalisman extends Talisman implements RebarJoinHandler {
     private static final NamespacedKey HUNGER_TALISMAN_KEY = PylonUtils.pylonKey("hunger_talisman");
     public final int hungerIncrease = getSettings().getOrThrow("hunger-increase", ConfigAdapter.INTEGER);
     public final float saturationIncrease = getSettings().getOrThrow("saturation-increase", ConfigAdapter.FLOAT);
