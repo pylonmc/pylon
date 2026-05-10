@@ -2664,6 +2664,32 @@ pylon:steel_support_beam:
     pylon:steel_support_beam: 1
   category: building
 
+pylon:potion_pedestal:
+  pattern:
+    - " E "
+    - "BPB"
+    - " E "
+  key:
+    P: pylon:pedestal
+    E: minecraft:end_stone
+    B: pylon:bronze_ingot
+  result: pylon:potion_pedestal
+  category: building
+
+pylon:potion_altar:
+  pattern:
+    - " B "
+    - "DSD"
+    - "ROR"
+  key:
+    O: minecraft:obsidian
+    S: minecraft:brewing_stand
+    D: minecraft:diamond
+    R: pylon:bronze_block
+    B: minecraft:blaze_rod
+  result: pylon:potion_altar
+  category: building
+
 pylon:palladium_condenser:
   pattern:
     - "SNS"
