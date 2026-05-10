@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class Talisman extends RebarItem implements RebarInventoryEffectItem {
     public final int level = getSettings().getOrThrow("level", ConfigAdapter.INTEGER);
 
-    public Talisman(@NotNull ItemStack stack) {
+    protected Talisman(@NotNull ItemStack stack) {
         super(stack);
     }
 
@@ -34,10 +34,24 @@ public abstract class Talisman extends RebarItem implements RebarInventoryEffect
     public void onRemovedFromInventory(@NotNull Player player) {
         RebarInventoryEffectItem.super.onRemovedFromInventory(player);
         Integer currentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
-        if (currentTalismanLevel == null)
+        if (currentTalismanLevel == null) {
             return; // really shouldn't happen, but in this case less likely to crash by not calling removeEffect
+        }
         if (currentTalismanLevel == getLevel()) {
             removeEffect(player);
+        }
+
+        // Check if there are any other talismans which will override this one
+        // e.g. if the player just removed a health talisman 3, is there another health talisman to fall back to?
+        for (ItemStack stack : player.getInventory()) {
+            if (fromStack(stack) instanceof Talisman talisman) {
+                if (talisman.getTalismanKey().equals(getTalismanKey())) {
+                    Integer newCurrentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
+                    if (newCurrentTalismanLevel == null || newCurrentTalismanLevel < currentTalismanLevel) {
+                        talisman.applyEffect(player);
+                    }
+                }
+            }
         }
     }
 

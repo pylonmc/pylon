@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
@@ -16,12 +17,17 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import java.util.Map;
 
 
-public class ItemInputHatch extends RebarBlock implements RebarGuiBlock, RebarLogisticBlock, RebarVirtualInventoryBlock {
+public class ItemInputHatch extends RebarBlock implements
+        RebarGuiBlock,
+        RebarDirectionalBlock,
+        RebarLogisticBlock,
+        RebarVirtualInventoryBlock {
 
     public final VirtualInventory inventory = new VirtualInventory(1);
 
     public ItemInputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        setFacing(context.getFacing());
     }
 
     public ItemInputHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
