@@ -45,6 +45,7 @@ public class PylonRecipes {
         TableSawRecipe.RECIPE_TYPE.register();
         SiloConverterRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
+        FormingRecipe.RECIPE_TYPE.register();
         GasTurbineRecipe.RECIPE_TYPE.register();
 
         //hardcoded

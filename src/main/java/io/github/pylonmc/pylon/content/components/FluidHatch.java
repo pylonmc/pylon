@@ -50,7 +50,7 @@ public abstract class FluidHatch extends RebarBlock implements
     private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
     private static final NamespacedKey CAPACITY_KEY = pylonKey("capacity");
 
-    private static MixedMultiblockComponent component = null;
+    private static MultiblockComponent component;
 
     @Getter
     private Set<RebarFluid> allowedFluids = new HashSet<>();
@@ -67,13 +67,13 @@ public abstract class FluidHatch extends RebarBlock implements
     static {
         // run on first tick after all addons registered
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            List<RebarMultiblockComponent> components = new ArrayList<>();
+            List<NamespacedKey> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.createNewItem()) instanceof FluidTankCasing.Item) {
-                    components.add(new RebarMultiblockComponent(schema.getKey()));
+                if (FluidTankCasing.Item.class.isAssignableFrom(schema.getItemClass())) {
+                    components.add(schema.getKey());
                 }
             }
-            component = new MixedMultiblockComponent(components);
+            component = MultiblockComponent.of(components.toArray(new NamespacedKey[0]));
         }, 0);
     }
 
@@ -176,7 +176,7 @@ public abstract class FluidHatch extends RebarBlock implements
         this.fluid = fluid;
         this.fluidAmount = Math.min(amount, capacity);
         float scale = (float) (0.9 * fluidAmount / capacity);
-        if (scale < 1.0e-9) {
+        if (scale < RebarUtils.FLUID_EPSILON) {
             this.fluid = null;
             this.fluidAmount = 0;
             getFluidDisplay().setItemStack(null);

@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.tools.base;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.base.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
@@ -43,17 +44,18 @@ public abstract class Rune extends RebarItem {
      * @return true if applicable, false otherwise
      */
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        RebarItem instance = RebarItem.fromStack(target);
-        if (instance == null) {
+        RebarItemSchema schema = RebarItemSchema.fromStack(target);
+        if (schema == null) {
             // Non-Rebar items are always applicable
             return true;
         }
 
-        if (instance instanceof RuneApplicable checker && checker.applicableToTarget(event, rune)) {
+        RuneApplicable checker = RebarItem.fromStack(target, RuneApplicable.class);
+        if (checker != null && checker.applicableToTarget(event, rune)) {
             return true;
         }
 
-        return DEFAULT_APPLICABLES.stream().anyMatch(clazz -> clazz.isInstance(instance));
+        return DEFAULT_APPLICABLES.stream().anyMatch(clazz -> clazz.isAssignableFrom(schema.getItemClass()));
     }
 
     /**
@@ -71,8 +73,8 @@ public abstract class Rune extends RebarItem {
             Player player = event.getPlayer();
             Item runeEntity = event.getItemDrop();
             ItemStack runeStack = runeEntity.getItemStack();
-            RebarItem runeInstance = RebarItem.fromStack(runeStack);
-            if (!(runeInstance instanceof Rune rune)) {
+            Rune rune = RebarItem.fromStack(runeStack, Rune.class);
+            if (rune == null) {
                 return;
             }
 

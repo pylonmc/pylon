@@ -162,14 +162,28 @@ public class HydraulicTableSaw extends RebarBlock implements
         }
 
         ItemStack stack = getItemDisplay().getItemStack();
-        for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
-            if (!stack.isSimilar(recipe.input()) || stack.getAmount() < recipe.input().getAmount()) {
-                continue;
-            }
-
-            startRecipe(recipe, recipe.timeTicks());
-            break;
+        if (stack.isEmpty()) {
+            return;
         }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
+            return;
+        }
+
+        for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
+            if (tryStartRecipe(recipe, stack)) {
+                break;
+            }
+        }
+    }
+
+    private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
+        if (!stack.isSimilar(recipe.input())) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.timeTicks());
+        return true;
     }
 
     public ItemDisplay getItemDisplay() {

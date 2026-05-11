@@ -232,6 +232,10 @@ public class PylonUtils {
         return stack;
     }
 
+    public boolean isPotion(Material material) {
+        return material == Material.POTION || material == Material.SPLASH_POTION || material == Material.LINGERING_POTION;
+    }
+
     /**
      * Handles players right clicking with bottles, water buckets, etc
      * Returns true if the function attempted to process the item used (i.e. if it's a water bucket, bottle, etc)

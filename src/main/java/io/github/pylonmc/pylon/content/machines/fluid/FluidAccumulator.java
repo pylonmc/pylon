@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -172,7 +173,7 @@ public class FluidAccumulator extends RebarBlock implements
             return 0.0;
         }
 
-        if (getFluidAmount() < 1.0e-6) {
+        if (getFluidAmount() < RebarUtils.FLUID_EPSILON) {
             isDischarging = false;
             getHeldEntityOrThrow(BlockDisplay.class, "lamp")
                 .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=false]"));
@@ -191,7 +192,7 @@ public class FluidAccumulator extends RebarBlock implements
             return RebarFluidTank.super.getSuppliedFluids();
         }
 
-        if (getFluidSpaceRemaining() < 1.0e-6) {
+        if (getFluidSpaceRemaining() < RebarUtils.FLUID_EPSILON) {
             isDischarging = true;
             getHeldEntityOrThrow(BlockDisplay.class, "lamp")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));

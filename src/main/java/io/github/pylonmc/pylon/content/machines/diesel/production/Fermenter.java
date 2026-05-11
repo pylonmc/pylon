@@ -18,7 +18,9 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.HashMap;
@@ -92,23 +94,23 @@ public class Fermenter extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(-1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(new Vector3i(1, 0, 0), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
-        components.put(INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(new Vector3i(-1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 0, -1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(1, 0, 0), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
+        components.put(INPUT_HATCH, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(new Vector3i(-1, 0, -1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(-1, 0, 1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, -1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
+        components.put(new Vector3i(1, 0, 1), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
 
         for (int x = -1; x <= 1; x++) {
             for (int y = 1 ; y <= 4; y++) {
                 for (int z = -1; z <= 1; z++) {
                     Vector3i position = new Vector3i(x, y, z);
                     if (x == 0 && z == 0) {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS));
+                        components.put(position, MultiblockComponent.of(PylonKeys.REINFORCED_GLASS));
                     } else {
-                        components.put(position, new RebarMultiblockComponent(PylonKeys.REINFORCED_GLASS_CASING));
+                        components.put(position, MultiblockComponent.of(PylonKeys.REINFORCED_GLASS_CASING));
                     }
                 }
             }
@@ -171,7 +173,7 @@ public class Fermenter extends RebarBlock implements
 
         ItemStack sugarcane = inputHatch.inventory.getItem(0);
         if (sugarcane != null
-                && RebarItem.fromStack(sugarcane) == null
+                && RebarItemSchema.fromStack(sugarcane) == null
                 && sugarcane.getType() == Material.SUGAR_CANE
                 && fluidSpaceRemaining(PylonFluids.SUGARCANE) > ethanolPerSugarcane
         ) {
@@ -184,7 +186,7 @@ public class Fermenter extends RebarBlock implements
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
         double outputSpaceRemaining = outputHatch.getFluidSpaceRemaining();
         double ethanolToOutput = Math.min(outputSpaceRemaining, sugarcaneProportion * maxEthanolOutputRate * getTickInterval() / 20);
-        if (ethanolToOutput > 1.0e-6) {
+        if (ethanolToOutput > RebarUtils.FLUID_EPSILON) {
             removeFluid(PylonFluids.SUGARCANE, ethanolToOutput);
             outputHatch.addFluid(PylonFluids.ETHANOL, ethanolToOutput);
         }
@@ -208,7 +210,7 @@ public class Fermenter extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
-        int sugarcaneAmount = sugarcaneProportion < 1.0e-3
+        int sugarcaneAmount = sugarcaneProportion < RebarUtils.FLUID_EPSILON
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(

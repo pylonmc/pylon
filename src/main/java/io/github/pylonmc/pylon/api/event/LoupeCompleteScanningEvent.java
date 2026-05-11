@@ -1,14 +1,15 @@
-package io.github.pylonmc.pylon.event;
+package io.github.pylonmc.pylon.api.event;
 
-import io.github.pylonmc.pylon.content.science.Loupe;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
+
+import io.github.pylonmc.pylon.content.science.Loupe;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Called when a {@link Player} attempts to start scanning something with the {@link Loupe}

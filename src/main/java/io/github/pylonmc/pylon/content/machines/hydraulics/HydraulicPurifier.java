@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.content.machines.hydraulics;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.RebarBlockSchema;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
@@ -21,7 +20,7 @@ import xyz.xenondevs.invui.gui.Gui;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public interface HydraulicPurifier extends RebarTickingBlock {
+public interface HydraulicPurifier {
     NamespacedKey HYDRAULIC_PURIFICATION_KEY = pylonKey("hydraulic_purification");
 
     RecipeType<RebarRecipe> RECIPE_TYPE = new RecipeType<>(HYDRAULIC_PURIFICATION_KEY) {{
@@ -61,9 +60,6 @@ public interface HydraulicPurifier extends RebarTickingBlock {
                 }
         );
     }};
-
-    double getPurificationSpeed();
-    double getPurificationEfficiency();
 
     static List<ItemStack> getPurifiers() {
         List<ItemStack> purifiers = new ArrayList<>();

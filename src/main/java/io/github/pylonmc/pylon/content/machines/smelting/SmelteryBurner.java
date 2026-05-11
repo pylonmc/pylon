@@ -1,5 +1,21 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
+import net.kyori.adventure.text.Component;
+
+import org.bukkit.Keyed;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.base.*;
@@ -112,6 +128,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     @Override
     public void tick() {
+        progressProcess(getTickInterval());
+
         SmelteryController controller = getController();
         if (controller == null || !controller.isRunning()) {
             return;

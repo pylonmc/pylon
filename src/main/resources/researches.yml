@@ -18,7 +18,6 @@ talismans_1:
   cost: 10
   unlocks:
     - pylon:health_talisman_simple
-    - pylon:hunger_talisman_simple
     - pylon:farming_talisman_simple
     - pylon:bartering_talisman_simple
     - pylon:water_breathing_talisman_simple
@@ -33,7 +32,6 @@ talismans_2:
   cost: 25
   unlocks:
     - pylon:health_talisman_advanced
-    - pylon:hunger_talisman_advanced
     - pylon:farming_talisman_advanced
     - pylon:bartering_talisman_advanced
     - pylon:water_breathing_talisman_advanced
@@ -48,7 +46,6 @@ talismans_3:
   cost: 60
   unlocks:
     - pylon:health_talisman_ultimate
-    - pylon:hunger_talisman_ultimate
     - pylon:farming_talisman_ultimate
     - pylon:bartering_talisman_ultimate
     - pylon:water_breathing_talisman_ultimate
@@ -64,7 +61,6 @@ talismans_4:
   cost: 175
   unlocks:
     - pylon:health_talisman_palladium
-    - pylon:hunger_talisman_palladium
     - pylon:farming_talisman_palladium
     - pylon:bartering_talisman_palladium
     - pylon:water_breathing_talisman_palladium
@@ -134,6 +130,13 @@ smelting_2:
     - pylon:steel_nugget
     - pylon:steel_block
     - pylon:steel_sheet
+    - pylon:casting_unit
+    - pylon:mold_nugget
+    - pylon:mold_ingot
+    - pylon:mold_block
+    - pylon:mold_sheet
+    - pylon:mold_pipe
+    - pylon:forming_table
 
 smelting_3:
   item: pylon:smeltery_controller
@@ -142,7 +145,6 @@ smelting_3:
     - pylon:smeltery_controller
     - pylon:smeltery_burner
     - pylon:diesel_smeltery_heater
-    - pylon:smeltery_caster
     - pylon:smeltery_hopper
     - pylon:smeltery_input_hatch
     - pylon:smeltery_output_hatch
@@ -262,7 +264,6 @@ fluid_machines_3:
   unlocks:
     - pylon:fluid_meter
     - pylon:fluid_accumulator
-    - pylon:fluid_voider_3
 
 bronze_equipment:
   item: pylon:bronze_pickaxe
@@ -334,29 +335,34 @@ hydraulic_machines:
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
 
-hydraulic_purification_1:
-  item: pylon:solar_purification_tower_1
+manual_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 5
+  unlocks:
+    - pylon:manual_hydraulic_purifier
+
+solar_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 10
   unlocks:
-    - pylon:solar_purification_tower_1
-    - pylon:solar_purification_tower_2
-    - pylon:purification_tower_glass
-    - pylon:purification_tower_cap
-    - pylon:solar_lens
+    - pylon:solar_hydraulic_purifier_1
+    - pylon:solar_hydraulic_purifier_2
+    - pylon:solar_hydraulic_purifier_3
+    - pylon:solar_hydraulic_purifier_4
+    - pylon:solar_hydraulic_purifier_5
 
-hydraulic_purification_2:
-  item: pylon:coal_fired_purification_tower
-  cost: 15
-  unlocks:
-    - pylon:coal_fired_purification_tower
-    - pylon:solar_purification_tower_3
-
-hydraulic_purification_3:
-  item: pylon:solar_purification_tower_5
+thermal_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 20
   unlocks:
-    - pylon:solar_purification_tower_4
-    - pylon:solar_purification_tower_5
+    - pylon:burner_hydraulic_purifier
+    - pylon:convection_hydraulic_purifier
+
+liselette_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 40
+  unlocks:
+    - pylon:liselette_hydraulic_purifier
 
 hydraulic_combat:
   item: pylon:hydraulic_cannon
@@ -421,6 +427,17 @@ shimmer_field_manipulation:
     - pylon:liselette_conductor
     - pylon:liselette_cathode
     - pylon:liselette_anode
+    - pylon:liselette_collector
+
+potion_magic:
+  item: pylon:potion_altar
+  cost: 20
+  unlocks:
+    - pylon:potion_pedestal
+    - pylon:potion_altar
+    - pylon:ascendant_ember
+    - pylon:chronicle_resin
+    - pylon:eon_weave_crystal
 
 assembling:
   item: pylon:assembly_table
@@ -544,6 +561,9 @@ components_1:
   - pylon:bronze_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
+  - pylon:copper_framed_glass
+  - pylon:quartz_cap
+  - pylon:solar_lens
 
 components_2:
   item: pylon:steel_crankshaft

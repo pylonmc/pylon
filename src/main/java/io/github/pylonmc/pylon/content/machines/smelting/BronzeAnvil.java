@@ -134,10 +134,11 @@ public final class BronzeAnvil extends RebarBlock implements
                 if (placedItem != null) {
                     itemDisplay.setItemStack(placedItem.asOne());
                     placedItem.subtract();
-                    if (RebarItem.fromStack(itemDisplay.getItemStack()) instanceof IronBloom bloom) {
+                    if (RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom) {
                         transformForWorking(bloom.getWorking(), false);
                         bloom.setDisplayGlowOn(itemDisplay);
                     }
+                    event.setUseInteractedBlock(Event.Result.DENY);
                 }
             } else {
                 event.getPlayer().give(oldStack);
@@ -150,6 +151,7 @@ public final class BronzeAnvil extends RebarBlock implements
                         .scaleLocal(1, 1, 1);
                     display.setTransformationMatrix(transform);
                 }
+                event.setUseInteractedBlock(Event.Result.DENY);
             }
         }
 
@@ -158,7 +160,7 @@ public final class BronzeAnvil extends RebarBlock implements
 
     private void onLeftClick(@NotNull PlayerInteractEvent event) {
         ItemDisplay itemDisplay = getItemDisplay();
-        if (!(RebarItem.fromStack(itemDisplay.getItemStack()) instanceof IronBloom bloom)) return;
+        if (!(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) return;
 
         ItemStack item = event.getItem();
         if (item == null || item.isEmpty()) return;
@@ -173,7 +175,7 @@ public final class BronzeAnvil extends RebarBlock implements
         } else if (item.isSimilar(PylonItems.TONGS)) {
             workingChange -= temperature;
             getBlock().getWorld().playSound(TONGS_SOUND, player);
-        } else if (RebarItem.fromStack(item) instanceof Hammer hammer) {
+        } else if (RebarItem.fromStack(item, Hammer.class) instanceof Hammer hammer) {
             if (!player.hasCooldown(item)) {
                 workingChange += temperature;
                 player.setCooldown(item, hammer.cooldownTicks);
@@ -215,7 +217,7 @@ public final class BronzeAnvil extends RebarBlock implements
         if (ThreadLocalRandom.current().nextFloat() > COOL_CHANCE) return;
         ItemDisplay itemDisplay = getItemDisplay();
         if (itemDisplay == null) return;
-        if (!(RebarItem.fromStack(itemDisplay.getItemStack()) instanceof IronBloom bloom)) return;
+        if (!(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) return;
         int newTemperature = Math.max(0, bloom.getTemperature() - 1);
         bloom.setTemperature(newTemperature);
         bloom.setDisplayGlowOn(itemDisplay);

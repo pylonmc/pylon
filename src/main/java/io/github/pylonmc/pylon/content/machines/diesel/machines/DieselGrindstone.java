@@ -154,6 +154,65 @@ public class DieselGrindstone extends AbstractGrindstone implements
         );
     }
 
+    public void tryStartRecipe() {
+        if (isProcessingRecipe()) {
+            return;
+        }
+
+        ItemStack stack = inputInventory.getItem(0);
+        if (stack == null) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
+            return;
+        }
+
+        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
+            if (tryStartRecipe(recipe, stack)) {
+                return;
+            }
+        }
+    }
+
+    private boolean tryStartRecipe(GrindstoneRecipe recipe, ItemStack stack) {
+        if (!recipe.input().matches(stack)) {
+            return false;
+        }
+
+        if (!outputInventory.canHold(List.copyOf(recipe.results().getElements()))) {
+            return true;
+        }
+
+        startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
+    }
+
+    @Override
+    public void onRecipeFinished(@NotNull GrindstoneRecipe recipe) {
+        getRecipeProgressItem().setItem(GuiItems.background());
+        outputInventory.addItem(null, recipe.results().getRandom());
+    }
+
+    @Override
+    public @NotNull Gui createGui() {
+        return Gui.builder()
+                .setStructure(
+                        "# I # # # O O O #",
+                        "# i # p # o o o #",
+                        "# I # # # O O O #"
+                )
+                .addIngredient('#', GuiItems.background())
+                .addIngredient('I', GuiItems.input())
+                .addIngredient('i', inputInventory)
+                .addIngredient('O', GuiItems.output())
+                .addIngredient('o', outputInventory)
+                .addIngredient('p', getRecipeProgressItem())
+                .build();
+    }
+
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
