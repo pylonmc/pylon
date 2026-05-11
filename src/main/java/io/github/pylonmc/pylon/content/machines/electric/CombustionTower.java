@@ -121,9 +121,9 @@ public class CombustionTower extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
-        components.put(new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_RING));
-        components.put(SMOKESTACK_POS, new RebarMultiblockComponent(PylonKeys.SMOKESTACK_CAP));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
+        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
+        components.put(SMOKESTACK_POS, MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));
 
         return components;
     }

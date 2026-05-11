@@ -84,7 +84,7 @@ public class SteamEngine extends RebarBlock implements
 
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
-        return Map.of(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.SMOKESTACK_CAP));
+        return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));
     }
 
     @Override

@@ -12,14 +12,14 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.Map;
 
 public abstract class AbstractGrindstone extends RebarBlock implements
         RebarGuiBlock,
@@ -60,7 +60,7 @@ public abstract class AbstractGrindstone extends RebarBlock implements
         });
     }
 
-    private void tryStartRecipe() {
+    public void tryStartRecipe() {
         if (isProcessingRecipe()) {
             return;
         }
@@ -70,23 +70,30 @@ public abstract class AbstractGrindstone extends RebarBlock implements
             return;
         }
 
-        recipeLoop:
-        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
-            if (!recipe.input().matches(stack)) {
-                continue;
-            }
-
-            for (ItemStack output : recipe.results().getElements()) {
-                if (!outputInventory.canHold(output)) {
-                    break recipeLoop;
-                }
-            }
-
-            startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
+            return;
         }
+
+        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
+            if (tryStartRecipe(recipe, stack)) {
+                return;
+            }
+        }
+    }
+
+    private boolean tryStartRecipe(GrindstoneRecipe recipe, ItemStack stack) {
+        if (!recipe.input().matches(stack)) {
+            return false;
+        }
+
+        if (!outputInventory.canHold(List.copyOf(recipe.results().getElements()))) {
+            return true;
+        }
+
+        startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override
@@ -111,7 +118,6 @@ public abstract class AbstractGrindstone extends RebarBlock implements
                 .addIngredient('p', getRecipeProgressItem())
                 .build();
     }
-
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
         return Map.of(

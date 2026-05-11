@@ -166,7 +166,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
     @Override
     public @Nullable ItemStack getPickItem() {
         // TODO implement clone for RebarItem and just clone it
-        ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItem();
+        ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItemStack();
 
         Item item = new Item(stack);
         item.setFluid(getFluidType());

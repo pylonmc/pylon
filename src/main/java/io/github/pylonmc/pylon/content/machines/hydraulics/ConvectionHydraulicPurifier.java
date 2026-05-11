@@ -19,6 +19,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -34,11 +38,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class ConvectionHydraulicPurifier extends RebarBlock implements
@@ -91,7 +90,6 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         addEntity("lava1", new ItemDisplayBuilder()
                 .material(Material.ORANGE_CONCRETE)
                 .brightness(0)
@@ -180,8 +178,8 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         FluidInputHatch hydraulicInput = getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT);
         FluidOutputHatch hydraulicOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT);
 
-        double inputFluidAvailable = hydraulicInput.fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        double outputSpaceRemaining = hydraulicOutput.fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID);
+        double inputFluidAvailable = hydraulicInput.getFluidAmount();
+        double outputSpaceRemaining = hydraulicOutput.getFluidSpaceRemaining();
         double fluidToPurify = Math.min(purificationSpeed, Math.min(inputFluidAvailable, outputSpaceRemaining)) * getTickInterval() / 20;
         double efficiency = getEfficiency();
 
@@ -206,10 +204,7 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        FluidInputHatch hydraulicInput = getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT);
-        FluidOutputHatch hydraulicOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT);
-        hydraulicInput.setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        hydraulicOutput.setFluidType(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT).setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         Block light = getBlock().getRelative(BlockFace.UP);
         if (light.getType().isAir()) {
             light.setType(Material.LIGHT);

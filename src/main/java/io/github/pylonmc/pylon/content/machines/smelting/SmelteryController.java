@@ -1,34 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 import com.google.common.base.Preconditions;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.damage.DamageType;
-import org.bukkit.entity.*;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.noise.SimplexOctaveGenerator;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3i;
-import org.jspecify.annotations.NonNull;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
@@ -60,6 +32,25 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import kotlin.Pair;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
@@ -579,7 +570,7 @@ public final class SmelteryController extends SmelteryComponent
             heaters = 0;
             updateFluidDisplay();
 
-            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+            BoundingBox box = BoundingBox.of(center.toLocation(), 2, 0, 2);
             box.expand(BlockFace.UP, height);
 
             double damage = Math.max(0, temperature / 100 + 1);

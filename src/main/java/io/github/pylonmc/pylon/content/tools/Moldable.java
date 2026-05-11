@@ -11,7 +11,7 @@ public interface Moldable extends Keyed {
     boolean isMoldingFinished();
 
     default ItemStack moldingInputStack() {
-        return RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItem();
+        return RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItemStack();
     }
 
     default ItemStack moldingResult() {

@@ -70,7 +70,7 @@ public interface HydraulicPurifier {
             RebarItemSchema itemSchema = RebarRegistry.ITEMS.get(blockSchema.getKey());
             if (itemSchema == null) continue; // should never happen
 
-            purifiers.add(itemSchema.createNewItem());
+            purifiers.add(itemSchema.createNewItemStack());
         }
 
         return purifiers;

@@ -153,19 +153,19 @@ public class GasTurbine extends RebarBlock implements
         lineOfThree(-1, -1, PylonKeys.BRONZE_FOUNDATION, components);
         lineOfThree(1, -1, PylonKeys.BRONZE_FOUNDATION, components);
 
-        components.put(new Vector3i(0, -1, -2), new RebarMultiblockComponent(PylonKeys.BRONZE_FOUNDATION));
+        components.put(new Vector3i(0, -1, -2), MultiblockComponent.of(PylonKeys.BRONZE_FOUNDATION));
 
-        components.put(FLUID_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(FLUID_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(ELECTRICITY_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.ELECTRICITY_OUTPUT_HATCH));
+        components.put(FLUID_INPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(FLUID_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(ELECTRICITY_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.ELECTRICITY_OUTPUT_HATCH));
 
         return components;
     }
 
     private static void lineOfThree(int x, int y, NamespacedKey key, Map<Vector3i, MultiblockComponent> components) {
-        components.put(new Vector3i(x, y, 0), new RebarMultiblockComponent(key));
-        components.put(new Vector3i(x, y, 1), new RebarMultiblockComponent(key));
-        components.put(new Vector3i(x, y, -1), new RebarMultiblockComponent(key));
+        components.put(new Vector3i(x, y, 0), MultiblockComponent.of(key));
+        components.put(new Vector3i(x, y, 1), MultiblockComponent.of(key));
+        components.put(new Vector3i(x, y, -1), MultiblockComponent.of(key));
     }
 
     @Override

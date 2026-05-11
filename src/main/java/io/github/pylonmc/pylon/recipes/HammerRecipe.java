@@ -12,6 +12,7 @@ import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
@@ -90,7 +91,7 @@ public record HammerRecipe(
             Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
             if (hammer == null) continue;
 
-            ItemStack stack = itemSchema.createNewItem();
+            ItemStack stack = itemSchema.createNewItemStack();
             if (!hammer.miningLevel.isAtLeast(level)) {
                 continue;
             }

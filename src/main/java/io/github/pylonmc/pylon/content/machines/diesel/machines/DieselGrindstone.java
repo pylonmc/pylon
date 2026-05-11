@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,8 +34,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -152,65 +151,6 @@ public class DieselGrindstone extends AbstractGrindstone implements
                         .rotate(0, stoneRotation, 0)
                         .buildForItemDisplay()
         );
-    }
-
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
-            return;
-        }
-
-        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
-            return;
-        }
-
-        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
-            if (tryStartRecipe(recipe, stack)) {
-                return;
-            }
-        }
-    }
-
-    private boolean tryStartRecipe(GrindstoneRecipe recipe, ItemStack stack) {
-        if (!recipe.input().matches(stack)) {
-            return false;
-        }
-
-        if (!outputInventory.canHold(List.copyOf(recipe.results().getElements()))) {
-            return true;
-        }
-
-        startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
-        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-        return true;
-    }
-
-    @Override
-    public void onRecipeFinished(@NotNull GrindstoneRecipe recipe) {
-        getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(null, recipe.results().getRandom());
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# I # # # O O O #",
-                        "# i # p # o o o #",
-                        "# I # # # O O O #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('O', GuiItems.output())
-                .addIngredient('o', outputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .build();
     }
 
     @Override

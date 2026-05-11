@@ -146,32 +146,32 @@ public class Boiler extends RebarBlock implements
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
 
-        components.put(WATER_INPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_INPUT_HATCH));
-        components.put(STEAM_OUTPUT_HATCH, new RebarMultiblockComponent(PylonKeys.FLUID_OUTPUT_HATCH));
+        components.put(WATER_INPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
+        components.put(STEAM_OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
 
         // bottom layer
         for (int x = -1; x <= 1; x++) {
             for (int z = 0; z <= 2; z++) {
-                components.put(new Vector3i(x, -1, z), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+                components.put(new Vector3i(x, -1, z), MultiblockComponent.of(PylonKeys.BOILER_CASING));
             }
         }
 
         // middle layer
-        components.put(new Vector3i(-1, 0, 1), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
-        components.put(new Vector3i(1, 0, 1), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
-        components.put(new Vector3i(-1, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
-        components.put(new Vector3i(0, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
-        components.put(new Vector3i(1, 0, 2), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(-1, 0, 1), MultiblockComponent.of(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(1, 0, 1), MultiblockComponent.of(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(-1, 0, 2), MultiblockComponent.of(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(1, 0, 2), MultiblockComponent.of(PylonKeys.BOILER_CASING));
 
         // top layer
-        components.put(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.BOILER_CASING));
         for (int x = -1; x <= 1; x++) {
             for (int z = 1; z <= 2; z++) {
-                components.put(new Vector3i(x, 1, z), new RebarMultiblockComponent(PylonKeys.BOILER_CASING));
+                components.put(new Vector3i(x, 1, z), MultiblockComponent.of(PylonKeys.BOILER_CASING));
             }
         }
 
-        components.put(SMOKESTACK_CAP, new RebarMultiblockComponent(PylonKeys.SMOKESTACK_CAP));
+        components.put(SMOKESTACK_CAP, MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));
 
         return components;
     }
