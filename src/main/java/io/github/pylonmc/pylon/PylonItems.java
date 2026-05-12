@@ -49,7 +49,6 @@ import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
-import java.util.Objects;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -3331,6 +3330,13 @@ public final class PylonItems {
     static {
         RebarItem.register(CombustionTower.Item.class, COMBUSTION_TOWER, PylonKeys.COMBUSTION_TOWER);
         PylonPages.ELECTRICITY.addItem(COMBUSTION_TOWER);
+    }
+
+    public static final ItemStack HEAT_EXCHANGER = ItemStackBuilder.rebar(Material.RED_NETHER_BRICK_WALL, PylonKeys.HEAT_EXCHANGER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HEAT_EXCHANGER, PylonKeys.HEAT_EXCHANGER);
+        PylonPages.ELECTRICITY.addItem(HEAT_EXCHANGER);
     }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)

@@ -160,6 +160,7 @@ public class Biorefinery extends RebarBlock implements
         RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluids(PylonFluids.ETHANOL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluids(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setAllowedFluids(PylonFluids.BIODIESEL);
     }
 
     @Override
@@ -187,8 +188,8 @@ public class Biorefinery extends RebarBlock implements
             );
 
             if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
-                ethanolInputHatch.removeFluid(PylonFluids.ETHANOL, biodieselToProduce * ethanolPerMbOfBiodiesel);
-                plantOilInputHatch.removeFluid(PylonFluids.PLANT_OIL, biodieselToProduce * plantOilPerMbOfBiodiesel);
+                ethanolInputHatch.removeFluid(biodieselToProduce * ethanolPerMbOfBiodiesel);
+                plantOilInputHatch.removeFluid(biodieselToProduce * plantOilPerMbOfBiodiesel);
                 biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);
             }
 

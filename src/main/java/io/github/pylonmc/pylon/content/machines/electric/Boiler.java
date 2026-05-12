@@ -180,6 +180,7 @@ public class Boiler extends RebarBlock implements
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH).setAllowedFluids(PylonFluids.WATER);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, STEAM_OUTPUT_HATCH).setAllowedFluids(PylonFluids.STEAM);
     }
 
     private void tryStartProcessing() {
@@ -208,11 +209,12 @@ public class Boiler extends RebarBlock implements
         double waterConsumption = steamProduction * PylonFluids.WATER_TO_STEAM_RATIO;
         FluidInputHatch waterInput = getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH);
         FluidOutputHatch steamOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, STEAM_OUTPUT_HATCH);
-        double toRemove = Math.min(Math.min(waterInput.getFluidAmount(), waterConsumption), steamOutput.getFluidSpaceRemaining() * PylonFluids.WATER_TO_STEAM_RATIO);
-        if (toRemove > 0) {
-            waterInput.removeFluid(PylonFluids.WATER, toRemove);
-            steamOutput.addFluid(PylonFluids.STEAM, toRemove / PylonFluids.WATER_TO_STEAM_RATIO);
-        }
+        double ratio = Math.min(1, waterInput.getFluidAmount() / waterConsumption);
+        ratio = Math.min(ratio, steamOutput.getFluidSpaceRemaining() / steamProduction);
+        if (ratio <= 0) return;
+        
+        waterInput.removeFluid(waterConsumption * ratio);
+        steamOutput.addFluid(PylonFluids.STEAM, steamProduction * ratio);
 
         Particle.CAMPFIRE_SIGNAL_SMOKE.builder()
                 .location(getBlock().getLocation().add(Vector.fromJOML(RebarUtils.rotateVectorToFace(SMOKESTACK_CAP, getFacing()))).toCenterLocation())

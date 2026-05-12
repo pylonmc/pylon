@@ -198,6 +198,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.STEAM_ENGINE, Material.IRON_BLOCK, SteamEngine.class);
         RebarBlock.register(PylonKeys.GAS_TURBINE, Material.IRON_BLOCK, GasTurbine.class);
         RebarBlock.register(PylonKeys.COMBUSTION_TOWER, Material.BRICKS, CombustionTower.class);
+        RebarBlock.register(PylonKeys.HEAT_EXCHANGER, Material.RED_NETHER_BRICK_WALL, HeatExchanger.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
     }
 }

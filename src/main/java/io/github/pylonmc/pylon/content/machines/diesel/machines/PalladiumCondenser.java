@@ -186,8 +186,8 @@ public class PalladiumCondenser extends RebarBlock implements
             return;
         }
 
-        biodieselInputHatch.removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * getTickInterval() / 20);
-        hydraulicFluidInputHatch.removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidPerSecond * getTickInterval() / 20);
+        biodieselInputHatch.removeFluid(dieselPerSecond * getTickInterval() / 20);
+        hydraulicFluidInputHatch.removeFluid(hydraulicFluidPerSecond * getTickInterval() / 20);
         dirtyHydraulicFluidOutputHatch.addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerSecond * getTickInterval() / 20);
 
         progressProcess(getTickInterval());
@@ -244,6 +244,8 @@ public class PalladiumCondenser extends RebarBlock implements
                 .setAllowedFluids(PylonFluids.BIODIESEL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH)
                 .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH)
+                .setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }
 
     @Override

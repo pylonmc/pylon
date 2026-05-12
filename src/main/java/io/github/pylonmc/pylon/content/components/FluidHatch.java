@@ -16,7 +16,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -34,6 +33,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
@@ -154,11 +154,19 @@ public abstract class FluidHatch extends RebarBlock implements
         }
     }
 
+    /**
+     * Implementation of {@link RebarFluidBlock}. Use {@link #addFluid} instead.
+     */
+    @ApiStatus.Internal
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
         setFluid(fluid, fluidAmount + amount);
     }
 
+    /**
+     * Implementation of {@link RebarFluidBlock}. Use {@link #removeFluid} instead.
+     */
+    @ApiStatus.Internal
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
         setFluid(fluid, fluidAmount - amount);
@@ -168,8 +176,10 @@ public abstract class FluidHatch extends RebarBlock implements
         onFluidAdded(fluid, amount);
     }
 
-    public void removeFluid(@NotNull RebarFluid fluid, double amount) {
-        onFluidRemoved(fluid, amount);
+    public void removeFluid(double amount) {
+        if (fluid != null) {
+            onFluidRemoved(fluid, amount);
+        }
     }
 
     public void setFluid(@NotNull RebarFluid fluid, double amount) {
@@ -239,6 +249,10 @@ public abstract class FluidHatch extends RebarBlock implements
             this.fluid = null;
         }
         checkFormed();
+    }
+
+    public boolean canAcceptFluid(@NotNull RebarFluid fluid) {
+        return fluidAmount < capacity && ((this.fluid == null && allowedFluids.contains(fluid)) || Objects.equals(this.fluid, fluid));
     }
 
     private void setCapacity(double capacity) {

@@ -158,7 +158,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             lightable.setLit(true);
             getBlock().setBlockData(lightable);
 
-            fluidInput.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, fluidToPurify);
+            fluidInput.removeFluid(fluidToPurify);
             fluidOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, fluidToPurify * purificationEfficiency);
             progressProcess(getTickInterval());
 
@@ -197,9 +197,11 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
+        RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT)
                 .setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
+                .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
     }
 
     @Override

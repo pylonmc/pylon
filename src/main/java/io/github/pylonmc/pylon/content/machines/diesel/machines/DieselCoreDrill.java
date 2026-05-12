@@ -117,7 +117,7 @@ public class DieselCoreDrill extends CoreDrill {
             return;
         }
 
-        fluidInputHatch.removeFluid(PylonFluids.BIODIESEL, dieselPerRotation);
+        fluidInputHatch.removeFluid(dieselPerRotation);
 
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .location(getMultiblockBlock(SMOKESTACK_CAP).getLocation().toCenterLocation())

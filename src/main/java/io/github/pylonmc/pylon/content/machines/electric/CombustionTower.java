@@ -81,13 +81,12 @@ public class CombustionTower extends RebarBlock implements
     public void tick() {
         if (!isFormedAndFullyLoaded()) return;
 
-        double dieselToConsume = Math.min(dieselUsage / getTicksPerSecond(), fluidAmount(PylonFluids.BIODIESEL));
-        double exhaustToProduce = dieselToConsume * (exhaustProduction / dieselUsage);
-        double actualExhaustProduced = Math.min(exhaustToProduce, fluidSpaceRemaining(PylonFluids.VERY_HOT_EXHAUST));
-        double actualDieselConsumed = actualExhaustProduced * (dieselUsage / exhaustProduction);
+        double ratio = Math.min(1, fluidAmount(PylonFluids.BIODIESEL) / dieselUsage);
+        ratio = Math.min(ratio, fluidSpaceRemaining(PylonFluids.VERY_HOT_EXHAUST) / exhaustProduction);
+        if (ratio <= 0) return;
 
-        removeFluid(PylonFluids.BIODIESEL, actualDieselConsumed);
-        addFluid(PylonFluids.VERY_HOT_EXHAUST, actualExhaustProduced);
+        removeFluid(PylonFluids.BIODIESEL, dieselUsage * ratio);
+        addFluid(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction * ratio);
 
         Particle.CAMPFIRE_SIGNAL_SMOKE.builder()
                 .location(getBlock().getLocation().add(Vector.fromJOML(SMOKESTACK_POS)).toCenterLocation())

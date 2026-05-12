@@ -76,18 +76,19 @@ public class GasTurbine extends RebarBlock implements
 
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
         RebarFluid outputFluid = matchingRecipe.output().fluid();
-        if (outputHatch.getFluid() != null && !outputHatch.getFluid().equals(outputFluid)) return;
+        if (!outputHatch.canAcceptFluid(outputFluid)) return;
 
-        double inputOutputRatio = matchingRecipe.input().amountMillibuckets() / matchingRecipe.output().amount();
+        double recipeInputAmount = matchingRecipe.input().amountMillibuckets();
+        double recipeOutputAmount = matchingRecipe.output().amount();
+        double ratio = inputAmount / recipeInputAmount;
+        ratio = Math.min(ratio, outputHatch.getFluidSpaceRemaining() / recipeOutputAmount);
+        double actualInputAmount = ratio * recipeInputAmount;
+        double actualOutputAmount = ratio * recipeOutputAmount;
 
-        double outputAmount = inputAmount / inputOutputRatio;
-        double actualOutputAmount = Math.min(outputAmount, outputHatch.getFluidSpaceRemaining());
-        double actualInputAmount = Math.min(inputAmount, outputAmount * inputOutputRatio);
-
-        inputHatch.removeFluid(inputFluid, actualInputAmount);
+        inputHatch.removeFluid(actualInputAmount);
         outputHatch.addFluid(outputFluid, actualOutputAmount);
 
-        double powerOutput = matchingRecipe.powerProduction() * (actualInputAmount / matchingRecipe.input().amountMillibuckets()) * (20D / tickInterval);
+        double powerOutput = matchingRecipe.powerProduction() * ratio;
         electricityOutputHatch.setPower(powerOutput);
 
         Vector3f direction = getFacing().getOppositeFace().getDirection().toVector3f();
@@ -178,6 +179,8 @@ public class GasTurbine extends RebarBlock implements
         RebarSimpleMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
                 .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().fluids().stream()).collect(Collectors.toSet()));
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
+                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().map(r -> r.output().fluid()).collect(Collectors.toSet()));
 
         if (getHeldEntity("turbine_shaft") == null) {
             getBlock().setType(Material.STRUCTURE_VOID);

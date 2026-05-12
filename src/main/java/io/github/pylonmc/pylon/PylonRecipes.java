@@ -47,6 +47,7 @@ public class PylonRecipes {
         HydraulicPurifier.RECIPE_TYPE.register();
         FormingRecipe.RECIPE_TYPE.register();
         GasTurbineRecipe.RECIPE_TYPE.register();
+        HeatExchangerRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();
@@ -54,6 +55,7 @@ public class PylonRecipes {
         initBiorefinery();
         initFermenter();
         initBoiler();
+        initCombustionTower();
     }
 
     private static void initCollimator() {
@@ -207,6 +209,36 @@ public class PylonRecipes {
                         .addIngredient('i', ItemButton.from(ItemStack.of(Material.SUGAR_CANE)))
                         .addIngredient('x', ItemButton.from(PylonItems.FERMENTER))
                         .addIngredient('o', new FluidButton(ethanolPerSugarcane, PylonFluids.ETHANOL))
+                        .build()
+        ).register();
+    }
+
+    private static void initCombustionTower() {
+        NamespacedKey key = PylonKeys.COMBUSTION_TOWER;
+        Config setting = Settings.get(key);
+
+        double dieselUsage = setting.getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
+        double exhaustProduction = setting.getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
+
+        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.BIODIESEL, dieselUsage);
+        FluidWithAmount output = new FluidWithAmount(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction);
+
+        new SingleRecipe(
+                key,
+                input,
+                output.asFluidOrItem(),
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# d # # x # # e #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('d', new FluidButton(input))
+                        .addIngredient('x', ItemButton.from(PylonItems.COMBUSTION_TOWER))
+                        .addIngredient('e', new FluidButton(output))
                         .build()
         ).register();
     }
