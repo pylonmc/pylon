@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
-import io.github.pylonmc.pylon.content.machines.generic.AbstractBrickMolder;
+import io.github.pylonmc.pylon.content.machines.generic.GenericBrickMolder;
 import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricBrickMolder extends AbstractBrickMolder implements RebarElectricConsumerBlock {
+public class ElectricBrickMolder extends GenericBrickMolder implements RebarElectricConsumerBlock {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
 

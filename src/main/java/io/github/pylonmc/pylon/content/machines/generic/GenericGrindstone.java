@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.generic;
 
-import io.github.pylonmc.pylon.recipes.MoldingRecipe;
+import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
+import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -11,6 +12,7 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -19,38 +21,30 @@ import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
-public abstract class AbstractBrickMolder extends RebarBlock implements
+public abstract class GenericGrindstone extends RebarBlock implements
         RebarGuiBlock,
         RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
         RebarTickingBlock,
         RebarLogisticBlock,
-        RebarRecipeProcessor<MoldingRecipe> {
+        RebarRecipeProcessor<GrindstoneRecipe> {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
-    public AbstractBrickMolder(@NotNull Block block, @NotNull BlockCreateContext context) {
+    private final VirtualInventory inputInventory = new VirtualInventory(1);
+    private final VirtualInventory outputInventory = new VirtualInventory(3);
+
+    @SuppressWarnings("unused")
+    public GenericGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
+
         setTickInterval(tickInterval);
-        setRecipeType(MoldingRecipe.RECIPE_TYPE);
+        setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
-    public AbstractBrickMolder(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    @SuppressWarnings("unused")
+    public GenericGrindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-    }
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(1);
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "input", inputInventory,
-                "output", outputInventory
-        );
     }
 
     @Override
@@ -72,7 +66,7 @@ public abstract class AbstractBrickMolder extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
+        if (stack == null) {
             return;
         }
 
@@ -80,44 +74,55 @@ public abstract class AbstractBrickMolder extends RebarBlock implements
             return;
         }
 
-        for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
+        for (GrindstoneRecipe recipe : GrindstoneRecipe.RECIPE_TYPE) {
             if (tryStartRecipe(recipe, stack)) {
-                break;
+                return;
             }
         }
     }
 
-    protected boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
-        if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
+    private boolean tryStartRecipe(GrindstoneRecipe recipe, ItemStack stack) {
+        if (!recipe.input().matches(stack)) {
             return false;
         }
 
-        startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
+        if (!outputInventory.canHold(List.copyOf(recipe.results().getElements()))) {
+            return true;
+        }
+
+        startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
         getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
         inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
         return true;
     }
 
     @Override
-    public void onRecipeFinished(@NotNull MoldingRecipe recipe) {
+    public void onRecipeFinished(@NotNull GrindstoneRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(new MachineUpdateReason(), recipe.result().clone());
+        outputInventory.addItem(null, recipe.results().getRandom());
     }
 
     @Override
     public @NotNull Gui createGui() {
         return Gui.builder()
                 .setStructure(
-                        "# # I # # # O # #",
-                        "# # i # p # o # #",
-                        "# # I # # # O # #"
+                        "# I # # # O O O #",
+                        "# i # p # o o o #",
+                        "# I # # # O O O #"
                 )
                 .addIngredient('#', GuiItems.background())
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('i', inputInventory)
-                .addIngredient('p', getRecipeProgressItem())
                 .addIngredient('O', GuiItems.output())
                 .addIngredient('o', outputInventory)
+                .addIngredient('p', getRecipeProgressItem())
                 .build();
+    }
+    @Override
+    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
+        return Map.of(
+                "input", inputInventory,
+                "output", outputInventory
+        );
     }
 }

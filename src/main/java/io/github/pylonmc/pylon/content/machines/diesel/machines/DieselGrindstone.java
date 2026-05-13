@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
+import io.github.pylonmc.pylon.content.machines.generic.GenericGrindstone;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
@@ -38,7 +38,7 @@ import org.joml.Vector3d;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class DieselGrindstone extends AbstractGrindstone implements
+public class DieselGrindstone extends GenericGrindstone implements
         RebarFluidBufferBlock,
         RebarDirectionalBlock {
 

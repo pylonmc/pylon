@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.content.machines.generic.AbstractBrickMolder;
+import io.github.pylonmc.pylon.content.machines.generic.GenericBrickMolder;
 import io.github.pylonmc.pylon.recipes.MoldingRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 
 
-public class DieselBrickMolder extends AbstractBrickMolder implements RebarFluidBufferBlock {
+public class DieselBrickMolder extends GenericBrickMolder implements RebarFluidBufferBlock {
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
