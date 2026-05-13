@@ -1,4 +1,4 @@
-package io.github.pylonmc.pylon.content.machines.electric;
+package io.github.pylonmc.pylon.content.machines.electricity;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarElectricProducerBlock;

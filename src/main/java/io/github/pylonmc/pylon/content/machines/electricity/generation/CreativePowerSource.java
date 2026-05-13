@@ -1,4 +1,4 @@
-package io.github.pylonmc.pylon.content.machines.electric;
+package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;

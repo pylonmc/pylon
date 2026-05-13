@@ -1,4 +1,4 @@
-package io.github.pylonmc.pylon.content.machines.electric;
+package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
 import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
