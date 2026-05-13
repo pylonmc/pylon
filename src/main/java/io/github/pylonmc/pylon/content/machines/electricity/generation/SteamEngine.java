@@ -37,14 +37,12 @@ public class SteamEngine extends RebarBlock implements
     private final double steamUsage = getSettings().getOrThrow("steam-usage", ConfigAdapter.DOUBLE);
     private final double steamCapacity = getSettings().getOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
     private final double powerProduction = getSettings().getOrThrow("power-production", ConfigAdapter.DOUBLE);
-    private final double outputVoltage = getSettings().getOrThrow("output-voltage", ConfigAdapter.DOUBLE);
 
     public static final class Item extends RebarItem {
 
         private final double steamUsage = getSettings().getOrThrow("steam-usage", ConfigAdapter.DOUBLE);
         private final double steamCapacity = getSettings().getOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
         private final double powerProduction = getSettings().getOrThrow("power-production", ConfigAdapter.DOUBLE);
-        private final double outputVoltage = getSettings().getOrThrow("output-voltage", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -114,7 +112,7 @@ public class SteamEngine extends RebarBlock implements
                         20,
                         TextColor.fromHexString("#d8d8d8")
                 )),
-                RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()))
+                RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()).decimalPlaces(1))
         ));
     }
 }

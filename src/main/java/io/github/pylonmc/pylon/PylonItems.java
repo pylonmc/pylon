@@ -21,6 +21,7 @@ import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
@@ -3351,6 +3352,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_GRINDSTONE)
                 .addButton(new MachineRecipesButton(ELECTRIC_GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+    }
+
+    public static final ItemStack ELECTRIC_BRICK_MOLDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_BRICK_MOLDER)
+            .build();
+    static {
+        RebarItem.register(ElectricBrickMolder.Item.class, ELECTRIC_BRICK_MOLDER, PylonKeys.ELECTRIC_BRICK_MOLDER);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
     }
     // </editor-fold>
 

@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -63,7 +64,10 @@ public record GasTurbineRecipe(
                 .addIngredient('x', ItemButton.from(ItemStackBuilder.of(PylonItems.GAS_TURBINE.clone())
                         .lore(
                                 Component.empty(),
-                                Component.translatable("pylon.gui.watts-per-mb", UnitFormat.WATTS_PER_MILLIBUCKET.format(powerProduction / input.amountMillibuckets()).decimalPlaces(1))
+                                Component.translatable(
+                                        "pylon.gui.watts-per-mb",
+                                        RebarArgument.of("power", UnitFormat.WATTS_PER_MILLIBUCKET.format(powerProduction / input.amountMillibuckets()).decimalPlaces(1))
+                                )
                         )
                         .build()))
                 .addIngredient('o', new FluidButton(output))

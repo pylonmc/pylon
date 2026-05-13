@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
-import io.github.pylonmc.pylon.content.machines.generic.AbstractGrindstone;
+import io.github.pylonmc.pylon.content.machines.generic.AbstractBrickMolder;
 import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -13,14 +13,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricGrindstone extends AbstractGrindstone implements
-        RebarElectricConsumerBlock {
+public class ElectricBrickMolder extends AbstractBrickMolder implements RebarElectricConsumerBlock {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        private final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -28,18 +29,20 @@ public class ElectricGrindstone extends AbstractGrindstone implements
 
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(RebarArgument.of("power-usage", UnitFormat.WATTS.format(powerUsage)));
+            return List.of(
+                    RebarArgument.of("molding-cycles", UnitFormat.CYCLES_PER_SECOND.format(20 / (ticksPerMoldingCycle * tickInterval))),
+                    RebarArgument.of("power-usage", UnitFormat.WATTS.format(powerUsage))
+            );
         }
     }
 
     @SuppressWarnings("unused")
-    public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public ElectricBrickMolder(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
     }
 
     @SuppressWarnings("unused")
-    public ElectricGrindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public ElectricBrickMolder(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 

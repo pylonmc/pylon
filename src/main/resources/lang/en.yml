@@ -1662,7 +1662,7 @@ item:
   diesel_grindstone:
     name: "Diesel Grindstone"
     lore: |-
-      <arrow> Grinds items
+      <arrow> Grinds items using diesel
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
     waila: "Diesel Grindstone | %diesel-bar%"
@@ -1670,7 +1670,7 @@ item:
   diesel_brick_molder:
     name: "Diesel Brick Molder"
     lore: |-
-      <arrow> Molds materials into bricks
+      <arrow> Molds materials into bricks using diesel
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
@@ -2527,6 +2527,13 @@ item:
     lore: |-
       <arrow> Grinds items using electricity
       <arrow> <attr>Power usage:</attr> %power-usage%
+
+  electric_brick_molder:
+    name: "Electric Brick Molder"
+    lore: |-
+      <arrow> Molds materials into bricks using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Molding cycles:</attr> %molding-cycles%
 
   boiler_casing:
     name: "Boiler Casing"

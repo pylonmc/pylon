@@ -1,0 +1,3 @@
+power-usage: 10
+tick-interval: 10
+ticks-per-molding-cycle: 2 # Machine ticks, not server ticks
