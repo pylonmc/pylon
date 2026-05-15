@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.content.TestFireBlock;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
@@ -187,5 +188,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.PALLADIUM_SILO, Material.BLUE_TERRACOTTA, Silo.class);
         RebarBlock.register(PylonKeys.SILO_CONVERTER, Material.STRIPPED_OAK_LOG, SiloConverter.class);
         RebarBlock.register(PylonKeys.LISELETTE_COLLECTOR, Material.STRUCTURE_VOID, LiseletteCollector.class);
+        RebarBlock.register(PylonKeys.TEST_FIRE_BLOCK, Material.FIRE, TestFireBlock.class);
     }
 }
