@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -76,7 +77,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
         return totalExp + expForNextLevel;
     }
 
-    private int getExpToNextLevel(int level) {
+    private static int getExpToNextLevel(int level) {
         if (level <= 15) return 2 * level + 7;
         if (level <= 30) return 5 * level - 38;
         return 9 * level - 158;
@@ -102,6 +103,7 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
         for (Player player : getBlock().getWorld().getNearbyPlayers(getBlock().getLocation(), 1d, 5d, Player::isSneaking)) {
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
+            getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0,0.25, 0), 1);
         }
     }
 

@@ -2507,11 +2507,11 @@ item:
     name: "Experience Fountain"
     lore: |-
       <star> Multiblock
-      <arrow> Produces experience when connected to a liquid xp source
-      <arrow> <attr>Experience production rate:</attr> %production-rate%
+      <arrow> Turns liquid XP into XP orbs
+      <arrow> <attr>Experience conversion rate:</attr> %conversion-rate%
       
       <u>Components</u>
-            <diamond> 1x <yellow><lang:pylon.item.experience_fountain_spout.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.experience_fountain_spout.name/></yellow>
     waila: "Experience Fountain | %bar%"
 
   experience_fountain_spout:
@@ -2545,9 +2545,9 @@ item:
       <arrow> <attr>Dirty hydraulic fluid production rate:</attr> %fluid-output-production%
       
       <u>Components</u>
-            <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
-            <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name></yellow>
-            <diamond> 4x <yellow>Iron Bars</yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name></yellow>
+      <diamond> 4x <yellow>Iron Bars</yellow>
     waila: "Hydraulic Experience Bottler | %progressbar%"
 
   diesel_experience_bottler:
@@ -2558,8 +2558,8 @@ item:
       <arrow> <attr>Biodiesel consumption rate:</attr> %fluid-input-consumption%
 
       <u>Components</u>
-            <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
-            <diamond> 2x <yellow>Iron Bars</yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 2x <yellow>Iron Bars</yellow>
     waila: "Diesel Experience Bottler | %progressbar%"
 
 fluid:

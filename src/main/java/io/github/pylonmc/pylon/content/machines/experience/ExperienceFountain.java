@@ -37,7 +37,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
     public ExperienceFountain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
         createFluidBuffer(PylonFluids.LIQUID_XP, liquidXpCapacity, true, false);
-        createFluidPoint(FluidPointType.INPUT, BlockFace.WEST, ctx, false, 0.5f);
+        createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, ctx, false, 0.5f);
         setTickInterval(tickInterval);
     }
 
@@ -55,7 +55,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
             return;
         }
         removeFluid(PylonFluids.LIQUID_XP, amountConverted);
-        ExperienceOrb orb = (ExperienceOrb) getBlock().getWorld().spawnEntity(getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
+        ExperienceOrb orb = (ExperienceOrb) getBlock().getWorld().spawnEntity(getBlock().getLocation().toCenterLocation(), EntityType.EXPERIENCE_ORB);
         orb.setExperience(amountConverted);
     }
 
@@ -86,7 +86,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
 
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(RebarArgument.of("production-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) amountToConvert / ((double) tickInterval / 20)).decimalPlaces(0)));
+            return List.of(RebarArgument.of("conversion-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) amountToConvert / ((double) tickInterval / 20)).decimalPlaces(0)));
         }
     }
 }
