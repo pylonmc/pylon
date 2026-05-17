@@ -47,11 +47,11 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
 
     @Override
     public void tick() {
-        if(!isFormedAndFullyLoaded()){
+        if (!isFormedAndFullyLoaded()) {
             return;
         }
-        int amountConverted = (int)Math.min(amountToConvert, fluidAmount(PylonFluids.LIQUID_XP));
-        if(amountConverted <= 0){
+        int amountConverted = (int) Math.min(amountToConvert, fluidAmount(PylonFluids.LIQUID_XP));
+        if (amountConverted <= 0) {
             return;
         }
         removeFluid(PylonFluids.LIQUID_XP, amountConverted);
@@ -73,7 +73,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
 
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
-        return Map.of(new Vector3i(0, 1, 0), new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT));
+        return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT));
     }
 
     public static class Item extends RebarItem {

@@ -29,11 +29,10 @@ import org.joml.Vector3i;
 import java.util.List;
 import java.util.Map;
 
-public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, RebarFluidBufferBlock, RebarSimpleMultiblock {
+public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, RebarFluidBufferBlock {
     public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
-    private static final MultiblockComponent PEDESTAL_COMPONENT = new RebarSimpleMultiblock.VanillaMultiblockComponent(Material.COBBLESTONE_WALL);
 
     public ExperienceDrain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
@@ -56,20 +55,6 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
                         TextColor.fromHexString("#1dcE420")
                 ))
         ));
-    }
-
-    @Override
-    public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
-        return Map.of(
-                new Vector3i(3, 0, 0), PEDESTAL_COMPONENT,
-                new Vector3i(2, 0, 2), PEDESTAL_COMPONENT,
-                new Vector3i(0, 0, 3), PEDESTAL_COMPONENT,
-                new Vector3i(-2, 0, 2), PEDESTAL_COMPONENT,
-                new Vector3i(-3, 0, 0), PEDESTAL_COMPONENT,
-                new Vector3i(-2, 0, -2), PEDESTAL_COMPONENT,
-                new Vector3i(0, 0, -3), PEDESTAL_COMPONENT,
-                new Vector3i(2, 0, -2), PEDESTAL_COMPONENT
-        );
     }
 
     // For some unknown reason, if you use /xp to give someone xp, it doesn't update player.getTotalExperience
