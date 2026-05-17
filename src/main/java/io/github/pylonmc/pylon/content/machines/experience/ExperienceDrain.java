@@ -1,11 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.experience;
 
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -14,9 +12,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,10 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3i;
 
 import java.util.List;
-import java.util.Map;
 
 public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, RebarFluidBufferBlock {
     public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
@@ -103,7 +97,9 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
         for (Player player : getBlock().getWorld().getNearbyPlayers(getBlock().getLocation(), 1d, 5d, Player::isSneaking)) {
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
-            getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0,0.25, 0), 1);
+            if (actualSubtracted != 0) {
+                getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
+            }
         }
     }
 
