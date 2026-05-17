@@ -22,4 +22,9 @@ public class FluidOutputHatch extends FluidHatch {
         Preconditions.checkState(fluid != null);
         addFluid(fluid, amount);
     }
+
+    public void canAddFluid(double amount) {
+        Preconditions.checkState(fluid != null);
+        addFluid(fluid, amount);
+    }
 }

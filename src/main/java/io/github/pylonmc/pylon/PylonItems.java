@@ -1974,6 +1974,8 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
         PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.CRUDE_ALLOY_FURNACE)
+                .addButton(new MachineRecipesButton(CRUDE_ALLOY_FURNACE, GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE_SLAB, PylonKeys.GRINDSTONE)
@@ -2183,6 +2185,8 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, KILN, PylonKeys.KILN);
         PylonPages.SMELTING.addItem(KILN);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.KILN)
+                .addButton(new MachineRecipesButton(KILN, GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack BLOOMERY = ItemStackBuilder.rebar(Material.MAGMA_BLOCK, PylonKeys.BLOOMERY)

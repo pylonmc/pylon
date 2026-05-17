@@ -10,7 +10,6 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
@@ -47,7 +46,6 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -212,14 +210,15 @@ public class Kiln extends RebarBlock implements
         }
 
         // Recipe stuff
+        tryStartRecipe();
         KilnRecipe recipe = getCurrentRecipe();
-        if (recipe == null) {
-            startRecipe();
-        }
         if (recipe != null) {
             boolean canHoldOutputItem = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)
                     .inventory.canHold(recipe.outputItem());
-            if (canHoldOutputItem && temperature > recipe.temperature()) {
+            FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
+            boolean canHoldOutputFluid = recipe.outputFluid() == null
+                    || fluidOutputHatch.canSetFluid(recipe.outputFluid(), fluidOutputHatch.fluidAmount() + recipe.outputFluidAmount());
+            if (canHoldOutputItem && canHoldOutputFluid && temperature > recipe.temperature()) {
                 progressRecipe(getTickInterval());
             }
         }
@@ -241,72 +240,86 @@ public class Kiln extends RebarBlock implements
         fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
     }
 
-    public void startRecipe() {
+    public boolean tryStartRecipe(@NonNull KilnRecipe recipe) {
+        if (temperature < recipe.temperature()) {
+            return false;
+        }
+
+        if (recipe.outputItem() != null) {
+            boolean canHoldOutputItem = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)
+                    .inventory.canHold(recipe.outputItem());
+            if (!canHoldOutputItem) {
+                return false;
+            }
+        }
+
+        if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
+            FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
+            boolean canHoldFluidOutput = fluidOutputHatch.fluid == null
+                    || fluidOutputHatch.fluidAmount(fluidOutputHatch.fluid) < 1.0e-6
+                    || fluidOutputHatch.fluid.equals(recipe.outputFluid()) && fluidOutputHatch.fluidSpaceRemaining(fluidOutputHatch.fluid) > recipe.outputFluidAmount();
+            if (!canHoldFluidOutput) {
+                return false;
+            }
+        }
+
+        ItemInputHatch itemInputHatch1 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_1);
+        ItemInputHatch itemInputHatch2 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_2);
+        ItemStack input1 = itemInputHatch1.inventory.getItem(0);
+        ItemStack input2 = itemInputHatch2.inventory.getItem(0);
+
+        boolean matches = false;
+        if (recipe.input2() == null) {
+            if (recipe.input1().matches(input1)) {
+                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
+                matches = true;
+            } else if (recipe.input1().matches(input2)) {
+                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
+                matches = true;
+            }
+        } else {
+            if (recipe.input1().matches(input1) && recipe.input2().matches(input2)) {
+                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
+                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input2().getAmount()));
+                matches = true;
+            }
+            if (recipe.input1().matches(input2) && recipe.input2().matches(input1)) {
+                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input2().getAmount()));
+                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
+                matches = true;
+            }
+        }
+
+        if (!matches) {
+            return false;
+        }
+
+        if (recipe.outputFluid() != null) {
+            getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.outputFluid().getItem())
+                    .clearLore()
+            );
+        } else if (recipe.outputItem() != null) {
+            getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.outputItem())
+                    .clearLore()
+            );
+        }
+        startRecipe(recipe, recipe.timeTicks());
+        return true;
+    }
+
+    public void tryStartRecipe() {
+        if (isProcessingRecipe()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe())) {
+            return;
+        }
+
         for (KilnRecipe recipe : KilnRecipe.RECIPE_TYPE) {
-            if (temperature < recipe.temperature()) {
-                continue;
+            if (tryStartRecipe(recipe)) {
+                break;
             }
-
-            if (recipe.outputItem() != null) {
-                boolean canHoldOutputItem = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)
-                        .inventory.canHold(recipe.outputItem());
-                if (!canHoldOutputItem) {
-                    continue;
-                }
-            }
-
-            if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
-                FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-                boolean canHoldFluidOutput = fluidOutputHatch.fluid == null
-                        || fluidOutputHatch.fluidAmount(fluidOutputHatch.fluid) < 1.0e-6
-                        || fluidOutputHatch.fluid.equals(recipe.outputFluid()) && fluidOutputHatch.fluidSpaceRemaining(fluidOutputHatch.fluid) > recipe.outputFluidAmount();
-                if (!canHoldFluidOutput) {
-                    continue;
-                }
-            }
-
-            ItemInputHatch itemInputHatch1 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_1);
-            ItemInputHatch itemInputHatch2 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_2);
-            ItemStack input1 = itemInputHatch1.inventory.getItem(0);
-            ItemStack input2 = itemInputHatch2.inventory.getItem(0);
-
-            boolean matches = false;
-            if (recipe.input2() == null) {
-                if (recipe.input1().matches(input1)) {
-                    itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
-                    matches = true;
-                } else if (recipe.input1().matches(input2)) {
-                    itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
-                    matches = true;
-                }
-            } else {
-                if (recipe.input1().matches(input1) && recipe.input2().matches(input2)) {
-                    itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
-                    itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input2().getAmount()));
-                    matches = true;
-                }
-                if (recipe.input1().matches(input2) && recipe.input2().matches(input1)) {
-                    itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input2().getAmount()));
-                    itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
-                    matches = true;
-                }
-            }
-
-            if (!matches) {
-                continue;
-            }
-
-            if (recipe.outputFluid() != null) {
-                getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.outputFluid().getItem())
-                        .clearLore()
-                );
-            } else if (recipe.outputItem() != null) {
-                getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.outputItem())
-                        .clearLore()
-                );
-            }
-            startRecipe(recipe, recipe.timeTicks());
-            break;
         }
     }
 
@@ -335,7 +348,7 @@ public class Kiln extends RebarBlock implements
                     .inventory.addItem(new MachineUpdateReason(), recipe.outputItem());
         }
         getRecipeProgressItem().setItem(GuiItems.background());
-        startRecipe();
+        tryStartRecipe();
     }
 
     @Override

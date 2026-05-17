@@ -2379,6 +2379,9 @@ item:
     name: "Kiln"
     lore: |-
       <arrow> A more efficient way to smelt metals
+      <arrow> Each kiln recipe has a minimum temperature
+      <arrow> Constantly burns fuel to heat itself up
+      <arrow> Takes time to heat up and cool down
       
       <u>Components</u>
       <diamond> 1x <yellow><lang:pylon.item.kiln.name/></yellow>
@@ -2968,6 +2971,8 @@ gui:
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
   fuel-left: "Fuel left"
+  no-fuel-left: "<white>No fuel"
+  no-recipe: "<white>No recipe"
   temperature: "Temperature"
   kiln:
     temperature: "<arrow> Temperature: %temperature%"
@@ -2997,3 +3002,4 @@ inventory:
   unfiltered: "Unfiltered"
   input1: "Input 1"
   input2: "Input 2"
+  input3: "Input 2"

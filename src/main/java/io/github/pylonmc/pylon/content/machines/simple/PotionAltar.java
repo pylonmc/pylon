@@ -69,9 +69,9 @@ public class PotionAltar extends RebarBlock
         implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock, RebarBreakHandler {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
-    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
-    private static final MultiblockComponent POTION_PEDESTAL_COMPONENT = new RebarMultiblockComponent(PylonKeys.POTION_PEDESTAL);
-    private static final MultiblockComponent LIT_ORANGE_CANDLE_COMPONENT = new VanillaBlockdataMultiblockComponent(Material.ORANGE_CANDLE.createBlockData("[lit=true]"));
+    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
+    private static final MultiblockComponent POTION_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.POTION_PEDESTAL);
+    private static final MultiblockComponent LIT_ORANGE_CANDLE_COMPONENT = MultiblockComponent.of(Material.ORANGE_CANDLE.createBlockData("[lit=true]"));
     private final Sound START_SOUND = getSettings().getOrThrow("sound.start", ConfigAdapter.SOUND);
     private final Sound FINISH_SOUND = getSettings().getOrThrow("sound.finish", ConfigAdapter.SOUND);
     private final Sound CANCEL_SOUND = getSettings().getOrThrow("sound.cancel", ConfigAdapter.SOUND);
