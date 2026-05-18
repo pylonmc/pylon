@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -51,7 +52,6 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     public final double inputFluidAmount = getSettings().getOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
 
     public final @Nullable RebarFluid outputFluid = getSettings().get("output-fluid", ConfigAdapter.REBAR_FLUID);
-    public final @Nullable Integer fluidOutputBuffer = getSettings().get("output-fluid-buffer-size", ConfigAdapter.INTEGER);
     public final @Nullable Double outputFluidAmount = getSettings().get("output-fluid-amount", ConfigAdapter.DOUBLE);
 
     private final VirtualInventory bottleInput = new VirtualInventory(1);
@@ -65,22 +65,18 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         super(block, ctx);
         setTickInterval(tickInterval);
         if (outputFluid != null) {
-            if (fluidOutputBuffer == null || outputFluidAmount == null) {
-                throw new ExceptionInInitializerError("An output-fluid was provided, but at least one of output-fluid-buffer, output-fluid-per-second, output-wiala-bar-length, output-waila-bar-color are missing");
-            }
+            Preconditions.checkNotNull(outputFluidAmount, "An output-fluid was provided, but output-fluid-amount was not.");
         }
         setFacing(ctx.getFacing());
         setMultiblockDirection(ctx.getFacing());
-        setProcessProgressItem(new ProgressItem(ItemStackBuilder.of(PylonItems.LIQUID_XP_BOTTLE)));
+        setProcessProgressItem(new ProgressItem(ItemStackBuilder.of(PylonItems.LIQUID_XP_BOTTLE), false));
         startProcess((int) Math.round(bottleProductionTime * 20));
     }
 
     public FluidExperienceBottler(@NotNull Block block, PersistentDataContainer pdc) {
         super(block, pdc);
         if (outputFluid != null) {
-            if (fluidOutputBuffer == null || outputFluidAmount == null) {
-                throw new ExceptionInInitializerError("An output-fluid was provided, but at least one of output-fluid-buffer, output-fluid-per-second, output-wiala-bar-length, output-waila-bar-color are missing");
-            }
+            Preconditions.checkNotNull(outputFluidAmount, "An output-fluid was provided, but output-fluid-amount was not.");
         }
     }
 
@@ -202,15 +198,14 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         if (getProcessTicksRemaining() == null || getProcessTimeTicks() == null) {
-            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("progressbar", PylonUtils.createBar(
-                            0, 20, TextColor.color(0, 255, 0)
-                    ))
-            ));
+            String defaultKey = getDefaultWailaTranslationKey().key();
+            // Remove waila part of .waila key and add waila_not_processing to get different key without hardcoding full translatable component key for class reuse
+            return new WailaDisplay(Component.translatable(defaultKey.substring(0, defaultKey.length() - 5) + "waila_not_processing"));
         }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("progressbar", PylonUtils.createBar(
-                        (double) getProcessTicksRemaining() / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0)))
+                        (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0))),
+                RebarArgument.of("percentprogress", UnitFormat.PERCENT.format((double)(getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks()).decimalPlaces(1))
         ));
     }
 
@@ -242,9 +237,9 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             List<RebarArgument> list = new ArrayList<>();
             list.add(RebarArgument.of("time-per-bottle", UnitFormat.SECONDS.format(bottleProductionTimeSeconds)));
-            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS_PER_SECOND.format(inputFluidAmount / bottleProductionTimeSeconds)));
+            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS_PER_SECOND.format(inputFluidAmount / bottleProductionTimeSeconds).decimalPlaces(1)));
             if (outputFluidAmount != null) {
-                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS_PER_SECOND.format(outputFluidAmount / bottleProductionTimeSeconds)));
+                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS_PER_SECOND.format(outputFluidAmount / bottleProductionTimeSeconds).decimalPlaces(2)));
             }
             return list;
         }

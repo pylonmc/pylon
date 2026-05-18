@@ -55,7 +55,7 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
             return;
         }
         removeFluid(PylonFluids.LIQUID_XP, amountConverted);
-        ExperienceOrb orb = (ExperienceOrb) getBlock().getWorld().spawnEntity(getBlock().getLocation().toCenterLocation(), EntityType.EXPERIENCE_ORB);
+        ExperienceOrb orb = (ExperienceOrb) getBlock().getWorld().spawnEntity(getBlock().getLocation().toCenterLocation().add(0, 1, 0), EntityType.EXPERIENCE_ORB);
         orb.setExperience(amountConverted);
     }
 

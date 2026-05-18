@@ -2140,11 +2140,11 @@ pylon:diesel_experience_bottler:
   pattern:
     - "SPS"
     - "PBP"
-    - "MEM"
+    - "IEI"
   key:
     S: pylon:iron_sheet
     P: minecraft:piston
-    M: pylon:brick_mold
+    I: minecraft:iron_bars
     E: pylon:internal_combustion_engine
     B: minecraft:brewing_stand
   result: pylon:diesel_experience_bottler

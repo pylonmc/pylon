@@ -2554,19 +2554,19 @@ item:
   liquid_xp_bottle:
     name: "Liquid XP Bottle"
     lore: |-
-      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> Throw using <insn>right click</insn> to release stored XP
       <arrow> <attr>Stored XP:</attr> %experience-amount%
 
   liquid_xp_bottle_super:
     name: "Super Liquid XP Bottle"
     lore: |-
-      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> Throw using <insn>right click</insn> to release stored XP
       <arrow> <attr>Stored XP:</attr> %experience-amount%
 
   liquid_xp_bottle_ultra:
     name: "Ultra Liquid XP Bottle"
     lore: |-
-      <arrow> Throw using <insn>Right-Click</insn> to release stored XP
+      <arrow> Throw using <insn>right click</insn> to release stored XP
       <arrow> <attr>Stored XP:</attr> %experience-amount%
 
   hydraulic_experience_bottler:
@@ -2578,10 +2578,12 @@ item:
       <arrow> <attr>Dirty hydraulic fluid production rate:</attr> %fluid-output-production%
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
       <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name></yellow>
-      <diamond> 4x <yellow>Iron Bars</yellow>
-    waila: "Hydraulic Experience Bottler | %progressbar%"
+      <diamond> 1x <yellow>Lapis Block</yellow>
+      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+    waila: "Hydraulic Experience Bottler | %progressbar% | %percentprogress%"
+    waila_not_processing: "Hydraulic Experience Bottler"
 
   diesel_experience_bottler:
     name: "Diesel Experience Bottler"
@@ -2591,9 +2593,11 @@ item:
       <arrow> <attr>Biodiesel consumption rate:</attr> %fluid-input-consumption%
 
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
-      <diamond> 2x <yellow>Iron Bars</yellow>
-    waila: "Diesel Experience Bottler | %progressbar%"
+      <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
+      <diamond> 1x <yellow>Lapis Block</yellow>
+      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+    waila: "Diesel Experience Bottler | %progressbar% | %percentprogress%"
+    waila_not_processing: "Hydraulic Experience Bottler"
 
 fluid:
   tag:
