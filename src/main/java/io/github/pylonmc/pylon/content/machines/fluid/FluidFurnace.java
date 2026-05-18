@@ -24,7 +24,6 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -46,6 +45,7 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class FluidFurnace extends RebarBlock implements
@@ -99,9 +99,9 @@ public class FluidFurnace extends RebarBlock implements
             ArrayList<RebarArgument> args = new ArrayList<>(List.of(RebarArgument.of("fluid-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidPerSecond)),
                     RebarArgument.of("fluid-buffer", UnitFormat.MILLIBUCKETS.format(fluidBuffer)),
                     RebarArgument.of("speed", UnitFormat.PERCENT.format(speed * 100)),
-                    RebarArgument.of("input-fluid", Component.translatable(inputFluid.getKey() + ".name"))));
-            if(outputFluid != null && fluidOutputRate != null){
-                args.add(RebarArgument.of("output-fluid", Component.translatable(outputFluid.getKey() + ".name")));
+                    RebarArgument.of("input-fluid", inputFluid.getName())));
+            if (outputFluid != null && fluidOutputRate != null) {
+                args.add(RebarArgument.of("output-fluid", outputFluid.getName()));
                 args.add(RebarArgument.of("fluid-output-rate", UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidOutputRate)));
             }
             return args;
@@ -113,36 +113,39 @@ public class FluidFurnace extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH);
-        if(outputFluid != null){
+        if (outputFluid != null) {
             createFluidPoint(FluidPointType.OUTPUT, BlockFace.NORTH);
         }
         setFacing(context.getFacing());
-        addEntity("chimney", new ItemDisplayBuilder()
-                .itemStack(chimneyStack)
-                .transformation(new TransformBuilder()
-                        .lookAlong(getFacing())
-                        .translate(0.4, 0.0, -0.4)
-                        .scale(0.15))
-                .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
-        );
-        addEntity("side1", new ItemDisplayBuilder()
-                .itemStack(sideStack1)
-                .transformation(new TransformBuilder()
-                        .lookAlong(getFacing())
-                        .translate(0, -0.5, -0.1)
-                        .scale(0.8, 0.8, 0.9))
-                .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
-        );
-        addEntity("side2", new ItemDisplayBuilder()
-                .itemStack(sideStack2)
-                .transformation(new TransformBuilder()
-                        .lookAlong(getFacing())
-                        .translate(0, -0.5, 0)
-                        .scale(1.1, 0.8, 0.8))
-                .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
-        );
+        // Extra hardcoded visuals for diesel furnace
+        if (Objects.equals(getKey().key().toString(), "pylon:diesel_furnace")) {
+            addEntity("chimney", new ItemDisplayBuilder()
+                    .itemStack(chimneyStack)
+                    .transformation(new TransformBuilder()
+                            .lookAlong(getFacing())
+                            .translate(0.4, 0.0, -0.4)
+                            .scale(0.15))
+                    .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
+            );
+            addEntity("side1", new ItemDisplayBuilder()
+                    .itemStack(sideStack1)
+                    .transformation(new TransformBuilder()
+                            .lookAlong(getFacing())
+                            .translate(0, -0.5, -0.1)
+                            .scale(0.8, 0.8, 0.9))
+                    .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
+            );
+            addEntity("side2", new ItemDisplayBuilder()
+                    .itemStack(sideStack2)
+                    .transformation(new TransformBuilder()
+                            .lookAlong(getFacing())
+                            .translate(0, -0.5, 0)
+                            .scale(1.1, 0.8, 0.8))
+                    .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
+            );
+        }
         createFluidBuffer(inputFluid, fluidBuffer, true, false);
-        if(outputFluid != null) {
+        if (outputFluid != null) {
             createFluidBuffer(outputFluid, fluidBuffer, false, true);
         }
         setRecipeType(FurnaceRecipeType.INSTANCE);
@@ -179,8 +182,8 @@ public class FluidFurnace extends RebarBlock implements
             return;
         }
 
-        removeFluid(inputFluid,fluidConsumptionRate * tickInterval / 20);
-        if(outputFluid != null && fluidOutputRate != null){
+        removeFluid(inputFluid, fluidConsumptionRate * tickInterval / 20);
+        if (outputFluid != null && fluidOutputRate != null) {
             addFluid(outputFluid, fluidOutputRate * tickInterval / 20);
         }
         Vector smokePosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
@@ -253,8 +256,8 @@ public class FluidFurnace extends RebarBlock implements
                 inputWailaNBars,
                 inputWailaBarColor
         ));
-        if(outputFluid != null) {
-            if(outputWailaNBars == null || outputWailaBarColor == null) {
+        if (outputFluid != null) {
+            if (outputWailaNBars == null || outputWailaBarColor == null) {
                 throw new RuntimeException("Output fluid was provided but either output-waila-bar-length or output-waila-bar-color was not set");
             }
             return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
@@ -273,12 +276,14 @@ public class FluidFurnace extends RebarBlock implements
         }
     }
 
-    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    @Override
+    @MultiHandler(priorities = EventPriority.LOWEST)
     public void onEndSmelting(@NotNull BlockCookEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
-    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    @Override
+    @MultiHandler(priorities = EventPriority.LOWEST)
     public void onFuelBurn(@NotNull FurnaceBurnEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }

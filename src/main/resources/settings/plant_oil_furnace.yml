@@ -1,4 +1,4 @@
-input-fluid-per-second: 25
+input-fluid-per-second: 5
 fluid-buffer: 200
 tick-interval: 10
 speed: 1.2

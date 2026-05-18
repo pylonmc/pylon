@@ -2115,6 +2115,13 @@ public final class PylonItems {
         PylonPages.SIMPLE_MACHINES.addItem(COLLIMATOR_PILLAR);
     }
 
+    public static final ItemStack PLANT_OIL_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.PLANT_OIL_FURNACE)
+            .build();
+    static {
+        RebarItem.register(FluidFurnace.Item.class, PLANT_OIL_FURNACE, PylonKeys.PLANT_OIL_FURNACE);
+        PylonPages.SIMPLE_MACHINES.addItem(PLANT_OIL_FURNACE);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Machines - Storage" defaultstate=collapsed>
@@ -3284,13 +3291,6 @@ public final class PylonItems {
                 .addIngredient(DISINFECTANT);
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
-    }
-
-    public static final ItemStack PLANT_OIL_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.PLANT_OIL_FURNACE)
-            .build();
-    static {
-        RebarItem.register(FluidFurnace.Item.class, PLANT_OIL_FURNACE, PylonKeys.PLANT_OIL_FURNACE);
-        PylonPages.FLUID_MACHINES.addItem(PLANT_OIL_FURNACE);
     }
 
     static {
