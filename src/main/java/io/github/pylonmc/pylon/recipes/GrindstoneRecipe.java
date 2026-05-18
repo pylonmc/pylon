@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -29,7 +30,6 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param results the result items and their corresponding probabilities
  *                (respects item amount) (maximum 9 items)
  * @param cycles the number of full rotations needed to complete the recipe
- * @param particleBlockData the block data to use for the particles shown while grinding
  */
 public record GrindstoneRecipe(
         @NotNull NamespacedKey key,
