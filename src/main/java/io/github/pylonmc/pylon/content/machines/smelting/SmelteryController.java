@@ -34,7 +34,7 @@ import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -64,7 +64,7 @@ import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 public final class SmelteryController extends SmelteryComponent
-        implements RebarGuiBlock, RebarMultiblock, RebarTickingBlock {
+        implements RebarInventoryBlock, RebarMultiblock, RebarTickingBlock {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");

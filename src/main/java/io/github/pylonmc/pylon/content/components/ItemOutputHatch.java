@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 public class ItemOutputHatch extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarDirectionalBlock,
         RebarLogisticBlock,
         RebarVirtualInventoryBlock {

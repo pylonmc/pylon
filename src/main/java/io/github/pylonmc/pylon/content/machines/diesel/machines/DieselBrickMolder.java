@@ -43,7 +43,7 @@ import java.util.Map;
 
 
 public class DieselBrickMolder extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
         RebarDirectionalBlock,

@@ -46,7 +46,7 @@ public class DieselQuarry extends Quarry implements
         RebarTickingBlock,
         RebarDirectionalBlock,
         RebarFluidBufferBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarLogisticBlock {
 

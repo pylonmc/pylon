@@ -5,7 +5,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarEntityCulledBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -55,7 +55,7 @@ import java.util.UUID;
 public class CargoExtractor extends CargoInteractor implements
         RebarCargoBlock,
         RebarTickingBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarEntityCulledBlock
 {

@@ -41,7 +41,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class FluidStrainer extends RebarBlock implements
         RebarDirectionalBlock,
         RebarFluidBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarLogisticBlock,
         RebarRecipeProcessor<StrainingRecipe> {

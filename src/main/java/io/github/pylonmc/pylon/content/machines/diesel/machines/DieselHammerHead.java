@@ -49,7 +49,7 @@ import java.util.Map;
 
 public class DieselHammerHead extends RebarBlock implements
         RebarTickingBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
         RebarProcessor,

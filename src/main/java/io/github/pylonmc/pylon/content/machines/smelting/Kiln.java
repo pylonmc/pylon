@@ -9,7 +9,7 @@ import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
@@ -55,7 +55,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Kiln extends RebarBlock implements
         RebarSimpleMultiblock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarRecipeProcessor<KilnRecipe>,
         RebarDirectionalBlock,
         RebarVirtualInventoryBlock,

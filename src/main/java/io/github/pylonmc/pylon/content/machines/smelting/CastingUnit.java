@@ -4,7 +4,7 @@ import io.github.pylonmc.pylon.recipes.CastingRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -43,7 +43,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public final class CastingUnit extends RebarBlock implements
         RebarFluidBlock,
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock {
 
     private static final NamespacedKey QUEUED_CASTS_KEY = pylonKey("queued_casts");

@@ -6,7 +6,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
@@ -50,7 +50,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CrudeAlloyFurnace extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarEntityHolderBlock,
         RebarDirectionalBlock,

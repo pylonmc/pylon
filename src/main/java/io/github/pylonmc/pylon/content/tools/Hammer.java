@@ -7,8 +7,8 @@ import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -185,7 +185,7 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
                 return;
             }
 
-            if ((rebarBlock instanceof RebarGuiBlock && !(rebarBlock instanceof AssemblyTable)) || (clicked.getState(false) instanceof BlockInventoryHolder && !(rebarBlock instanceof RebarNoVanillaContainerBlock))) {
+            if ((rebarBlock instanceof RebarInventoryBlock && !(rebarBlock instanceof AssemblyTable)) || (clicked.getState(false) instanceof BlockInventoryHolder && !(rebarBlock instanceof RebarNoVanillaInventoryBlock))) {
                 return;
             }
 
