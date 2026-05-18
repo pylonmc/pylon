@@ -21,6 +21,7 @@ import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBreaker;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
@@ -3408,6 +3409,13 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricBrickMolder.Item.class, ELECTRIC_BRICK_MOLDER, PylonKeys.ELECTRIC_BRICK_MOLDER);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
+    }
+
+    public static final ItemStack ELECTRIC_BREAKER = ItemStackBuilder.rebar(Material.DISPENSER, PylonKeys.ELECTRIC_BREAKER)
+            .build();
+    static {
+        RebarItem.register(ElectricBreaker.Item.class, ELECTRIC_BREAKER, PylonKeys.ELECTRIC_BREAKER);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_BREAKER);
     }
     // </editor-fold>
 

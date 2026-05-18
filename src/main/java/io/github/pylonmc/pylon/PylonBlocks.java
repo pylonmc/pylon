@@ -12,6 +12,7 @@ import io.github.pylonmc.pylon.content.machines.electricity.ElectricityInputHatc
 import io.github.pylonmc.pylon.content.machines.electricity.ElectricityOutputHatch;
 import io.github.pylonmc.pylon.content.machines.electricity.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBreaker;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
@@ -210,5 +211,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HEAT_EXCHANGER, Material.RED_NETHER_BRICK_WALL, HeatExchanger.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
         RebarBlock.register(PylonKeys.ELECTRIC_BRICK_MOLDER, Material.IRON_BLOCK, ElectricBrickMolder.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_BREAKER, Material.DISPENSER, ElectricBreaker.class);
     }
 }

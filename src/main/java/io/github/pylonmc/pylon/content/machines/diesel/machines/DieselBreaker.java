@@ -2,9 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
+import io.github.pylonmc.pylon.content.machines.generic.GenericBreaker;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.RebarDispenser;
+import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -16,17 +17,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
-import net.kyori.adventure.text.Component;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -40,30 +35,14 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.*;
 
 
-public class DieselBreaker extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
+public class DieselBreaker extends GenericBreaker implements
         RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarMultiblock,
-        RebarLogisticBlock,
-        RebarProcessor,
         RebarDispenser {
 
     public final double dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-
-    public VirtualInventory toolInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
@@ -84,10 +63,7 @@ public class DieselBreaker extends RebarBlock implements
             );
         }
     }
-
-    public final ItemStackBuilder toolStack = ItemStackBuilder.gui(Material.LIME_STAINED_GLASS_PANE, getKey() + ":tool")
-            .name(Component.translatable("pylon.gui.tool"));
-    public ItemStackBuilder drillStack = ItemStackBuilder.of(Material.YELLOW_CONCRETE)
+    private ItemStackBuilder drillStack = ItemStackBuilder.of(Material.YELLOW_CONCRETE)
             .addCustomModelDataString(getKey() + ":drill");
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -101,9 +77,7 @@ public class DieselBreaker extends RebarBlock implements
     @SuppressWarnings("unused")
     public DieselBreaker(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.55F);
-        setFacing(context.getFacing().getOppositeFace());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
@@ -152,16 +126,6 @@ public class DieselBreaker extends RebarBlock implements
     }
 
     @Override
-    public void postInitialise() {
-        createLogisticGroup("tool", LogisticGroupType.INPUT, toolInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        toolInventory.addPostUpdateHandler(event -> tryStartDrilling());
-        outputInventory.addPostUpdateHandler(event -> tryStartDrilling());
-        tryStartDrilling();
-    }
-
-    @Override
     public void tick() {
         if (!isProcessing()) {
             return;
@@ -186,89 +150,15 @@ public class DieselBreaker extends RebarBlock implements
                 .spawn();
     }
 
-    public void tryStartDrilling() {
-        if (isProcessing()) {
-            return;
-        }
-
-        Block toDrill = getBlock().getRelative(getFacing());
-        if (!toDrill.getWorld().getWorldBorder().isInside(toDrill.getLocation())) {
-            return;
-        }
-
-        ItemStack tool = toolInventory.getItem(0);
-        if (tool == null
-                || !PylonUtils.shouldBreakBlockUsingTool(toDrill, tool)
-                || !outputInventory.canHold(toDrill.getDrops().stream().toList())
-                || fluidAmount(PylonFluids.BIODIESEL) < dieselPerBlock
-        ) {
-            return;
-        }
-
-        startProcess((int) Math.round(RebarUtils.getBlockBreakTicks(tool, toDrill) / speed));
+    @Override
+    protected boolean canStartDrilling(ItemStack tool, Block block) {
+        return super.canStartDrilling(tool, block) && fluidAmount(PylonFluids.BIODIESEL) >= dieselPerBlock;
     }
 
     @Override
     public void onProcessFinished() {
-        Block toDrill = getBlock().getRelative(getFacing());
-        ItemStack tool = toolInventory.getItem(0);
-        List<ItemStack> drops = toDrill.getDrops().stream().toList();
-        if (tool == null
-                || !PylonUtils.shouldBreakBlockUsingTool(toDrill, tool)
-                || !outputInventory.canHold(drops)
-                || !new BlockBreakBlockEvent(toDrill, getBlock(), new ArrayList<>()).callEvent()
-        ) {
-            return;
-        }
-
-        toDrill.setType(Material.AIR);
-        for (ItemStack drop : drops) {
-            outputInventory.addItem(new MachineUpdateReason(), drop);
-        }
-
-        RebarUtils.damageItem(tool, 1, toDrill.getWorld());
-        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
-
+        super.onProcessFinished();
         removeFluid(PylonFluids.BIODIESEL, dieselPerBlock);
-    }
-
-    @Override
-    public @NotNull Set<ChunkPosition> getChunksOccupied() {
-        return Set.of(new ChunkPosition(getBlock().getRelative(getFacing()).getChunk()));
-    }
-
-    @Override
-    public boolean checkFormed() {
-        return true;
-    }
-
-    @Override
-    public boolean isPartOfMultiblock(@NotNull Block otherBlock) {
-        return getBlock().getRelative(getFacing()).equals(otherBlock);
-    }
-
-    @Override
-    public void onMultiblockRefreshed() {
-        if (isProcessing()) {
-            stopProcess();
-        }
-        tryStartDrilling();
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # # T # O # # #",
-                        "# # # t # o # # #",
-                        "# # # T # O # # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('t', toolInventory)
-                .addIngredient('T', toolStack)
-                .addIngredient('o', outputInventory)
-                .addIngredient('O', GuiItems.output())
-                .build();
     }
 
     @Override
@@ -296,15 +186,7 @@ public class DieselBreaker extends RebarBlock implements
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+        super.onBreak(drops, context);
         RebarFluidBufferBlock.super.onBreak(drops, context);
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "tool", toolInventory,
-                "output", outputInventory
-        );
     }
 }

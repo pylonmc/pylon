@@ -2555,19 +2555,6 @@ item:
     lore: |-
       <arrow> Outputs power to wires
 
-  electric_grindstone:
-    name: "Electric Grindstone"
-    lore: |-
-      <arrow> Grinds items using electricity
-      <arrow> <attr>Power usage:</attr> %power-usage%
-
-  electric_brick_molder:
-    name: "Electric Brick Molder"
-    lore: |-
-      <arrow> Molds materials into bricks using electricity
-      <arrow> <attr>Power usage:</attr> %power-usage%
-      <arrow> <attr>Molding cycles:</attr> %molding-cycles%
-
   boiler_casing:
     name: "Boiler Casing"
 
@@ -2647,6 +2634,27 @@ item:
       <arrow> Stores electricity
       <arrow> Capacitors have a lower priority than most electric blocks, so they will only take excess power that other blocks can't use
       <arrow> <attr>Capacity:</attr> %capacity%
+
+  electric_grindstone:
+    name: "Electric Grindstone"
+    lore: |-
+      <arrow> Grinds items using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
+  electric_brick_molder:
+    name: "Electric Brick Molder"
+    lore: |-
+      <arrow> Molds materials into bricks using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Molding cycles:</attr> %molding-cycles%
+
+  electric_breaker:
+    name: "Electric Breaker"
+    lore: |-
+      <arrow> Breaks the block directly in front of it using the stored tool
+      <arrow> Only breaks blocks that can be broken by the stored tool
+      <arrow> <attr>Speed:</attr> %speed%
+      <arrow> <attr>Power usage:</attr> %power-usage%
 
 fluid:
   tag:
