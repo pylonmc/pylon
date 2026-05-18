@@ -763,8 +763,6 @@ item:
   refractory_bricks:
     name: "Refractory Bricks"
     lore: |-
-      <star> Smeltery multiblock component
-      <star> Bloomery multiblock component
       <arrow> The cheapest and most basic smeltery component
 
   research_pack_1:
@@ -822,13 +820,11 @@ item:
   smeltery_burner:
     name: "Smeltery Burner"
     lore: |-
-      <star> Smeltery multiblock component
       <arrow> Burns fuel to heat the smeltery
 
   diesel_smeltery_heater:
     name: "Diesel Smeltery Heater"
     lore: |-
-      <star> Smeltery multiblock component
       <arrow> Burns diesel to heat the smeltery
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
@@ -854,19 +850,16 @@ item:
   smeltery_hopper:
     name: "Smeltery Hopper"
     lore: |-
-      <star> Smeltery multiblock component
       <arrow> Serves as item input for the smeltery
 
   smeltery_input_hatch:
     name: "Smeltery Input Hatch"
     lore: |-
-      <star> Smeltery multiblock component
       <arrow> Serves as fluid input for the smeltery
 
   smeltery_output_hatch:
     name: "Smeltery Output Hatch"
     lore: |-
-      <star> Smeltery multiblock component
       <arrow> Serves as fluid output for the smeltery
 
   soulbound_rune:
@@ -1107,7 +1100,7 @@ item:
       <arrow> <attr>Cycle duration:</attr> %cycle-duration%
       <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Manual Hydrualic Purifier | %input-bar% | %output-bar%"
+    waila: "Manual Hydraulic Purifier | %input-bar% | %output-bar%"
 
   solar_hydraulic_purifier_1:
     name: "Solar Hydraulic Purifier I"
@@ -1287,35 +1280,30 @@ item:
   fluid_tank_casing_wood:
     name: "Wooden Fluid Tank Casing"
     lore: |-
-      <star> Multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_copper:
     name: "Copper Fluid Tank Casing"
     lore: |-
-      <star> Multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_tin:
     name: "Tin Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_iron:
     name: "Iron Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_bronze:
     name: "Bronze Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
@@ -1329,28 +1317,24 @@ item:
   fluid_tank_casing_igneous_composite:
     name: "Igneous Composite Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_steel:
     name: "Steel Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   fluid_tank_casing_palladium:
     name: "Palladium Fluid Tank Casing"
     lore: |-
-      <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
   manual_core_drill_lever:
     name: "Manual Core Drill Lever"
     lore: |-
-      <star> Manual Core Drill multiblock component
       <arrow> <insn>Right click</insn> to cycle the attached core drill
 
   manual_core_drill:
@@ -1401,6 +1385,7 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 6x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 12x <yellow><item:pylon:iron_support_beam/></yellow>
+      <diamond> 2 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Hydraulic Core Drill %duration_if_any%"
     waila_format: "| %duration%"
 
@@ -1422,23 +1407,19 @@ item:
       <diamond> 4x <yellow><item:pylon:bronze_foundation/></yellow>
       <diamond> 9x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 10x <yellow><item:pylon:bronze_grating/></yellow>
+      <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Diesel Core Drill %duration_if_any%"
     waila_format: "| %duration%"
 
   iron_support_beam:
     name: "Iron Support Beam"
-    lore: |-
-      <star> Multiblock component
 
   steel_support_beam:
     name: "Steel Support Beam"
-    lore: |-
-      <star> Multiblock component
 
   fluid_input_hatch:
     name: "Fluid Input Hatch"
     lore: |-
-      <star> Multiblock component
       <arrow> Acts as a fluid input for multiblock machines
       <arrow> Requires a fluid casing above
     waila: "Fluid Input Hatch | %info%"
@@ -1446,7 +1427,6 @@ item:
   fluid_output_hatch:
     name: "Fluid Output Hatch"
     lore: |-
-      <star> Multiblock component
       <arrow> Acts as a fluid output for multiblock machines
       <arrow> Requires a fluid casing above
     waila: "Fluid Output Hatch | %info%"
@@ -1454,14 +1434,12 @@ item:
   item_input_hatch:
     name: "Item Input Hatch"
     lore: |-
-      <star> Multiblock component
       <arrow> Acts as an item input for multiblock machines
     waila: "Item Input Hatch"
 
   item_output_hatch:
     name: "Item Output Hatch"
     lore: |-
-      <star> Multiblock component
       <arrow> Acts as an item output for multiblock machines
     waila: "Item Output Hatch"
 
@@ -1748,17 +1726,14 @@ item:
       <diamond> 4x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 4x <yellow><item:pylon:reinforced_glass/></yellow>
       <diamond> 31x <yellow><item:pylon:reinforced_glass_casing/></yellow>
+      <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Fermenter | %sugarcane-bar% %sugarcane-amount% sugarcane"
 
   reinforced_glass:
     name: "Reinforced Glass"
-    lore: |-
-      <star> Multiblock component
 
   reinforced_glass_casing:
     name: "Reinforced Glass Casing"
-    lore: |-
-      <star> Multiblock component
 
   biorefinery:
     name: "Biorefinery"
@@ -1780,37 +1755,26 @@ item:
       <diamond> 7x <yellow><item:pylon:smokestack_ring/></yellow>
       <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
       <diamond> 24x <yellow><item:pylon:reinforced_plating/></yellow>
+      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Biorefinery | %info%"
 
   bronze_foundation:
     name: "Bronze Foundation"
-    lore: |-
-      <star> Multiblock component
 
   bronze_grating:
     name: "Bronze Grating"
-    lore: |-
-      <star> Multiblock component
 
   reinforced_plating:
     name: "Reinforced Plating"
-    lore: |-
-      <star> Multiblock component
 
   distillation_tower_ring:
     name: "Distillation Tower Ring"
-    lore: |-
-      <star> Multiblock component
 
   smokestack_ring:
     name: "Smokestack Ring"
-    lore: |-
-      <star> Multiblock component
 
   smokestack_cap:
     name: "Smokestack Cap"
-    lore: |-
-      <star> Multiblock component
 
   cargo_duct:
     name: "Cargo Duct"
@@ -2352,6 +2316,7 @@ item:
       <diamond> 8x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
+      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
@@ -2836,6 +2801,10 @@ message:
   silo:
     empty: "Empty"
     not-empty: "<gray>%item% <white>(<yellow>%amount%<white>/<yellow>%capacity%<white>)"
+  hydraulic-cannon:
+    empty: "<red>The cannon is out of hydraulic fluid"
+    full: "<red>The cannon is full with dirty hydraulic fluid"
+    no-ammo: "<red>The cannon is out of ammunition"
 
 gui:
   fluid-selector-title: "Select Fluid"

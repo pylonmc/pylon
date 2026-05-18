@@ -8,7 +8,6 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
@@ -20,14 +19,14 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 /**
  * @param input the input item (respects amount)
  * @param result the output item (respects amount)
- * @param particleData the block data to use for particles
+ * @param particleItem the item to use for particles
  * @param timeTicks the recipe time in ticks
  */
 public record PipeBendingRecipe(
         @NotNull NamespacedKey key,
         @NotNull RecipeInput.Item input,
         @NotNull ItemStack result,
-        @NotNull BlockData particleData,
+        @NotNull ItemStack particleItem,
         int timeTicks
 ) implements RebarRecipe {
 
@@ -43,7 +42,7 @@ public record PipeBendingRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
-                    section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA),
+                    section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
             );
         }

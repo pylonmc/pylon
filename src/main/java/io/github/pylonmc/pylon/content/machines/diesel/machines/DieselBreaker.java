@@ -23,7 +23,6 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import net.kyori.adventure.text.Component;
@@ -179,10 +178,11 @@ public class DieselBreaker extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
+                .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .data(drilling.getBlockData())
+                .data(new ItemStack(drilling.getType()))
                 .spawn();
     }
 
