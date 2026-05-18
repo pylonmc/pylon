@@ -150,10 +150,11 @@ public class HydraulicTableSaw extends RebarBlock implements
         }
 
         if (isProcessingRecipe()) {
-            new ParticleBuilder(Particle.BLOCK)
+            new ParticleBuilder(Particle.ITEM)
                     .count(5)
+                    .extra(0.05)
                     .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
-                    .data(getCurrentRecipe().particleData())
+                    .data(getCurrentRecipe().particleItem())
                     .spawn();
             removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidToConsume);
             addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidToConsume);
@@ -162,14 +163,28 @@ public class HydraulicTableSaw extends RebarBlock implements
         }
 
         ItemStack stack = getItemDisplay().getItemStack();
-        for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
-            if (!stack.isSimilar(recipe.input()) || stack.getAmount() < recipe.input().getAmount()) {
-                continue;
-            }
-
-            startRecipe(recipe, recipe.timeTicks());
-            break;
+        if (stack.isEmpty()) {
+            return;
         }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
+            return;
+        }
+
+        for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
+            if (tryStartRecipe(recipe, stack)) {
+                break;
+            }
+        }
+    }
+
+    private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
+        if (!stack.isSimilar(recipe.input())) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.timeTicks());
+        return true;
     }
 
     public ItemDisplay getItemDisplay() {

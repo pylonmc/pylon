@@ -27,7 +27,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Pylon extends JavaPlugin implements RebarAddon {
 
-    private static final int BSTATS_ID = 27323;
+    private static final int BSTATS_ID = 31410;
     private static Metrics metrics;
 
     @Getter
@@ -54,7 +54,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PylonRecipes.initialize();
 
 
-
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Sprinkler.SprinklerPlaceListener(), this);
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
@@ -62,10 +61,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);
         pm.registerEvents(new Bloomery.CreationListener(), this);
         pm.registerEvents(new Grindstone.PlaceListener(), this);
-
-        new ShimmerMagnet.Ticker().runTaskTimer(this, 0, 10);
-
-        pm.registerEvents(new HungerTalisman.JoinListener(), this);
         pm.registerEvents(new FarmingTalisman.FarmingTalismanListener(), this);
         pm.registerEvents(new BarteringTalisman.BarteringTalismanListener(), this);
         pm.registerEvents(new BreedingTalisman.BreedingTalismanListener(), this);

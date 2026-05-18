@@ -171,10 +171,11 @@ public class DieselBrickMolder extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
+                .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
-                .data(getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack().getType().createBlockData())
+                .data(getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack())
                 .spawn();
     }
 
@@ -184,21 +185,31 @@ public class DieselBrickMolder extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
-            if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
+        if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override

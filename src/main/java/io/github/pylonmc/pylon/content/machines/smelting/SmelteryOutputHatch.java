@@ -1,5 +1,13 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -8,13 +16,6 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import kotlin.Pair;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Map;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
 
@@ -37,10 +38,11 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         SmelteryController controller = getController();
         if (controller == null) return List.of();
 
-        Pair<RebarFluid, Double> supplied = controller.getBottomFluid();
-        return supplied == null
-                ? List.of()
-                : List.of(new Pair<>(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
+        return controller.getFluids().entrySet().stream()
+                .filter(entry -> entry.getKey().hasTag(MeltingPoint.class))
+                .filter(entry -> entry.getKey().getTag(MeltingPoint.class).temperature() <= controller.getTemperature())
+                .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
+                .toList();
     }
 
     @Override
@@ -49,5 +51,4 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         if (controller == null) return;
         controller.removeFluid(fluid, amount);
     }
-
 }

@@ -50,20 +50,20 @@ public abstract class FluidHatch extends RebarBlock implements
 
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
 
-    private static MixedMultiblockComponent component = null;
+    private static MultiblockComponent component;
 
     public @Nullable RebarFluid fluid;
 
     static {
         // run on first tick after all addons registered
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            List<RebarMultiblockComponent> components = new ArrayList<>();
+            List<NamespacedKey> components = new ArrayList<>();
             for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (RebarItem.fromStack(schema.getItemStack()) instanceof FluidTankCasing.Item) {
-                    components.add(new RebarMultiblockComponent(schema.getKey()));
+                if (FluidTankCasing.Item.class.isAssignableFrom(schema.getItemClass())) {
+                    components.add(schema.getKey());
                 }
             }
-            component = new MixedMultiblockComponent(components);
+            component = MultiblockComponent.of(components.toArray(new NamespacedKey[0]));
         }, 0);
     }
 
@@ -125,7 +125,7 @@ public abstract class FluidHatch extends RebarBlock implements
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         boolean result = RebarFluidBufferBlock.super.setFluid(fluid, amount);
         float scale = (float) (0.9 * fluidAmount(fluid) / fluidCapacity(fluid));
-        if (scale < 1.0e-9) {
+        if (scale < RebarUtils.FLUID_EPSILON) {
             getFluidDisplay().setItemStack(null);
         } else {
             getFluidDisplay().setItemStack(fluid.getItem());
@@ -138,13 +138,19 @@ public abstract class FluidHatch extends RebarBlock implements
         return result;
     }
 
+    public double fluidAmount() {
+        return fluid == null
+                ? 0.0
+                : fluidAmount(fluid);
+    }
+
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         Component info;
         if (!isFormedAndFullyLoaded()) {
             info = Component.translatable("pylon.message.fluid_hatch.no_casing");
         } else if (fluid == null) {
-            info = Component.translatable("pylon.message.fluid_hatch.no_multiblock");
+            info = Component.translatable("pylon.message.fluid_hatch.no_fluid");
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(

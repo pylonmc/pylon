@@ -88,14 +88,15 @@ public class IronBloom extends RebarItem implements RebarInventoryTicker {
     }
 
     @Override
-    public long getTickInterval() {
+    public long getBaseTickInterval() {
         return DAMAGE_INTERVAL;
     }
 
     @Override
     public void onTick(@NotNull Player player) {
-        if (player.getInventory().getItemInMainHand().isSimilar(PylonItems.TONGS) ||
-                player.getInventory().getItemInOffHand().isSimilar(PylonItems.TONGS)) {
+        if (getTemperature() == 0
+                || player.getInventory().getItemInMainHand().isSimilar(PylonItems.TONGS)
+                || player.getInventory().getItemInOffHand().isSimilar(PylonItems.TONGS)) {
             return;
         }
         player.damage(UNPROTECTED_DAMAGE, DamageSource.builder(DamageType.HOT_FLOOR).build());

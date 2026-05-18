@@ -14,11 +14,15 @@ import io.github.pylonmc.rebar.entity.EntityStorage;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -39,6 +43,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     private final Config settings = getSettings();
 
     public final int cooldownTicks = settings.getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final double recoilVelocity = settings.getOrThrow("recoil-velocity", ConfigAdapter.DOUBLE);
     public final double hydraulicFluidPerShot = settings.getOrThrow("hydraulic-fluid-per-shot", ConfigAdapter.DOUBLE);
     public final Material projectileMaterial = settings.getOrThrow("projectile.material", ConfigAdapter.MATERIAL);
     public final float projectileThickness = settings.getOrThrow("projectile.thickness", ConfigAdapter.FLOAT);
@@ -47,6 +52,12 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     public final double projectileDamage = settings.getOrThrow("projectile.damage", ConfigAdapter.DOUBLE);
     public final int projectileTickInterval = settings.getOrThrow("projectile.tick-interval", ConfigAdapter.INTEGER);
     public final int projectileLifetimeTicks = settings.getOrThrow("projectile.lifetime-ticks", ConfigAdapter.INTEGER);
+    public final RandomizedSound sound = settings.getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound emptySound = settings.getOrThrow("empty-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound fullSound = settings.getOrThrow("full-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound noAmmoSound = settings.getOrThrow("no-ammo-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound hitSound = settings.getOrThrow("hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound playerHitSound = settings.getOrThrow("player-hit-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     @SuppressWarnings("unused")
     public HydraulicCannon(@NotNull ItemStack stack) {
@@ -78,22 +89,9 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick()
-                || event.useItemInHand() == Event.Result.DENY
-                || getHydraulicFluid() < hydraulicFluidPerShot
-                || getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
-            return;
-        }
-
-        ItemStack projectile = null;
-        for (ItemStack stack : event.getPlayer().getInventory()) {
-            if (PylonItems.TIN_PROJECTILE.isSimilar(stack)) {
-                projectile = stack;
-                break;
-            }
-        }
-
-        if (projectile == null) {
+        Player player = event.getPlayer();
+        Location source = player.getEyeLocation();
+        if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
 
@@ -102,15 +100,39 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
             return;
         }
 
+        if (getHydraulicFluid() < hydraulicFluidPerShot) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.empty"));
+            source.getWorld().playSound(emptySound.create(), source.getX(), source.getY(), source.getZ());
+            return;
+        }
+
+        if (getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.full"));
+            source.getWorld().playSound(fullSound.create(), source.getX(), source.getY(), source.getZ());
+            return;
+        }
+
+        ItemStack projectile = null;
+        for (ItemStack stack : event.getPlayer().getInventory()) {
+            RebarItemSchema schema = RebarItemSchema.fromStack(stack);
+            if (schema != null && schema.getKey().equals(PylonKeys.TIN_PROJECTILE)) {
+                projectile = stack;
+                break;
+            }
+        }
+
+        if (projectile == null) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.no-ammo"));
+            source.getWorld().playSound(noAmmoSound.create(), source.getX(), source.getY(), source.getZ());
+            return;
+        }
+
         projectile.subtract();
         setHydraulicFluid(getHydraulicFluid() - hydraulicFluidPerShot);
         setDirtyHydraulicFluid(getDirtyHydraulicFluid() + hydraulicFluidPerShot);
 
-        Player player = event.getPlayer();
         player.setCooldown(getStack(), cooldownTicks);
         Vector direction = player.getEyeLocation().getDirection();
-        Location source = player.getEyeLocation()
-                .subtract(0, 0.5, 0);
         EntityStorage.add(new DisplayProjectile(
                 player,
                 projectileMaterial,
@@ -121,8 +143,21 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
                 projectileSpeedBlocksPerSecond,
                 projectileDamage,
                 projectileTickInterval,
-                projectileLifetimeTicks
+                projectileLifetimeTicks,
+                hitSound.create(),
+                playerHitSound.create()
         ));
+
+        player.getWorld().spawnParticle(
+                Particle.FLAME,
+                source.subtract(0, 0.4, 0).add(direction.clone().multiply(0.25)),
+                6,
+                0.3, 0.3, 0.3,
+                0.01
+        );
+
+        source.getWorld().playSound(sound.create(), source.getX(), source.getY(), source.getZ());
+        player.setVelocity(player.getVelocity().subtract(direction.clone().multiply(recoilVelocity)));
     }
 
     @Override

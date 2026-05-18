@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -22,8 +23,8 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
@@ -51,7 +53,8 @@ public class DieselBreaker extends RebarBlock implements
         RebarTickingBlock,
         RebarMultiblock,
         RebarLogisticBlock,
-        RebarProcessor {
+        RebarProcessor,
+        RebarDispenser {
 
     public final double dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
@@ -175,10 +178,11 @@ public class DieselBreaker extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
+                .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .data(drilling.getBlockData())
+                .data(new ItemStack(drilling.getType()))
                 .spawn();
     }
 
@@ -283,6 +287,11 @@ public class DieselBreaker extends RebarBlock implements
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
         RebarFluidBufferBlock.super.onFluidAdded(fluid, amount);
         tryStartDrilling();
+    }
+
+    @Override @MultiHandler(priorities = EventPriority.LOWEST)
+    public void onPreDispense(@NotNull BlockPreDispenseEvent event, @NotNull EventPriority priority) {
+        event.setCancelled(true);
     }
 
     @Override

@@ -192,21 +192,31 @@ public class DieselPress extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (PressRecipe recipe : PressRecipe.RECIPE_TYPE) {
-            double plantOilAmount = recipe.oilAmount();
-            if (!recipe.input().matches(stack) || fluidSpaceRemaining(PylonFluids.PLANT_OIL) < plantOilAmount) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, (int) (timePerItem * 20));
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(PressRecipe recipe, ItemStack stack) {
+        double plantOilAmount = recipe.oilAmount();
+        if (fluidSpaceRemaining(PylonFluids.PLANT_OIL) < plantOilAmount || !recipe.input().matches(stack)) {
+            return false;
+        }
+
+        startRecipe(recipe, (int) (timePerItem * 20));
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override

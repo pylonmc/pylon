@@ -7,12 +7,17 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.DamageResistant;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
+import io.papermc.paper.registry.set.RegistrySet;
+import io.papermc.paper.registry.tag.Tag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +28,8 @@ import org.jetbrains.annotations.NotNull;
  */
 @SuppressWarnings("UnstableApiUsage")
 public class FireproofRune extends Rune {
+    public static final Tag<DamageType> IS_FIRE_TAG = RegistryAccess.registryAccess().getRegistry(RegistryKey.DAMAGE_TYPE).getTag(DamageTypeTagKeys.IS_FIRE);
+
     public static final Component SUCCESS = Component.translatable("pylon.message.fireproof_result.success");
     public static final Component TOOLTIP = Component.translatable("pylon.message.fireproof_result.tooltip");
 
@@ -46,7 +53,7 @@ public class FireproofRune extends Rune {
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
         DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
         if (data == null) return true;
-        return !data.types().equals(DamageTypeTagKeys.IS_FIRE);
+        return !data.types().equals(IS_FIRE_TAG);
     }
 
     /**
@@ -63,7 +70,7 @@ public class FireproofRune extends Rune {
 
         Player player = event.getPlayer();
         ItemStack handle = ItemStackBuilder.of(target.asQuantity(consume)) // Already cloned in `asQuantity`
-                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(DamageTypeTagKeys.IS_FIRE))
+                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
                 .lore(GlobalTranslator.render(TOOLTIP, player.locale()))
                 .build();
 

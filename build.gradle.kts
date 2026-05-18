@@ -1,4 +1,5 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
+import org.gradle.api.internal.artifacts.dsl.dependencies.DependenciesExtensionModule.module
 
 plugins {
     java
@@ -6,8 +7,8 @@ plugins {
     idea
     id("com.gradleup.shadow") version "9.0.0"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
-    id("xyz.jpenilla.run-paper") version "2.3.0"
-    id("io.freefair.lombok") version "8.13.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("io.freefair.lombok") version "9.5.0"
     `maven-publish`
     signing
     id("com.gradleup.nmcp.aggregation") version "1.1.0"
@@ -27,8 +28,8 @@ repositories {
     maven("https://repo.xenondevs.xyz/releases") {
         name = "InvUI"
     }
-    maven("https://maven.pvphub.me/tofaa") {
-        name = "EntityLib"
+    maven("https://repo.codemc.io/repository/maven-releases/") {
+        name = "CodeMC"
     }
 }
 
@@ -36,7 +37,7 @@ val rebarVersion = project.properties["rebar.version"] as String
 val minecraftVersion = project.properties["minecraft.version"] as String
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$minecraftVersion.build.+")
     compileOnly("io.github.pylonmc:rebar:$rebarVersion")
 
     implementation("org.bstats:bstats-bukkit:2.2.1")
@@ -50,7 +51,7 @@ idea {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
     withJavadocJar()
 }

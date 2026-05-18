@@ -63,7 +63,7 @@ public class SmelteryRecipe implements RebarRecipe {
         }
     };
 
-    @Getter(onMethod_ = @Override) private final NamespacedKey key;
+    @Getter private final NamespacedKey key;
     @Getter private final Map<RebarFluid, Double> fluidInputs;
     @Getter private final Map<RebarFluid, Double> fluidOutputs;
     @Getter private final RebarFluid highestFluid;
@@ -129,7 +129,7 @@ public class SmelteryRecipe implements RebarRecipe {
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('s', ItemButton.from(PylonItems.SMELTERY_CONTROLLER))
+                .addIngredient('s', ItemButton.of(PylonItems.SMELTERY_CONTROLLER))
                 .addIngredient('t', ItemStackBuilder.of(Material.COAL)
                         .name(Component.translatable(
                                 "pylon.gui.smeltery.temperature",

@@ -30,14 +30,12 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param results the result items and their corresponding probabilities
  *                (respects item amount) (maximum 9 items)
  * @param cycles the number of full rotations needed to complete the recipe
- * @param particleBlockData the block data to use for the particles shown while grinding
  */
 public record GrindstoneRecipe(
         @NotNull NamespacedKey key,
         @NotNull RecipeInput.Item input,
         @NotNull WeightedSet<ItemStack> results,
-        int cycles,
-        @NotNull BlockData particleBlockData
+        int cycles
 ) implements RebarRecipe {
 
     @Override
@@ -52,8 +50,7 @@ public record GrindstoneRecipe(
                     key,
                     section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
-                    section.getOrThrow("cycles", ConfigAdapter.INTEGER),
-                    section.getOrThrow("particle-data", ConfigAdapter.BLOCK_DATA)
+                    section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
         }
 
@@ -93,8 +90,8 @@ public record GrindstoneRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('g', ItemButton.from(PylonItems.GRINDSTONE))
-                .addIngredient('i', ItemButton.from(input))
+                .addIngredient('g', ItemButton.of(PylonItems.GRINDSTONE))
+                .addIngredient('i', ItemButton.of(input))
                 .addIngredient('c', GuiItems.progressCyclingItem(cycles * Grindstone.CYCLE_DURATION_TICKS,
                         ItemStackBuilder.of(Material.CLOCK)
                                 .name(net.kyori.adventure.text.Component.translatable(
@@ -120,7 +117,7 @@ public record GrindstoneRecipe(
                             UnitFormat.PERCENT.format(Math.round(normalizedWeight * 100)).decimalPlaces(2))
             ));
             stack.lore(lore);
-            gui.addIngredient((char) ('0' + i), ItemButton.from(stack));
+            gui.addIngredient((char) ('0' + i), ItemButton.of(stack));
             i++;
         }
 
