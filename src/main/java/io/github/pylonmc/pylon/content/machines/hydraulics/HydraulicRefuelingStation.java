@@ -112,7 +112,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
             return;
         }
 
-        if (RebarItem.fromStack(toInsert) instanceof HydraulicRefuelable) {
+        if (RebarItem.isRebarItem(toInsert, HydraulicRefuelable.class)) {
             itemDisplay.setItemStack(toInsert.asQuantity(1));
             toInsert.subtract();
         }
@@ -120,7 +120,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
 
     public @Nullable HydraulicRefuelable getHeldRefuelableItem() {
         ItemStack stack = getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack();
-        if (RebarItem.fromStack(stack) instanceof HydraulicRefuelable refuelable) {
+        if (RebarItem.fromStack(stack, HydraulicRefuelable.class) instanceof HydraulicRefuelable refuelable) {
             return refuelable;
         }
         return null;
@@ -217,7 +217,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
 
         @Override
         public long getMaxAmount(@NotNull ItemStack stack) {
-            return RebarItem.fromStack(stack) instanceof HydraulicRefuelable
+            return RebarItem.isRebarItem(stack, HydraulicRefuelable.class)
                     ? super.getMaxAmount(stack)
                     : 0;
         }

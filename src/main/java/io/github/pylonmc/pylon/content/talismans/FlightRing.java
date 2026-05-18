@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.item.base.RebarJoinHandler;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -49,18 +50,11 @@ public final class FlightRing extends Talisman implements RebarJoinHandler {
     }
 
     @Override
-    public void onRejoin(@NotNull final PlayerJoinEvent event) {
+    public void onJoin(@NotNull PlayerJoinEvent event, @NotNull EventPriority priority) {
         if (!event.getPlayer().getPersistentDataContainer().has(PylonKeys.FLIGHT_RING)) {
             return;
         }
-        for (ItemStack stack : event.getPlayer().getInventory()) {
-            RebarItem item = RebarItem.fromStack(stack);
-            if (!(item instanceof FlightRing ring)) {
-                continue;
-            }
 
-            ring.applyEffect(event.getPlayer());
-            return;
-        }
+        applyEffect(event.getPlayer());
     }
 }
