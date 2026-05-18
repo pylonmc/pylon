@@ -67,8 +67,8 @@ public record PressRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('p', ItemButton.from(PylonItems.PRESS))
-                .addIngredient('i', ItemButton.from(input))
+                .addIngredient('p', ItemButton.of(PylonItems.PRESS))
+                .addIngredient('i', ItemButton.of(input))
                 .addIngredient('c', GuiItems.progressCyclingItem(Press.TIME_PER_ITEM_TICKS,
                         ItemStackBuilder.of(Material.CLOCK)
                                 .name(net.kyori.adventure.text.Component.translatable(

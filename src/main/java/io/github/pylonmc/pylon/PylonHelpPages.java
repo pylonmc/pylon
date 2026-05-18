@@ -15,7 +15,6 @@ public class PylonHelpPages {
     public static final SimpleStaticGuidePage HELP = new SimpleStaticGuidePage(pylonKey("help"));
 
     public static final SimpleStaticGuidePage PROGRESSION = new SimpleStaticGuidePage(pylonKey("help_progression"));
-    public static final SimpleStaticGuidePage PIT_KILN = new SimpleStaticGuidePage(pylonKey("help_pit_kiln"));
     public static final SimpleStaticGuidePage FLUID_HANDLING = new SimpleStaticGuidePage(pylonKey("help_fluid_handling"));
     public static final SimpleStaticGuidePage HYDRAULICS = new SimpleStaticGuidePage(pylonKey("help_hydraulics"));
     public static final SimpleStaticGuidePage BLOOMERY = new SimpleStaticGuidePage(pylonKey("help_bloomery"));
@@ -29,7 +28,6 @@ public class PylonHelpPages {
 
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.IRON_PICKAXE, Pylon.getInstance(), "help.progression.manual_core")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.CLOCK, Pylon.getInstance(), "help.loupe"))); // recycle loupe desc
-        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BRICKS, Pylon.getInstance(), "help.progression.pit_kiln")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BRICK, Pylon.getInstance(), "help.progression.bronze_age")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.WATER_BUCKET, Pylon.getInstance(), "help.progression.hydraulic_machines")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.MINECART, Pylon.getInstance(), "help.progression.cargo_machines")));
@@ -39,11 +37,6 @@ public class PylonHelpPages {
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.NETHERITE_INGOT, Pylon.getInstance(), "help.progression.palladium")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "help.progression.flight_ring")));
         HELP.addPage(Material.BOOKSHELF, PROGRESSION);
-
-        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "help.pit_kiln.kiln")));
-        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "help.pit_kiln.construction")));
-        PIT_KILN.addButton(Item.simple(ItemStackBuilder.guide(Material.DECORATED_POT, Pylon.getInstance(), "help.pit_kiln.crafting")));
-        HELP.addButton(new PageButton(ItemStackBuilder.of(Material.DECORATED_POT).addCustomModelDataString(PylonKeys.PIT_KILN.asString()), PIT_KILN));
 
         HELP.addButton(new PageButton(ItemStackBuilder.of(Material.BROWN_TERRACOTTA).addCustomModelDataString(PylonKeys.FLUID_PIPE_WOOD.asString()), FLUID_HANDLING));
 
