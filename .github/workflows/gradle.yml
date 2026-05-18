@@ -21,7 +21,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Parse [ref title
+      - name: Use reference from [ref title
         id: parseref
         if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, '[ref:')
         run: |
@@ -31,18 +31,18 @@ jobs:
           cd rebar
           git fetch --all
           git checkout $BRANCHNAME
-          echo "REBARCOMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
           cd ..
-          rm -rf rebar
 
       - name: Get latest commit of Rebar master
         if: steps.parseref.outcome == 'skipped'
         run: |
           git clone https://github.com/pylonmc/rebar
-          cd rebar
-          echo "REBARCOMMIT=$(git rev-parse master)" >> $GITHUB_ENV
-          cd ..
-          rm -rf rebar
+
+      - name: Get commit of rebar to use
+        id: rebarcommit
+        run: |
+          COMMIT_HASH=$(git rev-parse HEAD)
+          echo "commit=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
       - name: Set up JDK 25
         uses: actions/setup-java@v4.6.0
@@ -54,20 +54,27 @@ jobs:
         uses: gradle/actions/setup-gradle@v4.2.2
 
       - name: Clone master project
-        run: |
-          git clone https://github.com/pylonmc/parallel-dev-repo
-          cd parallel-dev-repo
-          ./gradlew
-          cd rebar
-          git fetch origin $(echo "$REBARCOMMIT")
-          git checkout $(echo "$REBARCOMMIT")
-          cd ../pylon
-          git fetch origin ${{ github.sha }}
-          git checkout ${{ github.sha }}
+        uses: actions/checkout@v5
+        with:
+          repository: 'pylonmc/parallel-dev-repo'
+
+      - name: Clone rebar
+        uses: actions/checkout@v5
+        with:
+          repository: 'pylonmc/rebar'
+          ref: ${{steps.}}
+          path: 'parallel-dev-repo/rebar'
+
+      - name: Clone pylon
+        uses: actions/checkout@v5
+        with:
+          repository: 'pylonmc/pylon'
+          ref: ${{github.sha}}
+          path: 'parallel-dev-repo/pylon'
 
       - name: Build with Gradle Wrapper
+        working-directory: parallel-dev-repo
         run: |
-          cd parallel-dev-repo
           ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.run_number }}
 
       - name: Upload the artifact
@@ -78,7 +85,7 @@ jobs:
 
   dependency-submission:
     needs: [build]
-    
+
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
