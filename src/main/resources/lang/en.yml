@@ -2629,7 +2629,6 @@ research:
   palladium_tools: "<#2937e3>Palladium tools"
   palladium_armor: "<#2937e3>Palladium armor"
   creative_flight: "<#2937e3>Creative flight"
-  village_doctor: "<#ff00ff>Village Doctor"
   palladium_production: "<#2937e3>Palladium Production"
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
@@ -2813,6 +2812,10 @@ message:
   silo:
     empty: "Empty"
     not-empty: "<gray>%item% <white>(<yellow>%amount%<white>/<yellow>%capacity%<white>)"
+  hydraulic-cannon:
+    empty: "<red>The cannon is out of hydraulic fluid"
+    full: "<red>The cannon is full with dirty hydraulic fluid"
+    no-ammo: "<red>The cannon is out of ammunition"
 
 gui:
   fluid-selector-title: "Select Fluid"

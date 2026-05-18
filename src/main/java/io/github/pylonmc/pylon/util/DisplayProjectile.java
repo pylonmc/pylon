@@ -82,14 +82,6 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
 
         entity.setTeleportDuration(getTickInterval());
 
-        entity.getWorld().spawnParticle(
-            Particle.FLAME,
-            entity.getLocation(),
-            2,
-            0.1, 0.1, 0.1,
-            0.01
-        );
-
         Location teleportTo = entity.getLocation().add(locationStep);
         if (!teleportTo.getBlock().isPassable()) {
             teleportTo.getWorld().spawnParticle(

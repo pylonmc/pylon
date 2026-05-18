@@ -17,9 +17,11 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -87,18 +89,24 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
-        Location source = player.getEyeLocation()
-                .subtract(0, 0.5, 0);
+        Location source = player.getEyeLocation();
         if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
 
+        if (priority == EventPriority.NORMAL) {
+            event.setUseInteractedBlock(Event.Result.DENY);
+            return;
+        }
+
         if (getHydraulicFluid() < hydraulicFluidPerShot) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.empty"));
             source.getWorld().playSound(emptySound.create(), source.getX(), source.getY(), source.getZ());
             return;
         }
 
         if (getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.full"));
             source.getWorld().playSound(fullSound.create(), source.getX(), source.getY(), source.getZ());
             return;
         }
@@ -112,12 +120,8 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
         }
 
         if (projectile == null) {
+            player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.no-ammo"));
             source.getWorld().playSound(noAmmoSound.create(), source.getX(), source.getY(), source.getZ());
-            return;
-        }
-
-        if (priority == EventPriority.NORMAL) {
-            event.setUseInteractedBlock(Event.Result.DENY);
             return;
         }
 
@@ -141,6 +145,15 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
                 hitSound.create(),
                 playerHitSound.create()
         ));
+
+        player.getWorld().spawnParticle(
+                Particle.FLAME,
+                source.subtract(0, 0.4, 0).add(direction.clone().multiply(0.25)),
+                6,
+                0.3, 0.3, 0.3,
+                0.01
+        );
+
         source.getWorld().playSound(sound.create(), source.getX(), source.getY(), source.getZ());
         player.setVelocity(player.getVelocity().subtract(direction.clone().multiply(recoilVelocity)));
     }
