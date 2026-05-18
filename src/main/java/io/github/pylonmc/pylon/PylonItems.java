@@ -989,7 +989,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_AXE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, BRONZE_AXE);
+        RebarItem.register(BronzeTool.class, BRONZE_AXE);
         PylonPages.TOOLS.addItem(BRONZE_AXE);
     }
 
@@ -997,7 +997,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_PICKAXE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, BRONZE_PICKAXE);
+        RebarItem.register(BronzeTool.class, BRONZE_PICKAXE);
         PylonPages.TOOLS.addItem(BRONZE_PICKAXE);
     }
 
@@ -1005,7 +1005,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_SHOVEL.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, BRONZE_SHOVEL);
+        RebarItem.register(BronzeTool.class, BRONZE_SHOVEL);
         PylonPages.TOOLS.addItem(BRONZE_SHOVEL);
     }
 
@@ -1013,7 +1013,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_HOE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, BRONZE_HOE);
+        RebarItem.register(BronzeTool.class, BRONZE_HOE);
         PylonPages.TOOLS.addItem(BRONZE_HOE);
     }
 
@@ -1021,7 +1021,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_AXE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, STEEL_AXE);
+        RebarItem.register(SteelTool.class, STEEL_AXE);
         PylonPages.TOOLS.addItem(STEEL_AXE);
     }
 
@@ -1029,7 +1029,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_PICKAXE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, STEEL_PICKAXE);
+        RebarItem.register(SteelTool.class, STEEL_PICKAXE);
         PylonPages.TOOLS.addItem(STEEL_PICKAXE);
     }
 
@@ -1037,7 +1037,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_SHOVEL.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, STEEL_SHOVEL);
+        RebarItem.register(SteelTool.class, STEEL_SHOVEL);
         PylonPages.TOOLS.addItem(STEEL_SHOVEL);
     }
 
@@ -1045,7 +1045,7 @@ public final class PylonItems {
             .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_HOE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, STEEL_HOE);
+        RebarItem.register(SteelTool.class, STEEL_HOE);
         PylonPages.TOOLS.addItem(STEEL_HOE);
     }
 
@@ -1184,7 +1184,7 @@ public final class PylonItems {
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("durability", ConfigAdapter.INTEGER))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_AXE);
+        RebarItem.register(PalladiumTool.class, PALLADIUM_AXE);
         PylonPages.TOOLS.addItem(PALLADIUM_AXE);
     }
 
@@ -1195,7 +1195,7 @@ public final class PylonItems {
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_PICKAXE).getOrThrow("durability", ConfigAdapter.INTEGER))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_PICKAXE);
+        RebarItem.register(PalladiumTool.class, PALLADIUM_PICKAXE);
         PylonPages.TOOLS.addItem(PALLADIUM_PICKAXE);
     }
 
@@ -1207,7 +1207,7 @@ public final class PylonItems {
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_SHOVEL).getOrThrow("durability", ConfigAdapter.INTEGER))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_SHOVEL);
+        RebarItem.register(PalladiumTool.class, PALLADIUM_SHOVEL);
         PylonPages.TOOLS.addItem(PALLADIUM_SHOVEL);
     }
 
@@ -1218,7 +1218,7 @@ public final class PylonItems {
             .set(DataComponentTypes.MAX_DAMAGE, Settings.get(PylonKeys.PALLADIUM_HOE).getOrThrow("durability", ConfigAdapter.INTEGER))
             .build();
     static {
-        RebarItem.register(RebarItem.class, PALLADIUM_HOE);
+        RebarItem.register(PalladiumTool.class, PALLADIUM_HOE);
         PylonPages.TOOLS.addItem(PALLADIUM_HOE);
     }
 
