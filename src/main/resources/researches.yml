@@ -99,10 +99,7 @@ smelting_1:
   item: pylon:smeltery_controller
   cost: 5
   unlocks:
-  - pylon:pit_kiln
-  - pylon:carbon
-  - pylon:sulfur
-  - pylon:sulfur_block
+  - pylon:crude_alloy_kiln
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -110,6 +107,15 @@ smelting_1:
   - pylon:bronze_block
 
 smelting_2:
+  item: pylon:smeltery_controller
+  cost: 20
+  unlocks:
+    - pylon:kiln
+    - pylon:carbon
+    - pylon:sulfur
+    - pylon:sulfur_block
+
+smelting_3:
   item: pylon:smeltery_controller
   cost: 35
   unlocks:
@@ -138,7 +144,7 @@ smelting_2:
     - pylon:mold_pipe
     - pylon:forming_table
 
-smelting_3:
+smelting_4:
   item: pylon:smeltery_controller
   cost: 50
   unlocks:
@@ -197,7 +203,7 @@ irrigation:
 
 fluid_handling_1:
   item: pylon:fluid_pipe_copper
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:fluid_pipe_copper
     - pylon:portable_fluid_tank_copper
@@ -208,7 +214,7 @@ fluid_handling_1:
 
 fluid_handling_2:
   item: pylon:fluid_pipe_copper
-  cost: 20
+  cost: 10
   unlocks:
     - pylon:fluid_pipe_bronze
     - pylon:portable_fluid_tank_bronze
@@ -221,8 +227,11 @@ fluid_handling_2:
 
 fluid_handling_3:
   item: pylon:fluid_pipe_copper
-  cost: 30
+  cost: 20
   unlocks:
+    - pylon:fluid_pipe_obsidian
+    - pylon:portable_fluid_tank_obsidian
+    - pylon:fluid_tank_casing_obsidian
     - pylon:fluid_pipe_igneous_composite
     - pylon:portable_fluid_tank_igneous_composite
     - pylon:fluid_tank_casing_igneous_composite
@@ -428,6 +437,16 @@ shimmer_field_manipulation:
     - pylon:liselette_cathode
     - pylon:liselette_anode
     - pylon:liselette_collector
+
+potion_magic:
+  item: pylon:potion_altar
+  cost: 20
+  unlocks:
+    - pylon:potion_pedestal
+    - pylon:potion_altar
+    - pylon:ascendant_ember
+    - pylon:chronicle_resin
+    - pylon:eon_weave_crystal
 
 assembling:
   item: pylon:assembly_table

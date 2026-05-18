@@ -103,6 +103,7 @@ public class Pedestal extends RebarBlock implements
         // drop old item
         ItemStack oldStack = display.getItemStack();
         ItemStack newStack = event.getItem();
+
         if (!oldStack.getType().isAir()) {
             player.give(oldStack);
             display.setItemStack(null);
@@ -111,10 +112,24 @@ public class Pedestal extends RebarBlock implements
 
         // insert new item
         if (newStack != null) {
+            if (isIllegalItem(event.getPlayer(), newStack)) {
+                return;
+            }
+
             ItemStack stackToInsert = newStack.asQuantity(1);
             display.setItemStack(stackToInsert);
             newStack.subtract();
         }
+    }
+
+    /**
+     * This method is called when an item is inserted into the pedestal. It can be used to check if the item is
+     * allowed to be inserted.
+     *
+     * @return true if the item can be inserted into the pedestal, false otherwise
+     */
+    public boolean isIllegalItem(Player player, ItemStack stack) {
+        return false;
     }
 
     @Override
