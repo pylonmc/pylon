@@ -1,1 +1,11 @@
 cycle-duration-ticks: 20 # must be a multiple of 4
+sound:
+  sound: minecraft:block.grindstone.use
+  source: block
+  volume: 0.5
+  pitch: 0.5
+fail-sound:
+  sound: minecraft:block.iron.break
+  source: block
+  volume: 0.5
+  pitch: 2

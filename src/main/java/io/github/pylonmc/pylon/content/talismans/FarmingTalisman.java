@@ -1,11 +1,15 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,18 +57,22 @@ public class FarmingTalisman extends Talisman {
     public static class FarmingTalismanListener implements Listener {
         @EventHandler
         public void onBlockBreak(BlockDropItemEvent event) {
-            if (!event.getPlayer().getPersistentDataContainer().has(FARMING_TALISMAN_CHANCE_KEY)) {
+            BlockState block = event.getBlockState();
+            Location loc = block.getLocation();
+            if (!Tag.CROPS.isTagged(block.getType())
+                    || !event.getPlayer().getPersistentDataContainer().has(FARMING_TALISMAN_CHANCE_KEY)
+                    || !(block.getBlockData() instanceof Ageable ageable)
+                    || ageable.getAge() != ageable.getMaximumAge())
+            {
                 return;
             }
             List<Item> additionalDrops = new ArrayList<>();
             for (Item drop : event.getItems()) {
-                if (!Tag.CROPS.isTagged(drop.getItemStack().getType())) {
-                    continue;
-                }
                 if (ThreadLocalRandom.current().nextFloat() > event.getPlayer().getPersistentDataContainer().get(FARMING_TALISMAN_CHANCE_KEY, PersistentDataType.FLOAT)) {
                     continue;
                 }
                 additionalDrops.add(drop.getWorld().dropItem(drop.getLocation(), drop.getItemStack().clone()));
+                loc.getWorld().playSound(PylonConfig.FARMING_TALISMAN_TRIGGER_SOUND.create(), loc.getX(), loc.getY(), loc.getZ());
             }
             event.getItems().addAll(additionalDrops);
         }

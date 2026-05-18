@@ -180,10 +180,11 @@ public class HydraulicPipeBender extends RebarBlock implements
         }
 
         if (isProcessingRecipe()) {
-            new ParticleBuilder(Particle.BLOCK)
+            new ParticleBuilder(Particle.ITEM)
                     .count(5)
+                    .extra(0.05)
                     .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
-                    .data(getCurrentRecipe().particleData())
+                    .data(getCurrentRecipe().particleItem())
                     .spawn();
             removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidToConsume);
             addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidToConsume);
