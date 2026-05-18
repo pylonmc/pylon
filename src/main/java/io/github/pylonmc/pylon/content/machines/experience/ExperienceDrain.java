@@ -29,6 +29,21 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
     public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
 
+    public static class Item extends RebarItem {
+        public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
+        public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
+
+        public Item(@NotNull ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+            return List.of(
+                    RebarArgument.of("xp-drain-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) xpDrainAmount / ((double) xpDrainPeriodTicks / 20))));
+        }
+    }
+
     public ExperienceDrain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
         createFluidBuffer(PylonFluids.LIQUID_XP, xpBufferAmount, false, true);
@@ -100,21 +115,6 @@ public class ExperienceDrain extends RebarBlock implements RebarTickingBlock, Re
             if (actualSubtracted != 0) {
                 getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
             }
-        }
-    }
-
-    public static class Item extends RebarItem {
-        public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
-        public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
-
-        public Item(@NotNull ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(
-                    RebarArgument.of("xp-drain-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) xpDrainAmount / ((double) xpDrainPeriodTicks / 20))));
         }
     }
 }

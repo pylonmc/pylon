@@ -24,7 +24,6 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -60,6 +59,27 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     private static final Vector3i FLUID_INPUT_HATCH_POS = new Vector3i(-2, -1, 0);
     private static final Vector3i EXPERIENCE_INPUT_HATCH_POS = new Vector3i(2, -1, 0);
     private static final Vector3i FLUID_OUTPUT_HATCH_POS = new Vector3i(0, -1, 2);
+
+    public static class Item extends RebarItem {
+        public final double bottleProductionTimeSeconds = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
+        public final double inputFluidAmount = getSettings().getOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
+        public final @Nullable Double outputFluidAmount = getSettings().get("output-fluid-amount", ConfigAdapter.DOUBLE);
+
+        public Item(@NotNull ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+            List<RebarArgument> list = new ArrayList<>();
+            list.add(RebarArgument.of("time-per-bottle", UnitFormat.SECONDS.format(bottleProductionTimeSeconds)));
+            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS_PER_ITEM.format(inputFluidAmount).decimalPlaces(1)));
+            if (outputFluidAmount != null) {
+                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS_PER_ITEM.format(outputFluidAmount).decimalPlaces(2)));
+            }
+            return list;
+        }
+    }
 
     public FluidExperienceBottler(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
@@ -135,12 +155,11 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
             outputHatch.addFluid(outputFluid, outputFluidAmount);
         }
         bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
-        startProcess((int)Math.round(bottleProductionTime * 20));
+        startProcess((int) Math.round(bottleProductionTime * 20));
     }
 
     @Override
     public void onProcessFinished() {
-        RebarProcessor.super.onProcessFinished();
         bottleOutput.addItem(null, PylonItems.LIQUID_XP_BOTTLE.clone());
     }
 
@@ -155,23 +174,6 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         if (outputFluid != null) {
             FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH_POS);
             outputHatch.setFluidType(outputFluid);
-        }
-    }
-
-    @Override
-    public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
-        FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
-        if (inputHatch != null) {
-            inputHatch.setFluidType(null);
-        }
-        FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, FLUID_OUTPUT_HATCH_POS);
-        if (outputHatch != null) {
-            outputHatch.setFluidType(null);
-        }
-        FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
-        if (xpHatch != null) {
-            xpHatch.setFluidType(null);
         }
     }
 
@@ -200,14 +202,11 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         if (getProcessTicksRemaining() == null || getProcessTimeTicks() == null) {
-            String defaultKey = getDefaultWailaTranslationKey().key();
-            // Remove waila part of .waila key and add waila_not_processing to get different key without hardcoding full translatable component key for class reuse
-            return new WailaDisplay(Component.translatable(defaultKey.substring(0, defaultKey.length() - 5) + "waila_not_processing"));
+            return new WailaDisplay(getNameTranslationKey());
         }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progressbar", PylonUtils.createBar(
-                        (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0))),
-                RebarArgument.of("percentprogress", UnitFormat.PERCENT.format((double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks() * 100).decimalPlaces(1))
+                RebarArgument.of("progressbar", PylonUtils.createProgressBar(
+                        (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0)))
         ));
     }
 
@@ -224,26 +223,5 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
             map.put(FLUID_OUTPUT_HATCH_POS, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
         }
         return map;
-    }
-
-    public static class Item extends RebarItem {
-        public final double bottleProductionTimeSeconds = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
-        public final double inputFluidAmount = getSettings().getOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
-        public final @Nullable Double outputFluidAmount = getSettings().get("output-fluid-amount", ConfigAdapter.DOUBLE);
-
-        public Item(@NotNull ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            List<RebarArgument> list = new ArrayList<>();
-            list.add(RebarArgument.of("time-per-bottle", UnitFormat.SECONDS.format(bottleProductionTimeSeconds)));
-            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS.format(inputFluidAmount).decimalPlaces(1)));
-            if (outputFluidAmount != null) {
-                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS.format(outputFluidAmount).decimalPlaces(2)));
-            }
-            return list;
-        }
     }
 }

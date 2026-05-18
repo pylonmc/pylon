@@ -34,6 +34,20 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final int liquidXpCapacity = getSettings().getOrThrow("liquid-xp-capacity", ConfigAdapter.INTEGER);
 
+    public static class Item extends RebarItem {
+        public final int amountToConvert = getSettings().getOrThrow("amount-to-convert", ConfigAdapter.INTEGER);
+        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
+        public Item(@NotNull ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+            return List.of(RebarArgument.of("conversion-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) amountToConvert / ((double) tickInterval / 20)).decimalPlaces(0)));
+        }
+    }
+
     public ExperienceFountain(@NotNull Block block, BlockCreateContext ctx) {
         super(block, ctx);
         createFluidBuffer(PylonFluids.LIQUID_XP, liquidXpCapacity, true, false);
@@ -74,19 +88,5 @@ public class ExperienceFountain extends RebarBlock implements RebarTickingBlock,
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT));
-    }
-
-    public static class Item extends RebarItem {
-        public final int amountToConvert = getSettings().getOrThrow("amount-to-convert", ConfigAdapter.INTEGER);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-
-        public Item(@NotNull ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(RebarArgument.of("conversion-rate", UnitFormat.EXPERIENCE_PER_SECOND.format((double) amountToConvert / ((double) tickInterval / 20)).decimalPlaces(0)));
-        }
     }
 }
