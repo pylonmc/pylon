@@ -8,6 +8,7 @@ import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -48,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Hammer extends RebarItem implements RebarBlockInteractor {
     private static final Map<BlockPosition, Pair<HammerRecipe, UUID>> lastHammeredItems = new HashMap<>();
@@ -178,13 +178,14 @@ public class Hammer extends RebarItem implements RebarBlockInteractor {
         }
 
         Block clicked = event.getClickedBlock();
+        RebarBlock rebarBlock = BlockStorage.get(clicked);
         if (priority == EventPriority.NORMAL) {
             if (clicked == null) {
                 event.setUseInteractedBlock(Event.Result.DENY);
                 return;
             }
 
-            if (BlockStorage.getAs(RebarGuiBlock.class, clicked) != null || clicked.getState() instanceof BlockInventoryHolder) {
+            if ((rebarBlock instanceof RebarGuiBlock && !(rebarBlock instanceof AssemblyTable)) || (clicked.getState(false) instanceof BlockInventoryHolder && !(rebarBlock instanceof RebarNoVanillaContainerBlock))) {
                 return;
             }
 
