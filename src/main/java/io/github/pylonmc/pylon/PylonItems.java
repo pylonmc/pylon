@@ -1969,15 +1969,6 @@ public final class PylonItems {
 
     //<editor-fold desc="Machines - Simple Machines" defaultstate=collapsed>
 
-    public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
-            .build();
-    static {
-        RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
-        PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
-        RebarGuide.getOrCreateInfoPage(PylonKeys.CRUDE_ALLOY_FURNACE)
-                .addButton(new MachineRecipesButton(CRUDE_ALLOY_FURNACE, GrindstoneRecipe.RECIPE_TYPE));
-    }
-
     public static final ItemStack GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE_SLAB, PylonKeys.GRINDSTONE)
             .build();
     static {
@@ -1992,6 +1983,15 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, GRINDSTONE_HANDLE, PylonKeys.GRINDSTONE_HANDLE);
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE_HANDLE);
+    }
+
+    public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
+        PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.CRUDE_ALLOY_FURNACE)
+                .addButton(new MachineRecipesButton(CRUDE_ALLOY_FURNACE, CrudeAlloyFurnaceRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack MIXING_POT = ItemStackBuilder.rebar(Material.CAULDRON, PylonKeys.MIXING_POT)
