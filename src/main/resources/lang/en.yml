@@ -2527,8 +2527,8 @@ item:
     lore: |-
       <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <lang:pylon.item.liquid_xp_bottle.name/>s from empty glass bottles
       <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
-      <arrow> <attr>Hydraulic fluid consumption rate:</attr> %fluid-input-consumption%
-      <arrow> <attr>Dirty hydraulic fluid production rate:</attr> %fluid-output-production%
+      <arrow> <attr>Hydraulic fluid consumed per bottle:</attr> %fluid-input-consumption%
+      <arrow> <attr>Dirty hydraulic fluid produced per bottle:</attr> %fluid-output-production%
       
       <u>Components</u>
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>
@@ -2543,7 +2543,7 @@ item:
     lore: |-
       <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <lang:pylon.item.liquid_xp_bottle.name/>s from empty glass bottles
       <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
-      <arrow> <attr>Biodiesel consumption rate:</attr> %fluid-input-consumption%
+      <arrow> <attr>Biodiesel consumed per bottle:</attr> %fluid-input-consumption%
 
       <u>Components</u>
       <diamond> 2x <yellow><lang:pylon.item.fluid_input_hatch.name/></yellow>

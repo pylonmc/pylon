@@ -70,7 +70,6 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         setFacing(ctx.getFacing());
         setMultiblockDirection(ctx.getFacing());
         setProcessProgressItem(new ProgressItem(ItemStackBuilder.of(PylonItems.LIQUID_XP_BOTTLE), false));
-        startProcess((int) Math.round(bottleProductionTime * 20));
     }
 
     public FluidExperienceBottler(@NotNull Block block, PersistentDataContainer pdc) {
@@ -98,6 +97,10 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         if (!isFormedAndFullyLoaded()) {
             return;
         }
+        if (isProcessing()) {
+            progressProcess(getTickInterval());
+            return;
+        }
         FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
         FluidOutputHatch outputHatch = getMultiblockComponent(FluidOutputHatch.class, FLUID_OUTPUT_HATCH_POS);
         FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
@@ -110,10 +113,10 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         if (!inputHatch.hasFluid(inputFluid) || !xpHatch.hasFluid(PylonFluids.LIQUID_XP)) {
             return;
         }
-        if (inputHatch.fluidAmount(inputFluid) < inputFluidAmount / (bottleProductionTime * 20)) {
+        if (inputHatch.fluidAmount(inputFluid) < inputFluidAmount) {
             return;
         }
-        if (xpHatch.fluidAmount(PylonFluids.LIQUID_XP) < XP_AMOUNT / (bottleProductionTime * 20)) {
+        if (xpHatch.fluidAmount(PylonFluids.LIQUID_XP) < XP_AMOUNT) {
             return;
         }
         if (bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE) {
@@ -123,23 +126,22 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         if (bottleOutputItem != null && (!bottleOutputItem.getKey().equals(PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getStack().getAmount() == bottleOutputItem.getStack().getMaxStackSize())) {
             return;
         }
-        if (outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < outputFluidAmount / (bottleProductionTime * 20)) {
+        if (outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < outputFluidAmount) {
             return;
         }
-        inputHatch.removeFluid(inputFluid, inputFluidAmount / (bottleProductionTime * 20));
-        xpHatch.removeFluid(PylonFluids.LIQUID_XP, XP_AMOUNT / (bottleProductionTime * 20));
+        inputHatch.removeFluid(inputFluid, inputFluidAmount);
+        xpHatch.removeFluid(PylonFluids.LIQUID_XP, XP_AMOUNT);
         if (outputFluid != null) {
-            outputHatch.addFluid(outputFluid, outputFluidAmount / (bottleProductionTime * 20));
+            outputHatch.addFluid(outputFluid, outputFluidAmount);
         }
-        progressProcess(getTickInterval());
+        bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
+        startProcess((int)Math.round(bottleProductionTime * 20));
     }
 
     @Override
     public void onProcessFinished() {
         RebarProcessor.super.onProcessFinished();
-        bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
         bottleOutput.addItem(null, PylonItems.LIQUID_XP_BOTTLE.clone());
-        startProcess((int) Math.round(bottleProductionTime * 20));
     }
 
     @Override
@@ -205,7 +207,7 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("progressbar", PylonUtils.createBar(
                         (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0))),
-                RebarArgument.of("percentprogress", UnitFormat.PERCENT.format((double)(getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks()).decimalPlaces(1))
+                RebarArgument.of("percentprogress", UnitFormat.PERCENT.format((double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks() * 100).decimalPlaces(1))
         ));
     }
 
@@ -237,9 +239,9 @@ public class FluidExperienceBottler extends RebarBlock implements RebarFluidBuff
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             List<RebarArgument> list = new ArrayList<>();
             list.add(RebarArgument.of("time-per-bottle", UnitFormat.SECONDS.format(bottleProductionTimeSeconds)));
-            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS_PER_SECOND.format(inputFluidAmount / bottleProductionTimeSeconds).decimalPlaces(1)));
+            list.add(RebarArgument.of("fluid-input-consumption", UnitFormat.MILLIBUCKETS.format(inputFluidAmount).decimalPlaces(1)));
             if (outputFluidAmount != null) {
-                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS_PER_SECOND.format(outputFluidAmount / bottleProductionTimeSeconds).decimalPlaces(2)));
+                list.add(RebarArgument.of("fluid-output-production", UnitFormat.MILLIBUCKETS.format(outputFluidAmount).decimalPlaces(2)));
             }
             return list;
         }
