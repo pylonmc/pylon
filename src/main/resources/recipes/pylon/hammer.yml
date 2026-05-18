@@ -92,14 +92,14 @@ pylon:sand_from_sandstone:
   result:
     minecraft:sand: 4
   mining-level: stone
-  chance: 0.5
+  uses: 2
 
 pylon:red_sand_from_red_sandstone:
   input: minecraft:red_sandstone
   result:
     minecraft:red_sand: 4
   mining-level: stone
-  chance: 0.5
+  uses: 2
 
 pylon:liselette_conductor:
   input: pylon:cohesive_unit
