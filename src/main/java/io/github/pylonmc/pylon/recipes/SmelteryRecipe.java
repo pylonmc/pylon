@@ -63,7 +63,7 @@ public class SmelteryRecipe implements RebarRecipe {
         }
     };
 
-    @Getter(onMethod_ = @Override) private final NamespacedKey key;
+    @Getter private final NamespacedKey key;
     @Getter private final Map<RebarFluid, Double> fluidInputs;
     @Getter private final Map<RebarFluid, Double> fluidOutputs;
     @Getter private final RebarFluid highestFluid;
