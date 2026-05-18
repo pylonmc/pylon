@@ -177,20 +177,30 @@ public class DieselFurnace extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (FurnaceRecipeWrapper recipe : FurnaceRecipeType.INSTANCE) {
-            if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getRecipe().getResult())) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, recipeTime);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(FurnaceRecipeWrapper recipe, ItemStack stack) {
+        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getRecipe().getResult())) {
+            return false;
+        }
+
+        startRecipe(recipe, recipeTime);
+        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
+        return true;
     }
 
     @Override

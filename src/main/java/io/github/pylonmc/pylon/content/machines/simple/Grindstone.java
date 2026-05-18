@@ -79,6 +79,8 @@ public class Grindstone extends RebarBlock implements
         setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
     }
 
+    private GrindstoneRecipe lastRecipe = null;
+
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
@@ -98,7 +100,7 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
-        return Map.of(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.GRINDSTONE_HANDLE));
+        return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.GRINDSTONE_HANDLE));
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -166,9 +168,13 @@ public class Grindstone extends RebarBlock implements
             return null;
         }
 
+        if (lastRecipe != null && lastRecipe.input().matches(input)) {
+            return lastRecipe;
+        }
+
         return GrindstoneRecipe.RECIPE_TYPE.getRecipes()
                 .stream()
-                .filter(recipe -> recipe.input().matches(input) && input.getAmount() >= recipe.input().getAmount())
+                .filter(recipe -> recipe.input().matches(input))
                 .findFirst()
                 .orElse(null);
     }
@@ -179,6 +185,8 @@ public class Grindstone extends RebarBlock implements
         if (input.getType().isAir()) {
             return false;
         }
+
+        ItemStack particleItem = input.clone();
 
         itemDisplay.setItemStack(input.subtract(nextRecipe.input().getAmount()));
 
@@ -198,11 +206,12 @@ public class Grindstone extends RebarBlock implements
                     }
 
                     PylonUtils.animate(getStoneDisplay(), CYCLE_DURATION_TICKS / 4, getStoneDisplayMatrix(translation, rotation));
-                    new ParticleBuilder(Particle.BLOCK)
-                        .data(nextRecipe.particleBlockData())
-                        .count(10)
-                        .location(getBlock().getLocation().toCenterLocation())
-                        .spawn();
+                    new ParticleBuilder(Particle.ITEM)
+                            .data(particleItem)
+                            .count(20)
+                            .extra(0.1)
+                            .location(getBlock().getLocation().toCenterLocation())
+                            .spawn();
 
                     progressRecipe(CYCLE_DURATION_TICKS / 4);
                 }, (long) ((i + j/4.0) * CYCLE_DURATION_TICKS));
