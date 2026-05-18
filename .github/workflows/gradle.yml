@@ -40,6 +40,7 @@ jobs:
 
       - name: Get commit of rebar to use
         id: rebarcommit
+        working-directory: rebar
         run: |
           COMMIT_HASH=$(git rev-parse HEAD)
           echo "commit=$COMMIT_HASH" >> $GITHUB_OUTPUT
@@ -62,7 +63,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: 'pylonmc/rebar'
-          ref: ${{steps.}}
+          ref: ${{steps.rebarcommit.outputs.commit}}
           path: 'parallel-dev-repo/rebar'
 
       - name: Clone pylon
