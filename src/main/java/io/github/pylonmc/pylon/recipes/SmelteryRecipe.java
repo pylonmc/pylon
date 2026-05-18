@@ -129,7 +129,7 @@ public class SmelteryRecipe implements RebarRecipe {
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('s', ItemButton.from(PylonItems.SMELTERY_CONTROLLER))
+                .addIngredient('s', ItemButton.of(PylonItems.SMELTERY_CONTROLLER))
                 .addIngredient('t', ItemStackBuilder.of(Material.COAL)
                         .name(Component.translatable(
                                 "pylon.gui.smeltery.temperature",

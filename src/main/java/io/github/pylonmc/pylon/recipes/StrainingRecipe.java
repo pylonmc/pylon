@@ -75,7 +75,7 @@ public record StrainingRecipe(
                 .addIngredient('i', new FluidButton(input))
                 .addIngredient('s', PylonItems.FLUID_STRAINER)
                 .addIngredient('o', new FluidButton(input.amountMillibuckets(), outputFluid))
-                .addIngredient('t', ItemButton.from(outputItem))
+                .addIngredient('t', ItemButton.of(outputItem))
                 .build();
     }
 }

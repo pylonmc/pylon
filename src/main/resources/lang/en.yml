@@ -244,6 +244,15 @@ item:
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
+  fluid_pipe_obsidian:
+    name: "Obsidian Fluid Pipe"
+    lore: |-
+      <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
+      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
+      <arrow> You can only connect pipes of the same type
+      <arrow> <attr>Fluid:</attr> %fluid_per_second%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
   fluid_pipe_igneous_composite:
     name: "Igneous Composite Fluid Pipe"
     lore: |-
@@ -337,15 +346,25 @@ item:
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
     waila: "Bronze Portable Fluid Tank | %bars% (%fluid%)"
 
+  portable_fluid_tank_obsidian:
+    name: "Obsidian Portable Fluid Tank"
+    lore: |-
+      <arrow> Can be placed down and connected with pipes
+      <arrow> Retains contents when broken
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
+    waila: "Igneous Composite Portable Fluid Tank | %bars% (%fluid%)"
+
   portable_fluid_tank_igneous_composite:
-      name: "Igneous Composite Portable Fluid Tank"
-      lore: |-
-        <arrow> Can be placed down and connected with pipes
-        <arrow> Retains contents when broken
-        <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-        <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
-        <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-      waila: "Igneous Composite Portable Fluid Tank | %bars% (%fluid%)"
+    name: "Igneous Composite Portable Fluid Tank"
+    lore: |-
+      <arrow> Can be placed down and connected with pipes
+      <arrow> Retains contents when broken
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
+    waila: "Igneous Composite Portable Fluid Tank | %bars% (%fluid%)"
 
   portable_fluid_tank_steel:
     name: "Steel Portable Fluid Tank"
@@ -686,29 +705,6 @@ item:
       <arrow> Displays items
       <arrow> <insn>Right click</insn> to set the displayed item
       <arrow> <insn>Shift right click</insn> to rotate the item
-
-  pit_kiln:
-    name: "Pit Kiln"
-    lore: |-
-      <star> Multiblock
-      <arrow> A primitive and inefficient high-temperature smelting method
-      <arrow> <insn>Right click</insn> to insert items
-      <arrow> <insn>Break</insn> to retrieve the items
-      <arrow> Complete the multiblock with a valid recipe inside to start the smelting process
-      <arrow> <attr>Capacity:</attr> %capacity% items
-      <arrow> <attr>Smelting time:</attr> %smelting_time%
-      
-      <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:pit_kiln/></yellow>
-      <diamond> 8x <yellow>Block of Coal</yellow>
-      <diamond> 20x <yellow>Coarse Dirt</yellow>
-      <diamond> 1x <yellow>Campfire</yellow> (%campfire%x <attr>speed</attr>) 
-      ...or 1x <yellow>Fire</yellow> (%fire%x <attr>speed</attr>) 
-      ...or 1x <yellow>Soul Campfire</yellow> (%soul_campfire%x <attr>speed</attr>) 
-      ...or 1x <yellow>Soul Fire</yellow> (%soul_fire%x <attr>speed</attr>) 
-      <diamond> 9x <yellow>Podzol</yellow> (%podzol%x <attr>yield</attr>) 
-      ...or 9x <yellow>Coarse Dirt</yellow> (%coarse_dirt%x <attr>yield</attr>)
-    waila: "Pit Kiln | %info% | %nitems% items"
 
   portability_catalyst:
     name: "Portability Catalyst"
@@ -1318,6 +1314,13 @@ item:
 
   fluid_tank_casing_bronze:
     name: "Bronze Fluid Tank Casing"
+    lore: |-
+      <star> Fluid Tank multiblock component
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Temperatures:</attr> %temperatures%
+
+  fluid_tank_casing_obsidian:
+    name: "Obsidian Fluid Tank Casing"
     lore: |-
       <star> Fluid Tank multiblock component
       <arrow> <attr>Capacity:</attr> %capacity%
@@ -2364,6 +2367,36 @@ item:
     waila: "Palladium Condenser | %duration-if-any%"
     waila_format: "| %duration%"
 
+  crude_alloy_furnace:
+    name: "Crude Alloy Furnace"
+    lore: |-
+      <arrow> Smelts alloys
+      <arrow> Crude and inefficient, but does the job
+    waila: "Crude Alloy Furnace%info%"
+    info: " | %progress%"
+
+  kiln:
+    name: "Kiln"
+    lore: |-
+      <arrow> A more efficient way to smelt metals
+      <arrow> Each kiln recipe has a minimum temperature
+      <arrow> Constantly burns fuel to heat itself up
+      <arrow> Takes time to heat up and cool down
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><lang:pylon.item.kiln.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 6x <yellow>Mud Bricks</yellow>
+      <diamond> 12x <yellow>Mud Brick Wall</yellow>
+
+    waila: "Kiln | %temperature-bar% %temperature%%progress%"
+
+  slag:
+    name: "Slag"
+
   wooden_silo:
     name: "Wooden Silo"
     lore: |-
@@ -2553,9 +2586,7 @@ waila:
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"
-  pit_kiln:
-    invalid_recipe: "<red>Invalid recipe"
-    smelting: "<green>%time% remaining"
+  kiln: " | %progress%"
 
 research:
   baking: "<#e2b42b>Baking"
@@ -2589,6 +2620,7 @@ research:
   smelting_1: "<#ff6b0f>Smelting I"
   smelting_2: "<#ff6b0f>Smelting II"
   smelting_3: "<#ff6b0f>Smelting III"
+  smelting_4: "<#ff6b0f>Smelting IV"
   drilling_1: "<#4f4641>Drilling I"
   drilling_2: "<#4f4641>Drilling II"
   drilling_3: "<#4f4641>Drilling III"
@@ -2689,10 +2721,10 @@ guide:
       chance: "<attr>Chance:</attr> %chance%"
     press: "<attr>Pressing time:</attr> %time%"
     magic-altar: "<attr>Ritual time:</attr> %time%"
-    melting: "<attr>Temperature:</attr> %temperature%"
-    casting: "<attr>Temperature:</attr> %temperature%"
+    temperature: "<attr>Temperature:</attr> %temperature%"
     drilling: "<attr>Cycle time:</attr> %time%"
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
+    kiln: "<attr>Melting time:</attr> %time%"
     hammer: "<attr>Uses:</attr> %uses%"
   button:
     info:
@@ -2710,9 +2742,6 @@ guide:
       progression:
         manual_core:
           name: "Manual Core"
-          lore: ""
-        pit_kiln:
-          name: "Pit Kiln"
           lore: ""
         bronze_age:
           name: "Bronze Age"
@@ -2738,17 +2767,6 @@ guide:
         palladium_flight_ring:
           name: "Palladium Flight Ring"
           lore: ""
-      pit_kiln:
-        kiln:
-          name: "The Pit Kiln"
-          lore: |-
-            <arrow> The pit kiln is the earliest form of advanced smelting available to you
-        construction:
-          name: "Constructing the Pit Kiln"
-          lore: ""
-        crafting:
-          name: "Crafting with the Pit Kiln"
-          lore: ""
       bloomery:
         bloomer:
           name: "The Bloomery"
@@ -2762,7 +2780,7 @@ message:
     clear: "<white>Clear"
   fluid_hatch:
     no_casing: "<red>No casing"
-    no_multiblock: "<red>No multiblock"
+    no_fluid: "<red>No fluid"
     working: "%bars% (%fluid%)"
   biorefinery:
     no_fuel: "<red>No fuel"
@@ -2842,6 +2860,7 @@ gui:
   left: "Left"
   right: "Right"
   none: "None"
+  fuel: "Fuel"
   side-priority:
     name: "Priority: <light_purple>%priority%"
     lore: |-
@@ -2951,6 +2970,12 @@ gui:
       hammer: "Hammer"
       screwdriver: "Screwdriver"
       redstone_soldering_iron: "Redstone Soldering Iron"
+  fuel-left: "Fuel left"
+  no-fuel-left: "<white>No fuel"
+  no-recipe: "<white>No recipe"
+  temperature: "Temperature"
+  kiln:
+    temperature: "<arrow> Temperature: %temperature%"
   cast-border: "Mold Item"
   casting-control:
     name: "Casting Control"
@@ -2975,3 +3000,6 @@ inventory:
   right: "Right"
   filtered: "Filtered"
   unfiltered: "Unfiltered"
+  input1: "Input 1"
+  input2: "Input 2"
+  input3: "Input 3"
