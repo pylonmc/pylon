@@ -17,6 +17,8 @@ import io.github.pylonmc.rebar.waila.WailaDisplay;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -127,7 +129,7 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
         }
 
         ItemStack stackInHand = event.getItem();
-        if (event.getAction().isLeftClick() && (stackInHand == null || !getBlock().isPreferredTool(stackInHand))) {
+        if (event.getAction().isLeftClick() && event.getPlayer().getGameMode() != GameMode.CREATIVE && (stackInHand == null || !getBlock().isPreferredTool(stackInHand))) {
             if (stack == null || stack.isEmpty() || amount == 0) {
                 return;
             }

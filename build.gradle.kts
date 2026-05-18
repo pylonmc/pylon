@@ -27,9 +27,6 @@ repositories {
     maven("https://repo.xenondevs.xyz/releases") {
         name = "InvUI"
     }
-    maven("https://maven.pvphub.me/tofaa") {
-        name = "EntityLib"
-    }
     maven("https://repo.codemc.io/repository/maven-releases/") {
         name = "CodeMC"
     }

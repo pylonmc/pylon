@@ -1,0 +1,4 @@
+tick-interval: 10
+min-temperature: 20
+max-temperature: 1200
+heating-rate: 60.0

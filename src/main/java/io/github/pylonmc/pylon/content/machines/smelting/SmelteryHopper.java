@@ -78,7 +78,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
             if (item == null) continue;
             MeltingRecipe recipe = null;
             for (MeltingRecipe meltingRecipe : MeltingRecipe.RECIPE_TYPE) {
-                if (meltingRecipe.input().contains(item)) {
+                if (meltingRecipe.input().matchesIgnoringAmount(item)) {
                     recipe = meltingRecipe;
                     break;
                 }
