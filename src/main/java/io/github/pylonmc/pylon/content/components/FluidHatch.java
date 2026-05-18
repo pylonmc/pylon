@@ -208,19 +208,13 @@ public abstract class FluidHatch extends RebarBlock implements
         }
     }
 
-    public double fluidAmount() {
-        return fluid == null
-                ? 0.0
-                : fluidAmount(fluid);
-    }
-
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         Component info;
         if (!isFormedAndFullyLoaded()) {
             info = Component.translatable("pylon.message.fluid_hatch.no_casing");
         } else if (fluid == null) {
-            info = Component.translatable("pylon.message.fluid_hatch.empty");
+            info = Component.translatable("pylon.message.fluid_hatch.no_fluid");
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(
@@ -257,8 +251,12 @@ public abstract class FluidHatch extends RebarBlock implements
         checkFormed();
     }
 
+    public boolean canAcceptFluid(@NotNull RebarFluid fluid, double amount) {
+        return fluidAmount + amount < capacity && ((this.fluid == null && allowedFluids.contains(fluid)) || Objects.equals(this.fluid, fluid));
+    }
+
     public boolean canAcceptFluid(@NotNull RebarFluid fluid) {
-        return fluidAmount < capacity && ((this.fluid == null && allowedFluids.contains(fluid)) || Objects.equals(this.fluid, fluid));
+        return canAcceptFluid(fluid, 0);
     }
 
     private void setCapacity(double capacity) {

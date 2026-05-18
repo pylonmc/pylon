@@ -8,12 +8,7 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -24,6 +19,9 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -45,10 +43,6 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -99,14 +93,13 @@ public class Kiln extends RebarBlock implements
     public Kiln(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         setRecipeType(KilnRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background(), false));
         temperature = minTemperature;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public Kiln(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         temperature = pdc.get(TEMPERATURE_KEY, RebarSerializers.DOUBLE);
@@ -217,8 +210,8 @@ public class Kiln extends RebarBlock implements
                     .inventory.canHold(recipe.outputItem());
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
             boolean canHoldOutputFluid = recipe.outputFluid() == null
-                    || fluidOutputHatch.fluid == null
-                    || fluidOutputHatch.canSetFluid(recipe.outputFluid(), fluidOutputHatch.fluidAmount() + recipe.outputFluidAmount());
+                    || fluidOutputHatch.getFluid() == null
+                    || fluidOutputHatch.canAcceptFluid(recipe.outputFluid(), recipe.outputFluidAmount());
             if (canHoldOutputItem && canHoldOutputFluid && temperature > recipe.temperature()) {
                 progressRecipe(getTickInterval());
             }
@@ -256,9 +249,9 @@ public class Kiln extends RebarBlock implements
 
         if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-            boolean canHoldFluidOutput = fluidOutputHatch.fluid == null
-                    || fluidOutputHatch.fluidAmount(fluidOutputHatch.fluid) < 1.0e-6
-                    || fluidOutputHatch.fluid.equals(recipe.outputFluid()) && fluidOutputHatch.fluidSpaceRemaining(fluidOutputHatch.fluid) > recipe.outputFluidAmount();
+            boolean canHoldFluidOutput = fluidOutputHatch.getFluid() == null
+                    || fluidOutputHatch.getFluidAmount() < 1.0e-6
+                    || fluidOutputHatch.getFluid().equals(recipe.outputFluid()) && fluidOutputHatch.getFluidSpaceRemaining() > recipe.outputFluidAmount();
             if (!canHoldFluidOutput) {
                 return false;
             }
@@ -341,8 +334,8 @@ public class Kiln extends RebarBlock implements
     public void onRecipeFinished(@NonNull KilnRecipe recipe) {
         if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-            fluidOutputHatch.setFluidType(recipe.outputFluid());
-            fluidOutputHatch.addFluid(recipe.outputFluidAmount());
+            fluidOutputHatch.setAllowedFluids(recipe.outputFluid());
+            fluidOutputHatch.addFluid(recipe.outputFluid(), recipe.outputFluidAmount());
         }
         if (recipe.outputItem() != null) {
             getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)

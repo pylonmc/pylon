@@ -2900,7 +2900,6 @@ message:
     clear: "<white>Clear"
   fluid_hatch:
     no_casing: "<red>No casing"
-    empty: "Empty"
     no_fluid: "<red>No fluid"
     working: "%bars% (%fluid%)"
   biorefinery:

@@ -102,7 +102,7 @@ public class PylonRecipes {
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
                         .addIngredient('i', new FluidButton(input))
-                        .addIngredient('x', ItemButton.from(PylonItems.BOILER))
+                        .addIngredient('x', ItemButton.of(PylonItems.BOILER))
                         .addIngredient('o', new FluidButton(output))
                         .build()
         ).register();
@@ -238,7 +238,7 @@ public class PylonRecipes {
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
                         .addIngredient('d', new FluidButton(input))
-                        .addIngredient('x', ItemButton.from(PylonItems.COMBUSTION_TOWER))
+                        .addIngredient('x', ItemButton.of(PylonItems.COMBUSTION_TOWER))
                         .addIngredient('e', new FluidButton(output))
                         .build()
         ).register();

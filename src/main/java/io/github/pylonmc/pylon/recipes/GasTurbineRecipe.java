@@ -61,7 +61,7 @@ public record GasTurbineRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', new FluidButton(input))
-                .addIngredient('x', ItemButton.from(ItemStackBuilder.of(PylonItems.GAS_TURBINE.clone())
+                .addIngredient('x', ItemButton.of(ItemStackBuilder.of(PylonItems.GAS_TURBINE.clone())
                         .lore(
                                 Component.empty(),
                                 Component.translatable(
