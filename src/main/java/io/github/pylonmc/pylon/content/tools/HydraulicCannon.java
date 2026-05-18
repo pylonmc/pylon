@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.entity.EntityStorage;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.base.RebarInteractor;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -113,7 +114,8 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
 
         ItemStack projectile = null;
         for (ItemStack stack : event.getPlayer().getInventory()) {
-            if (PylonItems.TIN_PROJECTILE.isSimilar(stack)) {
+            RebarItemSchema schema = RebarItemSchema.fromStack(stack);
+            if (schema != null && schema.getKey().equals(PylonKeys.TIN_PROJECTILE)) {
                 projectile = stack;
                 break;
             }
