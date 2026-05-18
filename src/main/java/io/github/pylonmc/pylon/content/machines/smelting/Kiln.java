@@ -217,6 +217,7 @@ public class Kiln extends RebarBlock implements
                     .inventory.canHold(recipe.outputItem());
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
             boolean canHoldOutputFluid = recipe.outputFluid() == null
+                    || fluidOutputHatch.fluid == null
                     || fluidOutputHatch.canSetFluid(recipe.outputFluid(), fluidOutputHatch.fluidAmount() + recipe.outputFluidAmount());
             if (canHoldOutputItem && canHoldOutputFluid && temperature > recipe.temperature()) {
                 progressRecipe(getTickInterval());

@@ -2186,7 +2186,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, KILN, PylonKeys.KILN);
         PylonPages.SMELTING.addItem(KILN);
         RebarGuide.getOrCreateInfoPage(PylonKeys.KILN)
-                .addButton(new MachineRecipesButton(KILN, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(KILN, KilnRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack BLOOMERY = ItemStackBuilder.rebar(Material.MAGMA_BLOCK, PylonKeys.BLOOMERY)
