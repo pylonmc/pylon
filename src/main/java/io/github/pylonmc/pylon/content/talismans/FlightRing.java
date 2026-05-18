@@ -1,9 +1,13 @@
 package io.github.pylonmc.pylon.content.talismans;
 
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.base.RebarJoinHandler;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public final class FlightRing extends Talisman {
+public final class FlightRing extends Talisman implements RebarJoinHandler {
     private static final Set<UUID> cannotFlyPlayers = new HashSet<>();
     public FlightRing(@NotNull ItemStack stack) {
         super(stack);
@@ -43,5 +47,14 @@ public final class FlightRing extends Talisman {
                 cannotFlyPlayers.remove(player.getUniqueId());
             }
         }
+    }
+
+    @Override
+    public void onJoin(@NotNull PlayerJoinEvent event, @NotNull EventPriority priority) {
+        if (!event.getPlayer().getPersistentDataContainer().has(PylonKeys.FLIGHT_RING)) {
+            return;
+        }
+
+        applyEffect(event.getPlayer());
     }
 }
