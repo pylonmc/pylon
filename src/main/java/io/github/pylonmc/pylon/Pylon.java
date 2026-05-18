@@ -26,7 +26,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Pylon extends JavaPlugin implements RebarAddon {
 
-    private static final int BSTATS_ID = 27323;
+    private static final int BSTATS_ID = 31410;
     private static Metrics metrics;
 
     @Getter

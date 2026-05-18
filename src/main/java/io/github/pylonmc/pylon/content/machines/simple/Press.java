@@ -189,7 +189,7 @@ public class Press extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(PressRecipe recipe, Pair<Item, ItemStack> stack, double fluidSpaceRemaining) {
-        if (recipe.oilAmount() > fluidSpaceRemaining || !recipe.input().contains(stack.getSecond())) {
+        if (recipe.oilAmount() > fluidSpaceRemaining || !recipe.input().matchesIgnoringAmount(stack.getSecond())) {
             return false;
         }
 

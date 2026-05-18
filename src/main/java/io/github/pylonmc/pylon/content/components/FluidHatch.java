@@ -208,6 +208,12 @@ public abstract class FluidHatch extends RebarBlock implements
         }
     }
 
+    public double fluidAmount() {
+        return fluid == null
+                ? 0.0
+                : fluidAmount(fluid);
+    }
+
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         Component info;
