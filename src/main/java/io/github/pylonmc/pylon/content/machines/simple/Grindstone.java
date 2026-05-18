@@ -244,7 +244,9 @@ public class Grindstone extends RebarBlock implements
                 ),
                 RebarArgument.of("processing",
                         getCurrentRecipe() == null
-                                ? Component.translatable("pylon.waila.grindstone.idle")
+                                ? !stack.isEmpty() && getNextRecipe() == null
+                                        ? Component.translatable("pylon.waila.grindstone.invalid_recipe")
+                                        : Component.translatable("pylon.waila.grindstone.idle")
                                 : Component.translatable("pylon.waila.grindstone.processing")
                                 .arguments(
                                         RebarArgument.of("bars", PylonUtils.createProgressBar(

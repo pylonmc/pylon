@@ -87,6 +87,20 @@ pylon:flint_from_gravel:
   mining-level: stone
   uses: 1
 
+pylon:sand_from_sandstone:
+  input: minecraft:sandstone
+  result:
+    minecraft:sand: 4
+  mining-level: stone
+  uses: 2
+
+pylon:red_sand_from_red_sandstone:
+  input: minecraft:red_sandstone
+  result:
+    minecraft:red_sand: 4
+  mining-level: stone
+  uses: 2
+
 pylon:liselette_conductor:
   input: pylon:cohesive_unit
   result:
