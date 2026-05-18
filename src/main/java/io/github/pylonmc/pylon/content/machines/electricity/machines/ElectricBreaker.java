@@ -90,6 +90,7 @@ public class ElectricBreaker extends GenericBreaker implements RebarElectricCons
 
     @Override
     public void postInitialise() {
+        super.postInitialise();
         setRequiredPower(powerUsage);
     }
 
