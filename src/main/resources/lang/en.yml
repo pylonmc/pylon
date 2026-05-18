@@ -1143,10 +1143,10 @@ item:
       <arrow> <attr>Buffer:</attr> %buffer%
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:solar_hydraulic_purifier_2.name/></yellow>
-      <diamond> 1x <yellow><item:pylon:quartz_cap.name/></yellow>
-      <diamond> 4x <yellow><item:pylon:copper_framed_glass.name/></yellow>
-      <diamond> 48x <yellow><item:pylon:solar_lens.name/></yellow>
+      <diamond> 1x <yellow><item:pylon:solar_hydraulic_purifier_2/></yellow>
+      <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
+      <diamond> 4x <yellow><item:pylon:copper_framed_glass/></yellow>
+      <diamond> 48x <yellow><item:pylon:solar_lens/></yellow>
     waila: "Solar Hydraulic Purifier II | %input-bar% | %output-bar%"
 
   solar_hydraulic_purifier_3:
@@ -1259,11 +1259,11 @@ item:
       <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:liselette_hydraulic_purifier.name/></yellow>
-      <diamond> 1x <yellow><item:pylon:fluid_input_hatch.name/></yellow>
-      <diamond> 1x <yellow><item:pylon:fluid_output_hatch.name/></yellow>
-      <diamond> 1x <yellow><item:pylon:copper_framed_glass.name/></yellow>
-      <diamond> 5x <yellow><item:pylon:steel_support_beam.name/></yellow>
+      <diamond> 1x <yellow><item:pylon:liselette_hydraulic_purifier/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:copper_framed_glass/></yellow>
+      <diamond> 5x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 8x <yellow><item:pylon:liselette_collector/></yellow>
 
   liselette_collector:
