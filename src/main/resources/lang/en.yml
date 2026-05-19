@@ -821,6 +821,7 @@ item:
     name: "Smeltery Burner"
     lore: |-
       <arrow> Burns fuel to heat the smeltery
+      <arrow> Takes all vanilla fuel at half efficiency
 
   diesel_smeltery_heater:
     name: "Diesel Smeltery Heater"

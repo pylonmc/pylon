@@ -29,7 +29,6 @@ import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
-import io.github.pylonmc.pylon.guide.SmelteryBurnerFuelsPage;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -2235,8 +2234,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SMELTERY_BURNER, PylonKeys.SMELTERY_BURNER);
         PylonPages.SMELTING.addItem(SMELTERY_BURNER);
-        RebarGuide.getOrCreateInfoPage(PylonKeys.SMELTERY_BURNER)
-                .addButton(SmelteryBurnerFuelsPage.getButton());
     }
 
     public static final ItemStack DIESEL_SMELTERY_HEATER = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.DIESEL_SMELTERY_HEATER)
