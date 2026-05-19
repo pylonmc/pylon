@@ -54,7 +54,6 @@ import io.papermc.paper.datacomponent.item.*;
 import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.keys.SoundEventKeys;
-import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -1128,7 +1127,7 @@ public final class PylonItems {
     }
 
     public static final ItemStack FIREPROOF_RUNE = ItemStackBuilder.rebar(Material.FIREWORK_STAR, PylonKeys.FIREPROOF_RUNE)
-            .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(DamageTypeTagKeys.IS_FIRE))
+            .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(FireproofRune.IS_FIRE_TAG))
             .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
                     .withColor(Color.fromRGB(0xff5e00))
                     .build())
@@ -3329,7 +3328,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
     }
-    
+
     public static final ItemStack ELECTRICITY_INPUT_HATCH = ItemStackBuilder.rebar(Material.GREEN_CONCRETE, PylonKeys.ELECTRICITY_INPUT_HATCH)
             .build();
     static {
@@ -3350,7 +3349,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, BOILER_CASING, PylonKeys.BOILER_CASING);
         PylonPages.COMPONENTS.addItem(BOILER_CASING);
     }
-    
+
     public static final ItemStack BOILER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BOILER)
             .build();
     static {
@@ -3364,7 +3363,7 @@ public final class PylonItems {
         RebarItem.register(SteamEngine.Item.class, STEAM_ENGINE, PylonKeys.STEAM_ENGINE);
         PylonPages.ELECTRICITY.addItem(STEAM_ENGINE);
     }
-    
+
     public static final ItemStack GAS_TURBINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.GAS_TURBINE)
             .build();
     static {
@@ -3373,7 +3372,7 @@ public final class PylonItems {
         RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
                 .addButton(new MachineRecipesButton(GAS_TURBINE, GasTurbineRecipe.RECIPE_TYPE));
     }
-    
+
     public static final ItemStack COMBUSTION_TOWER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.COMBUSTION_TOWER)
             .build();
     static {
