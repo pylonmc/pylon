@@ -1,9 +1,11 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
+import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
+import io.github.pylonmc.rebar.block.base.RebarGhostBlockHolder;
 import io.github.pylonmc.rebar.block.base.RebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -28,13 +30,16 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
+import org.joml.Vector3i;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class FluidTank extends RebarBlock
-        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock {
+        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock, RebarGhostBlockHolder {
+
+    private static final Vector3i CASING_POSITION = new Vector3i(0, 1, 0);
 
     private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
 
@@ -66,6 +71,7 @@ public class FluidTank extends RebarBlock
         );
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
+        FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
     }
 
     @SuppressWarnings("unused")
@@ -95,11 +101,15 @@ public class FluidTank extends RebarBlock
 
             casings.add(casing);
         }
+
+        FluidTankCasingComponent.INSTANCE.updateGhostBlock(this, CASING_POSITION);
+
         return !casings.isEmpty();
     }
 
     @Override
     public void onMultiblockFormed() {
+        removeGhostBlock(CASING_POSITION);
         onMultiblockRefreshed();
     }
 
@@ -128,6 +138,10 @@ public class FluidTank extends RebarBlock
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
+        if (!partUnloaded) {
+            FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
+        }
+
         casings.forEach(FluidTankCasing::reset);
         casings.clear();
         allowedTemperatures.clear();
