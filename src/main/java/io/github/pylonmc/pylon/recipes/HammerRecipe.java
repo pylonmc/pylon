@@ -12,6 +12,8 @@ import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -19,16 +21,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
  * @param input  the input item (setting the itemstack to have an amount that's not 1 will have no effect)
  * @param result the output item (respects amount)
  * @param level  the minimum hammer mining level
- * @param chance the chance to succeed per attempt
+ * @param uses   the number of uses of the hammer this recipe takes
  */
 public record HammerRecipe(
         @NotNull NamespacedKey key,
