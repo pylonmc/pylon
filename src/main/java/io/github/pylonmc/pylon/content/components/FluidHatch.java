@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.components;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
+import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -49,23 +50,7 @@ public abstract class FluidHatch extends RebarBlock implements
         RebarDirectionalBlock {
 
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
-
-    private static MultiblockComponent component;
-
     public @Nullable RebarFluid fluid;
-
-    static {
-        // run on first tick after all addons registered
-        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            List<NamespacedKey> components = new ArrayList<>();
-            for (RebarItemSchema schema : RebarRegistry.ITEMS) {
-                if (FluidTankCasing.Item.class.isAssignableFrom(schema.getItemClass())) {
-                    components.add(schema.getKey());
-                }
-            }
-            component = MultiblockComponent.of(components.toArray(new NamespacedKey[0]));
-        }, 0);
-    }
 
     public FluidHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
@@ -90,7 +75,7 @@ public abstract class FluidHatch extends RebarBlock implements
     @Override
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
         Map<Vector3i, MultiblockComponent> components = new HashMap<>();
-        components.put(new Vector3i(0, 1, 0), component);
+        components.put(new Vector3i(0, 1, 0), FluidTankCasingComponent.INSTANCE);
         return components;
     }
 
