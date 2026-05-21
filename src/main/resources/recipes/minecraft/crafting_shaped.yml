@@ -2867,3 +2867,14 @@ pylon:liselette_hydraulic_purifier:
     A: pylon:liselette_anode
   result: pylon:liselette_hydraulic_purifier
   category: building
+
+pylon:plant_oil_furnace:
+  pattern:
+    - "CDC"
+    - "DDD"
+    - "CDC"
+  key:
+    C: minecraft:cobblestone
+    D: pylon:crushed_raw_iron
+  result: pylon:plant_oil_furnace
+  category: building
