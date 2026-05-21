@@ -16,7 +16,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
