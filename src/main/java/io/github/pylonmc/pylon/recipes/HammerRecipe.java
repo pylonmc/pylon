@@ -91,7 +91,7 @@ public record HammerRecipe(
             Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
             if (hammer == null) continue;
 
-            ItemStack stack = itemSchema.getItemStack();
+            ItemStack stack = itemSchema.createNewItemStack();
             if (!hammer.miningLevel.isAtLeast(level)) {
                 continue;
             }

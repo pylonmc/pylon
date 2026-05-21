@@ -2,10 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
+import io.github.pylonmc.pylon.content.machines.generic.GenericBrickMolder;
 import io.github.pylonmc.pylon.recipes.MoldingRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -15,13 +15,10 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -35,29 +32,12 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.List;
-import java.util.Map;
 
 
-public class DieselBrickMolder extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<MoldingRecipe> {
+public class DieselBrickMolder extends GenericBrickMolder implements RebarFluidBufferBlock {
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
@@ -92,9 +72,7 @@ public class DieselBrickMolder extends RebarBlock implements
     @SuppressWarnings("unused")
     public DieselBrickMolder(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.55F);
-        setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
@@ -131,26 +109,11 @@ public class DieselBrickMolder extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(MoldingRecipe.RECIPE_TYPE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
     @SuppressWarnings("unused")
     public DieselBrickMolder(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-    }
-
-    @Override
-    public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, inputInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        outputInventory.addPostUpdateHandler(event -> tryStartRecipe());
-        inputInventory.addPostUpdateHandler(event -> {
-            if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
-                tryStartRecipe();
-            }
-        });
     }
 
     @Override
@@ -179,61 +142,13 @@ public class DieselBrickMolder extends RebarBlock implements
                 .spawn();
     }
 
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
-            return;
-        }
-
-        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
-            return;
-        }
-
-        for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
-            if (tryStartRecipe(recipe, stack)) {
-                break;
-            }
-        }
-    }
-
-    private boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
-        if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
-            return false;
-        }
-
-        startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
-        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-        return true;
-    }
-
     @Override
-    public void onRecipeFinished(@NotNull MoldingRecipe recipe) {
-        getRecipeProgressItem().setItem(GuiItems.background());
-        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(null);
-        outputInventory.addItem(new MachineUpdateReason(), recipe.result().clone());
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # I # # # O # #",
-                        "# # i # p # o # #",
-                        "# # I # # # O # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .addIngredient('O', GuiItems.output())
-                .addIngredient('o', outputInventory)
-                .build();
+    protected boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
+        boolean result = super.tryStartRecipe(recipe, stack);
+        if (result) {
+            getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
+        }
+        return result;
     }
 
     @Override
@@ -250,15 +165,13 @@ public class DieselBrickMolder extends RebarBlock implements
 
     @Override
     public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+        super.onBreak(drops, context);
         RebarFluidBufferBlock.super.onBreak(drops, context);
     }
 
     @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "input", inputInventory,
-                "output", outputInventory
-        );
+    public void onRecipeFinished(@NotNull MoldingRecipe recipe) {
+        super.onRecipeFinished(recipe);
+        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(null);
     }
 }

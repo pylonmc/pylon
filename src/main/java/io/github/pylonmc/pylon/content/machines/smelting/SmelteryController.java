@@ -1,34 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 import com.google.common.base.Preconditions;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.damage.DamageType;
-import org.bukkit.entity.*;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.noise.SimplexOctaveGenerator;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3i;
-import org.jspecify.annotations.NonNull;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
@@ -55,13 +27,37 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import kotlin.Pair;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryController extends SmelteryComponent
         implements RebarGuiBlock, RebarMultiblock, RebarTickingBlock {
@@ -424,7 +420,7 @@ public final class SmelteryController extends SmelteryComponent
     private void spawnPixels() {
         pixels.clear();
 
-        Location location = center.getLocation().add(-1, 0, -1);
+        Location location = center.toLocation().add(-1, 0, -1);
         for (int x = 0; x < PIXELS_PER_SIDE; x++) {
             for (int z = 0; z < PIXELS_PER_SIDE; z++) {
                 Location relative = location.clone().add((double) x / RESOLUTION, 0, (double) z / RESOLUTION);
@@ -574,7 +570,7 @@ public final class SmelteryController extends SmelteryComponent
             heaters = 0;
             updateFluidDisplay();
 
-            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+            BoundingBox box = BoundingBox.of(center.toLocation(), 2, 0, 2);
             box.expand(BlockFace.UP, height);
 
             double damage = Math.max(0, temperature / 100 + 1);

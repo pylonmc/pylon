@@ -16,6 +16,14 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
+import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
+import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
+import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
+import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBreaker;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -46,7 +54,6 @@ import io.papermc.paper.datacomponent.item.*;
 import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.keys.SoundEventKeys;
-
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -3285,6 +3292,124 @@ public final class PylonItems {
         recipe.setCategory(CraftingBookCategory.MISC);
         RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
     }
+
+    // <editor-fold desc="Electricity" defaultstate=collapsed>
+    public static final ItemStack ELECTRICITY_PYLON = ItemStackBuilder.rebar(Material.SEA_LANTERN, PylonKeys.ELECTRICITY_PYLON)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_PYLON, PylonKeys.ELECTRICITY_PYLON);
+        PylonPages.ELECTRICITY.addItem(ELECTRICITY_PYLON);
+    }
+
+    public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)
+            .build();
+    static {
+        RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
+        PylonPages.ELECTRICITY.addItem(CAPACITOR_1_KJ);
+    }
+
+    public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_1_GAUGE)
+            .build();
+    static {
+        RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
+        PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
+    }
+
+    public static final ItemStack MULTIMETER = ItemStackBuilder.rebar(Material.CLOCK, PylonKeys.MULTIMETER)
+            .build();
+    static {
+        RebarItem.register(Multimeter.class, MULTIMETER, PylonKeys.MULTIMETER);
+        PylonPages.TOOLS.addItem(MULTIMETER);
+    }
+
+    public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, CREATIVE_POWER_SOURCE, PylonKeys.CREATIVE_POWER_SOURCE);
+        PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_POWER_SOURCE);
+    }
+
+    public static final ItemStack ELECTRICITY_INPUT_HATCH = ItemStackBuilder.rebar(Material.GREEN_CONCRETE, PylonKeys.ELECTRICITY_INPUT_HATCH)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_INPUT_HATCH, PylonKeys.ELECTRICITY_INPUT_HATCH);
+        PylonPages.COMPONENTS.addItem(ELECTRICITY_INPUT_HATCH);
+    }
+
+    public static final ItemStack ELECTRICITY_OUTPUT_HATCH = ItemStackBuilder.rebar(Material.ORANGE_CONCRETE, PylonKeys.ELECTRICITY_OUTPUT_HATCH)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRICITY_OUTPUT_HATCH, PylonKeys.ELECTRICITY_OUTPUT_HATCH);
+        PylonPages.COMPONENTS.addItem(ELECTRICITY_OUTPUT_HATCH);
+    }
+
+    public static final ItemStack BOILER_CASING = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.BOILER_CASING)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BOILER_CASING, PylonKeys.BOILER_CASING);
+        PylonPages.COMPONENTS.addItem(BOILER_CASING);
+    }
+
+    public static final ItemStack BOILER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BOILER)
+            .build();
+    static {
+        RebarItem.register(Boiler.Item.class, BOILER, PylonKeys.BOILER);
+        PylonPages.ELECTRICITY.addItem(BOILER);
+    }
+
+    public static final ItemStack STEAM_ENGINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.STEAM_ENGINE)
+            .build();
+    static {
+        RebarItem.register(SteamEngine.Item.class, STEAM_ENGINE, PylonKeys.STEAM_ENGINE);
+        PylonPages.ELECTRICITY.addItem(STEAM_ENGINE);
+    }
+
+    public static final ItemStack GAS_TURBINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.GAS_TURBINE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GAS_TURBINE, PylonKeys.GAS_TURBINE);
+        PylonPages.ELECTRICITY.addItem(GAS_TURBINE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
+                .addButton(new MachineRecipesButton(GAS_TURBINE, GasTurbineRecipe.RECIPE_TYPE));
+    }
+
+    public static final ItemStack COMBUSTION_TOWER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.COMBUSTION_TOWER)
+            .build();
+    static {
+        RebarItem.register(CombustionTower.Item.class, COMBUSTION_TOWER, PylonKeys.COMBUSTION_TOWER);
+        PylonPages.ELECTRICITY.addItem(COMBUSTION_TOWER);
+    }
+
+    public static final ItemStack HEAT_EXCHANGER = ItemStackBuilder.rebar(Material.RED_NETHER_BRICK_WALL, PylonKeys.HEAT_EXCHANGER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HEAT_EXCHANGER, PylonKeys.HEAT_EXCHANGER);
+        PylonPages.ELECTRICITY.addItem(HEAT_EXCHANGER);
+    }
+
+    public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
+            .build();
+    static {
+        RebarItem.register(ElectricGrindstone.Item.class, ELECTRIC_GRINDSTONE, PylonKeys.ELECTRIC_GRINDSTONE);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_GRINDSTONE)
+                .addButton(new MachineRecipesButton(ELECTRIC_GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+    }
+
+    public static final ItemStack ELECTRIC_BRICK_MOLDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_BRICK_MOLDER)
+            .build();
+    static {
+        RebarItem.register(ElectricBrickMolder.Item.class, ELECTRIC_BRICK_MOLDER, PylonKeys.ELECTRIC_BRICK_MOLDER);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
+    }
+
+    public static final ItemStack ELECTRIC_BREAKER = ItemStackBuilder.rebar(Material.DISPENSER, PylonKeys.ELECTRIC_BREAKER)
+            .build();
+    static {
+        RebarItem.register(ElectricBreaker.Item.class, ELECTRIC_BREAKER, PylonKeys.ELECTRIC_BREAKER);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_BREAKER);
+    }
+    // </editor-fold>
 
     static {
         PylonPages.initialise();

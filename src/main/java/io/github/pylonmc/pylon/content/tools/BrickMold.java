@@ -8,16 +8,16 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.List;
 import org.bukkit.Particle;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 
 public class BrickMold extends RebarItem implements RebarBlockInteractor {
@@ -49,7 +49,12 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
         ItemStack particleType;
         RebarBlock rebarBlock = BlockStorage.get(event.getClickedBlock());
         if (rebarBlock != null) {
-            particleType = rebarBlock.getDefaultItem().getItemStack();
+            RebarItemSchema defaultItem = rebarBlock.getDefaultItem();
+            if (defaultItem != null) {
+                particleType = defaultItem.getOriginalTemplate();
+            } else {
+                particleType = new ItemStack(event.getClickedBlock().getType());
+            }
         } else {
             particleType = new ItemStack(event.getClickedBlock().getType());
         }

@@ -100,7 +100,7 @@ public class Press extends RebarBlock implements
     }
 
     @Override
-    public void postLoad() {
+    public void postLoad(@NotNull PersistentDataContainer pdc) {
         if (isProcessingRecipe()) {
             finishRecipe();
         }

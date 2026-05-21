@@ -16,7 +16,10 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -31,11 +34,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class BurnerHydraulicPurifier extends RebarBlock implements
@@ -83,7 +81,6 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
     }
 
     @SuppressWarnings("unused")
@@ -149,8 +146,8 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             double fluidToPurify = Math.min(
                     hydraulicFluidPerMachineTick,
                     Math.min(
-                            fluidInput.fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                            fluidOutput.fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID)
+                            fluidInput.getFluidAmount(),
+                            fluidOutput.getFluidSpaceRemaining()
                     )
             );
             if (fluidToPurify < hydraulicFluidPerMachineTick) {
@@ -161,7 +158,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             lightable.setLit(true);
             getBlock().setBlockData(lightable);
 
-            fluidInput.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, fluidToPurify);
+            fluidInput.removeFluid(fluidToPurify);
             fluidOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, fluidToPurify * purificationEfficiency);
             progressProcess(getTickInterval());
 
@@ -200,11 +197,11 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT)
-                .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
         RebarSimpleMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT)
+                .setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
+                .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
     }
 
     @Override

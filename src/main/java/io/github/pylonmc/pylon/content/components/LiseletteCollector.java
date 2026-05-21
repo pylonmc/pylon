@@ -41,7 +41,7 @@ public class LiseletteCollector extends RebarBlock implements RebarEntityHolderB
     }
 
     @Override
-    protected void postLoad() {
+    protected void postLoad(@NotNull PersistentDataContainer pdc) {
         getHeldEntityOrThrow(ItemDisplay.class, "shell")
                 .setBrightness(new Display.Brightness(15, 15));
     }

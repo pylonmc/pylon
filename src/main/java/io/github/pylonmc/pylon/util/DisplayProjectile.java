@@ -5,8 +5,12 @@ import io.github.pylonmc.rebar.entity.RebarEntity;
 import io.github.pylonmc.rebar.entity.base.RebarTickingEntity;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import java.util.List;
+import java.util.Optional;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -36,6 +40,7 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
 
     public DisplayProjectile(
             Player player,
+            @NotNull NamespacedKey key,
             Material material,
             Location source,
             @NotNull Vector direction,
@@ -55,7 +60,10 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
                 .thickness(thickness)
                 .build()
             )
-            .material(material)
+            .itemStack(
+                    ItemStackBuilder.of(material)
+                    .addCustomModelDataString("pylon:display_projectile/" + key)
+            )
             .build(source)
         );
         this.player = player;

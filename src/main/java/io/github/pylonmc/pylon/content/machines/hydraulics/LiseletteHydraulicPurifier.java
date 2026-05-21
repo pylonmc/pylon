@@ -18,6 +18,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -28,11 +32,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class LiseletteHydraulicPurifier extends RebarBlock implements
@@ -123,8 +122,8 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         RebarSimpleMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
     }
 
     @Override
@@ -166,11 +165,11 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
                 double toPurify = Math.min(
                         speed * maxFluidPurifiedPerStrike,
                         Math.min(
-                                inputHatch.fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                                outputHatch.fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID) / purificationEfficiency
+                                inputHatch.getFluidAmount(),
+                                outputHatch.getFluidSpaceRemaining() / purificationEfficiency
                         )
                 );
-                inputHatch.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, toPurify);
+                inputHatch.removeFluid(toPurify);
                 outputHatch.addFluid(PylonFluids.HYDRAULIC_FLUID, toPurify * purificationEfficiency);
             }, 45);
 

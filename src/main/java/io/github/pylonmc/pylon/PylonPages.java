@@ -35,6 +35,7 @@ public class PylonPages {
     public static final SimpleStaticGuidePage CARGO = new SimpleStaticGuidePage(pylonKey("machines_cargo"));
     public static final SimpleStaticGuidePage DIESEL_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_diesel_machines"));
     public static final SimpleStaticGuidePage DIESEL_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_diesel_production"));
+    public static final SimpleStaticGuidePage ELECTRICITY = new SimpleStaticGuidePage(pylonKey("machines_electricity"));
     public static final SimpleStaticGuidePage MACHINES = new SimpleStaticGuidePage(pylonKey("machines"));
 
     public static final SimpleStaticGuidePage ASSEMBLING = new SimpleStaticGuidePage(pylonKey("assembling"));
@@ -72,6 +73,7 @@ public class PylonPages {
         MACHINES.addPage(PylonItems.CARGO_BUFFER, CARGO);
         MACHINES.addPage(PylonItems.DIESEL_PIPE_BENDER, DIESEL_MACHINES);
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);
+        MACHINES.addPage(PylonItems.ELECTRICITY_PYLON, ELECTRICITY);
         RebarGuide.getRootPage().addPage(PylonItems.MIXING_POT, MACHINES);
         RebarGuide.getRootPage().addPage(PylonItems.ASSEMBLY_TABLE, ASSEMBLING);
 

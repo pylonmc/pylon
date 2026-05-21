@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
@@ -25,16 +26,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.List;
 
@@ -156,31 +152,18 @@ public class FluidLimiter extends RebarBlock implements RebarDirectionalBlock, R
         return Gui.builder()
                 .setStructure("# # # # m # # # #")
                 .addIngredient('#', GuiItems.background())
-                .addIngredient('m', new MaxFlowRateItem())
+                .addIngredient('m', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.max-flow-rate"))
+                        .increment(10)
+                        .shiftIncrement(100)
+                        .min(minAmount)
+                        .max(maxAmount)
+                        .valueGetter(() -> maxFlowRate)
+                        .valueSetter(value -> maxFlowRate = value)
+                        .valueFormatter(UnitFormat.MILLIBUCKETS_PER_SECOND::format)
+                        .reopenWindow(this::openWindow)
+                        .build())
                 .build();
-    }
-
-    public class MaxFlowRateItem extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NotNull Player player) {
-            return ItemStackBuilder.of(Material.WHITE_CONCRETE)
-                    .name(Component.translatable("pylon.gui.fluid_accumulator.name").arguments(
-                            RebarArgument.of("amount", UnitFormat.MILLIBUCKETS_PER_SECOND.format(maxFlowRate))
-                    ))
-                    .lore(Component.translatable("pylon.gui.fluid_accumulator.lore"));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            int delta = clickType.isShiftClick() ? 100 : 10;
-            if (clickType.isLeftClick()) {
-                maxFlowRate += delta;
-            } else if (clickType.isRightClick()) {
-                maxFlowRate -= delta;
-            }
-            maxFlowRate = Math.clamp(maxFlowRate, minAmount, maxAmount);
-            notifyWindows();
-        }
     }
 }
