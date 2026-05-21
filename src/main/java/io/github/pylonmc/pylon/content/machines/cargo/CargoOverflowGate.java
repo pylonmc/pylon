@@ -4,7 +4,7 @@ import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -40,7 +40,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoOverflowGate extends RebarBlock
-        implements RebarDirectionalBlock, RebarGuiBlock, RebarCargoBlock, RebarVirtualInventoryBlock {
+        implements RebarDirectionalBlock, RebarInventoryBlock, RebarCargoBlock, RebarVirtualInventoryBlock {
 
     private static final NamespacedKey SIDE_PRIORITY_KEY = pylonKey("side_priority");
     private static final NamespacedKey IS_LEFT_KEY = pylonKey("is_left");

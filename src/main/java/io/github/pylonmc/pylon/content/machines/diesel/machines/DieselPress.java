@@ -43,7 +43,7 @@ import java.util.Map;
 
 
 public class DieselPress extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarDirectionalBlock,
         RebarFluidBufferBlock,

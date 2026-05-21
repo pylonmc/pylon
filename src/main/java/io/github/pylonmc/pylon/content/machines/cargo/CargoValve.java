@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -46,7 +46,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class CargoValve extends RebarBlock implements
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarInteractBlock,
         RebarVirtualInventoryBlock,
         RebarCargoBlock {

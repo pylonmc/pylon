@@ -3,13 +3,11 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.content.machines.fluid.FluidTank;
-import io.github.pylonmc.pylon.content.machines.fluid.FluidTankWithDisplayEntity;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarProcessor;
 import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
@@ -46,7 +44,7 @@ public class Collimator extends RebarBlock implements
         RebarFluidTank,
         RebarProcessor,
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarTickingBlock,
         RebarSimpleMultiblock,
         RebarVirtualInventoryBlock {

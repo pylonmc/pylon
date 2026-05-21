@@ -31,7 +31,7 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public final class SmelteryBurner extends SmelteryComponent implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarTickingBlock,
         RebarLogisticBlock,

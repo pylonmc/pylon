@@ -46,7 +46,7 @@ import java.util.*;
 
 
 public class DieselBreaker extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
         RebarDirectionalBlock,

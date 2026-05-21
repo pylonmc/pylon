@@ -5,7 +5,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDispenser;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
-public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarNoVanillaContainerBlock, RebarDispenser {
+public class FluidPlacer extends RebarBlock implements RebarFluidBufferBlock, RebarTickingBlock, RebarNoVanillaInventoryBlock, RebarDispenser {
 
     public static class Item extends RebarItem {
 
