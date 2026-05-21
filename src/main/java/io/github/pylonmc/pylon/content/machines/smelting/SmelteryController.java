@@ -14,6 +14,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Furnace;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.*;
@@ -590,6 +591,11 @@ public final class SmelteryController extends SmelteryComponent
 
     public void setRunning(boolean running) {
         this.running = running;
+
+        Furnace furnace = (Furnace) getBlock().getBlockData();
+        furnace.setLit(running);
+        getBlock().setBlockData(furnace);
+
         refreshBlockTextureItem();
     }
 

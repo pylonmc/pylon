@@ -89,6 +89,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
             if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();
+                break;
             }
         }
     }
