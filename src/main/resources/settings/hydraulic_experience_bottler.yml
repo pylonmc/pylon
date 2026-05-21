@@ -1,0 +1,6 @@
+bottle-production-time-seconds: 2.5
+tick-interval: 5
+input-fluid: pylon:hydraulic_fluid
+input-fluid-amount: 25
+output-fluid: pylon:dirty_hydraulic_fluid
+output-fluid-amount: 25

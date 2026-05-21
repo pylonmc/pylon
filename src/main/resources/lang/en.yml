@@ -2337,11 +2337,11 @@ item:
       <arrow> Takes time to heat up and cool down
       
       <u>Components</u>
-      <diamond> 1x <yellow><lang:pylon.item.kiln.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.bronze_grating.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 1x <yellow><lang:pylon.item.item_output_hatch.name/></yellow>
-      <diamond> 2x <yellow><lang:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><item:pylon.item.kiln.name/></yellow>
+      <diamond> 1x <yellow><item:pylon.item.bronze_grating.name/></yellow>
+      <diamond> 1x <yellow><item:pylon.item.fluid_output_hatch.name/></yellow>
+      <diamond> 1x <yellow><item:pylon.item.item_output_hatch.name/></yellow>
+      <diamond> 2x <yellow><item:pylon.item.item_input_hatch.name/></yellow>
       <diamond> 6x <yellow>Mud Bricks</yellow>
       <diamond> 12x <yellow>Mud Brick Wall</yellow>
 
@@ -2482,6 +2482,72 @@ item:
     lore: |-
       <arrow> Used for forming items out of clay
 
+  experience_drain:
+    name: "Experience Drain"
+    lore: |-
+      <arrow> <insn>Sneak</insn> while standing on top to liquefy your experience
+      <arrow> <attr>Experience drain amount:</attr> %xp-drain-rate%
+    waila: "Experience Drain | %bar%"
+
+  experience_fountain:
+    name: "Experience Fountain"
+    lore: |-
+      <star> Multiblock
+      <arrow> Turns liquid XP into XP orbs
+      <arrow> <attr>Experience conversion rate:</attr> %conversion-rate%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:experience_fountain_spout/></yellow>
+    waila: "Experience Fountain | %bar%"
+
+  experience_fountain_spout:
+    name: "Experience Fountain Spout"
+
+  liquid_xp_bottle:
+    name: "Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>right click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  liquid_xp_bottle_super:
+    name: "Super Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>right click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  liquid_xp_bottle_ultra:
+    name: "Ultra Liquid XP Bottle"
+    lore: |-
+      <arrow> Throw using <insn>right click</insn> to release stored XP
+      <arrow> <attr>Stored XP:</attr> %experience-amount%
+
+  hydraulic_experience_bottler:
+    name: "Hydraulic Experience Bottler"
+    lore: |-
+      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <item:pylon:liquid_xp_bottle/>s from empty glass bottles
+      <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
+      <arrow> <attr>Hydraulic fluid usage:</attr> %fluid-input-consumption%
+      
+      <u>Components</u>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow>Lapis Block</yellow>
+      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+    waila: "Hydraulic Experience Bottler | %progressbar%"
+
+  diesel_experience_bottler:
+    name: "Diesel Experience Bottler"
+    lore: |-
+      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <item:pylon:liquid_xp_bottle/>s from empty glass bottles
+      <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
+      <arrow> <attr>Diesel usage:</attr> %fluid-input-consumption%
+
+      <u>Components</u>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow>Lapis Block</yellow>
+      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+    waila: "Diesel Experience Bottler | %progressbar%"
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
@@ -2514,6 +2580,7 @@ fluid:
   sugarcane: "<#a3ed2d>Sugarcane"
   ethanol: "<#d8d8d8>Ethanol"
   biodiesel: "<#eaa627>Biodiesel"
+  liquid_xp: "<#1dc420>Liquid Experience"
 
 waila:
   fluid_tank:
@@ -2623,6 +2690,7 @@ research:
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
   potion_magic: "<#e5c4ef>Potion magic"
+  experience_liquefaction: "<#1dc420>Experience Liquefaction"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"

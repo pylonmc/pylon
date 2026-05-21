@@ -1,0 +1,5 @@
+bottle-production-time-seconds: 1.5
+tick-interval: 5
+input-fluid: pylon:biodiesel
+input-fluid-buffer-size: 50
+input-fluid-amount: 6
