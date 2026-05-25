@@ -9,13 +9,11 @@ import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.recipe.ConfigurableRecipeType;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RebarRecipe;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
-import io.github.pylonmc.rebar.recipe.RecipeType;
+import io.github.pylonmc.rebar.recipe.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -24,16 +22,15 @@ import org.eclipse.sisu.Nullable;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 /**
- * @param input1 the first input item (respects amount)
- * @param input2 the second input item (respects amount)
- * @param result the output item (respects amount)
+ * @param input1 the first input item
+ * @param input2 the second input item
+ * @param outputItem the output item (null if no item output)
+ * @param outputFluid the output fluid (null if no fluid output)
+ * @param outputFluidAmount the amount of the output fluid (null if no fluid output)
  * @param timeTicks the recipe time in ticks
  */
 public record KilnRecipe(

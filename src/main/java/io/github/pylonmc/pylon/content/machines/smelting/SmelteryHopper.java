@@ -15,7 +15,7 @@ import io.github.pylonmc.pylon.recipes.MeltingRecipe;
 import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVanillaContainerBlock;
+import io.github.pylonmc.rebar.block.base.RebarVanillaInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -24,7 +24,7 @@ import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 
 public final class SmelteryHopper extends SmelteryComponent implements
         RebarTickingBlock,
-        RebarVanillaContainerBlock,
+        RebarVanillaInventoryBlock,
         RebarLogisticBlock,
         RebarBreakHandler {
 

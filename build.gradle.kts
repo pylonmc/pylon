@@ -1,5 +1,4 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
-import org.gradle.api.internal.artifacts.dsl.dependencies.DependenciesExtensionModule.module
 
 plugins {
     java
@@ -21,9 +20,6 @@ repositories {
     maven("https://central.sonatype.com/repository/maven-snapshots/")
     maven("https://repo.papermc.io/repository/maven-public/") {
         name = "papermc"
-    }
-    maven("https://jitpack.io") {
-        name = "JitPack"
     }
     maven("https://repo.xenondevs.xyz/releases") {
         name = "InvUI"

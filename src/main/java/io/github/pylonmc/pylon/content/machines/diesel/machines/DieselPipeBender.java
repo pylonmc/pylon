@@ -43,7 +43,7 @@ import java.util.Map;
 
 
 public class DieselPipeBender extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
         RebarDirectionalBlock,

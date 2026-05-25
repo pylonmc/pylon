@@ -4,7 +4,7 @@ import io.github.pylonmc.pylon.content.machines.fluid.gui.FluidSelector;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -29,14 +29,13 @@ import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class CreativeFluidSource extends RebarBlock implements
         RebarFluidBlock,
         RebarDirectionalBlock,
-        RebarGuiBlock {
+        RebarInventoryBlock {
 
     public static final NamespacedKey FLUID_KEY = pylonKey("fluid");
 

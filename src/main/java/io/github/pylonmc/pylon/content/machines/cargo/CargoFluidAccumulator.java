@@ -46,7 +46,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class CargoFluidAccumulator extends RebarBlock implements
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarCargoBlock,
         RebarFluidTank {

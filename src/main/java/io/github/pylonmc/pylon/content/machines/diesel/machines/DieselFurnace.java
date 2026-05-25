@@ -47,7 +47,7 @@ import java.util.Map;
 
 
 public class DieselFurnace extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarFluidBufferBlock,
         RebarDirectionalBlock,

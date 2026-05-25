@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
 import io.github.pylonmc.rebar.block.base.RebarEntityCulledBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
@@ -37,7 +37,7 @@ import java.util.UUID;
 
 public class CargoInserter extends CargoInteractor implements
         RebarCargoBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarEntityCulledBlock
 {
 

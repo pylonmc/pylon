@@ -7,7 +7,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaContainerBlock;
+import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -41,7 +41,7 @@ public class ManualHydraulicPurifier extends RebarBlock implements
         RebarFluidBufferBlock,
         HydraulicPurifier,
         RebarInteractBlock,
-        RebarNoVanillaContainerBlock {
+        RebarNoVanillaInventoryBlock {
 
     public final double hydraulicFluidPerCycle = getSettings().getOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
     public final int cycleDuration = getSettings().getOrThrow("cycle-duration", ConfigAdapter.INTEGER);

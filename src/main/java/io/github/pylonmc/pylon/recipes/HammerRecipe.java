@@ -27,7 +27,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param input  the input item (setting the itemstack to have an amount that's not 1 will have no effect)
  * @param result the output item (respects amount)
  * @param level  the minimum hammer mining level
- * @param chance the chance to succeed per attempt
+ * @param uses   the number of uses of the hammer this recipe takes
  */
 public record HammerRecipe(
         @NotNull NamespacedKey key,

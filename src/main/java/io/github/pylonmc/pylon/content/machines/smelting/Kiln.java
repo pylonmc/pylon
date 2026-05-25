@@ -49,7 +49,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Kiln extends RebarBlock implements
         RebarSimpleMultiblock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarRecipeProcessor<KilnRecipe>,
         RebarDirectionalBlock,
         RebarVirtualInventoryBlock,

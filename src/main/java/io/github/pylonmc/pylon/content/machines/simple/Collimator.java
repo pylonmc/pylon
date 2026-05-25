@@ -37,7 +37,7 @@ public class Collimator extends RebarBlock implements
         RebarFluidTank,
         RebarProcessor,
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarTickingBlock,
         RebarSimpleMultiblock,
         RebarVirtualInventoryBlock {

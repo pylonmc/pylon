@@ -6,7 +6,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -43,7 +43,7 @@ import java.util.Map;
 public class DieselRefuelingStation extends RebarBlock implements
         RebarFluidBlock,
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarLogisticBlock,
         RebarVirtualInventoryBlock {
 

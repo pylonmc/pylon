@@ -6,7 +6,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -39,7 +39,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import org.joml.Vector3i;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.OperationCategory;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
@@ -52,7 +51,7 @@ public class AssemblyTable extends RebarBlock implements
         RebarVirtualInventoryBlock,
         RebarDirectionalBlock,
         RebarEntityHolderBlock,
-        RebarGuiBlock {
+        RebarInventoryBlock {
 
     private static final NamespacedKey RECIPE_KEY = PylonUtils.pylonKey("recipe");
     private static final NamespacedKey STEP_INDEX_KEY = PylonUtils.pylonKey("step_index");

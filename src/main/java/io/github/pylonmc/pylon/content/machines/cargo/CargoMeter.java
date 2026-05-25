@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class CargoMeter extends RebarBlock implements
         RebarDirectionalBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarCargoBlock,
         RebarTickingBlock {

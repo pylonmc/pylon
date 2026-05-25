@@ -43,7 +43,7 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryBurner extends SmelteryComponent implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarTickingBlock,
         RebarLogisticBlock,
