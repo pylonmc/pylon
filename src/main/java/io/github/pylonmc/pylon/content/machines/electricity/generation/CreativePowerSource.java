@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarElectricProducerBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.MetricPrefix;
@@ -18,7 +18,7 @@ import xyz.xenondevs.invui.gui.Gui;
 
 public final class CreativePowerSource extends RebarBlock implements
         RebarElectricProducerBlock,
-        RebarGuiBlock {
+        RebarInventoryBlock {
 
     @SuppressWarnings("unused")
     public CreativePowerSource(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -31,6 +31,7 @@ public final class CreativePowerSource extends RebarBlock implements
         super(block, pdc);
     }
 
+    // TODO remove GUI
     @Override
     public @NotNull Gui createGui() {
         return Gui.builder()

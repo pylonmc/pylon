@@ -22,7 +22,7 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public abstract class GenericGrindstone extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarTickingBlock,
         RebarLogisticBlock,

@@ -20,7 +20,7 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public abstract class GenericBrickMolder extends RebarBlock implements
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarVirtualInventoryBlock,
         RebarDirectionalBlock,
         RebarTickingBlock,

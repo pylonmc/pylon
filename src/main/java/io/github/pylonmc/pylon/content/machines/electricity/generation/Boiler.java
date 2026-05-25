@@ -43,7 +43,7 @@ public class Boiler extends RebarBlock implements
         RebarProcessor,
         RebarTickingBlock,
         RebarVirtualInventoryBlock,
-        RebarGuiBlock,
+        RebarInventoryBlock,
         RebarLogisticBlock {
 
     public static class Item extends RebarItem {
