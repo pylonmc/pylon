@@ -2609,6 +2609,13 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Power usage:</attr> %power-usage%
 
+  electric_furnace:
+    name: "Electric Furnace"
+    lore: |-
+      <arrow> Smelts items using electricity
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Smelting speed:</attr> %speed%
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"

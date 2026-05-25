@@ -23,6 +23,7 @@ import io.github.pylonmc.pylon.content.machines.electricity.generation.Combustio
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBreaker;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricFurnace;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
@@ -3408,6 +3409,13 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricBreaker.Item.class, ELECTRIC_BREAKER, PylonKeys.ELECTRIC_BREAKER);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BREAKER);
+    }
+
+    public static final ItemStack ELECTRIC_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.ELECTRIC_FURNACE)
+            .build();
+    static {
+        RebarItem.register(ElectricFurnace.Item.class, ELECTRIC_FURNACE, PylonKeys.ELECTRIC_FURNACE);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_FURNACE);
     }
     // </editor-fold>
 
