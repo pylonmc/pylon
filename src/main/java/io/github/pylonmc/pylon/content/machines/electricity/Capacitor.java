@@ -54,8 +54,8 @@ public class Capacitor extends RebarBlock implements
 
         setFacing(context.getFacing());
 
-        addElectricPort(getFacing(), new ElectricNode.Acceptor("input", new BlockPosition(block)));
-        addElectricPort(getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0));
+        addElectricPort(new ElectricPort(new ElectricNode.Acceptor("input", new BlockPosition(block)), getFacing()));
+        addElectricPort(new ElectricPort(new ElectricNode.Producer("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
 
         addEntity("text_0", new TextDisplayBuilder()
                 .transformation(new TransformBuilder()

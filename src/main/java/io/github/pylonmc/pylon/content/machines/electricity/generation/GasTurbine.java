@@ -62,7 +62,7 @@ public class GasTurbine extends RebarBlock implements
         if (!isFormedAndFullyLoaded()) return;
 
         ElectricityOutputHatch electricityOutputHatch = getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH);
-        electricityOutputHatch.setPower(0);
+        electricityOutputHatch.setPowerProduced(0);
 
         FluidInputHatch inputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH);
         RebarFluid inputFluid = inputHatch.getFluid();
@@ -90,7 +90,7 @@ public class GasTurbine extends RebarBlock implements
         outputHatch.addFluid(outputFluid, actualOutputAmount);
 
         double powerOutput = matchingRecipe.powerProduction() * ratio;
-        electricityOutputHatch.setPower(powerOutput);
+        electricityOutputHatch.setPowerProduced(powerOutput);
 
         Vector3f direction = getFacing().getOppositeFace().getDirection().toVector3f();
 
@@ -133,7 +133,11 @@ public class GasTurbine extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPower()).decimalPlaces(1))
+                RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPowerProduced())
+                        .ignoreCommonlyUnusedPrefixes()
+                        .autoSelectPrefix()
+                        .decimalPlaces(2)
+                )
         ));
     }
 
@@ -207,7 +211,7 @@ public class GasTurbine extends RebarBlock implements
 
         ElectricityOutputHatch electricityOutputHatch = getMultiblockComponent(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH);
         if (electricityOutputHatch != null) {
-            electricityOutputHatch.setPower(0);
+            electricityOutputHatch.setPowerProduced(0);
         }
     }
 

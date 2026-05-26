@@ -26,7 +26,8 @@ public abstract class GenericGrindstone extends RebarBlock implements
         RebarVirtualInventoryBlock,
         RebarTickingBlock,
         RebarLogisticBlock,
-        RebarRecipeProcessor<GrindstoneRecipe> {
+        RebarRecipeProcessor<GrindstoneRecipe>,
+        RebarDirectionalBlock {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
@@ -40,6 +41,7 @@ public abstract class GenericGrindstone extends RebarBlock implements
         setTickInterval(tickInterval);
         setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
+        setFacing(context.getFacing());
     }
 
     @SuppressWarnings("unused")
@@ -118,6 +120,7 @@ public abstract class GenericGrindstone extends RebarBlock implements
                 .addIngredient('p', getRecipeProgressItem())
                 .build();
     }
+
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
         return Map.of(

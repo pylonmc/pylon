@@ -34,7 +34,7 @@ public class ElectricFurnace extends RebarBlock implements
         RebarLogisticBlock,
         RebarRecipeProcessor<FurnaceRecipeWrapper>,
         RebarDirectionalBlock,
-        RebarElectricConsumerBlock {
+        RebarSimpleElectricBlock {
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
@@ -66,6 +66,8 @@ public class ElectricFurnace extends RebarBlock implements
         setTickInterval(tickInterval);
         setRecipeType(FurnaceRecipeType.INSTANCE);
         setRecipeProgressItem(new BurnerProgressItem());
+        createSimpleElectricPort(NodeType.CONSUMER, getFacing());
+        setRequiredPower(powerUsage);
     }
 
     @SuppressWarnings("unused")

@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.content.machines.generic.GenericBrickMolder;
-import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
+import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricBrickMolder extends GenericBrickMolder implements RebarElectricConsumerBlock {
+public class ElectricBrickMolder extends GenericBrickMolder implements RebarSimpleElectricBlock {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
@@ -39,17 +39,13 @@ public class ElectricBrickMolder extends GenericBrickMolder implements RebarElec
     @SuppressWarnings("unused")
     public ElectricBrickMolder(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        createSimpleElectricPort(NodeType.CONSUMER, getFacing());
+        setRequiredPower(powerUsage);
     }
 
     @SuppressWarnings("unused")
     public ElectricBrickMolder(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-    }
-
-    @Override
-    public void postInitialise() {
-        super.postInitialise();
-        setRequiredPower(powerUsage);
     }
 
     @Override

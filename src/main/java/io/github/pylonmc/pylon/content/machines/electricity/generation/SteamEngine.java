@@ -12,7 +12,6 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ import org.joml.Vector3i;
 public class SteamEngine extends RebarBlock implements
         RebarDirectionalBlock,
         RebarFluidBufferBlock,
-        RebarElectricBlock,
+        RebarSimpleElectricBlock,
         RebarTickingBlock,
         RebarSimpleMultiblock {
 
@@ -67,7 +66,7 @@ public class SteamEngine extends RebarBlock implements
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, context.getFacing());
         createFluidBuffer(PylonFluids.STEAM, steamCapacity, true, false);
-        addElectricPort(context.getFacing().getOppositeFace(), new ElectricNode.Producer("output", new BlockPosition(block), 0));
+        createSimpleElectricPort(NodeType.PRODUCER, getFacing().getOppositeFace());
     }
 
     @SuppressWarnings("unused")

@@ -1,13 +1,12 @@
 package io.github.pylonmc.pylon.content.machines.electricity;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
+import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.electricity.ElectricNetwork;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -16,7 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 public final class ElectricityPylon extends RebarBlock implements
-        RebarElectricBlock,
+        RebarSimpleElectricBlock,
         RebarTickingBlock {
 
     @SuppressWarnings("unused")
@@ -24,10 +23,8 @@ public final class ElectricityPylon extends RebarBlock implements
         super(block, context);
 
         setTickInterval(10);
-        ElectricNode.Connector centralNode = addElectricNode(new ElectricNode.Connector("center", new BlockPosition(block)));
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            ElectricNode.Connector port = addElectricPort(face, new ElectricNode.Connector(face.name(), new BlockPosition(block)));
-            centralNode.connect(port);
+            createSimpleElectricPort(NodeType.CONNECTOR, face);
         }
     }
 

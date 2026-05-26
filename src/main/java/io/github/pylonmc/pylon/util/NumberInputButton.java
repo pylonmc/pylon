@@ -3,6 +3,11 @@ package io.github.pylonmc.pylon.util;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.PlayerInput;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import lombok.Builder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
@@ -15,12 +20,6 @@ import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.item.AbstractBoundItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.window.Window;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -109,7 +108,7 @@ public class NumberInputButton extends AbstractBoundItem {
                     setValue(newValue);
                     reopenWindow.accept(player);
                 } catch (NumberFormatException e) {
-                    player.sendMessage(Component.translatable("pylon.gui.number-button.enter-value.invalid"));
+                    player.sendMessage(Component.translatable("pylon.message.invalid-input.integer"));
                 }
             });
             return;

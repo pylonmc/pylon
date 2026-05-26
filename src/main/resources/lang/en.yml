@@ -2497,6 +2497,7 @@ item:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
       <arrow> Provides an infinite supply of power
+    waila: "Creative Power Source | producing %power%"
 
   electricity_input_hatch:
     name: "Electricity Input Hatch"
@@ -2940,6 +2941,11 @@ message:
     empty: "<red>The cannon is out of hydraulic fluid"
     full: "<red>The cannon is full with dirty hydraulic fluid"
     no-ammo: "<red>The cannon is out of ammunition"
+  creative-power-source:
+    set-power: "Enter a new amount of power to produce (min 0):"
+  invalid-input:
+    double: "<red>Invalid input, please enter a number"
+    integer: "<red>Invalid input, please enter an integer"
 
 gui:
   fluid-selector-title: "Select Fluid"

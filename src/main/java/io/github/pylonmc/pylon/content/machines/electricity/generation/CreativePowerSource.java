@@ -1,29 +1,35 @@
 package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
-import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarElectricProducerBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.unit.MetricPrefix;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.util.PlayerInput;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
-import xyz.xenondevs.invui.gui.Gui;
+import org.jspecify.annotations.NonNull;
 
 public final class CreativePowerSource extends RebarBlock implements
-        RebarElectricProducerBlock,
-        RebarInventoryBlock {
+        RebarSimpleElectricBlock,
+        RebarInteractBlock {
 
     @SuppressWarnings("unused")
     public CreativePowerSource(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
+        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
+            createSimpleElectricPort(NodeType.PRODUCER, face);
+        }
     }
 
     @SuppressWarnings({"unused"})
@@ -31,31 +37,31 @@ public final class CreativePowerSource extends RebarBlock implements
         super(block, pdc);
     }
 
-    // TODO remove GUI
     @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure("# # # # p # # # #")
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('p', NumberInputButton.builder()
-                        .material(Material.NETHER_STAR)
-                        .name(Component.translatable("pylon.gui.power"))
-                        .increment(1)
-                        .shiftIncrement(10)
-                        .min(0)
-                        .valueGetter(() -> (int) getPower())
-                        .valueSetter(this::setPower)
-                        .valueFormatter(p -> formatQuantity(UnitFormat.WATTS, p))
-                        .reopenWindow(this::openWindow)
-                        .build())
-                .build();
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        Player player = event.getPlayer();
+        if (player.isSneaking() || !event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND) return;
+        player.sendMessage(Component.translatable("pylon.message.creative-power-source.set-power"));
+        PlayerInput.requestInput(player).thenAccept(input -> {
+            if (input == null) return;
+            try {
+                double newValue = Double.parseDouble(input);
+                setPowerProduced(newValue);
+            } catch (NumberFormatException e) {
+                player.sendMessage(Component.translatable("pylon.message.invalid-input.double"));
+            }
+        });
     }
 
-    private static ComponentLike formatQuantity(UnitFormat format, int quantity) {
-        return format.format(quantity)
-                .ignorePrefixes(MetricPrefix.DECI, MetricPrefix.DECA, MetricPrefix.HECTO)
-                .abbreviate(true)
-                .autoSelectPrefix()
-                .decimalPlaces(0);
+    @Override
+    public @NonNull WailaDisplay getWaila(@NotNull Player player) {
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("power", UnitFormat.WATTS.format(getPowerProduced())
+                        .ignoreCommonlyUnusedPrefixes()
+                        .abbreviate(true)
+                        .autoSelectPrefix()
+                        .decimalPlaces(2)
+                )
+        ));
     }
 }

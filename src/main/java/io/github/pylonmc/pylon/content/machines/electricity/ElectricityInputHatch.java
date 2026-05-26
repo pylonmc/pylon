@@ -1,18 +1,22 @@
 package io.github.pylonmc.pylon.content.machines.electricity;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
+import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricityInputHatch extends RebarBlock implements RebarElectricConsumerBlock {
+public class ElectricityInputHatch extends RebarBlock implements RebarSimpleElectricBlock {
 
     @SuppressWarnings("unused")
     public ElectricityInputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacing());
+        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
+            createSimpleElectricPort(NodeType.CONSUMER, face);
+        }
     }
 
     @SuppressWarnings("unused")

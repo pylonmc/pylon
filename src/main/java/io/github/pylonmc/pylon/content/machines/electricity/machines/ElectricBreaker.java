@@ -2,26 +2,27 @@ package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.content.machines.generic.GenericBreaker;
 import io.github.pylonmc.rebar.block.base.RebarDispenser;
-import io.github.pylonmc.rebar.block.base.RebarElectricConsumerBlock;
+import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricBreaker extends GenericBreaker implements RebarElectricConsumerBlock, RebarDispenser {
+public class ElectricBreaker extends GenericBreaker implements RebarElectricBlock, RebarDispenser {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
@@ -81,6 +82,10 @@ public class ElectricBreaker extends GenericBreaker implements RebarElectricCons
                         .rotate(0, 0, Math.PI / 4))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
+        addElectricPort(
+                new ElectricPort(new ElectricNode.Consumer("consumer", new BlockPosition(block), powerUsage), getFacing().getOppositeFace())
+                        .radius(0.55)
+        );
     }
 
     @SuppressWarnings("unused")
@@ -89,24 +94,8 @@ public class ElectricBreaker extends GenericBreaker implements RebarElectricCons
     }
 
     @Override
-    public void postInitialise() {
-        super.postInitialise();
-        setRequiredPower(powerUsage);
-    }
-
-    @Override
-    public @NotNull BlockFace getPortFace() {
-        return getFacing().getOppositeFace();
-    }
-
-    @Override
-    public double getPortRadius() {
-        return 0.55;
-    }
-
-    @Override
     public void tick() {
-        if (!isProcessing() || !isPowered()) return;
+        if (!isProcessing() || !((ElectricNode.Consumer) getElectricNodeOrThrow("consumer")).isPowered()) return;
         progressProcess(tickInterval);
     }
 
