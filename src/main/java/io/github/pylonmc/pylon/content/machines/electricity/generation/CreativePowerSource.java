@@ -46,7 +46,7 @@ public final class CreativePowerSource extends RebarBlock implements
             if (input == null) return;
             try {
                 double newValue = Double.parseDouble(input);
-                setPowerProduced(newValue);
+                setPowerProduced(Math.max(0, newValue));
             } catch (NumberFormatException e) {
                 player.sendMessage(Component.translatable("pylon.message.invalid-input.double"));
             }

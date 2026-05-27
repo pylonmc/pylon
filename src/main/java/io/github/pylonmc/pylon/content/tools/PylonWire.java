@@ -24,7 +24,7 @@ public class PylonWire extends RebarItem implements RebarWire {
     }
 
     @Override
-    public double getMaxCurrent() {
+    public double getMaxPower() {
         return maxPower;
     }
 
