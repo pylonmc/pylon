@@ -135,7 +135,7 @@ public class GasTurbine extends RebarBlock implements
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPowerProduced())
                         .ignoreCommonlyUnusedPrefixes()
-                        .autoSelectPrefix()
+                        .selectPrefixAndRescale()
                         .decimalPlaces(2)
                 )
         ));
