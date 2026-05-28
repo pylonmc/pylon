@@ -21,10 +21,7 @@ import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
-import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBreaker;
-import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricBrickMolder;
-import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricFurnace;
-import io.github.pylonmc.pylon.content.machines.electricity.machines.ElectricGrindstone;
+import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -3402,6 +3399,15 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricBrickMolder.Item.class, ELECTRIC_BRICK_MOLDER, PylonKeys.ELECTRIC_BRICK_MOLDER);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
+    }
+
+    public static final ItemStack ELECTRIC_PIPE_BENDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_PIPE_BENDER)
+            .build();
+    static {
+        RebarItem.register(ElectricPipeBender.Item.class, ELECTRIC_PIPE_BENDER, PylonKeys.ELECTRIC_PIPE_BENDER);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_PIPE_BENDER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_PIPE_BENDER)
+                .addButton(new MachineRecipesButton(ELECTRIC_PIPE_BENDER, PipeBendingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack ELECTRIC_BREAKER = ItemStackBuilder.rebar(Material.DISPENSER, PylonKeys.ELECTRIC_BREAKER)

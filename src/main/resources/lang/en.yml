@@ -2592,15 +2592,22 @@ item:
   electric_grindstone:
     name: "Electric Grindstone"
     lore: |-
-      <arrow> Grinds items using electricity
+      <arrow> Grinds items
       <arrow> <attr>Power usage:</attr> %power-usage%
 
   electric_brick_molder:
     name: "Electric Brick Molder"
     lore: |-
-      <arrow> Molds materials into bricks using electricity
+      <arrow> Molds materials into bricks
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
+
+  electric_pipe_bender:
+    name: "Electric Pipe Bender"
+    lore: |-
+      <arrow> Efficiently bends materials into pipes
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Speed:</attr> %speed%
 
   electric_breaker:
     name: "Electric Breaker"
@@ -2613,7 +2620,7 @@ item:
   electric_furnace:
     name: "Electric Furnace"
     lore: |-
-      <arrow> Smelts items using electricity
+      <arrow> Smelts items
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Smelting speed:</attr> %speed%
 
