@@ -2496,8 +2496,9 @@ item:
   creative_power_source:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
-      <arrow> Provides an infinite supply of power
-    waila: "Creative Power Source | producing %power%"
+      <arrow> Produces <unit:zetta:watts>1</unit> of power
+      
+      <story>An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
 
   electricity_input_hatch:
     name: "Electricity Input Hatch"
