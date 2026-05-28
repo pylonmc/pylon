@@ -212,5 +212,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ELECTRIC_PIPE_BENDER, Material.IRON_BLOCK, ElectricPipeBender.class);
         RebarBlock.register(PylonKeys.ELECTRIC_BREAKER, Material.DISPENSER, ElectricBreaker.class);
         RebarBlock.register(PylonKeys.ELECTRIC_FURNACE, Material.FURNACE, ElectricFurnace.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_TABLE_SAW, Material.IRON_BLOCK, ElectricTableSaw.class);
     }
 }

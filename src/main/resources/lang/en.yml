@@ -2603,6 +2603,13 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
 
+  electric_table_saw:
+    name: "Electric Table Saw"
+    lore: |-
+      <arrow> Efficiently cuts logs into planks, and planks into sticks
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Speed:</attr> %speed%
+
   electric_quarry:
     name: "Electric Quarry"
     lore: |-

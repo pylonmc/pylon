@@ -3401,6 +3401,16 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
     }
 
+    public static final ItemStack ELECTRIC_TABLE_SAW = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_TABLE_SAW)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_BARS.getKey())
+            .build();
+    static {
+        RebarItem.register(ElectricTableSaw.Item.class, ELECTRIC_TABLE_SAW, PylonKeys.ELECTRIC_TABLE_SAW);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_TABLE_SAW);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_TABLE_SAW)
+                .addButton(new MachineRecipesButton(ELECTRIC_TABLE_SAW, TableSawRecipe.RECIPE_TYPE));
+    }
+
     public static final ItemStack ELECTRIC_QUARRY = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_QUARRY)
             .build();
     static {
