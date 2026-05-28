@@ -2603,6 +2603,14 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
 
+  electric_quarry:
+    name: "Electric Quarry"
+    lore: |-
+      <arrow> Mines blocks in a large area
+      <arrow> <attr>Mining area:</attr> %mining-area%
+      <arrow> <attr>Speed:</attr> %speed%
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
   electric_pipe_bender:
     name: "Electric Pipe Bender"
     lore: |-

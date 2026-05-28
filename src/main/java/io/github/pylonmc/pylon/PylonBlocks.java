@@ -208,6 +208,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HEAT_EXCHANGER, Material.RED_NETHER_BRICK_WALL, HeatExchanger.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
         RebarBlock.register(PylonKeys.ELECTRIC_BRICK_MOLDER, Material.IRON_BLOCK, ElectricBrickMolder.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_QUARRY, Material.IRON_BLOCK, ElectricQuarry.class);
         RebarBlock.register(PylonKeys.ELECTRIC_PIPE_BENDER, Material.IRON_BLOCK, ElectricPipeBender.class);
         RebarBlock.register(PylonKeys.ELECTRIC_BREAKER, Material.DISPENSER, ElectricBreaker.class);
         RebarBlock.register(PylonKeys.ELECTRIC_FURNACE, Material.FURNACE, ElectricFurnace.class);

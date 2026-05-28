@@ -31,7 +31,14 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public abstract class GenericQuarry extends RebarBlock implements RebarMultiblock, RebarProcessor, RebarTickingBlock, RebarInventoryBlock, RebarVirtualInventoryBlock, RebarLogisticBlock {
+public abstract class GenericQuarry extends RebarBlock implements
+        RebarMultiblock,
+        RebarProcessor,
+        RebarTickingBlock,
+        RebarInventoryBlock,
+        RebarVirtualInventoryBlock,
+        RebarLogisticBlock,
+        RebarDirectionalBlock {
 
     public static final NamespacedKey INDEX_KEY = pylonKey("index");
     public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
@@ -50,6 +57,9 @@ public abstract class GenericQuarry extends RebarBlock implements RebarMultibloc
     @SuppressWarnings("unused")
     public GenericQuarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
+        setTickInterval(tickInterval);
+        setFacing(context.getFacing());
+
         WorldBorder border = block.getWorld().getWorldBorder();
         index = 0;
         blockPositions = new ArrayList<>();

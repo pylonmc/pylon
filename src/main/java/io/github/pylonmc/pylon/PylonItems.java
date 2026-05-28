@@ -3401,6 +3401,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
     }
 
+    public static final ItemStack ELECTRIC_QUARRY = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_QUARRY)
+            .build();
+    static {
+        RebarItem.register(ElectricQuarry.Item.class, ELECTRIC_QUARRY, PylonKeys.ELECTRIC_QUARRY);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_QUARRY);
+    }
+
     public static final ItemStack ELECTRIC_PIPE_BENDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_PIPE_BENDER)
             .build();
     static {

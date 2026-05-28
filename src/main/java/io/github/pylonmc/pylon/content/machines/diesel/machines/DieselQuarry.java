@@ -4,7 +4,6 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.generic.GenericQuarry;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -35,7 +34,6 @@ import org.joml.Vector3d;
 
 
 public class DieselQuarry extends GenericQuarry implements
-        RebarDirectionalBlock,
         RebarFluidBufferBlock {
 
     public final int dieselPerBlock = getSettings().getOrThrow("diesel-per-block", ConfigAdapter.INTEGER);
@@ -67,9 +65,6 @@ public class DieselQuarry extends GenericQuarry implements
     @SuppressWarnings("unused")
     public DieselQuarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
-        setTickInterval(tickInterval);
-        setFacing(context.getFacing());
 
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
