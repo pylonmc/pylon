@@ -271,15 +271,6 @@ item:
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
-  fluid_pipe_palladium:
-    name: "Palladium Fluid Pipe"
-    lore: |-
-      <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
-      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
-      <arrow> You can only connect pipes of the same type
-      <arrow> <attr>Fluid:</attr> %fluid_per_second%
-      <arrow> <attr>Temperatures:</attr> %temperatures%
-
   fluid_pipe_creative:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
@@ -375,16 +366,6 @@ item:
       <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
     waila: "Steel Portable Fluid Tank | %bars% (%fluid%)"
-
-  portable_fluid_tank_palladium:
-    name: "Palladium Portable Fluid Tank"
-    lore: |-
-      <arrow> Can be placed down and connected with pipes
-      <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
-      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Palladium Portable Fluid Tank | %bars% (%fluid%)"
 
   fluid_valve:
     name: "Fluid Valve"
@@ -783,12 +764,6 @@ item:
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
 
-  research_pack_4:
-    name: "Research Pack IV"
-    lore: |-
-      <arrow> <insn>Right click</insn> to open
-      <arrow> <attr>Research points:</attr> %points%
-
   rock_dust:
     name: "Rock Dust"
 
@@ -901,21 +876,6 @@ item:
   steel_sheet:
     name: "Steel Sheet"
 
-  palladium_dust:
-    name: "Palladium Dust"
-
-  palladium_ingot:
-    name: "Palladium Ingot"
-
-  palladium_nugget:
-    name: "Palladium Nugget"
-
-  palladium_block:
-    name: "Block of Palladium"
-
-  palladium_sheet:
-    name: "Palladium Sheet"
-
   charcoal_block:
     name: "Block of Charcoal"
 
@@ -965,14 +925,6 @@ item:
 
   health_talisman_ultimate:
     name: "Ultimate Health Talisman"
-    lore: |-
-      <arrow> Increases your maximum health
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Max health increase:</attr> %health-boost%
-
-  health_talisman_palladium:
-    name: "Palladium Health Talisman"
     lore: |-
       <arrow> Increases your maximum health
       <arrow> Does not stack
@@ -1322,12 +1274,6 @@ item:
 
   fluid_tank_casing_steel:
     name: "Steel Fluid Tank Casing"
-    lore: |-
-      <arrow> <attr>Capacity:</attr> %capacity%
-      <arrow> <attr>Temperatures:</attr> %temperatures%
-
-  fluid_tank_casing_palladium:
-    name: "Palladium Fluid Tank Casing"
     lore: |-
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
@@ -1908,14 +1854,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
-  farming_talisman_palladium:
-    name: "Palladium Farming Talisman"
-    lore: |-
-      <arrow> Get an extra drop when breaking a crop
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %extra_crop_chance%
-
   bartering_talisman_simple:
     name: "Simple Bartering Talisman"
     lore: |-
@@ -1934,14 +1872,6 @@ item:
 
   bartering_talisman_ultimate:
     name: "Ultimate Bartering Talisman"
-    lore: |-
-      <arrow> Don't consume items traded to piglins
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
-
-  bartering_talisman_palladium:
-    name: "Palladium Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Does not stack
@@ -1972,14 +1902,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
-  water_breathing_talisman_palladium:
-    name: "Palladium Water Breathing Talisman"
-    lore: |-
-      <arrow> Allows you to breathe longer underwater
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
-
   luck_talisman_simple:
     name: "Simple Luck Talisman"
     lore: |-
@@ -1998,14 +1920,6 @@ item:
 
   luck_talisman_ultimate:
     name: "Ultimate Luck Talisman"
-    lore: |-
-      <arrow> Increases your chances of looting higher quality items
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Bonus luck:</attr> %bonus_luck%
-
-  luck_talisman_palladium:
-    name: "Palladium Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Does not stack
@@ -2036,14 +1950,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
-  breeding_talisman_palladium:
-    name: "Palladium Breeding Talisman"
-    lore: |-
-      <arrow> Bred children grow up instantly
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %adult_chance%
-
   enchanting_talisman_simple:
     name: "Simple Enchanting Talisman"
     lore: |-
@@ -2062,14 +1968,6 @@ item:
 
   enchanting_talisman_ultimate:
     name: "Ultimate Enchanting Talisman"
-    lore: |-
-      <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %bonus_level_chance%
-
-  enchanting_talisman_palladium:
-    name: "Palladium Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2100,14 +1998,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
-  hunting_talisman_palladium:
-    name: "Palladium Hunting Talisman"
-    lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %bonus_item_chance%
-
   flight_ring:
     name: "Flight Ring"
     lore: |-
@@ -2132,14 +2022,6 @@ item:
 
   experience_talisman_ultimate:
     name: "Ultimate Experience Talisman"
-    lore: |-
-      <arrow> Boost your experience gain
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
-
-  experience_talisman_palladium:
-    name: "Palladium Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Does not stack
@@ -2266,59 +2148,8 @@ item:
   steel_hoe:
     name: "Steel Hoe"
 
-  palladium_helmet:
-    name: "Palladium Helmet"
-
-  palladium_chestplate:
-    name: "Palladium Chestplate"
-
-  palladium_leggings:
-    name: "Palladium Leggings"
-
-  palladium_boots:
-    name: "Palladium Boots"
-
-  palladium_sword:
-    name: "Palladium Sword"
-
-  palladium_axe:
-    name: "Palladium Axe"
-
-  palladium_pickaxe:
-    name: "Palladium Pickaxe"
-
-  palladium_shovel:
-    name: "Palladium Shovel"
-
-  palladium_hoe:
-    name: "Palladium Hoe"
-
   fine_sediment:
     name: "Fine Sediment"
-
-  palladium_condenser:
-    name: "Palladium Condenser"
-    lore: |-
-      <arrow> Condenses Shimmer Dust II into Palladium Dust using Diesel and Hydraulic Fluid
-      <arrow> Outputs dirty hydraulic fluid
-      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
-      <arrow> <attr>Shimmer Dust II per cycle:</attr> %shimmer-dust-per-cycle%
-      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
-      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
-      
-      <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:palladium_condenser/></yellow>
-      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
-      <diamond> 1x <yellow><item:pylon:item_output_hatch/></yellow>
-      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
-      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
-      <diamond> 6x <yellow><item:pylon:bronze_foundation/></yellow>
-      <diamond> 8x <yellow><item:pylon:steel_support_beam/></yellow>
-      <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
-      <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
-      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Palladium Condenser | %duration-if-any%"
-    waila_format: "| %duration%"
 
   crude_alloy_furnace:
     name: "Crude Alloy Furnace"
@@ -2427,19 +2258,6 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Contents:</attr> %contents%
     waila: "Steel Silo | %contents%"
-
-  palladium_silo:
-    name: "Palladium Silo"
-    lore: |-
-      <arrow> Stores one type of item
-      <arrow> Retains its contents when broken
-      <arrow> <insn>Right click</insn> to add one item
-      <arrow> <insn>Shift right click</insn> to add a stack
-      <arrow> <insn>Left click</insn> to remove one item
-      <arrow> <insn>Shift left click</insn> to remove a stack
-      <arrow> <attr>Capacity:</attr> %capacity%
-      <arrow> <attr>Contents:</attr> %contents%
-    waila: "Palladium Silo | %contents%"
 
   silo_converter:
     name: "Silo Converter"
@@ -2672,7 +2490,6 @@ fluid:
   tin: "<gray>Liquid Tin"
   water: "<blue>Water"
   steam: "<#d8d8d8>Steam"
-  palladium: "<#b642f5>Liquid Palladium"
   plant_oil: "<#c4b352>Plant Oil"
   hydraulic_fluid: "<#212d99>Hydraulic Fluid"
   dirty_hydraulic_fluid: "<#48459b>Dirty Hydraulic Fluid"
@@ -2781,10 +2598,6 @@ research:
   assembling: "<#846e5a>Assembling"
   steel_tools: "<gray>Steel tools"
   steel_armor: "<gray>Steel armor"
-  palladium_tools: "<#2937e3>Palladium tools"
-  palladium_armor: "<#2937e3>Palladium armor"
-  creative_flight: "<#2937e3>Creative flight"
-  palladium_production: "<#2937e3>Palladium Production"
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
@@ -2881,12 +2694,6 @@ guide:
           lore: ""
         diesel_machines:
           name: "Diesel Machines"
-          lore: ""
-        palladium:
-          name: "Palladium Age"
-          lore: ""
-        palladium_flight_ring:
-          name: "Palladium Flight Ring"
           lore: ""
       bloomery:
         bloomer:

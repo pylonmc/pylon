@@ -71,28 +71,6 @@ pylon:steel_block_from_steel_ingots:
   result: pylon:steel_block
   category: misc
 
-pylon:palladium_ingot_from_palladium_nuggets:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:palladium_nugget
-  result: pylon:palladium_ingot
-  category: misc
-  priority: -2
-
-pylon:palladium_block_from_palladium_ingots:
-  pattern:
-    - "NNN"
-    - "NNN"
-    - "NNN"
-  key:
-    N: pylon:palladium_ingot
-  result: pylon:palladium_block
-  category: misc
-  priority: -2
-
 pylon:charcoal_block_from_charcoal:
   pattern:
     - "NNN"
@@ -543,17 +521,6 @@ pylon:fluid_pipe_steel:
     pylon:fluid_pipe_steel: 8
   category: building
 
-pylon:fluid_pipe_palladium:
-  pattern:
-    - "PPP"
-    - "   "
-    - "PPP"
-  key:
-    P: pylon:palladium_sheet
-  result:
-    pylon:fluid_pipe_palladium: 8
-  category: building
-
 pylon:portable_fluid_tank_wood:
   pattern:
     - "CGC"
@@ -641,17 +608,6 @@ pylon:portable_fluid_tank_steel:
     C: pylon:steel_sheet
     G: minecraft:glass_pane
   result: pylon:portable_fluid_tank_steel
-  category: building
-
-pylon:portable_fluid_tank_palladium:
-  pattern:
-    - "CGC"
-    - "G G"
-    - "CGC"
-  key:
-    C: pylon:palladium_sheet
-    G: minecraft:glass_pane
-  result: pylon:portable_fluid_tank_palladium
   category: building
 
 pylon:fluid_tank:
@@ -752,17 +708,6 @@ pylon:fluid_tank_casing_steel:
     C: pylon:steel_sheet
     G: minecraft:glass_pane
   result: pylon:fluid_tank_casing_steel
-  category: building
-
-pylon:fluid_tank_casing_palladium:
-  pattern:
-    - "G G"
-    - "C C"
-    - "G G"
-  key:
-    C: pylon:palladium_sheet
-    G: minecraft:glass_pane
-  result: pylon:fluid_tank_casing_palladium
   category: building
 
 pylon:rotor:
@@ -2569,110 +2514,6 @@ pylon:steel_hoe:
     pylon:steel_hoe: 1
   category: equipment
 
-pylon:palladium_helmet:
-  pattern:
-    - "PPP"
-    - "P P"
-    - "   "
-  key:
-    P: pylon:palladium_ingot
-  result:
-    pylon:palladium_helmet: 1
-  category: equipment
-
-pylon:palladium_chestplate:
-  pattern:
-    - "P P"
-    - "PPP"
-    - "PPP"
-  key:
-    P: pylon:palladium_ingot
-  result:
-    pylon:palladium_chestplate: 1
-  category: equipment
-
-pylon:palladium_leggings:
-  pattern:
-    - "PPP"
-    - "P P"
-    - "P P"
-  key:
-    P: pylon:palladium_ingot
-  result:
-    pylon:palladium_leggings: 1
-  category: equipment
-
-pylon:palladium_boots:
-  pattern:
-    - "P P"
-    - "P P"
-    - "   "
-  key:
-    P: pylon:palladium_ingot
-  result:
-    pylon:palladium_boots: 1
-  category: equipment
-
-pylon:palladium_sword:
-  pattern:
-    - " P "
-    - " P "
-    - " S "
-  key:
-    P: pylon:palladium_ingot
-    S: minecraft:stick
-  result:
-    pylon:palladium_sword: 1
-  category: equipment
-
-pylon:palladium_axe:
-  pattern:
-    - "PP "
-    - "PS "
-    - " S "
-  key:
-    P: pylon:palladium_ingot
-    S: minecraft:stick
-  result:
-    pylon:palladium_axe: 1
-  category: equipment
-
-pylon:palladium_pickaxe:
-  pattern:
-    - "PPP"
-    - " S "
-    - " S "
-  key:
-    P: pylon:palladium_ingot
-    S: minecraft:stick
-  result:
-    pylon:palladium_pickaxe: 1
-  category: equipment
-
-pylon:palladium_shovel:
-  pattern:
-    - " P "
-    - " S "
-    - " S "
-  key:
-    P: pylon:palladium_ingot
-    S: minecraft:stick
-  result:
-    pylon:palladium_shovel: 1
-  category: equipment
-
-pylon:palladium_hoe:
-  pattern:
-    - "PP "
-    - " S "
-    - " S "
-  key:
-    P: pylon:palladium_ingot
-    S: minecraft:stick
-  result:
-    pylon:palladium_hoe: 1
-  category: equipment
-
 pylon:iron_support_beam:
   pattern:
     - " N "
@@ -2721,19 +2562,6 @@ pylon:potion_altar:
     R: pylon:bronze_block
     B: minecraft:blaze_rod
   result: pylon:potion_altar
-  category: building
-
-pylon:palladium_condenser:
-  pattern:
-    - "SNS"
-    - "SCS"
-    - "SNS"
-  key:
-    S: pylon:steel_sheet
-    N: minecraft:nether_star
-    C: pylon:diesel_core_drill
-  result:
-    pylon:palladium_condenser: 1
   category: building
 
 pylon:casting_unit:
@@ -2829,18 +2657,6 @@ pylon:steel_silo:
     S: pylon:steel_ingot
   result:
     pylon:steel_silo: 4
-  category: building
-
-pylon:palladium_silo:
-  pattern:
-    - " S "
-    - "SBS"
-    - " S "
-  key:
-    B: minecraft:barrel
-    S: pylon:palladium_ingot
-  result:
-    pylon:palladium_silo: 4
   category: building
 
 pylon:manual_hydraulic_purifier:

@@ -56,21 +56,6 @@ talismans_3:
     - pylon:hunting_talisman_ultimate
     - pylon:experience_talisman_ultimate
 
-talismans_4:
-  item: pylon:health_talisman_palladium
-  cost: 175
-  unlocks:
-    - pylon:health_talisman_palladium
-    - pylon:farming_talisman_palladium
-    - pylon:bartering_talisman_palladium
-    - pylon:water_breathing_talisman_palladium
-    - pylon:luck_talisman_palladium
-    - pylon:breeding_talisman_palladium
-    - pylon:water_breathing_talisman_palladium
-    - pylon:enchanting_talisman_palladium
-    - pylon:hunting_talisman_palladium
-    - pylon:experience_talisman_palladium
-
 drilling_1:
   item: pylon:subsurface_core_chunk
   cost: 5
@@ -178,11 +163,10 @@ silos_2:
     - pylon:bronze_silo
 
 silos_3:
-  item: pylon:bronze_silo
+  item: pylon:steel_silo
   cost: 15
   unlocks:
     - pylon:steel_silo
-    - pylon:palladium_silo
 
 pumps:
   item: pylon:water_pump
@@ -243,14 +227,6 @@ fluid_handling_4:
     - pylon:fluid_pipe_steel
     - pylon:portable_fluid_tank_steel
     - pylon:fluid_tank_casing_steel
-
-fluid_handling_5:
-  item: pylon:fluid_pipe_palladium
-  cost: 200
-  unlocks:
-    - pylon:fluid_pipe_palladium
-    - pylon:portable_fluid_tank_palladium
-    - pylon:fluid_tank_casing_palladium
 
 fluid_machines_1:
   item: pylon:fluid_filter
@@ -537,12 +513,6 @@ scientific_revolution_2:
   unlocks:
   - pylon:research_pack_3
 
-scientific_revolution_3:
-  item: pylon:research_pack_3
-  cost: 90
-  unlocks:
-    - pylon:research_pack_4
-
 components_1:
   item: pylon:bronze_drill_bit
   cost: 10
@@ -658,39 +628,3 @@ steel_armor:
     - pylon:steel_chestplate
     - pylon:steel_leggings
     - pylon:steel_boots
-
-palladium_tools:
-  item: pylon:palladium_sword
-  cost: 250
-  unlocks:
-    - pylon:palladium_sword
-    - pylon:palladium_axe
-    - pylon:palladium_pickaxe
-    - pylon:palladium_shovel
-    - pylon:palladium_hoe
-
-palladium_armor:
-  item: pylon:palladium_chestplate
-  cost: 250
-  unlocks:
-    - pylon:palladium_helmet
-    - pylon:palladium_chestplate
-    - pylon:palladium_leggings
-    - pylon:palladium_boots
-
-palladium_production:
-  item: pylon:palladium_ingot
-  cost: 150
-  unlocks:
-    - pylon:palladium_condenser
-    - pylon:palladium_nugget
-    - pylon:palladium_ingot
-    - pylon:palladium_block
-    - pylon:palladium_dust
-    - pylon:palladium_sheet
-
-creative_flight:
-  item: pylon:flight_ring
-  cost: 1000
-  unlocks:
-    - pylon:flight_ring

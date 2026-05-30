@@ -1,10 +1,5 @@
 package io.github.pylonmc.pylon;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
@@ -178,14 +173,6 @@ public final class PylonFluids {
     ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1410));
     static {
         STEEL.register();
-    }
-
-    public static final RebarFluid PALLADIUM = new RebarFluid(
-            pylonKey("palladium"),
-            Material.LIGHT_BLUE_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1555));
-    static {
-        PALLADIUM.register();
     }
 
     public static final RebarFluid SLURRY = new RebarFluid(
