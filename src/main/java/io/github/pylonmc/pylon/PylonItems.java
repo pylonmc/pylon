@@ -3401,6 +3401,16 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
     }
 
+    public static final ItemStack ELECTRIC_PRESS = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_PRESS)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COMPOSTER.getKey())
+            .build();
+    static {
+        RebarItem.register(ElectricPress.Item.class, ELECTRIC_PRESS, PylonKeys.ELECTRIC_PRESS);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_PRESS);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_PRESS)
+                .addButton(PressableItemsPage.getButton());
+    }
+
     public static final ItemStack ELECTRIC_TABLE_SAW = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_TABLE_SAW)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_BARS.getKey())
             .build();

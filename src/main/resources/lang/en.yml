@@ -2603,6 +2603,14 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
 
+  electric_press:
+    name: "Electric Press"
+    lore: |-
+      <arrow> Presses plants into plant oil
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Time per item:</attr> %time-per-item%
+    waila: "Electric Press | %plant-oil-bar%"
+
   electric_table_saw:
     name: "Electric Table Saw"
     lore: |-
