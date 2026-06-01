@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.generic;
 
 import io.github.pylonmc.pylon.recipes.TableSawRecipe;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -15,7 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-public abstract class GenericTableSaw extends GenericMachine<TableSawRecipe> implements RebarEntityHolderBlock {
+public abstract class GenericTableSaw extends GenericMachine<TableSawRecipe> implements EntityHolderRebarBlock {
 
     protected final ItemStackBuilder sawStack = ItemStackBuilder.of(Material.IRON_BARS)
             .addCustomModelDataString(getKey() + ":saw");

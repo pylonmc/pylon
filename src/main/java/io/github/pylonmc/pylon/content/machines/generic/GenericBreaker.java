@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.generic;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -26,14 +26,14 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public abstract class GenericBreaker extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
-        RebarEntityHolderBlock,
-        RebarTickingBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        DirectionalRebarBlock,
+        EntityHolderRebarBlock,
+        TickingRebarBlock,
         RebarMultiblock,
-        RebarLogisticBlock,
-        RebarProcessor {
+        LogisticRebarBlock,
+        ProcessorRebarBlock {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);

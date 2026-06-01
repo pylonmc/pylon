@@ -1,8 +1,13 @@
 package io.github.pylonmc.pylon.content.machines.generic;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -30,18 +35,18 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
  * A generic machine that has a GUI with one input slot and three output slots. The machine must have a setting called
- * "tick-interval" which determines how many ticks it takes to process a recipe. {@link RebarRecipeProcessor#setRecipeType(RecipeType)}
+ * "tick-interval" which determines how many ticks it takes to process a recipe. {@link RecipeProcessorRebarBlock#setRecipeType(RecipeType)}
  * must be called in the place constructor.
  *
  * @param <T> the type of recipe this machine processes. Assumed to have exactly one item input and at most three item outputs
  */
 public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<T>,
-        RebarDirectionalBlock {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<T>,
+        DirectionalRebarBlock {
 
     private static final NamespacedKey RESULTS_KEY = pylonKey("results");
     private static final PersistentDataType<?, List<ItemStack>> RESULTS_TYPE = RebarSerializers.LIST.listTypeFrom(RebarSerializers.ITEM_STACK);

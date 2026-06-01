@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.generic;
 
 import io.github.pylonmc.pylon.recipes.PipeBendingRecipe;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
-public abstract class GenericPipeBender extends GenericMachine<PipeBendingRecipe> implements RebarEntityHolderBlock {
+public abstract class GenericPipeBender extends GenericMachine<PipeBendingRecipe> implements EntityHolderRebarBlock {
 
     public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
 

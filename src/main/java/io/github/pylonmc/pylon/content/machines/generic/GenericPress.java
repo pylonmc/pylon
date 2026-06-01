@@ -3,9 +3,15 @@ package io.github.pylonmc.pylon.content.machines.generic;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -26,13 +32,13 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public abstract class GenericPress extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarFluidBufferBlock,
-        RebarRecipeProcessor<PressRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        FluidBufferRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe> {
 
     public final double timePerItem = getSettings().getOrThrow("time-per-item", ConfigAdapter.DOUBLE);
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
@@ -90,7 +96,7 @@ public abstract class GenericPress extends RebarBlock implements
     @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         double current = fluidAmount(fluid);
-        boolean output = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        boolean output = FluidBufferRebarBlock.super.setFluid(fluid, amount);
         if (amount < current) {
             tryStartRecipe();
         }
@@ -154,9 +160,9 @@ public abstract class GenericPress extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
