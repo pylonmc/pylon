@@ -2549,6 +2549,14 @@ item:
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
     waila: "Diesel Experience Bottler | %progressbar%"
 
+  tape_measure:
+    name: "Tape Measure"
+    lore: |-
+      <arrow> Measures the distance between two points
+      <arrow> <insn>Right click</insn> to start measuring
+      <arrow> <insn>Right click</insn> again to set the end point
+      <arrow> <insn>Left click</insn> to clear
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"

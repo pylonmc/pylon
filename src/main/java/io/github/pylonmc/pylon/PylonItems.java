@@ -1175,6 +1175,14 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(CONFETTI_POPPER);
     }
 
+    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.TAPE_MEASURE)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+    static {
+        RebarItem.register(TapeMeasure.class, TAPE_MEASURE, PylonKeys.TAPE_MEASURE);
+        PylonPages.TOOLS.addItem(TAPE_MEASURE);
+    }
+
     public static final ItemStack PALLADIUM_AXE = ItemStackBuilder.rebarToolWeapon(Material.DIAMOND_AXE, PylonKeys.PALLADIUM_AXE, RebarUtils.axeMineable(), true, true, true)
             .set(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments()
                     .add(Enchantment.EFFICIENCY, Settings.get(PylonKeys.PALLADIUM_AXE).getOrThrow("efficiency-level", ConfigAdapter.INTEGER))
