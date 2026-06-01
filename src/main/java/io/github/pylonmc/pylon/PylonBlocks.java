@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
-import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
@@ -14,9 +13,9 @@ import io.github.pylonmc.pylon.content.machines.electricity.ElectricityOutputHat
 import io.github.pylonmc.pylon.content.machines.electricity.ElectricityPylon;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
-import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
+import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -213,6 +212,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HEAT_EXCHANGER, Material.RED_NETHER_BRICK_WALL, HeatExchanger.class);
         RebarBlock.register(PylonKeys.ELECTRIC_GRINDSTONE, Material.SMOOTH_STONE, ElectricGrindstone.class);
         RebarBlock.register(PylonKeys.ELECTRIC_BRICK_MOLDER, Material.IRON_BLOCK, ElectricBrickMolder.class);
+        RebarBlock.register(PylonKeys.ELECTRIC_COMPRESSOR, Material.IRON_BLOCK, ElectricCompressor.class);
         RebarBlock.register(PylonKeys.ELECTRIC_PRESS, Material.IRON_BLOCK, ElectricPress.class);
         RebarBlock.register(PylonKeys.ELECTRIC_QUARRY, Material.IRON_BLOCK, ElectricQuarry.class);
         RebarBlock.register(PylonKeys.ELECTRIC_PIPE_BENDER, Material.IRON_BLOCK, ElectricPipeBender.class);

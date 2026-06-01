@@ -2488,6 +2488,13 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
 
+  electric_compressor:
+    name: "Electric Compressor"
+    lore: |-
+      <arrow> Performs hammer recipes
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Speed:</attr> %speed% hammering cycles per second
+
   electric_press:
     name: "Electric Press"
     lore: |-
@@ -2538,6 +2545,7 @@ fluid:
     melting-point: "Melting point: %temperature%"
   none: "None"
   water: "Water"
+  steam: "Steam"
   lava: "Lava"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"

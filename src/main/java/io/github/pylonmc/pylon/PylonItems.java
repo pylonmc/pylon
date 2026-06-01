@@ -3182,6 +3182,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
     }
 
+    public static final ItemStack ELECTRIC_COMPRESSOR = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_COMPRESSOR)
+            .build();
+    static {
+        RebarItem.register(ElectricCompressor.Item.class, ELECTRIC_COMPRESSOR, PylonKeys.ELECTRIC_COMPRESSOR);
+        PylonPages.ELECTRICITY.addItem(ELECTRIC_COMPRESSOR);
+    }
+
     public static final ItemStack ELECTRIC_PRESS = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_PRESS)
             .set(DataComponentTypes.ITEM_MODEL, Material.COMPOSTER.getKey())
             .build();
