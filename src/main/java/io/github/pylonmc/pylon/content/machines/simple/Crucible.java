@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.base.RebarCauldron;
 import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
 import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
 import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -20,6 +21,8 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -55,16 +58,15 @@ public final class Crucible extends RebarBlock implements
         FluidTankWithDisplayEntity,
         RebarDirectionalBlock,
         RebarCauldron,
-        RebarTickingBlock {
+        RebarTickingBlock,
+        RebarLogisticBlock {
 
     public final int capacity = getSettings().getOrThrow("capacity", ConfigAdapter.INTEGER);
     public final int smeltTime = getSettings().getOrThrow("smelt-time", ConfigAdapter.INTEGER);
 
-    private ItemStack processingType = null;
-    private int amount = 0;
+    private ItemStack crucibleContent = null;
 
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
-    private static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
 
     public static final Map<Material, Integer> VANILLA_BLOCK_HEAT_MAP = Settings.get(PylonKeys.CRUCIBLE).getOrThrow("vanilla-block-heat-map", ConfigAdapter.MAP.from(ConfigAdapter.MATERIAL, ConfigAdapter.INTEGER));
 
@@ -80,35 +82,33 @@ public final class Crucible extends RebarBlock implements
     @SuppressWarnings("unused")
     public Crucible(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        processingType = pdc.get(PROCESSING_KEY, RebarSerializers.ITEM_STACK);
-        amount = pdc.get(AMOUNT_KEY, RebarSerializers.INTEGER);
+        crucibleContent = pdc.get(PROCESSING_KEY, RebarSerializers.ITEM_STACK);
     }
 
     //region Inventory handling
     public int spaceAvailable() {
-        return capacity - amount;
+        return capacity - (crucibleContent != null ? crucibleContent.getAmount() : 0);
     }
 
     @Override
     public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         FluidTankWithDisplayEntity.super.onBreak(drops, context);
-        if (processingType == null || amount == 0) return;
+        if (crucibleContent == null) return;
 
-        int maxStack = processingType.getMaxStackSize();
-        int cycles = amount / maxStack;
-        int spare = amount % maxStack;
+        int maxStack = crucibleContent.getMaxStackSize();
+        int cycles = crucibleContent.getAmount() / maxStack;
+        int spare = crucibleContent.getAmount() % maxStack;
         for (int i = 0; i < cycles; i++) {
-            drops.add(processingType.asQuantity(maxStack));
+            drops.add(crucibleContent.asQuantity(maxStack));
         }
 
-        drops.add(processingType.asQuantity(spare));
+        drops.add(crucibleContent.asQuantity(spare));
     }
     //endregion
 
     @Override
     public void write(@NotNull PersistentDataContainer pdc) {
-        RebarUtils.setNullable(pdc, PROCESSING_KEY, RebarSerializers.ITEM_STACK, processingType);
-        pdc.set(AMOUNT_KEY, RebarSerializers.INTEGER, amount);
+        RebarUtils.setNullable(pdc, PROCESSING_KEY, RebarSerializers.ITEM_STACK, crucibleContent);
     }
 
     @Override
@@ -135,38 +135,37 @@ public final class Crucible extends RebarBlock implements
             return;
         }
 
-        int amount = Math.min(item.getAmount(), spaceAvailable());
-        if (amount == 0) {
-            return;
-        }
-
         if (priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
             return;
         }
 
-        if (processingType == null) {
-            this.processingType = item.asOne();
-            this.amount = amount;
+        int amount = Math.min(item.getAmount(), spaceAvailable());
+        if (amount == 0) {
+            return;
+        }
+
+        if (crucibleContent == null) {
+            this.crucibleContent = item.asOne();
+            this.crucibleContent.setAmount(amount);
             item.subtract(amount);
-        } else if (processingType.isSimilar(item)) {
-            this.amount += amount;
+        } else if (crucibleContent.isSimilar(item)) {
+            this.crucibleContent.add(amount);
             item.subtract(amount);
         }
     }
 
     public void clearInventory() {
-        this.processingType = null;
-        this.amount = 0;
+        this.crucibleContent = null;
     }
 
     public boolean tryDoRecipe() {
-        if (processingType == null || getHeatFactor() == null) {
+        if (crucibleContent == null || getHeatFactor() == null) {
             return false;
         }
 
         for (CrucibleRecipe recipe : CrucibleRecipe.RECIPE_TYPE.getRecipes()) {
-            if (recipe.matches(processingType)) {
+            if (recipe.matches(crucibleContent)) {
                 doRecipe(recipe);
                 return true;
             }
@@ -200,8 +199,8 @@ public final class Crucible extends RebarBlock implements
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
 
-        this.amount--;
-        if (amount == 0) {
+        this.crucibleContent.subtract();
+        if (crucibleContent.isEmpty()) {
             clearInventory();
         }
     }
@@ -224,11 +223,11 @@ public final class Crucible extends RebarBlock implements
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("item_info", processingType == null ?
+            RebarArgument.of("item_info", crucibleContent == null ?
                 Component.translatable("pylon.waila.crucible.item.empty") :
                 Component.translatable("pylon.waila.crucible.item.stored",
-                    RebarArgument.of("type", processingType.getData(DataComponentTypes.ITEM_NAME)),
-                    RebarArgument.of("amount", amount)
+                    RebarArgument.of("type", crucibleContent.getData(DataComponentTypes.ITEM_NAME)),
+                    RebarArgument.of("amount", crucibleContent.getAmount())
                 )),
 
             RebarArgument.of("liquid_info", getFluidType() == null ?
@@ -253,7 +252,7 @@ public final class Crucible extends RebarBlock implements
 
     @Override
     public int getTickInterval() {
-        if (processingType == null) {
+        if (crucibleContent == null) {
             return smeltTime; // minimize ticking when empty
         }
 
@@ -267,6 +266,39 @@ public final class Crucible extends RebarBlock implements
     }
 
     //endregion
+
+    @Override
+    public void postInitialise() {
+        createLogisticGroup("input", LogisticGroupType.INPUT, new LogisticSlot() {
+            @Override
+            public boolean canSet(@Nullable ItemStack stack, long amount) {
+                return stack != null && CrucibleRecipe.isValid(stack) && amount < getMaxAmount(stack);
+            }
+
+            @Override
+            public @Nullable ItemStack getItemStack() {
+                return crucibleContent;
+            }
+
+            @Override
+            public long getAmount() {
+                return crucibleContent != null ? crucibleContent.getAmount() : 0;
+            }
+
+            @Override
+            public long getMaxAmount(@NotNull ItemStack stack) {
+                return CrucibleRecipe.isValid(stack) ? stack.getMaxStackSize() : 0;
+            }
+
+            @Override
+            public void set(@Nullable ItemStack stack, long amount) {
+                crucibleContent = stack;
+                if (stack != null && amount < getMaxAmount(stack)) {
+                    crucibleContent.setAmount((int) amount);
+                }
+            }
+        });
+    }
 
     //region Heat handling
     public interface HeatedBlock extends Keyed {

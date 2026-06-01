@@ -9,9 +9,8 @@ import io.github.pylonmc.rebar.recipe.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.registry.RegistryHandler;
-import lombok.Builder;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,27 +26,24 @@ public class Slurry extends RebarFluid implements RegistryHandler {
     @Getter
     private final int amount;
 
-
-    public Slurry(@NotNull NamespacedKey key, @NotNull Component name, @NotNull ItemStack slurryStack, @NotNull List<RebarFluidTag> tags, int amount) {
-        super(key, name, Material.LIGHT_GRAY_CONCRETE, tags);
-        this.amount = amount;
-        this.slurryStack = slurryStack;
-    }
-    
-    public Slurry(@NotNull NamespacedKey key, @NotNull Component name, @NotNull ItemStack slurryStack, @NotNull List<RebarFluidTag> tags) {
-        super(key, name, Material.LIGHT_GRAY_CONCRETE, tags);
+    public Slurry(
+            @NotNull NamespacedKey key,
+            @NotNull TextColor color,
+            @NotNull ItemStack slurryStack,
+            @NotNull RebarFluidTag @NotNull ... tags
+    ) {
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
         this.amount = 1000;
         this.slurryStack = slurryStack;
     }
 
-    public Slurry(@NotNull NamespacedKey key, @NotNull ItemStack slurryStack, @NotNull RebarFluidTag @NotNull ... tags) {
-        super(key, Material.LIGHT_GRAY_CONCRETE, tags);
-        this.amount = 1000;
-        this.slurryStack = slurryStack;
-    }
-
-    public Slurry(@NotNull NamespacedKey key, @NotNull ItemStack slurryStack, int amount, @NotNull RebarFluidTag @NotNull ... tags) {
-        super(key, Material.LIGHT_GRAY_CONCRETE, tags);
+    public Slurry(
+            @NotNull NamespacedKey key,
+            @NotNull TextColor color,
+            @NotNull ItemStack slurryStack,
+            int amount,
+            @NotNull RebarFluidTag @NotNull ... tags) {
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
         this.amount = amount;
         this.slurryStack = slurryStack;
     }

@@ -180,7 +180,6 @@ public class Kiln extends RebarBlock implements
         Furnace furnace = (Furnace) getBlock().getBlockData();
         furnace.setLit(fuelTicksRemaining > 0);
         getBlock().setBlockData(furnace);
-        refreshBlockTextureItem();
 
         int level = Math.clamp((int) Math.round(15 * temperature / maxTemperature), 0, 15);
         Block light = getLight();

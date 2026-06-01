@@ -15,6 +15,10 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
+import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
+import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
@@ -34,7 +38,6 @@ import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
-import io.github.pylonmc.pylon.guide.SmelteryBurnerFuelsPage;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -44,7 +47,6 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.guide.button.MachineRecipesButton;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.*;
@@ -58,9 +60,6 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.recipe.CraftingBookCategory;
-import org.bukkit.potion.PotionType;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -915,7 +914,7 @@ public final class PylonItems {
         RebarItem.register(Hammer.class, STONE_HAMMER);
         PylonPages.TOOLS.addItem(STONE_HAMMER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.STONE_HAMMER)
-                .addButton(new MachineRecipesButton(STONE_HAMMER, HammerRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack IRON_HAMMER = ItemStackBuilder.rebarWeapon(Material.IRON_PICKAXE, PylonKeys.IRON_HAMMER, true, true, false)
@@ -927,7 +926,7 @@ public final class PylonItems {
         RebarItem.register(Hammer.class, IRON_HAMMER);
         PylonPages.TOOLS.addItem(IRON_HAMMER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.IRON_HAMMER)
-                .addButton(new MachineRecipesButton(IRON_HAMMER, HammerRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
@@ -939,7 +938,7 @@ public final class PylonItems {
         RebarItem.register(Hammer.class, DIAMOND_HAMMER);
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIAMOND_HAMMER)
-                .addButton(new MachineRecipesButton(DIAMOND_HAMMER, HammerRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
@@ -1058,7 +1057,7 @@ public final class PylonItems {
         RebarItem.register(BrickMold.class, BRICK_MOLD);
         PylonPages.TOOLS.addItem(BRICK_MOLD);
         RebarGuide.getOrCreateInfoPage(PylonKeys.BRICK_MOLD)
-                .addButton(new MachineRecipesButton(BRICK_MOLD, MoldingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(MoldingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack TONGS = ItemStackBuilder.rebar(Material.SHEARS, PylonKeys.TONGS)
@@ -1749,7 +1748,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, GRINDSTONE, PylonKeys.GRINDSTONE);
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.GRINDSTONE)
-                .addButton(new MachineRecipesButton(GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack GRINDSTONE_HANDLE = ItemStackBuilder.rebar(Material.OAK_FENCE, PylonKeys.GRINDSTONE_HANDLE)
@@ -1765,7 +1764,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, CRUDE_ALLOY_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE);
         PylonPages.SIMPLE_MACHINES.addItem(CRUDE_ALLOY_FURNACE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.CRUDE_ALLOY_FURNACE)
-                .addButton(new MachineRecipesButton(CRUDE_ALLOY_FURNACE, CrudeAlloyFurnaceRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(CrudeAlloyFurnaceRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack MIXING_POT = ItemStackBuilder.rebar(Material.CAULDRON, PylonKeys.MIXING_POT)
@@ -1774,7 +1773,7 @@ public final class PylonItems {
         RebarItem.register(MixingPot.MixingPotItem.class, MIXING_POT, PylonKeys.MIXING_POT);
         PylonPages.SIMPLE_MACHINES.addItem(MIXING_POT);
         RebarGuide.getOrCreateInfoPage(PylonKeys.MIXING_POT)
-                .addButton(new MachineRecipesButton(MIXING_POT, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack MANUAL_CORE_DRILL_LEVER = ItemStackBuilder.rebar(Material.LEVER, PylonKeys.MANUAL_CORE_DRILL_LEVER)
@@ -1820,7 +1819,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, CRUCIBLE, PylonKeys.CRUCIBLE);
         PylonPages.SIMPLE_MACHINES.addItem(CRUCIBLE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.CRUCIBLE)
-                .addButton(new MachineRecipesButton(CRUCIBLE, CrucibleRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(CrucibleRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack FLUID_STRAINER = ItemStackBuilder.rebar(Material.COPPER_GRATE, PylonKeys.FLUID_STRAINER)
@@ -1829,7 +1828,7 @@ public final class PylonItems {
         RebarItem.register(FluidStrainer.Item.class, FLUID_STRAINER, PylonKeys.FLUID_STRAINER);
         PylonPages.FLUID_MACHINES.addItem(FLUID_STRAINER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.FLUID_STRAINER)
-                .addButton(new MachineRecipesButton(FLUID_STRAINER, StrainingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(StrainingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack VACUUM_HOPPER_1 = ItemStackBuilder.rebar(Material.HOPPER, PylonKeys.VACUUM_HOPPER_1)
@@ -1873,7 +1872,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, SHIMMER_ALTAR, PylonKeys.SHIMMER_ALTAR);
         PylonPages.SIMPLE_MACHINES.addItem(SHIMMER_ALTAR);
         RebarGuide.getOrCreateInfoPage(PylonKeys.SHIMMER_ALTAR)
-                .addButton(new MachineRecipesButton(SHIMMER_ALTAR, ShimmerAltarRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(ShimmerAltarRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack COLLIMATOR = ItemStackBuilder.rebar(Material.OBSIDIAN, PylonKeys.COLLIMATOR)
@@ -1954,7 +1953,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, KILN, PylonKeys.KILN);
         PylonPages.SMELTING.addItem(KILN);
         RebarGuide.getOrCreateInfoPage(PylonKeys.KILN)
-                .addButton(new MachineRecipesButton(KILN, KilnRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(KilnRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack BLOOMERY = ItemStackBuilder.rebar(Material.MAGMA_BLOCK, PylonKeys.BLOOMERY)
@@ -2004,8 +2003,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SMELTERY_BURNER, PylonKeys.SMELTERY_BURNER);
         PylonPages.SMELTING.addItem(SMELTERY_BURNER);
-        RebarGuide.getOrCreateInfoPage(PylonKeys.SMELTERY_BURNER)
-                .addButton(SmelteryBurnerFuelsPage.getButton());
     }
 
     public static final ItemStack DIESEL_SMELTERY_HEATER = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.DIESEL_SMELTERY_HEATER)
@@ -2474,7 +2471,7 @@ public final class PylonItems {
         RebarItem.register(HydraulicPipeBender.Item.class, HYDRAULIC_PIPE_BENDER, PylonKeys.HYDRAULIC_PIPE_BENDER);
         PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_PIPE_BENDER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.HYDRAULIC_PIPE_BENDER)
-                .addButton(new MachineRecipesButton(HYDRAULIC_PIPE_BENDER, PipeBendingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(PipeBendingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack HYDRAULIC_TABLE_SAW = ItemStackBuilder.rebar(Material.WAXED_CUT_COPPER, PylonKeys.HYDRAULIC_TABLE_SAW)
@@ -2483,7 +2480,7 @@ public final class PylonItems {
         RebarItem.register(HydraulicTableSaw.Item.class, HYDRAULIC_TABLE_SAW, PylonKeys.HYDRAULIC_TABLE_SAW);
         PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_TABLE_SAW);
         RebarGuide.getOrCreateInfoPage(PylonKeys.HYDRAULIC_TABLE_SAW)
-                .addButton(new MachineRecipesButton(HYDRAULIC_TABLE_SAW, TableSawRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(TableSawRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack HYDRAULIC_FARMER = ItemStackBuilder.rebar(Material.WAXED_EXPOSED_COPPER_BULB, PylonKeys.HYDRAULIC_FARMER)
@@ -2709,7 +2706,7 @@ public final class PylonItems {
         RebarItem.register(DieselGrindstone.Item.class, DIESEL_GRINDSTONE, PylonKeys.DIESEL_GRINDSTONE);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_GRINDSTONE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIESEL_GRINDSTONE)
-                .addButton(new MachineRecipesButton(DIESEL_GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack DIESEL_MIXING_ATTACHMENT = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_MIXING_ATTACHMENT)
@@ -2744,7 +2741,7 @@ public final class PylonItems {
         RebarItem.register(DieselPipeBender.Item.class, DIESEL_PIPE_BENDER, PylonKeys.DIESEL_PIPE_BENDER);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_PIPE_BENDER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIESEL_PIPE_BENDER)
-                .addButton(new MachineRecipesButton(DIESEL_PIPE_BENDER, PipeBendingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(PipeBendingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack DIESEL_TABLE_SAW = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_TABLE_SAW)
@@ -2754,7 +2751,7 @@ public final class PylonItems {
         RebarItem.register(DieselTableSaw.Item.class, DIESEL_TABLE_SAW, PylonKeys.DIESEL_TABLE_SAW);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_TABLE_SAW);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIESEL_TABLE_SAW)
-                .addButton(new MachineRecipesButton(DIESEL_TABLE_SAW, TableSawRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(TableSawRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack DIESEL_QUARRY = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_QUARRY)
@@ -2786,7 +2783,7 @@ public final class PylonItems {
         RebarItem.register(DieselBrickMolder.Item.class, DIESEL_BRICK_MOLDER, PylonKeys.DIESEL_BRICK_MOLDER);
         PylonPages.DIESEL_MACHINES.addItem(DIESEL_BRICK_MOLDER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIESEL_BRICK_MOLDER)
-                .addButton(new MachineRecipesButton(DIESEL_BRICK_MOLDER, MoldingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(MoldingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack DIESEL_CORE_DRILL = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.DIESEL_CORE_DRILL)
@@ -3010,18 +3007,69 @@ public final class PylonItems {
     static {
         RebarItem.register(CleansingPotion.class, CLEANSING_POTION);
         PylonPages.TOOLS.addItem(CLEANSING_POTION);
+    }
 
-        // This recipe isn't configured because we currently have no way to set the healing potion data on it
-        ItemStack healingPotion = ItemStackBuilder.of(Material.SPLASH_POTION)
-                .set(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
-                        .potion(PotionType.HEALING)
-                        .build())
-                .build();
-        ShapelessRecipe recipe = new ShapelessRecipe(PylonKeys.CLEANSING_POTION, CLEANSING_POTION)
-                .addIngredient(healingPotion)
-                .addIngredient(DISINFECTANT);
-        recipe.setCategory(CraftingBookCategory.MISC);
-        RecipeType.VANILLA_SHAPELESS.addRecipe(recipe);
+    public static final ItemStack EXPERIENCE_DRAIN = ItemStackBuilder.rebar(Material.BLACKSTONE_SLAB, PylonKeys.EXPERIENCE_DRAIN)
+            .build();
+    static {
+        RebarItem.register(ExperienceDrain.Item.class, EXPERIENCE_DRAIN, PylonKeys.EXPERIENCE_DRAIN);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_DRAIN);
+    }
+
+    public static final ItemStack EXPERIENCE_FOUNTAIN = ItemStackBuilder.rebar(Material.END_STONE, PylonKeys.EXPERIENCE_FOUNTAIN)
+            .build();
+    static {
+        RebarItem.register(ExperienceFountain.Item.class, EXPERIENCE_FOUNTAIN, PylonKeys.EXPERIENCE_FOUNTAIN);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_FOUNTAIN);
+    }
+
+    public static final ItemStack EXPERIENCE_FOUNTAIN_SPOUT = ItemStackBuilder.rebar(Material.END_ROD, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, EXPERIENCE_FOUNTAIN_SPOUT, PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT);
+        PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_FOUNTAIN_SPOUT);
+    }
+
+    public static final ItemStack HYDRAULIC_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER)
+            .build();
+    static {
+        RebarItem.register(FluidExperienceBottler.Item.class, HYDRAULIC_EXPERIENCE_BOTTLER, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER);
+        PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_EXPERIENCE_BOTTLER);
+    }
+
+    public static final ItemStack DIESEL_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.DIESEL_EXPERIENCE_BOTTLER)
+            .build();
+    static {
+        RebarItem.register(FluidExperienceBottler.Item.class, DIESEL_EXPERIENCE_BOTTLER, PylonKeys.DIESEL_EXPERIENCE_BOTTLER);
+        PylonPages.DIESEL_MACHINES.addItem(DIESEL_EXPERIENCE_BOTTLER);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE_SUPER = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE_SUPER)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE_SUPER);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE_SUPER);
+    }
+
+    public static final ItemStack LIQUID_XP_BOTTLE_ULTRA = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE_ULTRA)
+            .build();
+    static {
+        RebarItem.register(LiquidXPBottle.class, LIQUID_XP_BOTTLE_ULTRA);
+        PylonPages.MAGIC.addItem(LIQUID_XP_BOTTLE_ULTRA);
+    }
+
+    public static final ItemStack SLEEPING_BAG = ItemStackBuilder.rebar(Material.RED_BED, PylonKeys.SLEEPING_BAG)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SLEEPING_BAG, PylonKeys.SLEEPING_BAG);
+        PylonPages.MISCELLANEOUS.addItem(SLEEPING_BAG);
     }
 
     // <editor-fold desc="Electricity" defaultstate=collapsed>

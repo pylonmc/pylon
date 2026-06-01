@@ -65,7 +65,7 @@ public record MoldingRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', new ItemButton(input))
-                .addIngredient('m', new ItemButton(ItemStackBuilder.of(PylonItems.BRICK_MOLD)
+                .addIngredient('m', new ItemButton(ItemStackBuilder.of(PylonItems.BRICK_MOLD.clone())
                         .clearLore()
                         .lore(Component.translatable("pylon.guide.recipe.molding")
                                 .arguments(RebarArgument.of("molding-cycles", moldingCycles)))

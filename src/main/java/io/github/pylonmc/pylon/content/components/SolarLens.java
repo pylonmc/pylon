@@ -50,9 +50,4 @@ public class SolarLens extends RebarBlock implements RebarMultiblock {
     public boolean isPartOfMultiblock(@NotNull Block otherBlock) {
         return adjacentBlocks.contains(new BlockPosition(otherBlock));
     }
-
-    @Override
-    public void onMultiblockRefreshed() {
-        refreshBlockTextureItem();
-    }
 }

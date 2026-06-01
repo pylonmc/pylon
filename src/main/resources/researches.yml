@@ -84,7 +84,6 @@ smelting_1:
   item: pylon:smeltery_controller
   cost: 5
   unlocks:
-  - pylon:crude_alloy_kiln
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -318,6 +317,7 @@ hydraulic_machines:
     - pylon:hydraulic_breaker
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
+    - pylon:hydraulic_experience_bottler
 
 manual_hydraulic_purification:
   item: pylon:manual_hydraulic_purifier
@@ -478,6 +478,7 @@ diesel_machines:
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
     - pylon:diesel_refueling_station
+    - pylon:diesel_experience_bottler
 
 diesel_production:
   item: pylon:biorefinery
@@ -536,7 +537,6 @@ components_1:
   - pylon:item_input_hatch
   - pylon:item_output_hatch
   - pylon:iron_support_beam
-  - pylon:bronze_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
   - pylon:copper_framed_glass
@@ -628,3 +628,14 @@ steel_armor:
     - pylon:steel_chestplate
     - pylon:steel_leggings
     - pylon:steel_boots
+
+experience_liquefaction:
+  item: pylon:experience_fountain
+  cost: 10
+  unlocks:
+    - pylon:experience_fountain
+    - pylon:experience_fountain_spout
+    - pylon:experience_drain
+    - pylon:liquid_xp_bottle
+    - pylon:liquid_xp_bottle_super
+    - pylon:liquid_xp_bottle_ultra

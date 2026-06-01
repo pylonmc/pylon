@@ -1,46 +1,20 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
-import net.kyori.adventure.text.Component;
-
-import org.bukkit.Keyed;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
-
-import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.Map;
 import kotlin.Pair;
-import org.bukkit.Keyed;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Furnace;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryBurner extends SmelteryComponent implements
         RebarInventoryBlock,
@@ -48,18 +22,6 @@ public final class SmelteryBurner extends SmelteryComponent implements
         RebarTickingBlock,
         RebarLogisticBlock,
         RebarProcessor {
-
-    public static final NamespacedKey FUELS_KEY = pylonKey("smeltery_burner_fuels");
-    public static final RebarRegistry<Fuel> FUELS = new RebarRegistry<>(FUELS_KEY);
-
-    static {
-        RebarRegistry.addRegistry(FUELS);
-    }
-
-    private static final NamespacedKey FUEL_KEY = pylonKey("fuel");
-    private static final PersistentDataType<?, Fuel> FUEL_TYPE = RebarSerializers.KEYED.keyedTypeFrom(Fuel.class, FUELS::getOrThrow);
-
-    private @Nullable Fuel fuel;
 
     private final VirtualInventory fuelInventory = new VirtualInventory(3);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();
@@ -69,32 +31,23 @@ public final class SmelteryBurner extends SmelteryComponent implements
         super(block, context);
 
         setTickInterval(SmelteryController.TICK_INTERVAL);
-
-        fuel = null;
     }
 
     @SuppressWarnings("unused")
     public SmelteryBurner(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-
-        fuel = pdc.get(FUEL_KEY, FUEL_TYPE);
-    }
-
-    @Override
-    public void write(@NotNull PersistentDataContainer pdc) {
-        RebarUtils.setNullable(pdc, FUEL_KEY, FUEL_TYPE, fuel);
     }
 
     @Override
     public void postInitialise() {
         setProcessProgressItem(progressItem);
-        createLogisticGroup("fuel", LogisticGroupType.INPUT, fuelInventory);
+        createLogisticGroup("fuel", LogisticGroupType.BOTH, fuelInventory);
     }
 
     @Override
     public @NotNull Map<String, Pair<String, Integer>> getBlockTextureProperties() {
         var properties = super.getBlockTextureProperties();
-        properties.put("lit", new Pair<>(String.valueOf(fuel != null), 2));
+        properties.put("lit", new Pair<>(String.valueOf(isProcessing()), 2));
         return properties;
     }
 
@@ -115,17 +68,6 @@ public final class SmelteryBurner extends SmelteryComponent implements
                 .build();
     }
 
-    private void tryStartProcessing() {
-        for (Fuel fuel : FUELS) {
-            if (fuelInventory.removeFirstSimilar(new MachineUpdateReason(), 1, fuel.material()) > 0) {
-                this.fuel = fuel;
-                startProcess(fuel.burnTimeSeconds() * 20);
-                refreshBlockTextureItem();
-                return;
-            }
-        }
-    }
-
     @Override
     public void tick() {
         progressProcess(getTickInterval());
@@ -135,63 +77,53 @@ public final class SmelteryBurner extends SmelteryComponent implements
             return;
         }
 
-        if (!isProcessing()) {
-            tryStartProcessing();
+        if (this.isProcessing()) {
+            controller.heatAsymptotically(1100); //Hardcoded temperature for now. Add custom fuels with higher temperatures later?
+            return;
         }
 
-        if (!isProcessing()) return;
+        for (int i = 0; i < fuelInventory.getSize(); i++) {
+            ItemStack item = fuelInventory.getItem(i);
+            if (item == null) {
+                continue;
+            }
 
-        progressProcess(getTickInterval());
+            ItemType itemType = item.getType().asItemType();
+            if (itemType == null || !itemType.isFuel()) {
+                continue;
+            }
 
-        if (fuel != null) {
-            controller.heatAsymptotically(fuel.temperature);
-            return;
+            if (itemType.getCraftingRemainingItem() != null) {
+                ItemStack remainder = itemType.getCraftingRemainingItem().createItemStack();
+                if (!fuelInventory.canHold(remainder)) {
+                    continue;
+                }
+                fuelInventory.setItem(null, i, item.subtract());
+                fuelInventory.addItem(null, remainder);
+            } else {
+                fuelInventory.setItem(null, i, item.subtract());
+            }
+
+            startProcess(itemType.getBurnDuration() / 2);
+            Furnace furnace = (Furnace) getBlock().getBlockData();
+            furnace.setLit(true);
+            getBlock().setBlockData(furnace);
+            refreshBlockTextureItem();
+
+            break;
         }
     }
 
     @Override
     public void onProcessFinished() {
+        Furnace furnace = (Furnace) getBlock().getBlockData();
+        furnace.setLit(false);
+        getBlock().setBlockData(furnace);
         refreshBlockTextureItem();
-        fuel = null;
-        tryStartProcessing();
     }
 
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
         return Map.of("fuels", fuelInventory);
-    }
-
-    // TODO display fuels
-    public record Fuel(
-            @NotNull NamespacedKey key,
-            @NotNull ItemStack material,
-            double temperature,
-            int burnTimeSeconds
-    ) implements Keyed {
-        @Override
-        public @NotNull NamespacedKey getKey() {
-            return key;
-        }
-    }
-
-    static {
-        FUELS.register(new Fuel(
-                pylonKey("coal"),
-                new ItemStack(Material.COAL),
-                1100,
-                30
-        ));
-        FUELS.register(new Fuel(
-                pylonKey("coal_dust"),
-                PylonItems.COAL_DUST,
-                1100,
-                30
-        ));
-        FUELS.register(new Fuel(
-                pylonKey("charcoal"),
-                new ItemStack(Material.CHARCOAL),
-                1100,
-                30
-        ));
     }
 }

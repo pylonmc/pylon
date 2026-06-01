@@ -138,3 +138,9 @@ pylon:forming_table:
     - minecraft:crafting_table
     - minecraft:clay_ball
   result: pylon:forming_table
+
+pylon:cleansing_potion:
+  ingredients:
+    - minecraft:potion[potion_contents={potion:"healing"}]: 1
+    - pylon:disinfectant: 1
+  result: pylon:cleansing_potion

@@ -442,6 +442,18 @@ public class PylonKeys {
     public static final NamespacedKey FINE_SEDIMENT = pylonKey("fine_sediment");
     public static final NamespacedKey SLAG = pylonKey("slag");
 
+    public static final NamespacedKey EXPERIENCE_DRAIN = pylonKey("experience_drain");
+    public static final NamespacedKey EXPERIENCE_FOUNTAIN =  pylonKey("experience_fountain");
+    public static final NamespacedKey EXPERIENCE_FOUNTAIN_SPOUT = pylonKey("experience_fountain_spout");
+    public static final NamespacedKey HYDRAULIC_EXPERIENCE_BOTTLER = pylonKey("hydraulic_experience_bottler");
+    public static final NamespacedKey DIESEL_EXPERIENCE_BOTTLER = pylonKey("diesel_experience_bottler");
+
+    public static final NamespacedKey LIQUID_XP_BOTTLE = pylonKey("liquid_xp_bottle");
+    public static final NamespacedKey LIQUID_XP_BOTTLE_SUPER = pylonKey("liquid_xp_bottle_super");
+    public static final NamespacedKey LIQUID_XP_BOTTLE_ULTRA = pylonKey("liquid_xp_bottle_ultra");
+
+    public static final NamespacedKey SLEEPING_BAG = pylonKey("sleeping_bag");
+
     public static final NamespacedKey ELECTRICITY_PYLON = pylonKey("electricity_pylon");
     public static final NamespacedKey CAPACITOR_1_KJ = pylonKey("capacitor_1_kj");
     public static final NamespacedKey MULTIMETER = pylonKey("multimeter");

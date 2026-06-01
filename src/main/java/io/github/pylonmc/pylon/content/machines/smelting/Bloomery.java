@@ -125,7 +125,7 @@ public final class Bloomery extends RebarBlock implements
         ItemStack stack = itemDisplay.getItemStack();
         if (stack.getType().isAir()) return;
 
-        if (stack.isSimilar(PylonItems.SPONGE_IRON)) {
+        if (RebarItem.isRebarItem(stack, PylonKeys.SPONGE_IRON)) {
             IronBloom bloom = new IronBloom(PylonItems.IRON_BLOOM.clone());
             bloom.setTemperature(0);
             bloom.setWorking(ThreadLocalRandom.current().nextInt(IronBloom.MIN_WORKING, IronBloom.MAX_WORKING + 1));
@@ -199,12 +199,12 @@ public final class Bloomery extends RebarBlock implements
             Item gypsum = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
                     .filter(Item.class::isInstance)
                     .map(Item.class::cast)
-                    .filter(item -> item.getItemStack().isSimilar(PylonItems.GYPSUM_DUST))
+                    .filter(item -> RebarItem.isRebarItem(item.getItemStack(), PylonKeys.GYPSUM_DUST))
                     .findFirst()
                     .orElse(null);
             if (gypsum == null) return;
 
-            if (!Research.canPlayerUse(event.getPlayer(), RebarItemSchema.fromStack(PylonItems.BLOOMERY), true)) {
+            if (!Research.canPlayerUse(event.getPlayer(), PylonKeys.BLOOMERY, true)) {
                 event.setCancelled(true);
                 return;
             }

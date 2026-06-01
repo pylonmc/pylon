@@ -204,7 +204,9 @@ public class PylonUtils {
 
     private static final Map<Material, Material> BLOCK_ITEM_FALLBACK = Map.of(
         Material.FIRE, Material.FLINT_AND_STEEL,
-        Material.SOUL_FIRE, Material.FLINT_AND_STEEL
+        Material.SOUL_FIRE, Material.FLINT_AND_STEEL,
+        Material.LAVA, Material.LAVA_BUCKET,
+        Material.WATER, Material.WATER_BUCKET
     );
 
     /**

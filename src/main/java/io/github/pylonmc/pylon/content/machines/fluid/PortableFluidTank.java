@@ -160,11 +160,15 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     @Override
     public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
-        return getPickItem();
+        return getDrop();
     }
 
     @Override
-    public @Nullable ItemStack getPickItem() {
+    public @Nullable ItemStack getPickItem(@NotNull Player player) {
+        return getDrop();
+    }
+
+    public ItemStack getDrop() {
         // TODO implement clone for RebarItem and just clone it
         ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItemStack();
 

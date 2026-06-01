@@ -25,13 +25,8 @@ jobs:
         id: parseref
         if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, '[ref:')
         run: |
-          if [ -z "${{github.event.pull_request.title}}" ] then
-              echo "ref=master" >> $GITHUB_OUTPUT
-          else
-            prefixrm=$(echo "${{github.event.pull_request.title}}" | cut -c6-)
-            finalref=$(echo "$prefixrm" | cut -d']' -f1)
-            echo "ref=$finalref" >> $GITHUB_OUTPUT
-          fi
+          PARSED_REF=$(echo "${{ github.event.pull_request.title }}" | sed -n 's/.*\[ref:\([^]]*\)\].*/\1/p')
+          echo "ref=$PARSED_REF" >> $GITHUB_OUTPUT
 
       - name: Set up JDK 25
         uses: actions/setup-java@v5
@@ -51,7 +46,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: 'pylonmc/rebar'
-          ref: ${{steps.rebarcommit.outputs.commit}}
+          ref: ${{steps.rebarcommit.outputs.ref}} # empty string if ref not found falls back to master
           path: 'parallel-dev-repo/rebar'
 
       - name: Clone pylon

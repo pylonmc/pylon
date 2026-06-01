@@ -45,11 +45,11 @@ public final class SmelteryHopper extends SmelteryComponent implements
         createLogisticGroup(
                 "input",
                 LogisticGroupType.INPUT,
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 0),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 1),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 2),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 3),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 4)
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 0),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 1),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 2),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 3),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 4)
         );
     }
 
@@ -89,6 +89,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
             if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();
+                break;
             }
         }
     }

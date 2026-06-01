@@ -172,7 +172,7 @@ public final class BronzeAnvil extends RebarBlock implements
         if (temperature == 0) {
             player.swingHand(EquipmentSlot.HAND);
             return;
-        } else if (item.isSimilar(PylonItems.TONGS)) {
+        } else if (RebarItem.isRebarItem(item, PylonKeys.TONGS)) {
             workingChange -= temperature;
             getBlock().getWorld().playSound(TONGS_SOUND, player);
         } else if (RebarItem.fromStack(item, Hammer.class) instanceof Hammer hammer) {
@@ -209,7 +209,7 @@ public final class BronzeAnvil extends RebarBlock implements
         }
         bloom.setWorking(newWorking);
         itemDisplay.setItemStack(bloom.getStack());
-        transformForWorking(newWorking, item.isSimilar(PylonItems.TONGS));
+        transformForWorking(newWorking, RebarItem.isRebarItem(item, PylonKeys.TONGS));
     }
 
     @Override

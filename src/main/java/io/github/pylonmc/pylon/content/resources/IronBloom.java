@@ -17,6 +17,7 @@ import org.bukkit.damage.DamageType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
@@ -94,11 +95,15 @@ public class IronBloom extends RebarItem implements RebarInventoryTicker {
 
     @Override
     public void onTick(@NotNull Player player) {
-        if (getTemperature() == 0
-                || player.getInventory().getItemInMainHand().isSimilar(PylonItems.TONGS)
-                || player.getInventory().getItemInOffHand().isSimilar(PylonItems.TONGS)) {
+        if (getTemperature() == 0) {
             return;
         }
+
+        PlayerInventory inventory = player.getInventory();
+        if (RebarItem.isRebarItem(inventory.getItemInMainHand(), PylonKeys.TONGS) || RebarItem.isRebarItem(inventory.getItemInOffHand(), PylonKeys.TONGS)) {
+            return;
+        }
+
         player.damage(UNPROTECTED_DAMAGE, DamageSource.builder(DamageType.HOT_FLOOR).build());
     }
 }

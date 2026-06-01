@@ -41,6 +41,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Furnace;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.*;
@@ -558,9 +559,6 @@ public final class SmelteryController extends SmelteryComponent
                 applyHeat();
                 performRecipes();
             }
-            if (Math.abs(oldTemperature - temperature) < 1e-6) {
-                refreshBlockTextureItem();
-            }
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
                 // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
                 // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
@@ -586,6 +584,11 @@ public final class SmelteryController extends SmelteryComponent
 
     public void setRunning(boolean running) {
         this.running = running;
+
+        Furnace furnace = (Furnace) getBlock().getBlockData();
+        furnace.setLit(running);
+        getBlock().setBlockData(furnace);
+
         refreshBlockTextureItem();
     }
 
