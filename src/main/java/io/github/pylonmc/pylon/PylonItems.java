@@ -15,16 +15,16 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
-import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
-import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
-import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
-import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
+import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
+import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
+import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
@@ -3149,7 +3149,7 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, GAS_TURBINE, PylonKeys.GAS_TURBINE);
         PylonPages.ELECTRICITY.addItem(GAS_TURBINE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
-                .addButton(new MachineRecipesButton(GAS_TURBINE, GasTurbineRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(GasTurbineRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack COMBUSTION_TOWER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.COMBUSTION_TOWER)
@@ -3172,7 +3172,7 @@ public final class PylonItems {
         RebarItem.register(ElectricGrindstone.Item.class, ELECTRIC_GRINDSTONE, PylonKeys.ELECTRIC_GRINDSTONE);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_GRINDSTONE)
-                .addButton(new MachineRecipesButton(ELECTRIC_GRINDSTONE, GrindstoneRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(GrindstoneRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack ELECTRIC_BRICK_MOLDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_BRICK_MOLDER)
@@ -3199,7 +3199,7 @@ public final class PylonItems {
         RebarItem.register(ElectricTableSaw.Item.class, ELECTRIC_TABLE_SAW, PylonKeys.ELECTRIC_TABLE_SAW);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_TABLE_SAW);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_TABLE_SAW)
-                .addButton(new MachineRecipesButton(ELECTRIC_TABLE_SAW, TableSawRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(TableSawRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack ELECTRIC_QUARRY = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_QUARRY)
@@ -3215,7 +3215,7 @@ public final class PylonItems {
         RebarItem.register(ElectricPipeBender.Item.class, ELECTRIC_PIPE_BENDER, PylonKeys.ELECTRIC_PIPE_BENDER);
         PylonPages.ELECTRICITY.addItem(ELECTRIC_PIPE_BENDER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_PIPE_BENDER)
-                .addButton(new MachineRecipesButton(ELECTRIC_PIPE_BENDER, PipeBendingRecipe.RECIPE_TYPE));
+                .addButton(new MachineRecipesButton(PipeBendingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack ELECTRIC_BREAKER = ItemStackBuilder.rebar(Material.DISPENSER, PylonKeys.ELECTRIC_BREAKER)

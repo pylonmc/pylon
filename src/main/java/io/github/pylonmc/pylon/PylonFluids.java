@@ -1,17 +1,12 @@
 package io.github.pylonmc.pylon;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.IngredientCalculator;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,6 +42,7 @@ public final class PylonFluids {
 
     public static final RebarFluid STEAM = new RebarFluid(
             pylonKey("steam"),
+            TextColor.fromHexString("#d8d8d8"),
             Material.WHITE_STAINED_GLASS
     ).addTag(FluidTemperature.HOT);
     static {
@@ -292,6 +288,7 @@ public final class PylonFluids {
 
     public static final RebarFluid VERY_HOT_EXHAUST = new RebarFluid(
             pylonKey("very_hot_exhaust"),
+            TextColor.fromHexString("#ff0000"),
             Material.RED_STAINED_GLASS
     ).addTag(FluidTemperature.HOT);
     static {
@@ -300,6 +297,7 @@ public final class PylonFluids {
 
     public static final RebarFluid HOT_EXHAUST = new RebarFluid(
             pylonKey("hot_exhaust"),
+            TextColor.fromHexString("#ff8000"),
             Material.ORANGE_STAINED_GLASS
     ).addTag(FluidTemperature.HOT);
     static {
