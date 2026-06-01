@@ -1,9 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.content.machines.generic.GenericMachine;
-import io.github.pylonmc.rebar.block.base.RebarFurnace;
-import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.FurnaceRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -20,7 +20,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-public class ElectricFurnace extends GenericMachine<FurnaceRecipeWrapper> implements RebarSimpleElectricBlock, RebarFurnace {
+public class ElectricFurnace extends GenericMachine<FurnaceRecipeWrapper> implements SimpleElectricRebarBlock, FurnaceRebarBlockHandler {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
     private final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);

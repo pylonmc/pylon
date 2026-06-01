@@ -1,9 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -17,7 +17,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-public final class CreativePowerSource extends RebarBlock implements RebarSimpleElectricBlock, RebarTickingBlock {
+public final class CreativePowerSource extends RebarBlock implements SimpleElectricRebarBlock, TickingRebarBlock {
 
     private static final float BLACK_HOLE_SIZE = 0.25f;
 

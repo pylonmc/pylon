@@ -5,9 +5,9 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.recipes.HeatExchangerRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
@@ -23,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
 
 public class HeatExchanger extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        TickingRebarBlock {
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
@@ -121,7 +121,7 @@ public class HeatExchanger extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
 
         Set<RebarFluid> allowedInputs = HeatExchangerRecipe.RECIPE_TYPE.stream()
                 .flatMap(recipe -> Stream.of(recipe.transferFrom().getFirst(), recipe.transferTo().getFirst()))

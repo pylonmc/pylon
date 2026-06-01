@@ -6,8 +6,14 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -38,13 +44,13 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Boiler extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarProcessor,
-        RebarTickingBlock,
-        RebarVirtualInventoryBlock,
-        RebarInventoryBlock,
-        RebarLogisticBlock {
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        ProcessorRebarBlock,
+        TickingRebarBlock,
+        VirtualInventoryRebarBlock,
+        GuiRebarBlock,
+        LogisticRebarBlock {
 
     public static class Item extends RebarItem {
 
@@ -178,7 +184,7 @@ public class Boiler extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, WATER_INPUT_HATCH).setAllowedFluids(PylonFluids.WATER);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, STEAM_OUTPUT_HATCH).setAllowedFluids(PylonFluids.STEAM);
     }

@@ -4,8 +4,12 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -26,11 +30,11 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
 public class SteamEngine extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
-        RebarSimpleElectricBlock,
-        RebarTickingBlock,
-        RebarSimpleMultiblock {
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
+        SimpleElectricRebarBlock,
+        TickingRebarBlock,
+        SimpleRebarMultiblock {
 
     private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     private final double steamUsage = getSettings().getOrThrow("steam-usage", ConfigAdapter.DOUBLE);

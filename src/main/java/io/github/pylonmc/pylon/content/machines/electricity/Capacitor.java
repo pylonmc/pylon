@@ -1,9 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electricity;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarElectricBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Capacitor extends RebarBlock implements
-        RebarElectricBlock,
-        RebarDirectionalBlock {
+        ElectricRebarBlock,
+        DirectionalRebarBlock {
 
     public static final class Item extends RebarItem {
 

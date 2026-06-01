@@ -1,9 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.electricity;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleElectricBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.electricity.ElectricNetwork;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -15,8 +15,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 public final class ElectricityPylon extends RebarBlock implements
-        RebarSimpleElectricBlock,
-        RebarTickingBlock {
+        SimpleElectricRebarBlock,
+        TickingRebarBlock {
 
     @SuppressWarnings("unused")
     public ElectricityPylon(@NotNull Block block, @NotNull BlockCreateContext context) {

@@ -2,16 +2,17 @@ package io.github.pylonmc.pylon.content.machines.generic;
 
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import java.util.List;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-public abstract class GenericGrindstone extends GenericMachine<GrindstoneRecipe> implements RebarRecipeProcessor<GrindstoneRecipe> {
+import java.util.List;
+
+public abstract class GenericGrindstone extends GenericMachine<GrindstoneRecipe> implements RecipeProcessorRebarBlock<GrindstoneRecipe> {
     @SuppressWarnings("unused")
     public GenericGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);

@@ -405,7 +405,7 @@ public class PotionAltar extends RebarBlock
 
     @NotNull
     private List<Vector3i> getBlockOffsets(@NotNull MultiblockComponent component) {
-        return RebarSimpleMultiblock.rotateComponentsToFace(getComponents(), getFacing()).entrySet().stream()
+        return SimpleRebarMultiblock.rotateComponentsToFace(getComponents(), getFacing()).entrySet().stream()
                 .filter(entry -> entry.getValue() == component)
                 .map(Map.Entry::getKey)
                 .toList();
