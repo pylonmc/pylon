@@ -8,7 +8,6 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import java.math.BigDecimal;
 import java.util.List;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +18,12 @@ import org.jspecify.annotations.NonNull;
 public class ElectricCompressor extends GenericMachine<HammerRecipe> implements SimpleElectricRebarBlock {
 
     private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-    private final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+    private final double hammerTime = getSettings().getOrThrow("hammer-time", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
         private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-        private final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+        private final double hammerTime = getSettings().getOrThrow("hammer-time", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -34,7 +33,7 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
                     RebarArgument.of("power-usage", UnitFormat.WATTS.format(powerUsage)),
-                    RebarArgument.of("speed", BigDecimal.valueOf(speed).stripTrailingZeros().toPlainString())
+                    RebarArgument.of("hammer-time", UnitFormat.SECONDS.format(hammerTime))
             );
         }
     }
@@ -54,7 +53,7 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
 
     @Override
     protected int getRecipeTicks(@NonNull HammerRecipe recipe) {
-        return Math.max(1, (int) Math.round(recipe.uses() / speed));
+        return Math.max(1, (int) Math.round(recipe.uses() * hammerTime * 20));
     }
 
     @Override

@@ -2493,7 +2493,7 @@ item:
     lore: |-
       <arrow> Performs hammer recipes
       <arrow> <attr>Power usage:</attr> %power-usage%
-      <arrow> <attr>Speed:</attr> %speed% hammering cycles per second
+      <arrow> <attr>Hammer time:</attr> %hammer-time%
 
   electric_press:
     name: "Electric Press"
