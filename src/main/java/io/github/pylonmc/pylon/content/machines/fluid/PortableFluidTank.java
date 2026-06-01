@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -41,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class PortableFluidTank extends RebarBlock implements FluidTankWithDisplayEntity, RebarInteractBlock {
+public class PortableFluidTank extends RebarBlock implements FluidTankWithDisplayEntity, InteractRebarBlockHandler {
 
     public static class Item extends RebarItem {
         public static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
@@ -180,7 +180,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR }, ignoreCancelled = true)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         PylonUtils.handleFluidTankRightClick(this, event, priority);
     }
 }

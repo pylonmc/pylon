@@ -6,7 +6,12 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ComposterRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.Settings;
@@ -50,12 +55,12 @@ import java.util.UUID;
 
 
 public class Press extends RebarBlock implements
-        RebarInteractBlock,
-        RebarFluidBufferBlock,
-        RebarComposter,
-        RebarDirectionalBlock,
-        RebarRecipeProcessor<PressRecipe>,
-        RebarNoJobBlock {
+        InteractRebarBlockHandler,
+        FluidBufferRebarBlock,
+        ComposterRebarBlockHandler,
+        DirectionalRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe>,
+        NoJobRebarBlock {
 
     private static final Config settings = Settings.get(PylonKeys.PRESS);
     public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
@@ -119,7 +124,7 @@ public class Press extends RebarBlock implements
     }
 
     @Override  @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking()
                 || event.useInteractedBlock() == Event.Result.DENY) {
             return;

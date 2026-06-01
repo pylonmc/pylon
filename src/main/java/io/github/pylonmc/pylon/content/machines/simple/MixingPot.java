@@ -7,9 +7,9 @@ import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCauldron;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -43,10 +43,10 @@ import java.util.List;
 
 
 public final class MixingPot extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarInteractBlock,
+        DirectionalRebarBlock,
+        InteractRebarBlockHandler,
         FluidTankWithDisplayEntity,
-        RebarCauldron {
+        CauldronRebarBlockHandler {
 
     public static class MixingPotItem extends RebarItem {
 
@@ -83,7 +83,7 @@ public final class MixingPot extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
+    public void onCauldronLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
@@ -113,7 +113,7 @@ public final class MixingPot extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK

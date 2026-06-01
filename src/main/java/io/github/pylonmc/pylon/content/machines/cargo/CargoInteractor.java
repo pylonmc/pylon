@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -33,7 +33,7 @@ import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.*;
 
-public abstract class CargoInteractor extends RebarBlock implements RebarDirectionalBlock, RebarMultiblock {
+public abstract class CargoInteractor extends RebarBlock implements DirectionalRebarBlock, RebarMultiblock {
 
     public static final NamespacedKey TARGET_LOGISTIC_GROUP_KEY = PylonUtils.pylonKey("target_logistic_group");
     public static final List<Material> GROUP_MATERIALS = List.of(
@@ -81,7 +81,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
 
         // Refresh list of target groups
         targetGroups.clear();
-        RebarLogisticBlock targetLogisticBlock = BlockStorage.getAs(RebarLogisticBlock.class, targetBlock);
+        LogisticRebarBlock targetLogisticBlock = BlockStorage.getAs(LogisticRebarBlock.class, targetBlock);
         if (targetLogisticBlock != null) {
             targetGroups.putAll(targetLogisticBlock.getLogisticGroups());
         } else {
@@ -158,7 +158,7 @@ public abstract class CargoInteractor extends RebarBlock implements RebarDirecti
             // Find display name of current group
             Component displayName;
             RebarBlock rebarBlock = BlockStorage.get(block);
-            if (rebarBlock instanceof RebarLogisticBlock) {
+            if (rebarBlock instanceof LogisticRebarBlock) {
                 displayName = Component.translatable(
                         rebarBlock.getKey().getNamespace() + ".inventory." + targetLogisticGroup
                 );

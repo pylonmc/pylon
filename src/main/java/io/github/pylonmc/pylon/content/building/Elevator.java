@@ -3,8 +3,8 @@ package io.github.pylonmc.pylon.content.building;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarJumpBlock;
-import io.github.pylonmc.rebar.block.base.RebarSneakBlock;
+import io.github.pylonmc.rebar.block.interfaces.JumpRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.SneakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Elevator extends RebarBlock implements RebarSneakBlock, RebarJumpBlock {
+public class Elevator extends RebarBlock implements SneakRebarBlockHandler, JumpRebarBlockHandler {
 
     public static class Item extends RebarItem {
 
@@ -93,7 +93,7 @@ public class Elevator extends RebarBlock implements RebarSneakBlock, RebarJumpBl
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSneakedOn(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
+    public void onSneakStart(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
         teleportPlayer(event.getPlayer(), getBlock().getLocation(), true);
     }
 

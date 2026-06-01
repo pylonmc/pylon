@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -34,10 +34,10 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 import static java.lang.Math.PI;
 
 public class Pedestal extends RebarBlock implements
-        RebarEntityHolderBlock,
-        RebarInteractBlock,
-        RebarBreakHandler,
-        RebarLogisticBlock {
+        EntityHolderRebarBlock,
+        InteractRebarBlockHandler,
+        BlockBreakRebarBlockHandler,
+        LogisticRebarBlock {
 
     private static final NamespacedKey ROTATION_KEY = pylonKey("rotation");
     private static final NamespacedKey LOCKED_KEY = pylonKey("locked");
@@ -78,7 +78,7 @@ public class Pedestal extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (locked || event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
@@ -133,7 +133,7 @@ public class Pedestal extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         drops.add(getItemDisplay().getItemStack());
     }
 

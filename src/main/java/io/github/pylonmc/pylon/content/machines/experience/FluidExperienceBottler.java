@@ -8,7 +8,14 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
@@ -40,14 +47,14 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public class FluidExperienceBottler extends RebarBlock implements
-        RebarFluidBufferBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarProcessor {
+        FluidBufferRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        ProcessorRebarBlock {
 
     private static final int XP_AMOUNT = Settings.get(PylonKeys.LIQUID_XP_BOTTLE).getOrThrow("experience-amount", ConfigAdapter.INTEGER);
     public final double bottleProductionTime = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
@@ -114,9 +121,9 @@ public class FluidExperienceBottler extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -172,7 +179,7 @@ public class FluidExperienceBottler extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
         FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
         Preconditions.checkState(inputHatch != null && xpHatch != null);

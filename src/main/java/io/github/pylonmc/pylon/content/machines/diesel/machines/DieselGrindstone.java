@@ -4,8 +4,8 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.generic.GenericGrindstone;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -37,10 +37,9 @@ import org.joml.Vector3d;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-
 public class DieselGrindstone extends GenericGrindstone implements
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock {
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock {
 
     public static final NamespacedKey STONE_ROTATION_KEY = pylonKey("stone_rotation");
 
@@ -166,8 +165,8 @@ public class DieselGrindstone extends GenericGrindstone implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 }

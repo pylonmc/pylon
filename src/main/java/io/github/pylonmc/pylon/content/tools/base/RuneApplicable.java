@@ -1,6 +1,9 @@
 package io.github.pylonmc.pylon.content.tools.base;
 
-import io.github.pylonmc.rebar.item.base.*;
+import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -11,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
  * <p>Default rune-applicable items are defined in {@link Rune#DEFAULT_APPLICABLES},
  * including but not limited to:
  * <ul>
- *   <li>{@link RebarArrow}</li>
- *   <li>{@link RebarBow}</li>
- *   <li>{@link RebarBucket}</li>
- *   <li>{@link RebarTool}</li>
- *   <li>{@link RebarWeapon}</li>
+ *   <li>{@link ArrowRebarItemHandler}</li>
+ *   <li>{@link BowRebarItemHandler}</li>
+ *   <li>{@link BucketRebarItemHandler}</li>
+ *   <li>{@link BlockBreakRebarItemHandler}</li>
+ *   <li>{@link EntityAttackRebarItemHandler}</li>
  * </ul>
  *
  * <p><b>Implementation Example:</b></p>

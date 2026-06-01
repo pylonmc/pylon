@@ -4,8 +4,8 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.generic.GenericMachine;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarFurnace;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FurnaceRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -29,8 +29,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.BlockCookEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
+import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
@@ -39,10 +39,9 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
-
 public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implements
-        RebarFluidBufferBlock,
-        RebarFurnace {
+        FluidBufferRebarBlock,
+        FurnaceRebarBlockHandler {
 
     public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
@@ -123,9 +122,9 @@ public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implemen
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -161,12 +160,12 @@ public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implemen
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onEndSmelting(@NotNull BlockCookEvent event, @NotNull EventPriority priority) {
+    public void onFurnaceSmelt(@NotNull FurnaceSmeltEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onFuelBurn(@NotNull FurnaceBurnEvent event, @NotNull EventPriority priority) {
+    public void onFurnaceBurnFuel(@NotNull FurnaceBurnEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 }

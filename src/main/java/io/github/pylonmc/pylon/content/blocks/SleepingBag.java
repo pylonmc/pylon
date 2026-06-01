@@ -3,8 +3,8 @@ package io.github.pylonmc.pylon.content.blocks;
 import com.destroystokyo.paper.event.player.PlayerSetSpawnEvent;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBed;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.BedRebarBlockHandler;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class SleepingBag extends RebarBlock implements RebarBed {
+public class SleepingBag extends RebarBlock implements BedRebarBlockHandler {
     private final Player player;
 
     public SleepingBag(@NotNull Block block, @NotNull BlockCreateContext context) {

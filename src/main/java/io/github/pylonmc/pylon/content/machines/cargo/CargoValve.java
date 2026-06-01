@@ -1,11 +1,11 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -45,11 +45,11 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoValve extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarInteractBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        InteractRebarBlockHandler,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock {
 
     public static final NamespacedKey ENABLED_KEY = pylonKey("enabled");
 
@@ -81,7 +81,7 @@ public class CargoValve extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     )
             );
         }
@@ -142,7 +142,7 @@ public class CargoValve extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }

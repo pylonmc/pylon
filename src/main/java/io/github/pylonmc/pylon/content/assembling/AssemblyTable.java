@@ -4,10 +4,10 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.recipes.AssemblingRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -48,10 +48,10 @@ import java.util.Map;
 
 
 public class AssemblyTable extends RebarBlock implements
-        RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
-        RebarEntityHolderBlock,
-        RebarInventoryBlock {
+        VirtualInventoryRebarBlock,
+        DirectionalRebarBlock,
+        EntityHolderRebarBlock,
+        GuiRebarBlock {
 
     private static final NamespacedKey RECIPE_KEY = PylonUtils.pylonKey("recipe");
     private static final NamespacedKey STEP_INDEX_KEY = PylonUtils.pylonKey("step_index");

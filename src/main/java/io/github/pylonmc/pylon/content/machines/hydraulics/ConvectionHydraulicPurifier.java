@@ -8,9 +8,9 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTank;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -41,9 +41,9 @@ import org.joml.Vector3i;
 
 
 public class ConvectionHydraulicPurifier extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
         HydraulicPurifier {
 
     public static final Vector3i LEFT_INPUT = new Vector3i(2, 0, 0);
@@ -210,7 +210,7 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         if (light.getType().isAir()) {
             light.setType(Material.LIGHT);
         }
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
     }
 
     @Override
@@ -219,7 +219,7 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         if (light.getType() == Material.LIGHT) {
             light.setType(Material.AIR);
         }
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
     }
 
     @Override

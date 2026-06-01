@@ -3,10 +3,10 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -46,10 +46,10 @@ import java.util.List;
 
 
 public class FluidMeter extends RebarBlock implements
-        RebarFluidTank,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarInventoryBlock {
+        FluidTankRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        GuiRebarBlock {
 
     public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
@@ -201,7 +201,7 @@ public class FluidMeter extends RebarBlock implements
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidAdded(fluid, amount);
+        FluidTankRebarBlock.super.onFluidAdded(fluid, amount);
         fluidAddedLastUpdate = amount;
         getHeldEntityOrThrow(ItemDisplay.class, "fluid").setItemStack(fluid.getItem());
     }

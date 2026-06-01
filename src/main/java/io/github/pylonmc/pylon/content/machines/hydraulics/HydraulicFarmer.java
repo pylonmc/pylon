@@ -3,9 +3,9 @@ package io.github.pylonmc.pylon.content.machines.hydraulics;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -34,9 +34,9 @@ import java.util.*;
 
 
 public class HydraulicFarmer extends RebarBlock implements
-        RebarTickingBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock {
+        TickingRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock {
 
     private static final Set<Material> CROPS_TO_BREAK = EnumSet.of(
             Material.PUMPKIN,

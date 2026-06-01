@@ -7,7 +7,12 @@ import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.tools.Hammer;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.FallingRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
@@ -45,12 +50,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class BronzeAnvil extends RebarBlock implements
-        RebarBreakHandler,
-        RebarEntityHolderBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarInteractBlock,
-        RebarFallingBlock {
+        BlockBreakRebarBlockHandler,
+        EntityHolderRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        InteractRebarBlockHandler,
+        FallingRebarBlockHandler {
 
     public static final int TICK_INTERVAL = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final float COOL_CHANCE = Settings.get(PylonKeys.BRONZE_ANVIL).getOrThrow("cool-chance", ConfigAdapter.FLOAT);
@@ -99,7 +104,7 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         ItemStack stack = getItemDisplay().getItemStack();
         if (!stack.isEmpty()) {
             drops.add(stack);
@@ -107,7 +112,7 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
 
         if (priority == EventPriority.NORMAL) {
@@ -232,7 +237,7 @@ public final class BronzeAnvil extends RebarBlock implements
 
 
     @Override
-    public void onFallStart(@NotNull EntityChangeBlockEvent event, @NotNull RebarFallingBlock.RebarFallingBlockEntity spawnedEntity) {
+    public void onFallStart(@NotNull EntityChangeBlockEvent event, @NotNull FallingRebarBlockHandler.RebarFallingBlockEntity spawnedEntity) {
         var pdc = spawnedEntity.getEntity().getPersistentDataContainer();
 
         ItemDisplay display = getItemDisplay();
@@ -241,7 +246,7 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     @Override
-    public void onFallStop(@NotNull EntityChangeBlockEvent event, @NotNull RebarFallingBlock.RebarFallingBlockEntity entity) {
+    public void onFallStop(@NotNull EntityChangeBlockEvent event, @NotNull FallingRebarBlockHandler.RebarFallingBlockEntity entity) {
         var pdc = entity.getEntity().getPersistentDataContainer();
 
         ItemStack stack = pdc.get(STORED_ITEM, RebarSerializers.ITEM_STACK);

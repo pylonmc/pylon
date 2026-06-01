@@ -1,15 +1,14 @@
 package io.github.pylonmc.pylon.content.components;
 
 import com.google.common.base.Preconditions;
-import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -17,8 +16,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -27,7 +24,6 @@ import kotlin.Pair;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -42,9 +38,9 @@ import org.joml.Vector3i;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public abstract class FluidHatch extends RebarBlock implements
-        RebarFluidBlock,
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock {
+        FluidRebarBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock {
 
     private static final NamespacedKey ALLOWED_FLUIDS_KEY = pylonKey("allowed_fluids");
     private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
@@ -99,7 +95,7 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public boolean checkFormed() {
-        boolean formed = RebarSimpleMultiblock.super.checkFormed();
+        boolean formed = SimpleRebarMultiblock.super.checkFormed();
         if (formed) {
             FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
             Preconditions.checkState(casing != null);
@@ -110,7 +106,7 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
         if (fluid != null) {
             setCapacity(0);
@@ -141,7 +137,7 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     /**
-     * Implementation of {@link RebarFluidBlock}. Use {@link #addFluid} instead.
+     * Implementation of {@link FluidRebarBlock}. Use {@link #addFluid} instead.
      */
     @ApiStatus.Internal
     @Override
@@ -150,7 +146,7 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     /**
-     * Implementation of {@link RebarFluidBlock}. Use {@link #removeFluid} instead.
+     * Implementation of {@link FluidRebarBlock}. Use {@link #removeFluid} instead.
      */
     @ApiStatus.Internal
     @Override
@@ -255,7 +251,7 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     @Override
-    public void postBreak(@NotNull BlockBreakContext context) {
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
     }
 }

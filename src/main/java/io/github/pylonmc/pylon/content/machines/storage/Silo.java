@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.storage;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -36,7 +36,7 @@ import java.util.List;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInteractBlock {
+public class Silo extends RebarBlock implements LogisticRebarBlock, InteractRebarBlockHandler {
 
     public static final NamespacedKey STACK_KEY = pylonKey("stack");
     public static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
@@ -123,7 +123,7 @@ public class Silo extends RebarBlock implements RebarLogisticBlock, RebarInterac
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }

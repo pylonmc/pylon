@@ -3,11 +3,12 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityCulledBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityCulledRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
@@ -53,11 +54,12 @@ import java.util.UUID;
 
 
 public class CargoExtractor extends CargoInteractor implements
-        RebarCargoBlock,
-        RebarTickingBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarEntityCulledBlock
+        CargoRebarBlock,
+        CargoRebarBlockHandler,
+        TickingRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        EntityCulledRebarBlock
 {
 
     public static final NamespacedKey ITEMS_TO_FILTER_KEY = PylonUtils.pylonKey("items_to_filter");
@@ -94,7 +96,7 @@ public class CargoExtractor extends CargoInteractor implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     )
             );
         }
@@ -195,7 +197,7 @@ public class CargoExtractor extends CargoInteractor implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onDuctConnected(@NotNull RebarCargoConnectEvent event, @NotNull EventPriority priority) {
+    public void onCargoDuctConnect(@NotNull RebarCargoConnectEvent event, @NotNull EventPriority priority) {
         // Remove all faces that aren't to the connected block - this will make sure only
         // one duct is connected at a time
         for (BlockFace face : getCargoLogisticGroups().keySet()) {
@@ -206,7 +208,7 @@ public class CargoExtractor extends CargoInteractor implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
-    public void onDuctDisconnected(@NotNull RebarCargoDisconnectEvent event, @NotNull EventPriority priority) {
+    public void onCargoDuctDisconnect(@NotNull RebarCargoDisconnectEvent event, @NotNull EventPriority priority) {
         // Allow connecting to all faces now that there are zero connections
         List<BlockFace> faces = RebarUtils.perpendicularImmediateFaces(getFacing());
         faces.add(getFacing());

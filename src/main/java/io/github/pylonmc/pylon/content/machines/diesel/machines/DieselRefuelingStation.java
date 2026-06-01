@@ -4,11 +4,11 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.diesel.DieselRefuelable;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -41,11 +41,11 @@ import java.util.List;
 import java.util.Map;
 
 public class DieselRefuelingStation extends RebarBlock implements
-        RebarFluidBlock,
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarLogisticBlock,
-        RebarVirtualInventoryBlock {
+        FluidRebarBlock,
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        LogisticRebarBlock,
+        VirtualInventoryRebarBlock {
 
     private final VirtualInventory containerInventory = new VirtualInventory(1);
     public final ItemStackBuilder containerStack = ItemStackBuilder
@@ -146,9 +146,9 @@ public class DieselRefuelingStation extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(List<ItemStack> drops, BlockBreakContext context) {
-        RebarFluidBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(List<ItemStack> drops, BlockBreakContext context) {
+        FluidRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

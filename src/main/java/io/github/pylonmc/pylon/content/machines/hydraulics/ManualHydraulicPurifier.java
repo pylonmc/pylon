@@ -4,10 +4,10 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -37,11 +37,11 @@ import java.util.List;
 
 
 public class ManualHydraulicPurifier extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
         HydraulicPurifier,
-        RebarInteractBlock,
-        RebarNoVanillaInventoryBlock {
+        InteractRebarBlockHandler,
+        NoVanillaInventoryRebarBlock {
 
     public final double hydraulicFluidPerCycle = getSettings().getOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
     public final int cycleDuration = getSettings().getOrThrow("cycle-duration", ConfigAdapter.INTEGER);
@@ -95,7 +95,7 @@ public class ManualHydraulicPurifier extends RebarBlock implements
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getPlayer().isSneaking()

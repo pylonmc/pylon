@@ -8,7 +8,12 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -48,12 +53,12 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class Kiln extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInventoryBlock,
-        RebarRecipeProcessor<KilnRecipe>,
-        RebarDirectionalBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        GuiRebarBlock,
+        RecipeProcessorRebarBlock<KilnRecipe>,
+        DirectionalRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock {
 
     public static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
     public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");
@@ -346,7 +351,7 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         Block light = getLight();
         if (light.getType().isAir()) {
             light.setType(Material.LIGHT);
@@ -358,7 +363,7 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Block light = getLight();
         if (light.getType() == Material.LIGHT) {
             light.setType(Material.AIR);

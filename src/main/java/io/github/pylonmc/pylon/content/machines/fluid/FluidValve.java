@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -44,7 +44,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class FluidValve extends RebarBlock
-        implements RebarFluidTank, RebarInteractBlock, RebarDirectionalBlock {
+        implements FluidTankRebarBlock, InteractRebarBlockHandler, DirectionalRebarBlock {
 
     public static final NamespacedKey ENABLED_KEY = pylonKey("enabled");
 
@@ -111,7 +111,7 @@ public class FluidValve extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
@@ -148,7 +148,7 @@ public class FluidValve extends RebarBlock
         if (!open) {
             return 0.0;
         }
-        return RebarFluidTank.super.fluidAmountRequested(fluid);
+        return FluidTankRebarBlock.super.fluidAmountRequested(fluid);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class FluidValve extends RebarBlock
         if (!open) {
             return List.of();
         }
-        return RebarFluidTank.super.getSuppliedFluids();
+        return FluidTankRebarBlock.super.getSuppliedFluids();
     }
 
     @Override

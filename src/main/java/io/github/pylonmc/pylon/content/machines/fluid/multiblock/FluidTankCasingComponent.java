@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.fluid.multiblock;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.rebar.block.RebarBlockSchema;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.event.RebarRegisterEvent;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidTankCasingComponent extends RebarSimpleMultiblock.MultiblockComponent {
+public class FluidTankCasingComponent extends SimpleRebarMultiblock.MultiblockComponent {
     private static final List<NamespacedKey> FLUID_TANK_CASING_IDS = new ArrayList<>(RebarRegistry.BLOCKS.stream()
             .filter(schema -> schema.isType(FluidTankCasing.class))
             .map(RebarBlockSchema::getKey)

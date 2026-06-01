@@ -10,7 +10,7 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.format.TextColor;
 
@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-public class DieselBooster extends RebarItem implements RebarInteractor, DieselRefuelable {
+public class DieselBooster extends RebarItem implements InteractRebarItemHandler, DieselRefuelable {
 
     public static final double DIESEL_CAPACITY = Settings.get(PylonKeys.PORTABLE_FLUID_TANK_STEEL).getOrThrow("capacity", ConfigAdapter.DOUBLE) * 2;
     
@@ -50,7 +50,7 @@ public class DieselBooster extends RebarItem implements RebarInteractor, DieselR
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
-    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
         if (!event.getAction().isRightClick() || 
             event.useItemInHand() == Event.Result.DENY ||

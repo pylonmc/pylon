@@ -3,9 +3,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 import io.github.pylonmc.pylon.content.machines.fluid.gui.FluidSelector;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -39,7 +39,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class FluidFilter extends RebarBlock
-        implements RebarFluidTank, RebarDirectionalBlock, RebarInventoryBlock {
+        implements FluidTankRebarBlock, DirectionalRebarBlock, GuiRebarBlock {
 
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
 

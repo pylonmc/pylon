@@ -1,18 +1,15 @@
 package io.github.pylonmc.pylon.content.assembling;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Particle;
-import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -23,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class RedstoneSolderingIron extends RebarItem implements RebarBlockInteractor {
+public class RedstoneSolderingIron extends RebarItem implements BlockInteractRebarItemHandler {
 
     public final String toolType = getSettings().get("tool-type", ConfigAdapter.STRING);
     public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
@@ -41,7 +38,7 @@ public class RedstoneSolderingIron extends RebarItem implements RebarBlockIntera
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isLeftClick()
             || event.getHand() != EquipmentSlot.HAND
             || event.useItemInHand() == Event.Result.DENY

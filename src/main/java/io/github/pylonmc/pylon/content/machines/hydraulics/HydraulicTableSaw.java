@@ -5,7 +5,12 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.TableSawRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -41,12 +46,12 @@ import java.util.List;
 
 
 public class HydraulicTableSaw extends RebarBlock implements
-        RebarFluidBufferBlock,
-        RebarInteractBlock,
-        RebarTickingBlock,
-        RebarDirectionalBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<TableSawRecipe>{
+        FluidBufferRebarBlock,
+        InteractRebarBlockHandler,
+        TickingRebarBlock,
+        DirectionalRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<TableSawRecipe> {
 
     public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
@@ -107,7 +112,7 @@ public class HydraulicTableSaw extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -192,8 +197,8 @@ public class HydraulicTableSaw extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
         drops.add(getItemDisplay().getItemStack());
     }
 

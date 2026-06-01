@@ -7,7 +7,11 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Settings;
@@ -47,11 +51,11 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
 
 public final class Bloomery extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInteractBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarBreakHandler {
+        SimpleRebarMultiblock,
+        InteractRebarBlockHandler,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        BlockBreakRebarBlockHandler {
 
     public static final int TICK_INTERVAL = Settings.get(PylonKeys.BLOOMERY).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public static final float HEAT_CHANCE = Settings.get(PylonKeys.BLOOMERY).getOrThrow("heat-chance", ConfigAdapter.FLOAT);
@@ -82,7 +86,7 @@ public final class Bloomery extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         drops.clear();
         ItemStack stack = getItemDisplay().getItemStack();
         if (!stack.isEmpty()) {
@@ -91,7 +95,7 @@ public final class Bloomery extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
         Player player = event.getPlayer();
         if (player.isSneaking() || !isFormedAndFullyLoaded()) return;

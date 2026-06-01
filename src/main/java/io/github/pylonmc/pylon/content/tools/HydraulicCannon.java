@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicRefuelable;
 import io.github.pylonmc.pylon.util.DisplayProjectile;
@@ -15,7 +14,7 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
@@ -33,7 +32,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 
-public class HydraulicCannon extends RebarItem implements RebarInteractor, HydraulicRefuelable {
+public class HydraulicCannon extends RebarItem implements InteractRebarItemHandler, HydraulicRefuelable {
 
     public static final double HYDRAULIC_FLUID_CAPACITY = Settings.get(PylonKeys.PORTABLE_FLUID_TANK_COPPER).getOrThrow("capacity", ConfigAdapter.DOUBLE);
     public static final double DIRTY_HYDRAULIC_FLUID_CAPACITY = Settings.get(PylonKeys.PORTABLE_FLUID_TANK_COPPER).getOrThrow("capacity", ConfigAdapter.DOUBLE);
@@ -87,7 +86,7 @@ public class HydraulicCannon extends RebarItem implements RebarInteractor, Hydra
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         Player player = event.getPlayer();
         Location source = player.getEyeLocation();
         if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {

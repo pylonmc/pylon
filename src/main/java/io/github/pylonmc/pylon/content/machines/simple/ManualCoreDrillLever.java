@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
-public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlock {
+public class ManualCoreDrillLever extends RebarBlock implements InteractRebarBlockHandler {
 
     private BukkitTask leverResetTask;
 
@@ -36,7 +36,7 @@ public class ManualCoreDrillLever extends RebarBlock implements RebarInteractBlo
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }

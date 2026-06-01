@@ -9,7 +9,12 @@ import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -50,7 +55,7 @@ import org.joml.Vector3i;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock, RebarBreakHandler {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, DirectionalRebarBlock, BlockBreakRebarBlockHandler {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
@@ -180,7 +185,7 @@ public class PotionAltar extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -541,7 +546,7 @@ public class PotionAltar extends RebarBlock
     }
 
     /**
-     * {@link RebarRecipeProcessor} requires a unique recipe key to recover recipe progress after restarting server,
+     * {@link RecipeProcessorRebarBlock} requires a unique recipe key to recover recipe progress after restarting server,
      * while this altar doesn't have any static recipe to be loaded or be recovered, which produces tons of
      * error logs for "Couldn't find recipe". So we have to recover recipe progress manually.
      *
@@ -555,7 +560,7 @@ public class PotionAltar extends RebarBlock
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         for (Pedestal pedestal : getAllPedestals()) {
             if (pedestal != null) {
                 pedestal.setLocked(false);

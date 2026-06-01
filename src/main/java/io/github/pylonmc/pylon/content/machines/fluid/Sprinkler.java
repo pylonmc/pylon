@@ -7,9 +7,9 @@ import io.github.pylonmc.pylon.content.tools.WateringSettings;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarFlowerPot;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.FlowerPotRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.RebarConfig;
@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class Sprinkler extends RebarBlock
-        implements RebarFluidBufferBlock, RebarTickingBlock, RebarFlowerPot {
+        implements FluidBufferRebarBlock, TickingRebarBlock, FlowerPotRebarBlockHandler {
 
     private static final Config settings = Settings.get(PylonKeys.SPRINKLER);
     public static final WateringSettings SETTINGS = WateringSettings.fromConfig(settings);
@@ -78,7 +78,7 @@ public class Sprinkler extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onFlowerPotManipulated(@NotNull PlayerFlowerPotManipulateEvent event, @NotNull EventPriority priority) {
+    public void onFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 

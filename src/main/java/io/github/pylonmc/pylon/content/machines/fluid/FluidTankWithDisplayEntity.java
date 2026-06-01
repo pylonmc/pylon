@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -19,7 +19,7 @@ import org.joml.Vector3d;
  *
  * `createFluidDisplay` must be called in your constructor.
  */
-public interface FluidTankWithDisplayEntity extends RebarFluidTank {
+public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
 
     default void createFluidDisplay() {
         addEntity("fluid", new ItemDisplayBuilder()
@@ -33,14 +33,14 @@ public interface FluidTankWithDisplayEntity extends RebarFluidTank {
 
     @Override
     default void setFluidType(@Nullable RebarFluid fluid) {
-        RebarFluidTank.super.setFluidType(fluid);
+        FluidTankRebarBlock.super.setFluidType(fluid);
         getFluidDisplay().setItemStack(fluid == null ? null : fluid.getItem());
     }
 
     @Override
     default boolean setFluid(double amount) {
         double oldAmount = getFluidAmount();
-        boolean wasFluidSet = RebarFluidTank.super.setFluid(amount);
+        boolean wasFluidSet = FluidTankRebarBlock.super.setFluid(amount);
         if (!wasFluidSet || Math.abs(oldAmount - amount) < RebarUtils.FLUID_EPSILON) {
             return false;
         }

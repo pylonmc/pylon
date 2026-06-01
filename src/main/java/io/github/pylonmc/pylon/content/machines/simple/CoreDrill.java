@@ -4,10 +4,10 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -36,10 +36,10 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 public abstract class CoreDrill extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarProcessor,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        ProcessorRebarBlock,
+        TickingRebarBlock {
 
     public static class Item extends RebarItem {
 

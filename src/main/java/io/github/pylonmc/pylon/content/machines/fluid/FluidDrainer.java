@@ -3,11 +3,11 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarDispenser;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DispenserRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -36,7 +36,7 @@ import java.util.List;
 
 
 public class FluidDrainer extends RebarBlock
-        implements RebarFluidBufferBlock, RebarDirectionalBlock, RebarTickingBlock, RebarNoVanillaInventoryBlock, RebarDispenser {
+        implements FluidBufferRebarBlock, DirectionalRebarBlock, TickingRebarBlock, NoVanillaInventoryRebarBlock, DispenserRebarBlockHandler {
 
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final RebarFluid fluid = getSettings().getOrThrow("fluid", ConfigAdapter.REBAR_FLUID);

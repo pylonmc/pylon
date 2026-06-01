@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 
-public class LiseletteCollector extends RebarBlock implements RebarEntityHolderBlock {
+public class LiseletteCollector extends RebarBlock implements EntityHolderRebarBlock {
 
     public LiseletteCollector(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);

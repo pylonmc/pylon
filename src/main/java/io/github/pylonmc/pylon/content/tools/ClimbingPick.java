@@ -6,8 +6,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -16,7 +15,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +27,7 @@ import java.util.List;
 
 import static java.lang.Math.pow;
 
-public class ClimbingPick extends RebarItem implements RebarBlockInteractor {
+public class ClimbingPick extends RebarItem implements BlockInteractRebarItemHandler {
     private static final NamespacedKey HOOKED_KEY = PylonUtils.pylonKey("climbing_pick_hooked");
     private final double jumpSpeed = getSettings().getOrThrow("jump-speed", ConfigAdapter.DOUBLE);
     private final double hookRange = getSettings().getOrThrow("hook-range", ConfigAdapter.DOUBLE);
@@ -40,7 +38,7 @@ public class ClimbingPick extends RebarItem implements RebarBlockInteractor {
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction().isRightClick() && priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
         }

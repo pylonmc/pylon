@@ -1,12 +1,16 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
-import io.github.pylonmc.rebar.block.base.*;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.Map;
 import kotlin.Pair;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Furnace;
 import org.bukkit.inventory.ItemStack;
@@ -17,11 +21,11 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
 public final class SmelteryBurner extends SmelteryComponent implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarProcessor {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        ProcessorRebarBlock {
 
     private final VirtualInventory fuelInventory = new VirtualInventory(3);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();

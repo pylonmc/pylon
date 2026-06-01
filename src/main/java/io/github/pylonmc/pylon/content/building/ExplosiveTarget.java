@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarTargetBlock;
+import io.github.pylonmc.rebar.block.interfaces.TargetRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class ExplosiveTarget extends RebarBlock implements RebarTargetBlock {
+public class ExplosiveTarget extends RebarBlock implements TargetRebarBlockHandler {
 
     public static class Item extends RebarItem {
         private final Double explosivePower = getSettings().getOrThrow("explosive-power", ConfigAdapter.DOUBLE);
@@ -51,7 +51,7 @@ public class ExplosiveTarget extends RebarBlock implements RebarTargetBlock {
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onHit(@NotNull TargetHitEvent event, @NotNull EventPriority priority) {
+    public void onTargetHit(@NotNull TargetHitEvent event, @NotNull EventPriority priority) {
         Block hitBlock = event.getHitBlock();
         Preconditions.checkState(hitBlock != null);
 

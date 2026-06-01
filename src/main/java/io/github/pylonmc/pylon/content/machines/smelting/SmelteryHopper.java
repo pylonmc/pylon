@@ -12,10 +12,10 @@ import java.util.List;
 
 import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.recipes.MeltingRecipe;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVanillaInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VanillaInventoryRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -23,10 +23,10 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 
 public final class SmelteryHopper extends SmelteryComponent implements
-        RebarTickingBlock,
-        RebarVanillaInventoryBlock,
-        RebarLogisticBlock,
-        RebarBreakHandler {
+        TickingRebarBlock,
+        VanillaInventoryRebarBlockHandler,
+        LogisticRebarBlock,
+        BlockBreakRebarBlockHandler {
 
     @SuppressWarnings("unused")
     public SmelteryHopper(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -59,7 +59,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         Hopper hopper = (Hopper) getBlock().getState();
 
         for (ItemStack item : hopper.getInventory()) {

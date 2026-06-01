@@ -6,9 +6,9 @@ import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -29,9 +29,9 @@ import java.util.List;
 
 
 public class HydraulicGrindstoneTurner extends RebarBlock implements
-        RebarTickingBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock {
+        TickingRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock {
 
     public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
     public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);

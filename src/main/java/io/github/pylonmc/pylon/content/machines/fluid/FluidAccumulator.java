@@ -3,9 +3,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -41,9 +41,9 @@ import java.util.List;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class FluidAccumulator extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidTank,
-        RebarInventoryBlock {
+        DirectionalRebarBlock,
+        FluidTankRebarBlock,
+        GuiRebarBlock {
 
     public static final NamespacedKey IS_DISCHARGING_KEY = pylonKey("is_discharging");
 
@@ -183,13 +183,13 @@ public class FluidAccumulator extends RebarBlock implements
             return 0.0;
         }
 
-        return RebarFluidTank.super.fluidAmountRequested(fluid);
+        return FluidTankRebarBlock.super.fluidAmountRequested(fluid);
     }
 
     @Override
     public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         if (getBlock().isBlockIndirectlyPowered()) {
-            return RebarFluidTank.super.getSuppliedFluids();
+            return FluidTankRebarBlock.super.getSuppliedFluids();
         }
 
         if (getFluidSpaceRemaining() < RebarUtils.FLUID_EPSILON) {
@@ -199,7 +199,7 @@ public class FluidAccumulator extends RebarBlock implements
         }
 
         if (isDischarging) {
-            return RebarFluidTank.super.getSuppliedFluids();
+            return FluidTankRebarBlock.super.getSuppliedFluids();
         }
 
         return List.of();

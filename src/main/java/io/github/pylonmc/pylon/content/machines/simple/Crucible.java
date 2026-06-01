@@ -7,13 +7,13 @@ import io.github.pylonmc.pylon.recipes.CrucibleRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCauldron;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -54,12 +54,12 @@ import java.util.Map;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class Crucible extends RebarBlock implements
-        RebarInteractBlock,
+        InteractRebarBlockHandler,
         FluidTankWithDisplayEntity,
-        RebarDirectionalBlock,
-        RebarCauldron,
-        RebarTickingBlock,
-        RebarLogisticBlock {
+        DirectionalRebarBlock,
+        CauldronRebarBlockHandler,
+        TickingRebarBlock,
+        LogisticRebarBlock {
 
     public final int capacity = getSettings().getOrThrow("capacity", ConfigAdapter.INTEGER);
     public final int smeltTime = getSettings().getOrThrow("smelt-time", ConfigAdapter.INTEGER);
@@ -91,8 +91,8 @@ public final class Crucible extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        FluidTankWithDisplayEntity.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidTankWithDisplayEntity.super.onBlockBreak(drops, context);
         if (crucibleContent == null) return;
 
         int maxStack = crucibleContent.getMaxStackSize();
@@ -117,7 +117,7 @@ public final class Crucible extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         // Don't allow fluid to be manually inserted/removed
         if (event.useInteractedBlock() == Event.Result.DENY || PylonUtils.handleFluidTankRightClick(this, event, priority)) {
             return;
@@ -206,7 +206,7 @@ public final class Crucible extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
+    public void onCauldronLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 

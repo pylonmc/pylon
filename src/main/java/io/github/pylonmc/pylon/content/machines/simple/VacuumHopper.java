@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.simple;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -44,9 +44,9 @@ import java.util.Map;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class VacuumHopper extends RebarBlock implements
-        RebarTickingBlock,
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock {
+        TickingRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock {
 
     public static class Item extends RebarItem {
         public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
@@ -122,14 +122,14 @@ public class VacuumHopper extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         for (ItemStack item : hopperInventory.getItems()) {
             if (item != null) {
                 drops.add(item);
             }
         }
 
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

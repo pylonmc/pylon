@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class FluidVoider extends RebarBlock implements RebarFluidBlock {
+public class FluidVoider extends RebarBlock implements FluidRebarBlock {
 
     public static class Item extends RebarItem {
 

@@ -2,8 +2,8 @@ package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarPiston;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.PistonRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -37,7 +37,7 @@ import java.util.Set;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHandler {
+public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, BlockBreakRebarBlockHandler {
     public static HashMap<BlockPosition, Set<Player>> frozenPlayers = new HashMap<>();
     private final NamespacedKey cooldownKey = pylonKey("immobilizer_cooldown_millis");
     private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
@@ -77,7 +77,7 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
+    public void onPistonExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
 
         BukkitScheduler scheduler = Bukkit.getScheduler();
@@ -108,7 +108,7 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         BlockPosition position = new BlockPosition(context.getBlock());
         frozenPlayers.remove(position);
     }
