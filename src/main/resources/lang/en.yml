@@ -2550,6 +2550,7 @@ item:
     name: "Piped Cauldron"
     lore: |-
       <arrow> A cauldron which can have pipes attached to it
+    waila: "Piped Cauldron | %fluid%"
 
 fluid:
   tag:

@@ -2953,3 +2953,12 @@ pylon:experience_drain:
     P: minecraft:ender_pearl
   result: pylon:experience_drain
   category: building
+
+pylon:piped_cauldron:
+  pattern:
+    - "PCP"
+  key:
+    P: pylon:fluid_pipe_copper
+    C: minecraft:cauldron
+  result: pylon:piped_cauldron
+  category: building
