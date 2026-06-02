@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
@@ -12,12 +11,12 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -34,16 +33,16 @@ public class CombustionTower extends RebarBlock implements
         FluidBufferRebarBlock,
         SimpleRebarMultiblock {
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    private final double dieselUsage = getSettings().getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
-    private final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    private final double exhaustProduction = getSettings().getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
-    private final double exhaustBuffer = getSettings().getOrThrow("exhaust-buffer", ConfigAdapter.DOUBLE);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final double dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
+    private final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+    private final double exhaustProduction = getSettingOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
+    private final double exhaustBuffer = getSettingOrThrow("exhaust-buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        private final double dieselUsage = getSettings().getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
-        private final double exhaustProduction = getSettings().getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
+        private final double dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
+        private final double exhaustProduction = getSettingOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
 
         @SuppressWarnings("unused")
         public Item(@NotNull ItemStack stack) {
@@ -99,17 +98,15 @@ public class CombustionTower extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+                RebarArgument.of("diesel", ProgressBar.fluidContentsWithName(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 )),
-                RebarArgument.of("exhaust", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.VERY_HOT_EXHAUST),
+                RebarArgument.of("exhaust", ProgressBar.fluidContentsWithName(
+                        PylonFluids.VERY_HOT_EXHAUST,
                         fluidCapacity(PylonFluids.VERY_HOT_EXHAUST),
-                        20,
-                        TextColor.fromHexString("#ff2b0f")
+                        fluidAmount(PylonFluids.VERY_HOT_EXHAUST)
                 ))
         ));
     }

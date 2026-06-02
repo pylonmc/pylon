@@ -7,14 +7,8 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.block.interfaces.*;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
@@ -54,7 +48,7 @@ public class Boiler extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        private final double steamPerSecond = getSettings().getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
+        private final double steamPerSecond = getSettingOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -84,13 +78,13 @@ public class Boiler extends RebarBlock implements
     public static final RebarRegistry<Fuel> FUEL_REGISTRY = new RebarRegistry<>(pylonKey("boiler_fuels"));
 
     static {
-        for (var fuel : Settings.get(PylonKeys.BOILER).getOrThrow("fuels", FUELS_TYPE).entrySet()) {
+        for (var fuel : ConfigSection.fromSettings(PylonKeys.BOILER).getOrThrow("fuels", FUELS_TYPE).entrySet()) {
             FUEL_REGISTRY.register(new Fuel(ItemTypeWrapper.of(fuel.getKey()).getKey(), fuel.getKey(), fuel.getValue()));
         }
     }
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    private final double steamPerSecond = getSettings().getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final double steamPerSecond = getSettingOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
 
     private final VirtualInventory fuelInventory = new VirtualInventory(1);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();

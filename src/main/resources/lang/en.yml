@@ -2946,14 +2946,6 @@ gui:
       <arrow> <insn>Right click</insn> to decrease by <yellow>%increment%</yellow>
       <arrow> <insn>Shift left click</insn> to increase by <yellow>%increment-shift%</yellow>
       <arrow> <insn>Shift right click</insn> to decrease by <yellow>%increment-shift%</yellow>
-      <arrow> <insn>Press <key:key.drop/></insn> to enter the value manually
-    min: "<arrow> <attr>Minimum value:</attr> %min%"
-    max: "<arrow> <attr>Maximum value:</attr> %max%"
-    enter-value:
-      none: "Enter a new value:"
-      min: "Enter a new value (min: %min%):"
-      max: "Enter a new value (max: %max%):"
-      both: "Enter a new value (min: %min%, max: %max%):"
       invalid: "<red>Invalid input, please enter an integer"
   voltage: "Voltage"
   power: "Power"

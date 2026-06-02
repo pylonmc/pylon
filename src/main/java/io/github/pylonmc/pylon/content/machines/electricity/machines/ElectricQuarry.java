@@ -15,13 +15,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class ElectricQuarry extends GenericQuarry implements SimpleElectricRebarBlock {
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
-        public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        public final int radius = getSettingOrThrow("radius", ConfigAdapter.INTEGER);
+        public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

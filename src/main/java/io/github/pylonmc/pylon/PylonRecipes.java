@@ -172,7 +172,7 @@ public class PylonRecipes {
 
     private static void initCombustionTower() {
         NamespacedKey key = PylonKeys.COMBUSTION_TOWER;
-        Config setting = Settings.get(key);
+        ConfigSection setting = ConfigSection.fromSettings(key);
 
         double dieselUsage = setting.getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
         double exhaustProduction = setting.getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);

@@ -17,7 +17,7 @@ import org.jspecify.annotations.NonNull;
 
 public abstract class GenericPipeBender extends GenericMachine<PipeBendingRecipe> implements EntityHolderRebarBlock {
 
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
 
     protected GenericPipeBender(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);

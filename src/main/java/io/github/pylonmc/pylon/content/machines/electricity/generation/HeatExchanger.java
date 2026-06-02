@@ -26,7 +26,7 @@ public class HeatExchanger extends RebarBlock implements
         SimpleRebarMultiblock,
         TickingRebarBlock {
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public HeatExchanger(@NotNull Block block, @NotNull BlockCreateContext context) {

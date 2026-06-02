@@ -15,12 +15,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ElectricTableSaw extends GenericTableSaw implements SimpleElectricRebarBlock {
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-        private final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+        private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

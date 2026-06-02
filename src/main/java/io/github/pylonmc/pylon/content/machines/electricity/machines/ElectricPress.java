@@ -2,17 +2,16 @@ package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.generic.GenericPress;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -25,8 +24,8 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
 
     public static class Item extends RebarItem {
 
-        private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-        private final double timePerItem = getSettings().getOrThrow("time-per-item", ConfigAdapter.DOUBLE);
+        private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final double timePerItem = getSettingOrThrow("time-per-item", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -41,7 +40,7 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
         }
     }
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public ElectricPress(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -66,12 +65,11 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("plant-oil-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.PLANT_OIL),
+                RebarArgument.of("plant-oil-bar", ProgressBar.fluidContents(
+                        PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        20,
-                        TextColor.fromHexString("#c4b352")
-                ))
+                        fluidAmount(PylonFluids.PLANT_OIL))
+                )
         ));
     }
 }

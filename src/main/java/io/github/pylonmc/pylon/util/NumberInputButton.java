@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.util;
 
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.util.PlayerInput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.item.AbstractBoundItem;
 import xyz.xenondevs.invui.item.ItemProvider;
-import xyz.xenondevs.invui.window.Window;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -83,36 +81,7 @@ public class NumberInputButton extends AbstractBoundItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
         int value = valueGetter.get();
         int increment = clickType.isShiftClick() ? shiftIncrement : this.increment;
-        if (clickType == ClickType.DROP) {
-            String key;
-            if (min != null && max != null) {
-                key = "pylon.gui.number-button.enter-value.both";
-            } else if (min != null) {
-                key = "pylon.gui.number-button.enter-value.min";
-            } else if (max != null) {
-                key = "pylon.gui.number-button.enter-value.max";
-            } else {
-                key = "pylon.gui.number-button.enter-value.none";
-            }
-            Window window = getGui().getWindows().stream().filter(w -> w.getViewer().equals(player)).findAny().orElseThrow();
-            window.close();
-            player.sendMessage(Component.translatable(
-                    key,
-                    RebarArgument.of("min", min != null ? Component.text(min) : Component.empty()),
-                    RebarArgument.of("max", max != null ? Component.text(max) : Component.empty())
-            ));
-            PlayerInput.requestInput(player).thenAccept(input -> {
-                if (input == null) return;
-                try {
-                    int newValue = Integer.parseInt(input);
-                    setValue(newValue);
-                    reopenWindow.accept(player);
-                } catch (NumberFormatException e) {
-                    player.sendMessage(Component.translatable("pylon.message.invalid-input.integer"));
-                }
-            });
-            return;
-        } else if (clickType.isLeftClick()) {
+        if (clickType.isLeftClick()) {
             value += increment;
         } else if (clickType.isRightClick()) {
             value -= increment;

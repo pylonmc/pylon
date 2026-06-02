@@ -17,13 +17,13 @@ import org.jspecify.annotations.NonNull;
 
 public class ElectricCompressor extends GenericMachine<HammerRecipe> implements SimpleElectricRebarBlock {
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-    private final double hammerTime = getSettings().getOrThrow("hammer-time", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double hammerTime = getSettingOrThrow("hammer-time", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-        private final double hammerTime = getSettings().getOrThrow("hammer-time", ConfigAdapter.DOUBLE);
+        private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final double hammerTime = getSettingOrThrow("hammer-time", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

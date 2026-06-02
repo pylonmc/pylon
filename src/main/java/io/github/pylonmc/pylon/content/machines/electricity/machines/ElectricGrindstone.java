@@ -15,11 +15,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class ElectricGrindstone extends GenericGrindstone implements SimpleElectricRebarBlock {
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        public final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

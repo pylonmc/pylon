@@ -3,13 +3,7 @@ package io.github.pylonmc.pylon.content.machines.generic;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -49,9 +43,9 @@ public abstract class GenericQuarry extends RebarBlock implements
     public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
     public static final NamespacedKey CHUNK_POSITIONS_KEY = pylonKey("chunk_positions");
 
-    public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final int radius = getSettingOrThrow("radius", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
 
     protected final List<BlockPosition> blockPositions;
     protected final Set<ChunkPosition> chunkPositions;

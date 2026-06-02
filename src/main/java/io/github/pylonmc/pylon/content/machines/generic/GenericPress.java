@@ -5,13 +5,7 @@ import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -40,9 +34,9 @@ public abstract class GenericPress extends RebarBlock implements
         FluidBufferRebarBlock,
         RecipeProcessorRebarBlock<PressRecipe> {
 
-    public final double timePerItem = getSettings().getOrThrow("time-per-item", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double plantOilBuffer = getSettings().getOrThrow("plant-oil-buffer", ConfigAdapter.DOUBLE);
+    public final double timePerItem = getSettingOrThrow("time-per-item", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double plantOilBuffer = getSettingOrThrow("plant-oil-buffer", ConfigAdapter.DOUBLE);
 
     protected final VirtualInventory inputInventory = new VirtualInventory(1);
     protected final ItemStackBuilder pressStack = ItemStackBuilder.of(Material.COMPOSTER)

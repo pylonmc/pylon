@@ -2,24 +2,19 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.electricity.ElectricNode;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import java.util.Map;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,16 +31,16 @@ public class SteamEngine extends RebarBlock implements
         TickingRebarBlock,
         SimpleRebarMultiblock {
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    private final double steamUsage = getSettings().getOrThrow("steam-usage", ConfigAdapter.DOUBLE);
-    private final double steamCapacity = getSettings().getOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
-    private final double powerProduction = getSettings().getOrThrow("power-production", ConfigAdapter.DOUBLE);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final double steamUsage = getSettingOrThrow("steam-usage", ConfigAdapter.DOUBLE);
+    private final double steamCapacity = getSettingOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
+    private final double powerProduction = getSettingOrThrow("power-production", ConfigAdapter.DOUBLE);
 
     public static final class Item extends RebarItem {
 
-        private final double steamUsage = getSettings().getOrThrow("steam-usage", ConfigAdapter.DOUBLE);
-        private final double steamCapacity = getSettings().getOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
-        private final double powerProduction = getSettings().getOrThrow("power-production", ConfigAdapter.DOUBLE);
+        private final double steamUsage = getSettingOrThrow("steam-usage", ConfigAdapter.DOUBLE);
+        private final double steamCapacity = getSettingOrThrow("steam-capacity", ConfigAdapter.DOUBLE);
+        private final double powerProduction = getSettingOrThrow("power-production", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -109,11 +104,10 @@ public class SteamEngine extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.STEAM),
+                RebarArgument.of("bar", ProgressBar.fluidContents(
+                        PylonFluids.STEAM,
                         fluidCapacity(PylonFluids.STEAM),
-                        20,
-                        TextColor.fromHexString("#d8d8d8")
+                        fluidAmount(PylonFluids.STEAM)
                 )),
                 RebarArgument.of("power", UnitFormat.WATTS.format(node.getPower()).decimalPlaces(1))
         ));

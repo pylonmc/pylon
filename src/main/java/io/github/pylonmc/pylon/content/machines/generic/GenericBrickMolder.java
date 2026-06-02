@@ -12,7 +12,7 @@ import org.jspecify.annotations.NonNull;
 
 public abstract class GenericBrickMolder extends GenericMachine<MoldingRecipe> {
 
-    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
+    public final int ticksPerMoldingCycle = getSettingOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
     public GenericBrickMolder(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);

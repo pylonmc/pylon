@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PylonWire extends RebarItem implements WireRebarItem {
 
-    private final double maxPower = getSettings().getOrThrow("max-power", ConfigAdapter.DOUBLE);
+    private final double maxPower = getSettingOrThrow("max-power", ConfigAdapter.DOUBLE);
 
     public PylonWire(@NotNull ItemStack stack) {
         super(stack);

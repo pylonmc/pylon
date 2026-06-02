@@ -15,13 +15,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class ElectricBrickMolder extends GenericBrickMolder implements SimpleElectricRebarBlock {
 
-    private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
+    private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        private final double powerUsage = getSettings().getOrThrow("power-usage", ConfigAdapter.DOUBLE);
-        private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        private final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
+        private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
+        private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        private final int ticksPerMoldingCycle = getSettingOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

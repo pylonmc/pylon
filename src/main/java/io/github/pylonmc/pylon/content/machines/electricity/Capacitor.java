@@ -29,7 +29,7 @@ public class Capacitor extends RebarBlock implements
 
     public static final class Item extends RebarItem {
 
-        private final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
+        private final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -41,7 +41,7 @@ public class Capacitor extends RebarBlock implements
         }
     }
 
-    private final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
+    private final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
 
     private static final NamespacedKey STORED_ENERGY_KEY = pylonKey("stored_energy");
     private double storedEnergy;
