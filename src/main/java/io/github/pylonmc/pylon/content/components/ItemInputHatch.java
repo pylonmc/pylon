@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -18,10 +18,10 @@ import java.util.Map;
 
 
 public class ItemInputHatch extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarDirectionalBlock,
-        RebarLogisticBlock,
-        RebarVirtualInventoryBlock {
+        GuiRebarBlock,
+        DirectionalRebarBlock,
+        LogisticRebarBlock,
+        VirtualInventoryRebarBlock {
 
     public final VirtualInventory inventory = new VirtualInventory(1);
 

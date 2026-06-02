@@ -23,7 +23,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class EnchantingTalisman extends Talisman {
-    public final double bonusLevelChance = getSettings().getOrThrow("bonus-level-chance", ConfigAdapter.DOUBLE);
+    public final double bonusLevelChance = getSettingOrThrow("bonus-level-chance", ConfigAdapter.DOUBLE);
     public static final NamespacedKey ENCHANTING_TALISMAN_KEY = PylonUtils.pylonKey("enchanting_talisman");
     private static final NamespacedKey ENCHANTING_TALISMAN_BONUS_KEY = PylonUtils.pylonKey("enchanting_talisman_bonus");
     private static final NamespacedKey ENCHANTING_ITEM_UUID_KEY = PylonUtils.pylonKey("enchanting_talisman_uuid");

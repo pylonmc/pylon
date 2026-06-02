@@ -348,7 +348,7 @@ pylon:diesel_booster:
     - "CFC"
     - " N "
   key:
-    T: pylon:portable_fluid_tank_steel
+    T: pylon:portable_fluid_tank_copper
     C: pylon:steel_cylinder
     K: pylon:kinetic_control_mechanism
     F: minecraft:flint_and_steel

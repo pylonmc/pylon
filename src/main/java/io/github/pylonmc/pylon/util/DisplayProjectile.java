@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.util;
 
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.entity.RebarEntity;
-import io.github.pylonmc.rebar.entity.base.RebarTickingEntity;
+import io.github.pylonmc.rebar.entity.interfaces.TickingRebarEntity;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import org.bukkit.Location;
@@ -25,7 +25,7 @@ import java.util.Optional;
 import net.kyori.adventure.sound.Sound;
 
 
-public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements RebarTickingEntity {
+public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements TickingRebarEntity {
     private final Player player;
     private final float thickness;
     private final double damage;

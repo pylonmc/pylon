@@ -2,8 +2,8 @@ package io.github.pylonmc.pylon.content.machines.storage;
 
 import io.github.pylonmc.pylon.recipes.SiloConverterRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
@@ -21,7 +21,7 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import java.util.Map;
 
 
-public class SiloConverter extends RebarBlock implements RebarInventoryBlock, RebarVirtualInventoryBlock {
+public class SiloConverter extends RebarBlock implements GuiRebarBlock, VirtualInventoryRebarBlock {
 
     public final ItemStackBuilder materialStack = ItemStackBuilder.gui(Material.CYAN_STAINED_GLASS_PANE, getKey() + ":material")
             .name(Component.translatable("pylon.gui.material"));

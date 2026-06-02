@@ -4,6 +4,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 import com.google.common.base.Preconditions;
 
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 
@@ -30,18 +31,15 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Config;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
@@ -65,20 +63,18 @@ import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 public final class SmelteryController extends SmelteryComponent
-        implements RebarInventoryBlock, RebarMultiblock, RebarTickingBlock {
+        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
     private static final NamespacedKey FLUIDS_KEY = pylonKey("fluids");
 
-    private static final Config settings = Settings.get(PylonKeys.SMELTERY_CONTROLLER);
-    public static final int TICK_INTERVAL = settings.getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public static final double FLUID_REACTION_PER_TICK = settings.getOrThrow("fluid-reaction-per-tick", ConfigAdapter.DOUBLE);
-    public static final double HEATING_FACTOR = settings.getOrThrow("heating-factor", ConfigAdapter.DOUBLE);
-    public static final double COOLING_FACTOR = settings.getOrThrow("cooling-factor", ConfigAdapter.DOUBLE);
-    public static final double ROOM_TEMPERATURE = settings.getOrThrow("room-temperature", ConfigAdapter.DOUBLE);
-
-    public final int maxHeight = settings.getOrThrow("max-height", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double fluidReactionPerTick = getSettingOrThrow("fluid-reaction-per-tick", ConfigAdapter.DOUBLE);
+    public final double heatingFactor = getSettingOrThrow("heating-factor", ConfigAdapter.DOUBLE);
+    public final double coolingFactor = getSettingOrThrow("cooling-factor", ConfigAdapter.DOUBLE);
+    public final double roomTemperature = getSettingOrThrow("room-temperature", ConfigAdapter.DOUBLE);
+    public final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
     private final Set<SmelteryComponent> components = new HashSet<>();
     private final Object2DoubleMap<RebarFluid> fluids = new Object2DoubleRBTreeMap<>(
@@ -99,9 +95,9 @@ public final class SmelteryController extends SmelteryComponent
     public SmelteryController(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
-        setTickInterval(TICK_INTERVAL);
+        setTickInterval(tickInterval);
 
-        temperature = ROOM_TEMPERATURE;
+        temperature = roomTemperature;
     }
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
@@ -122,7 +118,7 @@ public final class SmelteryController extends SmelteryComponent
     }
 
     @Override
-    public void postBreak(@NotNull BlockBreakContext context) {
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
         for (SmelteryComponent component : components) {
             component.setController(null);
         }
@@ -309,7 +305,7 @@ public final class SmelteryController extends SmelteryComponent
         if (!partUnloaded) {
             height = 0;
             capacity = 0;
-            temperature = ROOM_TEMPERATURE;
+            temperature = roomTemperature;
             fluids.clear();
             removePixels();
         }
@@ -406,15 +402,15 @@ public final class SmelteryController extends SmelteryComponent
 
     private void applyHeat() {
         if (temperature < avgTarget) {
-            temperature += (avgTarget - temperature) * HEATING_FACTOR;
+            temperature += (avgTarget - temperature) * heatingFactor;
         }
     }
     // </editor-fold>
 
     // <editor-fold desc="Fluid display" defaultstate="collapsed">
     private final List<TextDisplay> pixels = new ArrayList<>();
-    private static final int RESOLUTION = Settings.get(PylonKeys.SMELTERY_CONTROLLER).getOrThrow("display.resolution", ConfigAdapter.INTEGER);
-    private static final int PIXELS_PER_SIDE = 3 * RESOLUTION;
+    private final int resolution = getSettingOrThrow("display.resolution", ConfigAdapter.INTEGER);
+    private final int pixelsPerSide = 3 * resolution;
 
     private static final SimplexOctaveGenerator LAVA_NOISE = new SimplexOctaveGenerator(ThreadLocalRandom.current().nextLong(), 4);
 
@@ -426,18 +422,18 @@ public final class SmelteryController extends SmelteryComponent
         pixels.clear();
 
         Location location = center.getLocation().add(-1, 0, -1);
-        for (int x = 0; x < PIXELS_PER_SIDE; x++) {
-            for (int z = 0; z < PIXELS_PER_SIDE; z++) {
-                Location relative = location.clone().add((double) x / RESOLUTION, 0, (double) z / RESOLUTION);
+        for (int x = 0; x < pixelsPerSide; x++) {
+            for (int z = 0; z < pixelsPerSide; z++) {
+                Location relative = location.clone().add((double) x / resolution, 0, (double) z / resolution);
                 pixels.add(PylonUtils.spawnUnitSquareTextDisplay(relative, PylonUtils.METAL_GRAY, display -> {
                     display.setTransformationMatrix(
                             TransformUtil.transformationToMatrix(display.getTransformation())
                                     .translateLocal(0, -1, 0) // move the origin so it will be correct after rotation
                                     .rotateLocalX((float) Math.toRadians(-90))
-                                    .scaleLocal(1f / RESOLUTION)
+                                    .scaleLocal(1f / resolution)
                     );
                     display.setBrightness(new Display.Brightness(15, 15));
-                    display.setTeleportDuration(Math.min(59, TICK_INTERVAL));
+                    display.setTeleportDuration(Math.min(59, tickInterval));
                     display.setPersistent(false); // do not save to world
                 }));
             }
@@ -460,8 +456,8 @@ public final class SmelteryController extends SmelteryComponent
         pixels.clear();
     }
 
-    private static final double LIGHTNESS_VARIATION = settings.getOrThrow("display.lightness-variation", ConfigAdapter.DOUBLE);
-    private static final double LIGHTNESS_SPEED = settings.getOrThrow("display.lightness-speed", ConfigAdapter.DOUBLE);
+    private final double lightnessVariation = getSettingOrThrow("display.lightness-variation", ConfigAdapter.DOUBLE);
+    private final double lightnessSpeed = getSettingOrThrow("display.lightness-speed", ConfigAdapter.DOUBLE);
     private double lastHeight = 0;
 
     private void updateFluidDisplay() {
@@ -488,12 +484,12 @@ public final class SmelteryController extends SmelteryComponent
             TextDisplay entity = pixels.get(i);
             if (!entity.isValid()) continue;
 
-            int x = i % PIXELS_PER_SIDE;
-            int z = (i / PIXELS_PER_SIDE) % PIXELS_PER_SIDE;
+            int x = i % pixelsPerSide;
+            int z = (i / pixelsPerSide) % pixelsPerSide;
             double value = LAVA_NOISE.noise(
                     x,
                     z,
-                    (System.currentTimeMillis() / 1000.0) * LIGHTNESS_SPEED,
+                    (System.currentTimeMillis() / 1000.0) * lightnessSpeed,
                     0.01,
                     0.01,
                     true
@@ -501,7 +497,7 @@ public final class SmelteryController extends SmelteryComponent
             HslColor newColor = new HslColor(
                     color.hue(),
                     color.saturation(),
-                    color.lightness() + value * LIGHTNESS_VARIATION
+                    color.lightness() + value * lightnessVariation
             );
             entity.setInterpolationDuration(getTickInterval());
             entity.setInterpolationDelay(0);
@@ -516,7 +512,7 @@ public final class SmelteryController extends SmelteryComponent
                 }
                 entity.teleportAsync(location).whenComplete((b, t) -> {
                     if (decreased) {
-                        entity.setTeleportDuration(Math.min(59, TICK_INTERVAL));
+                        entity.setTeleportDuration(Math.min(59, tickInterval));
                     }
                 });
             }
@@ -537,7 +533,7 @@ public final class SmelteryController extends SmelteryComponent
 
             double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
             double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
-            double maxFluidConsumption = FLUID_REACTION_PER_TICK * highestFluidRatio;
+            double maxFluidConsumption = fluidReactionPerTick * highestFluidRatio;
             double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
 
             double currentTemperature = temperature;
@@ -566,7 +562,7 @@ public final class SmelteryController extends SmelteryComponent
             if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
                 // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
                 // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
-                temperature -= (temperature - ROOM_TEMPERATURE) * COOLING_FACTOR;
+                temperature -= (temperature - roomTemperature) * coolingFactor;
             }
             avgTarget = -1;
             heaters = 0;

@@ -6,17 +6,20 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -39,30 +42,30 @@ import java.util.Random;
 
 
 public class BurnerHydraulicPurifier extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarProcessor,
-        RebarInteractBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        ProcessorRebarBlock,
+        InteractRebarBlockHandler,
         HydraulicPurifier {
 
     public static final Vector3i ITEM_INPUT = new Vector3i(0, 0, 2);
     public static final Vector3i FLUID_INPUT = new Vector3i(1, 0, 1);
     public static final Vector3i FLUID_OUTPUT = new Vector3i(-1, 0, 1);
 
-    public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
-    public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double purificationSpeed = getSettingOrThrow("purification-speed", ConfigAdapter.INTEGER);
+    public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerMachineTick = purificationSpeed * tickInterval / 20;
 
     private static final Random RANDOM = new Random();
 
     public static class Item extends RebarItem {
 
-        public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
-        public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+        public final double purificationSpeed = getSettingOrThrow("purification-speed", ConfigAdapter.INTEGER);
+        public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -204,26 +207,21 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
                 .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
                 .setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
     }
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (getProcessTicksRemaining() == null) {
+        if (!isProcessing()) {
             return new WailaDisplay(getNameTranslationKey());
         }
-
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fuel-bar", PylonUtils.createBar(
-                        (double) getProcessTicksRemaining() / getProcessTimeTicks(),
-                        20,
-                        TextColor.fromHexString("#f6a446")
-                ))
+                RebarArgument.of("fuel", ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining()))
         ));
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction().isRightClick()) {
             event.setUseInteractedBlock(Event.Result.DENY);
         }

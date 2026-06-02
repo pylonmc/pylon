@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -10,7 +10,6 @@ import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
@@ -27,10 +26,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class FluidTankCasing extends RebarBlock implements RebarInteractBlock {
+public class FluidTankCasing extends RebarBlock implements InteractRebarBlockHandler {
 
-    public final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
-    public final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+    public final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
+    public final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
             "allowed-temperatures",
             ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
     );
@@ -39,8 +38,8 @@ public class FluidTankCasing extends RebarBlock implements RebarInteractBlock {
 
     public static class Item extends RebarItem {
 
-        public final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
-        public final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+        public final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
+        public final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
                 "allowed-temperatures",
                 ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
         );
@@ -79,7 +78,7 @@ public class FluidTankCasing extends RebarBlock implements RebarInteractBlock {
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.useInteractedBlock() != Event.Result.DENY && tank != null) {
             PylonUtils.handleFluidTankRightClick(tank, event, priority);
         }

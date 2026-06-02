@@ -4,11 +4,11 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.diesel.DieselRefuelable;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -19,10 +19,12 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.inventory.event.UpdateReason;
@@ -41,11 +43,11 @@ import java.util.List;
 import java.util.Map;
 
 public class DieselRefuelingStation extends RebarBlock implements
-        RebarFluidBlock,
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarLogisticBlock,
-        RebarVirtualInventoryBlock {
+        FluidRebarBlock,
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        LogisticRebarBlock,
+        VirtualInventoryRebarBlock {
 
     private final VirtualInventory containerInventory = new VirtualInventory(1);
     public final ItemStackBuilder containerStack = ItemStackBuilder
@@ -110,20 +112,14 @@ public class DieselRefuelingStation extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         DieselRefuelable refuelable = getHeldRefuelableItem();
         if (refuelable == null) {
-            return new WailaDisplay(
-                    getDefaultWailaTranslationKey().arguments(RebarArgument.of("extra", "")));
+            return new WailaDisplay(getNameTranslationKey());
         }
 
-        return new WailaDisplay(
-                getDefaultWailaTranslationKey().arguments(
-                        RebarArgument.of(
-                                "extra",
-                                Component.translatable("pylon.message.diesel_refueling_station.extra").arguments(
-                                        RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                                                refuelable.getDiesel(),
-                                                refuelable.getDieselCapacity(),
-                                                20,
-                                                TextColor.fromHexString("#eaa627")))))));
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL, refuelable.getDieselCapacity(), refuelable.getDiesel())
+                )
+        ));
     }
 
     @Override
@@ -146,9 +142,9 @@ public class DieselRefuelingStation extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(List<ItemStack> drops, BlockBreakContext context) {
-        RebarFluidBlock.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

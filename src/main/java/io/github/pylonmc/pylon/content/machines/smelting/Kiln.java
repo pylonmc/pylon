@@ -8,24 +8,26 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -54,12 +56,12 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class Kiln extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInventoryBlock,
-        RebarRecipeProcessor<KilnRecipe>,
-        RebarDirectionalBlock,
-        RebarVirtualInventoryBlock,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        GuiRebarBlock,
+        RecipeProcessorRebarBlock<KilnRecipe>,
+        DirectionalRebarBlock,
+        VirtualInventoryRebarBlock,
+        TickingRebarBlock {
 
     public static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
     public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");
@@ -73,10 +75,10 @@ public class Kiln extends RebarBlock implements
 
     private static final Random RANDOM = new Random();
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double minTemperature = getSettings().getOrThrow("min-temperature", ConfigAdapter.DOUBLE);
-    public final double maxTemperature = getSettings().getOrThrow("max-temperature", ConfigAdapter.DOUBLE);
-    public final double heatingRate = getSettings().getOrThrow("heating-rate", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double minTemperature = getSettingOrThrow("min-temperature", ConfigAdapter.DOUBLE);
+    public final double maxTemperature = getSettingOrThrow("max-temperature", ConfigAdapter.DOUBLE);
+    public final double heatingRate = getSettingOrThrow("heating-rate", ConfigAdapter.DOUBLE);
 
     private final VirtualInventory fuelInventory = new VirtualInventory(1);
 
@@ -353,7 +355,7 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         Block light = getLight();
         if (light.getType().isAir()) {
             light.setType(Material.LIGHT);
@@ -365,7 +367,7 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Block light = getLight();
         if (light.getType() == Material.LIGHT) {
             light.setType(Material.AIR);
@@ -389,22 +391,21 @@ public class Kiln extends RebarBlock implements
             return new WailaDisplay(getNameTranslationKey());
         }
 
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("temperature-bar", PylonUtils.createBar(
-                        temperature / maxTemperature,
-                        20,
-                        PylonUtils.colorToTextColor(PylonUtils.colorFromTemperature(temperature)
-                ))),
-                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(temperature).decimalPlaces(1)),
-                RebarArgument.of("progress", getRecipeProgress() == null
-                        ? Component.empty()
-                        : Component.translatable("pylon.waila.kiln").arguments(
-                        RebarArgument.of("progress", PylonUtils.createProgressBar(
-                                1.0 - getRecipeProgress(),
-                                20,
-                                TextColor.color(255, 255, 255)
-                        ))
-                ))
+        ComponentLike temperatureBar = new ProgressBar()
+                .proportion((temperature - minTemperature) / maxTemperature)
+                .barColor(PylonUtils.colorFromTemperature(temperature))
+                .bars(30)
+                .suffix(Component.text(" ").append(UnitFormat.CELSIUS.format(temperature).decimalPlaces(1)));
+
+        if (getRecipeProgress() == null) {
+            return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-1").arguments(
+                    RebarArgument.of("temperature", temperatureBar)
+            ));
+        }
+
+        return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-2").arguments(
+                RebarArgument.of("temperature", temperatureBar),
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
         ));
     }
 

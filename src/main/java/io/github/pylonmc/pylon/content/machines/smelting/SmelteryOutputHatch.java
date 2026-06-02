@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import io.github.pylonmc.pylon.api.MeltingPoint;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -17,9 +17,9 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import kotlin.Pair;
 
-public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
+public final class SmelteryOutputHatch extends SmelteryComponent implements FluidRebarBlock, DirectionalRebarBlock {
 
-    public final double flowRate = getSettings().getOrThrow("flow-rate", ConfigAdapter.DOUBLE);
+    public final double flowRate = getSettingOrThrow("flow-rate", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public SmelteryOutputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {

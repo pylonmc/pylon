@@ -5,13 +5,13 @@ import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -41,23 +42,23 @@ import java.util.Map;
 
 
 public class Collimator extends RebarBlock implements
-        RebarFluidTank,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarInventoryBlock,
-        RebarTickingBlock,
-        RebarSimpleMultiblock,
-        RebarVirtualInventoryBlock {
+        FluidTankRebarBlock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        TickingRebarBlock,
+        SimpleRebarMultiblock,
+        VirtualInventoryRebarBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int obscyraPerCohesiveUnit = getSettings().getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
-    public final int secondsPerCohesiveUnit = getSettings().getOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int obscyraPerCohesiveUnit = getSettingOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
+    public final int secondsPerCohesiveUnit = getSettingOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
     public final VirtualInventory inventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
-        public final int obscyraPerCohesiveUnit = getSettings().getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
-        public final int secondsPerCohesiveUnit = getSettings().getOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
+        public final int obscyraPerCohesiveUnit = getSettingOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
+        public final int secondsPerCohesiveUnit = getSettingOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -122,11 +123,10 @@ public class Collimator extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey()
                 .arguments(
-                        RebarArgument.of("fluid-bar", PylonUtils.createFluidAmountBar(
-                                getFluidAmount(),
+                        RebarArgument.of("fluid", ProgressBar.fluidContents(
+                                PylonFluids.OBSCYRA,
                                 getFluidCapacity(),
-                                20,
-                                TextColor.fromHexString("#000000")
+                                getFluidAmount()
                         )),
                         RebarArgument.of("time-remaining", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
                 )
@@ -148,8 +148,8 @@ public class Collimator extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarFluidTank.super.onBreak(drops, context);
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidTankRebarBlock.super.onBlockBreak(drops, context);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 }

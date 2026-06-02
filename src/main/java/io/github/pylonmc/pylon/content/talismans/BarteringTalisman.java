@@ -25,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BarteringTalisman extends Talisman {
     public static final NamespacedKey BARTERING_TALISMAN_KEY = PylonUtils.pylonKey("bartering_talisman");
     public static final NamespacedKey BARTERING_TALISMAN_NO_CONSUME_KEY = PylonUtils.pylonKey("bartering_talisman_no_consume_chance");
-    public final float chanceToNotConsumeInput = getSettings().getOrThrow("chance-to-not-consume-input", ConfigAdapter.FLOAT);
+    public final float chanceToNotConsumeInput = getSettingOrThrow("chance-to-not-consume-input", ConfigAdapter.FLOAT);
 
     public BarteringTalisman(@NotNull ItemStack stack) {
         super(stack);

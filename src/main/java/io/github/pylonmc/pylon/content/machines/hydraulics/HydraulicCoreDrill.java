@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class HydraulicCoreDrill extends CoreDrill {
 
-    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+    public final int hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerRotation = hydraulicFluidUsage * rotationDuration / 20.0;
 
     public static final Vector3i FLUID_INPUT_HATCH = new Vector3i(1, -2, 3);
@@ -34,7 +34,7 @@ public class HydraulicCoreDrill extends CoreDrill {
 
     public static class Item extends CoreDrill.Item {
 
-        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+        public final int hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

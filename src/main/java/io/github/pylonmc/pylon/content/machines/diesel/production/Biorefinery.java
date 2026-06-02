@@ -9,22 +9,21 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -43,15 +42,15 @@ import java.util.Map;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Biorefinery extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarSimpleMultiblock,
-        RebarProcessor,
-        RebarTickingBlock {
+        DirectionalRebarBlock,
+        SimpleRebarMultiblock,
+        ProcessorRebarBlock,
+        TickingRebarBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double biodieselPerSecond = getSettings().getOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
-    public final double ethanolPerMbOfBiodiesel = getSettings().getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
-    public final double plantOilPerMbOfBiodiesel = getSettings().getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double biodieselPerSecond = getSettingOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
+    public final double ethanolPerMbOfBiodiesel = getSettingOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+    public final double plantOilPerMbOfBiodiesel = getSettingOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
 
     public static final Vector3i FUEL_INPUT_HATCH = new Vector3i(1, 0, 3);
     public static final Vector3i BIODIESEL_OUTPUT_HATCH = new Vector3i(0, 0, -1);
@@ -60,9 +59,9 @@ public class Biorefinery extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double biodieselPerSecond = getSettings().getOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
-        public final double ethanolPerMbOfBiodiesel = getSettings().getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
-        public final double plantOilPerMbOfBiodiesel = getSettings().getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+        public final double biodieselPerSecond = getSettingOrThrow("biodiesel-per-second", ConfigAdapter.DOUBLE);
+        public final double ethanolPerMbOfBiodiesel = getSettingOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+        public final double plantOilPerMbOfBiodiesel = getSettingOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -157,7 +156,7 @@ public class Biorefinery extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
@@ -234,23 +233,12 @@ public class Biorefinery extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (isProcessing()) {
-            double percent = (double) getProcessTicksRemaining() / getProcessTimeTicks();
-            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("info", Component.translatable("pylon.message.biorefinery.has_fuel").arguments(
-                            RebarArgument.of("fuel-bar", PylonUtils.createBar(
-                                    percent,
-                                    20,
-                                    TextColor.color(255, 200, 50)
-                            )),
-                            RebarArgument.of("remaining-time", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
-                    ))
-            ));
-        } else {
-            return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                    RebarArgument.of("info", Component.translatable("pylon.message.biorefinery.no_fuel"))
-            ));
-        }
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("fuel", isProcessing()
+                        ? ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.biorefinery.no_fuel")
+                )
+        ));
     }
 
     public record Fuel(

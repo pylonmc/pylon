@@ -6,10 +6,14 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ComposterRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Config;
-import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -19,6 +23,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -50,17 +55,17 @@ import java.util.UUID;
 
 
 public class Press extends RebarBlock implements
-        RebarInteractBlock,
-        RebarFluidBufferBlock,
-        RebarComposter,
-        RebarDirectionalBlock,
-        RebarRecipeProcessor<PressRecipe>,
-        RebarNoJobBlock {
+        InteractRebarBlockHandler,
+        FluidBufferRebarBlock,
+        ComposterRebarBlockHandler,
+        DirectionalRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe>,
+        NoJobRebarBlock {
 
-    private static final Config settings = Settings.get(PylonKeys.PRESS);
-    public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
-    public static final int RETURN_TO_START_TIME_TICKS = settings.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INTEGER);
-    public static final int CAPACITY_MB = settings.getOrThrow("capacity-mb", ConfigAdapter.INTEGER);
+    public static final ConfigSection CONFIG = ConfigSection.fromSettings(PylonKeys.PRESS);
+    public static final int TIME_PER_ITEM_TICKS = CONFIG.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
+    public static final int RETURN_TO_START_TIME_TICKS = CONFIG.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INTEGER);
+    public static final int CAPACITY_MB = CONFIG.getOrThrow("capacity-mb", ConfigAdapter.INTEGER);
 
     public static class PressItem extends RebarItem {
 
@@ -109,17 +114,16 @@ public class Press extends RebarBlock implements
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.PLANT_OIL),
+                RebarArgument.of("fluid", ProgressBar.fluidContents(
+                        PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        20,
-                        TextColor.fromHexString("#c4b352")
-                ))
+                        fluidAmount(PylonFluids.PLANT_OIL))
+                )
         ));
     }
 
     @Override  @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking()
                 || event.useInteractedBlock() == Event.Result.DENY) {
             return;

@@ -8,21 +8,19 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -40,16 +38,16 @@ import java.util.Random;
 
 
 public class PalladiumCondenser extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock {
 
-    public final int shimmerDustPerCycle = getSettings().getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER);
-    public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.INTEGER);
-    public final double hydraulicFluidPerSecond = getSettings().getOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER);
-    public final int machineTicksPerCycle = getSettings().getOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int shimmerDustPerCycle = getSettingOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER);
+    public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.INTEGER);
+    public final double hydraulicFluidPerSecond = getSettingOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER);
+    public final int machineTicksPerCycle = getSettingOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public static final Vector3i SHIMMER_DUST_INPUT_HATCH = new Vector3i(1, 0, 0);
     public static final Vector3i PALLADIUM_DUST_OUTPUT_HATCH = new Vector3i(-1, 0, 0);
@@ -73,11 +71,11 @@ public class PalladiumCondenser extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int shimmerDustPerCycle = getSettings().getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER);
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.INTEGER);
-        public final double hydraulicFluidPerSecond = getSettings().getOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER);
-        public final int machineTicksPerCycle = getSettings().getOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int shimmerDustPerCycle = getSettingOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER);
+        public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.INTEGER);
+        public final double hydraulicFluidPerSecond = getSettingOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER);
+        public final int machineTicksPerCycle = getSettingOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
 
         public Item(@NotNull ItemStack stack) {
@@ -241,7 +239,7 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, BIODIESEL_INPUT_HATCH)
                 .setFluidType(PylonFluids.BIODIESEL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH)
@@ -252,20 +250,12 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
         Integer timeLeft = getProcessTicksRemaining();
+        if (timeLeft == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("duration-if-any",
-                        timeLeft == null
-                                ? Component.empty()
-                                : Component.translatable(wailaFormat).arguments(
-                                RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                        ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                        20,
-                                        NamedTextColor.WHITE
-                                ))
-                        )
-                )
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getProcessProgress()))
         ));
     }
 }

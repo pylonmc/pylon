@@ -8,11 +8,11 @@ import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -20,9 +20,8 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -43,7 +42,7 @@ import org.joml.Vector3i;
 import java.util.*;
 
 public class ShimmerAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarRecipeProcessor<ShimmerAltarRecipe>, RebarBreakHandler {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, RecipeProcessorRebarBlock<ShimmerAltarRecipe>, BlockBreakRebarBlockHandler {
 
     public static final int PEDESTAL_COUNT = 8;
 
@@ -51,7 +50,7 @@ public class ShimmerAltar extends RebarBlock
 
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, BlockCreateContext context) {
@@ -92,7 +91,7 @@ public class ShimmerAltar extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -239,7 +238,7 @@ public class ShimmerAltar extends RebarBlock
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         if (!getItemDisplay().getItemStack().getType().isAir()) {
             drops.add(getItemDisplay().getItemStack());
         }
@@ -250,17 +249,13 @@ public class ShimmerAltar extends RebarBlock
         }
     }
     
+    @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (getCurrentRecipe() == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", getCurrentRecipe() == null
-                        ? Component.empty()
-                        : Component.translatable("pylon.item.shimmer_altar.progress")
-                        .arguments(RebarArgument.of("progress", PylonUtils.createProgressBar(
-                                        1.0 - (getRecipeTicksRemaining() / 20.0) / getCurrentRecipe().timeSeconds(),
-                                20,
-                                TextColor.color(255, 255, 255)
-                        )))
-                )
+                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
         ));
     }
 }

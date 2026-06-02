@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.machines.hydraulics;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -24,13 +24,13 @@ import java.util.Set;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public abstract class Quarry extends RebarBlock implements RebarMultiblock, RebarProcessor {
+public abstract class Quarry extends RebarBlock implements RebarMultiblock, ProcessorRebarBlock {
 
     public static final NamespacedKey INDEX_KEY = pylonKey("index");
     public static final NamespacedKey BLOCK_POSITIONS_KEY = pylonKey("block_positions");
     public static final NamespacedKey CHUNK_POSITIONS_KEY = pylonKey("chunk_positions");
 
-    public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
+    public final int radius = getSettingOrThrow("radius", ConfigAdapter.INTEGER);
 
     protected final List<BlockPosition> blockPositions;
     protected final Set<ChunkPosition> chunkPositions;

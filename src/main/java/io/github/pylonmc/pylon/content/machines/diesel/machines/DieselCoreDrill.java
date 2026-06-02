@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class DieselCoreDrill extends CoreDrill {
 
-    public final int dieselUsage = getSettings().getOrThrow("diesel-usage", ConfigAdapter.INTEGER);
+    public final int dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.INTEGER);
     public final double dieselPerRotation = dieselUsage * rotationDuration / 20.0;
 
     public static final Vector3i FLUID_INPUT_HATCH = new Vector3i(0, -3, 2);
@@ -35,7 +35,7 @@ public class DieselCoreDrill extends CoreDrill {
 
     public static class Item extends CoreDrill.Item {
 
-        public final int dieselUsage = getSettings().getOrThrow("diesel-usage", ConfigAdapter.INTEGER);
+        public final int dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

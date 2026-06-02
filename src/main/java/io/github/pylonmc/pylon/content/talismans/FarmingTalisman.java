@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FarmingTalisman extends Talisman {
-    public float extraCropChance = getSettings().getOrThrow("extra-crop-chance", ConfigAdapter.FLOAT);
+    public float extraCropChance = getSettingOrThrow("extra-crop-chance", ConfigAdapter.FLOAT);
     public static final NamespacedKey FARMING_TALISMAN_KEY = PylonUtils.pylonKey("farming_talisman");
     public static final NamespacedKey FARMING_TALISMAN_CHANCE_KEY = PylonUtils.pylonKey("farming_talisman_chance");
 

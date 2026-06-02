@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,15 +23,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class WaterPump extends RebarBlock implements RebarFluidBlock {
+public class WaterPump extends RebarBlock implements FluidRebarBlock {
 
-    public final double waterPerSecond = getSettings().getOrThrow("water-per-second", ConfigAdapter.DOUBLE);
+    public final double waterPerSecond = getSettingOrThrow("water-per-second", ConfigAdapter.DOUBLE);
 
     private final List<Pair<RebarFluid, Double>> suppliedWater = List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
 
     public static class Item extends RebarItem {
 
-        public final double waterPerSecond = getSettings().getOrThrow("water-per-second", ConfigAdapter.DOUBLE);
+        public final double waterPerSecond = getSettingOrThrow("water-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
