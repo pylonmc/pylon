@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import lombok.Getter;
@@ -62,17 +63,17 @@ public class HydraulicFarmer extends RebarBlock implements
             Material.SOUL_SAND, Map.of(Material.NETHER_WART, Material.NETHER_WART)
     );
 
-    public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.DOUBLE);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final int radius = getSettingOrThrow("radius", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.DOUBLE);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final int radius = getSettings().getOrThrow("radius", ConfigAdapter.INTEGER);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        public final double hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.DOUBLE);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final int radius = getSettingOrThrow("radius", ConfigAdapter.INTEGER);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final double hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.DOUBLE);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -282,17 +283,15 @@ public class HydraulicFarmer extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.HYDRAULIC_FLUID),
+                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+                        PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#212d99")
+                        fluidAmount(PylonFluids.HYDRAULIC_FLUID)
                 )),
-                RebarArgument.of("output-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
+                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                        PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#48459b")
+                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
                 ))
         ));
     }

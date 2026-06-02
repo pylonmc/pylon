@@ -40,17 +40,17 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, BlockBreakRebarBlockHandler {
     public static HashMap<BlockPosition, Set<Player>> frozenPlayers = new HashMap<>();
     private final NamespacedKey cooldownKey = pylonKey("immobilizer_cooldown_millis");
-    private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-    private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
-    private final long cooldownMillis = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
-    private final int particleCount = getSettings().getOrThrow("particle.count", ConfigAdapter.INTEGER);
-    private final double particleRadius = getSettings().getOrThrow("particle.radius", ConfigAdapter.DOUBLE);
-    private final int particlePeriod = getSettings().getOrThrow("particle.period", ConfigAdapter.INTEGER);
+    private final double radius = getSettingOrThrow("radius", ConfigAdapter.DOUBLE);
+    private final int duration = getSettingOrThrow("duration", ConfigAdapter.INTEGER);
+    private final long cooldownMillis = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
+    private final int particleCount = getSettingOrThrow("particle.count", ConfigAdapter.INTEGER);
+    private final double particleRadius = getSettingOrThrow("particle.radius", ConfigAdapter.DOUBLE);
+    private final int particlePeriod = getSettingOrThrow("particle.period", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
-        private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-        private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
-        private final int cooldown = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER);
+        private final double radius = getSettingOrThrow("radius", ConfigAdapter.DOUBLE);
+        private final int duration = getSettingOrThrow("duration", ConfigAdapter.INTEGER);
+        private final int cooldown = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

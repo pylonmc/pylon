@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
@@ -43,14 +44,14 @@ public class FluidTank extends RebarBlock
 
     private static final Vector3i CASING_POSITION = new Vector3i(0, 1, 0);
 
-    private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+    private final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
     private final List<FluidTankCasing> casings = new ArrayList<>();
     private final List<FluidTemperature> allowedTemperatures = new ArrayList<>();
 
     public static class Item extends RebarItem {
 
-        private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+        private final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -180,17 +181,15 @@ public class FluidTank extends RebarBlock
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
+        if (!isFormedAndFullyLoaded()) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
+                        getFluidAmount()
+                ))
         ));
     }
 }

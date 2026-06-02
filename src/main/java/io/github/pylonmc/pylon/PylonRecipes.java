@@ -2,8 +2,7 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
-import io.github.pylonmc.rebar.config.Config;
-import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
@@ -60,7 +59,7 @@ public class PylonRecipes {
 
     private static void initCollimator() {
         NamespacedKey key = PylonKeys.COLLIMATOR;
-        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.OBSCYRA, Settings.get(key).getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER));
+        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.OBSCYRA, ConfigSection.fromSettings(key).getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER));
         FluidOrItem output = FluidOrItem.of(PylonItems.COHESIVE_UNIT);
         new SingleRecipe(
                 key,
@@ -84,7 +83,8 @@ public class PylonRecipes {
 
     private static void initBoiler() {
         NamespacedKey key = PylonKeys.BOILER;
-        double steamPerSecond = Settings.get(key).getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
+        ConfigSection setting = ConfigSection.fromSettings(key);
+        double steamPerSecond = setting.getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
         RecipeInput.Fluid input = RecipeInput.of(PylonFluids.WATER, steamPerSecond * PylonFluids.WATER_TO_STEAM_RATIO);
         FluidWithAmount output = new FluidWithAmount(PylonFluids.STEAM, steamPerSecond);
         new SingleRecipe(
@@ -109,7 +109,7 @@ public class PylonRecipes {
 
     private static void initBiorefinery() {
         NamespacedKey key = PylonKeys.BIOREFINERY;
-        Config setting = Settings.get(key);
+        ConfigSection setting = ConfigSection.fromSettings(key);
 
         double ethanolPerMbOfBiodiesel = setting.getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
         double plantOilPerMbOfBiodiesel = setting.getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
@@ -143,7 +143,7 @@ public class PylonRecipes {
 
     private static void initFermenter() {
         NamespacedKey key = PylonKeys.FERMENTER;
-        Config setting = Settings.get(key);
+        ConfigSection setting = ConfigSection.fromSettings(key);
 
         double ethanolPerSugarcane = setting.getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
 

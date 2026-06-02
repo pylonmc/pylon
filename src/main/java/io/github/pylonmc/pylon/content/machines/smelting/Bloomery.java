@@ -14,7 +14,6 @@ import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -57,8 +56,8 @@ public final class Bloomery extends RebarBlock implements
         LogisticRebarBlock,
         BlockBreakRebarBlockHandler {
 
-    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BLOOMERY).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public static final float HEAT_CHANCE = Settings.get(PylonKeys.BLOOMERY).getOrThrow("heat-chance", ConfigAdapter.FLOAT);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final float heatChance = getSettingOrThrow("heat-chance", ConfigAdapter.FLOAT);
 
     @SuppressWarnings("unused")
     public Bloomery(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -71,7 +70,7 @@ public final class Bloomery extends RebarBlock implements
                         .rotate(Math.PI / 2, 0, 0))
                 .build(getBlock().getLocation().toCenterLocation())
         );
-        setTickInterval(TICK_INTERVAL);
+        setTickInterval(tickInterval);
         setFacing(context.getFacing());
     }
 
@@ -160,11 +159,11 @@ public final class Bloomery extends RebarBlock implements
             Bukkit.getScheduler().runTaskLater(
                     Pylon.getInstance(),
                     particleSpawner,
-                    ThreadLocalRandom.current().nextInt(TICK_INTERVAL)
+                    ThreadLocalRandom.current().nextInt(tickInterval)
             );
         }
 
-        if (ThreadLocalRandom.current().nextFloat() > HEAT_CHANCE) return;
+        if (ThreadLocalRandom.current().nextFloat() > heatChance) return;
 
         int temperature = bloom.getTemperature();
         if (isFormedAndFullyLoaded()) {

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class LiquidXPBottle extends RebarItem implements BottleRebarItemHandler {
-    public final int experienceAmount = getSettings().getOrThrow("experience-amount", ConfigAdapter.INTEGER);
+    public final int experienceAmount = getSettingOrThrow("experience-amount", ConfigAdapter.INTEGER);
 
     public LiquidXPBottle(@NotNull ItemStack stack) {
         super(stack);

@@ -51,7 +51,7 @@ public class CargoGate extends RebarBlock implements
     public static final NamespacedKey THRESHOLD_KEY = pylonKey("threshold");
     public static final NamespacedKey ITEMS_REMAINING_KEY = pylonKey("items_remaining");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int threshold = 1;
     public int itemsRemaining = 1;
@@ -76,7 +76,7 @@ public class CargoGate extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

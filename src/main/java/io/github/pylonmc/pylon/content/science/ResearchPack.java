@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ResearchPack extends RebarItem implements InteractRebarItemHandler {
 
-    public final int points = getSettings().getOrThrow("points", ConfigAdapter.INTEGER);
+    public final int points = getSettingOrThrow("points", ConfigAdapter.INTEGER);
 
     public ResearchPack(@NotNull ItemStack stack) {
         super(stack);

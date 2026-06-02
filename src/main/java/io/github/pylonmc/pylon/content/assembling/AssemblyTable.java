@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import net.kyori.adventure.text.Component;
@@ -78,10 +79,10 @@ public class AssemblyTable extends RebarBlock implements
     private final VirtualInventory inputInventory = new VirtualInventory(6);
     private final VirtualInventory outputInventory = new VirtualInventory(6);
 
-    public final double scale = getSettings().getOrThrow("scale",  ConfigAdapter.DOUBLE);
-    public final double xOffset = getSettings().getOrThrow("x-offset",  ConfigAdapter.DOUBLE);
-    public final double zOffset = getSettings().getOrThrow("z-offset",  ConfigAdapter.DOUBLE);
-    public final int particleCount = getSettings().getOrThrow("particle-count",  ConfigAdapter.INTEGER);
+    public final double scale = getSettingOrThrow("scale",  ConfigAdapter.DOUBLE);
+    public final double xOffset = getSettingOrThrow("x-offset",  ConfigAdapter.DOUBLE);
+    public final double zOffset = getSettingOrThrow("z-offset",  ConfigAdapter.DOUBLE);
+    public final int particleCount = getSettingOrThrow("particle-count",  ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public AssemblyTable(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -292,11 +293,10 @@ public class AssemblyTable extends RebarBlock implements
         getHeldEntityOrThrow(TextDisplay.class, "tool_name")
                 .text(Component.translatable("pylon.gui.assembly_table.tools." + step.tool()));
         getHeldEntityOrThrow(TextDisplay.class, "progress").text(
-                PylonUtils.createDiscreteProgressBar(
-                        stepIndex,
-                        recipe.steps().size(),
-                        TextColor.color(120, 150, 255)
-                )
+                new ProgressBar()
+                        .barColor(TextColor.color(120, 150, 255))
+                        .proportion((double) stepIndex / recipe.steps().size())
+                        .asComponent()
         );
         getHeldEntityOrThrow(TextDisplay.class, "tool_clicks_remaining").text(
                 Component.translatable("pylon.gui.assembly_table.clicks_remaining")

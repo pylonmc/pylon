@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
@@ -50,15 +51,15 @@ public class FluidAccumulator extends RebarBlock implements
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.WHITE_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
 
-    public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
-    public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
+    public final int minAmount = getSettingOrThrow("min-amount", ConfigAdapter.INTEGER);
+    public final int maxAmount = getSettingOrThrow("max-amount", ConfigAdapter.INTEGER);
 
     private boolean isDischarging;
 
     public static class Item extends RebarItem {
 
-        public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
-        public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
+        public final int minAmount = getSettingOrThrow("min-amount", ConfigAdapter.INTEGER);
+        public final int maxAmount = getSettingOrThrow("max-amount", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -129,16 +130,11 @@ public class FluidAccumulator extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
+                        getFluidAmount()
+                ))
         ));
     }
 

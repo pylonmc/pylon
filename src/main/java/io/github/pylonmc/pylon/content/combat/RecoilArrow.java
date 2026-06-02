@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RecoilArrow extends RebarItem implements ArrowRebarItemHandler {
 
-    public final double efficiency = getSettings().getOrThrow("efficiency", ConfigAdapter.DOUBLE);
+    public final double efficiency = getSettingOrThrow("efficiency", ConfigAdapter.DOUBLE);
 
     public RecoilArrow(@NotNull ItemStack stack) {
         super(stack);

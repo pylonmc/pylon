@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 
 public class FluidTankCasing extends RebarBlock implements InteractRebarBlockHandler {
 
-    public final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
-    public final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+    public final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
+    public final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
             "allowed-temperatures",
             ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
     );
@@ -38,8 +38,8 @@ public class FluidTankCasing extends RebarBlock implements InteractRebarBlockHan
 
     public static class Item extends RebarItem {
 
-        public final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
-        public final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+        public final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
+        public final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
                 "allowed-temperatures",
                 ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
         );

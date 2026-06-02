@@ -6,7 +6,6 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTank;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
@@ -17,6 +16,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.HashMap;
@@ -51,23 +51,23 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
     public static final Vector3i HYDRAULIC_FLUID_INPUT = new Vector3i(-1, 0, 1);
     public static final Vector3i HYDRAULIC_FLUID_OUTPUT = new Vector3i(1, 0, 1);
 
-    public final double minFluid = getSettings().getOrThrow("min-fluid", ConfigAdapter.INTEGER);
-    public final double basePurificationEfficiency = getSettings().getOrThrow("base-purification-efficiency", ConfigAdapter.DOUBLE);
-    public final double maxPurificationEfficiency = getSettings().getOrThrow("max-purification-efficiency", ConfigAdapter.DOUBLE);
-    public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
-    public final int fluidAtMaxEfficiency = getSettings().getOrThrow("fluid-at-max-efficiency", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double lavaParticleChance = getSettings().getOrThrow("lava-particle-chance", ConfigAdapter.DOUBLE);
+    public final double minFluid = getSettingOrThrow("min-fluid", ConfigAdapter.INTEGER);
+    public final double basePurificationEfficiency = getSettingOrThrow("base-purification-efficiency", ConfigAdapter.DOUBLE);
+    public final double maxPurificationEfficiency = getSettingOrThrow("max-purification-efficiency", ConfigAdapter.DOUBLE);
+    public final double purificationSpeed = getSettingOrThrow("purification-speed", ConfigAdapter.INTEGER);
+    public final int fluidAtMaxEfficiency = getSettingOrThrow("fluid-at-max-efficiency", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double lavaParticleChance = getSettingOrThrow("lava-particle-chance", ConfigAdapter.DOUBLE);
 
     private static final Random RANDOM = new Random();
 
     public static class Item extends RebarItem {
 
-        public final double minFluid = getSettings().getOrThrow("min-fluid", ConfigAdapter.INTEGER);
-        public final double basePurificationEfficiency = getSettings().getOrThrow("base-purification-efficiency", ConfigAdapter.DOUBLE);
-        public final double maxPurificationEfficiency = getSettings().getOrThrow("max-purification-efficiency", ConfigAdapter.DOUBLE);
-        public final double purificationSpeed = getSettings().getOrThrow("purification-speed", ConfigAdapter.INTEGER);
-        public final int fluidAtMaxEfficiency = getSettings().getOrThrow("fluid-at-max-efficiency", ConfigAdapter.INTEGER);
+        public final double minFluid = getSettingOrThrow("min-fluid", ConfigAdapter.INTEGER);
+        public final double basePurificationEfficiency = getSettingOrThrow("base-purification-efficiency", ConfigAdapter.DOUBLE);
+        public final double maxPurificationEfficiency = getSettingOrThrow("max-purification-efficiency", ConfigAdapter.DOUBLE);
+        public final double purificationSpeed = getSettingOrThrow("purification-speed", ConfigAdapter.INTEGER);
+        public final int fluidAtMaxEfficiency = getSettingOrThrow("fluid-at-max-efficiency", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -224,22 +224,17 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isFormedAndFullyLoaded()) {
+        if (!isFormedAndFullyLoaded() || !hasEnoughWaterAndLava()) {
             return new WailaDisplay(getNameTranslationKey());
         }
 
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("efficiency",
-                        hasEnoughWaterAndLava()
-                                ? Component.translatable("pylon.item.convection_hydraulic_purifier.efficiency").arguments(
-                                RebarArgument.of("bar", PylonUtils.createBar(
-                                        (getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency),
-                                        20,
-                                        TextColor.fromHexString("#ffffff")
-                                )),
-                                RebarArgument.of("efficiency", UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
-                                )
-                                : Component.empty()
+                RebarArgument.of("efficiency", new ProgressBar()
+                        .barColor(TextColor.fromHexString("#e0c77d"))
+                        .proportion((getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency))
+                        .suffix(Component.text(" ")
+                                .append(UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
+                        )
                 )
         ));
     }

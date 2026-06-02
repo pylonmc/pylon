@@ -40,7 +40,7 @@ public class CargoBuffer extends RebarBlock implements
 
     private final VirtualInventory inventory = new VirtualInventory(1);
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.LIGHT_GRAY_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
@@ -55,7 +55,7 @@ public class CargoBuffer extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

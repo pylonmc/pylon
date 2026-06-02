@@ -36,7 +36,7 @@ public class CargoMerger extends RebarBlock implements
         VirtualInventoryRebarBlock,
         CargoRebarBlock {
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inventory = new VirtualInventory(1);
 
@@ -51,7 +51,7 @@ public class CargoMerger extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

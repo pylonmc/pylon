@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.recipes.StrainingRecipe;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
@@ -20,13 +19,12 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -54,14 +52,14 @@ public class FluidStrainer extends RebarBlock implements
     private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
     private static final NamespacedKey FLUID_TYPE_KEY = pylonKey("fluid_type");
 
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
     public @Nullable RebarFluid fluidType;
     public double fluidAmount;
     private final VirtualInventory inventory = new VirtualInventory(5);
 
     public static class Item extends RebarItem {
 
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -153,20 +151,14 @@ public class FluidStrainer extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (!isProcessingRecipe()) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
+        double fluidNeeded = getCurrentRecipe().input().amountMillibuckets();
+        double totalFluid = fluidNeeded - getRecipeTicksRemaining();
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("info", getCurrentRecipe() == null
-                        ? Component.empty()
-                        : Component.translatable("pylon.waila.fluid_strainer.straining",
-                                RebarArgument.of("item", getCurrentRecipe().outputItem().effectiveName()),
-                                RebarArgument.of("bars", PylonUtils.createProgressBar(
-                                        getCurrentRecipe().input().amountMillibuckets() - getRecipeTicksRemaining(),
-                                        getCurrentRecipe().input().amountMillibuckets(),
-                                        20,
-                                        TextColor.color(100, 255, 100)
-                                )),
-                                RebarArgument.of("progress", 100.0 * getRecipeTicksRemaining() / getCurrentRecipe().input().amountMillibuckets())
-                        )
-                )
+                RebarArgument.of("item", getCurrentRecipe().outputItem().effectiveName()),
+                RebarArgument.of("progress", ProgressBar.recipeProgress(totalFluid / fluidNeeded))
         ));
     }
 

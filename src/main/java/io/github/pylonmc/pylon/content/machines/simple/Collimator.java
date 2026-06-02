@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.time.Duration;
@@ -48,15 +49,15 @@ public class Collimator extends RebarBlock implements
         SimpleRebarMultiblock,
         VirtualInventoryRebarBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int obscyraPerCohesiveUnit = getSettings().getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
-    public final int secondsPerCohesiveUnit = getSettings().getOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int obscyraPerCohesiveUnit = getSettingOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
+    public final int secondsPerCohesiveUnit = getSettingOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
     public final VirtualInventory inventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
-        public final int obscyraPerCohesiveUnit = getSettings().getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
-        public final int secondsPerCohesiveUnit = getSettings().getOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
+        public final int obscyraPerCohesiveUnit = getSettingOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER);
+        public final int secondsPerCohesiveUnit = getSettingOrThrow("seconds-per-cohesive-unit", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -120,11 +121,10 @@ public class Collimator extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey()
                 .arguments(
-                        RebarArgument.of("fluid-bar", PylonUtils.createFluidAmountBar(
-                                getFluidAmount(),
+                        RebarArgument.of("fluid", ProgressBar.fluidContents(
+                                PylonFluids.OBSCYRA,
                                 getFluidCapacity(),
-                                20,
-                                TextColor.fromHexString("#000000")
+                                getFluidAmount()
                         )),
                         RebarArgument.of("time-remaining", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
                 )

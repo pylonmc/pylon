@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventPriority;
@@ -28,10 +29,12 @@ public final class SmelteryHopper extends SmelteryComponent implements
         LogisticRebarBlock,
         BlockBreakRebarBlockHandler {
 
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
     @SuppressWarnings("unused")
     public SmelteryHopper(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(SmelteryController.TICK_INTERVAL);
+        setTickInterval(tickInterval);
     }
 
     @SuppressWarnings("unused")

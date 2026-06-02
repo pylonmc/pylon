@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BrickMold extends RebarItem implements BlockInteractRebarItemHandler {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public BrickMold(@NotNull ItemStack stack) {

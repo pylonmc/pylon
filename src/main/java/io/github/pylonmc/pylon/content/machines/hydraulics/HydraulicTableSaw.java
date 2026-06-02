@@ -23,8 +23,10 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -53,17 +55,17 @@ public class HydraulicTableSaw extends RebarBlock implements
         LogisticRebarBlock,
         RecipeProcessorRebarBlock<TableSawRecipe> {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder sawItem = ItemStackBuilder.of(Material.IRON_BARS)
             .addCustomModelDataString(getKey() + ":saw");
 
     public static class Item extends RebarItem {
 
-        public final int hydraulicFluidUsage = getSettings().getOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+        public final int hydraulicFluidUsage = getSettingOrThrow("hydraulic-fluid-usage", ConfigAdapter.INTEGER);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -214,18 +216,20 @@ public class HydraulicTableSaw extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.HYDRAULIC_FLUID),
+                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+                        PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#212d99")
+                        fluidAmount(PylonFluids.HYDRAULIC_FLUID)
                 )),
-                RebarArgument.of("output-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
+                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                        PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#48459b")
-                ))
+                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
+                )),
+                RebarArgument.of("progress", isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.waila.idle")
+                )
         ));
     }
 }

@@ -29,9 +29,9 @@ import java.util.List;
 
 public class ShimmerMagnet extends RebarItem implements InteractRebarItemHandler, InventoryTickerRebarItem {
     @Getter
-    private final double pickupDistance = getSettings().getOrThrow("pickup-distance", ConfigAdapter.DOUBLE);
+    private final double pickupDistance = getSettingOrThrow("pickup-distance", ConfigAdapter.DOUBLE);
     @Getter
-    private final double attractForce = getSettings().getOrThrow("attract-force", ConfigAdapter.DOUBLE);
+    private final double attractForce = getSettingOrThrow("attract-force", ConfigAdapter.DOUBLE);
 
     private static final NamespacedKey ENABLED_KEY = PylonUtils.pylonKey("shimmer_magnet_toggler");
 

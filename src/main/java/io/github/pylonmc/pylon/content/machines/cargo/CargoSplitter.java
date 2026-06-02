@@ -57,7 +57,7 @@ public class CargoSplitter extends RebarBlock implements
     public static final NamespacedKey IS_LEFT_KEY = pylonKey("is_left");
     public static final NamespacedKey ITEMS_REMAINING_KEY = pylonKey("items_remaining");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int ratioLeft = 1;
     public int ratioRight = 1;
@@ -126,7 +126,7 @@ public class CargoSplitter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

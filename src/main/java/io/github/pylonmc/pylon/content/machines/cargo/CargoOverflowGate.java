@@ -46,7 +46,7 @@ public class CargoOverflowGate extends RebarBlock
     private static final NamespacedKey IS_LEFT_KEY = pylonKey("is_left");
 
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory leftInventory = new VirtualInventory(1);
@@ -75,7 +75,7 @@ public class CargoOverflowGate extends RebarBlock
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

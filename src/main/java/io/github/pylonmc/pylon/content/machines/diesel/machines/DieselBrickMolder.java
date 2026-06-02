@@ -16,9 +16,13 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -40,10 +44,10 @@ public class DieselBrickMolder extends GenericBrickMolder implements FluidBuffer
 
     public static class Item extends RebarItem {
 
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
+        public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int ticksPerMoldingCycle = getSettingOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -153,12 +157,15 @@ public class DieselBrickMolder extends GenericBrickMolder implements FluidBuffer
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                ))
+                        fluidAmount(PylonFluids.BIODIESEL))
+                ),
+                RebarArgument.of("progress", isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.waila.idle")
+                )
         ));
     }
 

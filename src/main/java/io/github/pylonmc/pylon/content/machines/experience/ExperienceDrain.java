@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -25,13 +26,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, FluidBufferRebarBlock {
-    public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
-    public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
-    public final int xpBufferAmount = getSettings().getOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
+    public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
+    public final int xpDrainAmount = getSettingOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
+    public final int xpBufferAmount = getSettingOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
-        public final int xpDrainPeriodTicks = getSettings().getOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
-        public final int xpDrainAmount = getSettings().getOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
+        public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
+        public final int xpDrainAmount = getSettingOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -58,12 +59,11 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.LIQUID_XP),
+                RebarArgument.of("xp", ProgressBar.fluidContents(
+                        PylonFluids.LIQUID_XP,
                         fluidCapacity(PylonFluids.LIQUID_XP),
-                        20,
-                        TextColor.fromHexString("#1dcE420")
-                ))
+                        fluidAmount(PylonFluids.LIQUID_XP))
+                )
         ));
     }
 

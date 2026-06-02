@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
@@ -62,8 +63,8 @@ public class CargoFluidAccumulator extends RebarBlock implements
     private final VirtualInventory inputInventory = new VirtualInventory(5);
     private final VirtualInventory outputInventory = new VirtualInventory(5);
 
-    public final int fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int fluidBuffer = getSettingOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int itemThreshold;
     public int fluidThreshold;
@@ -80,8 +81,8 @@ public class CargoFluidAccumulator extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int fluidBuffer = getSettingOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -277,11 +278,10 @@ public class CargoFluidAccumulator extends RebarBlock implements
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
                 RebarArgument.of("item-threshold", UnitFormat.ITEMS.format(itemThreshold)),
                 RebarArgument.of("fluid-threshold", UnitFormat.MILLIBUCKETS.format(fluidThreshold)),
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
+                        getFluidAmount()
                 ))
         ));
     }

@@ -27,7 +27,7 @@ public class FluidVoider extends RebarBlock implements FluidRebarBlock {
 
     public static class Item extends RebarItem {
 
-        public final double voidRate = getSettings().getOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
+        public final double voidRate = getSettingOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -41,9 +41,9 @@ public class FluidVoider extends RebarBlock implements FluidRebarBlock {
         }
     }
 
-    public final Material mainMaterial = getSettings().getOrThrow("main-material", ConfigAdapter.MATERIAL);
-    public final double voidRate = getSettings().getOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
-    public final double mainDisplaySize = getSettings().getOrThrow("main-display-size", ConfigAdapter.DOUBLE);
+    public final Material mainMaterial = getSettingOrThrow("main-material", ConfigAdapter.MATERIAL);
+    public final double voidRate = getSettingOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
+    public final double mainDisplaySize = getSettingOrThrow("main-display-size", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public FluidVoider(@NotNull Block block, @NotNull BlockCreateContext context) {

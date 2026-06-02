@@ -40,7 +40,7 @@ public class CargoFilter extends RebarBlock implements
         VirtualInventoryRebarBlock,
         CargoRebarBlock {
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory leftInventory = new VirtualInventory(1);
@@ -76,7 +76,7 @@ public class CargoFilter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

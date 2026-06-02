@@ -22,8 +22,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BeheadingSword extends RebarItem implements EntityAttackRebarItemHandler {
 
-    private final double normalEntityHeadChance = getSettings().getOrThrow("head-chance.normal-entity", ConfigAdapter.DOUBLE);
-    private final double witherSkeletonHeadChance = getSettings().getOrThrow("head-chance.wither-skeleton", ConfigAdapter.DOUBLE);
+    private final double normalEntityHeadChance = getSettingOrThrow("head-chance.normal-entity", ConfigAdapter.DOUBLE);
+    private final double witherSkeletonHeadChance = getSettingOrThrow("head-chance.wither-skeleton", ConfigAdapter.DOUBLE);
 
     public BeheadingSword(@NotNull ItemStack stack) {
         super(stack);

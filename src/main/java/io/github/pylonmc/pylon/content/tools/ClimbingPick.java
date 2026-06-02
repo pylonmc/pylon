@@ -29,8 +29,8 @@ import static java.lang.Math.pow;
 
 public class ClimbingPick extends RebarItem implements BlockInteractRebarItemHandler {
     private static final NamespacedKey HOOKED_KEY = PylonUtils.pylonKey("climbing_pick_hooked");
-    private final double jumpSpeed = getSettings().getOrThrow("jump-speed", ConfigAdapter.DOUBLE);
-    private final double hookRange = getSettings().getOrThrow("hook-range", ConfigAdapter.DOUBLE);
+    private final double jumpSpeed = getSettingOrThrow("jump-speed", ConfigAdapter.DOUBLE);
+    private final double hookRange = getSettingOrThrow("hook-range", ConfigAdapter.DOUBLE);
     private final double hookRangeSquared = pow(hookRange, 2);
 
     public ClimbingPick(@NotNull ItemStack stack) {

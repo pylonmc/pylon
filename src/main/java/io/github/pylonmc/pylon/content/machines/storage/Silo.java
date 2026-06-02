@@ -41,13 +41,13 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
     public static final NamespacedKey STACK_KEY = pylonKey("stack");
     public static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
 
-    public final long capacityStacks = getSettings().getOrThrow("capacity-stacks", ConfigAdapter.LONG);
+    public final long capacityStacks = getSettingOrThrow("capacity-stacks", ConfigAdapter.LONG);
     @Getter @Setter private @Nullable ItemStack stack;
     @Getter @Setter private long amount;
 
     public static class Item extends RebarItem {
 
-        public final long capacityStacks = getSettings().getOrThrow("capacity-stacks", ConfigAdapter.LONG);
+        public final long capacityStacks = getSettingOrThrow("capacity-stacks", ConfigAdapter.LONG);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

@@ -33,7 +33,7 @@ public class FireproofRune extends Rune {
     public static final Component SUCCESS = Component.translatable("pylon.message.fireproof_result.success");
     public static final Component TOOLTIP = Component.translatable("pylon.message.fireproof_result.tooltip");
 
-    private final RandomizedSound applySound = getSettings().getOrThrow("apply-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    private final RandomizedSound applySound = getSettingOrThrow("apply-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     public FireproofRune(@NotNull ItemStack stack) {
         super(stack);

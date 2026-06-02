@@ -6,7 +6,6 @@ import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
@@ -18,13 +17,13 @@ import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
@@ -56,15 +55,15 @@ public class FluidExperienceBottler extends RebarBlock implements
         DirectionalRebarBlock,
         ProcessorRebarBlock {
 
-    private static final int XP_AMOUNT = Settings.get(PylonKeys.LIQUID_XP_BOTTLE).getOrThrow("experience-amount", ConfigAdapter.INTEGER);
-    public final double bottleProductionTime = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int xpAmount = getSettingOrThrow("experience-amount", ConfigAdapter.INTEGER);
+    public final double bottleProductionTime = getSettingOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
-    public final RebarFluid inputFluid = getSettings().getOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
-    public final double inputFluidAmount = getSettings().getOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
+    public final RebarFluid inputFluid = getSettingOrThrow("input-fluid", ConfigAdapter.REBAR_FLUID);
+    public final double inputFluidAmount = getSettingOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
 
-    public final @Nullable RebarFluid outputFluid = getSettings().get("output-fluid", ConfigAdapter.REBAR_FLUID);
-    public final @Nullable Double outputFluidAmount = getSettings().get("output-fluid-amount", ConfigAdapter.DOUBLE);
+    public final @Nullable RebarFluid outputFluid = getSetting("output-fluid", ConfigAdapter.REBAR_FLUID);
+    public final @Nullable Double outputFluidAmount = getSetting("output-fluid-amount", ConfigAdapter.DOUBLE);
 
     private final VirtualInventory bottleInput = new VirtualInventory(1);
     private final VirtualInventory bottleOutput = new VirtualInventory(1);
@@ -74,9 +73,9 @@ public class FluidExperienceBottler extends RebarBlock implements
     private static final Vector3i FLUID_OUTPUT_HATCH_POS = new Vector3i(0, -1, 2);
 
     public static class Item extends RebarItem {
-        public final double bottleProductionTimeSeconds = getSettings().getOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
-        public final double inputFluidAmount = getSettings().getOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
-        public final @Nullable Double outputFluidAmount = getSettings().get("output-fluid-amount", ConfigAdapter.DOUBLE);
+        public final double bottleProductionTimeSeconds = getSettingOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
+        public final double inputFluidAmount = getSettingOrThrow("input-fluid-amount", ConfigAdapter.DOUBLE);
+        public final @Nullable Double outputFluidAmount = getSetting("output-fluid-amount", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -150,7 +149,7 @@ public class FluidExperienceBottler extends RebarBlock implements
         if (inputHatch.getFluidAmount() < inputFluidAmount) {
             return;
         }
-        if (xpHatch.getFluidAmount() < XP_AMOUNT) {
+        if (xpHatch.getFluidAmount() < xpAmount) {
             return;
         }
         if (bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE) {
@@ -164,7 +163,7 @@ public class FluidExperienceBottler extends RebarBlock implements
             return;
         }
         inputHatch.removeFluid(inputFluidAmount);
-        xpHatch.removeFluid(XP_AMOUNT);
+        xpHatch.removeFluid(xpAmount);
         if (outputFluid != null) {
             outputHatch.addFluid(outputFluid, outputFluidAmount);
         }
@@ -215,12 +214,11 @@ public class FluidExperienceBottler extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (getProcessTicksRemaining() == null || getProcessTimeTicks() == null) {
+        if (!isProcessing()) {
             return new WailaDisplay(getNameTranslationKey());
         }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progressbar", PylonUtils.createProgressBar(
-                        (double) (getProcessTimeTicks() - getProcessTicksRemaining()) / getProcessTimeTicks(), 20, TextColor.color(0, 255, 0)))
+                RebarArgument.of("progress", ProgressBar.recipeProgress(1.0 - getProcessProgress()))
         ));
     }
 

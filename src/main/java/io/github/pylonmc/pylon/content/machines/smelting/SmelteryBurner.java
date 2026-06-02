@@ -8,9 +8,11 @@ import java.util.Map;
 import kotlin.Pair;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Furnace;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +29,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
         LogisticRebarBlock,
         ProcessorRebarBlock {
 
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
     private final VirtualInventory fuelInventory = new VirtualInventory(3);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();
 
@@ -34,7 +38,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
     public SmelteryBurner(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
-        setTickInterval(SmelteryController.TICK_INTERVAL);
+        setTickInterval(tickInterval);
     }
 
     @SuppressWarnings("unused")

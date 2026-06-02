@@ -100,10 +100,6 @@ public class PylonUtils {
         return Color.fromRGB(r, g, b);
     }
 
-    public @NotNull TextColor colorToTextColor(@NonNull Color color) {
-        return TextColor.color(color.getRed(), color.getGreen(), color.getBlue());
-    }
-
     private int clampAndRound(double value) {
         int rounded = (int) Math.round(value);
         return Math.max(0, Math.min(255, rounded));
@@ -132,44 +128,6 @@ public class PylonUtils {
 
     public @NotNull Vector3d getDirection(@NotNull Location source, @NotNull Location target) {
         return getDisplacement(source, target).normalize();
-    }
-
-    public @NotNull Component createBar(double proportion, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * proportion);
-        return Component.text("|".repeat(filledBars)).color(color)
-                .append(Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY));
-    }
-
-    public @NotNull Component createProgressBar(double progress, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * progress);
-        return Component.translatable("pylon.gui.progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(bars - filledBars)),
-                RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100).significantFigures(2))
-        );
-    }
-
-    public @NotNull Component createDiscreteProgressBar(int stage, int maxStage, TextColor color) {
-        return Component.translatable("pylon.gui.discrete_progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(stage)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(maxStage - stage)),
-                RebarArgument.of("stage", stage),
-                RebarArgument.of("max_stage", maxStage)
-        );
-    }
-
-    public @NotNull Component createProgressBar(double amount, double max, int bars, TextColor color) {
-        return createProgressBar(amount / max, bars, color);
-    }
-
-    public @NotNull Component createFluidAmountBar(double amount, double capacity, int bars, TextColor fluidColor) {
-        int filledBars = Math.max(0, (int) Math.round(bars * amount / capacity));
-        return Component.translatable("pylon.gui.fluid_amount_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(fluidColor)),
-                RebarArgument.of("empty_bars", Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY)),
-                RebarArgument.of("amount", Math.round(amount)),
-                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(Math.round(capacity)))
-        );
     }
 
     /**

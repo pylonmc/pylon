@@ -38,9 +38,7 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.api.event.LoupeCompleteScanningEvent;
 import io.github.pylonmc.pylon.api.event.LoupeStartScanningEvent;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.config.Config;
 import io.github.pylonmc.rebar.config.ConfigSection;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -85,7 +83,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
     private static final Map<UUID, RayTraceResult> SCANNING = new HashMap<>();
 
     static {
-        Config loupeConfig = Settings.get(PylonKeys.LOUPE);
+        ConfigSection loupeConfig = ConfigSection.fromSettings(PylonKeys.LOUPE);
 
         ConfigSection itemOverridesConfig = loupeConfig.getSection("item_overrides");
         Map<ItemRarity, EntryConfig> itemConfigs = new EnumMap<>(ItemRarity.class);
@@ -141,7 +139,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
         ENTITY_OVERRIDES = Map.copyOf(entityOverrides);
     }
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public Loupe(@NotNull ItemStack stack) {
         super(stack);

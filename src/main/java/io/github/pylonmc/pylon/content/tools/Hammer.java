@@ -61,9 +61,9 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
 
     public final Material baseBlock = getBaseBlock(getKey());
     public final MiningLevel miningLevel = getMiningLevel(getKey());
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
-    public final RandomizedSound sound = getSettings().getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound failSound = getSettings().getOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final RandomizedSound sound = getSettingOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound failSound = getSettingOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     public Hammer(@NotNull ItemStack stack) {
         super(stack);

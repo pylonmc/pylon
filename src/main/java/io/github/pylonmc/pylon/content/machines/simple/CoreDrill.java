@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -43,9 +44,9 @@ public abstract class CoreDrill extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        private final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
-        private final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
-        private final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
+        private final int rotationDuration = getSettingOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+        private final int rotationsPerCycle = getSettingOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
+        private final ItemStack output = getSettingOrThrow("output", ConfigAdapter.ITEM_STACK);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -60,11 +61,11 @@ public abstract class CoreDrill extends RebarBlock implements
         }
     }
 
-    @Getter protected final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
-    @Getter protected final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
-    protected final boolean spawnBlockParticles = getSettings().getOrThrow("spawn-block-particles", ConfigAdapter.BOOLEAN);
-    protected final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
-    protected final Material drillMaterial = getSettings().getOrThrow("drill-material", ConfigAdapter.MATERIAL);
+    @Getter protected final int rotationDuration = getSettingOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+    @Getter protected final int rotationsPerCycle = getSettingOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
+    protected final boolean spawnBlockParticles = getSettingOrThrow("spawn-block-particles", ConfigAdapter.BOOLEAN);
+    protected final ItemStack output = getSettingOrThrow("output", ConfigAdapter.ITEM_STACK);
+    protected final Material drillMaterial = getSettingOrThrow("drill-material", ConfigAdapter.MATERIAL);
     protected final ItemStackBuilder drillStack = ItemStackBuilder.of(drillMaterial)
             .addCustomModelDataString(getKey() + ":drill");
 
@@ -164,20 +165,14 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
-        Integer timeLeft = getProcessTicksRemaining();
+        if (!isProcessing()) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("duration_if_any",
-                timeLeft == null
-                    ? Component.empty()
-                    : Component.translatable(wailaFormat).arguments(
-                        RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                20,
-                                NamedTextColor.WHITE
-                        ))
-                    )
-            )
+                RebarArgument.of("remaining-time", ProgressBar.timeRemaining(
+                        getProcessTimeSeconds(),
+                        getProcessSecondsRemaining()
+                ))
         ));
     }
 }

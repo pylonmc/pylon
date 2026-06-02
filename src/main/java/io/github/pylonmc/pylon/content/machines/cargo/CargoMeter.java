@@ -56,9 +56,9 @@ public class CargoMeter extends RebarBlock implements
     public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
-    public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-    public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+    public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
     private int itemsAddedLastUpdate;
     private final List<Integer> measurements;
@@ -81,9 +81,9 @@ public class CargoMeter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
-        public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-        public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+        public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

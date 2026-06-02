@@ -19,10 +19,12 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.inventory.event.UpdateReason;
@@ -110,20 +112,14 @@ public class DieselRefuelingStation extends RebarBlock implements
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         DieselRefuelable refuelable = getHeldRefuelableItem();
         if (refuelable == null) {
-            return new WailaDisplay(
-                    getDefaultWailaTranslationKey().arguments(RebarArgument.of("extra", "")));
+            return new WailaDisplay(getNameTranslationKey());
         }
 
-        return new WailaDisplay(
-                getDefaultWailaTranslationKey().arguments(
-                        RebarArgument.of(
-                                "extra",
-                                Component.translatable("pylon.message.diesel_refueling_station.extra").arguments(
-                                        RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                                                refuelable.getDiesel(),
-                                                refuelable.getDieselCapacity(),
-                                                20,
-                                                TextColor.fromHexString("#eaa627")))))));
+        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL, refuelable.getDieselCapacity(), refuelable.getDiesel())
+                )
+        ));
     }
 
     @Override
@@ -146,7 +142,7 @@ public class DieselRefuelingStation extends RebarBlock implements
     }
 
     @Override
-    public void onBlockBreak(List<ItemStack> drops, BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         FluidRebarBlock.super.onBlockBreak(drops, context);
         VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }

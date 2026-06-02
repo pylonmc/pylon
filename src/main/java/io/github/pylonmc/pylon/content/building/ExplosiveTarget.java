@@ -25,7 +25,7 @@ import java.util.List;
 public class ExplosiveTarget extends RebarBlock implements TargetRebarBlockHandler {
 
     public static class Item extends RebarItem {
-        private final Double explosivePower = getSettings().getOrThrow("explosive-power", ConfigAdapter.DOUBLE);
+        private final Double explosivePower = getSettingOrThrow("explosive-power", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -37,8 +37,8 @@ public class ExplosiveTarget extends RebarBlock implements TargetRebarBlockHandl
         }
     }
 
-    public final double explosivePower = getSettings().getOrThrow("explosive-power", ConfigAdapter.DOUBLE);
-    public final boolean createsFire = getSettings().getOrThrow("creates-fire", ConfigAdapter.BOOLEAN);
+    public final double explosivePower = getSettingOrThrow("explosive-power", ConfigAdapter.DOUBLE);
+    public final boolean createsFire = getSettingOrThrow("creates-fire", ConfigAdapter.BOOLEAN);
 
     @SuppressWarnings("unused")
     public ExplosiveTarget(Block block, BlockCreateContext context) {

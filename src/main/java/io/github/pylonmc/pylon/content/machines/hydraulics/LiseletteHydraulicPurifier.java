@@ -55,19 +55,19 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
             new Vector3i(2, 0, -2)
     );
 
-    public final double maxFluidPurifiedPerStrike = getSettings().getOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
-    public final double strikeChance = getSettings().getOrThrow("strike-chance", ConfigAdapter.DOUBLE);
-    public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+    public final double maxFluidPurifiedPerStrike = getSettingOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
+    public final double strikeChance = getSettingOrThrow("strike-chance", ConfigAdapter.DOUBLE);
+    public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
 
-        public final double maxFluidPurifiedPerStrike = getSettings().getOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
-        public final double strikeChance = getSettings().getOrThrow("strike-chance", ConfigAdapter.DOUBLE);
-        public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        public final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+        public final double maxFluidPurifiedPerStrike = getSettingOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
+        public final double strikeChance = getSettingOrThrow("strike-chance", ConfigAdapter.DOUBLE);
+        public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

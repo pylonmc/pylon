@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ReactivatedWitherSkull extends RebarItem implements InteractRebarItemHandler {
-    private final boolean chargedSkulls = getSettings().getOrThrow("charged-skulls", ConfigAdapter.BOOLEAN);
-    private final double skullSpeed = getSettings().getOrThrow("skull-speed", ConfigAdapter.DOUBLE);
-    private final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    private final boolean chargedSkulls = getSettingOrThrow("charged-skulls", ConfigAdapter.BOOLEAN);
+    private final double skullSpeed = getSettingOrThrow("skull-speed", ConfigAdapter.DOUBLE);
+    private final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     private static final TranslatableComponent trueCharged = Component.translatable("pylon.item.reactivated_wither_skull.charged.true");
     private static final TranslatableComponent falseCharged = Component.translatable("pylon.item.reactivated_wither_skull.charged.false");
 

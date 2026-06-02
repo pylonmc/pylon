@@ -38,12 +38,12 @@ public class Elevator extends RebarBlock implements SneakRebarBlockHandler, Jump
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(RebarArgument.of(
                     "elevator_range",
-                    UnitFormat.BLOCKS.format(getSettings().getOrThrow("range", ConfigAdapter.INTEGER))
+                    UnitFormat.BLOCKS.format(getSettingOrThrow("range", ConfigAdapter.INTEGER))
             ));
         }
     }
 
-    private final RandomizedSound useSound = getSettings().getOrThrow("use-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    private final RandomizedSound useSound = getSettingOrThrow("use-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -56,7 +56,7 @@ public class Elevator extends RebarBlock implements SneakRebarBlockHandler, Jump
     }
 
     private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {
-        int range = getSettings().getOrThrow("range", ConfigAdapter.INTEGER);
+        int range = getSettingOrThrow("range", ConfigAdapter.INTEGER);
         int checkingLevel = 1;
         List<RebarBlock> blocks = new ArrayList<>();
 

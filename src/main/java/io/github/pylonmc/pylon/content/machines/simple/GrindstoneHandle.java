@@ -7,7 +7,6 @@ import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.util.RandomizedSound;
@@ -25,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class GrindstoneHandle extends RebarBlock implements InteractRebarBlockHandler {
     
-    public final RandomizedSound sound = Settings.get(PylonKeys.GRINDSTONE).getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
-    public final RandomizedSound failSound = Settings.get(PylonKeys.GRINDSTONE).getOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound sound = getSettingOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
+    public final RandomizedSound failSound = getSettingOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     @SuppressWarnings("unused")
     public GrindstoneHandle(Block block, BlockCreateContext context) {

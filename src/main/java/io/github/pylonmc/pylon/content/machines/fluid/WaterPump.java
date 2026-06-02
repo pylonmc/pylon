@@ -25,13 +25,13 @@ import java.util.List;
 
 public class WaterPump extends RebarBlock implements FluidRebarBlock {
 
-    public final double waterPerSecond = getSettings().getOrThrow("water-per-second", ConfigAdapter.DOUBLE);
+    public final double waterPerSecond = getSettingOrThrow("water-per-second", ConfigAdapter.DOUBLE);
 
     private final List<Pair<RebarFluid, Double>> suppliedWater = List.of(new Pair<>(PylonFluids.WATER, waterPerSecond * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
 
     public static class Item extends RebarItem {
 
-        public final double waterPerSecond = getSettings().getOrThrow("water-per-second", ConfigAdapter.DOUBLE);
+        public final double waterPerSecond = getSettingOrThrow("water-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);

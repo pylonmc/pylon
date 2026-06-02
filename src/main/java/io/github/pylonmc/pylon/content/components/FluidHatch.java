@@ -3,7 +3,6 @@ package io.github.pylonmc.pylon.content.components;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -16,6 +15,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -23,7 +23,6 @@ import java.util.*;
 import kotlin.Pair;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -200,11 +199,10 @@ public abstract class FluidHatch extends RebarBlock implements
         } else {
             info = Component.translatable("pylon.message.fluid_hatch.working")
                     .arguments(
-                            RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                                    fluidAmount,
+                            RebarArgument.of("fluid-bar", ProgressBar.fluidContents(
+                                    fluid,
                                     capacity,
-                                    20,
-                                    TextColor.color(200, 255, 255)
+                                    fluidAmount
                             )),
                             RebarArgument.of("fluid", fluid.getName())
                     );

@@ -19,7 +19,7 @@ import kotlin.Pair;
 
 public final class SmelteryOutputHatch extends SmelteryComponent implements FluidRebarBlock, DirectionalRebarBlock {
 
-    public final double flowRate = getSettings().getOrThrow("flow-rate", ConfigAdapter.DOUBLE);
+    public final double flowRate = getSettingOrThrow("flow-rate", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public SmelteryOutputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {

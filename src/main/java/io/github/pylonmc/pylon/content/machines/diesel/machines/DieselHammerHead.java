@@ -26,6 +26,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -62,11 +63,11 @@ public class DieselHammerHead extends RebarBlock implements
         DirectionalRebarBlock,
         LogisticRebarBlock {
 
-    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int goDownTimeTicks = getSettingOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     private final VirtualInventory hammerInventory = new VirtualInventory(1);
 
@@ -84,9 +85,9 @@ public class DieselHammerHead extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+        public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -279,12 +280,15 @@ public class DieselHammerHead extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+                RebarArgument.of("diesel", ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                ))
+                        fluidAmount(PylonFluids.BIODIESEL))
+                ),
+                RebarArgument.of("progress", isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.waila.idle")
+                )
         ));
     }
 

@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
@@ -54,9 +55,9 @@ public class FluidMeter extends RebarBlock implements
     public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
 
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-    public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-    public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+    public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
     private double fluidAddedLastUpdate;
     private final List<Double> measurements;
@@ -66,9 +67,9 @@ public class FluidMeter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-        public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-        public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+        public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -237,17 +238,12 @@ public class FluidMeter extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true)),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                ),
-                RebarArgument.of("duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true))
+                        getFluidAmount()
+                ))
         ));
     }
 
