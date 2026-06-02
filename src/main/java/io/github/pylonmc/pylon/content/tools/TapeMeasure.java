@@ -8,10 +8,9 @@ import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -46,7 +45,7 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class TapeMeasure extends RebarItem implements RebarInteractor {
+public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
 
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final Material finishedMaterial = getSettings().getOrThrow("finished-material", ConfigAdapter.MATERIAL);
@@ -58,7 +57,7 @@ public class TapeMeasure extends RebarItem implements RebarInteractor {
     }
 
     @Override
-    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getHand() != EquipmentSlot.HAND) {
             return;
         }
