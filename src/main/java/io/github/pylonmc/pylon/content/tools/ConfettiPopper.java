@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.tools;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarConsumable;
+import io.github.pylonmc.rebar.item.interfaces.ConsumeRebarItemHandler;
 import io.github.pylonmc.rebar.util.ConfettiParticle;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class ConfettiPopper extends RebarItem implements RebarConsumable {
+public class ConfettiPopper extends RebarItem implements ConsumeRebarItemHandler {
     private static final Random RANDOM = new Random();
 
-    public final double length = getSettings().getOrThrow("length", ConfigAdapter.DOUBLE);
-    public final double size = getSettings().getOrThrow("size", ConfigAdapter.DOUBLE);
-    public final int amount = getSettings().getOrThrow("amount", ConfigAdapter.INTEGER);
-    public final int lifetime = getSettings().getOrThrow("lifetime-ticks", ConfigAdapter.INTEGER);
+    public final double length = getSettingOrThrow("length", ConfigAdapter.DOUBLE);
+    public final double size = getSettingOrThrow("size", ConfigAdapter.DOUBLE);
+    public final int amount = getSettingOrThrow("amount", ConfigAdapter.INTEGER);
+    public final int lifetime = getSettingOrThrow("lifetime-ticks", ConfigAdapter.INTEGER);
 
     public ConfettiPopper(@NotNull ItemStack stack) {
         super(stack);

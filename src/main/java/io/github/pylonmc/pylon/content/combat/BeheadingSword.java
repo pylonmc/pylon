@@ -4,7 +4,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarWeapon;
+import io.github.pylonmc.rebar.item.interfaces.EntityAttackRebarItemHandler;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.Material;
@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class BeheadingSword extends RebarItem implements RebarWeapon {
+public class BeheadingSword extends RebarItem implements EntityAttackRebarItemHandler {
 
-    private final double normalEntityHeadChance = getSettings().getOrThrow("head-chance.normal-entity", ConfigAdapter.DOUBLE);
-    private final double witherSkeletonHeadChance = getSettings().getOrThrow("head-chance.wither-skeleton", ConfigAdapter.DOUBLE);
+    private final double normalEntityHeadChance = getSettingOrThrow("head-chance.normal-entity", ConfigAdapter.DOUBLE);
+    private final double witherSkeletonHeadChance = getSettingOrThrow("head-chance.wither-skeleton", ConfigAdapter.DOUBLE);
 
     public BeheadingSword(@NotNull ItemStack stack) {
         super(stack);
@@ -40,7 +40,7 @@ public class BeheadingSword extends RebarItem implements RebarWeapon {
     );
 
     @Override @MultiHandler(ignoreCancelled = true)
-    public void onUsedToKillEntity(@NotNull EntityDeathEvent event, @NotNull EventPriority priority) {
+    public void onKillEntity(@NotNull EntityDeathEvent event, @NotNull EventPriority priority) {
         ItemStack head = ENTITY_HEADS.get(event.getEntityType());
         if (head == null || event.getDrops().contains(head)) {
             return;

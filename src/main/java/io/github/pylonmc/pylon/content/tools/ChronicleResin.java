@@ -18,8 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class ChronicleResin extends RebarItem implements PotionCatalyst {
-    private final int durationBoostSeconds = getSettings().getOrThrow("duration-boost-seconds", ConfigAdapter.INTEGER);
-    private final double applicationSuccessRate = getSettings().getOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
+    private final int durationBoostSeconds = getSettingOrThrow("duration-boost-seconds", ConfigAdapter.INTEGER);
+    private final double applicationSuccessRate = getSettingOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
 
     public ChronicleResin(final @NotNull ItemStack stack) {
         super(stack);

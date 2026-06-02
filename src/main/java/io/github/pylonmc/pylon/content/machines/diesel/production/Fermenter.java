@@ -5,12 +5,11 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ReinforcedGlassCasing;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -20,10 +19,10 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -39,24 +38,24 @@ import java.util.List;
 import java.util.Map;
 
 public class Fermenter extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarFluidBufferBlock {
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        FluidBufferRebarBlock {
 
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double ethanolPerSugarcane = getSettings().getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
-    public final int sugarcaneCapacity = getSettings().getOrThrow("sugarcane-capacity", ConfigAdapter.INTEGER);
-    public final double maxEthanolOutputRate = getSettings().getOrThrow("max-ethanol-output-rate", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double ethanolPerSugarcane = getSettingOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
+    public final int sugarcaneCapacity = getSettingOrThrow("sugarcane-capacity", ConfigAdapter.INTEGER);
+    public final double maxEthanolOutputRate = getSettingOrThrow("max-ethanol-output-rate", ConfigAdapter.DOUBLE);
 
     public static final Vector3i INPUT_HATCH = new Vector3i(0, 0, -1);
     public static final Vector3i OUTPUT_HATCH = new Vector3i(0, 0, 1);
 
     public static class Item extends RebarItem {
 
-        public final double ethanolPerSugarcane = getSettings().getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
-        public final int sugarcaneCapacity = getSettings().getOrThrow("sugarcane-capacity", ConfigAdapter.INTEGER);
-        public final double maxEthanolOutputRate = getSettings().getOrThrow("max-ethanol-output-rate", ConfigAdapter.DOUBLE);
+        public final double ethanolPerSugarcane = getSettingOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
+        public final int sugarcaneCapacity = getSettingOrThrow("sugarcane-capacity", ConfigAdapter.INTEGER);
+        public final double maxEthanolOutputRate = getSettingOrThrow("max-ethanol-output-rate", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -125,7 +124,7 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         onMultiblockRefreshed();
         getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
@@ -151,7 +150,7 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
-        RebarSimpleMultiblock.super.onMultiblockUnformed(partUnloaded);
+        SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
 
         for (Vector3i position : getComponents().keySet()) {
             ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
@@ -197,7 +196,7 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
-        boolean wasSet = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        boolean wasSet = FluidBufferRebarBlock.super.setFluid(fluid, amount);
         if (wasSet) {
             double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
             getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setTransformationMatrix(
@@ -217,10 +216,10 @@ public class Fermenter extends RebarBlock implements
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("sugarcane-bar", PylonUtils.createBar(
-                        sugarcaneProportion,
-                        20, TextColor.color(163, 237, 45)
-                )),
+                RebarArgument.of("sugarcane-bar", new ProgressBar()
+                        .proportion(sugarcaneProportion)
+                        .barColor(PylonFluids.SUGARCANE)
+                ),
                 RebarArgument.of("sugarcane-amount", sugarcaneAmount)
         ));
     }

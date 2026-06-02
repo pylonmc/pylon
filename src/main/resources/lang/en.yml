@@ -301,9 +301,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Wooden Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Wooden Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_copper:
     name: "Copper Portable Fluid Tank"
@@ -311,9 +311,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Copper Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Copper Portable Fluid Tank | %fluid%"
 
 
   portable_fluid_tank_tin:
@@ -322,9 +322,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Tin Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Tin Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_iron:
     name: "Iron Portable Fluid Tank"
@@ -332,9 +332,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Iron Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Iron Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_bronze:
     name: "Bronze Portable Fluid Tank"
@@ -342,9 +342,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Bronze Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Bronze Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_obsidian:
     name: "Obsidian Portable Fluid Tank"
@@ -352,9 +352,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Igneous Composite Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Igneous Composite Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_igneous_composite:
     name: "Igneous Composite Portable Fluid Tank"
@@ -362,9 +362,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Igneous Composite Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Igneous Composite Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_steel:
     name: "Steel Portable Fluid Tank"
@@ -372,9 +372,9 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Steel Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Steel Portable Fluid Tank | %fluid%"
 
   portable_fluid_tank_palladium:
     name: "Palladium Portable Fluid Tank"
@@ -382,16 +382,16 @@ item:
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
       <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %amount%/%capacity% (%fluid%)
+      <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-    waila: "Palladium Portable Fluid Tank | %bars% (%fluid%)"
+    waila: "Palladium Portable Fluid Tank | %fluid%"
 
   fluid_valve:
     name: "Fluid Valve"
     lore: |-
       <arrow> <insn>Right click</insn> a fluid valve to toggle it
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Fluid Valve | %bars% (%fluid%) | %status%"
+    waila: "Fluid Valve | %status% | %fluid%"
 
   fluid_filter:
     name: "Fluid Filter"
@@ -399,7 +399,7 @@ item:
       <arrow> Only lets a certain fluid through
       <arrow> <insn>Right click</insn> a fluid filter to change the filtered fluid
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Fluid Filter | %bars% (%fluid%)"
+    waila: "Fluid Filter | %fluid%"
     gui: "Fluid Filter"
 
   fluid_limiter:
@@ -413,7 +413,7 @@ item:
       add: "<green>+ %amount% ml/s"
       dec: "<red>- %amount% ml/s"
       amount: "<white>Amount: %amount% ml/s"
-    waila: "Fluid Limiter | %bars% (%fluid%)"
+    waila: "Fluid Limiter | %fluid%"
 
   fluid_accumulator:
     name: "Fluid Accumulator"
@@ -423,7 +423,7 @@ item:
       <arrow> <insn>Right click</insn> to change the accumulation amount
       <arrow> <attr>Min amount:</attr> %min-amount%
       <arrow> <attr>Max amount:</attr> %max-amount%
-    waila: "Fluid Accumulator | %bars% (%fluid%)"
+    waila: "Fluid Accumulator | %fluid%"
 
   fluid_meter:
     name: "Fluid Meter"
@@ -432,7 +432,7 @@ item:
       <arrow> <insn>Right click</insn> a fluid meter to configure the measurement time
       <arrow> <attr>Buffer:</attr> %buffer%
       <arrow> <attr>Measurement range:</attr> %min-measurement-time% to %max-measurement-time%
-    waila: "Fluid Meter | %bars% (%fluid%) | %duration%"
+    waila: "Fluid Meter | %duration% | %fluid%"
 
   fluid_strainer:
     name: "Fluid Strainer"
@@ -440,7 +440,7 @@ item:
       <arrow> Filters out items from fluids
       <arrow> <insn>Right click</insn> to open the inventory
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Fluid Strainer%info%"
+    waila: "Fluid Strainer | Straining %item% | %progress%"
 
   fluid_voider_1:
     name: "Fluid Voider <light_purple>I"
@@ -477,7 +477,7 @@ item:
       <arrow> Must be supplied with water to function
       <arrow> <attr>Fill interval:</attr> %fill_interval%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Water Placer | %bars%"
+    waila: "Water Placer | %fluid%"
 
   lava_placer:
     name: "Lava Placer"
@@ -486,7 +486,7 @@ item:
       <arrow> Must be supplied with lava to function
       <arrow> <attr>Fill interval:</attr> %fill_interval%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Lava Placer | %bars%"
+    waila: "Lava Placer | %fluid%"
 
   water_drainer:
     name: "Water Drainer"
@@ -494,7 +494,7 @@ item:
       <arrow> Drains water from the block in front of it and makes it available to any connected pipes
       <arrow> <attr>Drain interval:</attr> %drain_interval%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Water Drainer | %bars%"
+    waila: "Water Drainer | %flouid%"
 
   lava_drainer:
     name: "Lava Drainer"
@@ -502,7 +502,7 @@ item:
       <arrow> Drains lava from the block in front of it and makes it available to any connected pipes
       <arrow> <attr>Drain interval:</attr> %drain_interval%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Lava Drainer | %bars%"
+    waila: "Lava Drainer | %fluid%"
 
   elevator_1:
     name: "Elevator I"
@@ -606,8 +606,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:shimmer_altar/></yellow>
       <diamond> 8x <yellow><item:pylon:shimmer_pedestal/></yellow>
-    waila: "Shimmer Altar%progress%"
-    progress: "| %progress%"
+    waila: "Shimmer Altar | %progress%"
 
   shimmer_pedestal:
     name: "Shimmer Pedestal"
@@ -629,7 +628,7 @@ item:
       <diamond> 2x <yellow>Lit Orange Candle</yellow>
       <diamond> 2x <yellow><item:pylon:potion_pedestal/></yellow>
       <diamond> 2x <yellow><item:pylon:shimmer_pedestal/></yellow>
-    waila: "Potion Altar%processing%"
+    waila: "Potion Altar | %progress%"
 
   potion_pedestal:
     name: "Potion Pedestal"
@@ -679,7 +678,7 @@ item:
       <arrow> Some recipes require <white>Enriched Soul Soil</white> fire underneath
       <arrow> Can also be used like a normal cauldron
       <arrow> <attr>Capacity:</attr> %capacity%
-    waila: "Mixing Pot | %bar% (%fluid%)"
+    waila: "Mixing Pot | %fluid%"
 
   crucible:
     name: "Crucible"
@@ -688,7 +687,9 @@ item:
       <arrow> Can hold only one item type at a time
       <arrow> The items will melt depending on the heat produced by the block below the cauldron
       <arrow> Requires a heat source underneath to work
-    waila: "Crucible %item_info% %liquid_info%"
+    waila: "Crucible | %fluid% | %item%"
+    empty: "<yellow>No items"
+    not-empty: "%type% x%amount%"
 
   monster_jerky:
     name: "Monster Jerky"
@@ -830,7 +831,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Temperature:</attr> %temperature%
-    waila: "Diesel Smeltery Heater | %bar%"
+    waila: "Diesel Smeltery Heater | %diesel%"
 
   smeltery_controller:
     name: "Smeltery Controller"
@@ -885,7 +886,7 @@ item:
       <arrow> <attr>Water consumption:</attr> %water_consumption%
       <arrow> <attr>Range:</attr> %range%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Sprinkler | %bars%"
+    waila: "Sprinkler | %fluid%"
 
   steel_dust:
     name: "Steel Dust"
@@ -1002,7 +1003,7 @@ item:
       <arrow> Throw plants in and <insn>right click</insn> to press them into plant oil
       <arrow> <attr>Time per item:</attr> %time-per-item%
       <arrow> <attr>Capacity:</attr> %capacity%
-    waila: "Press | %bar%"
+    waila: "Press | %fluid%"
 
   hydraulic_grindstone_turner:
     name: "Hydraulic Grindstone Turner"
@@ -1011,7 +1012,7 @@ item:
       <arrow> Outputs dirty hydraulic fluid
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Grindstone Turner | %input-bar% | %output-bar%"
+    waila: "Hydraulic Grindstone Turner | %input-fluid% | %output-fluid%"
 
   hydraulic_mixing_attachment:
     name: "Hydraulic Mixing Attachment"
@@ -1021,7 +1022,7 @@ item:
       <arrow> <attr>Cooldown time:</attr> %cooldown%
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-craft% per craft
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Mixing Attachment | %input-bar% | %output-bar%"
+    waila: "Hydraulic Mixing Attachment | %input-fluid% | %output-fluid% | %progress%"
 
   hydraulic_press_piston:
     name: "Hydraulic Press Piston"
@@ -1030,7 +1031,7 @@ item:
       <arrow> Outputs dirty hydraulic fluid
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-craft% per craft
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Press Piston | %input-bar% | %output-bar%"
+    waila: "Hydraulic Press Piston | %input-fluid% | %output-fluid%"
 
   hydraulic_hammer_head:
     name: "Hydraulic Hammer Head"
@@ -1042,7 +1043,7 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-craft% per craft
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Hammer Head | %input-bar% | %output-bar%"
+    waila: "Hydraulic Hammer Head | %input-fluid% | %output-fluid%"
 
   hydraulic_pipe_bender:
     name: "Hydraulic Pipe Bender"
@@ -1052,7 +1053,7 @@ item:
       <arrow> <insn>Right click</insn> to insert an item
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Pipe Bender | %input-bar% | %output-bar%"
+    waila: "Hydraulic Pipe Bender | %input-fluid% | %output-fluid% | %progress%"
 
   hydraulic_table_saw:
     name: "Hydraulic Table Saw"
@@ -1062,7 +1063,7 @@ item:
       <arrow> <insn>Right click</insn> to insert an item
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage% per craft
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Table Saw | %input-bar% | %output-bar%"
+    waila: "Hydraulic Table Saw | %input-fluid% | %output-fluid% | %progress%"
 
   hydraulic_breaker:
     name: "Hydraulic Breaker"
@@ -1072,7 +1073,7 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-per-block% per block
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Breaker | %input-bar% | %output-bar%"
+    waila: "Hydraulic Breaker | %input-fluid% | %output-fluid%"
 
   quartz_dust:
     name: "Quartz Dust"
@@ -1101,7 +1102,7 @@ item:
       <arrow> <attr>Cycle duration:</attr> %cycle-duration%
       <arrow> <attr>Purification efficiency:</attr> %purification-efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Manual Hydraulic Purifier | %input-bar% | %output-bar%"
+    waila: "Manual Hydraulic Purifier | %input-fluid% | %output-fluid%"
 
   solar_hydraulic_purifier_1:
     name: "Solar Hydraulic Purifier I"
@@ -1119,7 +1120,7 @@ item:
       <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
       <diamond> 3x <yellow><item:pylon:copper_framed_glass/></yellow>
       <diamond> 16x <yellow><item:pylon:solar_lens/></yellow>
-    waila: "Solar Hydraulic Purifier I | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier I | %input-fluid% | %output-fluid%"
 
   solar_hydraulic_purifier_2:
     name: "Solar Hydraulic Purifier II"
@@ -1137,7 +1138,7 @@ item:
       <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
       <diamond> 4x <yellow><item:pylon:copper_framed_glass/></yellow>
       <diamond> 48x <yellow><item:pylon:solar_lens/></yellow>
-    waila: "Solar Hydraulic Purifier II | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier II | %input-fluid% | %output-fluid%"
 
   solar_hydraulic_purifier_3:
     name: "Solar Hydraulic Purifier III"
@@ -1155,7 +1156,7 @@ item:
       <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
       <diamond> 5x <yellow><item:pylon:copper_framed_glass/></yellow>
       <diamond> 96x <yellow><item:pylon:solar_lens/></yellow>
-    waila: "Solar Hydraulic Purifier III | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier III | %input-fluid% | %output-fluid%"
 
   solar_hydraulic_purifier_4:
     name: "Solar Hydraulic Purifier IV"
@@ -1173,7 +1174,7 @@ item:
       <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
       <diamond> 6x <yellow><item:pylon:copper_framed_glass/></yellow>
       <diamond> 160x <yellow><item:pylon:solar_lens/></yellow>
-    waila: "Solar Hydraulic Purifier IV | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier IV | %input-fluid% | %output-fluid%"
 
   solar_hydraulic_purifier_5:
     name: "Solar Hydraulic Purifier V"
@@ -1191,7 +1192,7 @@ item:
       <diamond> 1x <yellow><item:pylon:quartz_cap/></yellow>
       <diamond> 7x <yellow><item:pylon:copper_framed_glass/></yellow>
       <diamond> 240x <yellow><item:pylon:solar_lens/></yellow>
-    waila: "Solar Hydraulic Purifier V | %input-bar% | %output-bar%"
+    waila: "Solar Hydraulic Purifier V | %input-fluid% | %output-fluid%"
 
   burner_hydraulic_purifier:
     name: "Burner Hydraulic Purifier"
@@ -1212,7 +1213,7 @@ item:
       <diamond> 2x <yellow><item:pylon:copper_framed_glass></yellow>
       <diamond> 8x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
-    waila: "Burner Hydraulic Purifier | %fuel-bar%"
+    waila: "Burner Hydraulic Purifier | %fuel%"
 
   convection_hydraulic_purifier:
     name: "Convection Hydraulic Purifier"
@@ -1276,7 +1277,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:fluid_tank/></yellow>
       <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Fluid Tank | %bars% (%fluid%)"
+    waila: "Fluid Tank | %fluid%"
 
   fluid_tank_casing_wood:
     name: "Wooden Fluid Tank Casing"
@@ -1350,8 +1351,7 @@ item:
       <diamond> 1x <yellow><item:pylon:manual_core_drill/></yellow>
       <diamond> 1x <yellow><item:pylon:manual_core_drill_lever/></yellow>
       <diamond> 9x <yellow>Cobblestone Wall</yellow>
-    waila: "Manual Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Manual Core Drill | %remaining-time%"
 
   improved_manual_core_drill:
     name: "Improved Manual Core Drill"
@@ -1365,8 +1365,7 @@ item:
       <diamond> 1x <yellow><item:pylon:improved_manual_core_drill/></yellow>
       <diamond> 1x <yellow><item:pylon:manual_core_drill_lever/></yellow>
       <diamond> 9x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Improved Manual Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Improved Manual Core Drill | %remaining-time%"
 
   hydraulic_core_drill:
     name: "Hydraulic Core Drill"
@@ -1387,8 +1386,7 @@ item:
       <diamond> 6x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 12x <yellow><item:pylon:iron_support_beam/></yellow>
       <diamond> 2 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Hydraulic Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Hydraulic Core Drill | %remaining-time%"
 
   diesel_core_drill:
     name: "Diesel Core Drill"
@@ -1409,8 +1407,7 @@ item:
       <diamond> 9x <yellow><item:pylon:steel_support_beam/></yellow>
       <diamond> 10x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 1 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Diesel Core Drill %duration_if_any%"
-    waila_format: "| %duration%"
+    waila: "Diesel Core Drill | %remaining-time%"
 
   iron_support_beam:
     name: "Iron Support Beam"
@@ -1587,8 +1584,9 @@ item:
     name: "Hydraulic Refueling Station"
     lore: |-
       <arrow> Refuels items with hydraulic fluid
+      <arrow> Removes dirty hydraulic fluid from items
       <arrow> <insn>Right click</insn> to insert an item to refuel
-    waila: "Hydraulic Refueling Station %extra%"
+    waila: "Hydraulic Refueling Station | %hydraulic-fluid% | %dirty-hydraulic-fluid%"
 
   hydraulic_farmer:
     name: "Hydraulic Farmer"
@@ -1599,7 +1597,7 @@ item:
       <arrow> <attr>Farm interval:</attr> %tick-interval%
       <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
       <arrow> <attr>Buffer:</attr> %buffer%
-    waila: "Hydraulic Farmer | %input-bar% | %output-bar%"
+    waila: "Hydraulic Farmer | %input-fluid% | %output-fluid%"
 
   diesel_pipe_bender:
     name: "Diesel Pipe Bender"
@@ -1608,7 +1606,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Speed:</attr> %speed%
-    waila: "Diesel Pipe Bender | %diesel-bar%"
+    waila: "Diesel Pipe Bender | %diesel% | %progress%"
 
   diesel_table_saw:
     name: "Diesel Table Saw"
@@ -1617,7 +1615,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Speed:</attr> %speed%
-    waila: "Diesel Table Saw | %diesel-bar%"
+    waila: "Diesel Table Saw | %diesel% | %progress%"
 
   diesel_press:
     name: "Diesel Press"
@@ -1627,7 +1625,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Time per item:</attr> %time-per-item%
-    waila: "Diesel Press | %diesel-bar% | %plant-oil-bar%"
+    waila: "Diesel Press | %diesel% | %plant-oil% | %progress%"
 
   diesel_grindstone:
     name: "Diesel Grindstone"
@@ -1635,7 +1633,7 @@ item:
       <arrow> Grinds items
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Grindstone | %diesel-bar%"
+    waila: "Diesel Grindstone | %diesel% | %progress%"
 
   diesel_brick_molder:
     name: "Diesel Brick Molder"
@@ -1644,7 +1642,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
-    waila: "Diesel Brick Molder | %diesel-bar%"
+    waila: "Diesel Brick Molder | %diesel% | %progress%"
 
   diesel_hammer_head:
     name: "Diesel Hammer Head"
@@ -1653,7 +1651,7 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Diesel usage:</attr> %diesel-per-craft% per craft
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Hammer Head | %bar%"
+    waila: "Diesel Hammer Head | %diesel% | %progress%"
 
   diesel_mixing_attachment:
     name: "Diesel Mixing Attachment"
@@ -1662,7 +1660,7 @@ item:
       <arrow> <attr>Cooldown time:</attr> %cooldown%
       <arrow> <attr>Diesel usage:</attr> %diesel-per-craft% per craft
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Mixing Attachment | %bar%"
+    waila: "Diesel Mixing Attachment | %diesel% | %progress%"
 
   diesel_breaker:
     name: "Diesel Breaker"
@@ -1672,7 +1670,7 @@ item:
       <arrow> <attr>Speed:</attr> %speed%
       <arrow> <attr>Diesel usage:</attr> %diesel-per-block% per block
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Breaker | %bar%"
+    waila: "Diesel Breaker | %fluid% | %progress%"
 
   diesel_furnace:
     name: "Diesel Furnace"
@@ -1681,7 +1679,7 @@ item:
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Speed:</attr> %speed%
-    waila: "Diesel Furnace | %bar%"
+    waila: "Diesel Furnace | %diesel% | %progress%"
 
   diesel_quarry:
     name: "Diesel Quarry"
@@ -1692,7 +1690,7 @@ item:
       <arrow> <attr>Mining area:</attr> %mining-area%
       <arrow> <attr>Diesel usage:</attr> %diesel-per-block% per block
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
-    waila: "Diesel Quarry | %bar%"
+    waila: "Diesel Quarry | %diesel%"
 
   diesel_booster:
     name: "Diesel Booster"
@@ -1707,7 +1705,7 @@ item:
     name: "Diesel Refueling Station"
     lore: |-
       <arrow> Refuels items with diesel
-    waila: "Diesel Refueling Station %extra%"
+    waila: "Diesel Refueling Station | %diesel%"
 
   fermenter:
     name: "Fermenter"
@@ -1757,7 +1755,7 @@ item:
       <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
       <diamond> 24x <yellow><item:pylon:reinforced_plating/></yellow>
       <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Biorefinery | %info%"
+    waila: "Biorefinery | %fuel%"
 
   bronze_foundation:
     name: "Bronze Foundation"
@@ -1865,7 +1863,7 @@ item:
       <arrow> New items or fluid cannot enter while there are still items in the output
       <arrow> <attr>Transfer rate:</attr> %transfer-rate%
       <arrow> <attr>Fluid buffer:</attr> %fluid-buffer%
-    waila: "Cargo Fluid Accumulator | <light_purple>%item-threshold%</light_purple> <white>| <light_purple>%fluid-threshold%</light_purple> <white>| %bars%"
+    waila: "Cargo Fluid Accumulator | <light_purple>%item-threshold%</light_purple> <white>| <light_purple>%fluid-threshold%</light_purple> <white>| %fluid%"
 
   cargo_overflow_gate:
     name: "Cargo Overflow Gate"
@@ -2208,7 +2206,7 @@ item:
       <diamond> 3x <yellow><item:pylon:collimator_pillar/></yellow>
       
       <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
-    waila: "Collimator | %fluid-bar% <white>| %time-remaining%"
+    waila: "Collimator | %fluid% <white>| %time-remaining%"
 
   collimator_pillar:
     name: "Collimation Pillar"
@@ -2318,16 +2316,14 @@ item:
       <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
       <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
       <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
-    waila: "Palladium Condenser | %duration-if-any%"
-    waila_format: "| %duration%"
+    waila: "Palladium Condenser | %progress%"
 
   crude_alloy_furnace:
     name: "Crude Alloy Furnace"
     lore: |-
       <arrow> Smelts alloys
       <arrow> Crude and inefficient, but does the job
-    waila: "Crude Alloy Furnace%info%"
-    info: " | %progress%"
+    waila: "Crude Alloy Furnace | %progress%"
 
   kiln:
     name: "Kiln"
@@ -2338,15 +2334,16 @@ item:
       <arrow> Takes time to heat up and cool down
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon.item.kiln.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.bronze_grating.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.fluid_output_hatch.name/></yellow>
-      <diamond> 1x <yellow><item:pylon.item.item_output_hatch.name/></yellow>
-      <diamond> 2x <yellow><item:pylon.item.item_input_hatch.name/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.kiln/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.bronze_grating/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item.item_output_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:item.item_input_hatch/></yellow>
       <diamond> 6x <yellow>Mud Bricks</yellow>
       <diamond> 12x <yellow>Mud Brick Wall</yellow>
 
-    waila: "Kiln | %temperature-bar% %temperature%%progress%"
+    waila-1: "Kiln | %temperature%"
+    waila-2: "Kiln | %temperature% | %progress%"
 
   slag:
     name: "Slag"
@@ -2488,7 +2485,7 @@ item:
     lore: |-
       <arrow> <insn>Sneak</insn> while standing on top to liquefy your experience
       <arrow> <attr>Experience drain amount:</attr> %xp-drain-rate%
-    waila: "Experience Drain | %bar%"
+    waila: "Experience Drain | %xp%"
 
   experience_fountain:
     name: "Experience Fountain"
@@ -2499,7 +2496,7 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:experience_fountain_spout/></yellow>
-    waila: "Experience Fountain | %bar%"
+    waila: "Experience Fountain | %xp%"
 
   experience_fountain_spout:
     name: "Experience Fountain Spout"
@@ -2534,7 +2531,7 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Hydraulic Experience Bottler | %progressbar%"
+    waila: "Hydraulic Experience Bottler | %progress%"
 
   diesel_experience_bottler:
     name: "Diesel Experience Bottler"
@@ -2547,7 +2544,7 @@ item:
       <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-    waila: "Diesel Experience Bottler | %progressbar%"
+    waila: "Diesel Experience Bottler | %progress%"
 
   piped_cauldron:
     name: "Piped Cauldron"
@@ -2557,7 +2554,6 @@ item:
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
-  none: "None"
   water: "Water"
   lava: "Lava"
   plant_oil: "Plant Oil"
@@ -2589,31 +2585,17 @@ fluid:
   liquid_xp: "Liquid Experience"
 
 waila:
-  fluid_tank:
-    empty: "(empty)"
-    filled: "| %bar%/%capacity% of %fluid%"
-  crucible:
-    item:
-      empty: "| No items |"
-      stored: "| x%amount% %type% |"
-    liquid:
-      empty: "No fluid"
-      filled: "%bar% (%fluid%)"
-  fluid_strainer:
-    straining: " | Straining %item% | %bars%"
+  idle: "<#f9e981>Idle"
   grindstone:
-    empty: ""
     not-empty: " | %item% x%amount%"
-    idle: ""
-    processing: " | %bars%"
+    processing: " | %progress%"
     invalid_recipe: " | <red>Invalid recipe"
-  potion_altar:
-    idle: ""
-    processing: " | %bars%"
   cargo_splitter:
     left: "<#efae15>Left"
     right: "<#2386c4>Right"
   kiln: " | %progress%"
+  cargo_fluid_accumulator:
+    no_fluid: "No fluid"
 
 research:
   baking: "<#e2b42b>Baking"
@@ -2809,10 +2791,9 @@ message:
   fluid_hatch:
     no_casing: "<red>No casing"
     no_fluid: "<red>No fluid"
-    working: "%bars% (%fluid%)"
+    working: "%fluid-bar% %fluid%"
   biorefinery:
     no_fuel: "<red>No fuel"
-    has_fuel: "%fuel-bar% %remaining-time%"
   hammer_cant_use: "<red>You cannot use this hammer on this block"
   sprinkler_too_close: "<red>You cannot place sprinklers within %radius% blocks of each other"
   gained_research_points: "<green>+%points% research points (%total% points total)"
@@ -2845,10 +2826,6 @@ message:
   fireproof_result:
     tooltip: "<arrow> <#ff5e00>Fireproof"
     success: "<red>Your item has been fire-proofed"
-  hydraulic_refueling_station:
-    extra: "| %hydraulic-fluid-bar% | %dirty-hydraulic-fluid-bar%"
-  diesel_refueling_station:
-    extra: "| %diesel-bar%"
   soulbound_rune:
     tooltip: "<dark_purple>Soulbound"
     soulbind-message: "<dark_purple>Your soul has been linked with your item"
@@ -2960,15 +2937,9 @@ gui:
   smeltery_burner:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
-  progress_bar:
-    text: "%filled_bars%<dark_gray>%empty_bars% <gray>%progress%"
-  discrete_progress_bar:
-    text: "%filled_bars%<dark_gray>%empty_bars% <gray>%stage%/%max_stage%"
   vacuum_hopper:
     blacklist: "<white>Blacklist"
     whitelist: "<white>Whitelist"
-  fluid_amount_bar:
-    text: "%filled_bars%<dark_gray>%empty_bars% <gray>%amount%/%capacity%"
   logistic-group-cycle-item:
     name: "Current inventory: <yellow>%inventory%"
     lore: |-

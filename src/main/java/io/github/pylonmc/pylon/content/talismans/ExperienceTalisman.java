@@ -20,7 +20,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class ExperienceTalisman extends Talisman {
     public static final NamespacedKey XP_TALISMAN_KEY = pylonKey("xp_talisman");
     public static final NamespacedKey XP_MULTIPLIER_KEY = pylonKey("xp_talisman_multiplier");
-    public final float xpMultiplier = getSettings().getOrThrow("xp-multiplier", ConfigAdapter.FLOAT);
+    public final float xpMultiplier = getSettingOrThrow("xp-multiplier", ConfigAdapter.FLOAT);
 
     public ExperienceTalisman(@NotNull ItemStack stack) {
         super(stack);

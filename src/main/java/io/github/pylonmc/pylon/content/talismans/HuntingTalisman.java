@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HuntingTalisman extends Talisman {
-    public final double chanceForExtraItem = getSettings().getOrThrow("chance-for-extra-item", ConfigAdapter.DOUBLE);
+    public final double chanceForExtraItem = getSettingOrThrow("chance-for-extra-item", ConfigAdapter.DOUBLE);
     public static final NamespacedKey HUNTING_TALISMAN_KEY = PylonUtils.pylonKey("hunting_talisman");
     public static final NamespacedKey HUNTING_TALISMAN_BONUS_KEY = PylonUtils.pylonKey("hunting_talisman_bonus");
 

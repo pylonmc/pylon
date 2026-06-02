@@ -18,9 +18,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class AscendantEmber extends RebarItem implements PotionCatalyst {
-    private final int maxAmplifier = getSettings().getOrThrow("max-amplifier", ConfigAdapter.INTEGER);
-    private final double durationShortenRate = getSettings().getOrThrow("duration-shorten-rate", ConfigAdapter.DOUBLE);
-    private final double applicationSuccessRate = getSettings().getOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
+    private final int maxAmplifier = getSettingOrThrow("max-amplifier", ConfigAdapter.INTEGER);
+    private final double durationShortenRate = getSettingOrThrow("duration-shorten-rate", ConfigAdapter.DOUBLE);
+    private final double applicationSuccessRate = getSettingOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
 
     public AscendantEmber(final @NotNull ItemStack stack) {
         super(stack);

@@ -1,10 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -17,11 +16,11 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -44,17 +43,17 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class FluidValve extends RebarBlock
-        implements RebarFluidTank, RebarInteractBlock, RebarDirectionalBlock {
+        implements FluidTankRebarBlock, InteractRebarBlockHandler, DirectionalRebarBlock {
 
     public static final NamespacedKey ENABLED_KEY = pylonKey("enabled");
 
     private boolean open;
 
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -111,7 +110,7 @@ public class FluidValve extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking() || event.useInteractedBlock() == Event.Result.DENY) {
             return;
         }
@@ -130,16 +129,11 @@ public class FluidValve extends RebarBlock
                 RebarArgument.of("status", Component.translatable(
                         "pylon.message.valve." + (open ? "open" : "closed")
                 )),
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
+                        getFluidAmount()
+                ))
         ));
     }
 
@@ -148,7 +142,7 @@ public class FluidValve extends RebarBlock
         if (!open) {
             return 0.0;
         }
-        return RebarFluidTank.super.fluidAmountRequested(fluid);
+        return FluidTankRebarBlock.super.fluidAmountRequested(fluid);
     }
 
     @Override
@@ -156,7 +150,7 @@ public class FluidValve extends RebarBlock
         if (!open) {
             return List.of();
         }
-        return RebarFluidTank.super.getSuppliedFluids();
+        return FluidTankRebarBlock.super.getSuppliedFluids();
     }
 
     @Override

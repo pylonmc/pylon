@@ -4,10 +4,10 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarNoVanillaInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.format.TextColor;
@@ -37,25 +38,25 @@ import java.util.List;
 
 
 public class ManualHydraulicPurifier extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
         HydraulicPurifier,
-        RebarInteractBlock,
-        RebarNoVanillaInventoryBlock {
+        InteractRebarBlockHandler,
+        NoVanillaInventoryRebarBlock {
 
-    public final double hydraulicFluidPerCycle = getSettings().getOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
-    public final int cycleDuration = getSettings().getOrThrow("cycle-duration", ConfigAdapter.INTEGER);
-    public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final double hydraulicFluidPerCycle = getSettingOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
+    public final int cycleDuration = getSettingOrThrow("cycle-duration", ConfigAdapter.INTEGER);
+    public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
     public boolean isProcessing;
 
     public static class Item extends RebarItem {
 
-        public final double hydraulicFluidPerCycle = getSettings().getOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
-        public final int cycleDuration = getSettings().getOrThrow("cycle-duration", ConfigAdapter.INTEGER);
-        public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final double hydraulicFluidPerCycle = getSettingOrThrow("hydraulic-fluid-per-cycle", ConfigAdapter.DOUBLE);
+        public final int cycleDuration = getSettingOrThrow("cycle-duration", ConfigAdapter.INTEGER);
+        public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -95,7 +96,7 @@ public class ManualHydraulicPurifier extends RebarBlock implements
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getPlayer().isSneaking()
@@ -142,17 +143,15 @@ public class ManualHydraulicPurifier extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
+                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+                        PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#48459b")
+                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
                 )),
-                RebarArgument.of("output-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.HYDRAULIC_FLUID),
+                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                        PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#212d99")
+                        fluidAmount(PylonFluids.HYDRAULIC_FLUID)
                 ))
         ));
     }

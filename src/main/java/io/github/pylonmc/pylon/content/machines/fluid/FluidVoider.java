@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,11 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class FluidVoider extends RebarBlock implements RebarFluidBlock {
+public class FluidVoider extends RebarBlock implements FluidRebarBlock {
 
     public static class Item extends RebarItem {
 
-        public final double voidRate = getSettings().getOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
+        public final double voidRate = getSettingOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -41,9 +41,9 @@ public class FluidVoider extends RebarBlock implements RebarFluidBlock {
         }
     }
 
-    public final Material mainMaterial = getSettings().getOrThrow("main-material", ConfigAdapter.MATERIAL);
-    public final double voidRate = getSettings().getOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
-    public final double mainDisplaySize = getSettings().getOrThrow("main-display-size", ConfigAdapter.DOUBLE);
+    public final Material mainMaterial = getSettingOrThrow("main-material", ConfigAdapter.MATERIAL);
+    public final double voidRate = getSettingOrThrow("fluid-voided-per-second", ConfigAdapter.DOUBLE);
+    public final double mainDisplaySize = getSettingOrThrow("main-display-size", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public FluidVoider(@NotNull Block block, @NotNull BlockCreateContext context) {

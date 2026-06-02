@@ -2,8 +2,8 @@ package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.pylon.recipes.FormingRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInventoryBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -27,8 +27,8 @@ import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.ItemWrapper;
 
 public class FormingTable extends RebarBlock implements
-        RebarInventoryBlock,
-        RebarVirtualInventoryBlock {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock {
 
     @SuppressWarnings("unused")
     public FormingTable(@NotNull Block block, @NotNull BlockCreateContext context) {

@@ -4,7 +4,11 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.item.base.*;
+import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.EntityAttackRebarItemHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -24,11 +28,11 @@ import java.util.List;
 public abstract class Rune extends RebarItem {
     // These can be applied with runes
     public static final List<Class<?>> DEFAULT_APPLICABLES = List.of(
-            RebarArrow.class,
-            RebarBow.class,
-            RebarBucket.class,
-            RebarTool.class,
-            RebarWeapon.class
+            ArrowRebarItemHandler.class,
+            BowRebarItemHandler.class,
+            BucketRebarItemHandler.class,
+            BlockBreakRebarItemHandler.class,
+            EntityAttackRebarItemHandler.class
     );
 
     public Rune(@NotNull ItemStack stack) {

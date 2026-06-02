@@ -9,9 +9,9 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.LiseletteCollector;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -36,10 +36,10 @@ import java.util.Random;
 
 
 public class LiseletteHydraulicPurifier extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
         HydraulicPurifier,
-        RebarTickingBlock {
+        TickingRebarBlock {
 
     private static final Random RANDOM = new Random();
 
@@ -56,19 +56,19 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
             new Vector3i(2, 0, -2)
     );
 
-    public final double maxFluidPurifiedPerStrike = getSettings().getOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
-    public final double strikeChance = getSettings().getOrThrow("strike-chance", ConfigAdapter.DOUBLE);
-    public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+    public final double maxFluidPurifiedPerStrike = getSettingOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
+    public final double strikeChance = getSettingOrThrow("strike-chance", ConfigAdapter.DOUBLE);
+    public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
 
-        public final double maxFluidPurifiedPerStrike = getSettings().getOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
-        public final double strikeChance = getSettings().getOrThrow("strike-chance", ConfigAdapter.DOUBLE);
-        public final double purificationEfficiency = getSettings().getOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        public final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+        public final double maxFluidPurifiedPerStrike = getSettingOrThrow("max-fluid-purified-per-strike", ConfigAdapter.DOUBLE);
+        public final double strikeChance = getSettingOrThrow("strike-chance", ConfigAdapter.DOUBLE);
+        public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -122,7 +122,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
-        RebarSimpleMultiblock.super.onMultiblockFormed();
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.HYDRAULIC_FLUID);
     }

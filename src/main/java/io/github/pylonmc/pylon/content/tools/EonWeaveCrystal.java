@@ -18,8 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author balugaq
  */
 public class EonWeaveCrystal extends RebarItem implements PotionCatalyst {
-    private final double multipleRate = getSettings().getOrThrow("multiple-rate", ConfigAdapter.DOUBLE);
-    private final double applicationSuccessRate = getSettings().getOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
+    private final double multipleRate = getSettingOrThrow("multiple-rate", ConfigAdapter.DOUBLE);
+    private final double applicationSuccessRate = getSettingOrThrow("application-success-rate", ConfigAdapter.DOUBLE);
 
     public EonWeaveCrystal(final @NotNull ItemStack stack) {
         super(stack);

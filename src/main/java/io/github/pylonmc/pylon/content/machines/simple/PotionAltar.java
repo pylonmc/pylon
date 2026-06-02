@@ -9,7 +9,12 @@ import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -19,6 +24,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
@@ -27,7 +33,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import lombok.Getter;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.*;
 import org.bukkit.Vibration.Destination.BlockDestination;
 import org.bukkit.block.Block;
@@ -50,22 +55,22 @@ import org.joml.Vector3i;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarDirectionalBlock, RebarBreakHandler {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, DirectionalRebarBlock, BlockBreakRebarBlockHandler {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
     private static final MultiblockComponent POTION_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.POTION_PEDESTAL);
     private static final MultiblockComponent LIT_ORANGE_CANDLE_COMPONENT = MultiblockComponent.of(Material.ORANGE_CANDLE.createBlockData("[lit=true]"));
-    private final Sound START_SOUND = getSettings().getOrThrow("sound.start", ConfigAdapter.SOUND);
-    private final Sound FINISH_SOUND = getSettings().getOrThrow("sound.finish", ConfigAdapter.SOUND);
-    private final Sound CANCEL_SOUND = getSettings().getOrThrow("sound.cancel", ConfigAdapter.SOUND);
-    private final Sound PROCESSING_SOUND = getSettings().getOrThrow("sound.processing", ConfigAdapter.SOUND);
-    private final Sound CANNOT_APPLY_CATALYST_SOUND = getSettings().getOrThrow("sound.cannot_apply_catalyst", ConfigAdapter.SOUND);
-    private final Sound FAILED_APPLY_CATALYST_SOUND = getSettings().getOrThrow("sound.failed_apply_catalyst", ConfigAdapter.SOUND);
+    private final Sound START_SOUND = getSettingOrThrow("sound.start", ConfigAdapter.SOUND);
+    private final Sound FINISH_SOUND = getSettingOrThrow("sound.finish", ConfigAdapter.SOUND);
+    private final Sound CANCEL_SOUND = getSettingOrThrow("sound.cancel", ConfigAdapter.SOUND);
+    private final Sound PROCESSING_SOUND = getSettingOrThrow("sound.processing", ConfigAdapter.SOUND);
+    private final Sound CANNOT_APPLY_CATALYST_SOUND = getSettingOrThrow("sound.cannot_apply_catalyst", ConfigAdapter.SOUND);
+    private final Sound FAILED_APPLY_CATALYST_SOUND = getSettingOrThrow("sound.failed_apply_catalyst", ConfigAdapter.SOUND);
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    private final int recipeTimeTicks = getSettings().getOrThrow("recipe-time-ticks", ConfigAdapter.INTEGER);
-    private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int recipeTimeTicks = getSettingOrThrow("recipe-time-ticks", ConfigAdapter.INTEGER);
+    private final int maxEffectTypes = getSettingOrThrow("max-effect-types", ConfigAdapter.INTEGER);
     private int ticked = 0;
     private @Nullable Player interactor;
     private @Nullable AltarProgress altarProgress;
@@ -74,7 +79,7 @@ public class PotionAltar extends RebarBlock
      * @author balugaq
      */
     public static class Item extends RebarItem {
-        private final int maxEffectTypes = getSettings().getOrThrow("max-effect-types", ConfigAdapter.INTEGER);
+        private final int maxEffectTypes = getSettingOrThrow("max-effect-types", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -181,7 +186,7 @@ public class PotionAltar extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -490,23 +495,12 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (altarProgress == null) {
+            return new WailaDisplay(getNameTranslationKey());
+        }
+        double progress = (double) (altarProgress.timeTicks - altarProgress.ticksRemaining) / altarProgress.timeTicks;
         return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of(
-                    "processing",
-                    altarProgress == null
-                    ? Component.translatable("pylon.waila.potion_altar.idle")
-                    : Component.translatable("pylon.waila.potion_altar.processing")
-                    .arguments(
-                        RebarArgument.of(
-                            "bars", PylonUtils.createProgressBar(
-                                        altarProgress.timeTicks - altarProgress.ticksRemaining,
-                                        altarProgress.timeTicks,
-                                        20,
-                                        TextColor.color(100, 255, 100)
-                            )
-                        )
-                    )
-            )
+                RebarArgument.of("progress", ProgressBar.recipeProgress(progress))
         ));
     }
 
@@ -539,7 +533,7 @@ public class PotionAltar extends RebarBlock
     }
 
     /**
-     * {@link RebarRecipeProcessor} requires a unique recipe key to recover recipe progress after restarting server,
+     * {@link RecipeProcessorRebarBlock} requires a unique recipe key to recover recipe progress after restarting server,
      * while this altar doesn't have any static recipe to be loaded or be recovered, which produces tons of
      * error logs for "Couldn't find recipe". So we have to recover recipe progress manually.
      *
@@ -553,7 +547,7 @@ public class PotionAltar extends RebarBlock
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         for (Pedestal pedestal : getAllPedestals()) {
             if (pedestal != null) {
                 pedestal.setLocked(false);

@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarFlowerPot;
+import io.github.pylonmc.rebar.block.interfaces.FlowerPotRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 
-public class SmokestackCap extends RebarBlock implements RebarFlowerPot {
+public class SmokestackCap extends RebarBlock implements FlowerPotRebarBlockHandler {
 
     public SmokestackCap(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
@@ -22,7 +22,7 @@ public class SmokestackCap extends RebarBlock implements RebarFlowerPot {
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onFlowerPotManipulated(@NotNull PlayerFlowerPotManipulateEvent event, @NotNull EventPriority priority) {
+    public void onFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 }
