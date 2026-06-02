@@ -1983,6 +1983,13 @@ public final class PylonItems {
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE_HANDLE);
     }
 
+    public static final ItemStack PIPED_CAULDRON = ItemStackBuilder.rebar(Material.CAULDRON, PylonKeys.PIPED_CAULDRON)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPED_CAULDRON, PylonKeys.PIPED_CAULDRON);
+        PylonPages.SIMPLE_MACHINES.addItem(PIPED_CAULDRON);
+    }
+
     public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
             .build();
     static {

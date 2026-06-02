@@ -2549,6 +2549,11 @@ item:
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
     waila: "Diesel Experience Bottler | %progressbar%"
 
+  piped_cauldron:
+    name: "Piped Cauldron"
+    lore: |-
+      <arrow> A cauldron which can have pipes attached to it
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
