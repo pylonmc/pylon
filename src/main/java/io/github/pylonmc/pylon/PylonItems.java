@@ -1175,7 +1175,8 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(CONFETTI_POPPER);
     }
 
-    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.TAPE_MEASURE)
+    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.TAPE_MEASURE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_NAUTILUS_ARMOR.getKey())
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .build();
     static {
