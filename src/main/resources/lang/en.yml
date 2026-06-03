@@ -2493,6 +2493,14 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Hammer time:</attr> %hammer-time%
 
+  electric_mixer:
+    name: "Electric Mixer"
+    lore: |-
+      <arrow> Automatically performs the functions of a <item:pylon:mixing_pot/>
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Mixing time:</attr> %mixing-time%
+    waila: "Electric Mixer | %input-bar% | %output-bar%"
+
   electric_press:
     name: "Electric Press"
     lore: |-
@@ -2946,9 +2954,7 @@ gui:
       <arrow> <insn>Right click</insn> to decrease by <yellow>%increment%</yellow>
       <arrow> <insn>Shift left click</insn> to increase by <yellow>%increment-shift%</yellow>
       <arrow> <insn>Shift right click</insn> to decrease by <yellow>%increment-shift%</yellow>
-      invalid: "<red>Invalid input, please enter an integer"
-  voltage: "Voltage"
-  power: "Power"
+  mixing: "Mixing"
   max-flow-rate: "Max flow rate"
   amount: "Amount"
   measurement-duration: "Measurement duration"

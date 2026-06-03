@@ -470,6 +470,7 @@ public class PylonKeys {
     public static final NamespacedKey ELECTRIC_GRINDSTONE = pylonKey("electric_grindstone");
     public static final NamespacedKey ELECTRIC_BRICK_MOLDER = pylonKey("electric_brick_molder");
     public static final NamespacedKey ELECTRIC_COMPRESSOR = pylonKey("electric_compressor");
+    public static final NamespacedKey ELECTRIC_MIXER = pylonKey("electric_mixer");
     public static final NamespacedKey ELECTRIC_PRESS = pylonKey("electric_press");
     public static final NamespacedKey ELECTRIC_TABLE_SAW = pylonKey("electric_table_saw");
     public static final NamespacedKey ELECTRIC_QUARRY = pylonKey("electric_quarry");
