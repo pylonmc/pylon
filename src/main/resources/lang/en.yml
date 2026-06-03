@@ -2405,7 +2405,7 @@ item:
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:boiler/></yellow>
-      <diamond> 20x <yellow><item:pylon:boiler_casing/></yellow>
+      <diamond> 21x <yellow><item:pylon:boiler_casing/></yellow>
       <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
