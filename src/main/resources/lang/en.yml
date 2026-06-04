@@ -2546,6 +2546,12 @@ item:
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
     waila: "Diesel Experience Bottler | %progress%"
 
+  redstone_link:
+    name: "Redstone Link"
+    lore: |-
+      <arrow> TBD
+    waila: "Redstone Link | %direction%"
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"

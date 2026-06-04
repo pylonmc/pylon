@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
-import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
@@ -17,6 +16,7 @@ import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.*;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
+import io.github.pylonmc.pylon.content.redstone.RedstoneLink;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
@@ -199,5 +199,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
+        RebarBlock.register(PylonKeys.REDSTONE_LINK, Material.PALE_OAK_SHELF, RedstoneLink.class);
     }
 }

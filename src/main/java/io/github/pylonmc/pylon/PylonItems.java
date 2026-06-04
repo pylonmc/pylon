@@ -3334,6 +3334,13 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(SLEEPING_BAG);
     }
 
+    public static final ItemStack REDSTONE_LINK = ItemStackBuilder.rebar(Material.PALE_OAK_SHELF, PylonKeys.REDSTONE_LINK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, REDSTONE_LINK, PylonKeys.REDSTONE_LINK);
+        PylonPages.MISCELLANEOUS.addItem(REDSTONE_LINK);
+    }
+
     static {
         PylonPages.initialise();
         PylonHelpPages.initialise();
