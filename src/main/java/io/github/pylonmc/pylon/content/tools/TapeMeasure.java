@@ -8,7 +8,6 @@ import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.Bukkit;
@@ -23,12 +22,10 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,13 +36,12 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 
-public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
+public class TapeMeasure extends RebarItem {
 
     public final Material material = getSettings().getOrThrow("material", ConfigAdapter.MATERIAL);
     public final Material finishedMaterial = getSettings().getOrThrow("finished-material", ConfigAdapter.MATERIAL);
@@ -54,25 +50,6 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
 
     public TapeMeasure(@NotNull ItemStack stack) {
         super(stack);
-    }
-
-    @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getAction().isLeftClick()) {
-            if (TapeMeasureService.isMeasuring(event.getPlayer())) {
-                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
-                return;
-            }
-        }
-
-        if (event.getAction().isRightClick() && event.getInteractionPoint() != null) {
-            if (TapeMeasureService.isMeasuring(event.getPlayer())) {
-                TapeMeasureService.finish(event.getPlayer());
-                return;
-            }
-
-            TapeMeasureService.start(event.getPlayer(), event.getInteractionPoint(), this);
-        }
     }
 
     private static class TapeMeasureTask extends BukkitRunnable {
@@ -278,6 +255,39 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
         private static void onDrop(@NonNull PlayerDropItemEvent event) {
             if (isRebarItem(event.getItemDrop().getItemStack(), TapeMeasure.class)) {
                 TapeMeasureService.cancel(event.getPlayer().getUniqueId());
+            }
+        }
+
+        @EventHandler
+        public static void onInteract(@NotNull PlayerInteractEvent event) {
+            // We can't use interact handlers because they don't fire for off-hand if player left clicks
+            TapeMeasure mainHand = fromStack(event.getPlayer().getInventory().getItemInMainHand(), TapeMeasure.class);
+            TapeMeasure offHand = fromStack(event.getPlayer().getInventory().getItemInOffHand(), TapeMeasure.class);
+            if (offHand == null && mainHand == null) {
+                return;
+            }
+
+            if (event.getHand() == EquipmentSlot.OFF_HAND && event.getAction().isRightClick()) {
+                // Don't fire twice for right clicks
+                return;
+            }
+
+            TapeMeasure tapeMeasure = mainHand == null ? offHand : mainHand;
+
+            if (event.getAction().isLeftClick()) {
+                if (TapeMeasureService.isMeasuring(event.getPlayer())) {
+                    TapeMeasureService.cancel(event.getPlayer().getUniqueId());
+                    return;
+                }
+            }
+
+            if (event.getAction().isRightClick() && event.getInteractionPoint() != null) {
+                if (TapeMeasureService.isMeasuring(event.getPlayer())) {
+                    TapeMeasureService.finish(event.getPlayer());
+                    return;
+                }
+
+                TapeMeasureService.start(event.getPlayer(), event.getInteractionPoint(), tapeMeasure);
             }
         }
     }
