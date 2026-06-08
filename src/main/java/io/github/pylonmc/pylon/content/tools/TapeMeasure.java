@@ -58,13 +58,9 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
 
     @Override
     public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getHand() != EquipmentSlot.HAND) {
-            return;
-        }
-
         if (event.getAction().isLeftClick()) {
             if (TapeMeasureService.isMeasuring(event.getPlayer())) {
-                TapeMeasureService.cancel(event.getPlayer());
+                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
                 return;
             }
         }
@@ -113,25 +109,23 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
             ItemDisplay line = (ItemDisplay) Bukkit.getEntity(lineId);
             TextDisplay text = (TextDisplay) Bukkit.getEntity(textId);
             if (line == null || text == null) {
-                if (line != null) {
-                    line.remove();
-                }
-                if (text != null) {
-                    text.remove();
-                }
-                cancel();
+                TapeMeasureService.cancel(playerId);
                 return;
             }
 
             Player player = Bukkit.getPlayer(playerId);
             if (player == null) {
-                line.remove();
-                cancel();
+                TapeMeasureService.cancel(playerId);
                 return;
             }
 
             Location endLocation = getPlayerTarget(player);
             if (endLocation == null) {
+                return;
+            }
+
+            if (!endLocation.getWorld().equals(startLocation.getWorld())) {
+                TapeMeasureService.cancel(player.getUniqueId());
                 return;
             }
 
@@ -194,7 +188,7 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
 
         public static void start(@NotNull Player player, @NotNull Location startLocation, @NotNull TapeMeasure tapeMeasure) {
             if (isMeasuring(player)) {
-                cancel(player);
+                cancel(player.getUniqueId());
             }
 
             ItemDisplay line = new ItemDisplayBuilder()
@@ -237,8 +231,8 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
             }
         }
 
-        private static void cancel(@NotNull Player player) {
-            TapeMeasureTask task = tasks.remove(player.getUniqueId());
+        private static void cancel(@NotNull UUID uuid) {
+            TapeMeasureTask task = tasks.remove(uuid);
             if (task == null) {
                 return;
             }
@@ -267,18 +261,7 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
         private static void onPlayerScroll(@NonNull PlayerItemHeldEvent event) {
             ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
             if (isRebarItem(heldItem, TapeMeasure.class)) {
-                TapeMeasureService.cancel(event.getPlayer());
-            }
-        }
-
-        @EventHandler
-        private static void onSwap(@NonNull PlayerSwapHandItemsEvent event) {
-            if (isRebarItem(event.getMainHandItem(), TapeMeasureService.class)) {
-                TapeMeasureService.cancel(event.getPlayer());
-            }
-
-            if (isRebarItem(event.getOffHandItem(), TapeMeasure.class)) {
-                TapeMeasureService.cancel(event.getPlayer());
+                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
             }
         }
 
@@ -287,14 +270,14 @@ public class TapeMeasure extends RebarItem implements InteractRebarItemHandler {
             if (event.getSlot() == event.getPlayer().getInventory().getHeldItemSlot()
                     && isRebarItem(event.getOldItemStack(), TapeMeasure.class)
                     && !isRebarItem(event.getNewItemStack(), TapeMeasure.class)) {
-                TapeMeasureService.cancel(event.getPlayer());
+                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
             }
         }
 
         @EventHandler
         private static void onDrop(@NonNull PlayerDropItemEvent event) {
             if (isRebarItem(event.getItemDrop().getItemStack(), TapeMeasure.class)) {
-                TapeMeasureService.cancel(event.getPlayer());
+                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
             }
         }
     }
