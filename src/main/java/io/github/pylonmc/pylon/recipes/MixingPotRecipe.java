@@ -43,7 +43,7 @@ public record MixingPotRecipe(
         protected @NotNull MixingPotRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             Preconditions.checkState(section.has("output"), "Mixing pot recipe " + key + " is missing an output");
             ItemStack outputItem = section.get("output", ConfigAdapter.ITEM_STACK);
-            FluidWithAmount fluidWithAmount = section.get("output", ConfigAdapter.FLUID_WITH_AMOUNT);
+            FluidWithAmount fluidWithAmount = section.getOrThrow("output", ConfigAdapter.FLUID_WITH_AMOUNT);
 
             Preconditions.checkState(
                     outputItem != null || fluidWithAmount != null,
