@@ -187,6 +187,7 @@ public class DieselBreaker extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
+        if (!drilling.getType().isItem()) return;
         new ParticleBuilder(Particle.ITEM)
                 .count(5)
                 .extra(0.05)
