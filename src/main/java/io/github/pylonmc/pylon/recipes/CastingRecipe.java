@@ -68,10 +68,10 @@ public record CastingRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('f', new FluidButton(input))
-                .addIngredient('c', new ItemButton(mold))
-                .addIngredient('C', new ItemButton(PylonItems.CASTING_UNIT))
-                .addIngredient('r', new ItemButton(result))
+                .addIngredient('f', FluidButton.of(input))
+                .addIngredient('c', ItemButton.of(mold))
+                .addIngredient('C', ItemButton.of(PylonItems.CASTING_UNIT))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 

@@ -251,11 +251,10 @@ public class ShimmerAltar extends RebarBlock
     
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (getCurrentRecipe() == null) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (getCurrentRecipe() != null) {
+            display.add(ProgressBar.recipeProgress(getRecipeProgress()));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
-        ));
+        return display;
     }
 }

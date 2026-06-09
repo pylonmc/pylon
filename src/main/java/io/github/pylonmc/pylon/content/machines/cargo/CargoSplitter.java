@@ -21,6 +21,8 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -274,14 +276,12 @@ public class CargoSplitter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("left", ratioLeft),
-                RebarArgument.of("right", ratioRight),
-                RebarArgument.of("side", isLeft
-                        ? Component.translatable("pylon.waila.cargo_splitter.left")
-                        : Component.translatable("pylon.waila.cargo_splitter.right")
+        return WailaDisplay.of(this, player)
+                .add(Component.text(ratioLeft).color(TextColor.fromHexString("#efae15"))
+                        .append(Component.text("-").color(NamedTextColor.WHITE))
+                        .append(Component.text(ratioRight).color(TextColor.fromHexString("#2386c4")))
                 )
-        ));
+                .add(Component.translatable("pylon.inventory." + (isLeft ? "left" : "right")));
     }
 
     private void doSplit() {

@@ -150,7 +150,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
                     .spawn();
 
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                if (!isChunkLoaded()) {
                     return;
                 }
                 PylonUtils.drawParticleLine(
@@ -177,7 +177,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
             for (int i = 0; i < 15; i++) {
                 int j = i;
                 Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
                     getMultiblockComponentOrThrow(LiseletteCollector.class, collector.toVector3i())

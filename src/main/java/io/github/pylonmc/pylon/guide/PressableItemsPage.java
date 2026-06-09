@@ -41,12 +41,12 @@ public class PressableItemsPage extends SimpleDynamicGuidePage {
                 .toList();
         List<Item> buttons = new ArrayList<>();
         for (PressRecipe recipe : sortedRecipes) {
-            ItemStack stack = ItemStackBuilder.of(recipe.input().getRepresentativeItem().clone())
+            ItemStack stack = ItemStackBuilder.copyOf(recipe.input().getRepresentativeItem())
                     .lore(Component.translatable("pylon.guide.pressable_items").arguments(
                             RebarArgument.of("plant-oil", UnitFormat.MILLIBUCKETS.format(recipe.oilAmount()))
                     ))
                     .build();
-            buttons.add(new ItemButton(stack));
+            buttons.add(ItemButton.of(stack));
         }
         return buttons;
     }

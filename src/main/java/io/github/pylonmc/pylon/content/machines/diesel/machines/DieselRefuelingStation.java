@@ -110,16 +110,14 @@ public class DieselRefuelingStation extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
         DieselRefuelable refuelable = getHeldRefuelableItem();
-        if (refuelable == null) {
-            return new WailaDisplay(getNameTranslationKey());
+        if (refuelable != null) {
+            display.add(ProgressBar.fluidContents(
+                    PylonFluids.BIODIESEL, refuelable.getDieselCapacity(), refuelable.getDiesel()
+            ));
         }
-
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
-                        PylonFluids.BIODIESEL, refuelable.getDieselCapacity(), refuelable.getDiesel())
-                )
-        ));
+        return display;
     }
 
     @Override

@@ -24,13 +24,12 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -174,7 +173,7 @@ public class HydraulicHammerHead extends RebarBlock implements
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+            if (!isChunkLoaded()) {
                 return;
             }
 
@@ -220,22 +219,21 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                ))
+                .add(ProgressBar.fluidContents(
                         PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("progress", isProcessing()
+                ))
+                .add(isProcessing()
                         ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

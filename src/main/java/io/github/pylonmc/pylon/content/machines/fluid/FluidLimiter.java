@@ -126,13 +126,13 @@ public class FluidLimiter extends RebarBlock implements DirectionalRebarBlock, F
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
                 ))
-        ));
+                .add(UnitFormat.MILLIBUCKETS_PER_SECOND.format(maxFlowRate));
     }
 
     @Override

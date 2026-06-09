@@ -80,7 +80,7 @@ public record HammerRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', ItemButton.of(input))
-                .addIngredient('h', new ItemButton(getHammers()))
+                .addIngredient('h', ItemButton.of(getHammers()))
                 .addIngredient('o', ItemButton.of(result))
                 .build();
     }

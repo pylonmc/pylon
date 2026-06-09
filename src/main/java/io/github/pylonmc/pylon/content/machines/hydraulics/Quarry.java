@@ -75,7 +75,7 @@ public abstract class Quarry extends RebarBlock implements RebarMultiblock, Proc
     private boolean checkBlocks() {
         while (index < blockPositions.size() - 1) {
             BlockPosition position = blockPositions.get(index);
-            if (!position.getChunk().isLoaded()) {
+            if (!position.isChunkLoaded()) {
                 index++;
                 continue;
             }

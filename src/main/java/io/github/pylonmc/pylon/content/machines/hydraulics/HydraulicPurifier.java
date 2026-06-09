@@ -48,9 +48,9 @@ public interface HydraulicPurifier {
                                         "# # # # # # # # #"
                                 )
                                 .addIngredient('#', GuiItems.backgroundBlack())
-                                .addIngredient('d', new FluidButton(PylonFluids.DIRTY_HYDRAULIC_FLUID))
-                                .addIngredient('x', new ItemButton(getPurifiers()))
-                                .addIngredient('h', new FluidButton(PylonFluids.HYDRAULIC_FLUID))
+                                .addIngredient('d', FluidButton.of(PylonFluids.DIRTY_HYDRAULIC_FLUID))
+                                .addIngredient('x', ItemButton.of(getPurifiers()))
+                                .addIngredient('h', FluidButton.of(PylonFluids.HYDRAULIC_FLUID))
                                 .build();
                     }
 

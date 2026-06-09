@@ -106,7 +106,7 @@ public record KilnRecipe(
                 .addIngredient('j', ItemButton.of(input2))
                 .addIngredient('b', PylonItems.KILN)
                 .addIngredient('o', ItemButton.of(outputItem))
-                .addIngredient('p', new FluidButton(outputFluidAmount, outputFluid))
+                .addIngredient('p', FluidButton.of(outputFluidAmount, outputFluid))
                 .addIngredient('d', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.of(Material.CLOCK)
                         .name(Component.translatable(
                                 "pylon.guide.recipe.kiln",

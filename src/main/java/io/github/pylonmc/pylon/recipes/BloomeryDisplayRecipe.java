@@ -59,9 +59,9 @@ public record BloomeryDisplayRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', new ItemButton(input))
-                .addIngredient('b', new ItemButton(PylonItems.BLOOMERY))
-                .addIngredient('r', new ItemButton(result))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('b', ItemButton.of(PylonItems.BLOOMERY))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }

@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -212,12 +213,11 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isProcessing()) {
-            return new WailaDisplay(getNameTranslationKey());
-        }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fuel", ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining()))
-        ));
+        return WailaDisplay.of(this, player)
+                .add(isProcessing()
+                        ? ProgressBar.fuelRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.no_fuel")
+                );
     }
 
     @Override

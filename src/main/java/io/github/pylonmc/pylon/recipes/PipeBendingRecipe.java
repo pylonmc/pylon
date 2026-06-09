@@ -70,7 +70,7 @@ public record PipeBendingRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', ItemButton.of(input))
-                .addIngredient('b', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.of(PylonItems.HYDRAULIC_PIPE_BENDER)))
+                .addIngredient('b', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.copyOf(PylonItems.HYDRAULIC_PIPE_BENDER)))
                 .addIngredient('o', ItemButton.of(result))
                 .build();
     }

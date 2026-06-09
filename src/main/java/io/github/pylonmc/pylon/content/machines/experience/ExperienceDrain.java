@@ -13,7 +13,6 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -58,17 +58,16 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("xp", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.LIQUID_XP,
                         fluidCapacity(PylonFluids.LIQUID_XP),
-                        fluidAmount(PylonFluids.LIQUID_XP))
-                )
-        ));
+                        fluidAmount(PylonFluids.LIQUID_XP)
+                ));
     }
 
     // For some unknown reason, if you use /xp to give someone xp, it doesn't update player.getTotalExperience
-    public int getRealTotalExperience(Player player) {
+    public int getRealTotalExperience(@NonNull Player player) {
         int level = player.getLevel();
         int totalExp = 0;
 

@@ -5,8 +5,11 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -52,11 +55,19 @@ public class RefractoryMix extends RebarBlock implements Moldable {
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of(
-                        "percent",
-                        UnitFormat.PERCENT.format(100 * (totalMoldingClicks() - moldingClicksRemaining) / totalMoldingClicks())
-                )
-        ));
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (moldingClicksRemaining != totalMoldingClicks()) {
+            display.add(new ProgressBar()
+                    .bars(totalMoldingClicks())
+                    .proportion((double) (totalMoldingClicks() - moldingClicksRemaining) / totalMoldingClicks())
+                    .barColor(TextColor.color(150, 100, 100))
+                    .suffix(Component.text(" ")
+                            .append(Component.text(totalMoldingClicks() - moldingClicksRemaining))
+                            .append(Component.text("/"))
+                            .append(Component.text(totalMoldingClicks()))
+                    )
+            );
+        }
+        return display;
     }
 }
