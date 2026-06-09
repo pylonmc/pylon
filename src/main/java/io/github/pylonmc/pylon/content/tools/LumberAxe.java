@@ -91,6 +91,10 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
                 RebarUtils.damageItem(tool, toolComponent.damagePerBlock(), player, EquipmentSlot.HAND);
             }
 
+            if (tool.getData(DataComponentTypes.DAMAGE) >= tool.getData(DataComponentTypes.MAX_DAMAGE)) {
+                return;
+            }
+
             for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
                 Block relative = block.getRelative(face);
                 if (!visited.contains(relative)) {
