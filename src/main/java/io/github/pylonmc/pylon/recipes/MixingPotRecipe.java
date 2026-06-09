@@ -42,19 +42,11 @@ public record MixingPotRecipe(
         @Override
         protected @NotNull MixingPotRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             Preconditions.checkState(section.has("output"), "Mixing pot recipe " + key + " is missing an output");
-            ItemStack outputItem = section.get("output", ConfigAdapter.ITEM_STACK);
-            FluidWithAmount fluidWithAmount = section.getOrThrow("output", ConfigAdapter.FLUID_WITH_AMOUNT);
-
-            Preconditions.checkState(
-                    outputItem != null || fluidWithAmount != null,
-                    "Failed to convert output to a fluid or an item for mixing pot recipe " + key
-            );
-
             return new MixingPotRecipe(
                     key,
                     section.getOrThrow("input-items", ConfigAdapter.LIST.from(ConfigAdapter.ITEM_CHOICE)),
                     section.getOrThrow("input-fluid", ConfigAdapter.FLUID_CHOICE),
-                    outputItem == null ? fluidWithAmount : FluidOrItem.of(outputItem),
+                    section.getOrThrow("output", ConfigAdapter.FLUID_OR_ITEM),
                     section.get("requires-enriched-fire", ConfigAdapter.BOOLEAN, false)
             );
         }
