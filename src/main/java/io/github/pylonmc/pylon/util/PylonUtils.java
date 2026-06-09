@@ -152,6 +152,8 @@ public class PylonUtils {
 
     public boolean shouldBreakBlockUsingTool(@NotNull Block block, @NotNull ItemStack tool) {
         return !block.getType().isAir()
+                && block.getType() != Material.LAVA
+                && block.getType() != Material.WATER
                 && !(block.getState() instanceof BlockInventoryHolder)
                 && !BlockStorage.isRebarBlock(block)
                 && block.getType().getHardness() >= 0
