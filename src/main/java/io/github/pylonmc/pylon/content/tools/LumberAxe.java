@@ -33,7 +33,7 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
         super(stack);
     }
 
-    private final int maxBreakBlocks = getSettingOrThrow("max-break-block", ConfigAdapter.INTEGER);
+    private final int maxBreakBlocks = getSettingOrThrow("max-break-blocks", ConfigAdapter.INTEGER);
 
     private static final Set<Event> eventsToIgnore = Collections.newSetFromMap(new WeakHashMap<>());
 
