@@ -28,8 +28,7 @@ import java.util.*;
 
 @SuppressWarnings("UnstableApiUsage")
 public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
-
-    public LumberAxe( @NotNull ItemStack stack) {
+    public LumberAxe(@NotNull ItemStack stack) {
         super(stack);
     }
 
@@ -50,41 +49,55 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
         event.setCancelled(true); // Stop vanilla logic
     }
 
-    private void breakAttachedWood(Block block, Player player, ItemStack tool) {
-        // Recursive function, for every adjacent block check if it's a log, if so delete it and give the drop to the player and check all its adjacent blocks
-        if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)
-            || !block.getWorld().getWorldBorder().isInside(block.getLocation())) {
-            return;
-        }
-        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(block, player);
-        eventsToIgnore.add(blockBreakEvent);
-        if (!blockBreakEvent.callEvent()) {
-            return;
-        }
-        BlockState blockState = block.getState();
-        Collection<ItemStack> drops = block.getDrops(tool);
-        block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getBlockData());
-        block.setType(Material.AIR);
-        if (blockBreakEvent.isDropItems()) {
-            List<Item> itemsDropped = new ArrayList<>();
-            for (ItemStack itemStack : drops) {
-                Item item = block.getWorld().dropItem(block.getLocation(), itemStack);
-                itemsDropped.add(item);
+    private void breakAttachedWood(Block startBlock, Player player, ItemStack tool) {
+        Deque<Block> queue = new ArrayDeque<>();
+        Set<Block> visited = new HashSet<>();
+
+        queue.offer(startBlock);
+        visited.add(startBlock);
+
+        while (!queue.isEmpty()) {
+            Block block = queue.poll();
+
+            if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)
+                    || !block.getWorld().getWorldBorder().isInside(block.getLocation())) {
+                continue;
             }
-            if (!new BlockDropItemEvent(block, blockState, player, itemsDropped).callEvent()) {
-                for (Item item : itemsDropped) {
-                    item.remove();
+
+            BlockBreakEvent blockBreakEvent = new BlockBreakEvent(block, player);
+            eventsToIgnore.add(blockBreakEvent);
+            if (!blockBreakEvent.callEvent()) {
+                continue;
+            }
+            BlockState blockState = block.getState();
+            Collection<ItemStack> drops = block.getDrops(tool);
+            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getBlockData());
+            block.setType(Material.AIR);
+            if (blockBreakEvent.isDropItems()) {
+                List<Item> itemsDropped = new ArrayList<>();
+                for (ItemStack itemStack : drops) {
+                    Item item = block.getWorld().dropItem(block.getLocation(), itemStack);
+                    itemsDropped.add(item);
+                }
+                if (!new BlockDropItemEvent(block, blockState, player, itemsDropped).callEvent()) {
+                    for (Item item : itemsDropped) {
+                        item.remove();
+                    }
                 }
             }
-        }
 
-        Tool toolComponent = tool.getData(DataComponentTypes.TOOL);
-        if (toolComponent != null) {
-            RebarUtils.damageItem(tool, toolComponent.damagePerBlock(), player, EquipmentSlot.HAND);
-        }
+            Tool toolComponent = tool.getData(DataComponentTypes.TOOL);
+            if (toolComponent != null) {
+                RebarUtils.damageItem(tool, toolComponent.damagePerBlock(), player, EquipmentSlot.HAND);
+            }
 
-        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            breakAttachedWood(block.getRelative(face), player, tool);
+            for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
+                Block relative = block.getRelative(face);
+                if (!visited.contains(relative)) {
+                    visited.add(relative);
+                    queue.offer(relative);
+                }
+            }
         }
     }
 }
