@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
@@ -32,6 +33,8 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
         super(stack);
     }
 
+    private final int maxBreakBlocks = getSettingOrThrow("max-break-block", ConfigAdapter.INTEGER);
+
     private static final Set<Event> eventsToIgnore = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
@@ -56,6 +59,7 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
         queue.offer(startBlock);
         visited.add(startBlock);
 
+        int brokenBlocks = 0;
         while (!queue.isEmpty()) {
             Block block = queue.poll();
 
@@ -73,6 +77,7 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
             Collection<ItemStack> drops = block.getDrops(tool);
             block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getBlockData());
             block.setType(Material.AIR);
+            brokenBlocks++;
             if (blockBreakEvent.isDropItems()) {
                 List<Item> itemsDropped = new ArrayList<>();
                 for (ItemStack itemStack : drops) {
@@ -92,6 +97,10 @@ public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
             }
 
             if (tool.getData(DataComponentTypes.DAMAGE) >= tool.getData(DataComponentTypes.MAX_DAMAGE)) {
+                return;
+            }
+
+            if (brokenBlocks >= maxBreakBlocks) {
                 return;
             }
 
