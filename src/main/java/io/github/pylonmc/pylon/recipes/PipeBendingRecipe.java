@@ -40,7 +40,7 @@ public record PipeBendingRecipe(
         protected @NotNull PipeBendingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new PipeBendingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
@@ -49,7 +49,7 @@ public record PipeBendingRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

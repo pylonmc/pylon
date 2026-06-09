@@ -24,6 +24,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.FluidWithAmount;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -183,7 +184,7 @@ public final class Crucible extends RebarBlock implements
             return;
         }
 
-        FluidOrItem.Fluid fluid = recipe.output();
+        FluidWithAmount fluid = recipe.output();
 
         setFluidType(fluid.fluid());
         addFluid(fluid.amountMillibuckets());

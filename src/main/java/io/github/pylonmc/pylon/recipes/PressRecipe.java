@@ -26,7 +26,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record PressRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         double oilAmount
 ) implements RebarRecipe {
 
@@ -35,7 +35,7 @@ public record PressRecipe(
         protected @NotNull PressRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new PressRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("oil-amount", ConfigAdapter.DOUBLE)
             );
         }
@@ -47,7 +47,7 @@ public record PressRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

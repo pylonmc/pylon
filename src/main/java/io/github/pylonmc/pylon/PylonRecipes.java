@@ -6,8 +6,10 @@ import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
+import io.github.pylonmc.rebar.recipe.FluidChoice;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.List;
 import org.bukkit.Material;
@@ -55,7 +57,7 @@ public class PylonRecipes {
 
     private static void initCollimator() {
         NamespacedKey key = PylonKeys.COLLIMATOR;
-        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.OBSCYRA, ConfigSection.fromSettings(key).getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER));
+        FluidChoice input = FluidChoice.of(PylonFluids.OBSCYRA, ConfigSection.fromSettings(key).getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER));
         FluidOrItem output = FluidOrItem.of(PylonItems.COHESIVE_UNIT);
         new SingleRecipe(
                 key,
@@ -70,7 +72,7 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', FluidButton.of(input.amountMillibuckets(), PylonFluids.OBSCYRA))
+                        .addIngredient('i', FluidButton.of(input.getAmount(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.of(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.of(PylonItems.COHESIVE_UNIT))
                         .build()
@@ -86,13 +88,13 @@ public class PylonRecipes {
         int dieselUse = setting.getOrThrow("diesel-per-second", ConfigAdapter.INTEGER) * totalTicks;
 
         ItemStack dusts = PylonItems.SHIMMER_DUST_2.asQuantity(setting.getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER));
-        var input = List.of(
-                RecipeInput.of(dusts),
-                RecipeInput.of(PylonFluids.BIODIESEL, dieselUse),
-                RecipeInput.of(PylonFluids.HYDRAULIC_FLUID, hydraulicUse)
+        List<FluidOrItemChoice> input = List.of(
+                new ItemChoice.Builder().addExact(dusts).build(),
+                FluidChoice.of(PylonFluids.BIODIESEL, dieselUse),
+                FluidChoice.of(PylonFluids.HYDRAULIC_FLUID, hydraulicUse)
         );
 
-        var output = List.of(
+        List<FluidOrItem> output = List.of(
                 FluidOrItem.of(PylonItems.PALLADIUM_DUST),
                 FluidOrItem.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicUse)
         );
@@ -128,8 +130,8 @@ public class PylonRecipes {
         double plantOilPerMbOfBiodiesel = setting.getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
 
 
-        RecipeInput.Fluid ethanol = RecipeInput.of(PylonFluids.ETHANOL, ethanolPerMbOfBiodiesel);
-        RecipeInput.Fluid plantOil = RecipeInput.of(PylonFluids.PLANT_OIL, plantOilPerMbOfBiodiesel);
+        FluidChoice ethanol = FluidChoice.of(PylonFluids.ETHANOL, ethanolPerMbOfBiodiesel);
+        FluidChoice plantOil = FluidChoice.of(PylonFluids.PLANT_OIL, plantOilPerMbOfBiodiesel);
 
         FluidOrItem output = FluidOrItem.of(PylonFluids.BIODIESEL, 1);
 
@@ -160,7 +162,9 @@ public class PylonRecipes {
 
         double ethanolPerSugarcane = setting.getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
 
-        RecipeInput.Item input = RecipeInput.of(ItemStack.of(Material.SUGAR_CANE));
+        ItemChoice input = new ItemChoice.Builder()
+                .addExact(ItemStack.of(Material.SUGAR_CANE))
+                .build();
         FluidOrItem output = FluidOrItem.of(PylonFluids.ETHANOL, ethanolPerSugarcane);
 
         new SingleRecipe(

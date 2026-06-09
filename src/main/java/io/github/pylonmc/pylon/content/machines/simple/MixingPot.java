@@ -17,12 +17,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.ItemChoice;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -169,7 +168,7 @@ public final class MixingPot extends RebarBlock implements
     }
 
     private void doRecipe(@NotNull MixingPotRecipe recipe, @NotNull List<Item> items) {
-        for (RecipeInput.Item choice : recipe.inputItems()) {
+        for (ItemChoice choice : recipe.inputItems()) {
             for (Item item : items) {
                 ItemStack stack = item.getItemStack();
                 if (choice.matches(stack)) {
@@ -180,7 +179,7 @@ public final class MixingPot extends RebarBlock implements
         }
         switch (recipe.output()) {
             case FluidOrItem.Item item -> {
-                removeFluid(recipe.inputFluid().amountMillibuckets());
+                removeFluid(recipe.inputFluid().getAmount());
                 getBlock().getWorld().dropItemNaturally(
                     getBlock().getLocation().toCenterLocation(),
                     item.item(),
@@ -189,7 +188,7 @@ public final class MixingPot extends RebarBlock implements
                     }
                 );
             }
-            case FluidOrItem.Fluid fluid -> {
+            case FluidWithAmount fluid -> {
                 setFluidType(fluid.fluid());
                 setFluid(fluid.amountMillibuckets());
             }

@@ -49,7 +49,7 @@ public record CrucibleRecipe(
 
     @Override
     public @NotNull List<@NotNull FluidOrItem> getResults() {
-        return List.of(FluidOrItem.of(output));
+        return List.of(output);
     }
 
     public static Set<NamespacedKey> getHeatedBlocks() {

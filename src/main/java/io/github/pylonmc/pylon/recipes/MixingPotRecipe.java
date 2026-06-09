@@ -54,7 +54,7 @@ public record MixingPotRecipe(
                     key,
                     section.getOrThrow("input-items", ConfigAdapter.LIST.from(ConfigAdapter.ITEM_CHOICE)),
                     section.getOrThrow("input-fluid", ConfigAdapter.FLUID_CHOICE),
-                    outputItem == null ? FluidOrItem.of(fluidWithAmount) : FluidOrItem.of(outputItem),
+                    outputItem == null ? fluidWithAmount : FluidOrItem.of(outputItem),
                     section.get("requires-enriched-fire", ConfigAdapter.BOOLEAN, false)
             );
         }
@@ -121,7 +121,7 @@ public record MixingPotRecipe(
                 'o',
                 switch (output) {
                     case FluidOrItem.Item item -> ItemButton.of(item.item());
-                    case FluidOrItem.Fluid fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
+                    case FluidWithAmount fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
                     default -> throw new AssertionError();
                 }
         );

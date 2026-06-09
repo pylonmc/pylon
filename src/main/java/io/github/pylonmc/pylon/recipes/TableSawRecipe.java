@@ -24,7 +24,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record TableSawRecipe(
         @NotNull NamespacedKey key,
-        @NotNull ItemStack input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result,
         @NotNull ItemStack particleItem,
         int timeTicks
@@ -40,7 +40,7 @@ public record TableSawRecipe(
         protected @NotNull TableSawRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new TableSawRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
@@ -49,8 +49,8 @@ public record TableSawRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<FluidOrItemChoice> getInputs() {
+        return List.of(input);
     }
 
     @Override

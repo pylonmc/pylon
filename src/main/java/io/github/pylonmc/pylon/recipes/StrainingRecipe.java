@@ -20,7 +20,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record StrainingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Fluid input,
+        @NotNull FluidChoice input,
         @NotNull RebarFluid outputFluid,
         @NotNull ItemStack outputItem
 ) implements RebarRecipe {
@@ -30,7 +30,7 @@ public record StrainingRecipe(
         protected @NotNull StrainingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new StrainingRecipe(
                     key,
-                    section.getOrThrow("input-fluid", ConfigAdapter.RECIPE_INPUT_FLUID),
+                    section.getOrThrow("input-fluid", ConfigAdapter.FLUID_CHOICE),
                     section.getOrThrow("output-fluid", ConfigAdapter.REBAR_FLUID),
                     section.getOrThrow("output-item", ConfigAdapter.ITEM_STACK)
             );
@@ -38,8 +38,8 @@ public record StrainingRecipe(
     };
 
     public static @Nullable StrainingRecipe getRecipeForFluid(RebarFluid fluid) {
-        for (StrainingRecipe recipe : StrainingRecipe.RECIPE_TYPE) {
-            if (recipe.input().fluids().contains(fluid)) {
+        for (StrainingRecipe recipe : RECIPE_TYPE) {
+            if (recipe.input().getFluids().contains(fluid)) {
                 return recipe;
             }
         }
@@ -52,13 +52,13 @@ public record StrainingRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
     @Override
     public @NotNull List<FluidOrItem> getResults() {
-        return List.of(FluidOrItem.of(outputItem), FluidOrItem.of(outputFluid, input.amountMillibuckets()));
+        return List.of(FluidOrItem.of(outputItem), FluidOrItem.of(outputFluid, input.getAmount()));
     }
 
     @Override
@@ -74,7 +74,7 @@ public record StrainingRecipe(
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', FluidButton.of(input))
                 .addIngredient('s', PylonItems.FLUID_STRAINER)
-                .addIngredient('o', FluidButton.of(input.amountMillibuckets(), outputFluid))
+                .addIngredient('o', FluidButton.of(input.getAmount(), outputFluid))
                 .addIngredient('t', ItemButton.of(outputItem))
                 .build();
     }
