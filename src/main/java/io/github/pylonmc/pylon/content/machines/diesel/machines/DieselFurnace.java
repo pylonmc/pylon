@@ -22,8 +22,8 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRebarRecipe;
 import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeWrapper;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -61,7 +61,7 @@ public class DieselFurnace extends RebarBlock implements
         TickingRebarBlock,
         LogisticRebarBlock,
         FurnaceRebarBlockHandler,
-        RecipeProcessorRebarBlock<FurnaceRecipeWrapper> {
+        RecipeProcessorRebarBlock<FurnaceRebarRecipe> {
 
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
@@ -192,14 +192,14 @@ public class DieselFurnace extends RebarBlock implements
             return;
         }
 
-        for (FurnaceRecipeWrapper recipe : FurnaceRecipeType.INSTANCE) {
+        for (FurnaceRebarRecipe recipe : FurnaceRecipeType.INSTANCE) {
             if (tryStartRecipe(recipe, stack)) {
                 break;
             }
         }
     }
 
-    private boolean tryStartRecipe(FurnaceRecipeWrapper recipe, ItemStack stack) {
+    private boolean tryStartRecipe(FurnaceRebarRecipe recipe, ItemStack stack) {
         if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getRecipe().getResult())) {
             return false;
         }
@@ -252,7 +252,7 @@ public class DieselFurnace extends RebarBlock implements
     }
 
     @Override
-    public void onRecipeFinished(@NotNull FurnaceRecipeWrapper recipe) {
+    public void onRecipeFinished(@NotNull FurnaceRebarRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
         outputInventory.addItem(null, recipe.getRecipe().getResult().clone());
     }
