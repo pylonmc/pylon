@@ -17,38 +17,24 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record CastingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull ItemStack mold,
-        @NotNull RecipeInput.Fluid input,
+        @NotNull ItemChoice mold,
+        @NotNull FluidChoice input,
         @NotNull ItemStack result
 ) implements RebarRecipe {
 
     public static final RecipeType<CastingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("casting")) {
         @Override
         protected @NotNull CastingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            ItemStack cast = section.getOrThrow("mold", ConfigAdapter.ITEM_STACK);
-            RecipeInput.Fluid input = section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_FLUID);
+            ItemChoice cast = section.getOrThrow("mold", ConfigAdapter.ITEM_CHOICE);
+            FluidChoice input = section.getOrThrow("input", ConfigAdapter.FLUID_CHOICE);
+            ItemStack result = section.getOrThrow("result", ConfigAdapter.ITEM_STACK);
 
-            for (CastingRecipe recipe : this) {
-                if (recipe.mold().isSimilar(cast)) {
-                    if (recipe.input().amountMillibuckets() != input.amountMillibuckets()) {
-                        throw new IllegalArgumentException("All casting recipes with the same mold must have the same fluid use: recipe %s uses %f mB but recipe %s uses %f mB, but they use the same mold".formatted(recipe.getKey(), recipe.input().amountMillibuckets(), key, input.amountMillibuckets()));
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            return new CastingRecipe(
-                    key,
-                    cast,
-                    input,
-                    section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
-            );
+            return new CastingRecipe(key, cast, input, result);
         }
     };
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

@@ -26,7 +26,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record CrucibleRecipe(
     @NotNull NamespacedKey key,
-    @NotNull RecipeInput.Item input,
+    @NotNull ItemChoice input,
     @NotNull FluidOrItem.Fluid output
 ) implements RebarRecipe {
 
@@ -36,7 +36,7 @@ public record CrucibleRecipe(
     public static final RecipeType<CrucibleRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("crucible")) {
         @Override
         protected @NotNull CrucibleRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            FluidOrItem output = section.getOrThrow("output", ConfigAdapter.FLUID_OR_ITEM);
+            FluidOrItem output = section.getOrThrow("output", ConfigAdapter.REBAR_FLUID);
             if (!(output instanceof FluidOrItem.Fluid fluidOutput)) {
                 throw new IllegalArgumentException(key + ": In crucible recipe output must be a fluid.");
             }
@@ -50,7 +50,7 @@ public record CrucibleRecipe(
     };
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

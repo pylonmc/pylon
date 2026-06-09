@@ -18,7 +18,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record BloomeryDisplayRecipe(
         NamespacedKey key,
-        ItemStack input,
+        ItemChoice input,
         ItemStack result
 ) implements RebarRecipe {
 
@@ -27,7 +27,7 @@ public record BloomeryDisplayRecipe(
         protected @NotNull BloomeryDisplayRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new BloomeryDisplayRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
             );
         }
@@ -39,8 +39,8 @@ public record BloomeryDisplayRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+        return List.of(input);
     }
 
     @Override
