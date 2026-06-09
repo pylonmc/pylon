@@ -16,7 +16,7 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroup;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlotGroup;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -149,7 +149,7 @@ public class CargoInserter extends CargoInteractor implements
     }
 
     @Override
-    public @NotNull Map<String, LogisticGroup> getLogisticGroups() {
+    public @NotNull Map<String, ItemSlotGroup> getLogisticGroups() {
         return targetGroups;
     }
 
@@ -173,7 +173,7 @@ public class CargoInserter extends CargoInteractor implements
     }
 
     @Override
-    public boolean isValidGroup(@NotNull LogisticGroup group) {
+    public boolean isValidGroup(@NotNull ItemSlotGroup group) {
         return group.getSlotType() == LogisticGroupType.BOTH || group.getSlotType() == LogisticGroupType.INPUT;
     }
 

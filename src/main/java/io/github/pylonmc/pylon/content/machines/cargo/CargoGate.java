@@ -15,7 +15,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
+import io.github.pylonmc.rebar.recipe.slot.item.implementation.VirtualInventoryItemSlot;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -220,9 +220,9 @@ public class CargoGate extends RebarBlock implements
     @Override
     public void postInitialise() {
         setDisableBlockTextureEntity(true);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(outputInventory, 0));
-        createLogisticGroup("left", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(leftInventory, 0));
-        createLogisticGroup("right", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(rightInventory, 0));
+        createLogisticGroup("output", LogisticGroupType.OUTPUT, new VirtualInventoryItemSlot(outputInventory, 0));
+        createLogisticGroup("left", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(leftInventory, 0));
+        createLogisticGroup("right", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(rightInventory, 0));
         outputInventory.addPostUpdateHandler(event -> {
             if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
                 doSplit();

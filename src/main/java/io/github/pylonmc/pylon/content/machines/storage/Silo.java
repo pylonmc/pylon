@@ -9,7 +9,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.logistics.LogisticGroup;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlotGroup;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -119,7 +119,7 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
 
     @Override
     public void postInitialise() {
-        createLogisticGroup("inventory", new LogisticGroup(LogisticGroupType.BOTH, new SiloLogisticSlot(this)));
+        createLogisticGroup("inventory", new ItemSlotGroup(LogisticGroupType.BOTH, new SiloItemSlot(this)));
     }
 
     @Override

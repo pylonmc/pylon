@@ -11,7 +11,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroup;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlotGroup;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public abstract class CargoInteractor extends RebarBlock implements DirectionalR
     );
 
     @Setter @Getter protected @Nullable String targetLogisticGroup;
-    public final Map<String, LogisticGroup> targetGroups = new HashMap<>();
+    public final Map<String, ItemSlotGroup> targetGroups = new HashMap<>();
 
     protected CargoInteractor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
@@ -85,7 +85,7 @@ public abstract class CargoInteractor extends RebarBlock implements DirectionalR
         if (targetLogisticBlock != null) {
             targetGroups.putAll(targetLogisticBlock.getLogisticGroups());
         } else {
-            targetGroups.putAll(LogisticGroup.getVanillaLogisticSlots(targetBlock));
+            targetGroups.putAll(ItemSlotGroup.getVanillaLogisticSlots(targetBlock));
         }
         targetGroups.entrySet().removeIf(pair -> !isValidGroup(pair.getValue()));
 
@@ -195,5 +195,5 @@ public abstract class CargoInteractor extends RebarBlock implements DirectionalR
         }
     }
 
-    public abstract boolean isValidGroup(@NotNull LogisticGroup group);
+    public abstract boolean isValidGroup(@NotNull ItemSlotGroup group);
 }

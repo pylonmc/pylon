@@ -15,10 +15,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
+import io.github.pylonmc.rebar.recipe.slot.item.implementation.VirtualInventoryItemSlot;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -125,9 +124,9 @@ public class CrudeAlloyFurnace extends RebarBlock implements
     @Override
     public void postInitialise() {
         createLogisticGroup("fuel", LogisticGroupType.INPUT, fuelInventory);
-        createLogisticGroup("input1", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inputInventory, 0));
-        createLogisticGroup("input2", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inputInventory, 1));
-        createLogisticGroup("input3", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inputInventory, 2));
+        createLogisticGroup("input1", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(inputInventory, 0));
+        createLogisticGroup("input2", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(inputInventory, 1));
+        createLogisticGroup("input3", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(inputInventory, 2));
         createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
 
         outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);

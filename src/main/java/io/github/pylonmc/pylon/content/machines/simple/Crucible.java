@@ -20,15 +20,12 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlot;
+import io.github.pylonmc.rebar.recipe.ingredients.FluidWithAmount;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
@@ -262,7 +259,7 @@ public final class Crucible extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, new LogisticSlot() {
+        createLogisticGroup("input", LogisticGroupType.INPUT, new ItemSlot() {
             @Override
             public boolean canSet(@Nullable ItemStack stack, long amount) {
                 return stack != null && CrucibleRecipe.isValid(stack) && amount < getMaxAmount(stack);

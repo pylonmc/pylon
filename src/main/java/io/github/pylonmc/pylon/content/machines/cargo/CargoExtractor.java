@@ -21,9 +21,9 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroup;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlotGroup;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
+import io.github.pylonmc.rebar.recipe.slot.item.ItemSlot;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -249,14 +249,14 @@ public class CargoExtractor extends CargoInteractor implements
             return;
         }
 
-        LogisticGroup group = targetGroups.get(targetLogisticGroup);
+        ItemSlotGroup group = targetGroups.get(targetLogisticGroup);
         Preconditions.checkState(group != null);
         ItemStack output = outputInventory.getItem(0);
         if (output != null && output.getAmount() == output.getMaxStackSize()) {
             return;
         }
 
-        for (LogisticSlot slot : group.getSlots()) {
+        for (ItemSlot slot : group.getSlots()) {
             ItemStack slotStack = slot.getItemStack();
             if (slotStack == null || slot.getAmount() == 0 || (output != null && !output.isSimilar(slotStack))) {
                 continue;
@@ -278,7 +278,7 @@ public class CargoExtractor extends CargoInteractor implements
     }
 
     @Override
-    public boolean isValidGroup(@NotNull LogisticGroup group) {
+    public boolean isValidGroup(@NotNull ItemSlotGroup group) {
         return group.getSlotType() == LogisticGroupType.BOTH || group.getSlotType() == LogisticGroupType.OUTPUT;
     }
 
