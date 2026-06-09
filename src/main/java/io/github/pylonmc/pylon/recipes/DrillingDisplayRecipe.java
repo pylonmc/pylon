@@ -37,7 +37,7 @@ public record DrillingDisplayRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of();
     }
 

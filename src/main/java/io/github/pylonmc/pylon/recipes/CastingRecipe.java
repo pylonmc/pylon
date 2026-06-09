@@ -25,11 +25,12 @@ public record CastingRecipe(
     public static final RecipeType<CastingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("casting")) {
         @Override
         protected @NotNull CastingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            ItemChoice cast = section.getOrThrow("mold", ConfigAdapter.ITEM_CHOICE);
-            FluidChoice input = section.getOrThrow("input", ConfigAdapter.FLUID_CHOICE);
-            ItemStack result = section.getOrThrow("result", ConfigAdapter.ITEM_STACK);
-
-            return new CastingRecipe(key, cast, input, result);
+            return new CastingRecipe(
+                    key,
+                    section.getOrThrow("mold", ConfigAdapter.ITEM_CHOICE),
+                    section.getOrThrow("input", ConfigAdapter.FLUID_CHOICE),
+                    section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
+            );
         }
     };
 

@@ -117,6 +117,7 @@ public record AssemblingRecipe(
     public @NotNull List<@NotNull FluidOrItem> getResults() {
         return results.stream()
                 .map(FluidOrItem::of)
+                .map(FluidOrItem.class::cast)
                 .toList();
     }
 
@@ -126,7 +127,7 @@ public record AssemblingRecipe(
             for (ItemChoice requiredItem : recipe.inputs) {
                 boolean hasIngredient = false;
                 for (ItemStack item : items) {
-                    if (item != null && requiredItem.validate(item)) {
+                    if (item != null && requiredItem.matches(item)) {
                         hasIngredient = true;
                         break;
                     }

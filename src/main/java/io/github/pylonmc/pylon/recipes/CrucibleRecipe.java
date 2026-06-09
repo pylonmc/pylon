@@ -27,7 +27,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public record CrucibleRecipe(
     @NotNull NamespacedKey key,
     @NotNull ItemChoice input,
-    @NotNull FluidOrItem.Fluid output
+    @NotNull FluidWithAmount output
 ) implements RebarRecipe {
 
     private static Set<NamespacedKey> HEATED_BLOCKS = null;
@@ -36,16 +36,9 @@ public record CrucibleRecipe(
     public static final RecipeType<CrucibleRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("crucible")) {
         @Override
         protected @NotNull CrucibleRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            FluidOrItem output = section.getOrThrow("output", ConfigAdapter.REBAR_FLUID);
-            if (!(output instanceof FluidOrItem.Fluid fluidOutput)) {
-                throw new IllegalArgumentException(key + ": In crucible recipe output must be a fluid.");
-            }
-
-            return new CrucibleRecipe(
-                key,
-                new RecipeInput.Item(section.getOrThrow("input-item", ConfigAdapter.RECIPE_INPUT_ITEM).getItems(), 1),
-                fluidOutput
-            );
+            ItemChoice input = section.getOrThrow("input-item", ConfigAdapter.ITEM_CHOICE);
+            FluidWithAmount output = section.getOrThrow("output", ConfigAdapter.FLUID_WITH_AMOUNT);
+            return new CrucibleRecipe(key, input, output);
         }
     };
 
@@ -56,7 +49,7 @@ public record CrucibleRecipe(
 
     @Override
     public @NotNull List<@NotNull FluidOrItem> getResults() {
-        return List.of(output);
+        return List.of(FluidOrItem.of(output));
     }
 
     public static Set<NamespacedKey> getHeatedBlocks() {
@@ -113,7 +106,7 @@ public record CrucibleRecipe(
             .addIngredient('i', ItemButton.of(input))
             .addIngredient('m', ItemButton.of(PylonItems.CRUCIBLE))
             .addIngredient('h', ItemButton.of(getHeatSources()))
-            .addIngredient('o', FluidButton.of(output.amountMillibuckets(), output.fluid())
+            .addIngredient('o', FluidButton.of(output)
         ).build();
     }
 

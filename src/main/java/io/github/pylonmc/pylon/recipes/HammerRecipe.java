@@ -31,7 +31,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record HammerRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result,
         @NotNull MiningLevel level,
         int uses
@@ -50,7 +50,7 @@ public record HammerRecipe(
         protected @NotNull HammerRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new HammerRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("mining-level", MINING_LEVEL_ADAPTER),
                     section.getOrThrow("uses", ConfigAdapter.INTEGER)
@@ -59,7 +59,7 @@ public record HammerRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -89,7 +89,9 @@ public record HammerRecipe(
         List<ItemStack> hammers = new ArrayList<>();
         for (RebarItemSchema itemSchema : RebarRegistry.ITEMS.getValues()) {
             Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
-            if (hammer == null) continue;
+            if (hammer == null) {
+                continue;
+            }
 
             ItemStack stack = itemSchema.getItemStack();
             if (!hammer.miningLevel.isAtLeast(level)) {

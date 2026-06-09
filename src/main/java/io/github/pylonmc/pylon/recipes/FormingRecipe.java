@@ -17,7 +17,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record FormingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result
 ) implements RebarRecipe {
 
@@ -26,14 +26,14 @@ public record FormingRecipe(
         protected @NonNull FormingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new FormingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
             );
         }
     };
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

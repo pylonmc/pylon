@@ -24,7 +24,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record PipeBendingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result,
         @NotNull ItemStack particleItem,
         int timeTicks

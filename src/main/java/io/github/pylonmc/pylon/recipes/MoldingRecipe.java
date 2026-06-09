@@ -21,7 +21,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record MoldingRecipe(
         NamespacedKey key,
-        ItemStack input,
+        ItemChoice input,
         ItemStack result,
         int moldingCycles
 ) implements RebarRecipe {
@@ -31,7 +31,7 @@ public record MoldingRecipe(
         protected @NotNull MoldingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new MoldingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
@@ -44,8 +44,8 @@ public record MoldingRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+        return List.of(input);
     }
 
     @Override

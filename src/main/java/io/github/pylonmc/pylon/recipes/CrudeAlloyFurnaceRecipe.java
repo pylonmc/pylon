@@ -6,8 +6,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.ConfigurableRecipeType;
 import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ItemChoice;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
@@ -28,8 +29,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record CrudeAlloyFurnaceRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input1,
-        @NotNull RecipeInput.Item input2,
+        @NotNull ItemChoice input1,
+        @NotNull ItemChoice input2,
         @NotNull ItemStack result,
         int timeTicks
 ) implements RebarRecipe {
@@ -44,8 +45,8 @@ public record CrudeAlloyFurnaceRecipe(
         protected @NotNull CrudeAlloyFurnaceRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new CrudeAlloyFurnaceRecipe(
                     key,
-                    section.getOrThrow("input1", ConfigAdapter.RECIPE_INPUT_ITEM),
-                    section.getOrThrow("input2", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input1", ConfigAdapter.ITEM_CHOICE),
+                    section.getOrThrow("input2", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
             );
@@ -53,7 +54,7 @@ public record CrudeAlloyFurnaceRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input1, input2);
     }
 

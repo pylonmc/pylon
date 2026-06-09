@@ -26,7 +26,7 @@ import xyz.xenondevs.invui.gui.Gui;
 
 public record MeltingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull RebarFluid result,
         double resultAmount
 ) implements RebarRecipe {
@@ -36,7 +36,7 @@ public record MeltingRecipe(
         protected @NotNull MeltingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new MeltingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.REBAR_FLUID),
                     section.getOrThrow("amount", ConfigAdapter.DOUBLE)
             );
@@ -49,7 +49,7 @@ public record MeltingRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
