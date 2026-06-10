@@ -43,7 +43,7 @@ public record ForgingDisplayRecipe(
 
     @Override
     public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
-        return List.of(new ItemChoice.Builder().addExact(input).build());
+        return List.of(ItemChoice.exact(input));
     }
 
     @Override

@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
+import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
@@ -89,7 +90,7 @@ public class PylonRecipes {
 
         ItemStack dusts = PylonItems.SHIMMER_DUST_2.asQuantity(setting.getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER));
         List<FluidOrItemChoice> input = List.of(
-                new ItemChoice.Builder().addExact(dusts).build(),
+                ItemChoice.fuzzy(dusts),
                 FluidChoice.of(PylonFluids.BIODIESEL, dieselUse),
                 FluidChoice.of(PylonFluids.HYDRAULIC_FLUID, hydraulicUse)
         );
@@ -162,9 +163,7 @@ public class PylonRecipes {
 
         double ethanolPerSugarcane = setting.getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
 
-        ItemChoice input = new ItemChoice.Builder()
-                .addExact(ItemStack.of(Material.SUGAR_CANE))
-                .build();
+        ItemChoice input = ItemChoice.fuzzy(ItemTypeWrapper.of(Material.SUGAR_CANE));
         FluidOrItem output = FluidOrItem.of(PylonFluids.ETHANOL, ethanolPerSugarcane);
 
         new SingleRecipe(

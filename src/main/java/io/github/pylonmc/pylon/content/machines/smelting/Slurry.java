@@ -53,7 +53,7 @@ public class Slurry extends RebarFluid implements RegistryHandler {
     public void onRegister(@NotNull RebarRegistry<?> registry) {
         MixingPotRecipe.RECIPE_TYPE.addRecipe(new MixingPotRecipe(
                 getKey(),
-                List.of(new ItemChoice.Builder().addFuzzy(slurryStack).build()),
+                List.of(ItemChoice.fuzzy(slurryStack)),
                 FluidChoice.of(PylonFluids.SLURRY, amount),
                 FluidOrItem.of(this, amount),
                 false
