@@ -22,8 +22,8 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRebarRecipe;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeType;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRebarRecipe;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRecipeType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -61,7 +61,7 @@ public class DieselFurnace extends RebarBlock implements
         TickingRebarBlock,
         LogisticRebarBlock,
         FurnaceRebarBlockHandler,
-        RecipeProcessorRebarBlock<FurnaceRebarRecipe> {
+        RecipeProcessorRebarBlock<SmeltingRebarRecipe> {
 
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
@@ -130,7 +130,7 @@ public class DieselFurnace extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(FurnaceRecipeType.INSTANCE);
+        setRecipeType(SmeltingRecipeType.INSTANCE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
@@ -192,14 +192,14 @@ public class DieselFurnace extends RebarBlock implements
             return;
         }
 
-        for (FurnaceRebarRecipe recipe : FurnaceRecipeType.INSTANCE) {
+        for (SmeltingRebarRecipe recipe : SmeltingRecipeType.INSTANCE) {
             if (tryStartRecipe(recipe, stack)) {
                 break;
             }
         }
     }
 
-    private boolean tryStartRecipe(FurnaceRebarRecipe recipe, ItemStack stack) {
+    private boolean tryStartRecipe(SmeltingRebarRecipe recipe, ItemStack stack) {
         if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getBukkitRecipe().getResult())) {
             return false;
         }
@@ -252,7 +252,7 @@ public class DieselFurnace extends RebarBlock implements
     }
 
     @Override
-    public void onRecipeFinished(@NotNull FurnaceRebarRecipe recipe) {
+    public void onRecipeFinished(@NotNull SmeltingRebarRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
         outputInventory.addItem(null, recipe.getBukkitRecipe().getResult().clone());
     }
