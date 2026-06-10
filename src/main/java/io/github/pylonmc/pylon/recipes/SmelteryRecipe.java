@@ -10,6 +10,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import lombok.Getter;
@@ -101,7 +104,7 @@ public class SmelteryRecipe implements RebarRecipe {
     }
 
     @Override
-    public @NotNull List<FluidOrItemChoice> getInputs() {
+    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
         return fluidInputs.entrySet()
                 .stream()
                 .map(pair -> (FluidOrItemChoice) FluidChoice.of(pair.getKey(), pair.getValue()))
