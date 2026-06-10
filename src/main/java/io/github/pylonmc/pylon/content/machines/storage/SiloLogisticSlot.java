@@ -1,16 +1,16 @@
 package io.github.pylonmc.pylon.content.machines.storage;
 
-import io.github.pylonmc.rebar.recipe.slot.item.ItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public class SiloItemSlot implements ItemSlot {
+public class SiloLogisticSlot implements LogisticSlot {
 
     private final Silo silo;
 
-    public SiloItemSlot(Silo silo) {
+    public SiloLogisticSlot(Silo silo) {
         this.silo = silo;
     }
 

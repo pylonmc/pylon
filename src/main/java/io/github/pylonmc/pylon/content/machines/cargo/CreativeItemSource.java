@@ -10,7 +10,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.ItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -109,7 +109,7 @@ public class CreativeItemSource extends RebarBlock
         return Map.of("inventory", inventory);
     }
 
-    private class InfiniteItemSlot implements ItemSlot {
+    private class InfiniteLogisticSlot implements LogisticSlot {
 
         @Override
         public @Nullable ItemStack getItemStack() {
@@ -145,7 +145,7 @@ public class CreativeItemSource extends RebarBlock
     @Override
     public void postInitialise() {
         setDisableBlockTextureEntity(true);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, new InfiniteItemSlot());
+        createLogisticGroup("output", LogisticGroupType.OUTPUT, new InfiniteLogisticSlot());
         inventory.addPostUpdateHandler(event -> getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(inventory.getItem(0)));
     }
 }

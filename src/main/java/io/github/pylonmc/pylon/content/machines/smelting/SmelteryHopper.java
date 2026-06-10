@@ -21,7 +21,7 @@ import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.VanillaInventoryItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
 
 public final class SmelteryHopper extends SmelteryComponent implements
         TickingRebarBlock,
@@ -48,11 +48,11 @@ public final class SmelteryHopper extends SmelteryComponent implements
         createLogisticGroup(
                 "input",
                 LogisticGroupType.INPUT,
-                new VanillaInventoryItemSlot(getBlock(), hopper.getInventory(), 0),
-                new VanillaInventoryItemSlot(getBlock(), hopper.getInventory(), 1),
-                new VanillaInventoryItemSlot(getBlock(), hopper.getInventory(), 2),
-                new VanillaInventoryItemSlot(getBlock(), hopper.getInventory(), 3),
-                new VanillaInventoryItemSlot(getBlock(), hopper.getInventory(), 4)
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 0),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 1),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 2),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 3),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 4)
         );
     }
 

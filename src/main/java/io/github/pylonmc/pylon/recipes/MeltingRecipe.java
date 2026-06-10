@@ -2,9 +2,6 @@ package io.github.pylonmc.pylon.recipes;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-import io.github.pylonmc.rebar.recipe.ingredients.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.ingredients.FluidOrItemChoice;
-import io.github.pylonmc.rebar.recipe.ingredients.ItemChoice;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;

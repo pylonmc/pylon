@@ -16,7 +16,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.VirtualInventoryItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -172,8 +172,8 @@ public class CargoValve extends RebarBlock implements
     @Override
     public void postInitialise() {
         setDisableBlockTextureEntity(true);
-        createLogisticGroup("input", LogisticGroupType.INPUT, new VirtualInventoryItemSlot(inventory, 0));
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, new VirtualInventoryItemSlot(inventory, 0));
+        createLogisticGroup("input", LogisticGroupType.INPUT, new VirtualInventoryLogisticSlot(inventory, 0));
+        createLogisticGroup("output", LogisticGroupType.OUTPUT, new VirtualInventoryLogisticSlot(inventory, 0));
     }
 
     @Override

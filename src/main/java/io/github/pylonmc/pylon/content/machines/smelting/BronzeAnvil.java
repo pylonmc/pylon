@@ -22,7 +22,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.ItemDisplayItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.Location;
@@ -99,7 +99,7 @@ public final class BronzeAnvil extends RebarBlock implements
             );
         }
 
-        createLogisticGroup("inventory", LogisticGroupType.BOTH, new BronzeAnvilItemSLot(getItemDisplay()));
+        createLogisticGroup("inventory", LogisticGroupType.BOTH, new BronzeAnvilLogisticSLot(getItemDisplay()));
     }
 
     @Override
@@ -294,9 +294,9 @@ public final class BronzeAnvil extends RebarBlock implements
         };
     }
 
-    static class BronzeAnvilItemSLot extends ItemDisplayItemSlot {
+    static class BronzeAnvilLogisticSLot extends ItemDisplayLogisticSlot {
 
-        public BronzeAnvilItemSLot(@NotNull ItemDisplay display) {
+        public BronzeAnvilLogisticSLot(@NotNull ItemDisplay display) {
             super(display);
         }
 

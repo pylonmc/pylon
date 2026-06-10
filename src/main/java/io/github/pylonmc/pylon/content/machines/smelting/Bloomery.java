@@ -19,9 +19,11 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.ItemDisplayItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -80,7 +82,7 @@ public final class Bloomery extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-       createLogisticGroup("inventory", LogisticGroupType.BOTH, new BloomeryItemSlot(getItemDisplay()));
+       createLogisticGroup("inventory", LogisticGroupType.BOTH, new BloomeryLogisticSlot(getItemDisplay()));
     }
 
     @Override
@@ -217,9 +219,9 @@ public final class Bloomery extends RebarBlock implements
         }
     }
 
-    static class BloomeryItemSlot extends ItemDisplayItemSlot {
+    static class BloomeryLogisticSlot extends ItemDisplayLogisticSlot {
 
-        public BloomeryItemSlot(@NotNull ItemDisplay display) {
+        public BloomeryLogisticSlot(@NotNull ItemDisplay display) {
             super(display);
         }
 

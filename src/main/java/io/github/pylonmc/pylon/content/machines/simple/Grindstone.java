@@ -21,8 +21,9 @@ import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.ItemDisplayItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -90,7 +91,7 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, new ItemDisplayItemSlot(getItemDisplay()));
+        createLogisticGroup("input", LogisticGroupType.INPUT, new ItemDisplayLogisticSlot(getItemDisplay()));
     }
 
     @Override

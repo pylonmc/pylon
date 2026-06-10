@@ -9,7 +9,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.ItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +60,7 @@ public class CreativeItemVoider extends RebarBlock
         super(block, pdc);
     }
 
-    private static class VoiderItemSlot implements ItemSlot {
+    private static class VoiderLogisticSlot implements LogisticSlot {
 
         @Override
         public @Nullable ItemStack getItemStack() {
@@ -86,6 +86,6 @@ public class CreativeItemVoider extends RebarBlock
     @Override
     public void postInitialise() {
         setDisableBlockTextureEntity(true);
-        createLogisticGroup("input", LogisticGroupType.INPUT, new VoiderItemSlot());
+        createLogisticGroup("input", LogisticGroupType.INPUT, new VoiderLogisticSlot());
     }
 }

@@ -12,7 +12,7 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.slot.item.implementation.ItemDisplayItemSlot;
+import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.NamespacedKey;
@@ -68,7 +68,7 @@ public class Pedestal extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-        createLogisticGroup("inventory", LogisticGroupType.BOTH, new ItemDisplayItemSlot(getItemDisplay()));
+        createLogisticGroup("inventory", LogisticGroupType.BOTH, new ItemDisplayLogisticSlot(getItemDisplay()));
     }
 
     @Override
