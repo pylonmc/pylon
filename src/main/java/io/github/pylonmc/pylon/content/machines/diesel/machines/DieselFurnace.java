@@ -200,7 +200,7 @@ public class DieselFurnace extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(FurnaceRebarRecipe recipe, ItemStack stack) {
-        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getRecipe().getResult())) {
+        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getBukkitRecipe().getResult())) {
             return false;
         }
 
@@ -254,7 +254,7 @@ public class DieselFurnace extends RebarBlock implements
     @Override
     public void onRecipeFinished(@NotNull FurnaceRebarRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(null, recipe.getRecipe().getResult().clone());
+        outputInventory.addItem(null, recipe.getBukkitRecipe().getResult().clone());
     }
 
     @Override
