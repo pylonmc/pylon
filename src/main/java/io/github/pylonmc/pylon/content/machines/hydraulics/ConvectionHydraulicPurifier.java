@@ -228,19 +228,17 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isFormedAndFullyLoaded() || !hasEnoughWaterAndLava()) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isFormedAndFullyLoaded() && hasEnoughWaterAndLava()) {
+            display.add(new ProgressBar()
+                    .barColor(TextColor.fromHexString("#e0c77d"))
+                    .proportion((getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency))
+                    .suffix(Component.text(" ")
+                            .append(UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
+                    )
+            );
         }
-
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("efficiency", new ProgressBar()
-                        .barColor(TextColor.fromHexString("#e0c77d"))
-                        .proportion((getEfficiency() - basePurificationEfficiency) / (maxPurificationEfficiency - basePurificationEfficiency))
-                        .suffix(Component.text(" ")
-                                .append(UnitFormat.PERCENT.format(100 * getEfficiency()).decimalPlaces(2))
-                        )
-                )
-        ));
+        return display;
     }
 
     public boolean hasEnoughWaterAndLava() {

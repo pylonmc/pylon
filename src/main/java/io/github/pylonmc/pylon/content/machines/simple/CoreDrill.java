@@ -139,7 +139,7 @@ public abstract class CoreDrill extends RebarBlock implements
         for (int j = 0; j < 4; j++) {
             double rotation = (j / 4.0) * 2.0 * Math.PI;
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                if (!isChunkLoaded()) {
                     return;
                 }
 
@@ -167,14 +167,13 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isProcessing()) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isProcessing()) {
+            display.add(ProgressBar.timeRemaining(
+                    getProcessTimeSeconds(),
+                    getProcessSecondsRemaining()
+            ));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("remaining-time", ProgressBar.timeRemaining(
-                        getProcessTimeSeconds(),
-                        getProcessSecondsRemaining()
-                ))
-        ));
+        return display;
     }
 }

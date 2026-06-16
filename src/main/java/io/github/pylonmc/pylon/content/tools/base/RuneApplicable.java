@@ -4,6 +4,7 @@ import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.EntityAttackRebarItemHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
@@ -33,7 +32,6 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -226,7 +224,7 @@ public class DieselGrindstone extends RebarBlock implements
         }
 
         startRecipe(recipe, recipe.cycles() * Grindstone.CYCLE_DURATION_TICKS);
-        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
         inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
         return true;
     }
@@ -256,17 +254,16 @@ public class DieselGrindstone extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("progress", isProcessingRecipe()
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(isProcessingRecipe()
                         ? ProgressBar.recipeProgress(getRecipeProgress())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

@@ -187,12 +187,14 @@ public class DieselBreaker extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.ITEM)
-                .count(5)
-                .extra(0.05)
-                .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .data(ItemStack.of(drilling.getType()))
-                .spawn();
+        if (!drilling.getType().isAir()) {
+            new ParticleBuilder(Particle.ITEM)
+                    .count(5)
+                    .extra(0.05)
+                    .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
+                    .data(ItemStack.of(drilling.getType()))
+                    .spawn();
+        }
     }
 
     public void tryStartDrilling() {
@@ -282,17 +284,16 @@ public class DieselBreaker extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("progress", isProcessing()
-                        ? ProgressBar.recipeProgress(getProcessProgress())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(isProcessing()
+                        ? ProgressBar.recipeProgress(1.0 - getProcessProgress())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

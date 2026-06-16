@@ -101,7 +101,7 @@ public record MixingPotRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('f', new FluidButton(inputFluid))
+                .addIngredient('f', FluidButton.of(inputFluid))
                 .addIngredient('m', ItemButton.of(PylonItems.MIXING_POT))
                 .addIngredient('i', requiresEnrichedFire
                         ? ItemButton.of(PylonItems.ENRICHED_SOUL_SOIL)
@@ -112,7 +112,7 @@ public record MixingPotRecipe(
                 'o',
                 switch (output) {
                     case FluidOrItem.Item item -> ItemButton.of(item.item());
-                    case FluidOrItem.Fluid fluid -> new FluidButton(fluid.amountMillibuckets(), fluid.fluid());
+                    case FluidOrItem.Fluid fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
                     default -> throw new AssertionError();
                 }
         );

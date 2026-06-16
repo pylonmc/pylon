@@ -74,10 +74,10 @@ public record SiloConverterRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', new ItemButton(silos))
-                .addIngredient('m', new ItemButton(material.getRepresentativeItem()))
-                .addIngredient('c', new ItemButton(PylonItems.SILO_CONVERTER))
-                .addIngredient('o', new ItemButton(result))
+                .addIngredient('i', ItemButton.of(silos))
+                .addIngredient('m', ItemButton.of(material.getRepresentativeItem()))
+                .addIngredient('c', ItemButton.of(PylonItems.SILO_CONVERTER))
+                .addIngredient('o', ItemButton.of(result))
                 .build();
     }
 }

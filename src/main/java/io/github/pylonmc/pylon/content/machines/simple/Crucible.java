@@ -222,21 +222,18 @@ public final class Crucible extends RebarBlock implements
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
-                )),
-                RebarArgument.of("item", crucibleContent == null
+                ))
+                .add(crucibleContent == null
                         ? Component.translatable("pylon.item.crucible.empty")
-                        : Component.translatable("pylon.item.crucible.not-empty",
-                                RebarArgument.of("type", crucibleContent.getData(DataComponentTypes.ITEM_NAME)),
-                                RebarArgument.of("amount", crucibleContent.getAmount())
-                        )
-                )
-        ));
+                        : crucibleContent.effectiveName()
+                                .append(Component.text(" x"))
+                                .append(Component.text(crucibleContent.getAmount()))
+                );
     }
 
     //region Tick handling

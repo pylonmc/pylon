@@ -91,7 +91,6 @@ public class FluidTankCasing extends RebarBlock implements InteractRebarBlockHan
 
     public void reset() {
         setShape(Shape.SINGLE);
-        Waila.removeWailaOverride(getBlock());
     }
 
     public enum Shape {
