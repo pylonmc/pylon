@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.pylonmc.pylon.content.machines.fluid.PortableFluidTank;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.OilService;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.rebar.command.RegistryCommandArgument;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
@@ -38,6 +39,9 @@ public class PylonCommand {
                     .then(Commands.argument("player", ArgumentTypes.player())
                             .executes(ctx -> resetLoupe(ctx, ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst()))
                     )
+            )
+            .then(Commands.literal("oil")
+                    .executes(ctx -> oil(ctx, null))
             )
             .build();
 
@@ -77,6 +81,21 @@ public class PylonCommand {
         target.getPersistentDataContainer().remove(Loupe.CONSUMED_KEY);
         sender.sendRichMessage("<green>Reset loupe data for <target>",
                 Placeholder.unparsed("target", target.getName()));
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private int oil(CommandContext<CommandSourceStack> ctx, Player target) {
+        CommandSender sender = ctx.getSource().getSender();
+        if (target == null) {
+            if (!(sender instanceof Player player)) {
+                sender.sendRichMessage("<red>You must be a player to use this command");
+                return Command.SINGLE_SUCCESS;
+            }
+            target = player;
+        }
+
+        sender.sendMessage("bruh" + OilService.getOilYield(target.getLocation().getBlock()));
+
         return Command.SINGLE_SUCCESS;
     }
 }

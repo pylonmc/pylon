@@ -1,0 +1,4 @@
+tick-interval: 5
+radians-per-second: 6.0
+sample-ticks: 4800
+fuel-burn-rate: 2.0

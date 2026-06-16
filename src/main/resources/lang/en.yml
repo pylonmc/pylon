@@ -1167,6 +1167,7 @@ item:
       <arrow> <attr>Purification speed:</attr> %purification_speed%
       <arrow> <attr>Purification efficiency:</attr> %purification_efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
+      <arrow> <attr>Fuel burn rate:</attr> %fuel-burn-rate%
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:burner_hydraulic_purifier/></yellow>
@@ -2422,7 +2423,6 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:experience_fountain_spout/></yellow>
 
-
   experience_fountain_spout:
     name: "Experience Fountain Spout"
 
@@ -2468,6 +2468,40 @@ item:
       <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+
+  oil_sample_drill:
+    name: "Oil Sample Drill"
+    lore: |-
+      <arrow> Samples the maximum oil yield in the location the drill is built
+      <arrow> Requires fuel to operate
+      <arrow> Gives a reading of <#8f2121>none<gray>, <#e06100>low<gray>, <#efae15>medium<gray>, or <#5ea918>high<gray>
+      <arrow> <attr>Time to sample:</attr> %sample-time%
+      <arrow> <attr>Fuel burn rate:</attr> %fuel-burn-rate%
+
+  hydraulic_fracturing_drill:
+    name: "Hydraulic Fracturing Drill"
+    lore: |-
+      <arrow> Uses steam, hydraulic fluid, and sand to create a hydraulic fracture from which oil can be pumped
+      <arrow> The created fracture has a yield between zero and the maximum yield (which you can find out with a <white><item:pylon:oil_sample_drill/></white>)
+      <arrow> <attr>Time to create hydraulic fracture: </attr> %time-to-create-fracture%
+      <arrow> <attr>Steam per fracture: </attr> %steam-per-fracture%
+      <arrow> <attr>Hydraulic fluid per fracture: </attr> %hydraulic-fluid-per-fracture%
+      <arrow> <attr>Sand per fracture: </attr> %sand-per-fracture%
+
+  hydraulic_fracture_seal:
+    name: "Hydraulic Fracture Seal"
+    lore: |-
+      <arrow> Place on top of a hydraulic fracture and fill with <white>%gravel% gravel</white> to seal the fracture
+      <arrow> <red>Fracture sealing creates a small explosion</red>
+
+  hydraulic_fracture_cap:
+    name: "Hydraulic Fracture Cap"
+
+  injection_pipe:
+    name: "Injection Pipe"
+
+  hydraulic_fracture:
+    name: "<#60a7d6>Hydraulic Fracture"
 
 fluid:
   tag:

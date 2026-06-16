@@ -22,6 +22,9 @@ import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFractureSeal;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.OilSampleDrill;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
@@ -942,6 +945,20 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, LISELETTE_COLLECTOR, PylonKeys.LISELETTE_COLLECTOR);
         PylonPages.COMPONENTS.addItem(LISELETTE_COLLECTOR);
+    }
+
+    public static final ItemStack HYDRAULIC_FRACTURE_CAP = ItemStackBuilder.rebar(Material.POLISHED_ANDESITE, PylonKeys.HYDRAULIC_FRACTURE_CAP)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HYDRAULIC_FRACTURE_CAP, PylonKeys.HYDRAULIC_FRACTURE_CAP);
+        PylonPages.COMPONENTS.addItem(HYDRAULIC_FRACTURE_CAP);
+    }
+
+    public static final ItemStack INJECTION_PIPE = ItemStackBuilder.rebar(Material.IRON_CHAIN, PylonKeys.INJECTION_PIPE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INJECTION_PIPE, PylonKeys.INJECTION_PIPE);
+        PylonPages.COMPONENTS.addItem(INJECTION_PIPE);
     }
 
     //</editor-fold>
@@ -2950,6 +2967,40 @@ public final class PylonItems {
         RebarItem.register(CargoFluidAccumulator.Item.class, CARGO_FLUID_ACCUMULATOR, PylonKeys.CARGO_FLUID_ACCUMULATOR);
         PylonPages.CARGO.addItem(CARGO_FLUID_ACCUMULATOR);
     }
+    //</editor-fold>
+
+    //<editor-fold desc="Machines - Petrochemicals" defaultstate=collapsed>
+
+    public static final ItemStack OIL_SAMPLE_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.OIL_SAMPLE_DRILL)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.getKey())
+            .build();
+    static {
+        RebarItem.register(OilSampleDrill.Item.class, OIL_SAMPLE_DRILL, PylonKeys.OIL_SAMPLE_DRILL);
+        PylonPages.PETROCHEMICALS.addItem(OIL_SAMPLE_DRILL);
+    }
+
+    public static final ItemStack HYDRAULIC_FRACTURING_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.HYDRAULIC_FRACTURING_DRILL)
+            .build();
+    static {
+        RebarItem.register(HydraulicFracturingDrill.Item.class, HYDRAULIC_FRACTURING_DRILL, PylonKeys.HYDRAULIC_FRACTURING_DRILL);
+        PylonPages.PETROCHEMICALS.addItem(HYDRAULIC_FRACTURING_DRILL);
+    }
+
+    public static final ItemStack HYDRAULIC_FRACTURE_SEAL = ItemStackBuilder.rebar(Material.TNT, PylonKeys.HYDRAULIC_FRACTURE_SEAL)
+            .build();
+    static {
+        RebarItem.register(HydraulicFractureSeal.Item.class, HYDRAULIC_FRACTURE_SEAL, PylonKeys.HYDRAULIC_FRACTURE_SEAL);
+        PylonPages.PETROCHEMICALS.addItem(HYDRAULIC_FRACTURE_SEAL);
+    }
+
+    public static final ItemStack BURNER_PUMPJACK = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.BURNER_PUMPJACK)
+            .set(DataComponentTypes.ITEM_MODEL, Material.PISTON.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BURNER_PUMPJACK, PylonKeys.BURNER_PUMPJACK);
+        PylonPages.PETROCHEMICALS.addItem(BURNER_PUMPJACK);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Machines - Diesel Machines" defaultstate="collapsed">

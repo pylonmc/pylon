@@ -87,6 +87,15 @@ public final class PylonFluids {
         RebarGuide.hideFluid(SUGARCANE.getKey());
     }
 
+    public static final RebarFluid OIL = new RebarFluid(
+            pylonKey("oil"),
+            TextColor.fromHexString("#404040"),
+            Material.BLACK_CONCRETE
+    ).addTag(FluidTemperature.NORMAL);
+    static {
+        OIL.register();
+    }
+
     public static final RebarFluid ETHANOL = new RebarFluid(
             pylonKey("ethanol"),
             TextColor.fromHexString("#d8d8d8"),
