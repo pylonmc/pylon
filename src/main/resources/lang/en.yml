@@ -3095,3 +3095,8 @@ unit:
     one: "joule per millibucket"
     other: "joules per millibucket"
     abbr: "J/mB"
+
+advancements:
+  random_advancement:
+    title: "<blue>Random advancement"
+    description: "dilly dally doo"
