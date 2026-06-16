@@ -1,0 +1,21 @@
+pylon:random_advancement:
+  # The parent of this advancement in the tree
+  parent: minecraft:adventure/root
+  display-info:
+    icon:
+      # Namespaced key pointing to the item to use for the icon of the advancement (can be either vanilla or rebar item)
+      item: pylon:beheading_sword
+      count: 1
+    # Whether to show the toast in the top-right when its unlocked
+    show-toast: true
+    # Whether to send the chat message that the advancement has been unlocked
+    announce-to-chat: true
+    # Whether the advancement can be viewed in the tree
+    hidden: false
+    # The frame around the icon of the advancement
+    frame: challenge
+    #background: minecraft:gui/advancements/backgrounds/adventure for root advancements
+  # What is unlocked upon completion
+  rewards:
+    # amount of xp to grant
+    experience: 10

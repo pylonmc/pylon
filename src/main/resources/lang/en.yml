@@ -3001,3 +3001,8 @@ inventory:
   input1: "Input 1"
   input2: "Input 2"
   input3: "Input 3"
+
+advancements:
+  random_advancement:
+    title: "<blue>Random advancement"
+    description: "dilly dally doo"
