@@ -5,7 +5,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.electricity.ElectricNetwork;
-import io.github.pylonmc.rebar.electricity.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import org.bukkit.Color;
 import org.bukkit.Particle;

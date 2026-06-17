@@ -6,7 +6,8 @@ import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.electricity.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricAcceptorNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricProducerNode;
 import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -46,7 +47,7 @@ public class Capacitor extends RebarBlock implements
     private static final NamespacedKey STORED_ENERGY_KEY = pylonKey("stored_energy");
     private double storedEnergy;
 
-    private ElectricNode.Producer output;
+    private ElectricProducerNode output;
 
     @SuppressWarnings("unused")
     public Capacitor(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -54,8 +55,8 @@ public class Capacitor extends RebarBlock implements
 
         setFacing(context.getFacing());
 
-        addElectricPort(new ElectricPort(new ElectricNode.Acceptor("input", new BlockPosition(block)), getFacing()));
-        addElectricPort(new ElectricPort(new ElectricNode.Producer("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
+        addElectricPort(new ElectricPort(new ElectricAcceptorNode("input", new BlockPosition(block)), getFacing()));
+        addElectricPort(new ElectricPort(new ElectricProducerNode("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
 
         addEntity("text_0", new TextDisplayBuilder()
                 .transformation(new TransformBuilder()
@@ -88,14 +89,14 @@ public class Capacitor extends RebarBlock implements
 
     @Override
     public void postInitialise() {
-        ElectricNode.Acceptor input = (ElectricNode.Acceptor) getElectricNodeOrThrow("input");
+        ElectricAcceptorNode input = (ElectricAcceptorNode) getElectricNodeOrThrow("input");
         input.onAccept(energy -> {
             double accepted = Math.min(energy, capacity - storedEnergy);
             setStoredEnergy(storedEnergy + accepted);
             return accepted;
         });
 
-        output = (ElectricNode.Producer) getElectricNodeOrThrow("output");
+        output = (ElectricProducerNode) getElectricNodeOrThrow("output");
         output.onPowerTake(energy -> {
             double taken = Math.min(energy, storedEnergy);
             setStoredEnergy(storedEnergy - taken);

@@ -5,7 +5,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DispenserRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.electricity.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricConsumerNode;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -83,7 +83,7 @@ public class ElectricBreaker extends GenericBreaker implements ElectricRebarBloc
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addElectricPort(
-                new ElectricPort(new ElectricNode.Consumer("consumer", new BlockPosition(block), powerUsage), getFacing().getOppositeFace())
+                new ElectricPort(new ElectricConsumerNode("consumer", new BlockPosition(block), powerUsage), getFacing().getOppositeFace())
                         .radius(0.55)
         );
     }
@@ -95,7 +95,7 @@ public class ElectricBreaker extends GenericBreaker implements ElectricRebarBloc
 
     @Override
     public void tick() {
-        if (!isProcessing() || !((ElectricNode.Consumer) getElectricNodeOrThrow("consumer")).isPowered()) return;
+        if (!isProcessing() || !((ElectricConsumerNode) getElectricNodeOrThrow("consumer")).isPowered()) return;
         progressProcess(tickInterval);
     }
 
