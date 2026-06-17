@@ -1,8 +1,8 @@
 package io.github.pylonmc.pylon.content.components;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import org.bukkit.Material;
@@ -41,7 +41,7 @@ public class LiseletteCollector extends RebarBlock implements EntityHolderRebarB
     }
 
     @Override
-    protected void postLoad(@NotNull PersistentDataContainer pdc) {
+    protected void postLoad() {
         getHeldEntityOrThrow(ItemDisplay.class, "shell")
                 .setBrightness(new Display.Brightness(15, 15));
     }
