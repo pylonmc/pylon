@@ -80,7 +80,7 @@ public class GasTurbine extends RebarBlock implements
         if (!outputHatch.canAcceptFluid(outputFluid)) return;
 
         double recipeInputAmount = matchingRecipe.input().amountMillibuckets();
-        double recipeOutputAmount = matchingRecipe.output().amount();
+        double recipeOutputAmount = matchingRecipe.output().millibuckets();
         double ratio = inputAmount / recipeInputAmount;
         ratio = Math.min(ratio, outputHatch.getFluidSpaceRemaining() / recipeOutputAmount);
         double actualInputAmount = ratio * recipeInputAmount;

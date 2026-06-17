@@ -174,13 +174,13 @@ public class ElectricMixer extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(MixingPotRecipe recipe, List<ItemStack> items) {
-        if (!recipe.matches(items, true, inputFluid.fluid(), inputFluid.amount())) {
+        if (!recipe.matches(items, true, inputFluid.fluid(), inputFluid.millibuckets())) {
             return false;
         }
 
         switch (recipe.output()) {
             case FluidOrItem.Fluid fluidOutput -> {
-                if (outputFluid != null && (!outputFluid.fluid().equals(fluidOutput.fluid()) || outputFluid.amount() + fluidOutput.amountMillibuckets() > outputCapacity)) {
+                if (outputFluid != null && (!outputFluid.fluid().equals(fluidOutput.fluid()) || outputFluid.millibuckets() + fluidOutput.amountMillibuckets() > outputCapacity)) {
                     return false;
                 }
             }
@@ -204,7 +204,7 @@ public class ElectricMixer extends RebarBlock implements
                 }
             }
         }
-        inputFluid = inputFluid.subtractAmount(recipe.inputFluid().amountMillibuckets());
+        inputFluid = inputFluid.subtractMillibuckets(recipe.inputFluid().amountMillibuckets());
 
         return true;
     }
@@ -223,7 +223,7 @@ public class ElectricMixer extends RebarBlock implements
                 if (outputFluid == null) {
                     outputFluid = new FluidWithAmount(fluidOutput.fluid(), fluidOutput.amountMillibuckets());
                 } else {
-                    outputFluid = outputFluid.addAmount(fluidOutput.amountMillibuckets());
+                    outputFluid = outputFluid.addMillibuckets(fluidOutput.amountMillibuckets());
                 }
             }
             case FluidOrItem.Item itemOutput -> outputInventory.addItem(new MachineUpdateReason(), itemOutput.item());
@@ -239,8 +239,8 @@ public class ElectricMixer extends RebarBlock implements
 
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
-        outputFluid = outputFluid.subtractAmount(amount);
-        if (outputFluid.amount() <= RebarUtils.FLUID_EPSILON) {
+        outputFluid = outputFluid.subtractMillibuckets(amount);
+        if (outputFluid.millibuckets() <= RebarUtils.FLUID_EPSILON) {
             outputFluid = null;
         }
         tryStartRecipe();
@@ -251,7 +251,7 @@ public class ElectricMixer extends RebarBlock implements
         if (inputFluid == null) {
             inputFluid = new FluidWithAmount(fluid, amount);
         } else {
-            inputFluid = inputFluid.addAmount(amount);
+            inputFluid = inputFluid.addMillibuckets(amount);
         }
         tryStartRecipe();
     }
@@ -262,7 +262,7 @@ public class ElectricMixer extends RebarBlock implements
             if (!inputFluid.fluid().equals(fluid)) {
                 return 0;
             } else {
-                return inputCapacity - inputFluid.amount();
+                return inputCapacity - inputFluid.millibuckets();
             }
         }
 
@@ -280,7 +280,7 @@ public class ElectricMixer extends RebarBlock implements
         if (outputFluid == null) {
             return List.of();
         } else {
-            return List.of(new Pair<>(outputFluid.fluid(), outputFluid.amount()));
+            return List.of(new Pair<>(outputFluid.fluid(), outputFluid.millibuckets()));
         }
     }
 
@@ -290,12 +290,12 @@ public class ElectricMixer extends RebarBlock implements
                 .add(ProgressBar.fluidContentsWithName(
                         inputFluid == null ? null : inputFluid.fluid(),
                         inputCapacity,
-                        inputFluid == null ? 0 : inputFluid.amount()
+                        inputFluid == null ? 0 : inputFluid.millibuckets()
                 ))
                 .add(ProgressBar.fluidContentsWithName(
                         outputFluid == null ? null : outputFluid.fluid(),
                         outputCapacity,
-                        outputFluid == null ? 0 : outputFluid.amount()
+                        outputFluid == null ? 0 : outputFluid.millibuckets()
                 ));
     }
 }

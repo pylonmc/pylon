@@ -78,14 +78,14 @@ public class HeatExchanger extends RebarBlock implements
         FluidWithAmount fromOutput = matchingRecipe.transferFrom().getSecond();
         if (fromOutput != null) {
             if (!fromOutputHatch.canAcceptFluid(fromOutput.fluid())) return;
-            double outputAmount = fromOutput.amount();
+            double outputAmount = fromOutput.millibuckets();
             double actualOutputAmount = Math.min(outputAmount, fromOutputHatch.getFluidSpaceRemaining());
             recipeRatio = Math.min(recipeRatio, actualOutputAmount / outputAmount);
         }
         FluidWithAmount toOutput = matchingRecipe.transferTo().getSecond();
         if (toOutput != null) {
             if (!toOutputHatch.canAcceptFluid(toOutput.fluid())) return;
-            double outputAmount = toOutput.amount();
+            double outputAmount = toOutput.millibuckets();
             double actualOutputAmount = Math.min(outputAmount, toOutputHatch.getFluidSpaceRemaining());
             recipeRatio = Math.min(recipeRatio, actualOutputAmount / outputAmount);
         }
@@ -107,10 +107,10 @@ public class HeatExchanger extends RebarBlock implements
         fromInputHatch.removeFluid(fromInputAmount * recipeRatio);
         toInputHatch.removeFluid(toInputAmount * recipeRatio);
         if (fromOutput != null) {
-            fromOutputHatch.addFluid(fromOutput.fluid(), fromOutput.amount() * recipeRatio);
+            fromOutputHatch.addFluid(fromOutput.fluid(), fromOutput.millibuckets() * recipeRatio);
         }
         if (toOutput != null) {
-            toOutputHatch.addFluid(toOutput.fluid(), toOutput.amount() * recipeRatio);
+            toOutputHatch.addFluid(toOutput.fluid(), toOutput.millibuckets() * recipeRatio);
         }
     }
 
