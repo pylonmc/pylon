@@ -17,7 +17,6 @@ import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
-import io.github.pylonmc.pylon.content.machines.electricity.generation.Boiler;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
@@ -3471,22 +3470,6 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, ELECTRICITY_OUTPUT_HATCH, PylonKeys.ELECTRICITY_OUTPUT_HATCH);
         PylonPages.COMPONENTS.addItem(ELECTRICITY_OUTPUT_HATCH);
-    }
-
-    public static final ItemStack BOILER_CASING = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.BOILER_CASING)
-            .build();
-
-    static {
-        RebarItem.register(RebarItem.class, BOILER_CASING, PylonKeys.BOILER_CASING);
-        PylonPages.COMPONENTS.addItem(BOILER_CASING);
-    }
-
-    public static final ItemStack BOILER = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.BOILER)
-            .build();
-
-    static {
-        RebarItem.register(Boiler.Item.class, BOILER, PylonKeys.BOILER);
-        PylonPages.ELECTRICITY.addItem(BOILER);
     }
 
     public static final ItemStack STEAM_ENGINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.STEAM_ENGINE)

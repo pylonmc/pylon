@@ -53,7 +53,6 @@ public class PylonRecipes {
         initCollimator();
         initBiorefinery();
         initFermenter();
-        initBoiler();
         initCombustionTower();
     }
 
@@ -77,32 +76,6 @@ public class PylonRecipes {
                         .addIngredient('i', FluidButton.of(input.amountMillibuckets(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.of(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.of(PylonItems.COHESIVE_UNIT))
-                        .build()
-        ).register();
-    }
-
-    private static void initBoiler() {
-        NamespacedKey key = PylonKeys.BOILER;
-        ConfigSection setting = ConfigSection.fromSettings(key);
-        double steamPerSecond = setting.getOrThrow("steam-per-second", ConfigAdapter.DOUBLE);
-        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.WATER, steamPerSecond * PylonFluids.WATER_TO_STEAM_RATIO);
-        FluidWithAmount output = new FluidWithAmount(PylonFluids.STEAM, steamPerSecond);
-        new SingleRecipe(
-                key,
-                input,
-                output.asFluidOrItem(),
-                () -> Gui.builder()
-                        .setStructure(
-                                "# # # # # # # # #",
-                                "# # # # # # # # #",
-                                "# i # # x # # o #",
-                                "# # # # # # # # #",
-                                "# # # # # # # # #"
-                        )
-                        .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', FluidButton.of(input))
-                        .addIngredient('x', ItemButton.of(PylonItems.BOILER))
-                        .addIngredient('o', FluidButton.of(output))
                         .build()
         ).register();
     }
