@@ -132,21 +132,20 @@ public class DieselPress extends GenericPress {
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("plant-oil", ProgressBar.fluidContents(
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(ProgressBar.fluidContents(
                         PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        fluidAmount(PylonFluids.PLANT_OIL))
-                ),
-                RebarArgument.of("progress", isProcessingRecipe()
+                        fluidAmount(PylonFluids.PLANT_OIL)
+                ))
+                .add(isProcessingRecipe()
                         ? ProgressBar.recipeProgress(getRecipeProgress())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 }

@@ -30,13 +30,13 @@ public class BeheadingSword extends RebarItem implements EntityAttackRebarItemHa
     }
 
     private static final Map<EntityType, ItemStack> ENTITY_HEADS = Map.of(
-            EntityType.WITHER_SKELETON, new ItemStack(Material.WITHER_SKELETON_SKULL),
-            EntityType.PLAYER, new ItemStack(Material.PLAYER_HEAD),
-            EntityType.CREEPER, new ItemStack(Material.CREEPER_HEAD),
-            EntityType.PIGLIN, new ItemStack(Material.PIGLIN_HEAD),
-            EntityType.ENDER_DRAGON, new ItemStack(Material.DRAGON_HEAD),
-            EntityType.ZOMBIE, new ItemStack(Material.ZOMBIE_HEAD),
-            EntityType.SKELETON, new ItemStack(Material.SKELETON_SKULL)
+            EntityType.WITHER_SKELETON, ItemStack.of(Material.WITHER_SKELETON_SKULL),
+            EntityType.PLAYER, ItemStack.of(Material.PLAYER_HEAD),
+            EntityType.CREEPER, ItemStack.of(Material.CREEPER_HEAD),
+            EntityType.PIGLIN, ItemStack.of(Material.PIGLIN_HEAD),
+            EntityType.ENDER_DRAGON, ItemStack.of(Material.DRAGON_HEAD),
+            EntityType.ZOMBIE, ItemStack.of(Material.ZOMBIE_HEAD),
+            EntityType.SKELETON, ItemStack.of(Material.SKELETON_SKULL)
     );
 
     @Override @MultiHandler(ignoreCancelled = true)

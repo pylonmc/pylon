@@ -112,8 +112,8 @@ public record CrucibleRecipe(
             .addIngredient('#', GuiItems.backgroundBlack())
             .addIngredient('i', ItemButton.of(input))
             .addIngredient('m', ItemButton.of(PylonItems.CRUCIBLE))
-            .addIngredient('h', new ItemButton(getHeatSources()))
-            .addIngredient('o', new FluidButton(output.amountMillibuckets(), output.fluid())
+            .addIngredient('h', ItemButton.of(getHeatSources()))
+            .addIngredient('o', FluidButton.of(output.amountMillibuckets(), output.fluid())
         ).build();
     }
 

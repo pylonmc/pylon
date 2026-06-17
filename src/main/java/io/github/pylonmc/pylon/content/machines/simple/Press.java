@@ -113,13 +113,12 @@ public class Press extends RebarBlock implements
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        fluidAmount(PylonFluids.PLANT_OIL))
-                )
-        ));
+                        fluidAmount(PylonFluids.PLANT_OIL)
+                ));
     }
 
     @Override  @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -209,7 +208,7 @@ public class Press extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
 

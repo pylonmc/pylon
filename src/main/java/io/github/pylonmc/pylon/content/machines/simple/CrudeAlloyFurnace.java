@@ -227,7 +227,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         inputInventory.removeFirst(new MachineUpdateReason(), recipe.input2().getAmount(), recipe.input2()::matchesIgnoringAmount);
 
         startRecipe(recipe, recipe.timeTicks());
-        getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.result().asOne()).clearLore());
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(recipe.result()).clearLore());
 
         return true;
     }
@@ -280,12 +280,11 @@ public class CrudeAlloyFurnace extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isProcessingRecipe()) {
-            return new WailaDisplay(getNameTranslationKey());
-        }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
-        ));
+        return WailaDisplay.of(this, player)
+                .add(isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

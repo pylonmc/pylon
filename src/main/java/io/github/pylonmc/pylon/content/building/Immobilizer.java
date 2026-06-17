@@ -109,8 +109,7 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
 
     @Override
     public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        BlockPosition position = new BlockPosition(context.getBlock());
-        frozenPlayers.remove(position);
+        frozenPlayers.remove(new BlockPosition(context.getBlock()));
     }
 
     public static class PlayerVFX extends BukkitRunnable {

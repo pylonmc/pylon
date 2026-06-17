@@ -95,13 +95,12 @@ public class Sprinkler extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         PylonFluids.WATER,
                         fluidCapacity(PylonFluids.WATER),
-                        fluidAmount(PylonFluids.WATER))
-                )
-        ));
+                        fluidAmount(PylonFluids.WATER)
+                ));
     }
 
     public static class SprinklerPlaceListener implements Listener {

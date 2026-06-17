@@ -175,7 +175,7 @@ public class CargoMeter extends RebarBlock implements
                         .translate(new Vector3d(0.0, 0.53, 0.0))
                         .scale(0.15, 0.15, 0.15)
                 )
-                .itemStack(new ItemStack(Material.BARRIER))
+                .itemStack(ItemStack.of(Material.BARRIER))
                 .billboard(Display.Billboard.VERTICAL)
                 .build(block.getLocation().toCenterLocation())
         );
@@ -226,7 +226,7 @@ public class CargoMeter extends RebarBlock implements
         inventory.addPostUpdateHandler(event -> {
             ItemStack newStack = event.getNewItem();
             getHeldEntityOrThrow(ItemDisplay.class, "item")
-                    .setItemStack(newStack == null ? new ItemStack(Material.BARRIER) : newStack);
+                    .setItemStack(newStack == null ? ItemStack.of(Material.BARRIER) : newStack);
             if (event.isAdd()) {
                 itemsAddedLastUpdate += event.getAddedAmount();
             }
@@ -276,9 +276,8 @@ public class CargoMeter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true))
-        ));
+        return WailaDisplay.of(this, player)
+                .add(UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true));
     }
 
     @Override

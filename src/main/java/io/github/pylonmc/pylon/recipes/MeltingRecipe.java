@@ -77,7 +77,7 @@ public record MeltingRecipe(
                                 RebarArgument.of("temperature", UnitFormat.CELSIUS.format(result.getTag(MeltingPoint.class).temperature()))
                         ))
                 )
-                .addIngredient('o', new FluidButton(resultAmount, result))
+                .addIngredient('o', FluidButton.of(resultAmount, result))
                 .build();
     }
 }

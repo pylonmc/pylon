@@ -56,7 +56,7 @@ public class BrickMold extends RebarItem implements BlockInteractRebarItemHandle
                 particleType = new ItemStack(event.getClickedBlock().getType());
             }
         } else {
-            particleType = new ItemStack(event.getClickedBlock().getType());
+            particleType = ItemStack.of(event.getClickedBlock().getType());
         }
         new ParticleBuilder(Particle.ITEM)
                 .count(50)

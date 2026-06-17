@@ -331,7 +331,7 @@ public class AssemblyTable extends RebarBlock implements
                     Component.translatable("pylon.gui.assembly_table.no_recipe")
             );
             getHeldEntityOrThrow(ItemDisplay.class, "tool_item")
-                    .setItemStack(new ItemStack(Material.BARRIER));
+                    .setItemStack(ItemStack.of(Material.BARRIER));
             getHeldEntityOrThrow(TextDisplay.class, "tool_clicks_remaining").text(null);
         }
     }

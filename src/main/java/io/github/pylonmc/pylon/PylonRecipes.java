@@ -74,7 +74,7 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', new FluidButton(input.amountMillibuckets(), PylonFluids.OBSCYRA))
+                        .addIngredient('i', FluidButton.of(input.amountMillibuckets(), PylonFluids.OBSCYRA))
                         .addIngredient('x', ItemButton.of(PylonItems.COLLIMATOR))
                         .addIngredient('o', ItemButton.of(PylonItems.COHESIVE_UNIT))
                         .build()
@@ -134,9 +134,9 @@ public class PylonRecipes {
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
                         .addIngredient('x', ItemButton.of(PylonItems.BIOREFINERY))
-                        .addIngredient('o', new FluidButton(1.0, PylonFluids.BIODIESEL))
-                        .addIngredient('p', new FluidButton(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
-                        .addIngredient('e', new FluidButton(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
+                        .addIngredient('o', FluidButton.of(1.0, PylonFluids.BIODIESEL))
+                        .addIngredient('p', FluidButton.of(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
+                        .addIngredient('e', FluidButton.of(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
                         .build()
         ).register();
     }
@@ -165,7 +165,7 @@ public class PylonRecipes {
                         .addIngredient('#', GuiItems.backgroundBlack())
                         .addIngredient('i', ItemButton.of(ItemStack.of(Material.SUGAR_CANE)))
                         .addIngredient('x', ItemButton.of(PylonItems.FERMENTER))
-                        .addIngredient('o', new FluidButton(ethanolPerSugarcane, PylonFluids.ETHANOL))
+                        .addIngredient('o', FluidButton.of(ethanolPerSugarcane, PylonFluids.ETHANOL))
                         .build()
         ).register();
     }

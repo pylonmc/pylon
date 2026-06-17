@@ -139,13 +139,13 @@ public class SmelteryRecipe implements RebarRecipe {
 
         int i = 0;
         for (Map.Entry<RebarFluid, Double> entry : fluidInputs.entrySet()) {
-            gui.setItem(10 + (i / 2) * 9 + (i % 2), new FluidButton(entry.getValue(), entry.getKey()));
+            gui.setItem(10 + (i / 2) * 9 + (i % 2), FluidButton.of(entry.getValue(), entry.getKey()));
             i++;
         }
 
         i = 0;
         for (Map.Entry<RebarFluid, Double> entry : fluidOutputs.entrySet()) {
-            gui.setItem(15 + (i / 2) * 9 + (i % 2), new FluidButton(entry.getValue(), entry.getKey()));
+            gui.setItem(15 + (i / 2) * 9 + (i % 2), FluidButton.of(entry.getValue(), entry.getKey()));
             i++;
         }
 

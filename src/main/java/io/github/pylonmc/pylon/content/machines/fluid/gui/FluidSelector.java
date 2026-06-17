@@ -65,7 +65,7 @@ public final class FluidSelector {
         @Override
         public @NotNull ItemProvider getItemProvider(@NotNull Player viewer) {
             RebarFluid fluid = getFluid.get();
-            return ItemStackBuilder.of(fluid == null ? new ItemStack(Material.BARRIER) : fluid.getItem())
+            return ItemStackBuilder.of(fluid == null ? ItemStack.of(Material.BARRIER) : fluid.getItem())
                     .name(Component.translatable(
                             "pylon.message.fluid_selector.current_fluid",
                             RebarArgument.of(

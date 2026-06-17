@@ -151,7 +151,7 @@ public record AssemblingRecipe(
         for (int i = 0; i < steps.size(); i++) {
             Step step = steps.get(i);
             if (step != null) {
-                ItemStack stack = ItemStackBuilder.of(step.icon)
+                ItemStack stack = ItemStackBuilder.copyOf(step.icon)
                         .name(Component.translatable("pylon.gui.assembly_table.step").arguments(
                                 RebarArgument.of("step_index", i + 1),
                                 RebarArgument.of("tool", Component.translatable("pylon.gui.assembly_table.tools." + step.tool)),
@@ -178,7 +178,7 @@ public record AssemblingRecipe(
                 .addIngredient('#', GuiItems.background())
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', new ItemButton(PylonItems.ASSEMBLY_TABLE))
+                .addIngredient('t', ItemButton.of(PylonItems.ASSEMBLY_TABLE))
                 .addIngredient('x', PagedGui.itemsBuilder()
                         .setStructure("< x x x x x x x >")
                         .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
@@ -192,14 +192,14 @@ public record AssemblingRecipe(
         for (int i = 0; i < inputs.size(); i++) {
             RecipeInput.Item input = inputs.get(i);
             if (input != null) {
-                gui.setItem(1 + i % 2, i / 2, new ItemButton(input.getRepresentativeItem()));
+                gui.setItem(1 + i % 2, i / 2, ItemButton.of(input.getRepresentativeItem()));
             }
         }
 
         for (int i = 0; i < results.size(); i++) {
             ItemStack result = results.get(i);
             if (result != null) {
-                gui.setItem(6 + i % 2, Math.floorDiv(i, 2), new ItemButton(result));
+                gui.setItem(6 + i % 2, Math.floorDiv(i, 2), ItemButton.of(result));
             }
         }
 

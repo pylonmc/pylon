@@ -152,11 +152,9 @@ public class Fermenter extends RebarBlock implements
 
         for (Vector3i position : getComponents().keySet()) {
             ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
-            if (casing == null) {
-                continue;
+            if (casing != null) {
+                casing.reset();
             }
-
-            casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
         }
 
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);
@@ -209,16 +207,23 @@ public class Fermenter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (!isFormedAndFullyLoaded()) {
+            return WailaDisplay.of(this, player);
+        }
+
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
         int sugarcaneAmount = sugarcaneProportion < RebarUtils.FLUID_EPSILON
                 ? 0
                 : Math.min(sugarcaneCapacity, (int) (sugarcaneProportion * sugarcaneCapacity) + 1);
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("sugarcane-bar", new ProgressBar()
+        return WailaDisplay.of(this, player)
+                .add(new ProgressBar()
                         .proportion(sugarcaneProportion)
                         .barColor(PylonFluids.SUGARCANE)
-                ),
-                RebarArgument.of("sugarcane-amount", sugarcaneAmount)
-        ));
+                        .suffix(Component.text(" ")
+                                .append(Component.text(sugarcaneAmount))
+                                .append(Component.text("/"))
+                                .append(Component.text(sugarcaneCapacity))
+                        )
+                );
     }
 }

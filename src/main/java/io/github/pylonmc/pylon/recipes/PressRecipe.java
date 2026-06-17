@@ -76,7 +76,7 @@ public record PressRecipe(
                                         RebarArgument.of("time", UnitFormat.SECONDS.format(Press.TIME_PER_ITEM_TICKS / 20.0))
                                 ))
                 ))
-                .addIngredient('o', new FluidButton(oilAmount, PylonFluids.PLANT_OIL))
+                .addIngredient('o', FluidButton.of(oilAmount, PylonFluids.PLANT_OIL))
                 .build();
     }
 }

@@ -261,7 +261,7 @@ public final class PylonFluids {
     public static final RebarFluid REDSTONE_SLURRY = new Slurry(
             pylonKey("slurry_redstone"),
             TextColor.fromHexString("#841f1e"),
-            new ItemStack(Material.REDSTONE)
+            ItemStack.of(Material.REDSTONE)
     ).addTag(FluidTemperature.NORMAL);
     static {
         REDSTONE_SLURRY.register();

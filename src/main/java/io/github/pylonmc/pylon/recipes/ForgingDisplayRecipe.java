@@ -59,10 +59,10 @@ public record ForgingDisplayRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('h', new ItemButton(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
-                .addIngredient('i', new ItemButton(input))
-                .addIngredient('b', new ItemButton(PylonItems.BRONZE_ANVIL))
-                .addIngredient('r', new ItemButton(result))
+                .addIngredient('h', ItemButton.of(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('b', ItemButton.of(PylonItems.BRONZE_ANVIL))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }
