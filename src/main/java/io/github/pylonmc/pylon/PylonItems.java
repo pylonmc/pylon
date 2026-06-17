@@ -16,7 +16,6 @@ import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
-import io.github.pylonmc.pylon.content.machines.electricity.Multimeter;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
@@ -3438,14 +3437,6 @@ public final class PylonItems {
     static {
         RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
         PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
-    }
-
-    public static final ItemStack MULTIMETER = ItemStackBuilder.rebar(Material.CLOCK, PylonKeys.MULTIMETER)
-            .build();
-
-    static {
-        RebarItem.register(Multimeter.class, MULTIMETER, PylonKeys.MULTIMETER);
-        PylonPages.TOOLS.addItem(MULTIMETER);
     }
 
     public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)

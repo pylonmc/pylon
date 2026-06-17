@@ -2292,11 +2292,6 @@ item:
       <arrow> Acts as a multidirectional bus for wires to connect to
       <arrow> Power may be transmitted from any port to any other port
 
-  multimeter:
-    name: "Multimeter"
-    lore: |-
-      <arrow> Measures the power passing through a wire
-
   creative_power_source:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
