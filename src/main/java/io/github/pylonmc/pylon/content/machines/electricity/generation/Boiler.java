@@ -35,8 +35,6 @@ import org.joml.Vector3i;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 public class Boiler extends RebarBlock implements
         SimpleRebarMultiblock,
         DirectionalRebarBlock,
@@ -75,7 +73,7 @@ public class Boiler extends RebarBlock implements
         }
     }
 
-    public static final RebarRegistry<Fuel> FUEL_REGISTRY = new RebarRegistry<>(pylonKey("boiler_fuels"));
+    public static final RebarRegistry<Fuel> FUEL_REGISTRY = new RebarRegistry<>();
 
     static {
         for (var fuel : ConfigSection.fromSettings(PylonKeys.BOILER).getOrThrow("fuels", FUELS_TYPE).entrySet()) {

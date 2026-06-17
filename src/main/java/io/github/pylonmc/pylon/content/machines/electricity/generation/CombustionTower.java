@@ -97,18 +97,17 @@ public class CombustionTower extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
                         fluidAmount(PylonFluids.BIODIESEL)
-                )),
-                RebarArgument.of("exhaust", ProgressBar.fluidContentsWithName(
+                ))
+                .add(ProgressBar.fluidContentsWithName(
                         PylonFluids.VERY_HOT_EXHAUST,
                         fluidCapacity(PylonFluids.VERY_HOT_EXHAUST),
                         fluidAmount(PylonFluids.VERY_HOT_EXHAUST)
-                ))
-        ));
+                ));
     }
 
     private static final Vector3i SMOKESTACK_POS = new Vector3i(0, 3, 0);

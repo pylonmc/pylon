@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -132,13 +133,14 @@ public class GasTurbine extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPowerProduced())
-                        .ignoreCommonlyUnusedPrefixes()
-                        .selectPrefixAndRescale()
-                        .decimalPlaces(2)
-                )
-        ));
+        return WailaDisplay.of(this, player)
+                .add(Component.translatable("pylon.message.producing-power",
+                        RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPowerProduced())
+                                .ignoreCommonlyUnusedPrefixes()
+                                .selectPrefixAndRescale()
+                                .decimalPlaces(1)
+                        )
+                ));
     }
 
     private static final Vector3i FLUID_INPUT_HATCH = new Vector3i(0, 0, -2);

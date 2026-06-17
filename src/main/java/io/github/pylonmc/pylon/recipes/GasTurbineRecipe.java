@@ -60,7 +60,7 @@ public record GasTurbineRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', new FluidButton(input))
+                .addIngredient('i', FluidButton.of(input))
                 .addIngredient('x', ItemButton.of(ItemStackBuilder.of(PylonItems.GAS_TURBINE.clone())
                         .lore(
                                 Component.empty(),
@@ -70,7 +70,7 @@ public record GasTurbineRecipe(
                                 )
                         )
                         .build()))
-                .addIngredient('o', new FluidButton(output))
+                .addIngredient('o', FluidButton.of(output))
                 .build();
     }
 

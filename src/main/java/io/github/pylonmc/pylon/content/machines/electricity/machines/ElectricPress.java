@@ -64,13 +64,12 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("plant-oil-bar", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
                         fluidAmount(PylonFluids.PLANT_OIL))
-                )
-        ));
+                );
     }
 }
 

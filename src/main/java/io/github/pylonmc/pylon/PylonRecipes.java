@@ -100,9 +100,9 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', new FluidButton(input))
+                        .addIngredient('i', FluidButton.of(input))
                         .addIngredient('x', ItemButton.of(PylonItems.BOILER))
-                        .addIngredient('o', new FluidButton(output))
+                        .addIngredient('o', FluidButton.of(output))
                         .build()
         ).register();
     }
@@ -193,9 +193,9 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('d', new FluidButton(input))
+                        .addIngredient('d', FluidButton.of(input))
                         .addIngredient('x', ItemButton.of(PylonItems.COMBUSTION_TOWER))
-                        .addIngredient('e', new FluidButton(output))
+                        .addIngredient('e', FluidButton.of(output))
                         .build()
         ).register();
     }

@@ -286,17 +286,16 @@ public class ElectricMixer extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-bar", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         inputFluid == null ? null : inputFluid.fluid(),
                         inputCapacity,
                         inputFluid == null ? 0 : inputFluid.amount()
-                )),
-                RebarArgument.of("output-bar", ProgressBar.fluidContentsWithName(
+                ))
+                .add(ProgressBar.fluidContentsWithName(
                         outputFluid == null ? null : outputFluid.fluid(),
                         outputCapacity,
                         outputFluid == null ? 0 : outputFluid.amount()
-                ))
-        ));
+                ));
     }
 }

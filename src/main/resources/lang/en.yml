@@ -2342,7 +2342,6 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
       <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
-    waila: "Steam Engine | %bar% | producing %power%"
 
   gas_turbine:
     name: "Gas Turbine"
@@ -2358,7 +2357,6 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
-    waila: "Gas Turbine | producing %power%"
 
   combustion_tower:
     name: "Combustion Tower"
@@ -2369,7 +2367,6 @@ item:
      
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
-    waila: "Combustion Tower | %diesel% | %exhaust%"
 
   heat_exchanger:
     name: "Heat Exchanger"
@@ -2420,7 +2417,6 @@ item:
       <arrow> Automatically performs the functions of a <item:pylon:mixing_pot/>
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Mixing time:</attr> %mixing-time%
-    waila: "Electric Mixer | %input-bar% | %output-bar%"
 
   electric_press:
     name: "Electric Press"
@@ -2428,7 +2424,6 @@ item:
       <arrow> Presses plants into plant oil
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Time per item:</attr> %time-per-item%
-    waila: "Electric Press | %plant-oil-bar%"
 
   electric_table_saw:
     name: "Electric Table Saw"
@@ -2756,9 +2751,7 @@ message:
     no-ammo: "<red>The cannon is out of ammunition"
   creative-power-source:
     set-power: "Enter a new amount of power to produce (min 0):"
-  invalid-input:
-    double: "<red>Invalid input, please enter a number"
-    integer: "<red>Invalid input, please enter an integer"
+  producing-power: "Producing %power%"
 
 gui:
   fluid-selector-title: "Select Fluid"

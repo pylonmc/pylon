@@ -65,10 +65,10 @@ public record HeatExchangerRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', new FluidButton(transferFrom.getFirst()))
-                .addIngredient('o', transferFrom.getSecond() != null ? new FluidButton(transferFrom.getSecond()) : GuiItems.backgroundBlack())
-                .addIngredient('I', new FluidButton(transferTo.getFirst()))
-                .addIngredient('O', transferTo.getSecond() != null ? new FluidButton(transferTo.getSecond()) : GuiItems.backgroundBlack())
+                .addIngredient('i', FluidButton.of(transferFrom.getFirst()))
+                .addIngredient('o', transferFrom.getSecond() != null ? FluidButton.of(transferFrom.getSecond()) : GuiItems.backgroundBlack())
+                .addIngredient('I', FluidButton.of(transferTo.getFirst()))
+                .addIngredient('O', transferTo.getSecond() != null ? FluidButton.of(transferTo.getSecond()) : GuiItems.backgroundBlack())
                 .addIngredient('x', ItemButton.of(PylonItems.HEAT_EXCHANGER))
                 .build();
     }
