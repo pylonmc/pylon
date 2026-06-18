@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
-import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
@@ -13,7 +12,7 @@ import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.BurnerPumpjack;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicPumpjack;
 import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracture;
 import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFractureSeal;
 import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
@@ -25,7 +24,6 @@ import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
-import io.github.pylonmc.rebar.item.RebarItem;
 import org.bukkit.Material;
 
 
@@ -206,11 +204,14 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.OIL_SAMPLE_DRILL, Material.NETHERITE_BLOCK, OilSampleDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURING_DRILL, Material.NETHERITE_BLOCK, HydraulicFracturingDrill.class);
-        RebarBlock.register(PylonKeys.BURNER_PUMPJACK, Material.NETHERITE_BLOCK, BurnerPumpjack.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_PUMPJACK, Material.POLISHED_TUFF, HydraulicPumpjack.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_CAP, Material.POLISHED_ANDESITE, RebarBlock.class);
         RebarBlock.register(PylonKeys.INJECTION_PIPE, Material.IRON_CHAIN, RebarBlock.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE, Material.LIGHT_BLUE_CONCRETE_POWDER, HydraulicFracture.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_SEAL, Material.TNT, HydraulicFractureSeal.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_MOTOR, Material.PISTON, RebarBlock.class);
+        RebarBlock.register(PylonKeys.STEEL_FOUNDATION, Material.NETHERITE_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.FLARE_STACK, Material.NETHER_BRICK_FENCE, RebarBlock.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
     }
 }

@@ -342,6 +342,8 @@ public class PylonKeys {
 
     public static final NamespacedKey BIOREFINERY = pylonKey("biorefinery");
     public static final NamespacedKey BRONZE_FOUNDATION = pylonKey("bronze_foundation");
+    public static final NamespacedKey STEEL_FOUNDATION = pylonKey("steel_foundation");
+    public static final NamespacedKey FLARE_STACK = pylonKey("flare_stack_structure");
     public static final NamespacedKey BRONZE_GRATING = pylonKey("bronze_grating");
     public static final NamespacedKey REINFORCED_PLATING = pylonKey("reinforced_plating");
     public static final NamespacedKey DISTILLATION_TOWER_RING = pylonKey("distillation_tower_ring");
@@ -494,5 +496,5 @@ public class PylonKeys {
 
     public static final NamespacedKey OIL_SAMPLE_DRILL = pylonKey("oil_sample_drill");
     public static final NamespacedKey HYDRAULIC_FRACTURING_DRILL = pylonKey("hydraulic_fracturing_drill");
-    public static final NamespacedKey BURNER_PUMPJACK = pylonKey("burner_pumpjack");
+    public static final NamespacedKey HYDRAULIC_PUMPJACK = pylonKey("hydraulic_pumpjack");
 }

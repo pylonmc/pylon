@@ -2472,7 +2472,7 @@ item:
   oil_sample_drill:
     name: "Oil Sample Drill"
     lore: |-
-      <arrow> Samples the maximum oil yield in the location the drill is built
+      <arrow> Samples the maximum oil yield in a particular location
       <arrow> Requires fuel to operate
       <arrow> Gives a reading of <#8f2121>none<gray>, <#e06100>low<gray>, <#efae15>medium<gray>, or <#5ea918>high<gray>
       <arrow> <attr>Time to sample:</attr> %sample-time%
@@ -2503,6 +2503,21 @@ item:
   hydraulic_fracture:
     name: "<#60a7d6>Hydraulic Fracture"
 
+  hydraulic_pumpjack:
+    name: "Hydraulic Pumpjack"
+    lore: |-
+      <arrow> Pumps oil from a <item:pylon:hydraulic_fracture/>
+      <arrow> Requires hydraulic fluid to operate
+      <arrow> Gradually reduces the yield of the fracture
+      <arrow> <attr>Max oil per second:</attr> %max-oil-per-second%
+      <arrow> <attr>Hydraulic fluid per second:</attr> %hydraulic-fluid-per-second%
+
+  steel_foundation:
+    name: "Steel Foundation"
+
+  flare_stack:
+    name: "Flare Stack Structure"
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
@@ -2513,6 +2528,7 @@ fluid:
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
+  oil: "Oil"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
@@ -2644,6 +2660,7 @@ guide:
     machines_hydraulic_machines: "<white>Hydraulic Machines"
     machines_hydraulic_purification: "<white>Hydraulic Purification"
     machines_cargo: "<white>Cargo"
+    machines_petrochemicals: "<white>Petrochemicals"
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
@@ -2796,6 +2813,8 @@ message:
     empty: "<red>The cannon is out of hydraulic fluid"
     full: "<red>The cannon is full with dirty hydraulic fluid"
     no-ammo: "<red>The cannon is out of ammunition"
+  pumpjack:
+    no-oil: "<red>No oil"
 
 gui:
   fluid-selector-title: "Select Fluid"

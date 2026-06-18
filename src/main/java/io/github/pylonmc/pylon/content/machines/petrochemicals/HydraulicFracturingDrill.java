@@ -67,7 +67,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
                     RebarArgument.of("time-to-create-fracture", UnitFormat.SECONDS.format(ticksToCreateFracture / 20.0)),
                     RebarArgument.of("steam-per-fracture", UnitFormat.MILLIBUCKETS.format(steamPerFracture)),
                     RebarArgument.of("hydraulic-fluid-per-fracture", UnitFormat.MILLIBUCKETS.format(hydraulicFluidPerFracture)),
-                    RebarArgument.of("sand-per-fracture", machineTicksPerSand * 20.0 / tickInterval)
+                    RebarArgument.of("sand-per-fracture", (int) (machineTicksPerSand * 20.0 / tickInterval))
             );
         }
     }
@@ -156,7 +156,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
     @Override
     public void postInitialise() {
         processor.onFinish(() -> {
-            Block block = getMultiblockBlock(new Vector3i(0, -1, 0));
+            Block block = getMultiblockBlock(new Vector3i(0, -2, 0));
             BlockStorage.breakBlock(block);
             BlockStorage.placeBlock(block, PylonKeys.HYDRAULIC_FRACTURE);
             Double maxYield = OilService.getOilYield(block);
@@ -199,9 +199,8 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         components.put(new Vector3i(-1, 1, 1), MultiblockComponent.of(PylonKeys.REINFORCED_PLATING));
         components.put(new Vector3i(-1, 1, -1), MultiblockComponent.of(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
-        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
-        components.put(new Vector3i(0, 2, 2), MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));
+        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK));
+        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK));
 
         components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.INJECTION_PIPE));
         components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.INJECTION_PIPE));
@@ -210,7 +209,8 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         components.put(new Vector3i(0, 5, 0), MultiblockComponent.of(PylonKeys.INJECTION_PIPE));
         components.put(new Vector3i(0, 6, 0), MultiblockComponent.of(PylonKeys.STEEL_SUPPORT_BEAM));
 
-        components.put(new Vector3i(0, -1, 0), MultiblockComponent.of(PylonKeys.HYDRAULIC_FRACTURE_CAP));
+        components.put(new Vector3i(0, -1, 0), MultiblockComponent.of(PylonKeys.STEEL_FOUNDATION));
+        components.put(new Vector3i(0, -2, 0), MultiblockComponent.of(PylonKeys.HYDRAULIC_FRACTURE_CAP));
 
         return components;
     }
@@ -261,12 +261,12 @@ public class HydraulicFracturingDrill extends RebarBlock implements
                 getFacing().getOppositeFace()
         ));
         new ParticleBuilder(Particle.FLAME)
-                .location(getBlock().getLocation().toCenterLocation().add(flamePosition))
+                .location(getBlock().getLocation().toCenterLocation().add(flamePosition).add(0, -0.4, 0))
                 .count(5)
                 .extra(0)
                 .spawn();
         new ParticleBuilder(Particle.SMOKE)
-                .location(getBlock().getLocation().toCenterLocation().add(flamePosition).add(0, 0.2, 0))
+                .location(getBlock().getLocation().toCenterLocation().add(flamePosition).add(0, -0.2, 0))
                 .count(20)
                 .extra(0)
                 .spawn();
