@@ -347,6 +347,8 @@ public class PylonKeys {
     public static final NamespacedKey DISTILLATION_TOWER_RING = pylonKey("distillation_tower_ring");
     public static final NamespacedKey SMOKESTACK_RING = pylonKey("smokestack_ring");
     public static final NamespacedKey SMOKESTACK_CAP = pylonKey("smokestack_cap");
+    public static final NamespacedKey SMALL_BOILER = pylonKey("small_boiler");
+    public static final NamespacedKey LARGE_BOILER = pylonKey("large_boiler");
 
     public static final NamespacedKey CARGO_BUFFER = pylonKey("cargo_buffer");
     public static final NamespacedKey CARGO_DUCT = pylonKey("cargo_duct");

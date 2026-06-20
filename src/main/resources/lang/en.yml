@@ -2464,9 +2464,30 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  small_boiler:
+    name: "Small Boiler"
+    lore: |-
+      <arrow> Burns fuel to turn water into steam
+      <arrow> Constantly consumes fuel, but burns much less when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_boiler:
+    name: "Large Boiler"
+    lore: |-
+      <arrow> Burns fuel to turn water into steam
+      <arrow> Constantly consumes fuel, but burns much less when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+
 fluid:
   tag:
-    melting-point: "Melting point: %temperature%"
+    melting-point: "<arrow> Melting point: %temperature%"
+    gas: "<arrow> <#b0abce>Gas</#b0abce>"
+    flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
   lava: "Lava"
   plant_oil: "Plant Oil"
@@ -2474,6 +2495,7 @@ fluid:
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
+  steam: "Steam"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
