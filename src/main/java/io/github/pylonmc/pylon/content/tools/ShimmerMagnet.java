@@ -1,15 +1,13 @@
 package io.github.pylonmc.pylon.content.tools;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.item.interfaces.InventoryTickerRebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.CustomModelData;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -27,13 +25,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 public class ShimmerMagnet extends RebarItem implements InteractRebarItemHandler, InventoryTickerRebarItem {
+    private static final NamespacedKey ENABLED_KEY = pylonKey("shimmer_magnet_toggler");
+
     @Getter
     private final double pickupDistance = getSettingOrThrow("pickup-distance", ConfigAdapter.DOUBLE);
     @Getter
     private final double attractForce = getSettingOrThrow("attract-force", ConfigAdapter.DOUBLE);
-
-    private static final NamespacedKey ENABLED_KEY = PylonUtils.pylonKey("shimmer_magnet_toggler");
 
     public ShimmerMagnet(@NotNull ItemStack stack) {
         super(stack);
@@ -58,27 +58,15 @@ public class ShimmerMagnet extends RebarItem implements InteractRebarItemHandler
 
         Player player = event.getPlayer();
         getStack().editPersistentDataContainer(pdc -> {
-            boolean enabled;
-            if (!pdc.has(ENABLED_KEY)) {
-                enabled = false;
-            } else {
-                enabled = pdc.get(ENABLED_KEY, PersistentDataType.BOOLEAN) != Boolean.TRUE;
-            }
-
-            String targetKey = enabled ? "enabled" : "disabled";
-            player.sendMessage(Component.translatable("pylon.message.shimmer_magnet." + targetKey));
-
+            boolean enabled = !isEnabled();
+            player.sendMessage(Component.translatable("pylon.message.shimmer_magnet." + (enabled ? "enabled" : "disabled")));
             pdc.set(ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
         });
 
-        CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
-        CustomModelData newData = CustomModelData.customModelData()
-                .addStrings(data.strings())
-                .addFloats(data.floats())
-                .addColors(data.colors())
-                .addFlag(isEnabled())
-                .build();
-        getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
+        ItemStackBuilder.of(getStack()).editCustomModelData(data -> {
+            data.getFlags().clear();
+            data.addFlag(isEnabled());
+        });
     }
 
     /**

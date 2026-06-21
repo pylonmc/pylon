@@ -4,7 +4,6 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicRefuelable;
 import io.github.pylonmc.pylon.util.DisplayProjectile;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -12,16 +11,14 @@ import io.github.pylonmc.rebar.entity.EntityStorage;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -98,28 +95,21 @@ public class HydraulicCannon extends RebarItem implements InteractRebarItemHandl
 
         if (getHydraulicFluid() < hydraulicFluidPerShot) {
             player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.empty"));
-            source.getWorld().playSound(emptySound.create(), source.getX(), source.getY(), source.getZ());
+            emptySound.play(source);
             return;
         }
 
         if (getDirtyHydraulicFluidSpace() < hydraulicFluidPerShot) {
             player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.full"));
-            source.getWorld().playSound(fullSound.create(), source.getX(), source.getY(), source.getZ());
+            fullSound.play(source);
             return;
         }
 
-        ItemStack projectile = null;
-        for (ItemStack stack : event.getPlayer().getInventory()) {
-            RebarItemSchema schema = RebarItemSchema.fromStack(stack);
-            if (schema != null && schema.getKey().equals(PylonKeys.TIN_PROJECTILE)) {
-                projectile = stack;
-                break;
-            }
-        }
-
+        Integer projectileIndex = RebarUtils.findRebar(player.getInventory(), PylonKeys.TIN_PROJECTILE);
+        ItemStack projectile = projectileIndex != null ? player.getInventory().getItem(projectileIndex) : null;
         if (projectile == null) {
             player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.no-ammo"));
-            source.getWorld().playSound(noAmmoSound.create(), source.getX(), source.getY(), source.getZ());
+            noAmmoSound.play(source);
             return;
         }
 
@@ -144,26 +134,18 @@ public class HydraulicCannon extends RebarItem implements InteractRebarItemHandl
                 playerHitSound.create()
         ));
 
-        player.getWorld().spawnParticle(
-                Particle.FLAME,
-                source.subtract(0, 0.4, 0).add(direction.clone().multiply(0.25)),
-                6,
-                0.3, 0.3, 0.3,
-                0.01
-        );
-
-        source.getWorld().playSound(sound.create(), source.getX(), source.getY(), source.getZ());
+        sound.play(source);
         player.setVelocity(player.getVelocity().subtract(direction.clone().multiply(recoilVelocity)));
     }
 
     @Override
     public double getHydraulicFluid() {
-        return getStack().getPersistentDataContainer().get(PylonFluids.HYDRAULIC_FLUID.getKey(), RebarSerializers.DOUBLE);
+        return getStack().getPersistentDataContainer().getOrDefault(PylonFluids.HYDRAULIC_FLUID.getKey(), RebarSerializers.DOUBLE, 0.0);
     }
 
     @Override
     public double getDirtyHydraulicFluid() {
-        return getStack().getPersistentDataContainer().get(PylonFluids.DIRTY_HYDRAULIC_FLUID.getKey(), RebarSerializers.DOUBLE);
+        return getStack().getPersistentDataContainer().getOrDefault(PylonFluids.DIRTY_HYDRAULIC_FLUID.getKey(), RebarSerializers.DOUBLE, 0.0);
     }
 
     @Override
