@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
 public class HealthTalisman extends AttributeTalisman {
 
     private static final NamespacedKey HEALTH_TALISMAN_KEY = PylonUtils.pylonKey("health_talisman");
@@ -30,7 +29,9 @@ public class HealthTalisman extends AttributeTalisman {
     }
 
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("health-boost", UnitFormat.HEARTS.format(attrBonus/2).decimalPlaces(1)));
+    public @NotNull List<RebarArgument> getPlaceholders() {
+        return List.of(
+                RebarArgument.of("health-boost", UnitFormat.HEARTS.format(attrBonus/2).decimalPlaces(1))
+        );
     }
 }
