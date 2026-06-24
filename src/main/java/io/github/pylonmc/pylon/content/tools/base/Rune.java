@@ -30,6 +30,7 @@ public abstract class Rune extends RebarItem implements DropRebarItemHandler {
 
     /**
      * Returns if the rune is applicable to a dropped item.
+     * @see RuneTarget
      */
     public abstract boolean isRuneApplicable(@NotNull Player player, @NotNull Item runeItem, @NotNull Item item);
 
