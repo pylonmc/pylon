@@ -285,20 +285,23 @@ public class CargoSplitter extends RebarBlock implements
     }
 
     private void doSplit() {
-        ItemStack input = inputInventory.getItem(0);
+        ItemStack input = inputInventory.getUnsafeItem(0);
         if (input == null) {
             return;
         }
 
         if (isLeft) {
-            ItemStack left = leftInventory.getItem(0);
-            if (left == null || (left.isSimilar(input) && left.getAmount() < left.getMaxStackSize())) {
+            ItemStack left = leftInventory.getUnsafeItem(0);
+            if (left == null || (left.getAmount() < left.getMaxStackSize() && left.isSimilar(input))) {
                 if (left == null) {
-                    leftInventory.setItem(new MachineUpdateReason(), 0, input.asOne());
+                    leftInventory.getUnsafeItems()[0] = input.asOne();
                 } else {
-                    leftInventory.setItem(new MachineUpdateReason(), 0, left.add());
+                    left.add();
                 }
-                inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+                input.subtract();
+                if (input.isEmpty()) {
+                    inputInventory.getUnsafeItems()[0] = null;
+                }
                 itemsRemaining--;
                 if (itemsRemaining == 0) {
                     isLeft = !isLeft;
@@ -307,14 +310,17 @@ public class CargoSplitter extends RebarBlock implements
                 doSplit();
             }
         } else {
-            ItemStack right = rightInventory.getItem(0);
-            if (right == null || (right.isSimilar(input) && right.getAmount() < right.getMaxStackSize())) {
+            ItemStack right = rightInventory.getUnsafeItem(0);
+            if (right == null || (right.getAmount() < right.getMaxStackSize() && right.isSimilar(input))) {
                 if (right == null) {
-                    rightInventory.setItem(new MachineUpdateReason(), 0, input.asOne());
+                    rightInventory.getUnsafeItems()[0] = input.asOne();
                 } else {
-                    rightInventory.setItem(new MachineUpdateReason(), 0, right.add());
+                    right.add();
                 }
-                inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+                input.subtract();
+                if (input.isEmpty()) {
+                    inputInventory.getUnsafeItems()[0] = null;
+                }
                 itemsRemaining--;
                 if (itemsRemaining == 0) {
                     isLeft = !isLeft;

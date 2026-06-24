@@ -251,7 +251,7 @@ public class CargoExtractor extends CargoInteractor implements
 
         LogisticGroup group = targetGroups.get(targetLogisticGroup);
         Preconditions.checkState(group != null);
-        ItemStack output = outputInventory.getItem(0);
+        ItemStack output = outputInventory.getUnsafeItem(0);
         if (output != null && output.getAmount() == output.getMaxStackSize()) {
             return;
         }
@@ -262,14 +262,26 @@ public class CargoExtractor extends CargoInteractor implements
                 continue;
             }
 
-            if (isWhitelist != itemsToFilter.contains(slotStack.asOne())) {
-                continue;
+            ItemStack singleton = null;
+            if (isWhitelist) {
+                if (itemsToFilter.isEmpty()) {
+                    continue;
+                }
+                singleton = slotStack.asOne();
+                if (!itemsToFilter.contains(singleton)) {
+                    continue;
+                }
+            } else if (!itemsToFilter.isEmpty()) {
+                singleton = slotStack.asOne();
+                if (itemsToFilter.contains(singleton)) {
+                    continue;
+                }
             }
 
             if (output == null) {
-                outputInventory.setItem(new MachineUpdateReason(), 0, slotStack.asOne());
+                outputInventory.getUnsafeItems()[0] = singleton == null ? slotStack.asOne() : singleton;
             } else {
-                outputInventory.setItem(new MachineUpdateReason(), 0, output.add());
+                output.add();
             }
             long newAmount = slot.getAmount() - 1;
             slot.set(newAmount == 0 ? null : slotStack, newAmount);

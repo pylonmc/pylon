@@ -279,21 +279,21 @@ public class CargoFluidAccumulator extends RebarBlock implements
 
     private void doTransfer() {
         int inputTotal = 0;
-        for (ItemStack stack : inputInventory.getItems()) {
+        for (ItemStack stack : inputInventory.getUnsafeItems()) {
             if (stack != null) {
                 inputTotal += stack.getAmount();
             }
         }
 
         int outputTotal = 0;
-        for (ItemStack stack : outputInventory.getItems()) {
+        for (ItemStack stack : outputInventory.getUnsafeItems()) {
             if (stack != null) {
                 outputTotal += stack.getAmount();
             }
         }
 
         if (inputTotal >= itemThreshold) {
-            getLogisticGroupOrThrow("input").setFilter(stack -> false);
+            getLogisticGroupOrThrow("input").setFilter(_ -> false);
         }
 
         if (outputTotal == 0 && getFluidAmount() < RebarUtils.FLUID_EPSILON) {
@@ -302,13 +302,13 @@ public class CargoFluidAccumulator extends RebarBlock implements
         }
 
         if (inputTotal >= itemThreshold && getFluidAmount() >= (fluidThreshold - RebarUtils.FLUID_EPSILON)) {
-            List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
+            List<ItemStack> stacks = Arrays.stream(inputInventory.getUnsafeItems()).toList();
             Preconditions.checkState(outputInventory.canHold(stacks));
             for (ItemStack stack : stacks) {
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }
-            for (int slot = 0; slot < inputInventory.getItems().length; slot++) {
-                inputInventory.setItem(new MachineUpdateReason(), slot, null);
+            for (int slot = 0; slot < inputInventory.getSize(); slot++) {
+                inputInventory.getUnsafeItems()[slot] = null;
             }
             allowFluidInputs = false;
         }

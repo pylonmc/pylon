@@ -261,22 +261,25 @@ public class CargoGate extends RebarBlock implements
 
     private void doSplit() {
         getHeldEntityOrThrow(BlockDisplay.class, "repeater")
-                .setBlock(Material.REPEATER.createBlockData("[powered=" + (itemsRemaining == 0 ? "true" : "false") + "]"));
+                .setBlock(Material.REPEATER.createBlockData("[powered=" + (itemsRemaining == 0) + "]"));
 
         VirtualInventory inputInventory = itemsRemaining == 0 ? rightInventory : leftInventory;
-        ItemStack input = inputInventory.getItem(0);
+        ItemStack input = inputInventory.getUnsafeItem(0);
         if (input == null) {
             return;
         }
 
-        ItemStack output = outputInventory.getItem(0);
-        if (output == null || (output.isSimilar(input) && output.getAmount() < output.getMaxStackSize())) {
+        ItemStack output = outputInventory.getUnsafeItem(0);
+        if (output == null || (output.getAmount() < output.getMaxStackSize() && output.isSimilar(input))) {
             if (output == null) {
-                outputInventory.setItem(new MachineUpdateReason(), 0, input.asOne());
+                outputInventory.getUnsafeItems()[0] = input.asOne();
             } else {
-                outputInventory.setItem(new MachineUpdateReason(), 0, output.add());
+                output.add();
             }
-            inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+            input.subtract();
+            if (input.isEmpty()) {
+                inputInventory.getUnsafeItems()[0] = null;
+            }
             itemsRemaining = itemsRemaining == 0
                     ? threshold
                     : itemsRemaining - 1;

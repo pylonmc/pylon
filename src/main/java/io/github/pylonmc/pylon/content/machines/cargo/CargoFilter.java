@@ -211,13 +211,13 @@ public class CargoFilter extends RebarBlock implements
     }
 
     private void doSplit() {
-        ItemStack input = inputInventory.getItem(0);
+        ItemStack input = inputInventory.getUnsafeItem(0);
         if (input == null) {
             return;
         }
 
         boolean matchesFilter = false;
-        for (ItemStack filterStack : filterInventory.getItems()) {
+        for (ItemStack filterStack : filterInventory.getUnsafeItems()) {
             if (input.isSimilar(filterStack)) {
                 matchesFilter = true;
                 break;
@@ -225,36 +225,38 @@ public class CargoFilter extends RebarBlock implements
         }
 
         getHeldEntityOrThrow(BlockDisplay.class, "comparator")
-                .setBlock(Material.COMPARATOR.createBlockData("[powered=" + (matchesFilter ? "true" : "false") +"]"));
+                .setBlock(Material.COMPARATOR.createBlockData("[powered=" + matchesFilter +"]"));
 
         if (matchesFilter) {
-            ItemStack filteredStack = leftInventory.getItem(0);
-            if (filteredStack == null
-                    || (filteredStack.isSimilar(input) && filteredStack.getAmount() < filteredStack.getMaxStackSize())
-            ) {
+            ItemStack filteredStack = leftInventory.getUnsafeItem(0);
+            if (filteredStack == null || (filteredStack.getAmount() < filteredStack.getMaxStackSize() && filteredStack.isSimilar(input))) {
                 if (filteredStack == null) {
-                    leftInventory.setItem(new MachineUpdateReason(), 0, input);
-                    inputInventory.setItem(new MachineUpdateReason(), 0, null);
+                    leftInventory.getUnsafeItems()[0] = input;
+                    inputInventory.getUnsafeItems()[0] = null;
                 } else {
                     int newAmount = Math.min(filteredStack.getMaxStackSize(), filteredStack.getAmount() + input.getAmount());
                     int toSubtract = newAmount - filteredStack.getAmount();
-                    leftInventory.setItem(new MachineUpdateReason(), 0, filteredStack.asQuantity(newAmount));
-                    inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract(toSubtract));
+                    filteredStack.setAmount(newAmount);
+                    input.subtract(toSubtract);
+                    if (input.isEmpty()) {
+                        inputInventory.getUnsafeItems()[0] = null;
+                    }
                 }
             }
         } else {
-            ItemStack unfilteredStack = rightInventory.getItem(0);
-            if (unfilteredStack == null
-                    || (unfilteredStack.isSimilar(input) && unfilteredStack.getAmount() < unfilteredStack.getMaxStackSize())
-            ) {
+            ItemStack unfilteredStack = rightInventory.getUnsafeItem(0);
+            if (unfilteredStack == null || (unfilteredStack.getAmount() < unfilteredStack.getMaxStackSize() && unfilteredStack.isSimilar(input))) {
                 if (unfilteredStack == null) {
-                    rightInventory.setItem(new MachineUpdateReason(), 0, input);
-                    inputInventory.setItem(new MachineUpdateReason(), 0, null);
+                    rightInventory.getUnsafeItems()[0] = input;
+                    inputInventory.getUnsafeItems()[0] = null;
                 } else {
                     int newAmount = Math.min(unfilteredStack.getMaxStackSize(), unfilteredStack.getAmount() + input.getAmount());
                     int toSubtract = newAmount - unfilteredStack.getAmount();
-                    rightInventory.setItem(new MachineUpdateReason(), 0, unfilteredStack.asQuantity(newAmount));
-                    inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract(toSubtract));
+                    unfilteredStack.setAmount(newAmount);
+                    input.subtract(toSubtract);
+                    if (input.isEmpty()) {
+                        inputInventory.getUnsafeItems()[0] = null;
+                    }
                 }
             }
         }

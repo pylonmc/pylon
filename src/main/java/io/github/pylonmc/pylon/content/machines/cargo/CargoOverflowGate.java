@@ -248,7 +248,7 @@ public class CargoOverflowGate extends RebarBlock
     }
 
     private void doSplit() {
-        ItemStack input = inputInventory.getItem(0);
+        ItemStack input = inputInventory.getUnsafeItem(0);
         if (input == null) return;
 
         isLeft = switch (sidePriority) {
@@ -262,14 +262,17 @@ public class CargoOverflowGate extends RebarBlock
 
     private void transferToSide(ItemStack input, boolean tryOther) {
         VirtualInventory targetInventory = isLeft ? leftInventory : rightInventory;
-        ItemStack existing = targetInventory.getItem(0);
-        if (existing == null || (existing.isSimilar(input) && existing.getAmount() < existing.getMaxStackSize())) {
+        ItemStack existing = targetInventory.getUnsafeItem(0);
+        if (existing == null || (existing.getAmount() < existing.getMaxStackSize() && existing.isSimilar(input))) {
             if (existing == null) {
-                targetInventory.setItem(new MachineUpdateReason(), 0, input.asOne());
+                targetInventory.getUnsafeItems()[0] = input.asOne();
             } else {
-                targetInventory.setItem(new MachineUpdateReason(), 0, existing.add());
+                existing.add();
             }
-            inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+            input.subtract();
+            if (input.isEmpty()) {
+                inputInventory.getUnsafeItems()[0] = null;
+            }
             doSplit();
         } else if (tryOther) {
             // Try other side

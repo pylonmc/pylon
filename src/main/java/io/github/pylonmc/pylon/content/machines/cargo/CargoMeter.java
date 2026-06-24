@@ -259,9 +259,10 @@ public class CargoMeter extends RebarBlock implements
                 measurements.removeFirst();
             }
         }
-        double total = measurements.stream()
-                .mapToDouble(x -> x)
-                .sum();
+        double total = 0.0;
+        for (Integer measurement : measurements) {
+            total += measurement;
+        }
         double average = (total / measurements.size()) * 20.0 / getTickInterval();
         Component component = UnitFormat.ITEMS_PER_SECOND.format(average).decimalPlaces(2).asComponent();
         getHeldEntityOrThrow(TextDisplay.class, "flow_rate").text(component);
