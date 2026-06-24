@@ -265,13 +265,16 @@ public class CargoOverflowGate extends RebarBlock
         ItemStack existing = targetInventory.getUnsafeItem(0);
         if (existing == null || (existing.getAmount() < existing.getMaxStackSize() && existing.isSimilar(input))) {
             if (existing == null) {
-                targetInventory.getUnsafeItems()[0] = input.asOne();
-            } else {
-                existing.add();
-            }
-            input.subtract();
-            if (input.isEmpty()) {
+                targetInventory.getUnsafeItems()[0] = input;
                 inputInventory.getUnsafeItems()[0] = null;
+            } else {
+                int newAmount = Math.min(existing.getMaxStackSize(), existing.getAmount() + input.getAmount());
+                int toSubtract = existing.getAmount() - newAmount;
+                existing.setAmount(newAmount);
+                input.subtract(toSubtract);
+                if (input.isEmpty()) {
+                    inputInventory.getUnsafeItems()[0] = null;
+                }
             }
             doSplit();
         } else if (tryOther) {

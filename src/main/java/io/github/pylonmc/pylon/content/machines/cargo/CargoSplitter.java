@@ -291,43 +291,39 @@ public class CargoSplitter extends RebarBlock implements
         }
 
         if (isLeft) {
-            ItemStack left = leftInventory.getUnsafeItem(0);
-            if (left == null || (left.getAmount() < left.getMaxStackSize() && left.isSimilar(input))) {
-                if (left == null) {
-                    leftInventory.getUnsafeItems()[0] = input.asOne();
-                } else {
-                    left.add();
-                }
-                input.subtract();
-                if (input.isEmpty()) {
-                    inputInventory.getUnsafeItems()[0] = null;
-                }
-                itemsRemaining--;
-                if (itemsRemaining == 0) {
-                    isLeft = !isLeft;
-                    itemsRemaining = ratioRight;
-                }
-                doSplit();
-            }
+            splitInventory(input, leftInventory, ratioRight);
         } else {
-            ItemStack right = rightInventory.getUnsafeItem(0);
-            if (right == null || (right.getAmount() < right.getMaxStackSize() && right.isSimilar(input))) {
-                if (right == null) {
-                    rightInventory.getUnsafeItems()[0] = input.asOne();
-                } else {
-                    right.add();
-                }
-                input.subtract();
-                if (input.isEmpty()) {
-                    inputInventory.getUnsafeItems()[0] = null;
-                }
-                itemsRemaining--;
-                if (itemsRemaining == 0) {
-                    isLeft = !isLeft;
-                    itemsRemaining = ratioLeft;
-                }
-                doSplit();
+            splitInventory(input, rightInventory, ratioLeft);
+        }
+    }
+
+    private void splitInventory(ItemStack input, VirtualInventory targetInventory, int ratio) {
+        ItemStack existing = targetInventory.getUnsafeItem(0);
+        if (existing != null && (existing.getAmount() >= existing.getMaxStackSize() || !existing.isSimilar(input))) {
+            return;
+        }
+
+        int amountToMove = Math.min(itemsRemaining, Math.min(input.getAmount(), input.getMaxStackSize() - (existing != null ? existing.getAmount() : 0)));
+        if (existing == null) {
+            targetInventory.getUnsafeItems()[0] = amountToMove == input.getAmount() ? input : input.asQuantity(amountToMove);
+        } else {
+            existing.add(amountToMove);
+        }
+
+        if (amountToMove == input.getAmount()) {
+            inputInventory.getUnsafeItems()[0] = null;
+        } else {
+            input.subtract(amountToMove);
+            if (input.isEmpty()) {
+                inputInventory.getUnsafeItems()[0] = null;
             }
         }
+
+        itemsRemaining -= amountToMove;
+        if (itemsRemaining == 0) {
+            isLeft = !isLeft;
+            itemsRemaining = ratio;
+        }
+        doSplit();
     }
 }
