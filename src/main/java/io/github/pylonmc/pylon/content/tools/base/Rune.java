@@ -72,7 +72,7 @@ public abstract class Rune extends RebarItem implements DropRebarItemHandler {
                 }
 
                 ItemStack targetItemStack = targetItem.getItemStack();
-                return !(RebarItem.fromStack(targetItemStack, RuneTarget.class) instanceof RuneTarget runeTarget) || runeTarget.isRuneSupported(player, this, runeItem, targetItem);
+                return !(fromStack(targetItemStack, RuneTarget.class) instanceof RuneTarget runeTarget) || runeTarget.isRuneSupported(player, this, runeItem, targetItem);
             });
             if (nearbyItems.isEmpty()) {
                 return;
