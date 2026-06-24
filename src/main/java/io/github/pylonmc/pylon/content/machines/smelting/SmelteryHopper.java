@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventPriority;
@@ -30,6 +31,8 @@ public final class SmelteryHopper extends SmelteryComponent implements
         BlockBreakRebarBlockHandler {
 
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
+    private MeltingRecipe lastMeltingRecipe = null;
 
     @SuppressWarnings("unused")
     public SmelteryHopper(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -63,7 +66,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
 
     @Override
     public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        Hopper hopper = (Hopper) getBlock().getState();
+        Hopper hopper = (Hopper) getBlock().getState(false);
 
         for (ItemStack item : hopper.getInventory()) {
             if (item != null) {
@@ -76,24 +79,42 @@ public final class SmelteryHopper extends SmelteryComponent implements
     public void tick() {
         SmelteryController controller = getController();
         if (controller == null) return;
+
         Hopper hopper = (Hopper) getBlock().getState(false);
         for (ItemStack item : hopper.getInventory().getContents()) {
-            if (item == null) continue;
-            MeltingRecipe recipe = null;
+            if (item == null || item.isEmpty()) continue;
+
+            if (tryRecipe(controller, lastMeltingRecipe, item)) {
+                return;
+            }
+
             for (MeltingRecipe meltingRecipe : MeltingRecipe.RECIPE_TYPE) {
-                if (meltingRecipe.input().matchesIgnoringAmount(item)) {
-                    recipe = meltingRecipe;
-                    break;
+                if (tryRecipe(controller, meltingRecipe, item)) {
+                    return;
                 }
             }
-            if (recipe == null) continue;
-            double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
-            double temperature = recipe.result().getTag(MeltingPoint.class).temperature();
-            if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
-                controller.addFluid(recipe.result(), recipe.resultAmount());
-                item.subtract();
-                break;
-            }
         }
+
+        lastMeltingRecipe = null;
+    }
+
+    public boolean tryRecipe(SmelteryController controller, MeltingRecipe recipe, ItemStack item) {
+        if (!recipe.input().matchesIgnoringAmount(item)) {
+            return false;
+        }
+
+        RebarFluid result = recipe.result();
+        if (!result.hasTag(MeltingPoint.class) || result.getTag(MeltingPoint.class).temperature() > controller.getTemperature()) {
+            return false;
+        }
+
+        double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
+        if (fluidAmountAfterAdding <= controller.getCapacity()) {
+            controller.addFluid(recipe.result(), recipe.resultAmount());
+            item.subtract();
+            lastMeltingRecipe = recipe;
+            return true;
+        }
+        return false;
     }
 }

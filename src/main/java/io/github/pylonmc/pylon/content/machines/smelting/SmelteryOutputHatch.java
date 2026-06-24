@@ -5,7 +5,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -36,13 +38,16 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Flui
     @Override
     public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         SmelteryController controller = getController();
-        if (controller == null) return List.of();
+        if (controller == null || controller.getFluids().isEmpty()) return List.of();
 
-        return controller.getFluids().entrySet().stream()
-                .filter(entry -> entry.getKey().hasTag(MeltingPoint.class))
-                .filter(entry -> entry.getKey().getTag(MeltingPoint.class).temperature() <= controller.getTemperature())
-                .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
-                .toList();
+        List<Pair<RebarFluid, Double>> suppliedFluids = new ArrayList<>();
+        for (Map.Entry<RebarFluid, Double> entry : controller.getFluids().entrySet()) {
+            RebarFluid fluid = entry.getKey();
+            if (fluid.hasTag(MeltingPoint.class) && fluid.getTag(MeltingPoint.class).temperature() <= controller.getTemperature()) {
+                suppliedFluids.add(new Pair<>(fluid, Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
+            }
+        }
+        return suppliedFluids;
     }
 
     @Override

@@ -185,16 +185,13 @@ public class Kiln extends RebarBlock implements
         temperatureItem.notifyWindows();
 
         // Visual stuff
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(fuelTicksRemaining > 0);
-        getBlock().setBlockData(furnace);
+        editBlockData(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
 
         int level = Math.clamp((int) Math.round(15 * temperature / maxTemperature), 0, 15);
         Block light = getLight();
-        if (light.getType() == Material.LIGHT) {
-            Light blockData = (Light) light.getBlockData();
-            blockData.setLevel(level);
-            light.setBlockData(blockData);
+        if (light.getBlockData() instanceof Light lightData) {
+            lightData.setLevel(level);
+            light.setBlockData(lightData);
         }
 
         for (int i = 0; i < level; i++) {
@@ -356,11 +353,10 @@ public class Kiln extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         Block light = getLight();
-        if (light.getType().isAir()) {
-            light.setType(Material.LIGHT);
-            Light blockData = (Light) light.getBlockData();
-            blockData.setLevel(0);
-            light.setBlockData(blockData);
+        if (light.isEmpty()) {
+            Light lightData = (Light) Material.LIGHT.createBlockData();
+            lightData.setLevel(0);
+            light.setBlockData(lightData, false);
         }
     }
 
@@ -369,7 +365,7 @@ public class Kiln extends RebarBlock implements
         SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Block light = getLight();
         if (light.getType() == Material.LIGHT) {
-            light.setType(Material.AIR);
+            light.setType(Material.AIR, false);
         }
     }
 

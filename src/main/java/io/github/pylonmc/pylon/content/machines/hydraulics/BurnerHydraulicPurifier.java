@@ -142,10 +142,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             return;
         }
 
-        Lightable lightable = (Lightable) getBlock().getBlockData();
-        lightable.setLit(false);
-        getBlock().setBlockData(lightable);
-
+        editBlockData(Lightable.class, lightable -> lightable.setLit(false));
         if (getProcessTimeTicks() != null) {
 
             FluidInputHatch fluidInput = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT);
@@ -161,9 +158,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
                 return;
             }
 
-            lightable = (Lightable) getBlock().getBlockData();
-            lightable.setLit(true);
-            getBlock().setBlockData(lightable);
+            editBlockData(Lightable.class, lightable -> lightable.setLit(true));
 
             fluidInput.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, fluidToPurify);
             fluidOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, fluidToPurify * purificationEfficiency);

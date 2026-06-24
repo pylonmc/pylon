@@ -83,12 +83,9 @@ public final class SmelteryController extends SmelteryComponent
                     .thenComparing(fluid -> fluid.getKey().toString())
     );
 
-    @Getter
-    private boolean running;
-    @Getter
-    private double temperature;
-    @Getter
-    private double capacity;
+    @Getter private boolean running;
+    @Getter private double temperature;
+    @Getter private double capacity;
     private int height;
 
     @SuppressWarnings("unused")
@@ -177,35 +174,31 @@ public final class SmelteryController extends SmelteryComponent
 
         @Override
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            List<Component> lore = new ArrayList<>();
+            ItemStackBuilder icon = ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
+                    .name(Component.translatable("pylon.gui.smeltery.contents.name"));
             if (fluids.isEmpty()) {
-                lore.add(Component.translatable("pylon.gui.smeltery.contents.empty"));
-            } else {
-                for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
-                    RebarFluid fluid = entry.getKey();
-                    double amount = entry.getDoubleValue();
-                    lore.add(Component.text().build().append(Component.translatable(
-                            "pylon.gui.smeltery.contents.fluid",
-                            RebarArgument.of(
-                                    "amount",
-                                    UnitFormat.MILLIBUCKETS.format(amount)
-                                            .decimalPlaces(1)
-                                            .unitStyle(Style.empty())
-                            ),
-                            RebarArgument.of("fluid", fluid.getName())
-                    )));
-                }
+                icon.lore(Component.translatable("pylon.gui.smeltery.contents.empty"));
+                return icon;
             }
-            return ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
-                    .name(Component.translatable("pylon.gui.smeltery.contents.name"))
-                    .lore(lore);
+
+            for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
+                icon.lore(Component.translatable(
+                        "pylon.gui.smeltery.contents.fluid",
+                        RebarArgument.of(
+                                "amount",
+                                UnitFormat.MILLIBUCKETS.format(entry.getDoubleValue())
+                                        .decimalPlaces(1)
+                                        .unitStyle(Style.empty())
+                        ),
+                        RebarArgument.of("fluid", entry.getKey().getName())
+                ));
+            }
+            return icon;
         }
 
         @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-        }
+        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {}
     }
-
     // </editor-fold>
 
     // <editor-fold desc="Multiblock" defaultstate="collapsed">
@@ -290,7 +283,7 @@ public final class SmelteryController extends SmelteryComponent
         if (totalFluid > capacity) {
             double ratio = capacity / totalFluid;
             for (RebarFluid fluid : fluids.keySet()) {
-                fluids.computeDouble(fluid, (key, value) -> value * ratio);
+                fluids.computeDouble(fluid, (_, value) -> value * ratio);
             }
         }
 
@@ -522,75 +515,86 @@ public final class SmelteryController extends SmelteryComponent
     }
     // </editor-fold>
 
+    private SmelteryRecipe lastRecipe = null;
+
+    private boolean tryRecipe(SmelteryRecipe recipe) {
+        if (recipe.getTemperature() > temperature) {
+            return false;
+        }
+
+        if (!fluids.keySet().containsAll(recipe.getFluidInputs().keySet())) {
+            return false;
+        }
+
+        double totalInputFluid = 0.0;
+        for (Double v : recipe.getFluidInputs().values()) {
+            totalInputFluid += v;
+        }
+
+        double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
+        double maxFluidConsumption = fluidReactionPerTick * highestFluidRatio;
+        double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
+
+        double currentTemperature = temperature;
+        for (Map.Entry<RebarFluid, Double> entry : recipe.getFluidInputs().entrySet()) {
+            double amount = trueMaxConsumption * entry.getValue();
+            removeFluid(entry.getKey(), amount);
+        }
+        for (Map.Entry<RebarFluid, Double> entry : recipe.getFluidOutputs().entrySet()) {
+            double amount = trueMaxConsumption * entry.getValue();
+            addFluid(entry.getKey(), amount);
+        }
+        temperature = currentTemperature; // offset addFluid/removeFluid temperature change
+        return true;
+    }
+
     private void performRecipes() {
-        if (fluids.isEmpty()) return;
-        recipeLoop:
+        if (fluids.isEmpty() || tryRecipe(lastRecipe)) {
+            return;
+        }
+
         for (SmelteryRecipe recipe : SmelteryRecipe.RECIPE_TYPE) {
-            if (recipe.getTemperature() > temperature) continue;
-
-            for (RebarFluid fluid : recipe.getFluidInputs().keySet()) {
-                if (!fluids.containsKey(fluid)) continue recipeLoop;
+            if (tryRecipe(recipe)) {
+                break;
             }
-
-            double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
-            double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
-            double maxFluidConsumption = fluidReactionPerTick * highestFluidRatio;
-            double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
-
-            double currentTemperature = temperature;
-            for (var entry : recipe.getFluidInputs().entrySet()) {
-                RebarFluid fluid = entry.getKey();
-                double amount = trueMaxConsumption * entry.getValue();
-                removeFluid(fluid, amount);
-            }
-            for (var entry : recipe.getFluidOutputs().entrySet()) {
-                RebarFluid fluid = entry.getKey();
-                double amount = trueMaxConsumption * entry.getValue();
-                addFluid(fluid, amount);
-            }
-            temperature = currentTemperature; // offset addFluid/removeFluid temperature change
         }
     }
 
     @Override
     public void tick() {
-        if (isFormedAndFullyLoaded()) {
-            double oldTemperature = temperature;
-            if (running) {
-                applyHeat();
-                performRecipes();
-            }
-            if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
-                // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
-                // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
-                temperature -= (temperature - roomTemperature) * coolingFactor;
-            }
-            avgTarget = -1;
-            heaters = 0;
-            updateFluidDisplay();
-
-            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
-            box.expand(BlockFace.UP, height);
-
-            double damage = Math.max(0, temperature / 100 + 1);
-
-            for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
-                if (!(entity instanceof LivingEntity livingEntity)) continue;
-                livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
-            }
+        if (!isFormedAndFullyLoaded()) {
+            return;
         }
+
+        double oldTemperature = temperature;
+        if (running) {
+            applyHeat();
+            performRecipes();
+        }
+        if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
+            // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
+            // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
+            temperature -= (temperature - roomTemperature) * coolingFactor;
+        }
+        avgTarget = -1;
+        heaters = 0;
+        updateFluidDisplay();
         infoItem.notifyWindows();
         contentsItem.notifyWindows();
+
+        BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
+        box.expand(BlockFace.UP, height);
+
+        double damage = Math.max(0, temperature / 100 + 1);
+        for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
+            if (!(entity instanceof LivingEntity livingEntity)) continue;
+            livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
+        }
     }
 
     public void setRunning(boolean running) {
         this.running = running;
-
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(running);
-        getBlock().setBlockData(furnace);
-
-        refreshBlockTextureItem();
+        editBlockData(Furnace.class, furnace -> furnace.setLit(running));
     }
 
     @Override
