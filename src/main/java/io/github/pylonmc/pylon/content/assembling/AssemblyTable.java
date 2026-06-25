@@ -319,7 +319,7 @@ public class AssemblyTable extends RebarBlock implements
             }
         }
 
-        recipe = AssemblingRecipe.findRecipe(inputInventory.getItems());
+        recipe = AssemblingRecipe.findRecipe(inputInventory.getUnsafeItems());
         if (recipe != null) {
             setStep(0);
             setRemainingClicks(recipe.steps().getFirst().clicks());
@@ -352,8 +352,8 @@ public class AssemblyTable extends RebarBlock implements
         // Remove input items if recipe has not been started yet
         if (!isRecipeStarted()) {
             for (RecipeInput.Item item : recipe.inputs()) {
-                for (int i = 0; i < inputInventory.getItems().length; i++) {
-                    ItemStack stack = inputInventory.getItem(i);
+                for (int i = 0; i < inputInventory.getSize(); i++) {
+                    ItemStack stack = inputInventory.getUnsafeItem(i);
                     if (stack != null && item.matches(stack)) {
                         inputInventory.addItemAmount(new MachineUpdateReason(), i, -item.getAmount());
                         break;

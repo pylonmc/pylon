@@ -313,10 +313,7 @@ public class CargoSplitter extends RebarBlock implements
         if (amountToMove == input.getAmount()) {
             inputInventory.getUnsafeItems()[0] = null;
         } else {
-            input.subtract(amountToMove);
-            if (input.isEmpty()) {
-                inputInventory.getUnsafeItems()[0] = null;
-            }
+            RebarUtils.unsafeSubtract(inputInventory, 0, amountToMove);
         }
 
         itemsRemaining -= amountToMove;

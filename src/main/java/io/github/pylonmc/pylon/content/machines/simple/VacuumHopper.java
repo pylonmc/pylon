@@ -191,7 +191,7 @@ public class VacuumHopper extends RebarBlock implements
     }
 
     public boolean isFiltered(@NotNull ItemStack item) {
-        for (ItemStack filterStack : filterInventory.getItems()) {
+        for (ItemStack filterStack : filterInventory.getUnsafeItems()) {
             if (item.isSimilar(filterStack)) {
                 return whitelist;
             }

@@ -231,7 +231,7 @@ public class CargoAccumulator extends RebarBlock implements
         }
 
         if (inputTotal >= threshold) {
-            List<ItemStack> stacks = Arrays.stream(inputInventory.getUnsafeItems()).toList();
+            List<ItemStack> stacks = Arrays.asList(inputInventory.getUnsafeItems());
             if (!outputInventory.canHold(stacks)) return;
 
             for (ItemStack stack : stacks) {

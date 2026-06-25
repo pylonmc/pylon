@@ -247,10 +247,7 @@ public class CargoFilter extends RebarBlock implements
             int newAmount = Math.min(existing.getMaxStackSize(), existing.getAmount() + input.getAmount());
             int toSubtract = newAmount - existing.getAmount();
             existing.setAmount(newAmount);
-            input.subtract(toSubtract);
-            if (input.isEmpty()) {
-                inputInventory.getUnsafeItems()[0] = null;
-            }
+            RebarUtils.unsafeSubtract(inputInventory, 0, toSubtract);
         }
     }
 }

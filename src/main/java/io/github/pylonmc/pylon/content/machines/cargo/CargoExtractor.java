@@ -188,7 +188,7 @@ public class CargoExtractor extends CargoInteractor implements
 
         filterInventory.addPostUpdateHandler(event -> {
             itemsToFilter.clear();
-            for (ItemStack stack : filterInventory.getItems()) {
+            for (ItemStack stack : filterInventory.getUnsafeItems()) {
                 if (stack != null) {
                     itemsToFilter.add(stack.asOne());
                 }
