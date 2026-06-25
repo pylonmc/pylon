@@ -69,7 +69,7 @@ public class FluidPlacer extends RebarBlock implements FluidBufferRebarBlock, Ti
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH, context, true);
         createFluidBuffer(fluid, buffer, true, false);
-        Preconditions.checkState(getBlock().getBlockData() instanceof Directional);
+        Preconditions.checkState(getBlock().getBlockData() instanceof Directional directional);
         Directional directional = (Directional) getBlock().getBlockData();
         placeBlock = getBlock().getRelative(directional.getFacing());
     }
@@ -107,8 +107,9 @@ public class FluidPlacer extends RebarBlock implements FluidBufferRebarBlock, Ti
             return;
         }
 
-        if (new FluidLevelChangeEvent(placeBlock, material.createBlockData()).callEvent()) {
-            placeBlock.setType(material);
+        FluidLevelChangeEvent event = new FluidLevelChangeEvent(placeBlock, material.createBlockData());
+        if (event.callEvent()) {
+            placeBlock.setBlockData(event.getNewData());
         }
     }
 

@@ -33,6 +33,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,14 +97,19 @@ public class FluidDrainer extends RebarBlock
     @Override
     public void tick() {
         if (fluidSpaceRemaining(fluid) >= 1000.0
-                && drainBlock.getType() == material
                 && drainBlock.getBlockData() instanceof Levelled levelled
                 && levelled.getLevel() == 0 // 0 = source block (for some reason)
-                && new BlockBreakBlockEvent(drainBlock, getBlock(), List.of()).callEvent()
+                && levelled.getMaterial() == material
                 && drainBlock.getWorld().getWorldBorder().isInside(drainBlock.getLocation())
         ) {
-            drainBlock.setType(Material.AIR);
-            addFluid(fluid, 1000.0);
+            BlockBreakBlockEvent event = new BlockBreakBlockEvent(drainBlock, getBlock(), new ArrayList<>());
+            if (event.callEvent()) {
+                for (ItemStack drop : event.getDrops()) {
+                    drainBlock.getWorld().dropItemNaturally(drainBlock.getLocation().toCenterLocation(), drop);
+                }
+                drainBlock.setType(Material.AIR);
+                addFluid(fluid, 1000.0);
+            }
         }
     }
 

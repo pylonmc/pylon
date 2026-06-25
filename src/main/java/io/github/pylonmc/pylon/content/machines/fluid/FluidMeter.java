@@ -210,9 +210,11 @@ public class FluidMeter extends RebarBlock implements
             }
         }
 
-        double total = measurements.stream()
-                .mapToDouble(x -> x)
-                .sum();
+        double total = 0.0;
+        for (Double measurement : measurements) {
+            total += measurement;
+        }
+
         int average = (int) ((total / measurements.size()) * 20.0 / getTickInterval());
         if (average == lastAverage) {
             return;

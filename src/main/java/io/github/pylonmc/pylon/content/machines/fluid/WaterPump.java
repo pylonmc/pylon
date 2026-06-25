@@ -59,7 +59,7 @@ public class WaterPump extends RebarBlock implements FluidRebarBlock {
     @Override
     public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         Block below = getBlock().getRelative(BlockFace.DOWN);
-        FluidData data = below.getWorld().getFluidData(below.getLocation());
+        FluidData data = below.getWorld().getFluidData(below.getX(), below.getY(), below.getZ());
         if (data.getFluidType() == Fluid.WATER && data.isSource()) {
             return suppliedWater;
         }
