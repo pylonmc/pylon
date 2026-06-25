@@ -244,7 +244,7 @@ public class Kiln extends RebarBlock implements
         // dividing by 10 due to suspected bug with getBurnDuration
         fuelTicksTotal = type.getBurnDuration() / 10;
         fuelTicksRemaining = fuelTicksTotal;
-        fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
+        RebarUtils.unsafeSubtract(fuelInventory, 0, 1);
     }
 
     public boolean tryStartRecipe(@NonNull KilnRecipe recipe) {

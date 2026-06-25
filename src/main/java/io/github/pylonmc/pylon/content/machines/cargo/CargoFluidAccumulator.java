@@ -308,7 +308,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }
             for (int slot = 0; slot < inputInventory.getSize(); slot++) {
-                inputInventory.getUnsafeItems()[slot] = null;
+                RebarUtils.unsafeSet(inputInventory, slot, null);
             }
             allowFluidInputs = false;
         }

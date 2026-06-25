@@ -275,12 +275,12 @@ public class CargoGate extends RebarBlock implements
         }
 
         if (output == null) {
-            outputInventory.getUnsafeItems()[0] = input;
-            inputInventory.getUnsafeItems()[0] = null;
+            RebarUtils.unsafeSet(outputInventory, 0, input);
+            RebarUtils.unsafeSet(inputInventory, 0, null);
         } else {
             int newAmount = Math.min(output.getMaxStackSize(), output.getAmount() + input.getAmount());
             int toSubtract = newAmount - output.getAmount();
-            output.setAmount(newAmount);
+            RebarUtils.unsafeSetAmount(outputInventory, 0, newAmount);
             RebarUtils.unsafeSubtract(inputInventory, 0, toSubtract);
         }
         itemsRemaining = itemsRemaining == 0

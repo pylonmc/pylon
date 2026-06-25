@@ -241,12 +241,12 @@ public class CargoFilter extends RebarBlock implements
         }
 
         if (existing == null) {
-            targetInventory.getUnsafeItems()[0] = input;
-            inputInventory.getUnsafeItems()[0] = null;
+            RebarUtils.unsafeSet(targetInventory, 0, input);
+            RebarUtils.unsafeSet(inputInventory, 0, null);
         } else {
             int newAmount = Math.min(existing.getMaxStackSize(), existing.getAmount() + input.getAmount());
             int toSubtract = newAmount - existing.getAmount();
-            existing.setAmount(newAmount);
+            RebarUtils.unsafeSetAmount(targetInventory, 0, newAmount);
             RebarUtils.unsafeSubtract(inputInventory, 0, toSubtract);
         }
     }

@@ -355,7 +355,7 @@ public class AssemblyTable extends RebarBlock implements
                 for (int i = 0; i < inputInventory.getSize(); i++) {
                     ItemStack stack = inputInventory.getUnsafeItem(i);
                     if (stack != null && item.matches(stack)) {
-                        inputInventory.addItemAmount(new MachineUpdateReason(), i, -item.getAmount());
+                        RebarUtils.unsafeSubtract(inputInventory, i, item.getAmount());
                         break;
                     }
                 }

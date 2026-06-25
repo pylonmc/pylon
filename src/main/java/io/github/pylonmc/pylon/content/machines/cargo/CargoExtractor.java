@@ -279,9 +279,9 @@ public class CargoExtractor extends CargoInteractor implements
             }
 
             if (output == null) {
-                outputInventory.getUnsafeItems()[0] = singleton == null ? slotStack.asOne() : singleton;
+                RebarUtils.unsafeSet(outputInventory, 0, singleton == null ? slotStack.asOne() : singleton);
             } else {
-                output.add();
+                RebarUtils.unsafeAdd(outputInventory, 0, 1);
             }
             long newAmount = slot.getAmount() - 1;
             slot.set(newAmount == 0 ? null : slotStack, newAmount);

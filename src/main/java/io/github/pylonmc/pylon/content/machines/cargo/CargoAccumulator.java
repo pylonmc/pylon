@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -238,7 +239,7 @@ public class CargoAccumulator extends RebarBlock implements
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }
             for (int slot = 0; slot < inputInventory.getSize(); slot++) {
-                inputInventory.getUnsafeItems()[slot] = null;
+                RebarUtils.unsafeSet(inputInventory, slot, null);
             }
             getLogisticGroupOrThrow("input").setFilter(_ -> false);
             getHeldEntityOrThrow(BlockDisplay.class, "side1")
