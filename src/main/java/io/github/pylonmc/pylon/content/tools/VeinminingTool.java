@@ -58,7 +58,7 @@ public abstract class VeinminingTool extends RebarItem implements BlockBreakReba
     }
 
     public void tryVeinMine(Player player, Block root, Block block, BlockFace sourceFace, Set<BlockPosition> vein) {
-        if (vein.size() >= getMaxVeinSize() || getStack().isEmpty()) {
+        if (vein.size() >= getMaxVeinSize() || getStack().isEmpty()|| RebarUtils.isBroken(getStack())) {
             return;
         }
 
