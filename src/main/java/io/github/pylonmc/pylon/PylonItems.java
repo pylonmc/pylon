@@ -888,28 +888,32 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(BRONZE_GRATING);
     }
 
-    public static final ItemStack FIREBOX = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.FIREBOX)
+    public static final ItemStack FIREBOX = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FIREBOX)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BLAST_FURNACE.getKey())
             .build();
     static {
         RebarItem.register(RebarItem.class, FIREBOX, PylonKeys.FIREBOX);
         PylonPages.COMPONENTS.addItem(FIREBOX);
     }
 
-    public static final ItemStack FLUID_FIREBOX = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.FLUID_FIREBOX)
+    public static final ItemStack FLUID_FIREBOX = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_FIREBOX)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BLAST_FURNACE.getKey())
             .build();
     static {
         RebarItem.register(RebarItem.class, FLUID_FIREBOX, PylonKeys.FLUID_FIREBOX);
         PylonPages.COMPONENTS.addItem(FLUID_FIREBOX);
     }
 
-    public static final ItemStack COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.WAXED_COPPER_CHAIN, PylonKeys.COPPER_PIPE_ASSEMBLY)
+    public static final ItemStack COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_PIPE_ASSEMBLY)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_CHAIN.getKey())
             .build();
     static {
         RebarItem.register(RebarItem.class, COPPER_PIPE_ASSEMBLY, PylonKeys.COPPER_PIPE_ASSEMBLY);
         PylonPages.COMPONENTS.addItem(COPPER_PIPE_ASSEMBLY);
     }
 
-    public static final ItemStack LARGE_COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.WAXED_COPPER_CHAIN, PylonKeys.LARGE_COPPER_PIPE_ASSEMBLY)
+    public static final ItemStack LARGE_COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LARGE_COPPER_PIPE_ASSEMBLY)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_CHAIN.getKey())
             .build();
     static {
         RebarItem.register(RebarItem.class, LARGE_COPPER_PIPE_ASSEMBLY, PylonKeys.LARGE_COPPER_PIPE_ASSEMBLY);
