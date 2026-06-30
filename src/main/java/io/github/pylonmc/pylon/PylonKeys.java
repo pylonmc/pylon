@@ -343,12 +343,18 @@ public class PylonKeys {
     public static final NamespacedKey BIOREFINERY = pylonKey("biorefinery");
     public static final NamespacedKey BRONZE_FOUNDATION = pylonKey("bronze_foundation");
     public static final NamespacedKey BRONZE_GRATING = pylonKey("bronze_grating");
+    public static final NamespacedKey FIREBOX = pylonKey("firebox");
+    public static final NamespacedKey FLUID_FIREBOX = pylonKey("fluid_firebox");
+    public static final NamespacedKey COPPER_PIPE_ASSEMBLY = pylonKey("copper_pipe_assembly");
+    public static final NamespacedKey LARGE_COPPER_PIPE_ASSEMBLY = pylonKey("large_copper_pipe_assembly");
     public static final NamespacedKey REINFORCED_PLATING = pylonKey("reinforced_plating");
     public static final NamespacedKey DISTILLATION_TOWER_RING = pylonKey("distillation_tower_ring");
     public static final NamespacedKey SMOKESTACK_RING = pylonKey("smokestack_ring");
     public static final NamespacedKey SMOKESTACK_CAP = pylonKey("smokestack_cap");
     public static final NamespacedKey SMALL_BOILER = pylonKey("small_boiler");
     public static final NamespacedKey LARGE_BOILER = pylonKey("large_boiler");
+    public static final NamespacedKey SMALL_FLUID_BOILER = pylonKey("small_fluid_boiler");
+    public static final NamespacedKey LARGE_FLUID_BOILER = pylonKey("large_fluid_boiler");
 
     public static final NamespacedKey CARGO_BUFFER = pylonKey("cargo_buffer");
     public static final NamespacedKey CARGO_DUCT = pylonKey("cargo_duct");

@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class LargeBoiler extends AbstractSolidFuelBoiler {
+public class LargeFluidBoiler extends AbstractFluidFuelBoiler {
 
-    public ItemStackBuilder panelStack = ItemStackBuilder.of(Material.ORANGE_TERRACOTTA)
+    public ItemStackBuilder panelStack = ItemStackBuilder.of(Material.YELLOW_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":panel");
     public ItemStackBuilder gratingStack = ItemStackBuilder.of(Material.COPPER_BARS)
             .addCustomModelDataString(getKey() + ":grating");
@@ -42,7 +42,7 @@ public class LargeBoiler extends AbstractSolidFuelBoiler {
     public static final Vector3i SMOKESTACK_CAP_2 = new Vector3i(4, 4, 2);
 
     @SuppressWarnings("unused")
-    public LargeBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public LargeFluidBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
         BlockFace perpendicular = RebarUtils.rotateFaceToReference(getFacing(), BlockFace.WEST);
@@ -92,7 +92,7 @@ public class LargeBoiler extends AbstractSolidFuelBoiler {
     }
 
     @SuppressWarnings("unused")
-    public LargeBoiler(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public LargeFluidBoiler(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 
@@ -169,7 +169,7 @@ public class LargeBoiler extends AbstractSolidFuelBoiler {
 
         components.put(WATER_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
         components.put(STEAM_OUTPUT, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(FUEL_INPUT, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
+        components.put(FUEL_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
 
         return components;
     }

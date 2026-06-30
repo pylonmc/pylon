@@ -1,6 +1,5 @@
 package io.github.pylonmc.pylon.content.machines.boiler;
 
-import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.util.PylonUtils;
@@ -99,8 +98,8 @@ public abstract class AbstractBoiler extends RebarBlock implements SimpleRebarMu
         FluidInputHatch waterHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, waterInputHatchPosition);
         FluidOutputHatch steamHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, steamOutputHatchPosition);
 
-        double maxWaterProportion = waterHatch.fluidAmount() / (waterInput * deltaTime);
-        double maxSteamProportion = steamHatch.fluidSpaceRemaining(PylonFluids.STEAM) / (steamOutput * deltaTime);
+        double maxWaterProportion = waterHatch.getFluidAmount() / (waterInput * deltaTime);
+        double maxSteamProportion = steamHatch.getFluidSpaceRemaining() / (steamOutput * deltaTime);
         double maxSteamConversionProportion = Math.min(boilingTemperatureProportion, Math.min(maxWaterProportion, maxSteamProportion));
 
         double waterAmount = maxSteamConversionProportion * waterInput * deltaTime;

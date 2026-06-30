@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SmallBoiler extends AbstractSolidFuelBoiler {
+public class SmallFluidBoiler extends AbstractFluidFuelBoiler {
 
-    public ItemStackBuilder panelStack = ItemStackBuilder.of(Material.ORANGE_TERRACOTTA)
+    public ItemStackBuilder panelStack = ItemStackBuilder.of(Material.YELLOW_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":panel");
     public ItemStackBuilder gratingStack = ItemStackBuilder.of(Material.COPPER_BARS)
             .addCustomModelDataString(getKey() + ":grating");
@@ -38,7 +38,7 @@ public class SmallBoiler extends AbstractSolidFuelBoiler {
     public static final Vector3i SMOKESTACK_CAP = new Vector3i(1, 4, 1);
 
     @SuppressWarnings("unused")
-    public SmallBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
+    public SmallFluidBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
         addEntity("vertical-panel", new ItemDisplayBuilder()
@@ -97,7 +97,7 @@ public class SmallBoiler extends AbstractSolidFuelBoiler {
     }
 
     @SuppressWarnings("unused")
-    public SmallBoiler(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    public SmallFluidBoiler(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 
@@ -122,8 +122,7 @@ public class SmallBoiler extends AbstractSolidFuelBoiler {
 
         components.put(WATER_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
         components.put(STEAM_OUTPUT, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
-        components.put(FUEL_INPUT, MultiblockComponent.of(PylonKeys.ITEM_INPUT_HATCH));
-        components.put(new Vector3i(1, 1, 1), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
+        components.put(FUEL_INPUT, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH));
         components.put(new Vector3i(1, 2, 1), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
         components.put(new Vector3i(1, 3, 1), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
         components.put(SMOKESTACK_CAP, MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));

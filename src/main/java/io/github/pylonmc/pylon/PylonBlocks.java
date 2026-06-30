@@ -3,9 +3,10 @@ package io.github.pylonmc.pylon;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.building.*;
 import io.github.pylonmc.pylon.content.components.*;
-import io.github.pylonmc.pylon.content.machines.boiler.AbstractSolidBoiler;
 import io.github.pylonmc.pylon.content.machines.boiler.LargeBoiler;
+import io.github.pylonmc.pylon.content.machines.boiler.LargeFluidBoiler;
 import io.github.pylonmc.pylon.content.machines.boiler.SmallBoiler;
+import io.github.pylonmc.pylon.content.machines.boiler.SmallFluidBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
@@ -201,7 +202,9 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.SMALL_BOILER, Material.BRICKS, SmallBoiler.class);
-        RebarBlock.register(PylonKeys.LARGE_BOILER, Material.BRICKS, LargeBoiler.class);
+        RebarBlock.register(PylonKeys.LARGE_BOILER, Material.BRICK_STAIRS, LargeBoiler.class);
+        RebarBlock.register(PylonKeys.SMALL_FLUID_BOILER, Material.BRICKS, SmallFluidBoiler.class);
+        RebarBlock.register(PylonKeys.LARGE_FLUID_BOILER, Material.BRICK_STAIRS, LargeFluidBoiler.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
     }
 }
