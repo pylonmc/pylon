@@ -3034,7 +3034,7 @@ pylon:large_fluid_boiler:
   key:
     B: pylon:bronze_block
     R: minecraft:bricks
-    F: pylon:firebox
+    F: pylon:fluid_firebox
     C: pylon:large_copper_pipe_assembly
   result: pylon:large_fluid_boiler
   category: building
