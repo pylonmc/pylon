@@ -1,12 +1,11 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.NumberInputButton;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -16,10 +15,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -31,8 +31,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -157,7 +155,7 @@ public class FluidLimiter extends RebarBlock implements DirectionalRebarBlock, F
                         .valueGetter(() -> maxFlowRate)
                         .valueSetter(value -> maxFlowRate = value)
                         .valueFormatter(UnitFormat.MILLIBUCKETS_PER_SECOND::format)
-                        .reopenWindow(this::openWindow)
+                        .reopenWindow(this::open)
                         .build())
                 .build();
     }

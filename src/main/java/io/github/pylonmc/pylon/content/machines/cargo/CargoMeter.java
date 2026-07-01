@@ -3,12 +3,8 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -23,6 +19,10 @@ import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -39,11 +39,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public class CargoMeter extends RebarBlock implements
@@ -252,7 +247,7 @@ public class CargoMeter extends RebarBlock implements
                         .valueGetter(() -> numberOfMeasurements)
                         .valueSetter(value -> numberOfMeasurements = value)
                         .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
-                        .reopenWindow(this::openWindow)
+                        .reopenWindow(this::open)
                         .build())
                 .build();
     }

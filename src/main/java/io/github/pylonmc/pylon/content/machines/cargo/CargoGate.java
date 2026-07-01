@@ -2,11 +2,11 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
@@ -22,6 +22,8 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,9 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -194,7 +193,7 @@ public class CargoGate extends RebarBlock implements
                         .valueGetter(() -> threshold)
                         .valueSetter(value -> threshold = value)
                         .valueFormatter(UnitFormat.ITEMS::format)
-                        .reopenWindow(this::openWindow)
+                        .reopenWindow(this::open)
                         .build())
                 .build();
     }

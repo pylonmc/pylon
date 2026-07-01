@@ -2,15 +2,10 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.NumberInputButton;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -22,15 +17,16 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -42,10 +38,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -240,7 +232,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                         .valueGetter(() -> itemThreshold)
                         .valueSetter(value -> itemThreshold = value)
                         .valueFormatter(UnitFormat.ITEMS::format)
-                        .reopenWindow(this::openWindow)
+                        .reopenWindow(this::open)
                         .build())
                 .addIngredient('T', NumberInputButton.builder()
                         .material(Material.WHITE_CONCRETE)
@@ -252,7 +244,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                         .valueGetter(() -> fluidThreshold)
                         .valueSetter(value -> fluidThreshold = value)
                         .valueFormatter(UnitFormat.MILLIBUCKETS::format)
-                        .reopenWindow(this::openWindow)
+                        .reopenWindow(this::open)
                         .build())
                 .build();
     }
