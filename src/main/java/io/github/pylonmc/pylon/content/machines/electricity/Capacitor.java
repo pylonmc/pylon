@@ -101,6 +101,7 @@ public class Capacitor extends RebarBlock implements
             double taken = Math.min(energy, storedEnergy);
             setStoredEnergy(storedEnergy - taken);
         });
+        output.setPriority(Integer.MAX_VALUE);
 
         setStoredEnergy(storedEnergy);
     }
