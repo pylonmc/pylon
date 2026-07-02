@@ -178,17 +178,17 @@ public class PalladiumCondenser extends RebarBlock implements
         FluidOutputHatch dirtyHydraulicFluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH);
         ItemOutputHatch palladiumDustOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, PALLADIUM_DUST_OUTPUT_HATCH);
 
-        if (biodieselInputHatch.fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * getTickInterval() / 20
-                || hydraulicFluidInputHatch.fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerSecond * getTickInterval() / 20
-                || dirtyHydraulicFluidOutputHatch.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerSecond * getTickInterval() / 20
+        if (biodieselInputHatch.getFluidAmount() < dieselPerSecond * getTickInterval() / 20
+                || hydraulicFluidInputHatch.getFluidAmount() < hydraulicFluidPerSecond * getTickInterval() / 20
+                || dirtyHydraulicFluidOutputHatch.getFluidSpaceRemaining() < hydraulicFluidPerSecond * getTickInterval() / 20
                 || !palladiumDustOutputHatch.inventory.canHold(PylonItems.PALLADIUM_DUST)
         ) {
             return;
         }
 
-        biodieselInputHatch.removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * getTickInterval() / 20);
-        hydraulicFluidInputHatch.removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidPerSecond * getTickInterval() / 20);
-        dirtyHydraulicFluidOutputHatch.addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerSecond * getTickInterval() / 20);
+        biodieselInputHatch.removeFluid(dieselPerSecond * getTickInterval() / 20);
+        hydraulicFluidInputHatch.removeFluid(hydraulicFluidPerSecond * getTickInterval() / 20);
+        dirtyHydraulicFluidOutputHatch.addFluid(hydraulicFluidPerSecond * getTickInterval() / 20);
 
         progressProcess(getTickInterval());
 
@@ -241,9 +241,9 @@ public class PalladiumCondenser extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, BIODIESEL_INPUT_HATCH)
-                .setFluidType(PylonFluids.BIODIESEL);
+                .setAllowedFluid(PylonFluids.BIODIESEL);
         getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
+                .setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT_HATCH)
                 .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }

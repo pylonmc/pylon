@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
@@ -19,12 +18,9 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -69,9 +65,7 @@ public class FluidTank extends RebarBlock
     public FluidTank(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        addEntity("fluid", new ItemDisplayBuilder()
-                .build(getBlock().getLocation().toCenterLocation().add(0, 1, 0))
-        );
+        createFluidDisplay(new Vector3i(0, 1, 0));
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
         FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
@@ -134,7 +128,7 @@ public class FluidTank extends RebarBlock
             } else {
                 casing.setShape(FluidTankCasing.Shape.MIDDLE);
             }
-            Waila.addWailaOverride(new BlockPosition(casing.getBlock()), this::getWaila);
+            Waila.addWailaOverride(casing.getBlock(), this);
             casing.tank = this;
         }
     }

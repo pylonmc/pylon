@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Biorefinery extends RebarBlock implements
         DirectionalRebarBlock,
@@ -154,8 +155,8 @@ public class Biorefinery extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
-        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluid(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluid(PylonFluids.PLANT_OIL);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
@@ -173,20 +174,20 @@ public class Biorefinery extends RebarBlock implements
             FluidOutputHatch biodieselOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
 
             double biodieselToProduce = Math.min(
-                    biodieselOutputHatch.fluidSpaceRemaining(PylonFluids.BIODIESEL),
+                    biodieselOutputHatch.getFluidSpaceRemaining(),
                     Math.min(
                             biodieselPerSecond * getTickInterval() / 20.0,
                             Math.min(
-                                    ethanolInputHatch.fluidAmount(PylonFluids.ETHANOL) / ethanolPerMbOfBiodiesel,
-                                    plantOilInputHatch.fluidAmount(PylonFluids.PLANT_OIL) / plantOilPerMbOfBiodiesel
+                                    ethanolInputHatch.getFluidAmount() / ethanolPerMbOfBiodiesel,
+                                    plantOilInputHatch.getFluidAmount() / plantOilPerMbOfBiodiesel
                             )
                     )
             );
 
             if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
-                ethanolInputHatch.removeFluid(PylonFluids.ETHANOL, biodieselToProduce * ethanolPerMbOfBiodiesel);
-                plantOilInputHatch.removeFluid(PylonFluids.PLANT_OIL, biodieselToProduce * plantOilPerMbOfBiodiesel);
-                biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);
+                ethanolInputHatch.removeFluid(biodieselToProduce * ethanolPerMbOfBiodiesel);
+                plantOilInputHatch.removeFluid(biodieselToProduce * plantOilPerMbOfBiodiesel);
+                biodieselOutputHatch.addFluid(biodieselToProduce);
             }
 
             Vector smokePosition1 = Vector.fromJOML(RebarUtils.rotateVectorToFace(
@@ -214,13 +215,12 @@ public class Biorefinery extends RebarBlock implements
 
         // Consume fuel
         if (!isProcessing()) {
-            ItemInputHatch fuelInputHatch = getMultiblockComponent(ItemInputHatch.class, FUEL_INPUT_HATCH);
+            ItemInputHatch fuelInputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, FUEL_INPUT_HATCH);
             ItemStack input = fuelInputHatch.inventory.getItem(0);
-            ItemStack stack = fuelInputHatch.inventory.getItem(0);
-            if (stack != null && !stack.isEmpty()) {
-                ItemType itemType = stack.getType().asItemType();
-                if (itemType != null) {
-                    fuelInputHatch.inventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
+            if (input != null && !RebarItem.isRebarItem(input)) {
+                ItemType itemType = input.getType().asItemType();
+                if (itemType != null && !itemType.isFuel()) {
+                    fuelInputHatch.inventory.setItem(new MachineUpdateReason(), 0, input.subtract());
                     startProcess(itemType.getBurnDuration());
                 }
             }

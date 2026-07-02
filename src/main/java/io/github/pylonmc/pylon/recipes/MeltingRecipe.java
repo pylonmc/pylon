@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import io.github.pylonmc.pylon.PylonItems;
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
@@ -74,7 +74,7 @@ public record MeltingRecipe(
                 .addIngredient('t', ItemStackBuilder.of(Material.BLAZE_POWDER)
                         .name(Component.translatable(
                                 "pylon.guide.recipe.melting",
-                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(result.getTag(MeltingPoint.class).temperature()))
+                                RebarArgument.of("temperature", UnitFormat.CELSIUS.format(result.getTag(MeltingPointTag.class).temperature()))
                         ))
                 )
                 .addIngredient('o', FluidButton.of(resultAmount, result))

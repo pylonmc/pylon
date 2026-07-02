@@ -156,8 +156,8 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             double fluidToPurify = Math.min(
                     hydraulicFluidPerMachineTick,
                     Math.min(
-                            fluidInput.fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                            fluidOutput.fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID)
+                            fluidInput.getFluidAmount(),
+                            fluidOutput.getFluidSpaceRemaining()
                     )
             );
             if (fluidToPurify < hydraulicFluidPerMachineTick) {
@@ -168,8 +168,8 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             lightable.setLit(true);
             getBlock().setBlockData(lightable);
 
-            fluidInput.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, fluidToPurify);
-            fluidOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, fluidToPurify * purificationEfficiency);
+            fluidInput.removeFluid(fluidToPurify);
+            fluidOutput.addFluid(fluidToPurify * purificationEfficiency);
             progressProcess(getTickInterval());
 
             for (int i = 0; i < 5; i++) {
@@ -192,7 +192,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     public void tryConsumeFuel() {
         ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT);
         ItemStack stack = inputHatch.inventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
+        if (stack == null || RebarItem.isRebarItem(stack) || stack.isEmpty()) {
             return;
         }
 
@@ -208,7 +208,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT)
-                .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+                .setAllowedFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
                 .setFluidType(PylonFluids.HYDRAULIC_FLUID);
         SimpleRebarMultiblock.super.onMultiblockFormed();

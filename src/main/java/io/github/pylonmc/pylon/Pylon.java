@@ -80,12 +80,12 @@ public class Pylon extends JavaPlugin implements RebarAddon {
     }
 
     @Override
-    public @NotNull Set<@NotNull Locale> getLanguages() {
-        return Set.of(Locale.ENGLISH);
+    public @NotNull Material getMaterial() {
+        return Material.COPPER_INGOT;
     }
 
     @Override
-    public @NotNull Material getMaterial() {
-        return Material.COPPER_INGOT;
+    public @NotNull Locale getDefaultLanguage() {
+        return PylonConfig.DEFAULT_LANGUAGE;
     }
 }

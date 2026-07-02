@@ -1425,8 +1425,7 @@ item:
       <arrow> A hard and durable material, held together by forces currently beyond our comprehension
       <arrow> Can withstand very high temperatures
       <arrow> Wither proof
-      
-      <story>When obscyra is mixed with covalent binder and nether bricks, it solidifies into a remarkably durable material. The obscyra residue helps create contours in the shimmer field along the solids, contributing to the material's strength, but little more than that is known.
+    story: <story>When obscyra is mixed with covalent binder and nether bricks, it solidifies into a remarkably durable material. The obscyra residue helps create contours in the shimmer field along the solids, contributing to the material's strength, but little more than that is known.
 
   rotor:
     name: "Rotor"
@@ -2143,35 +2142,31 @@ item:
       
       <u>Components</u>
       <diamond> 3x <yellow><item:pylon:collimator_pillar/></yellow>
-      
+    story: |-
       <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
+      
 
   collimator_pillar:
     name: "Collimation Pillar"
-    lore: |-
-      <story>A breakthrough in shimmer theory came when Liselette discovered that the shimmer field could be weakly ordered with the help of a shimmer bronze cylinder (or 'pillar'). The field resists entering the cylinder at the bottom, allowing the shimmer bronze to force the field to separate evenly along the cylinder. This crude method only works deep underground, where the shimmer field is stronger.
+    story: <story>A breakthrough in shimmer theory came when Liselette discovered that the shimmer field could be weakly ordered with the help of a shimmer bronze cylinder (or 'pillar'). The field resists entering the cylinder at the bottom, allowing the shimmer bronze to force the field to separate evenly along the cylinder. This crude method only works deep underground, where the shimmer field is stronger.
 
   cohesive_unit:
     name: "Cohesive Unit"
     lore: |-
       <arrow> Synthesized using a Collimator
-      
-      <story>Obscyra naturally resonates with shimmer fields, but in nature such fields are chaotic and overlapping. A Cohesive Unit results from a coordinated and persistent shaping of the fields that forces the obscyra into a smaller and smaller space, until it collapses completely as predicted by the Chaudresker Correspondance. This collapse is termed 'Collimation.'
+    story: <story>Obscyra naturally resonates with shimmer fields, but in nature such fields are chaotic and overlapping. A Cohesive Unit results from a coordinated and persistent shaping of the fields that forces the obscyra into a smaller and smaller space, until it collapses completely as predicted by the Chaudresker Correspondance. This collapse is termed 'Collimation.'
 
   liselette_cathode:
     name: "Liselette Cathode"
-    lore: |-
-      <story>Creates a Liselette gradient when paired with a Liselette Anode and appropriate mediating conductors.
+    story: <story>Creates a Liselette gradient when paired with a Liselette Anode and appropriate mediating conductors.
 
   liselette_conductor:
     name: "Liselette Conductor"
-    lore: |-
-      <story>Facilitates the creation of Liselette gradients; dynamical systems which can be thought of as similar a conveyor belt. The gradient allows mass to be slowly transferred from a Liselette cathode to a Liselette anode while respecting Leibar's conservation laws.
+    story: <story>Facilitates the creation of Liselette gradients; dynamical systems which can be thought of as similar a conveyor belt. The gradient allows mass to be slowly transferred from a Liselette cathode to a Liselette anode while respecting Leibar's conservation laws.
 
   liselette_anode:
     name: "Liselette Anode"
-    lore: |-
-      <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
+    story: <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
 
   cargo_controller:
     name: "Cargo Controller"
@@ -2518,11 +2513,68 @@ item:
   flare_stack:
     name: "Flare Stack Structure"
 
+  small_boiler:
+    name: "Small Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_boiler:
+    name: "Large Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  small_fluid_boiler:
+    name: "Small Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_fluid_boiler:
+    name: "Large Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  firebox:
+    name: "Firebox"
+
+  fluid_firebox:
+    name: "Fluid Firebox"
+
+  copper_pipe_assembly:
+    name: "Copper Pipe Assembly"
+
+  large_copper_pipe_assembly:
+    name: "Large Copper Pipe Assembly"
+
 fluid:
   tag:
-    melting-point: "Melting point: %temperature%"
+    melting-point: "<arrow> Melting point: %temperature%"
+    gas: "<arrow> <#b0abce>Gas</#b0abce>"
+    flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
   lava: "Lava"
+  steam: "Steam"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
@@ -2619,6 +2671,8 @@ research:
   cargo_1: "<#e89888>Cargo I"
   cargo_2: "<#e89888>Cargo II"
   cargo_3: "<#e89888>Cargo III"
+  tea_brewing: "<#cc9b6e>Tea brewing"
+  advanced_tea_brewing: "<#cc9b6e>Advanced tea brewing"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   diesel_booster: "<#e8c888>Diesel booster"
@@ -2660,6 +2714,7 @@ guide:
     machines_hydraulic_machines: "<white>Hydraulic Machines"
     machines_hydraulic_purification: "<white>Hydraulic Purification"
     machines_cargo: "<white>Cargo"
+    machines_boilers: "<white>Boilers"
     machines_petrochemicals: "<white>Petrochemicals"
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
