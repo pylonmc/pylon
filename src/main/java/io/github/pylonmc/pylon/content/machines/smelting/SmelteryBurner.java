@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.item.RebarItem;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
@@ -100,7 +101,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);
-            if (item == null) {
+            if (item == null || RebarItem.isRebarItem(item)) {
                 continue;
             }
 

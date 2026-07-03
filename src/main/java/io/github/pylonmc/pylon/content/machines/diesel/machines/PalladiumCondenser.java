@@ -250,12 +250,10 @@ public class PalladiumCondenser extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        Integer timeLeft = getProcessTicksRemaining();
-        if (timeLeft == null) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isProcessing()) {
+            display.add(ProgressBar.recipeProgress(1.0 - getProcessProgress()));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", ProgressBar.recipeProgress(getProcessProgress()))
-        ));
+        return display;
     }
 }

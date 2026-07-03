@@ -8,7 +8,6 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -77,7 +76,7 @@ public abstract class FluidHatch extends RebarBlock implements
         if (formed) {
             FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
             Preconditions.checkState(casing != null);
-            Waila.addWailaOverride(casing.getBlock(), this::getWaila);
+            Waila.addWailaOverride(casing.getBlock(), this);
             if (fluid != null) {
                 setFluidCapacity(fluid, casing.capacity);
             }
@@ -123,25 +122,21 @@ public abstract class FluidHatch extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        Component info;
+        WailaDisplay display = WailaDisplay.of(this, player);
+        
         if (!isFormedAndFullyLoaded()) {
-            info = Component.translatable("pylon.message.fluid_hatch.no_casing");
+            display.add(Component.translatable("pylon.message.fluid_hatch.no_casing"));
         } else if (fluid == null) {
-            info = Component.translatable("pylon.message.fluid_hatch.no_fluid");
+            display.add(Component.translatable("pylon.message.fluid_hatch.no_fluid"));
         } else {
-            info = Component.translatable("pylon.message.fluid_hatch.working")
-                    .arguments(
-                            RebarArgument.of("fluid-bar", ProgressBar.fluidContents(
-                                    fluid,
-                                    fluidCapacity(fluid),
-                                    fluidAmount(fluid)
-                            )),
-                            RebarArgument.of("fluid", fluid.getName())
-                    );
+            display.add(ProgressBar.fluidContentsWithName(
+                    fluid,
+                    fluidCapacity(fluid),
+                    fluidAmount(fluid)
+            ));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("info", info)
-        ));
+        
+        return display;
     }
 
     public void setFluidType(@Nullable RebarFluid fluid) {
@@ -169,11 +164,5 @@ public abstract class FluidHatch extends RebarBlock implements
 
     public @NotNull ItemDisplay getFluidDisplay() {
         return getHeldEntityOrThrow(ItemDisplay.class, "fluid");
-    }
-
-    @Override
-    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
-        FluidBufferRebarBlock.super.onPostBlockBreak(context);
-        Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
     }
 }

@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -23,8 +22,8 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeWrapper;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRebarRecipe;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRecipeType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -33,7 +32,6 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -63,7 +61,7 @@ public class DieselFurnace extends RebarBlock implements
         TickingRebarBlock,
         LogisticRebarBlock,
         FurnaceRebarBlockHandler,
-        RecipeProcessorRebarBlock<FurnaceRecipeWrapper> {
+        RecipeProcessorRebarBlock<SmeltingRebarRecipe> {
 
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
@@ -132,7 +130,7 @@ public class DieselFurnace extends RebarBlock implements
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(FurnaceRecipeType.INSTANCE);
+        setRecipeType(SmeltingRecipeType.INSTANCE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
@@ -194,20 +192,20 @@ public class DieselFurnace extends RebarBlock implements
             return;
         }
 
-        for (FurnaceRecipeWrapper recipe : FurnaceRecipeType.INSTANCE) {
+        for (SmeltingRebarRecipe recipe : SmeltingRecipeType.INSTANCE) {
             if (tryStartRecipe(recipe, stack)) {
                 break;
             }
         }
     }
 
-    private boolean tryStartRecipe(FurnaceRecipeWrapper recipe, ItemStack stack) {
-        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getRecipe().getResult())) {
+    private boolean tryStartRecipe(SmeltingRebarRecipe recipe, ItemStack stack) {
+        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getBukkitRecipe().getResult())) {
             return false;
         }
 
         startRecipe(recipe, recipeTime);
-        getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
         inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
         return true;
     }
@@ -231,17 +229,16 @@ public class DieselFurnace extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("progress", isProcessingRecipe()
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(isProcessingRecipe()
                         ? ProgressBar.recipeProgress(getRecipeProgress())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
@@ -255,9 +252,9 @@ public class DieselFurnace extends RebarBlock implements
     }
 
     @Override
-    public void onRecipeFinished(@NotNull FurnaceRecipeWrapper recipe) {
+    public void onRecipeFinished(@NotNull SmeltingRebarRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(null, recipe.getRecipe().getResult().clone());
+        outputInventory.addItem(null, recipe.getBukkitRecipe().getResult().clone());
     }
 
     @Override

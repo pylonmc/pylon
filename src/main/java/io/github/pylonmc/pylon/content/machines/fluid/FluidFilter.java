@@ -124,13 +124,16 @@ public class FluidFilter extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
                 ))
-        ));
+                .add(fluid == null
+                        ? Component.translatable("rebar.fluid.none")
+                        : fluid.getName()
+                );
     }
 
     @Override

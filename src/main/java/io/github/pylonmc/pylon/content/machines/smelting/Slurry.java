@@ -5,8 +5,9 @@ import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.pylon.recipes.StrainingRecipe;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.RebarFluidTag;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.registry.RegistryHandler;
 import lombok.Getter;
@@ -52,14 +53,14 @@ public class Slurry extends RebarFluid implements RegistryHandler {
     public void onRegister(@NotNull RebarRegistry<?> registry) {
         MixingPotRecipe.RECIPE_TYPE.addRecipe(new MixingPotRecipe(
                 getKey(),
-                List.of(RecipeInput.of(slurryStack)),
-                RecipeInput.of(PylonFluids.SLURRY, amount),
+                List.of(ItemChoice.fuzzy(slurryStack)),
+                FluidChoice.of(PylonFluids.SLURRY, amount),
                 FluidOrItem.of(this, amount),
                 false
         ));
         StrainingRecipe.RECIPE_TYPE.addRecipe(new StrainingRecipe(
                 getKey(),
-                RecipeInput.of(this, amount),
+                FluidChoice.of(this, amount),
                 PylonFluids.SLURRY,
                 slurryStack
         ));

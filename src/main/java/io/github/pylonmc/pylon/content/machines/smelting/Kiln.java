@@ -27,7 +27,6 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -301,7 +300,7 @@ public class Kiln extends RebarBlock implements
                     .clearLore()
             );
         } else if (recipe.outputItem() != null) {
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(recipe.outputItem())
+            getRecipeProgressItem().setItem(ItemStackBuilder.asOne(recipe.outputItem())
                     .clearLore()
             );
         }
@@ -387,26 +386,23 @@ public class Kiln extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
         if (!isFormedAndFullyLoaded()) {
-            return new WailaDisplay(getNameTranslationKey());
+            return display;
         }
 
-        ComponentLike temperatureBar = new ProgressBar()
+        display.add(new ProgressBar()
                 .proportion((temperature - minTemperature) / maxTemperature)
                 .barColor(PylonUtils.colorFromTemperature(temperature))
                 .bars(30)
-                .suffix(Component.text(" ").append(UnitFormat.CELSIUS.format(temperature).decimalPlaces(1)));
+                .suffix(Component.text(" ").append(UnitFormat.CELSIUS.format(temperature).decimalPlaces(1)))
+        );
 
-        if (getRecipeProgress() == null) {
-            return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-1").arguments(
-                    RebarArgument.of("temperature", temperatureBar)
-            ));
+        if (isProcessingRecipe()) {
+            display.add(ProgressBar.recipeProgress(getRecipeProgress()));
         }
 
-        return new WailaDisplay(Component.translatable("pylon.item.kiln.waila-2").arguments(
-                RebarArgument.of("temperature", temperatureBar),
-                RebarArgument.of("progress", ProgressBar.recipeProgress(getRecipeProgress()))
-        ));
+        return display;
     }
 
     public class TemperatureItem extends AbstractItem {

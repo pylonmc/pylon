@@ -143,7 +143,7 @@ public class CargoMonitor extends RebarBlock implements
                         .translate(new Vector3d(0.0, 0.53, 0.0))
                         .scale(0.15, 0.15, 0.15)
                 )
-                .itemStack(new ItemStack(Material.BARRIER))
+                .itemStack(ItemStack.of(Material.BARRIER))
                 .billboard(Display.Billboard.VERTICAL)
                 .build(block.getLocation().toCenterLocation())
         );
@@ -185,7 +185,7 @@ public class CargoMonitor extends RebarBlock implements
                 getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(event.getNewItem());
                 getHeldEntityOrThrow(TextDisplay.class, "amount").text(Component.text(event.getNewItem().getAmount()));
             } else {
-                getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(new ItemStack(Material.BARRIER));
+                getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(ItemStack.of(Material.BARRIER));
                 getHeldEntityOrThrow(TextDisplay.class, "amount").text(Component.text(0));
             }
         });

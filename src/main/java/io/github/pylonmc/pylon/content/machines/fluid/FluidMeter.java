@@ -156,7 +156,7 @@ public class FluidMeter extends RebarBlock implements
                         .translate(new Vector3d(0.0, 0.3, 0.0))
                         .scale(0.07, 0.07, 0.07)
                 )
-                .itemStack(new ItemStack(Material.BARRIER))
+                .itemStack(ItemStack.of(Material.BARRIER))
                 .billboard(Display.Billboard.VERTICAL)
                 .build(block.getLocation().toCenterLocation())
         );
@@ -230,14 +230,13 @@ public class FluidMeter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true)),
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
                 ))
-        ));
+                .add(UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true));
     }
 
     public static Duration getDuration(int numberOfMeasurements) {

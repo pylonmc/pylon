@@ -121,16 +121,17 @@ public class Collimator extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey()
-                .arguments(
-                        RebarArgument.of("fluid", ProgressBar.fluidContents(
-                                PylonFluids.OBSCYRA,
-                                getFluidCapacity(),
-                                getFluidAmount()
-                        )),
-                        RebarArgument.of("time-remaining", UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20))
-                )
-        );
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (!isFormedAndFullyLoaded()) {
+            return display;
+        }
+
+        return display.add(ProgressBar.fluidContents(
+                        PylonFluids.OBSCYRA,
+                        getFluidCapacity(),
+                        getFluidAmount()
+                ))
+                .add(UnitFormat.SECONDS.format(getProcessTicksRemaining() / 20));
     }
 
     @Override

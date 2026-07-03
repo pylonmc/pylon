@@ -5,6 +5,9 @@ import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,8 +42,8 @@ public record ForgingDisplayRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+        return List.of(ItemChoice.exact(input));
     }
 
     @Override
@@ -59,10 +62,10 @@ public record ForgingDisplayRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('h', new ItemButton(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
-                .addIngredient('i', new ItemButton(input))
-                .addIngredient('b', new ItemButton(PylonItems.BRONZE_ANVIL))
-                .addIngredient('r', new ItemButton(result))
+                .addIngredient('h', ItemButton.of(PylonItems.STONE_HAMMER, PylonItems.IRON_HAMMER, PylonItems.DIAMOND_HAMMER, PylonItems.TONGS))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('b', ItemButton.of(PylonItems.BRONZE_ANVIL))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }

@@ -17,11 +17,11 @@ import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
@@ -56,7 +56,8 @@ public class FluidExperienceBottler extends RebarBlock implements
         DirectionalRebarBlock,
         ProcessorRebarBlock {
 
-    private final int xpAmount = getSettingOrThrow("experience-amount", ConfigAdapter.INTEGER);
+    private final int xpAmount = ConfigSection.fromSettings(PylonKeys.LIQUID_XP_BOTTLE)
+            .getOrThrow("experience-amount", ConfigAdapter.INTEGER);
     public final double bottleProductionTime = getSettingOrThrow("bottle-production-time-seconds", ConfigAdapter.DOUBLE);
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
@@ -214,12 +215,11 @@ public class FluidExperienceBottler extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (!isProcessing()) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isProcessing()) {
+            display.add(ProgressBar.recipeProgress(1.0 - getProcessProgress()));
         }
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", ProgressBar.recipeProgress(1.0 - getProcessProgress()))
-        ));
+        return display;
     }
 
     @Override

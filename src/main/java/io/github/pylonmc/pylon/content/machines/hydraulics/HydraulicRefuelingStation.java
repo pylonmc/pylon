@@ -126,24 +126,20 @@ public class HydraulicRefuelingStation extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         HydraulicRefuelable refuelable = getHeldRefuelableItem();
-        if (refuelable == null) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (refuelable != null) {
+            display.add(ProgressBar.fluidContents(
+                            PylonFluids.HYDRAULIC_FLUID,
+                            refuelable.getHydraulicFluidCapacity(),
+                            refuelable.getHydraulicFluid()
+                    ))
+                    .add(ProgressBar.fluidContents(
+                            PylonFluids.DIRTY_HYDRAULIC_FLUID,
+                            refuelable.getDirtyHydraulicFluidCapacity(),
+                            refuelable.getDirtyHydraulicFluid()
+                    ));
         }
-
-        return new WailaDisplay(
-                getDefaultWailaTranslationKey().arguments(
-                        RebarArgument.of("hydraulic-fluid", ProgressBar.fluidContents(
-                                PylonFluids.HYDRAULIC_FLUID,
-                                refuelable.getHydraulicFluidCapacity(),
-                                refuelable.getHydraulicFluid()
-                        )),
-                        RebarArgument.of("dirty-hydraulic-fluid", ProgressBar.fluidContents(
-                                PylonFluids.DIRTY_HYDRAULIC_FLUID,
-                                refuelable.getDirtyHydraulicFluidCapacity(),
-                                refuelable.getDirtyHydraulicFluid()
-                        ))
-                )
-        );
+        return display;
     }
 
     @Override

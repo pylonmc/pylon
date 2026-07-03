@@ -20,14 +20,12 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
@@ -183,7 +181,7 @@ public final class Crucible extends RebarBlock implements
             return;
         }
 
-        FluidOrItem.Fluid fluid = recipe.output();
+        FluidWithAmount fluid = recipe.output();
 
         setFluidType(fluid.fluid());
         addFluid(fluid.amountMillibuckets());
@@ -222,21 +220,18 @@ public final class Crucible extends RebarBlock implements
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
-                )),
-                RebarArgument.of("item", crucibleContent == null
+                ))
+                .add(crucibleContent == null
                         ? Component.translatable("pylon.item.crucible.empty")
-                        : Component.translatable("pylon.item.crucible.not-empty",
-                                RebarArgument.of("type", crucibleContent.getData(DataComponentTypes.ITEM_NAME)),
-                                RebarArgument.of("amount", crucibleContent.getAmount())
-                        )
-                )
-        ));
+                        : crucibleContent.effectiveName()
+                                .append(Component.text(" x"))
+                                .append(Component.text(crucibleContent.getAmount()))
+                );
     }
 
     //region Tick handling
