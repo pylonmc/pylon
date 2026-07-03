@@ -105,7 +105,7 @@ public final class PylonFluids {
             pylonKey("oil"),
             TextColor.fromHexString("#404040"),
             Material.BLACK_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(160));
     static {
         OIL.register();
     }

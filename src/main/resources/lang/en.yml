@@ -1711,6 +1711,9 @@ item:
   distillation_tower_ring:
     name: "Distillation Tower Ring"
 
+  smokestack:
+    name: "Smokestack"
+
   smokestack_ring:
     name: "Smokestack Ring"
 
@@ -2479,14 +2482,14 @@ item:
       <arrow> Uses steam, hydraulic fluid, and sand to create a hydraulic fracture from which oil can be pumped
       <arrow> The created fracture has a yield between zero and the maximum yield (which you can find out with a <white><item:pylon:oil_sample_drill/></white>)
       <arrow> <attr>Time to create hydraulic fracture: </attr> %time-to-create-fracture%
-      <arrow> <attr>Steam per fracture: </attr> %steam-per-fracture%
-      <arrow> <attr>Hydraulic fluid per fracture: </attr> %hydraulic-fluid-per-fracture%
-      <arrow> <attr>Sand per fracture: </attr> %sand-per-fracture%
+      <arrow> <attr>Steam per fracture:</attr> %steam-per-fracture%
+      <arrow> <attr>Hydraulic fluid per fracture:</attr> %hydraulic-fluid-per-fracture%
+      <arrow> <attr>Sand per fracture:</attr> %sand-per-fracture%
 
   hydraulic_fracture_seal:
     name: "Hydraulic Fracture Seal"
     lore: |-
-      <arrow> Place on top of a hydraulic fracture and fill with <white>%gravel% gravel</white> to seal the fracture
+      <arrow> Place on top of a hydraulic fracture and fill with <white>%gravel% gravel</white> to destroy the fracture
       <arrow> <red>Fracture sealing creates a small explosion</red>
 
   hydraulic_fracture_cap:
@@ -2511,6 +2514,9 @@ item:
     name: "Steel Foundation"
 
   flare_stack:
+    name: "Flare Stack"
+
+  flare_stack_structure:
     name: "Flare Stack Structure"
 
   small_boiler:
@@ -2673,6 +2679,7 @@ research:
   cargo_3: "<#e89888>Cargo III"
   tea_brewing: "<#cc9b6e>Tea brewing"
   advanced_tea_brewing: "<#cc9b6e>Advanced tea brewing"
+  oil_drilling: "<#404040>Oil drilling"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   diesel_booster: "<#e8c888>Diesel booster"

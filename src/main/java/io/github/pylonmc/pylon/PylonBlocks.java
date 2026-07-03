@@ -215,11 +215,13 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_SEAL, Material.TNT, HydraulicFractureSeal.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_MOTOR, Material.PISTON, RebarBlock.class);
         RebarBlock.register(PylonKeys.STEEL_FOUNDATION, Material.NETHERITE_BLOCK, RebarBlock.class);
-        RebarBlock.register(PylonKeys.FLARE_STACK, Material.NETHER_BRICK_FENCE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.FLARE_STACK_STRUCTURE, Material.NETHER_BRICK_FENCE, RebarBlock.class);
         RebarBlock.register(PylonKeys.SMALL_BOILER, Material.BRICKS, SmallBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_BOILER, Material.BRICK_STAIRS, LargeBoiler.class);
         RebarBlock.register(PylonKeys.SMALL_FLUID_BOILER, Material.BRICKS, SmallFluidBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_FLUID_BOILER, Material.BRICK_STAIRS, LargeFluidBoiler.class);
+        RebarBlock.register(PylonKeys.SMOKESTACK, Material.BRICKS, Smokestack.class);
+        RebarBlock.register(PylonKeys.FLARE_STACK, Material.NETHER_BRICKS, FlareStack.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
     }
 }

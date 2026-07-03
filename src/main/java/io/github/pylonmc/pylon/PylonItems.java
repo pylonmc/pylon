@@ -1002,10 +1002,10 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(STEEL_FOUNDATION);
     }
 
-    public static final ItemStack FLARE_STACK_STRUCTURE = ItemStackBuilder.rebar(Material.NETHER_BRICK_FENCE, PylonKeys.FLARE_STACK)
+    public static final ItemStack FLARE_STACK_STRUCTURE = ItemStackBuilder.rebar(Material.NETHER_BRICK_FENCE, PylonKeys.FLARE_STACK_STRUCTURE)
             .build();
     static {
-        RebarItem.register(RebarItem.class, FLARE_STACK_STRUCTURE, PylonKeys.FLARE_STACK);
+        RebarItem.register(RebarItem.class, FLARE_STACK_STRUCTURE, PylonKeys.FLARE_STACK_STRUCTURE);
         PylonPages.COMPONENTS.addItem(FLARE_STACK_STRUCTURE);
     }
 
@@ -2751,6 +2751,20 @@ public final class PylonItems {
     static {
         RebarItem.register(FluidVoider.Item.class, FLUID_VOIDER_2, PylonKeys.FLUID_VOIDER_2);
         PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_2);
+    }
+
+    public static final ItemStack SMOKESTACK = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMOKESTACK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SMOKESTACK, PylonKeys.SMOKESTACK);
+        PylonPages.FLUID_MACHINES.addItem(SMOKESTACK);
+    }
+
+    public static final ItemStack FLARE_STACK = ItemStackBuilder.rebar(Material.NETHER_BRICKS, PylonKeys.FLARE_STACK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FLARE_STACK, PylonKeys.FLARE_STACK);
+        PylonPages.FLUID_MACHINES.addItem(FLARE_STACK);
     }
 
     //</editor-fold>

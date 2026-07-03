@@ -39,6 +39,7 @@ import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +64,7 @@ public class OilSampleDrill extends RebarBlock implements
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("sample-time", UnitFormat.SECONDS.format(tickInterval * sampleTicks / 20)),
+                    RebarArgument.of("sample-time", UnitFormat.formatDuration(Duration.ofSeconds((long) sampleTicks / 20))),
                     RebarArgument.of("fuel-burn-rate", UnitFormat.PERCENT.format(100 * fuelBurnRate))
             );
         }

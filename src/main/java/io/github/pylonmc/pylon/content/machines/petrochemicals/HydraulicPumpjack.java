@@ -202,8 +202,8 @@ public class HydraulicPumpjack extends RebarBlock implements
         components.put(OIL_OUTPUT, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH));
         components.put(HYDRAULIC_FRACTURE, MultiblockComponent.of(PylonKeys.HYDRAULIC_FRACTURE));
         components.put(new Vector3i(-1, 0, 6), MultiblockComponent.of(PylonKeys.STEEL_FOUNDATION));
-        components.put(new Vector3i(-1, 1, 6), MultiblockComponent.of(PylonKeys.FLARE_STACK));
-        components.put(FLARE_STACK_TIP, MultiblockComponent.of(PylonKeys.FLARE_STACK));
+        components.put(new Vector3i(-1, 1, 6), MultiblockComponent.of(PylonKeys.FLARE_STACK_STRUCTURE));
+        components.put(FLARE_STACK_TIP, MultiblockComponent.of(PylonKeys.FLARE_STACK_STRUCTURE));
 
         return components;
     }
@@ -211,7 +211,7 @@ public class HydraulicPumpjack extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT).setFluidType(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT).setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, DIRTY_HYDRAULIC_FLUID_OUTPUT).setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, OIL_OUTPUT).setFluidType(PylonFluids.OIL);
         Waila.removeWailaOverride(getMultiblockBlock(HYDRAULIC_FRACTURE));
@@ -234,9 +234,9 @@ public class HydraulicPumpjack extends RebarBlock implements
 
         boolean isUpStroke = animationTick >= strokeDuration / 2;
 
-        if (hydraulicFluidInput.fluidAmount() < hydraulicFluidPerSecond * getTickInterval() / 20.0
-                || dirtyHydraulicFluidOutput.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerSecond * getTickInterval() / 20.0
-                || (isUpStroke && oilOutput.fluidSpaceRemaining(PylonFluids.OIL) < maxOilPerSecond * getTickInterval() / 20.0)
+        if (hydraulicFluidInput.getFluidAmount() < hydraulicFluidPerSecond * getTickInterval() / 20.0
+                || dirtyHydraulicFluidOutput.getFluidSpaceRemaining() < hydraulicFluidPerSecond * getTickInterval() / 20.0
+                || (isUpStroke && oilOutput.getFluidSpaceRemaining() < maxOilPerSecond * getTickInterval() / 20.0)
         ) {
             return;
         }

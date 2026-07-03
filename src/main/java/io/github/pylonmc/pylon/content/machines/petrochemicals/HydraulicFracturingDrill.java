@@ -38,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("time-to-create-fracture", UnitFormat.SECONDS.format(ticksToCreateFracture / 20.0)),
+                    RebarArgument.of("time-to-create-fracture", UnitFormat.formatDuration(Duration.ofSeconds(ticksToCreateFracture / 20))),
                     RebarArgument.of("steam-per-fracture", UnitFormat.MILLIBUCKETS.format(steamPerFracture)),
                     RebarArgument.of("hydraulic-fluid-per-fracture", UnitFormat.MILLIBUCKETS.format(hydraulicFluidPerFracture)),
                     RebarArgument.of("sand-per-fracture", (int) (machineTicksPerSand * 20.0 / tickInterval))
@@ -199,8 +200,8 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         components.put(new Vector3i(-1, 1, 1), MultiblockComponent.of(PylonKeys.REINFORCED_PLATING));
         components.put(new Vector3i(-1, 1, -1), MultiblockComponent.of(PylonKeys.REINFORCED_PLATING));
 
-        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK));
-        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK));
+        components.put(new Vector3i(0, 0, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK_STRUCTURE));
+        components.put(new Vector3i(0, 1, 2), MultiblockComponent.of(PylonKeys.FLARE_STACK_STRUCTURE));
 
         components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.INJECTION_PIPE));
         components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.INJECTION_PIPE));
@@ -218,8 +219,8 @@ public class HydraulicFracturingDrill extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH).setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidInputHatch.class, STEAM_FLUID_INPUT_HATCH).setFluidType(PylonFluids.WATER);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT_HATCH).setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, STEAM_FLUID_INPUT_HATCH).setAllowedFluid(PylonFluids.STEAM);
     }
 
     @Override
@@ -236,8 +237,8 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         boolean shouldTakeSand = (processor.getElapsedTicks() / getTickInterval()) % machineTicksPerSand == 0;
 
         if (shouldTakeSand && (sand == null || RebarItem.isRebarItem(sand) || sand.getType() != Material.SAND)
-                || hydraulicFluidInput.fluidAmount() < hydraulicFluidPerTick
-                || steamInput.fluidAmount() < steamPerTick
+                || hydraulicFluidInput.getFluidAmount() < hydraulicFluidPerTick
+                || steamInput.getFluidAmount() < steamPerTick
         ) {
             return;
         }
