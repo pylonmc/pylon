@@ -8,13 +8,8 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -338,8 +333,8 @@ public class Kiln extends RebarBlock implements
     public void onRecipeFinished(@NonNull KilnRecipe recipe) {
         if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-            fluidOutputHatch.setAllowedFluids(recipe.outputFluid());
-            fluidOutputHatch.addFluid(recipe.outputFluid(), recipe.outputFluidAmount());
+            fluidOutputHatch.setFluidType(recipe.outputFluid());
+            fluidOutputHatch.addFluid(recipe.outputFluidAmount());
         }
         if (recipe.outputItem() != null) {
             getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH)

@@ -12,10 +12,8 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -54,14 +52,14 @@ public class HeatExchanger extends RebarBlock implements
         FluidOutputHatch toOutputHatch = null;
         HeatExchangerRecipe matchingRecipe = null;
         for (HeatExchangerRecipe recipe : HeatExchangerRecipe.RECIPE_TYPE) {
-            if (recipe.transferFrom().getFirst().matchesIgnoringAmount(inputHatch1.getFluid())) {
+            if (recipe.transferFrom().getFirst().matchesIgnoringAmount(inputHatch1.getFluidType())) {
                 fromInputHatch = inputHatch1;
                 fromOutputHatch = outputHatch1;
                 toInputHatch = inputHatch2;
                 toOutputHatch = outputHatch2;
                 matchingRecipe = recipe;
                 break;
-            } else if (recipe.transferFrom().getFirst().matchesIgnoringAmount(inputHatch2.getFluid())) {
+            } else if (recipe.transferFrom().getFirst().matchesIgnoringAmount(inputHatch2.getFluidType())) {
                 fromInputHatch = inputHatch2;
                 fromOutputHatch = outputHatch2;
                 toInputHatch = inputHatch1;
@@ -77,27 +75,27 @@ public class HeatExchanger extends RebarBlock implements
 
         FluidWithAmount fromOutput = matchingRecipe.transferFrom().getSecond();
         if (fromOutput != null) {
-            if (!fromOutputHatch.canAcceptFluid(fromOutput.fluid())) return;
+            if (!fromOutputHatch.canAddFluid(fromOutput)) return;
             double outputAmount = fromOutput.amount();
             double actualOutputAmount = Math.min(outputAmount, fromOutputHatch.getFluidSpaceRemaining());
             recipeRatio = Math.min(recipeRatio, actualOutputAmount / outputAmount);
         }
         FluidWithAmount toOutput = matchingRecipe.transferTo().getSecond();
         if (toOutput != null) {
-            if (!toOutputHatch.canAcceptFluid(toOutput.fluid())) return;
+            if (!toOutputHatch.canAddFluid(toOutput)) return;
             double outputAmount = toOutput.amount();
             double actualOutputAmount = Math.min(outputAmount, toOutputHatch.getFluidSpaceRemaining());
             recipeRatio = Math.min(recipeRatio, actualOutputAmount / outputAmount);
         }
 
         FluidChoice fromInput = matchingRecipe.transferFrom().getFirst();
-        if (!fromInput.matchesIgnoringAmount(fromInputHatch.getFluid())) return;
+        if (!fromInput.matchesIgnoringAmount(fromInputHatch.getFluidType())) return;
         double fromInputAmount = fromInput.getAmount();
         double actualFromInputAmount = Math.min(fromInputAmount, fromInputHatch.getFluidAmount());
         recipeRatio = Math.min(recipeRatio, actualFromInputAmount / fromInputAmount);
 
         FluidChoice toInput = matchingRecipe.transferTo().getFirst();
-        if (!toInput.matchesIgnoringAmount(toInputHatch.getFluid())) return;
+        if (!toInput.matchesIgnoringAmount(toInputHatch.getFluidType())) return;
         double toInputAmount = toInput.getAmount();
         double actualToInputAmount = Math.min(toInputAmount, toInputHatch.getFluidAmount());
         recipeRatio = Math.min(recipeRatio, actualToInputAmount / toInputAmount);
@@ -123,20 +121,13 @@ public class HeatExchanger extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
 
-        Set<RebarFluid> allowedInputs = HeatExchangerRecipe.RECIPE_TYPE.stream()
+        List<RebarFluid> allowedInputs = HeatExchangerRecipe.RECIPE_TYPE.stream()
                 .flatMap(recipe -> Stream.of(recipe.transferFrom().getFirst(), recipe.transferTo().getFirst()))
                 .flatMap(input -> input.getFluids().stream())
-                .collect(Collectors.toSet());
+                .distinct()
+                .toList();
         getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH_1).setAllowedFluids(allowedInputs);
         getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH_2).setAllowedFluids(allowedInputs);
-
-        Set<RebarFluid> allowedOutputs = HeatExchangerRecipe.RECIPE_TYPE.stream()
-                .flatMap(recipe -> Stream.of(recipe.transferFrom().getSecond(), recipe.transferTo().getSecond()))
-                .filter(Objects::nonNull)
-                .map(FluidWithAmount::fluid)
-                .collect(Collectors.toSet());
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH_1).setAllowedFluids(allowedOutputs);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH_2).setAllowedFluids(allowedOutputs);
     }
 
     @Override

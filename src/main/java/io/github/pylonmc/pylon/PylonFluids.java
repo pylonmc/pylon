@@ -1,24 +1,12 @@
 package io.github.pylonmc.pylon;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 import io.github.pylonmc.pylon.api.FlammableTag;
 import io.github.pylonmc.pylon.api.GasTag;
-import io.github.pylonmc.rebar.fluid.RebarFluidTag;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import io.github.pylonmc.pylon.api.MeltingPointTag;
-import io.github.pylonmc.pylon.api.MeltingPoint;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
-import io.github.pylonmc.rebar.recipe.IngredientCalculator;
-import org.jetbrains.annotations.NotNull;
-
 import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -54,9 +42,9 @@ public final class PylonFluids {
 
     public static final RebarFluid STEAM = new RebarFluid(
             pylonKey("steam"),
-            TextColor.fromHexString("#d8d8d8"),
+            TextColor.fromHexString("#ffffff"),
             Material.WHITE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
     static {
         STEAM.register();
     }
@@ -106,15 +94,6 @@ public final class PylonFluids {
     static {
         SUGARCANE.register();
         RebarGuide.hideFluid(SUGARCANE.getKey());
-    }
-
-    public static final RebarFluid STEAM = new RebarFluid(
-            pylonKey("steam"),
-            TextColor.fromHexString("#ffffff"),
-            Material.WHITE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
-    static {
-        STEAM.register();
     }
 
     public static final RebarFluid ETHANOL = new RebarFluid(
@@ -311,7 +290,7 @@ public final class PylonFluids {
             pylonKey("very_hot_exhaust"),
             TextColor.fromHexString("#ff0000"),
             Material.RED_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
     static {
         VERY_HOT_EXHAUST.register();
     }
@@ -320,7 +299,7 @@ public final class PylonFluids {
             pylonKey("hot_exhaust"),
             TextColor.fromHexString("#ff8000"),
             Material.ORANGE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT);
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
     static {
         HOT_EXHAUST.register();
     }

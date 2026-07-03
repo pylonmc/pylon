@@ -133,7 +133,5 @@ public class HydraulicCoreDrill extends CoreDrill {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
                 .setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
-                .setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }
 }

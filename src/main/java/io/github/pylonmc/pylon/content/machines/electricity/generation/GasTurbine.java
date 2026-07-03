@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -65,7 +64,7 @@ public class GasTurbine extends RebarBlock implements
         electricityOutputHatch.setPowerProduced(0);
 
         FluidInputHatch inputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH);
-        RebarFluid inputFluid = inputHatch.getFluid();
+        RebarFluid inputFluid = inputHatch.getFluidType();
         if (inputFluid == null) return;
         double inputAmount = inputHatch.getFluidAmount();
 
@@ -76,8 +75,6 @@ public class GasTurbine extends RebarBlock implements
         if (matchingRecipe == null) return;
 
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-        RebarFluid outputFluid = matchingRecipe.output().fluid();
-        if (!outputHatch.canAcceptFluid(outputFluid)) return;
 
         double recipeInputAmount = matchingRecipe.input().getAmount();
         double recipeOutputAmount = matchingRecipe.output().amount();
@@ -87,7 +84,7 @@ public class GasTurbine extends RebarBlock implements
         double actualOutputAmount = ratio * recipeOutputAmount;
 
         inputHatch.removeFluid(actualInputAmount);
-        outputHatch.addFluid(outputFluid, actualOutputAmount);
+        outputHatch.addFluid(matchingRecipe.output().fluid(), actualOutputAmount);
 
         double powerOutput = matchingRecipe.powerProduction() * ratio;
         electricityOutputHatch.setPowerProduced(powerOutput);
@@ -184,9 +181,7 @@ public class GasTurbine extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().getFluids().stream()).collect(Collectors.toSet()));
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
-                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().map(r -> r.output().fluid()).collect(Collectors.toSet()));
+                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().getFluids().stream()).distinct().toList());
 
         if (getHeldEntity("turbine_shaft") == null) {
             getBlock().setType(Material.STRUCTURE_VOID);
