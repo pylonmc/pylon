@@ -12,10 +12,10 @@ public class BurnerProgressItem extends ProgressItem {
 
     private static final ItemStackBuilder NOT_BURNING = ItemStackBuilder.of(Material.CHARCOAL)
             .name(Component.translatable("pylon.gui.burning.not_burning"))
-            .addCustomModelDataString("pylon:burner_progress/not_burning");
+            .addCustomModelDataString("pylon:burner_progress:not_burning");
     private static final ItemStackBuilder BURNING = ItemStackBuilder.of(Material.BLAZE_POWDER)
             .name(Component.translatable("pylon.gui.burning.burning"))
-            .addCustomModelDataString("pylon:burner_progress/burning");
+            .addCustomModelDataString("pylon:burner_progress:burning");
 
     public BurnerProgressItem() {
         super(NOT_BURNING);

@@ -62,7 +62,7 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
             )
             .itemStack(
                     ItemStackBuilder.of(material)
-                    .addCustomModelDataString("pylon:display_projectile/" + key)
+                    .addCustomModelDataString("pylon:display_projectile:" + key)
             )
             .build(source)
         );
