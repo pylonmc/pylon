@@ -6,6 +6,10 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.List;
 import org.bukkit.NamespacedKey;
@@ -17,38 +21,25 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record CastingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull ItemStack mold,
-        @NotNull RecipeInput.Fluid input,
+        @NotNull ItemChoice mold,
+        @NotNull FluidChoice input,
         @NotNull ItemStack result
 ) implements RebarRecipe {
 
     public static final RecipeType<CastingRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("casting")) {
         @Override
         protected @NotNull CastingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            ItemStack cast = section.getOrThrow("mold", ConfigAdapter.ITEM_STACK);
-            RecipeInput.Fluid input = section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_FLUID);
-
-            for (CastingRecipe recipe : this) {
-                if (recipe.mold().isSimilar(cast)) {
-                    if (recipe.input().amountMillibuckets() != input.amountMillibuckets()) {
-                        throw new IllegalArgumentException("All casting recipes with the same mold must have the same fluid use: recipe %s uses %f mB but recipe %s uses %f mB, but they use the same mold".formatted(recipe.getKey(), recipe.input().amountMillibuckets(), key, input.amountMillibuckets()));
-                    } else {
-                        break;
-                    }
-                }
-            }
-
             return new CastingRecipe(
                     key,
-                    cast,
-                    input,
+                    section.getOrThrow("mold", ConfigAdapter.ITEM_CHOICE),
+                    section.getOrThrow("input", ConfigAdapter.FLUID_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
             );
         }
     };
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 

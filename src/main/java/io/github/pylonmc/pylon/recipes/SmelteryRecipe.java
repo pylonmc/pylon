@@ -10,6 +10,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import lombok.Getter;
@@ -90,21 +93,21 @@ public class SmelteryRecipe implements RebarRecipe {
         this.fluidInputs = new HashMap<>();
         for (var entry : inputFluids.entrySet()) {
             Preconditions.checkArgument(entry.getValue() > 0, "Input fluid amount must be positive");
-            this.fluidInputs.put(entry.getKey(), entry.getValue() / highestFluidAmount);
+            fluidInputs.put(entry.getKey(), entry.getValue() / highestFluidAmount);
         }
 
         this.fluidOutputs = new HashMap<>();
         for (var entry : outputFluids.entrySet()) {
             Preconditions.checkArgument(entry.getValue() > 0, "Output fluid amount must be positive");
-            this.fluidOutputs.put(entry.getKey(), entry.getValue() / highestFluidAmount);
+            fluidOutputs.put(entry.getKey(), entry.getValue() / highestFluidAmount);
         }
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
         return fluidInputs.entrySet()
                 .stream()
-                .map(pair -> (RecipeInput) RecipeInput.of(pair.getKey(), pair.getValue()))
+                .map(pair -> (FluidOrItemChoice) FluidChoice.of(pair.getKey(), pair.getValue()))
                 .toList();
     }
 
