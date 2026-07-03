@@ -4,13 +4,12 @@ import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.List;
@@ -153,13 +152,13 @@ public class PylonRecipes {
         double dieselUsage = setting.getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
         double exhaustProduction = setting.getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
 
-        RecipeInput.Fluid input = RecipeInput.of(PylonFluids.BIODIESEL, dieselUsage);
+        FluidChoice input = FluidChoice.of(PylonFluids.BIODIESEL, dieselUsage);
         FluidWithAmount output = new FluidWithAmount(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction);
 
         new SingleRecipe(
                 key,
                 input,
-                output.asFluidOrItem(),
+                output,
                 () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",

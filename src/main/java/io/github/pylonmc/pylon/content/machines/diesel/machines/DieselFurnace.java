@@ -113,12 +113,12 @@ public class DieselFurnace extends GenericMachine<SmeltingRebarRecipe> implement
 
     @Override
     protected int getRecipeTicks(@NonNull SmeltingRebarRecipe recipe) {
-        return (int) Math.ceil(recipe.getRecipe().getCookingTime() / speed);
+        return (int) Math.ceil(recipe.getBukkitRecipe().getCookingTime() / speed);
     }
 
     @Override
     protected @NotNull List<ItemStack> getResults(@NonNull SmeltingRebarRecipe recipe) {
-        return List.of(recipe.getRecipe().getResult());
+        return List.of(recipe.getBukkitRecipe().getResult());
     }
 
     @Override

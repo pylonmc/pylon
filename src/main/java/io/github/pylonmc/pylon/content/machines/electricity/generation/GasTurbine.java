@@ -70,7 +70,7 @@ public class GasTurbine extends RebarBlock implements
         double inputAmount = inputHatch.getFluidAmount();
 
         GasTurbineRecipe matchingRecipe = GasTurbineRecipe.RECIPE_TYPE.stream()
-                .filter(r -> r.input().contains(inputFluid))
+                .filter(r -> r.input().matchesIgnoringAmount(inputFluid))
                 .findFirst()
                 .orElse(null);
         if (matchingRecipe == null) return;
@@ -79,8 +79,8 @@ public class GasTurbine extends RebarBlock implements
         RebarFluid outputFluid = matchingRecipe.output().fluid();
         if (!outputHatch.canAcceptFluid(outputFluid)) return;
 
-        double recipeInputAmount = matchingRecipe.input().amountMillibuckets();
-        double recipeOutputAmount = matchingRecipe.output().millibuckets();
+        double recipeInputAmount = matchingRecipe.input().getAmount();
+        double recipeOutputAmount = matchingRecipe.output().amount();
         double ratio = inputAmount / recipeInputAmount;
         ratio = Math.min(ratio, outputHatch.getFluidSpaceRemaining() / recipeOutputAmount);
         double actualInputAmount = ratio * recipeInputAmount;
@@ -184,7 +184,7 @@ public class GasTurbine extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().fluids().stream()).collect(Collectors.toSet()));
+                .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().getFluids().stream()).collect(Collectors.toSet()));
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
                 .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().map(r -> r.output().fluid()).collect(Collectors.toSet()));
 

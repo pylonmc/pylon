@@ -8,8 +8,8 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.recipe.RecipeType;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -111,7 +111,7 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
     protected abstract @NotNull List<ItemStack> getResults(@NotNull T recipe);
 
     protected boolean tryStartRecipe(T recipe, ItemStack stack) {
-        RecipeInput.Item input = (RecipeInput.Item) recipe.getInputs().getFirst();
+        ItemChoice input = (ItemChoice) recipe.getInputs().getFirst();
         if (!input.matches(stack)) {
             return false;
         }

@@ -8,14 +8,14 @@ import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
-import io.github.pylonmc.rebar.fluid.FluidWithAmount;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -174,13 +174,13 @@ public class ElectricMixer extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(MixingPotRecipe recipe, List<ItemStack> items) {
-        if (!recipe.matches(items, true, inputFluid.fluid(), inputFluid.millibuckets())) {
+        if (!recipe.matches(items, true, inputFluid.fluid(), inputFluid.amount())) {
             return false;
         }
 
         switch (recipe.output()) {
-            case FluidOrItem.Fluid fluidOutput -> {
-                if (outputFluid != null && (!outputFluid.fluid().equals(fluidOutput.fluid()) || outputFluid.millibuckets() + fluidOutput.amountMillibuckets() > outputCapacity)) {
+            case FluidWithAmount fluidOutput -> {
+                if (outputFluid != null && (!outputFluid.fluid().equals(fluidOutput.fluid()) || outputFluid.amount() + fluidOutput.amount() > outputCapacity)) {
                     return false;
                 }
             }
@@ -194,7 +194,7 @@ public class ElectricMixer extends RebarBlock implements
 
         startRecipe(recipe, (int) Math.ceil(mixingTime * 20));
         getRecipeProgressItem().setItem(MIXING_ITEM);
-        for (RecipeInput.Item choice : recipe.inputItems()) {
+        for (ItemChoice choice : recipe.inputItems()) {
             for (int i = 0; i < inputInventory.getSize(); i++) {
                 ItemStack stack = inputInventory.getItem(i);
                 if (stack == null) continue;
@@ -204,7 +204,7 @@ public class ElectricMixer extends RebarBlock implements
                 }
             }
         }
-        inputFluid = inputFluid.subtractMillibuckets(recipe.inputFluid().amountMillibuckets());
+        inputFluid = inputFluid.subtractAmount(recipe.inputFluid().getAmount());
 
         return true;
     }
@@ -219,11 +219,11 @@ public class ElectricMixer extends RebarBlock implements
     public void onRecipeFinished(@NonNull MixingPotRecipe recipe) {
         getRecipeProgressItem().setItem(GuiItems.background());
         switch (recipe.output()) {
-            case FluidOrItem.Fluid fluidOutput -> {
+            case FluidWithAmount fluidOutput -> {
                 if (outputFluid == null) {
-                    outputFluid = new FluidWithAmount(fluidOutput.fluid(), fluidOutput.amountMillibuckets());
+                    outputFluid = new FluidWithAmount(fluidOutput.fluid(), fluidOutput.amount());
                 } else {
-                    outputFluid = outputFluid.addMillibuckets(fluidOutput.amountMillibuckets());
+                    outputFluid = outputFluid.addAmount(fluidOutput.amount());
                 }
             }
             case FluidOrItem.Item itemOutput -> outputInventory.addItem(new MachineUpdateReason(), itemOutput.item());
@@ -239,8 +239,8 @@ public class ElectricMixer extends RebarBlock implements
 
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
-        outputFluid = outputFluid.subtractMillibuckets(amount);
-        if (outputFluid.millibuckets() <= RebarUtils.FLUID_EPSILON) {
+        outputFluid = outputFluid.subtractAmount(amount);
+        if (outputFluid.amount() <= RebarUtils.FLUID_EPSILON) {
             outputFluid = null;
         }
         tryStartRecipe();
@@ -251,7 +251,7 @@ public class ElectricMixer extends RebarBlock implements
         if (inputFluid == null) {
             inputFluid = new FluidWithAmount(fluid, amount);
         } else {
-            inputFluid = inputFluid.addMillibuckets(amount);
+            inputFluid = inputFluid.addAmount(amount);
         }
         tryStartRecipe();
     }
@@ -262,12 +262,12 @@ public class ElectricMixer extends RebarBlock implements
             if (!inputFluid.fluid().equals(fluid)) {
                 return 0;
             } else {
-                return inputCapacity - inputFluid.millibuckets();
+                return inputCapacity - inputFluid.amount();
             }
         }
 
         for (MixingPotRecipe recipe : MixingPotRecipe.RECIPE_TYPE) {
-            if (recipe.inputFluid().contains(fluid)) {
+            if (recipe.inputFluid().matchesIgnoringAmount(fluid)) {
                 return inputCapacity;
             }
         }
@@ -280,7 +280,7 @@ public class ElectricMixer extends RebarBlock implements
         if (outputFluid == null) {
             return List.of();
         } else {
-            return List.of(new Pair<>(outputFluid.fluid(), outputFluid.millibuckets()));
+            return List.of(new Pair<>(outputFluid.fluid(), outputFluid.amount()));
         }
     }
 
@@ -290,12 +290,12 @@ public class ElectricMixer extends RebarBlock implements
                 .add(ProgressBar.fluidContentsWithName(
                         inputFluid == null ? null : inputFluid.fluid(),
                         inputCapacity,
-                        inputFluid == null ? 0 : inputFluid.millibuckets()
+                        inputFluid == null ? 0 : inputFluid.amount()
                 ))
                 .add(ProgressBar.fluidContentsWithName(
                         outputFluid == null ? null : outputFluid.fluid(),
                         outputCapacity,
-                        outputFluid == null ? 0 : outputFluid.millibuckets()
+                        outputFluid == null ? 0 : outputFluid.amount()
                 ));
     }
 }

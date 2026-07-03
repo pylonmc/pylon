@@ -7,8 +7,8 @@ import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeWrapper;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRebarRecipe;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRecipeType;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-public class ElectricFurnace extends GenericMachine<FurnaceRecipeWrapper> implements SimpleElectricRebarBlock, FurnaceRebarBlockHandler {
+public class ElectricFurnace extends GenericMachine<SmeltingRebarRecipe> implements SimpleElectricRebarBlock, FurnaceRebarBlockHandler {
 
     private final double powerUsage = getSettingOrThrow("power-usage", ConfigAdapter.DOUBLE);
     private final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
@@ -47,7 +47,7 @@ public class ElectricFurnace extends GenericMachine<FurnaceRecipeWrapper> implem
     @SuppressWarnings("unused")
     public ElectricFurnace(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setRecipeType(FurnaceRecipeType.INSTANCE);
+        setRecipeType(SmeltingRecipeType.INSTANCE);
         createSimpleElectricPort(NodeType.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
     }
@@ -58,17 +58,17 @@ public class ElectricFurnace extends GenericMachine<FurnaceRecipeWrapper> implem
     }
 
     @Override
-    protected int getRecipeTicks(@NonNull FurnaceRecipeWrapper recipe) {
-        return (int) Math.ceil(recipe.getRecipe().getCookingTime() / speed);
+    protected int getRecipeTicks(@NonNull SmeltingRebarRecipe recipe) {
+        return (int) Math.ceil(recipe.getBukkitRecipe().getCookingTime() / speed);
     }
 
     @Override
-    protected @NotNull List<ItemStack> getResults(@NonNull FurnaceRecipeWrapper recipe) {
-        return List.of(recipe.getRecipe().getResult());
+    protected @NotNull List<ItemStack> getResults(@NonNull SmeltingRebarRecipe recipe) {
+        return List.of(recipe.getBukkitRecipe().getResult());
     }
 
     @Override
-    public void onRecipeFinished(@NonNull FurnaceRecipeWrapper recipe) {
+    public void onRecipeFinished(@NonNull SmeltingRebarRecipe recipe) {
         super.onRecipeFinished(recipe);
         Furnace furnaceData = (Furnace) getBlock().getBlockData();
         furnaceData.setLit(false);
