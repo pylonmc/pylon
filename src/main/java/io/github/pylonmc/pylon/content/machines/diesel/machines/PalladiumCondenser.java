@@ -21,6 +21,7 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.util.Tick;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -30,7 +31,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +86,7 @@ public class PalladiumCondenser extends RebarBlock implements
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
                     RebarArgument.of("cycle-duration", UnitFormat.formatDuration(
-                            Duration.ofSeconds((long) machineTicksPerCycle * tickInterval / 20), false
+                            Tick.of((long) machineTicksPerCycle * tickInterval), false
                     )),
                     RebarArgument.of("shimmer-dust-per-cycle", shimmerDustPerCycle),
                     RebarArgument.of("diesel-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(dieselPerSecond)),
