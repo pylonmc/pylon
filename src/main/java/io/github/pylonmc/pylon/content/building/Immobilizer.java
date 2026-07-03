@@ -85,7 +85,7 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
         for (Player player : getBlock().getLocation().getNearbyPlayers(radius)) {
             UUID playerId = player.getUniqueId();
             long freezeTime = FREEZE_TIMES.getOrDefault(playerId, 0L);
-            if (freezeTime + cooldown > now) {
+            if (freezeTime != 0 && freezeTime + cooldown > now) {
                 continue;
             }
 
@@ -113,7 +113,7 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
 
             entry.getValue().removeIf(playerId -> {
                 long freezeTime = FREEZE_TIMES.getOrDefault(playerId, 0L);
-                return now > freezeTime + immobilizer.duration;
+                return freezeTime == 0 || now > freezeTime + immobilizer.duration;
             });
         }
     }
