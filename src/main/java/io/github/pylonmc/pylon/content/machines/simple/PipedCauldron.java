@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -21,6 +22,8 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandler, FluidTankRebarBlock {
+
+    public static final double BOTTLE_FLUID_AMOUNT = 333.333333333333333333333333333333333333333333333333333;
 
     public PipedCauldron(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
@@ -52,35 +55,49 @@ public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandl
 
     @Override
     public void onCauldronLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
-        Material oldMaterial = event.getBlock().getType();
-        Material newMaterial = event.getNewState().getBlockData().getMaterial();
+        BlockData oldBlockData = getBlock().getBlockData();
+        BlockData newBlockData = event.getNewState().getBlockData();
 
-        if (oldMaterial == Material.LAVA_CAULDRON) {
-            // lava -> empty
-            setFluid(0);
-            return;
-        }
+        Material oldMaterial = oldBlockData.getMaterial();
+        Material newMaterial = newBlockData.getMaterial();
 
-        if (oldMaterial == Material.WATER_CAULDRON && newMaterial == Material.CAULDRON) {
-            // 1/3 water -> empty
+        if (newMaterial == Material.CAULDRON) {
+            // water/powder snow/lava -> empty
             setFluid(0);
             return;
         }
 
         if (oldMaterial == Material.WATER_CAULDRON && newMaterial == Material.WATER_CAULDRON) {
             // ?/3 water -> ?/3 water
-            int oldLevel = ((Levelled) getBlock().getBlockData()).getLevel();
-            int newLevel = ((Levelled) event.getNewState().getBlockData()).getLevel();
+            int oldLevel = ((Levelled) oldBlockData).getLevel();
+            int newLevel = ((Levelled) newBlockData).getLevel();
             int levelChange = newLevel - oldLevel;
-            setFluid(getFluidAmount() + levelChange * 333.3333333333333333333333333333333333333333333333333333);
+            setFluid(getFluidAmount() + levelChange * BOTTLE_FLUID_AMOUNT);
+            return;
+        }
+
+        if (oldMaterial == Material.POWDER_SNOW_CAULDRON && newMaterial == Material.POWDER_SNOW_CAULDRON) {
+            // ?/3 powder snow -> ?/3 powder snow
+            int oldLevel = ((Levelled) oldBlockData).getLevel();
+            int newLevel = ((Levelled) newBlockData).getLevel();
+            int levelChange = newLevel - oldLevel;
+            setFluid(getFluidAmount() + levelChange * BOTTLE_FLUID_AMOUNT);
             return;
         }
 
         if (oldMaterial == Material.CAULDRON && newMaterial == Material.WATER_CAULDRON) {
             // empty -> ?/3 water
-            int newLevel = ((Levelled) event.getNewState().getBlockData()).getLevel();
+            int newLevel = ((Levelled) newBlockData).getLevel();
             setFluidType(PylonFluids.WATER);
-            setFluid(newLevel * 333.3333333333333333333333333333333333333333333333333333);
+            setFluid(newLevel * BOTTLE_FLUID_AMOUNT);
+            return;
+        }
+
+        if (oldMaterial == Material.CAULDRON && newMaterial == Material.POWDER_SNOW_CAULDRON) {
+            // empty -> ?/3 powder snow
+            int newLevel = ((Levelled) newBlockData).getLevel();
+            setFluidType(PylonFluids.POWDER_SNOW);
+            setFluid(newLevel * BOTTLE_FLUID_AMOUNT);
             return;
         }
 
@@ -98,12 +115,23 @@ public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandl
         }
 
         if (PylonFluids.WATER.equals(getFluidType())) {
-            int targetLevel = (int) Math.floor(getFluidAmount() / 333.3333333333333333333333333333333333333333333333333333); // lol
+            int targetLevel = (int) Math.floor(getFluidAmount() / BOTTLE_FLUID_AMOUNT);
             if (targetLevel == 0) {
                 getBlock().setType(Material.CAULDRON);
             } else {
-                getBlock().setType(Material.WATER_CAULDRON);
                 Levelled levelled = (Levelled) Material.WATER_CAULDRON.createBlockData();
+                levelled.setLevel(targetLevel);
+                getBlock().setBlockData(levelled);
+            }
+            return;
+        }
+
+        if (PylonFluids.POWDER_SNOW.equals(getFluidType())) {
+            int targetLevel = (int) Math.floor(getFluidAmount() / BOTTLE_FLUID_AMOUNT);
+            if (targetLevel == 0) {
+                getBlock().setType(Material.CAULDRON);
+            } else {
+                Levelled levelled = (Levelled) Material.POWDER_SNOW.createBlockData();
                 levelled.setLevel(targetLevel);
                 getBlock().setBlockData(levelled);
             }

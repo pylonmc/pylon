@@ -2475,6 +2475,7 @@ fluid:
     melting-point: "Melting point: %temperature%"
   water: "Water"
   lava: "Lava"
+  powder_snow: "Powder Snow"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"

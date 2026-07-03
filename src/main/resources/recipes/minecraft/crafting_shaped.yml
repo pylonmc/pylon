@@ -2958,7 +2958,7 @@ pylon:piped_cauldron:
   pattern:
     - "PCP"
   key:
-    P: pylon:fluid_pipe_copper
+    P: pylon:fluid_pipe_iron
     C: minecraft:cauldron
   result: pylon:piped_cauldron
   category: building
