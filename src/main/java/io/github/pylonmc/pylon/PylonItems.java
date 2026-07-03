@@ -99,11 +99,11 @@ public final class PylonItems {
             .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
                 .animation(ItemUseAnimation.SPYGLASS)
                 .hasConsumeParticles(false)
-                .consumeSeconds(Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .consumeSeconds(ConfigSection.fromSettings(PylonKeys.BRONZE_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
                 .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
             )
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
-                    Settings.get(PylonKeys.BRONZE_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    ConfigSection.fromSettings(PylonKeys.BRONZE_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
                 .cooldownGroup(PylonKeys.LOUPE)
             )
             .build();
