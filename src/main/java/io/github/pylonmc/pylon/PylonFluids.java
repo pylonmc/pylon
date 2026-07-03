@@ -5,7 +5,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
-import io.github.pylonmc.rebar.recipe.IngredientCalculator;
+import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -17,8 +17,6 @@ public final class PylonFluids {
     private PylonFluids() {
         throw new AssertionError("Utility class");
     }
-
-    public static final double WATER_TO_STEAM_RATIO = 1.0 / 10.0;
 
     public static final RebarFluid WATER = new RebarFluid(
             pylonKey("water"),

@@ -21,7 +21,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record SiloConverterRecipe(
         NamespacedKey key,
-        RecipeInput.Item material,
+        ItemChoice material,
         ItemStack result
 ) implements RebarRecipe {
 
@@ -30,7 +30,7 @@ public record SiloConverterRecipe(
         protected @NotNull SiloConverterRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new SiloConverterRecipe(
                     key,
-                    section.getOrThrow("material", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("material", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
             );
         }
@@ -42,7 +42,7 @@ public record SiloConverterRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(material);
     }
 
@@ -70,7 +70,7 @@ public record SiloConverterRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', ItemButton.of(silos))
-                .addIngredient('m', ItemButton.of(material.getRepresentativeItem()))
+                .addIngredient('m', ItemButton.of(material.getRepresentativeItems()))
                 .addIngredient('c', ItemButton.of(PylonItems.SILO_CONVERTER))
                 .addIngredient('o', ItemButton.of(result))
                 .build();

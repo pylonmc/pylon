@@ -1270,6 +1270,14 @@ public final class PylonItems {
 //        RebarItem.register(FlightRing.class, FLIGHT_RING);
 //        PylonPages.TOOLS.addItem(FLIGHT_RING);
 //    }
+    public static final ItemStack TAPE_MEASURE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.TAPE_MEASURE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.IRON_NAUTILUS_ARMOR.getKey())
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+    static {
+        RebarItem.register(TapeMeasure.class, TAPE_MEASURE, PylonKeys.TAPE_MEASURE);
+        PylonPages.TOOLS.addItem(TAPE_MEASURE);
+    }
 
     //</editor-fold>
 

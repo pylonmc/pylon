@@ -8,6 +8,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +31,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record MixingPotRecipe(
         @NotNull NamespacedKey key,
-        @NotNull List<RecipeInput.Item> inputItems,
-        @NotNull RecipeInput.Fluid inputFluid,
+        @NotNull List<ItemChoice> inputItems,
+        @NotNull FluidChoice inputFluid,
         @NotNull FluidOrItem output,
         boolean requiresEnrichedFire
 ) implements RebarRecipe {
@@ -44,10 +49,11 @@ public record MixingPotRecipe(
     public static final RecipeType<MixingPotRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("mixing_pot")) {
         @Override
         protected @NotNull MixingPotRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
+            Preconditions.checkState(section.has("output"), "Mixing pot recipe " + key + " is missing an output");
             return new MixingPotRecipe(
                     key,
-                    section.getOrThrow("input-items", ConfigAdapter.LIST.from(ConfigAdapter.RECIPE_INPUT_ITEM)),
-                    section.getOrThrow("input-fluid", ConfigAdapter.RECIPE_INPUT_FLUID),
+                    section.getOrThrow("input-items", ConfigAdapter.LIST.from(ConfigAdapter.ITEM_CHOICE)),
+                    section.getOrThrow("input-fluid", ConfigAdapter.FLUID_CHOICE),
                     section.getOrThrow("output", ConfigAdapter.FLUID_OR_ITEM),
                     section.get("requires-enriched-fire", ConfigAdapter.BOOLEAN, false)
             );
@@ -60,11 +66,11 @@ public record MixingPotRecipe(
             RebarFluid fluid,
             double fluidAmount
     ) {
-        if (requiresEnrichedFire && !isEnrichedFire || !this.inputFluid.matches(fluid, fluidAmount)) {
+        if (requiresEnrichedFire && !isEnrichedFire || !inputFluid.matches(fluid, fluidAmount)) {
             return false;
         }
 
-        for (RecipeInput.Item input : this.inputItems) {
+        for (ItemChoice input : this.inputItems) {
             boolean anyMatches = false;
             for (ItemStack stack : inputItems) {
                 if (input.matches(stack)) {
@@ -81,8 +87,8 @@ public record MixingPotRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
-        List<RecipeInput> inputs = new ArrayList<>(inputItems);
+    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+        List<FluidOrItemChoice> inputs = new ArrayList<>(inputItems);
         inputs.add(inputFluid);
         return inputs;
     }
@@ -115,7 +121,7 @@ public record MixingPotRecipe(
                 'o',
                 switch (output) {
                     case FluidOrItem.Item item -> ItemButton.of(item.item());
-                    case FluidOrItem.Fluid fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
+                    case FluidWithAmount fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
                     default -> throw new AssertionError();
                 }
         );
@@ -123,7 +129,7 @@ public record MixingPotRecipe(
         Gui gui = builder.build();
 
         int i = 0;
-        for (RecipeInput.Item input : inputItems) {
+        for (ItemChoice input : inputItems) {
             gui.setItem(10 + ((i / 3) * 9) + i % 3, ItemButton.of(input));
             i++;
         }

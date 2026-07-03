@@ -10,6 +10,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import java.util.ArrayList;
@@ -35,8 +38,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record KilnRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input1,
-        @Nullable RecipeInput.Item input2,
+        @NotNull ItemChoice input1,
+        @Nullable ItemChoice input2,
         @Nullable ItemStack outputItem,
         @Nullable RebarFluid outputFluid,
         @Nullable Double outputFluidAmount,
@@ -58,8 +61,8 @@ public record KilnRecipe(
             Preconditions.checkState((outputFluid == null) == (outputFluidAmount == null), "Either none or both of output-fluid and output-fluid-amount should be set");
             return new KilnRecipe(
                     key,
-                    section.getOrThrow("input1", ConfigAdapter.RECIPE_INPUT_ITEM),
-                    section.get("input2", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input1", ConfigAdapter.ITEM_CHOICE),
+                    section.get("input2", ConfigAdapter.ITEM_CHOICE),
                     section.get("output-item", ConfigAdapter.ITEM_STACK),
                     outputFluid,
                     outputFluidAmount,
@@ -70,8 +73,8 @@ public record KilnRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
-        List<RecipeInput> inputs = new ArrayList<>();
+    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+        List<FluidOrItemChoice> inputs = new ArrayList<>();
         inputs.add(input1);
         if (input2 != null) {
             inputs.add(input2);

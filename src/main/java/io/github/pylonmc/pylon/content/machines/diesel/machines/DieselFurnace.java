@@ -15,8 +15,8 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeType;
-import io.github.pylonmc.rebar.recipe.vanilla.FurnaceRecipeWrapper;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRebarRecipe;
+import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRecipeType;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
-public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implements
+public class DieselFurnace extends GenericMachine<SmeltingRebarRecipe> implements
         FluidBufferRebarBlock,
         FurnaceRebarBlockHandler {
 
@@ -103,7 +103,7 @@ public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implemen
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(FurnaceRecipeType.INSTANCE);
+        setRecipeType(SmeltingRecipeType.INSTANCE);
     }
 
     @SuppressWarnings("unused")
@@ -112,12 +112,12 @@ public class DieselFurnace extends GenericMachine<FurnaceRecipeWrapper> implemen
     }
 
     @Override
-    protected int getRecipeTicks(@NonNull FurnaceRecipeWrapper recipe) {
+    protected int getRecipeTicks(@NonNull SmeltingRebarRecipe recipe) {
         return (int) Math.ceil(recipe.getRecipe().getCookingTime() / speed);
     }
 
     @Override
-    protected @NotNull List<ItemStack> getResults(@NonNull FurnaceRecipeWrapper recipe) {
+    protected @NotNull List<ItemStack> getResults(@NonNull SmeltingRebarRecipe recipe) {
         return List.of(recipe.getRecipe().getResult());
     }
 

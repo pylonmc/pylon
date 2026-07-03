@@ -2769,3 +2769,14 @@ pylon:experience_drain:
     P: minecraft:ender_pearl
   result: pylon:experience_drain
   category: building
+
+pylon:tape_measure:
+  pattern:
+    - " SS"
+    - "SNS"
+    - " S "
+  key:
+    S: minecraft:string
+    N: minecraft:iron_nugget
+  result: pylon:tape_measure
+  category: equipment
