@@ -174,7 +174,7 @@ public class GasTurbine extends RebarBlock implements
 
     @Override
     public @Nullable ItemStack getBlockTextureItem() {
-        return isFormedAndFullyLoaded() ? null : super.getBlockTextureItem();
+        return isFormedAndFullyLoaded() ? ItemStack.empty() : super.getBlockTextureItem();
     }
 
     @Override
@@ -184,7 +184,7 @@ public class GasTurbine extends RebarBlock implements
                 .setAllowedFluids(GasTurbineRecipe.RECIPE_TYPE.stream().flatMap(r -> r.input().getFluids().stream()).distinct().toList());
 
         if (getHeldEntity("turbine_shaft") == null) {
-            getBlock().setType(Material.STRUCTURE_VOID);
+            getBlock().setType(Material.AIR);
             refreshBlockTextureItem();
             setupDisplay();
         }

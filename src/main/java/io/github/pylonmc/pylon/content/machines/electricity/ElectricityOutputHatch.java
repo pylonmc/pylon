@@ -15,7 +15,7 @@ public class ElectricityOutputHatch extends RebarBlock implements SimpleElectric
     public ElectricityOutputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            createSimpleElectricPort(NodeType.CONSUMER, face);
+            createSimpleElectricPort(NodeType.PRODUCER, face);
         }
     }
 
