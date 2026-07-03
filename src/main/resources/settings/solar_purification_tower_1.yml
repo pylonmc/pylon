@@ -1,6 +1,0 @@
-purification-speed: 16 # mb/s
-purification-efficiency: 0.90
-buffer: 64 # mb
-rain-speed-fraction: 0.6
-lens-layers: 1
-tick-interval: 40

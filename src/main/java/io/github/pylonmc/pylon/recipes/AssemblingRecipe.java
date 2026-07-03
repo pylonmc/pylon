@@ -8,6 +8,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
@@ -28,7 +31,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record AssemblingRecipe(
         NamespacedKey key,
-        List<RecipeInput.Item> inputs,
+        List<ItemChoice> inputs,
         List<ItemStack> results,
         List<Step> steps
 ) implements RebarRecipe {
@@ -87,7 +90,7 @@ public record AssemblingRecipe(
                 }
             }
 
-            List<RecipeInput.Item> inputs = section.getOrThrow("inputs", ConfigAdapter.LIST.from(ConfigAdapter.RECIPE_INPUT_ITEM));
+            List<ItemChoice> inputs = section.getOrThrow("inputs", ConfigAdapter.LIST.from(ConfigAdapter.ITEM_CHOICE));
             List<ItemStack> results = section.getOrThrow("results", ConfigAdapter.LIST.from(ConfigAdapter.ITEM_STACK));
 
             Preconditions.checkArgument(
@@ -109,7 +112,7 @@ public record AssemblingRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return new ArrayList<>(inputs);
     }
 
@@ -117,13 +120,14 @@ public record AssemblingRecipe(
     public @NotNull List<@NotNull FluidOrItem> getResults() {
         return results.stream()
                 .map(FluidOrItem::of)
+                .map(FluidOrItem.class::cast)
                 .toList();
     }
 
     public static @Nullable AssemblingRecipe findRecipe(ItemStack[] items) {
         for (AssemblingRecipe recipe : RECIPE_TYPE.getRecipes()) {
             boolean hasAllIngredients = true;
-            for (RecipeInput.Item requiredItem : recipe.inputs) {
+            for (ItemChoice requiredItem : recipe.inputs) {
                 boolean hasIngredient = false;
                 for (ItemStack item : items) {
                     if (item != null && requiredItem.matches(item)) {
@@ -151,12 +155,16 @@ public record AssemblingRecipe(
         for (int i = 0; i < steps.size(); i++) {
             Step step = steps.get(i);
             if (step != null) {
-                ItemStack stack = ItemStackBuilder.of(step.icon)
+                ItemStack stack = ItemStackBuilder.copyOf(step.icon)
                         .name(Component.translatable("pylon.gui.assembly_table.step").arguments(
                                 RebarArgument.of("step_index", i + 1),
                                 RebarArgument.of("tool", Component.translatable("pylon.gui.assembly_table.tools." + step.tool)),
                                 RebarArgument.of("clicks", step.clicks)
                         ))
+                        .editMeta(meta -> {
+                            meta.setMaxStackSize(step.clicks);
+                        })
+                        .amount(step.clicks)
                         .clearLore()
                         .build();
                 stepItems.add(Item.simple(stack));
@@ -174,7 +182,7 @@ public record AssemblingRecipe(
                 .addIngredient('#', GuiItems.background())
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', PylonItems.ASSEMBLY_TABLE)
+                .addIngredient('t', ItemButton.of(PylonItems.ASSEMBLY_TABLE))
                 .addIngredient('x', PagedGui.itemsBuilder()
                         .setStructure("< x x x x x x x >")
                         .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
@@ -186,16 +194,16 @@ public record AssemblingRecipe(
                 .build();
 
         for (int i = 0; i < inputs.size(); i++) {
-            RecipeInput.Item input = inputs.get(i);
+            ItemChoice input = inputs.get(i);
             if (input != null) {
-                gui.setItem(1 + i % 2, i / 2, new ItemButton(input.getRepresentativeItem()));
+                gui.setItem(1 + i % 2, i / 2, ItemButton.of(input.getRepresentativeItems()));
             }
         }
 
         for (int i = 0; i < results.size(); i++) {
             ItemStack result = results.get(i);
             if (result != null) {
-                gui.setItem(6 + i % 2, Math.floorDiv(i, 2), new ItemButton(result));
+                gui.setItem(6 + i % 2, Math.floorDiv(i, 2), ItemButton.of(result));
             }
         }
 

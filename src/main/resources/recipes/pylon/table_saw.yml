@@ -2,230 +2,230 @@ pylon:oak_planks:
   input: minecraft:oak_log
   result:
     minecraft:oak_planks: 6
-  particle-data: minecraft:oak_log
+  particle-item: minecraft:oak_log
   time-ticks: 20
 
 pylon:spruce_planks:
   input: minecraft:spruce_log
   result:
     minecraft:spruce_planks: 6
-  particle-data: minecraft:spruce_log
+  particle-item: minecraft:spruce_log
   time-ticks: 20
 
 pylon:birch_planks:
   input: minecraft:birch_log
   result:
     minecraft:birch_planks: 6
-  particle-data: minecraft:birch_log
+  particle-item: minecraft:birch_log
   time-ticks: 20
 
 pylon:jungle_planks:
   input: minecraft:jungle_log
   result:
     minecraft:jungle_planks: 6
-  particle-data: minecraft:jungle_log
+  particle-item: minecraft:jungle_log
   time-ticks: 20
 
 pylon:acacia_planks:
   input: minecraft:acacia_log
   result:
     minecraft:acacia_planks: 6
-  particle-data: minecraft:acacia_log
+  particle-item: minecraft:acacia_log
   time-ticks: 20
 
 pylon:dark_oak_planks:
   input: minecraft:dark_oak_log
   result:
     minecraft:dark_oak_planks: 6
-  particle-data: minecraft:dark_oak_log
+  particle-item: minecraft:dark_oak_log
   time-ticks: 20
 
 pylon:mangrove_planks:
   input: minecraft:mangrove_log
   result:
     minecraft:mangrove_planks: 6
-  particle-data: minecraft:mangrove_log
+  particle-item: minecraft:mangrove_log
   time-ticks: 20
 
 pylon:cherry_planks:
   input: minecraft:cherry_log
   result:
     minecraft:cherry_planks: 6
-  particle-data: minecraft:cherry_log
+  particle-item: minecraft:cherry_log
   time-ticks: 20
 
 pylon:crimson_planks:
   input: minecraft:crimson_stem
   result:
     minecraft:crimson_planks: 6
-  particle-data: minecraft:crimson_stem
+  particle-item: minecraft:crimson_stem
   time-ticks: 20
 
 pylon:warped_planks:
   input: minecraft:warped_stem
   result:
     minecraft:warped_planks: 6
-  particle-data: minecraft:warped_stem
+  particle-item: minecraft:warped_stem
   time-ticks: 20
 
 pylon:pale_oak_planks:
   input: minecraft:pale_oak_log
   result:
     minecraft:pale_oak_planks: 6
-  particle-data: minecraft:pale_oak_log
+  particle-item: minecraft:pale_oak_log
   time-ticks: 20
 
 pylon:oak_planks_from_wood:
   input: minecraft:oak_wood
   result:
     minecraft:oak_planks: 6
-  particle-data: minecraft:oak_wood
+  particle-item: minecraft:oak_wood
   time-ticks: 20
 
 pylon:spruce_planks_from_wood:
   input: minecraft:spruce_wood
   result:
     minecraft:spruce_planks: 6
-  particle-data: minecraft:spruce_wood
+  particle-item: minecraft:spruce_wood
   time-ticks: 20
 
 pylon:birch_planks_from_wood:
   input: minecraft:birch_wood
   result:
     minecraft:birch_planks: 6
-  particle-data: minecraft:birch_wood
+  particle-item: minecraft:birch_wood
   time-ticks: 20
 
 pylon:jungle_planks_from_wood:
   input: minecraft:jungle_wood
   result:
     minecraft:jungle_planks: 6
-  particle-data: minecraft:jungle_wood
+  particle-item: minecraft:jungle_wood
   time-ticks: 20
 
 pylon:acacia_planks_from_wood:
   input: minecraft:acacia_wood
   result:
     minecraft:acacia_planks: 6
-  particle-data: minecraft:acacia_wood
+  particle-item: minecraft:acacia_wood
   time-ticks: 20
 
 pylon:dark_oak_planks_from_wood:
   input: minecraft:dark_oak_wood
   result:
     minecraft:dark_oak_planks: 6
-  particle-data: minecraft:dark_oak_wood
+  particle-item: minecraft:dark_oak_wood
   time-ticks: 20
 
 pylon:mangrove_planks_from_wood:
   input: minecraft:mangrove_wood
   result:
     minecraft:mangrove_planks: 6
-  particle-data: minecraft:mangrove_wood
+  particle-item: minecraft:mangrove_wood
   time-ticks: 20
 
 pylon:cherry_planks_from_wood:
   input: minecraft:cherry_wood
   result:
     minecraft:cherry_planks: 6
-  particle-data: minecraft:cherry_wood
+  particle-item: minecraft:cherry_wood
   time-ticks: 20
 
 pylon:crimson_planks_from_hyphae:
   input: minecraft:crimson_hyphae
   result:
     minecraft:crimson_planks: 6
-  particle-data: minecraft:crimson_hyphae
+  particle-item: minecraft:crimson_hyphae
   time-ticks: 20
 
 pylon:warped_planks_from_hyphae:
   input: minecraft:warped_hyphae
   result:
     minecraft:warped_planks: 6
-  particle-data: minecraft:warped_hyphae
+  particle-item: minecraft:warped_hyphae
   time-ticks: 20
 
 pylon:pale_oak_planks_from_wood:
   input: minecraft:pale_oak_wood
   result:
     minecraft:pale_oak_planks: 6
-  particle-data: minecraft:pale_oak_wood
+  particle-item: minecraft:pale_oak_wood
   time-ticks: 20
 
 pylon:oak_sticks:
   input: minecraft:oak_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:oak_planks
+  particle-item: minecraft:oak_planks
   time-ticks: 20
 
 pylon:spruce_sticks:
   input: minecraft:spruce_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:spruce_planks
+  particle-item: minecraft:spruce_planks
   time-ticks: 20
 
 pylon:birch_sticks:
   input: minecraft:birch_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:birch_planks
+  particle-item: minecraft:birch_planks
   time-ticks: 20
 
 pylon:jungle_sticks:
   input: minecraft:jungle_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:jungle_planks
+  particle-item: minecraft:jungle_planks
   time-ticks: 20
 
 pylon:acacia_sticks:
   input: minecraft:acacia_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:acacia_planks
+  particle-item: minecraft:acacia_planks
   time-ticks: 20
 
 pylon:dark_oak_sticks:
   input: minecraft:dark_oak_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:dark_oak_planks
+  particle-item: minecraft:dark_oak_planks
   time-ticks: 20
 
 pylon:mangrove_sticks:
   input: minecraft:mangrove_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:mangrove_planks
+  particle-item: minecraft:mangrove_planks
   time-ticks: 20
 
 pylon:cherry_sticks:
   input: minecraft:cherry_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:cherry_planks
+  particle-item: minecraft:cherry_planks
   time-ticks: 20
 
 pylon:crimson_sticks:
   input: minecraft:crimson_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:crimson_planks
+  particle-item: minecraft:crimson_planks
   time-ticks: 20
 
 pylon:warped_sticks:
   input: minecraft:warped_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:warped_planks
+  particle-item: minecraft:warped_planks
   time-ticks: 20
 
 pylon:pale_oak_sticks:
   input: minecraft:pale_oak_planks
   result:
     minecraft:stick: 6
-  particle-data: minecraft:pale_oak_planks
+  particle-item: minecraft:pale_oak_planks
   time-ticks: 20
 

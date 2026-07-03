@@ -1,0 +1,6 @@
+max-fluid-purified-per-strike: 8000
+strike-chance: 0.3
+purification-efficiency: 1.02
+tick-interval: 60
+max-height: 52
+

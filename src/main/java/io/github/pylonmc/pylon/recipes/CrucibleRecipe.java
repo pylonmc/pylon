@@ -9,6 +9,10 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.Material;
@@ -26,8 +30,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record CrucibleRecipe(
     @NotNull NamespacedKey key,
-    @NotNull RecipeInput.Item input,
-    @NotNull FluidOrItem.Fluid output
+    @NotNull ItemChoice input,
+    @NotNull io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount output
 ) implements RebarRecipe {
 
     private static Set<NamespacedKey> HEATED_BLOCKS = null;
@@ -36,21 +40,14 @@ public record CrucibleRecipe(
     public static final RecipeType<CrucibleRecipe> RECIPE_TYPE = new ConfigurableRecipeType<>(pylonKey("crucible")) {
         @Override
         protected @NotNull CrucibleRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
-            FluidOrItem output = section.getOrThrow("output", ConfigAdapter.FLUID_OR_ITEM);
-            if (!(output instanceof FluidOrItem.Fluid fluidOutput)) {
-                throw new IllegalArgumentException(key + ": In crucible recipe output must be a fluid.");
-            }
-
-            return new CrucibleRecipe(
-                key,
-                new RecipeInput.Item(section.getOrThrow("input-item", ConfigAdapter.RECIPE_INPUT_ITEM).getItems(), 1),
-                fluidOutput
-            );
+            ItemChoice input = section.getOrThrow("input-item", ConfigAdapter.ITEM_CHOICE);
+            FluidWithAmount output = section.getOrThrow("output", ConfigAdapter.FLUID_WITH_AMOUNT);
+            return new CrucibleRecipe(key, input, output);
         }
     };
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -110,10 +107,10 @@ public record CrucibleRecipe(
                 "# # # # # # # # #"
             )
             .addIngredient('#', GuiItems.backgroundBlack())
-            .addIngredient('i', ItemButton.from(input))
-            .addIngredient('m', ItemButton.from(PylonItems.CRUCIBLE))
-            .addIngredient('h', new ItemButton(getHeatSources()))
-            .addIngredient('o', new FluidButton(output.amountMillibuckets(), output.fluid())
+            .addIngredient('i', ItemButton.of(input))
+            .addIngredient('m', ItemButton.of(PylonItems.CRUCIBLE))
+            .addIngredient('h', ItemButton.of(getHeatSources()))
+            .addIngredient('o', FluidButton.of(output)
         ).build();
     }
 

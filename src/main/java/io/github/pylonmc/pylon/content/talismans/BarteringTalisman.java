@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -24,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BarteringTalisman extends Talisman {
     public static final NamespacedKey BARTERING_TALISMAN_KEY = PylonUtils.pylonKey("bartering_talisman");
     public static final NamespacedKey BARTERING_TALISMAN_NO_CONSUME_KEY = PylonUtils.pylonKey("bartering_talisman_no_consume_chance");
-    public final float chanceToNotConsumeInput = getSettings().getOrThrow("chance-to-not-consume-input", ConfigAdapter.FLOAT);
+    public final float chanceToNotConsumeInput = getSettingOrThrow("chance-to-not-consume-input", ConfigAdapter.FLOAT);
 
     public BarteringTalisman(@NotNull ItemStack stack) {
         super(stack);
@@ -68,6 +69,8 @@ public class BarteringTalisman extends Talisman {
             Item item = event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), event.getInput().clone());
             if (!new EntityDropItemEvent(event.getEntity(), item).callEvent()) {
                 item.remove();
+            } else {
+                item.getWorld().playSound(PylonConfig.BARTERING_TALISMAN_TRIGGER_SOUND.create(), item);
             }
         }
     }

@@ -6,23 +6,26 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.PreRebarBlockPlaceEvent;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -49,13 +52,13 @@ import java.util.Map;
 
 
 public class Grindstone extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInteractBlock,
-        RebarBreakHandler,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<GrindstoneRecipe> {
+        SimpleRebarMultiblock,
+        InteractRebarBlockHandler,
+        BlockBreakRebarBlockHandler,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<GrindstoneRecipe> {
 
-    public static final int CYCLE_DURATION_TICKS = Settings.get(PylonKeys.GRINDSTONE)
+    public static final int CYCLE_DURATION_TICKS = ConfigSection.fromSettings(PylonKeys.GRINDSTONE)
             .getOrThrow("cycle-duration-ticks",ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
@@ -79,6 +82,8 @@ public class Grindstone extends RebarBlock implements
         setRecipeType(GrindstoneRecipe.RECIPE_TYPE);
     }
 
+    private GrindstoneRecipe lastRecipe = null;
+
     @SuppressWarnings("unused")
     public Grindstone(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
@@ -98,12 +103,12 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @NotNull Map<Vector3i, MultiblockComponent> getComponents() {
-        return Map.of(new Vector3i(0, 1, 0), new RebarMultiblockComponent(PylonKeys.GRINDSTONE_HANDLE));
+        return Map.of(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.GRINDSTONE_HANDLE));
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getPlayer().isSneaking()
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!isFormedAndFullyLoaded()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
                 || event.useInteractedBlock() == Event.Result.DENY
@@ -123,23 +128,36 @@ public class Grindstone extends RebarBlock implements
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack oldStack = itemDisplay.getItemStack();
         ItemStack newStack = event.getItem();
+        boolean isSneaking = event.getPlayer().isSneaking();
 
-        // drop old item
+        // item in grindstone
         if (!oldStack.isEmpty()) {
-            event.getPlayer().give(oldStack);
-            itemDisplay.setItemStack(null);
+            // no item in hand or different items -> drop old item
+            if (newStack == null || !newStack.isSimilar(oldStack)) {
+                event.getPlayer().give(oldStack);
+                itemDisplay.setItemStack(null);
+                return;
+            }
+            // sneaking -> add all; not sneaking -> add one more
+            int qty = Math.min(
+                isSneaking ? newStack.getAmount() : 1,
+                oldStack.getMaxStackSize() - oldStack.getAmount()
+            );
+            itemDisplay.setItemStack(oldStack.add(qty));
+            newStack.subtract(qty);
             return;
         }
 
         // insert new item
         if (newStack != null) {
-            itemDisplay.setItemStack(newStack.clone());
-            newStack.setAmount(0);
+            int qty = isSneaking ? newStack.getAmount() : 1;
+            itemDisplay.setItemStack(newStack.asQuantity(qty));
+            newStack.subtract(qty);
         }
     }
 
     @Override
-    public void onBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
         drops.add(getItemDisplay().getItemStack());
     }
 
@@ -153,9 +171,13 @@ public class Grindstone extends RebarBlock implements
             return null;
         }
 
+        if (lastRecipe != null && lastRecipe.input().matches(input)) {
+            return lastRecipe;
+        }
+
         return GrindstoneRecipe.RECIPE_TYPE.getRecipes()
                 .stream()
-                .filter(recipe -> recipe.input().matches(input) && input.getAmount() >= recipe.input().getAmount())
+                .filter(recipe -> recipe.input().matches(input))
                 .findFirst()
                 .orElse(null);
     }
@@ -166,6 +188,8 @@ public class Grindstone extends RebarBlock implements
         if (input.getType().isAir()) {
             return false;
         }
+
+        ItemStack particleItem = input.clone();
 
         itemDisplay.setItemStack(input.subtract(nextRecipe.input().getAmount()));
 
@@ -180,16 +204,17 @@ public class Grindstone extends RebarBlock implements
                 double translation = isLast ? 0.8 : 0.5;
                 double rotation = (j / 4.0) * 2.0 * Math.PI;
                 Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                    if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                    if (!isChunkLoaded()) {
                         return;
                     }
 
                     PylonUtils.animate(getStoneDisplay(), CYCLE_DURATION_TICKS / 4, getStoneDisplayMatrix(translation, rotation));
-                    new ParticleBuilder(Particle.BLOCK)
-                        .data(nextRecipe.particleBlockData())
-                        .count(10)
-                        .location(getBlock().getLocation().toCenterLocation())
-                        .spawn();
+                    new ParticleBuilder(Particle.ITEM)
+                            .data(particleItem)
+                            .count(20)
+                            .extra(0.1)
+                            .location(getBlock().getLocation().toCenterLocation())
+                            .spawn();
 
                     progressRecipe(CYCLE_DURATION_TICKS / 4);
                 }, (long) ((i + j/4.0) * CYCLE_DURATION_TICKS));
@@ -209,31 +234,23 @@ public class Grindstone extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
+        
         ItemStack stack = getItemDisplay().getItemStack();
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("contents",
-                        stack.isEmpty()
-                                ? Component.translatable("pylon.waila.grindstone.empty")
-                                : Component.translatable("pylon.waila.grindstone.not-empty")
-                                .arguments(
-                                        RebarArgument.of("item", stack.effectiveName()),
-                                        RebarArgument.of("amount", stack.getAmount())
-                                )
-                ),
-                RebarArgument.of("processing",
-                        getCurrentRecipe() == null
-                                ? Component.translatable("pylon.waila.grindstone.idle")
-                                : Component.translatable("pylon.waila.grindstone.processing")
-                                .arguments(
-                                        RebarArgument.of("bars", PylonUtils.createProgressBar(
-                                                getCurrentRecipe().timeTicks() - getRecipeTicksRemaining(),
-                                                getCurrentRecipe().timeTicks(),
-                                                20,
-                                                TextColor.color(100, 255, 100)
-                                        ))
-                                )
-                )
-        ));
+        if (!stack.isEmpty()) {
+            display.add( stack.effectiveName()
+                    .append(Component.text(" x"))
+                    .append(Component.text(stack.getAmount()))
+            );
+        }
+        
+        if (isProcessingRecipe()) {
+            display.add(ProgressBar.recipeProgress(getRecipeProgress()));
+        } else if (!stack.isEmpty() && getNextRecipe() == null) {
+            display.add(Component.translatable("pylon.message.invalid_recipe"));
+        }
+        
+        return display;
     }
 
     public @NotNull ItemDisplay getItemDisplay() {

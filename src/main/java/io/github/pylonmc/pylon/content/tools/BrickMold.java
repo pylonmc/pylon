@@ -2,12 +2,13 @@ package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Particle;
 import org.bukkit.event.Event;
@@ -19,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class BrickMold extends RebarItem implements RebarBlockInteractor {
+public class BrickMold extends RebarItem implements BlockInteractRebarItemHandler {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public BrickMold(@NotNull ItemStack stack) {
@@ -29,7 +30,7 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick()
                 || event.useItemInHand() == Event.Result.DENY
                 || event.getPlayer().isSneaking()
@@ -44,11 +45,20 @@ public class BrickMold extends RebarItem implements RebarBlockInteractor {
 
         moldable.doMoldingClick();
         event.getPlayer().setCooldown(getStack(), cooldownTicks);
-        new ParticleBuilder(Particle.BLOCK)
-                .count(20)
+
+        ItemStack particleType;
+        RebarBlock rebarBlock = BlockStorage.get(event.getClickedBlock());
+        if (rebarBlock != null) {
+            particleType = rebarBlock.getDefaultItem().getItemStack();
+        } else {
+            particleType = ItemStack.of(event.getClickedBlock().getType());
+        }
+        new ParticleBuilder(Particle.ITEM)
+                .count(50)
+                .extra(0.1)
                 .offset(0.2, 0.2, 0.2)
                 .location(event.getClickedBlock().getLocation().toCenterLocation())
-                .data(event.getClickedBlock().getBlockData())
+                .data(particleType)
                 .spawn();
 
         if (moldable.isMoldingFinished()) {

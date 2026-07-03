@@ -3,13 +3,17 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.TableSawRecipe;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -21,9 +25,10 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -44,18 +49,18 @@ import java.util.Map;
 
 
 public class DieselTableSaw extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<TableSawRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<TableSawRecipe> {
 
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+    public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
 
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -63,15 +68,17 @@ public class DieselTableSaw extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":side2");
     public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":chimney");
+    public final ItemStackBuilder sawItem = ItemStackBuilder.of(Material.IRON_BARS)
+            .addCustomModelDataString(getKey() + ":saw");
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-        public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+        public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -120,10 +127,9 @@ public class DieselTableSaw extends RebarBlock implements
                         .scale(0.3))
                 .build(block.getLocation().toCenterLocation().add(0, 0.65, 0))
         );
-        addEntity("saw", new BlockDisplayBuilder()
-                .blockData(Material.IRON_BARS.createBlockData("[east=true,west=true]"))
+        addEntity("saw", new ItemDisplayBuilder()
+                .itemStack(sawItem)
                 .transformation(new TransformBuilder()
-                        .rotate(0, RebarUtils.faceToYaw(getFacing()), 0)
                         .scale(0.6, 0.4, 0.4))
                 .build(block.getLocation().toCenterLocation().add(0, 0.7, 0))
         );
@@ -151,9 +157,9 @@ public class DieselTableSaw extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -173,10 +179,11 @@ public class DieselTableSaw extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
+                .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
-                .data(getCurrentRecipe().particleData())
+                .data(getCurrentRecipe().particleItem())
                 .spawn();
         progressRecipe(tickInterval);
     }
@@ -187,25 +194,35 @@ public class DieselTableSaw extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
-            double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
-            if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
-                    || !recipe.input().isSimilar(stack)
-                    || !outputInventory.canHold(recipe.result())
-            ) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, recipe.timeTicks());
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
+        double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
+        if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
+                || !recipe.input().matches(stack)
+                || !outputInventory.canHold(recipe.result())
+        ) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.timeTicks());
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
+        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override
@@ -227,14 +244,16 @@ public class DieselTableSaw extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 ))
-        ));
+                .add(isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

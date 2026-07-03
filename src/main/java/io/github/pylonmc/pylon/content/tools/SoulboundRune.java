@@ -32,7 +32,7 @@ public class SoulboundRune extends Rune {
 
     @Override
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        return !(RebarItem.fromStack(target) instanceof SoulboundRune) && !target.getPersistentDataContainer().has(SOULBOUND_KEY);
+        return !RebarItem.isRebarItem(target, SoulboundRune.class) && !target.getPersistentDataContainer().has(SOULBOUND_KEY);
     }
 
     @Override

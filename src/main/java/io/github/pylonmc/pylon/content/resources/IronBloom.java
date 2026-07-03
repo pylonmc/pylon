@@ -1,14 +1,12 @@
 package io.github.pylonmc.pylon.content.resources;
 
 import com.google.common.base.Preconditions;
-import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInventoryTicker;
+import io.github.pylonmc.rebar.item.interfaces.InventoryTickerRebarItem;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.NamespacedKey;
@@ -17,14 +15,15 @@ import org.bukkit.damage.DamageType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class IronBloom extends RebarItem implements RebarInventoryTicker {
+public class IronBloom extends RebarItem implements InventoryTickerRebarItem {
 
-    public static final long DAMAGE_INTERVAL = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("damage-interval", ConfigAdapter.LONG);
-    public static final int UNPROTECTED_DAMAGE = Settings.get(PylonKeys.IRON_BLOOM).getOrThrow("unprotected-damage", ConfigAdapter.INTEGER);
+    public final long damageInterval = getSettingOrThrow("damage-interval", ConfigAdapter.LONG);
+    public final int unprotectedDamage = getSettingOrThrow("unprotected-damage", ConfigAdapter.INTEGER);
 
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
     public static final int MAX_TEMPERATURE = 12;
@@ -88,16 +87,21 @@ public class IronBloom extends RebarItem implements RebarInventoryTicker {
     }
 
     @Override
-    public long getTickInterval() {
-        return DAMAGE_INTERVAL;
+    public long getBaseTickInterval() {
+        return damageInterval;
     }
 
     @Override
     public void onTick(@NotNull Player player) {
-        if (player.getInventory().getItemInMainHand().isSimilar(PylonItems.TONGS) ||
-                player.getInventory().getItemInOffHand().isSimilar(PylonItems.TONGS)) {
+        if (getTemperature() == 0) {
             return;
         }
-        player.damage(UNPROTECTED_DAMAGE, DamageSource.builder(DamageType.HOT_FLOOR).build());
+
+        PlayerInventory inventory = player.getInventory();
+        if (RebarItem.isRebarItem(inventory.getItemInMainHand(), PylonKeys.TONGS) || RebarItem.isRebarItem(inventory.getItemInOffHand(), PylonKeys.TONGS)) {
+            return;
+        }
+
+        player.damage(unprotectedDamage, DamageSource.builder(DamageType.HOT_FLOOR).build());
     }
 }

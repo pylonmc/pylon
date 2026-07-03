@@ -1,2 +1,2 @@
-capacity: 4000.0
+capacity: 10000.0
 allowed-temperatures: [normal, hot] # can be cold (cryogenic), normal, or hot (molten)

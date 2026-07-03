@@ -1,11 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -21,6 +20,7 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -46,17 +46,17 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoAccumulator extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock {
 
     public static final NamespacedKey THRESHOLD_KEY = pylonKey("threshold");
 
     private final VirtualInventory inputInventory = new VirtualInventory(5);
     private final VirtualInventory outputInventory = new VirtualInventory(5);
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int threshold;
 
@@ -71,7 +71,7 @@ public class CargoAccumulator extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -82,7 +82,7 @@ public class CargoAccumulator extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     )
             );
         }
@@ -199,9 +199,8 @@ public class CargoAccumulator extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("threshold", threshold)
-        ));
+        return WailaDisplay.of(this, player)
+                .add(UnitFormat.ITEMS.format(threshold));
     }
 
     @Override
@@ -234,7 +233,8 @@ public class CargoAccumulator extends RebarBlock implements
 
         if (inputTotal >= threshold) {
             List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
-            Preconditions.checkState(outputInventory.canHold(stacks));
+            if (!outputInventory.canHold(stacks)) return;
+
             for (ItemStack stack : stacks) {
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }

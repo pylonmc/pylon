@@ -7,39 +7,36 @@ import io.github.pylonmc.pylon.content.tools.Hammer;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.LogisticSlot;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -51,23 +48,21 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import java.util.List;
 import java.util.Map;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 
 public class HydraulicHammerHead extends RebarBlock implements
-        RebarTickingBlock,
-        RebarFluidBufferBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarProcessor,
-        RebarLogisticBlock,
-        RebarDirectionalBlock {
+        TickingRebarBlock,
+        FluidBufferRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        ProcessorRebarBlock,
+        LogisticRebarBlock,
+        DirectionalRebarBlock {
 
-    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int goDownTimeTicks = getSettingOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final double hydraulicFluidPerCraft = getSettingOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     private final ItemStack emptyHammerTipStack = ItemStackBuilder.of(Material.AIR)
             .addCustomModelDataString(getKey() + ":hammer_tip:empty")
@@ -78,9 +73,9 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double hydraulicFluidPerCraft = getSettings().getOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.INTEGER);
+        public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final double hydraulicFluidPerCraft = getSettingOrThrow("hydraulic-fluid-per-craft", ConfigAdapter.INTEGER);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -138,7 +133,7 @@ public class HydraulicHammerHead extends RebarBlock implements
     }
 
     public void updateHammerTip(ItemStack newItem) {
-        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(newItem, Hammer.class) instanceof Hammer hammer)) {
             getHammerTip().setItemStack(null);
             return;
         }
@@ -157,7 +152,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0), Hammer.class) instanceof Hammer hammer)) {
             return;
         }
 
@@ -170,7 +165,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
+        if (!hammer.tryDoRecipe(baseBlock, null, null)) {
             return;
         }
 
@@ -178,7 +173,7 @@ public class HydraulicHammerHead extends RebarBlock implements
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+            if (!isChunkLoaded()) {
                 return;
             }
 
@@ -195,9 +190,9 @@ public class HydraulicHammerHead extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     public @Nullable ItemDisplay getHammerHead() {
@@ -224,20 +219,21 @@ public class HydraulicHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.HYDRAULIC_FLUID),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#212d99")
-                )),
-                RebarArgument.of("output-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                        fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
-                        20,
-                        TextColor.fromHexString("#48459b")
+                        fluidAmount(PylonFluids.HYDRAULIC_FLUID)
                 ))
-        ));
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.DIRTY_HYDRAULIC_FLUID,
+                        fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
+                        fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
+                ))
+                .add(isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

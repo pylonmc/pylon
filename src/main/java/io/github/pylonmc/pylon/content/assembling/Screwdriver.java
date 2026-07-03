@@ -6,7 +6,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class Screwdriver extends RebarItem implements RebarBlockInteractor {
+public class Screwdriver extends RebarItem implements BlockInteractRebarItemHandler {
 
-    public final String toolType = getSettings().get("tool-type", ConfigAdapter.STRING);
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final String toolType = getSetting("tool-type", ConfigAdapter.STRING);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public Screwdriver(@NotNull ItemStack stack) {
         super(stack);
@@ -35,7 +35,7 @@ public class Screwdriver extends RebarItem implements RebarBlockInteractor {
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isLeftClick()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.useItemInHand() == Event.Result.DENY

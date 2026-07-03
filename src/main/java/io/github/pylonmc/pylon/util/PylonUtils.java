@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.util;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -129,44 +130,6 @@ public class PylonUtils {
         return getDisplacement(source, target).normalize();
     }
 
-    public @NotNull Component createBar(double proportion, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * proportion);
-        return Component.text("|".repeat(filledBars)).color(color)
-                .append(Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY));
-    }
-
-    public @NotNull Component createProgressBar(double progress, int bars, TextColor color) {
-        int filledBars = (int) Math.round(bars * progress);
-        return Component.translatable("pylon.gui.progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(bars - filledBars)),
-                RebarArgument.of("progress", UnitFormat.PERCENT.format(progress * 100).significantFigures(2))
-        );
-    }
-
-    public @NotNull Component createDiscreteProgressBar(int stage, int maxStage, TextColor color) {
-        return Component.translatable("pylon.gui.discrete_progress_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(stage)).color(color)),
-                RebarArgument.of("empty_bars", "|".repeat(maxStage - stage)),
-                RebarArgument.of("stage", stage),
-                RebarArgument.of("max_stage", maxStage)
-        );
-    }
-
-    public @NotNull Component createProgressBar(double amount, double max, int bars, TextColor color) {
-        return createProgressBar(amount / max, bars, color);
-    }
-
-    public @NotNull Component createFluidAmountBar(double amount, double capacity, int bars, TextColor fluidColor) {
-        int filledBars = Math.max(0, (int) Math.round(bars * amount / capacity));
-        return Component.translatable("pylon.gui.fluid_amount_bar.text").arguments(
-                RebarArgument.of("filled_bars", Component.text("|".repeat(filledBars)).color(fluidColor)),
-                RebarArgument.of("empty_bars", Component.text("|".repeat(bars - filledBars)).color(NamedTextColor.GRAY)),
-                RebarArgument.of("amount", Math.round(amount)),
-                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(Math.round(capacity)))
-        );
-    }
-
     /**
      * @param display if null nothing gets done
      */
@@ -189,6 +152,7 @@ public class PylonUtils {
 
     public boolean shouldBreakBlockUsingTool(@NotNull Block block, @NotNull ItemStack tool) {
         return !block.getType().isAir()
+                && block.getWorld().getFluidData(block.getLocation()).getFluidType() == Fluid.EMPTY
                 && !(block.getState() instanceof BlockInventoryHolder)
                 && !BlockStorage.isRebarBlock(block)
                 && block.getType().getHardness() >= 0
@@ -199,7 +163,9 @@ public class PylonUtils {
 
     private static final Map<Material, Material> BLOCK_ITEM_FALLBACK = Map.of(
         Material.FIRE, Material.FLINT_AND_STEEL,
-        Material.SOUL_FIRE, Material.FLINT_AND_STEEL
+        Material.SOUL_FIRE, Material.FLINT_AND_STEEL,
+        Material.LAVA, Material.LAVA_BUCKET,
+        Material.WATER, Material.WATER_BUCKET
     );
 
     /**
@@ -220,7 +186,7 @@ public class PylonUtils {
         }
 
         Material fallback = BLOCK_ITEM_FALLBACK.getOrDefault(mat, Material.BARRIER);
-        ItemStack stack = new ItemStack(fallback);
+        ItemStack stack = ItemStack.of(fallback);
 
         if (fallback == Material.BARRIER) {
             stack.setData(
@@ -232,11 +198,15 @@ public class PylonUtils {
         return stack;
     }
 
+    public boolean isPotion(Material material) {
+        return material == Material.POTION || material == Material.SPLASH_POTION || material == Material.LINGERING_POTION;
+    }
+
     /**
      * Handles players right clicking with bottles, water buckets, etc
      * Returns true if the function attempted to process the item used (i.e. if it's a water bucket, bottle, etc)
      */
-    public boolean handleFluidTankRightClick(@NotNull RebarFluidTank tank, @NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public boolean handleFluidTankRightClick(@NotNull FluidTankRebarBlock tank, @NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.useInteractedBlock() == Event.Result.DENY) {
             return false;
         }
@@ -258,7 +228,7 @@ public class PylonUtils {
             } else {
                 tank.setFluidType(PylonFluids.WATER);
                 tank.addFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
+                newItemStack = ItemStack.of(Material.BUCKET);
             }
             triggered = true;
         }
@@ -274,7 +244,7 @@ public class PylonUtils {
             } else {
                 tank.setFluidType(PylonFluids.WATER);
                 tank.setFluid(333.333);
-                newItemStack = new ItemStack(Material.GLASS_BOTTLE);
+                newItemStack = ItemStack.of(Material.GLASS_BOTTLE);
             }
             triggered = true;
         }
@@ -286,7 +256,7 @@ public class PylonUtils {
             } else if (tank.canAddFluid(PylonFluids.LAVA, 1000.0)) {
                 tank.setFluidType(PylonFluids.LAVA);
                 tank.addFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
+                newItemStack = ItemStack.of(Material.BUCKET);
             }
         }
 
@@ -294,7 +264,7 @@ public class PylonUtils {
             if (priority == EventPriority.NORMAL) {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
-                newItemStack = new ItemStack(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
+                newItemStack = ItemStack.of(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
                 tank.removeFluid(1000.0);
             }
             triggered = true;
@@ -305,7 +275,7 @@ public class PylonUtils {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
                 tank.setFluid(Math.max(0.0, tank.getFluidAmount() - 333.333));
-                newItemStack = new ItemStack(Material.POTION);
+                newItemStack = ItemStack.of(Material.POTION);
                 newItemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(PotionType.WATER));
             }
             triggered = true;

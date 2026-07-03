@@ -1,7 +1,7 @@
 pylon:bronze:
   inputs:
-    pylon:copper: 0.88
-    pylon:tin: 0.12
+    pylon:copper: 0.85
+    pylon:tin: 0.15
   outputs:
     pylon:bronze: 1
   temperature: 950

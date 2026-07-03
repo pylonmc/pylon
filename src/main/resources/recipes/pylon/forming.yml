@@ -1,0 +1,19 @@
+pylon:nugget_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_nugget
+
+pylon:ingot_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_ingot
+
+pylon:block_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_block
+
+pylon:sheet_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_sheet
+
+pylon:pipe_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_pipe

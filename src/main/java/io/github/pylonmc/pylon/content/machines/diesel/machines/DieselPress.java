@@ -3,9 +3,14 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -21,9 +26,10 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -43,27 +49,27 @@ import java.util.Map;
 
 
 public class DieselPress extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarDirectionalBlock,
-        RebarFluidBufferBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<PressRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        DirectionalRebarBlock,
+        FluidBufferRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe> {
 
-    public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final double plantOilBuffer = getSettings().getOrThrow("plant-oil-buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double timePerItem = getSettings().getOrThrow("time-per-item", ConfigAdapter.DOUBLE);
+    public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+    public final double plantOilBuffer = getSettingOrThrow("plant-oil-buffer", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final double timePerItem = getSettingOrThrow("time-per-item", ConfigAdapter.DOUBLE);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-        public final double timePerItem = getSettings().getOrThrow("time-per-item", ConfigAdapter.DOUBLE);
+        public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+        public final double timePerItem = getSettingOrThrow("time-per-item", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -158,7 +164,7 @@ public class DieselPress extends RebarBlock implements
     @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         double current = fluidAmount(fluid);
-        boolean output = RebarFluidBufferBlock.super.setFluid(fluid, amount);
+        boolean output = FluidBufferRebarBlock.super.setFluid(fluid, amount);
         if (amount < current) {
             tryStartRecipe();
         }
@@ -192,21 +198,31 @@ public class DieselPress extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (PressRecipe recipe : PressRecipe.RECIPE_TYPE) {
-            double plantOilAmount = recipe.oilAmount();
-            if (!recipe.input().matches(stack) || fluidSpaceRemaining(PylonFluids.PLANT_OIL) < plantOilAmount) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, (int) (timePerItem * 20));
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(PressRecipe recipe, ItemStack stack) {
+        double plantOilAmount = recipe.oilAmount();
+        if (fluidSpaceRemaining(PylonFluids.PLANT_OIL) < plantOilAmount || !recipe.input().matches(stack)) {
+            return false;
+        }
+
+        startRecipe(recipe, (int) (timePerItem * 20));
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override
@@ -233,26 +249,27 @@ public class DieselPress extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
-                )),
-                RebarArgument.of("plant-oil-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.PLANT_OIL),
-                        fluidCapacity(PylonFluids.PLANT_OIL),
-                        20,
-                        TextColor.fromHexString("#c4b352")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 ))
-        ));
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.PLANT_OIL,
+                        fluidCapacity(PylonFluids.PLANT_OIL),
+                        fluidAmount(PylonFluids.PLANT_OIL)
+                ))
+                .add(isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

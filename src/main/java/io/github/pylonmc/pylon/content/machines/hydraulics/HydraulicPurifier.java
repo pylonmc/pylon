@@ -2,13 +2,13 @@ package io.github.pylonmc.pylon.content.machines.hydraulics;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.RebarBlockSchema;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -22,15 +22,15 @@ import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public interface HydraulicPurifier extends RebarTickingBlock {
+public interface HydraulicPurifier {
     NamespacedKey HYDRAULIC_PURIFICATION_KEY = pylonKey("hydraulic_purification");
 
     RecipeType<RebarRecipe> RECIPE_TYPE = new RecipeType<>(HYDRAULIC_PURIFICATION_KEY) {{
         addRecipe(
                 new RebarRecipe() {
                     @Override
-                    public @NotNull List<@NotNull RecipeInput> getInputs() {
-                        return List.of(RecipeInput.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, 1));
+                    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+                        return List.of(FluidChoice.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, 1));
                     }
 
                     @Override
@@ -49,9 +49,9 @@ public interface HydraulicPurifier extends RebarTickingBlock {
                                         "# # # # # # # # #"
                                 )
                                 .addIngredient('#', GuiItems.backgroundBlack())
-                                .addIngredient('d', new FluidButton(PylonFluids.DIRTY_HYDRAULIC_FLUID))
-                                .addIngredient('x', new ItemButton(getPurifiers()))
-                                .addIngredient('h', new FluidButton(PylonFluids.HYDRAULIC_FLUID))
+                                .addIngredient('d', FluidButton.of(PylonFluids.DIRTY_HYDRAULIC_FLUID))
+                                .addIngredient('x', ItemButton.of(getPurifiers()))
+                                .addIngredient('h', FluidButton.of(PylonFluids.HYDRAULIC_FLUID))
                                 .build();
                     }
 
@@ -62,9 +62,6 @@ public interface HydraulicPurifier extends RebarTickingBlock {
                 }
         );
     }};
-
-    double getPurificationSpeed();
-    double getPurificationEfficiency();
 
     static List<ItemStack> getPurifiers() {
         List<ItemStack> purifiers = new ArrayList<>();

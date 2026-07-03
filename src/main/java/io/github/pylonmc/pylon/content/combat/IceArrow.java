@@ -5,7 +5,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarArrow;
+import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventPriority;
@@ -17,16 +17,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class IceArrow extends RebarItem implements RebarArrow {
-    private final int freezeDuration = getSettings().getOrThrow("freeze-duration", ConfigAdapter.INTEGER);
-    private final double freezeSpeed = getSettings().getOrThrow("freeze-speed", ConfigAdapter.DOUBLE);
+public class IceArrow extends RebarItem implements ArrowRebarItemHandler {
+    private final int freezeDuration = getSettingOrThrow("freeze-duration", ConfigAdapter.INTEGER);
+    private final double freezeSpeed = getSettingOrThrow("freeze-speed", ConfigAdapter.DOUBLE);
 
     public IceArrow(@NotNull ItemStack stack) {
         super(stack);
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onArrowDamage(@NotNull EntityDamageByEntityEvent event, @NotNull EventPriority priority) {
+    public void onProjectileDamageEntity(@NotNull EntityDamageByEntityEvent event, @NotNull EventPriority priority) {
         if (event.getEntity() instanceof LivingEntity entity) {
             // Has to be run every tick or effect will flicker in and out from game resetting it since the player isn't in a powdered snow block
             new DamageOverTimeRunnable(entity, freezeDuration, Bukkit.getCurrentTick(), (float) freezeSpeed).runTaskTimer(Pylon.getInstance(), 0, 1);

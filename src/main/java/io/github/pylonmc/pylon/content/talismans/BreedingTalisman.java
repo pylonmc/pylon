@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BreedingTalisman extends Talisman {
-    public final float adultChance = getSettings().getOrThrow("adult-chance", ConfigAdapter.FLOAT);
+    public final float adultChance = getSettingOrThrow("adult-chance", ConfigAdapter.FLOAT);
     public static final NamespacedKey BREEDING_TALISMAN_KEY = PylonUtils.pylonKey("breeding_talisman");
     public static final NamespacedKey BREEDING_TALISMAN_ADULT_CHANCE_KEY = PylonUtils.pylonKey("breeding_talisman_adult_chance");
 

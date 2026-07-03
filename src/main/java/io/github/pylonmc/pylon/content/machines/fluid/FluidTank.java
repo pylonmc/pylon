@@ -1,10 +1,13 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
+import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GhostBlockHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -13,13 +16,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -28,22 +29,25 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
+import org.joml.Vector3i;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class FluidTank extends RebarBlock
-        implements RebarMultiblock, FluidTankWithDisplayEntity, RebarDirectionalBlock {
+        implements RebarMultiblock, FluidTankWithDisplayEntity, DirectionalRebarBlock, GhostBlockHolderRebarBlock, BlockBreakRebarBlockHandler {
 
-    private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+    private static final Vector3i CASING_POSITION = new Vector3i(0, 1, 0);
+
+    private final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
     private final List<FluidTankCasing> casings = new ArrayList<>();
     private final List<FluidTemperature> allowedTemperatures = new ArrayList<>();
 
     public static class Item extends RebarItem {
 
-        private final int maxHeight = getSettings().getOrThrow("max-height", ConfigAdapter.INTEGER);
+        private final int maxHeight = getSettingOrThrow("max-height", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -66,6 +70,7 @@ public class FluidTank extends RebarBlock
         );
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
+        FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
     }
 
     @SuppressWarnings("unused")
@@ -95,11 +100,15 @@ public class FluidTank extends RebarBlock
 
             casings.add(casing);
         }
+
+        FluidTankCasingComponent.INSTANCE.updateGhostBlock(this, CASING_POSITION);
+
         return !casings.isEmpty();
     }
 
     @Override
     public void onMultiblockFormed() {
+        removeGhostBlock(CASING_POSITION);
         onMultiblockRefreshed();
     }
 
@@ -121,13 +130,17 @@ public class FluidTank extends RebarBlock
             } else {
                 casing.setShape(FluidTankCasing.Shape.MIDDLE);
             }
-            Waila.addWailaOverride(new BlockPosition(casing.getBlock()), this::getWaila);
+            Waila.addWailaOverride(casing.getBlock(), this);
             casing.tank = this;
         }
     }
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
+        if (!partUnloaded) {
+            FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
+        }
+
         casings.forEach(FluidTankCasing::reset);
         casings.clear();
         allowedTemperatures.clear();
@@ -136,6 +149,11 @@ public class FluidTank extends RebarBlock
             setFluid(0);
             setFluidType(null);
         }
+    }
+
+    @Override
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
+        casings.forEach(FluidTankCasing::reset);
     }
 
     @Override
@@ -159,17 +177,14 @@ public class FluidTank extends RebarBlock
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
-                        getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
-        ));
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isFormedAndFullyLoaded()) {
+            display.add(ProgressBar.fluidContentsWithName(
+                    getFluidType(),
+                    getFluidCapacity(),
+                    getFluidAmount()
+            ));
+        }
+        return display;
     }
 }

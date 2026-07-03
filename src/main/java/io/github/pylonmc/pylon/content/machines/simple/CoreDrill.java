@@ -4,10 +4,10 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -34,20 +35,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
-import java.time.Duration;
 import java.util.List;
 
 public abstract class CoreDrill extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarDirectionalBlock,
-        RebarProcessor,
-        RebarTickingBlock {
+        SimpleRebarMultiblock,
+        DirectionalRebarBlock,
+        ProcessorRebarBlock,
+        TickingRebarBlock {
 
     public static class Item extends RebarItem {
 
-        private final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
-        private final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
-        private final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
+        private final int rotationDuration = getSettingOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+        private final int rotationsPerCycle = getSettingOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
+        private final ItemStack output = getSettingOrThrow("output", ConfigAdapter.ITEM_STACK);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -62,11 +62,11 @@ public abstract class CoreDrill extends RebarBlock implements
         }
     }
 
-    @Getter protected final int rotationDuration = getSettings().getOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
-    @Getter protected final int rotationsPerCycle = getSettings().getOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
-    protected final boolean spawnBlockParticles = getSettings().getOrThrow("spawn-block-particles", ConfigAdapter.BOOLEAN);
-    protected final ItemStack output = getSettings().getOrThrow("output", ConfigAdapter.ITEM_STACK);
-    protected final Material drillMaterial = getSettings().getOrThrow("drill-material", ConfigAdapter.MATERIAL);
+    @Getter protected final int rotationDuration = getSettingOrThrow("rotation-duration-ticks", ConfigAdapter.INTEGER);
+    @Getter protected final int rotationsPerCycle = getSettingOrThrow("rotations-per-cycle", ConfigAdapter.INTEGER);
+    protected final boolean spawnBlockParticles = getSettingOrThrow("spawn-block-particles", ConfigAdapter.BOOLEAN);
+    protected final ItemStack output = getSettingOrThrow("output", ConfigAdapter.ITEM_STACK);
+    protected final Material drillMaterial = getSettingOrThrow("drill-material", ConfigAdapter.MATERIAL);
     protected final ItemStackBuilder drillStack = ItemStackBuilder.of(drillMaterial)
             .addCustomModelDataString(getKey() + ":drill");
 
@@ -139,15 +139,18 @@ public abstract class CoreDrill extends RebarBlock implements
         for (int j = 0; j < 4; j++) {
             double rotation = (j / 4.0) * 2.0 * Math.PI;
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-                if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+                if (!isChunkLoaded()) {
                     return;
                 }
 
                 PylonUtils.animate(getDrillDisplay(), rotationDuration / 4, getDrillDisplayMatrix(rotation));
                 if (spawnBlockParticles) {
-                    new ParticleBuilder(Particle.BLOCK)
+                    Material type = getBlock().getRelative(BlockFace.DOWN, 3).getType();
+                    if (!type.isItem()) return;
+                    new ParticleBuilder(Particle.ITEM)
                             .count(5)
-                            .data(getBlock().getRelative(BlockFace.DOWN, 3).getBlockData())
+                            .extra(0.05)
+                            .data(ItemStack.of(type))
                             .location(getBlock()
                                     .getRelative(BlockFace.DOWN, 2)
                                     .getLocation()
@@ -166,20 +169,13 @@ public abstract class CoreDrill extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        String wailaFormat = "pylon.item." + getKey().getKey() + ".waila_format";
-        Integer timeLeft = getProcessTicksRemaining();
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-            RebarArgument.of("duration_if_any",
-                timeLeft == null
-                    ? Component.empty()
-                    : Component.translatable(wailaFormat).arguments(
-                        RebarArgument.of("duration", PylonUtils.createProgressBar(
-                                ((double) getProcessTimeTicks() - (double) getProcessTicksRemaining()) / (double) getProcessTimeTicks(),
-                                20,
-                                NamedTextColor.WHITE
-                        ))
-                    )
-            )
-        ));
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (isProcessing()) {
+            display.add(ProgressBar.timeRemaining(
+                    getProcessTimeSeconds(),
+                    getProcessSecondsRemaining()
+            ));
+        }
+        return display;
     }
 }

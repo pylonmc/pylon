@@ -1,9 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarEntityHolderBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class CreativeItemVoider extends RebarBlock
-        implements RebarDirectionalBlock, RebarCargoBlock, RebarEntityHolderBlock {
+        implements DirectionalRebarBlock, CargoRebarBlock, EntityHolderRebarBlock {
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.PINK_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":main");

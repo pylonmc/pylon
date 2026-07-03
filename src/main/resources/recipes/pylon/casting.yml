@@ -1,55 +1,244 @@
 pylon:sulfur:
+  mold: pylon:mold_ingot
   input:
     pylon:sulfur: 144
   result: pylon:sulfur
-  temperature: 112.8
   priority: -1
 
-pylon:copper_ingot:
+pylon:tin_nugget:
+  mold: pylon:mold_nugget
   input:
-    pylon:copper: 144
-  result: minecraft:copper_ingot
-  temperature: 1083
+    pylon:tin: 16
+  result: pylon:tin_nugget
   priority: -1
-
-pylon:gold_ingot:
-  input:
-    pylon:gold: 144
-  result: minecraft:gold_ingot
-  temperature: 1064
-  priority: -1
-
-pylon:iron_ingot:
-  input:
-    pylon:iron: 144
-  result: minecraft:iron_ingot
-  temperature: 1538
-  priority: -1
-
+  
 pylon:tin_ingot:
+  mold: pylon:mold_ingot
   input:
     pylon:tin: 144
   result: pylon:tin_ingot
-  temperature: 231.9
+  priority: -1
+  
+pylon:tin_block:
+  mold: pylon:mold_block
+  input:
+    pylon:tin: 1296
+  result: pylon:tin_block
+  priority: -1
+  
+pylon:tin_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:tin: 144
+  result: pylon:tin_sheet
   priority: -1
 
-pylon:bronze_ingot:
+pylon:tin_pipe:
+  mold: pylon:mold_pipe
   input:
-    pylon:bronze: 144
-  result: pylon:bronze_ingot
-  temperature: 950
+    pylon:tin: 72
+  result: pylon:fluid_pipe_tin
+  priority: -1
+  
+pylon:copper_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:copper: 16
+  result: minecraft:copper_nugget
+  priority: -1
+
+pylon:copper_ingot:
+  mold: pylon:mold_ingot
+  input:
+    pylon:copper: 144
+  result: minecraft:copper_ingot
+  priority: -1
+
+pylon:copper_block:
+  mold: pylon:mold_block
+  input:
+    pylon:copper: 1296
+  result: minecraft:copper_block
+  priority: -1
+
+pylon:copper_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:copper: 144
+  result: pylon:copper_sheet
+  priority: -1
+
+pylon:copper_pipe:
+  mold: pylon:mold_pipe
+  input:
+    pylon:copper: 72
+  result: pylon:fluid_pipe_copper
+  priority: -1
+  
+pylon:iron_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:iron: 16
+  result: minecraft:iron_nugget
+  priority: -1
+
+pylon:iron_ingot:
+  mold: pylon:mold_ingot
+  input:
+    pylon:iron: 144
+  result: minecraft:iron_ingot
+  priority: -1
+
+pylon:iron_block:
+  mold: pylon:mold_block
+  input:
+    pylon:iron: 1296
+  result: minecraft:iron_block
+  priority: -1
+
+pylon:iron_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:iron: 144
+  result: pylon:iron_sheet
+  priority: -1
+
+pylon:iron_pipe:
+  mold: pylon:mold_pipe
+  input:
+    pylon:iron: 72
+  result: pylon:fluid_pipe_iron
+  priority: -1
+  
+pylon:gold_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:gold: 16
+  result: minecraft:gold_nugget
+  priority: -1
+
+pylon:gold_ingot:
+  mold: pylon:mold_ingot
+  input:
+    pylon:gold: 144
+  result: minecraft:gold_ingot
+  priority: -1
+
+pylon:gold_block:
+  mold: pylon:mold_block
+  input:
+    pylon:gold: 1296
+  result: minecraft:gold_block
+  priority: -1
+
+pylon:gold_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:gold: 144
+  result: pylon:gold_sheet
+  priority: -1
+  
+pylon:steel_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:steel: 16
+  result: pylon:steel_nugget
   priority: -1
 
 pylon:steel_ingot:
+  mold: pylon:mold_ingot
   input:
     pylon:steel: 144
   result: pylon:steel_ingot
-  temperature: 1410
+  priority: -1
+
+pylon:steel_block:
+  mold: pylon:mold_block
+  input:
+    pylon:steel: 1296
+  result: pylon:steel_block
+  priority: -1
+
+pylon:steel_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:steel: 144
+  result: pylon:steel_sheet
+  priority: -1
+
+pylon:steel_pipe:
+  mold: pylon:mold_pipe
+  input:
+    pylon:steel: 72
+  result: pylon:fluid_pipe_steel
+  priority: -1
+  
+pylon:palladium_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:palladium: 16
+  result: pylon:palladium_nugget
   priority: -1
 
 pylon:palladium_ingot:
+  mold: pylon:mold_ingot
   input:
     pylon:palladium: 144
   result: pylon:palladium_ingot
-  temperature: 1555
+  priority: -1
+
+pylon:palladium_block:
+  mold: pylon:mold_block
+  input:
+    pylon:palladium: 1296
+  result: pylon:palladium_block
+  priority: -1
+
+pylon:palladium_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:palladium: 144
+  result: pylon:palladium_sheet
+  priority: -1
+
+pylon:palladium_pipe:
+  mold: pylon:mold_pipe
+  input:
+    pylon:palladium: 72
+  result: pylon:fluid_pipe_palladium
+  priority: -1
+  
+pylon:bronze_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:bronze: 16
+  result: pylon:bronze_nugget
+  priority: -1
+
+pylon:bronze_ingot:
+  mold: pylon:mold_ingot
+  input:
+    pylon:bronze: 144
+  result: pylon:bronze_ingot
+  priority: -1
+
+pylon:bronze_block:
+  mold: pylon:mold_block
+  input:
+    pylon:bronze: 1296
+  result: pylon:bronze_block
+  priority: -1
+
+pylon:bronze_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:bronze: 144
+  result: pylon:bronze_sheet
+  priority: -1
+
+pylon:bronze_pipe:
+  mold: pylon:mold_pipe
+  input:
+    pylon:bronze: 72
+  result: pylon:fluid_pipe_bronze
   priority: -1

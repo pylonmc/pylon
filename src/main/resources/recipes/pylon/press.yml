@@ -156,11 +156,11 @@ pylon:cactus:
 
 pylon:melon:
   input: minecraft:melon
-  oil-amount: 300
+  oil-amount: 150
 
 pylon:pumpkin:
   input: minecraft:pumpkin
-  oil-amount: 200
+  oil-amount: 125
 
 pylon:sweet_berries:
   input: minecraft:sweet_berries

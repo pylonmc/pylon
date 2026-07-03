@@ -3,7 +3,11 @@ package io.github.pylonmc.pylon.content.machines.cargo;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -17,11 +21,14 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -48,11 +55,11 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoFluidAccumulator extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock,
-        RebarFluidTank {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock,
+        FluidTankRebarBlock {
 
     public static final NamespacedKey ITEM_THRESHOLD_KEY = pylonKey("item_threshold");
     public static final NamespacedKey FLUID_THRESHOLD_KEY = pylonKey("fluid_threshold");
@@ -61,8 +68,8 @@ public class CargoFluidAccumulator extends RebarBlock implements
     private final VirtualInventory inputInventory = new VirtualInventory(5);
     private final VirtualInventory outputInventory = new VirtualInventory(5);
 
-    public final int fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int fluidBuffer = getSettingOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int itemThreshold;
     public int fluidThreshold;
@@ -83,8 +90,8 @@ public class CargoFluidAccumulator extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int fluidBuffer = getSettings().getOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int fluidBuffer = getSettingOrThrow("fluid-buffer", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -95,7 +102,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     ),
                     RebarArgument.of(
                             "fluid-buffer",
@@ -178,9 +185,9 @@ public class CargoFluidAccumulator extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidTank.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidTankRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -189,25 +196,25 @@ public class CargoFluidAccumulator extends RebarBlock implements
                 0,
                 Math.min(
                         fluidThreshold - getFluidAmount(),
-                        RebarFluidTank.super.fluidAmountRequested(fluid)
+                        FluidTankRebarBlock.super.fluidAmountRequested(fluid)
                 )
         );
     }
 
     @Override
     public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
-        return allowFluidInputs ? List.of() : RebarFluidTank.super.getSuppliedFluids();
+        return allowFluidInputs ? List.of() : FluidTankRebarBlock.super.getSuppliedFluids();
     }
 
     @Override
     public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidRemoved(fluid, amount);
+        FluidTankRebarBlock.super.onFluidRemoved(fluid, amount);
         doTransfer();
     }
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidAdded(fluid, amount);
+        FluidTankRebarBlock.super.onFluidAdded(fluid, amount);
         doTransfer();
     }
 
@@ -255,16 +262,14 @@ public class CargoFluidAccumulator extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("item-threshold", UnitFormat.ITEMS.format(itemThreshold)),
-                RebarArgument.of("fluid-threshold", UnitFormat.MILLIBUCKETS.format(fluidThreshold)),
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+        return WailaDisplay.of(this, player)
+                .add(UnitFormat.ITEMS.format(itemThreshold))
+                .add(UnitFormat.MILLIBUCKETS.format(fluidThreshold))
+                .add(ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                ))
-        ));
+                        getFluidAmount()
+                ));
     }
 
     @Override
@@ -291,12 +296,12 @@ public class CargoFluidAccumulator extends RebarBlock implements
             getLogisticGroupOrThrow("input").setFilter(stack -> false);
         }
 
-        if (outputTotal == 0 && getFluidAmount() < 1.0e-3) {
+        if (outputTotal == 0 && getFluidAmount() < RebarUtils.FLUID_EPSILON) {
             getLogisticGroupOrThrow("input").setFilter(null);
             allowFluidInputs = true;
         }
 
-        if (inputTotal >= itemThreshold && getFluidAmount() >= (fluidThreshold - 1.0e-6)) {
+        if (inputTotal >= itemThreshold && getFluidAmount() >= (fluidThreshold - RebarUtils.FLUID_EPSILON)) {
             List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
             Preconditions.checkState(outputInventory.canHold(stacks));
             for (ItemStack stack : stacks) {

@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.talismans;
 
+import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -22,7 +23,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class EnchantingTalisman extends Talisman {
-    public final double bonusLevelChance = getSettings().getOrThrow("bonus-level-chance", ConfigAdapter.DOUBLE);
+    public final double bonusLevelChance = getSettingOrThrow("bonus-level-chance", ConfigAdapter.DOUBLE);
     public static final NamespacedKey ENCHANTING_TALISMAN_KEY = PylonUtils.pylonKey("enchanting_talisman");
     private static final NamespacedKey ENCHANTING_TALISMAN_BONUS_KEY = PylonUtils.pylonKey("enchanting_talisman_bonus");
     private static final NamespacedKey ENCHANTING_ITEM_UUID_KEY = PylonUtils.pylonKey("enchanting_talisman_uuid");
@@ -107,6 +108,7 @@ public class EnchantingTalisman extends Talisman {
                 return;
             }
             UUID itemId = UUID.fromString(itemIdStr);
+            Player player = event.getEnchanter();
             for (Enchantment enchant : event.getEnchantsToAdd().keySet()) {
                 // regenerate the seed used to set the offers and check the rng again
                 Random randGen = new Random(etableView.getEnchantmentSeed()
@@ -119,6 +121,7 @@ public class EnchantingTalisman extends Talisman {
                 }
                 // if the offer level was increased, then also increase the applied enchant
                 event.getEnchantsToAdd().replace(enchant, Math.min(event.getEnchantsToAdd().get(enchant) + 1, enchant.getMaxLevel()));
+                player.playSound(PylonConfig.ENCHANTING_TALISMAN_TRIGGER_SOUND.create(), player);
             }
         }
     }
