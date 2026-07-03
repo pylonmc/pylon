@@ -114,7 +114,7 @@ public class FluidStrainer extends RebarBlock implements
                 return buffer - fluidAmount;
             }
         }
-        if (getCurrentRecipe().input().contains(fluid)) {
+        if (getCurrentRecipe().input().matchesIgnoringAmount(fluid)) {
             return buffer - fluidAmount;
         }
         return 0;
@@ -125,7 +125,7 @@ public class FluidStrainer extends RebarBlock implements
         if (!isProcessingRecipe()) {
             StrainingRecipe recipe = StrainingRecipe.getRecipeForFluid(fluid);
             Preconditions.checkState(recipe != null);
-            startRecipe(recipe, (int) Math.round(recipe.input().amountMillibuckets()));
+            startRecipe(recipe, (int) Math.round(recipe.input().getAmount()));
             fluidType = recipe.outputFluid();
         }
         if (isProcessingRecipe()) {
@@ -154,7 +154,7 @@ public class FluidStrainer extends RebarBlock implements
         WailaDisplay display = WailaDisplay.of(this, player)
                 .add(ProgressBar.fluidContentsWithName(fluidType, buffer, fluidAmount));
         if (isProcessingRecipe()) {
-            double fluidNeeded = getCurrentRecipe().input().amountMillibuckets();
+            double fluidNeeded = getCurrentRecipe().input().getAmount();
             double totalFluid = fluidNeeded - getRecipeTicksRemaining();
             display.add(getCurrentRecipe().outputItem().effectiveName());
             display.add(ProgressBar.recipeProgress(totalFluid / fluidNeeded));

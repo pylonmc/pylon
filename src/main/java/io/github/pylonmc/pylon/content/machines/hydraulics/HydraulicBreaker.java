@@ -175,6 +175,7 @@ public class HydraulicBreaker extends RebarBlock implements
 
         progressProcess(tickInterval);
         Block drilling = getBlock().getRelative(getFacing());
+        if (!drilling.getType().isItem()) return;
         new ParticleBuilder(Particle.ITEM)
                 .count(5)
                 .extra(0.05)

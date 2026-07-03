@@ -97,9 +97,9 @@ public final class CastingUnit extends RebarBlock implements
     public void postInitialise() {
         castInv.addPreUpdateHandler(event -> {
             if (event.getNewItem() == null) return;
-            if (lastRecipe != null && lastRecipe.mold().isSimilar(event.getNewItem())) return;
+            if (lastRecipe != null && lastRecipe.mold().matches(event.getNewItem())) return;
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-                if (recipe.mold().isSimilar(event.getNewItem())) {
+                if (recipe.mold().matches(event.getNewItem())) {
                     lastRecipe = recipe;
                     return;
                 }
@@ -197,16 +197,16 @@ public final class CastingUnit extends RebarBlock implements
         ItemStack castItem = castInv.getItem(0);
         if (castItem == null || castItem.isEmpty()) return 0;
 
-        if (lastRecipe != null && lastRecipe.isSimilar(fluid, castItem)) {
+        if (lastRecipe != null && lastRecipe.matches(fluid, castItem)) {
             if (outputInv.simulateSingleAdd(lastRecipe.result()) > 0) return 0;
-            return lastRecipe.input().amountMillibuckets() - fluidAmount;
+            return lastRecipe.input().getAmount() - fluidAmount;
         }
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isSimilar(fluid, castItem)) {
+            if (recipe.matches(fluid, castItem)) {
                 lastRecipe = recipe;
                 if (outputInv.simulateSingleAdd(recipe.result()) > 0) return 0;
-                return recipe.input().amountMillibuckets() - fluidAmount;
+                return recipe.input().getAmount() - fluidAmount;
             }
         }
 
@@ -220,13 +220,13 @@ public final class CastingUnit extends RebarBlock implements
         ItemStack castItem = castInv.getItem(0);
         if (castItem == null) throw new AssertionError("Should not happen");
 
-        if (lastRecipe != null && !lastRecipe.isSimilar(fluid, castItem)) {
+        if (lastRecipe != null && !lastRecipe.matches(fluid, castItem)) {
             lastRecipe = null;
         }
 
         if (lastRecipe == null) {
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-                if (recipe.isSimilar(fluid, castItem)) {
+                if (recipe.matches(fluid, castItem)) {
                     lastRecipe = recipe;
                     break;
                 }
@@ -239,7 +239,7 @@ public final class CastingUnit extends RebarBlock implements
 
         fluidType = fluid;
         fluidAmount += amount;
-        if (Math.abs(fluidAmount - lastRecipe.input().amountMillibuckets()) < 1e-6) {
+        if (Math.abs(fluidAmount - lastRecipe.input().getAmount()) < 1e-6) {
             fluidType = null;
             fluidAmount = 0;
             outputInv.addItem(new MachineUpdateReason(), lastRecipe.result());

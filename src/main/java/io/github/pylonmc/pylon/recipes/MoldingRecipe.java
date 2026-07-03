@@ -7,6 +7,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
@@ -21,7 +24,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record MoldingRecipe(
         NamespacedKey key,
-        ItemStack input,
+        ItemChoice input,
         ItemStack result,
         int moldingCycles
 ) implements RebarRecipe {
@@ -31,7 +34,7 @@ public record MoldingRecipe(
         protected @NotNull MoldingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new MoldingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
@@ -44,8 +47,8 @@ public record MoldingRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+        return List.of(input);
     }
 
     @Override
