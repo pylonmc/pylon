@@ -15,7 +15,6 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +47,7 @@ public class FluidVoider extends RebarBlock implements FluidRebarBlock {
     @SuppressWarnings("unused")
     public FluidVoider(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        createFluidPoint(FluidPointType.INPUT, BlockFace.UP, (float) (mainDisplaySize / 2.0));
+        createFluidPoint(FluidPointType.INPUT, context.getFacingVertical(), (float) (mainDisplaySize / 2.0));
         addEntity("main", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(mainMaterial)
                         .addCustomModelDataString(getKey() + ":main")
