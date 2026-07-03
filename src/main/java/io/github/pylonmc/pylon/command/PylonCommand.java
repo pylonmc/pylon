@@ -40,9 +40,6 @@ public class PylonCommand {
                             .executes(ctx -> resetLoupe(ctx, ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst()))
                     )
             )
-            .then(Commands.literal("oil")
-                    .executes(ctx -> oil(ctx, null))
-            )
             .build();
 
     private int fillFluid(CommandContext<CommandSourceStack> ctx) {
@@ -81,21 +78,6 @@ public class PylonCommand {
         target.getPersistentDataContainer().remove(Loupe.CONSUMED_KEY);
         sender.sendRichMessage("<green>Reset loupe data for <target>",
                 Placeholder.unparsed("target", target.getName()));
-        return Command.SINGLE_SUCCESS;
-    }
-
-    private int oil(CommandContext<CommandSourceStack> ctx, Player target) {
-        CommandSender sender = ctx.getSource().getSender();
-        if (target == null) {
-            if (!(sender instanceof Player player)) {
-                sender.sendRichMessage("<red>You must be a player to use this command");
-                return Command.SINGLE_SUCCESS;
-            }
-            target = player;
-        }
-
-        sender.sendMessage("bruh" + OilService.getOilYield(target.getLocation().getBlock()));
-
         return Command.SINGLE_SUCCESS;
     }
 }
