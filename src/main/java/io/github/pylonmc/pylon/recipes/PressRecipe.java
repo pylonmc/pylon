@@ -10,6 +10,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
@@ -26,7 +29,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record PressRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         double oilAmount
 ) implements RebarRecipe {
 
@@ -35,7 +38,7 @@ public record PressRecipe(
         protected @NotNull PressRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new PressRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("oil-amount", ConfigAdapter.DOUBLE)
             );
         }
@@ -47,7 +50,7 @@ public record PressRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -76,7 +79,7 @@ public record PressRecipe(
                                         RebarArgument.of("time", UnitFormat.SECONDS.format(Press.TIME_PER_ITEM_TICKS / 20.0))
                                 ))
                 ))
-                .addIngredient('o', new FluidButton(oilAmount, PylonFluids.PLANT_OIL))
+                .addIngredient('o', FluidButton.of(oilAmount, PylonFluids.PLANT_OIL))
                 .build();
     }
 }

@@ -6,6 +6,9 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +27,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record PipeBendingRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result,
         @NotNull ItemStack particleItem,
         int timeTicks
@@ -40,7 +43,7 @@ public record PipeBendingRecipe(
         protected @NotNull PipeBendingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new PipeBendingRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("particle-item", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("time-ticks", ConfigAdapter.INTEGER)
@@ -49,7 +52,7 @@ public record PipeBendingRecipe(
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -70,7 +73,7 @@ public record PipeBendingRecipe(
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', ItemButton.of(input))
-                .addIngredient('b', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.of(PylonItems.HYDRAULIC_PIPE_BENDER)))
+                .addIngredient('b', GuiItems.progressCyclingItem(timeTicks, ItemStackBuilder.copyOf(PylonItems.HYDRAULIC_PIPE_BENDER)))
                 .addIngredient('o', ItemButton.of(result))
                 .build();
     }

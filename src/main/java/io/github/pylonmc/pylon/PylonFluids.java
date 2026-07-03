@@ -11,7 +11,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
-import io.github.pylonmc.rebar.recipe.IngredientCalculator;
+import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
 
 public final class PylonFluids {
 
@@ -261,7 +261,7 @@ public final class PylonFluids {
     public static final RebarFluid REDSTONE_SLURRY = new Slurry(
             pylonKey("slurry_redstone"),
             TextColor.fromHexString("#841f1e"),
-            new ItemStack(Material.REDSTONE)
+            ItemStack.of(Material.REDSTONE)
     ).addTag(FluidTemperature.NORMAL);
     static {
         REDSTONE_SLURRY.register();

@@ -22,7 +22,7 @@ public class HydraulicRefuelableItemsPage extends SimpleDynamicGuidePage {
 
     private static final HydraulicRefuelableItemsPage INSTANCE = new HydraulicRefuelableItemsPage();
     @Getter private static final Item button = new PageButton(
-            ItemStackBuilder.of(PylonItems.HYDRAULIC_CANNON.clone())
+            ItemStackBuilder.copyOf(PylonItems.HYDRAULIC_CANNON)
                     .name(Component.translatable("pylon.guide.page.hydraulic_refuelable_items"))
                     .build(),
             INSTANCE
@@ -35,7 +35,7 @@ public class HydraulicRefuelableItemsPage extends SimpleDynamicGuidePage {
     private static @NonNull List<Item> getButtons() {
         return RebarRegistry.ITEMS.stream()
                 .filter(item -> RebarItem.fromStack(item.getItemStack()) instanceof HydraulicRefuelable)
-                .map(item -> (Item) new ItemButton(item.getItemStack()))
+                .map(item -> ItemButton.of(item.getItemStack()))
                 .toList();
     }
 }

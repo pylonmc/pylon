@@ -45,6 +45,5 @@ public class ReinforcedGlassCasing extends RebarBlock {
 
     public void reset() {
         setPosition(Position.BOTTOM);
-        Waila.removeWailaOverride(getBlock());
     }
 }

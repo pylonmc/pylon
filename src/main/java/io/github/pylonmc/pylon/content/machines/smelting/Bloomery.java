@@ -140,7 +140,7 @@ public final class Bloomery extends RebarBlock implements
         if (!(RebarItem.fromStack(stack, IronBloom.class) instanceof IronBloom bloom)) return;
 
         Runnable particleSpawner = () -> {
-            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+            if (!isChunkLoaded()) {
                 return;
             }
             Location pos = getBlock().getLocation().add(

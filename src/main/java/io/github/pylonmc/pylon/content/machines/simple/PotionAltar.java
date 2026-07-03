@@ -495,13 +495,12 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        if (altarProgress == null) {
-            return new WailaDisplay(getNameTranslationKey());
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (altarProgress != null) {
+            double progress = (double) (altarProgress.timeTicks - altarProgress.ticksRemaining) / altarProgress.timeTicks;
+            display.add(ProgressBar.recipeProgress(progress));
         }
-        double progress = (double) (altarProgress.timeTicks - altarProgress.ticksRemaining) / altarProgress.timeTicks;
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("progress", ProgressBar.recipeProgress(progress))
-        ));
+        return display;
     }
 
     /**

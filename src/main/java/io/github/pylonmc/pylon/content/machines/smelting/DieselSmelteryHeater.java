@@ -105,12 +105,11 @@ public class DieselSmelteryHeater extends SmelteryComponent implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                )
-        ));
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ));
     }
 }

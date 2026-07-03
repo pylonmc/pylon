@@ -8,13 +8,16 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.WeightedSet;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -33,7 +36,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record GrindstoneRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull WeightedSet<ItemStack> results,
         int cycles
 ) implements RebarRecipe {
@@ -48,7 +51,7 @@ public record GrindstoneRecipe(
         protected @NotNull GrindstoneRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new GrindstoneRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("results", ConfigAdapter.WEIGHTED_SET.from(ConfigAdapter.ITEM_STACK)),
                     section.getOrThrow("cycles", ConfigAdapter.INTEGER)
             );
@@ -68,7 +71,7 @@ public record GrindstoneRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -76,6 +79,7 @@ public record GrindstoneRecipe(
     public @NotNull List<FluidOrItem> getResults() {
         return results.getElements().stream()
                 .map(FluidOrItem::of)
+                .map(FluidOrItem.class::cast)
                 .toList();
     }
 

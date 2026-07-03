@@ -179,7 +179,7 @@ public class HydraulicBreaker extends RebarBlock implements
                 .count(5)
                 .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.6, 0))
-                .data(new ItemStack(drilling.getType()))
+                .data(ItemStack.of(drilling.getType()))
                 .spawn();
     }
 
@@ -260,22 +260,21 @@ public class HydraulicBreaker extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("input-fluid", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("output-fluid", ProgressBar.fluidContents(
+                ))
+                .add(ProgressBar.fluidContents(
                         PylonFluids.DIRTY_HYDRAULIC_FLUID,
                         fluidCapacity(PylonFluids.DIRTY_HYDRAULIC_FLUID),
                         fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID)
-                )),
-                RebarArgument.of("progress", isProcessing()
-                        ? ProgressBar.recipeProgress(getProcessProgress())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                ))
+                .add(isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

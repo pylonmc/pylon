@@ -28,6 +28,7 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -261,15 +262,14 @@ public class CargoFluidAccumulator extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("item-threshold", UnitFormat.ITEMS.format(itemThreshold)),
-                RebarArgument.of("fluid-threshold", UnitFormat.MILLIBUCKETS.format(fluidThreshold)),
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(
+        return WailaDisplay.of(this, player)
+                .add(UnitFormat.ITEMS.format(itemThreshold))
+                .add(UnitFormat.MILLIBUCKETS.format(fluidThreshold))
+                .add(ProgressBar.fluidContentsWithName(
                         getFluidType(),
                         getFluidCapacity(),
                         getFluidAmount()
-                ))
-        ));
+                ));
     }
 
     @Override

@@ -178,11 +178,8 @@ public class CargoValve extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("status", Component.translatable(
-                        "pylon.message.valve." + (open ? "open" : "closed")
-                ))
-        ));
+        return WailaDisplay.of(this, player)
+                .add(Component.translatable("pylon.message.valve." + (open ? "open" : "closed")));
     }
 
     @Override

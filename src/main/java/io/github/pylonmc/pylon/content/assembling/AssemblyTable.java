@@ -16,7 +16,7 @@ import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -331,7 +331,7 @@ public class AssemblyTable extends RebarBlock implements
                     Component.translatable("pylon.gui.assembly_table.no_recipe")
             );
             getHeldEntityOrThrow(ItemDisplay.class, "tool_item")
-                    .setItemStack(new ItemStack(Material.BARRIER));
+                    .setItemStack(ItemStack.of(Material.BARRIER));
             getHeldEntityOrThrow(TextDisplay.class, "tool_clicks_remaining").text(null);
         }
     }
@@ -351,7 +351,7 @@ public class AssemblyTable extends RebarBlock implements
 
         // Remove input items if recipe has not been started yet
         if (!isRecipeStarted()) {
-            for (RecipeInput.Item item : recipe.inputs()) {
+            for (ItemChoice item : recipe.inputs()) {
                 for (int i = 0; i < inputInventory.getItems().length; i++) {
                     ItemStack stack = inputInventory.getItem(i);
                     if (stack != null && item.matches(stack)) {

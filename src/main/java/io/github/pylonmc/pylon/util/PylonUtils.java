@@ -185,7 +185,7 @@ public class PylonUtils {
         }
 
         Material fallback = BLOCK_ITEM_FALLBACK.getOrDefault(mat, Material.BARRIER);
-        ItemStack stack = new ItemStack(fallback);
+        ItemStack stack = ItemStack.of(fallback);
 
         if (fallback == Material.BARRIER) {
             stack.setData(
@@ -227,7 +227,7 @@ public class PylonUtils {
             } else {
                 tank.setFluidType(PylonFluids.WATER);
                 tank.addFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
+                newItemStack = ItemStack.of(Material.BUCKET);
             }
             triggered = true;
         }
@@ -243,7 +243,7 @@ public class PylonUtils {
             } else {
                 tank.setFluidType(PylonFluids.WATER);
                 tank.setFluid(333.333);
-                newItemStack = new ItemStack(Material.GLASS_BOTTLE);
+                newItemStack = ItemStack.of(Material.GLASS_BOTTLE);
             }
             triggered = true;
         }
@@ -255,7 +255,7 @@ public class PylonUtils {
             } else if (tank.canAddFluid(PylonFluids.LAVA, 1000.0)) {
                 tank.setFluidType(PylonFluids.LAVA);
                 tank.addFluid(1000.0);
-                newItemStack = new ItemStack(Material.BUCKET);
+                newItemStack = ItemStack.of(Material.BUCKET);
             }
         }
 
@@ -263,7 +263,7 @@ public class PylonUtils {
             if (priority == EventPriority.NORMAL) {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
-                newItemStack = new ItemStack(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
+                newItemStack = ItemStack.of(tank.getFluidType() == PylonFluids.WATER ? Material.WATER_BUCKET : Material.LAVA_BUCKET);
                 tank.removeFluid(1000.0);
             }
             triggered = true;
@@ -274,7 +274,7 @@ public class PylonUtils {
                 event.setUseItemInHand(Event.Result.DENY);
             } else {
                 tank.setFluid(Math.max(0.0, tank.getFluidAmount() - 333.333));
-                newItemStack = new ItemStack(Material.POTION);
+                newItemStack = ItemStack.of(Material.POTION);
                 newItemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(PotionType.WATER));
             }
             triggered = true;

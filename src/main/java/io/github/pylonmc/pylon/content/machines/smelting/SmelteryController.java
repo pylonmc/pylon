@@ -461,13 +461,6 @@ public final class SmelteryController extends SmelteryComponent
     private double lastHeight = 0;
 
     private void updateFluidDisplay() {
-        List<TextDisplay> pixels = getPixels();
-        if (pixels.isEmpty() || !RebarUtils.hasTracker(pixels.getFirst())) {
-            // Don't update the smeltery display if no one can see it.
-            return;
-        }
-
-        HslColor color = HslColor.fromRgb(PylonUtils.colorFromTemperature(temperature));
         double fill = getTotalFluid() / capacity;
         if (Double.isNaN(fill) || Double.isInfinite(fill)) {
             fill = 0;
@@ -476,6 +469,14 @@ public final class SmelteryController extends SmelteryComponent
             removePixels();
             return;
         }
+
+        List<TextDisplay> pixels = getPixels();
+        if (pixels.isEmpty() || !RebarUtils.hasTracker(pixels.getFirst())) {
+            // Don't update the smeltery display if no one can see it.
+            return;
+        }
+
+        HslColor color = HslColor.fromRgb(PylonUtils.colorFromTemperature(temperature));
 
         double finalHeight = center.getY() + height * fill - 0.01;
         boolean decreased = lastHeight > finalHeight;

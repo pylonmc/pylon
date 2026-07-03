@@ -150,7 +150,8 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
             return true; // recipe not finished
         }
 
-        lastHammeredItems.put(new BlockPosition(block), new Pair<>(recipe, item.getUniqueId()));
+        BlockPosition blockPos = new BlockPosition(block);
+        lastHammeredItems.put(blockPos, new Pair<>(recipe, item.getUniqueId()));
         remainingUseMap.remove(item.getUniqueId());
 
         int newAmount = item.getItemStack().getAmount() - recipe.input().getAmount();
@@ -160,9 +161,9 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
         block.getWorld().playSound(sound.create(), block.getX() + 0.5, block.getY() + 0.5, block.getZ() + 0.5);
 
         if (newAmount >= recipe.input().getAmount()) {
-            lastHammeredItems.put(new BlockPosition(block), new Pair<>(recipe, item.getUniqueId()));
+            lastHammeredItems.put(blockPos, new Pair<>(recipe, item.getUniqueId()));
         } else {
-            lastHammeredItems.remove(new BlockPosition(block));
+            lastHammeredItems.remove(blockPos);
         }
 
         return true;

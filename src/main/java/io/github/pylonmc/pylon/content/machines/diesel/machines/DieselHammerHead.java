@@ -28,10 +28,8 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -219,7 +217,7 @@ public class DieselHammerHead extends RebarBlock implements
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            if (!new BlockPosition(getBlock()).getChunk().isLoaded()) {
+            if (!isChunkLoaded()) {
                 return;
             }
 
@@ -279,17 +277,16 @@ public class DieselHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel", ProgressBar.fluidContents(
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
                         PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL))
-                ),
-                RebarArgument.of("progress", isProcessing()
+                        fluidAmount(PylonFluids.BIODIESEL)
+                ))
+                .add(isProcessing()
                         ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
-                        : Component.translatable("pylon.waila.idle")
-                )
-        ));
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override
