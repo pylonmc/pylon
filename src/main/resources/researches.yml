@@ -469,6 +469,20 @@ cargo_3:
     - pylon:cargo_accumulator
     - pylon:cargo_fluid_accumulator
 
+tea_brewing:
+  item: pylon:small_boiler
+  cost: 50
+  unlocks:
+    - pylon:small_boiler
+    - pylon:small_fluid_boiler
+
+advanced_tea_brewing:
+  item: pylon:small_boiler
+  cost: 90
+  unlocks:
+    - pylon:large_boiler
+    - pylon:large_fluid_boiler
+
 diesel_machines:
   item: pylon:diesel_pipe_bender
   cost: 60
@@ -545,6 +559,10 @@ components_1:
   - pylon:iron_support_beam
   - pylon:bronze_foundation
   - pylon:bronze_grating
+  - pylon:copper_pipe_assembly
+  - pylon:large_copper_pipe_assembly
+  - pylon:firebox
+  - pylon:fluid_firebox
   - pylon:copper_framed_glass
   - pylon:quartz_cap
   - pylon:solar_lens

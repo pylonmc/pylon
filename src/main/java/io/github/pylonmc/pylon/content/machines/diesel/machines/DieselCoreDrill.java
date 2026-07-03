@@ -144,6 +144,6 @@ public class DieselCoreDrill extends CoreDrill {
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setAllowedFluids(PylonFluids.BIODIESEL);
+                .setAllowedFluid(PylonFluids.BIODIESEL);
     }
 }

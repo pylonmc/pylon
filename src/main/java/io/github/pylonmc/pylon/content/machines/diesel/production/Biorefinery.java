@@ -160,9 +160,9 @@ public class Biorefinery extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluids(PylonFluids.ETHANOL);
-        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluids(PylonFluids.PLANT_OIL);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setAllowedFluids(PylonFluids.BIODIESEL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluid(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluid(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class Biorefinery extends RebarBlock implements
             if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
                 ethanolInputHatch.removeFluid(biodieselToProduce * ethanolPerMbOfBiodiesel);
                 plantOilInputHatch.removeFluid(biodieselToProduce * plantOilPerMbOfBiodiesel);
-                biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);
+                biodieselOutputHatch.addFluid(biodieselToProduce);
             }
 
             Vector smokePosition1 = Vector.fromJOML(RebarUtils.rotateVectorToFace(

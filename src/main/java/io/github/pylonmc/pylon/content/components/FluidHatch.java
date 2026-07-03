@@ -2,86 +2,40 @@ package io.github.pylonmc.pylon.content.components;
 
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
+import io.github.pylonmc.pylon.content.machines.fluid.FluidTankWithDisplayEntity;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
-import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
-import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.util.ProgressBar;
-import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.waila.Waila;
-import io.github.pylonmc.rebar.waila.WailaDisplay;
-import java.util.*;
-import kotlin.Pair;
-import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public abstract class FluidHatch extends RebarBlock implements
-        FluidRebarBlock,
+        FluidTankWithDisplayEntity,
         SimpleRebarMultiblock,
         DirectionalRebarBlock {
 
-    private static final NamespacedKey ALLOWED_FLUIDS_KEY = pylonKey("allowed_fluids");
-    private static final NamespacedKey FLUID_KEY = pylonKey("fluid");
-    private static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
-    private static final NamespacedKey CAPACITY_KEY = pylonKey("capacity");
+    public double wailaFluidCycleIntervalTicks = getSettingOrThrow("waila-fluid-cycle-interval-ticks", ConfigAdapter.DOUBLE);
 
-    @Getter
-    private Set<RebarFluid> allowedFluids = new HashSet<>();
-
-    @Getter
-    private @Nullable RebarFluid fluid;
-
-    @Getter
-    private double fluidAmount = 0;
-
-    @Getter
-    private double capacity = 0;
-
-    public FluidHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
+    protected FluidHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        fluid = null;
         setFacing(context.getFacing());
-        addEntity("fluid", new ItemDisplayBuilder()
-                .transformation(new TransformBuilder().scale(0))
-                .build(getBlock().getLocation().toCenterLocation().add(0, 1, 0))
-        );
+        createFluidDisplay(new Vector3i(0, 1, 0));
     }
 
-    @SuppressWarnings("DataFlowIssue")
-    public FluidHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
+    protected FluidHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        allowedFluids = pdc.get(ALLOWED_FLUIDS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.REBAR_FLUID));
-        fluid = pdc.get(FLUID_KEY, RebarSerializers.REBAR_FLUID);
-        fluidAmount = pdc.get(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE);
-        capacity = pdc.get(CAPACITY_KEY, RebarSerializers.DOUBLE);
-    }
-
-    @Override
-    public void write(@NotNull PersistentDataContainer pdc) {
-        pdc.set(ALLOWED_FLUIDS_KEY, RebarSerializers.SET.setTypeFrom(RebarSerializers.REBAR_FLUID), allowedFluids);
-        RebarUtils.setNullable(pdc, FLUID_KEY, RebarSerializers.REBAR_FLUID, fluid);
-        pdc.set(FLUID_AMOUNT_KEY, RebarSerializers.DOUBLE, fluidAmount);
-        pdc.set(CAPACITY_KEY, RebarSerializers.DOUBLE, capacity);
     }
 
     @Override
@@ -92,154 +46,18 @@ public abstract class FluidHatch extends RebarBlock implements
     }
 
     @Override
-    public boolean checkFormed() {
-        boolean formed = SimpleRebarMultiblock.super.checkFormed();
-        if (formed) {
-            FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
-            Preconditions.checkState(casing != null);
-            setCapacity(casing.capacity);
-        }
-        return formed;
+    public void onMultiblockFormed() {
+        SimpleRebarMultiblock.super.onMultiblockFormed();
+        FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
+        Preconditions.checkState(casing != null);
+        Waila.addWailaOverride(casing.getBlock(), this);
+        setCapacity(casing.capacity);
     }
 
     @Override
     public void onMultiblockUnformed(boolean partUnloaded) {
         SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
-        if (fluid != null) {
-            setCapacity(0);
-            getFluidDisplay().setTransformationMatrix(new TransformBuilder()
-                    .scale(0, 0, 0)
-                    .buildForItemDisplay()
-            );
-        }
-    }
-
-    @Override
-    public @NotNull List<@NotNull Pair<RebarFluid, Double>> getSuppliedFluids() {
-        if (fluid == null || fluidAmount <= 1e-6) {
-            return List.of();
-        }
-        return List.of(new Pair<>(fluid, fluidAmount));
-    }
-
-    @Override
-    public double fluidAmountRequested(@NotNull RebarFluid fluid) {
-        if (Objects.equals(this.fluid, fluid)) {
-            return capacity - fluidAmount;
-        } else if (allowedFluids.contains(fluid)) {
-            return capacity;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * Implementation of {@link FluidRebarBlock}. Use {@link #addFluid} instead.
-     */
-    @ApiStatus.Internal
-    @Override
-    public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        setFluid(fluid, fluidAmount + amount);
-    }
-
-    /**
-     * Implementation of {@link FluidRebarBlock}. Use {@link #removeFluid} instead.
-     */
-    @ApiStatus.Internal
-    @Override
-    public void onFluidRemoved(@NotNull RebarFluid fluid, double amount) {
-        setFluid(fluid, fluidAmount - amount);
-    }
-
-    public void addFluid(@NotNull RebarFluid fluid, double amount) {
-        onFluidAdded(fluid, amount);
-    }
-
-    public void removeFluid(double amount) {
-        if (fluid != null) {
-            onFluidRemoved(fluid, amount);
-        }
-    }
-
-    public void setFluid(@NotNull RebarFluid fluid, double amount) {
-        this.fluid = fluid;
-        this.fluidAmount = Math.min(amount, capacity);
-        float scale = (float) (0.9 * fluidAmount / capacity);
-        if (scale < RebarUtils.FLUID_EPSILON) {
-            this.fluid = null;
-            this.fluidAmount = 0;
-            getFluidDisplay().setItemStack(null);
-        } else {
-            getFluidDisplay().setItemStack(fluid.getItem());
-        }
-        getFluidDisplay().setTransformationMatrix(new TransformBuilder()
-                .translate(0.0, -0.45 + scale / 2, 0.0)
-                .scale(0.9, scale, 0.9)
-                .buildForItemDisplay()
-        );
-    }
-
-    public double getFluidSpaceRemaining() {
-        if (fluid == null) {
-            return capacity;
-        } else {
-            return capacity - fluidAmount;
-        }
-    }
-
-    @Override
-    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        WailaDisplay display = WailaDisplay.of(this, player);
-
-        if (!isFormedAndFullyLoaded()) {
-            display.add(Component.translatable("pylon.message.fluid_hatch.no_casing"));
-        } else if (fluid == null) {
-            display.add(Component.translatable("pylon.message.fluid_hatch.no_fluid"));
-        } else {
-            display.add(ProgressBar.fluidContentsWithName(
-                    fluid,
-                    capacity,
-                    fluidAmount
-            ));
-        }
-
-        return display;
-    }
-
-    public void setAllowedFluids(@NotNull RebarFluid @NotNull ... fluids) {
-        setAllowedFluids(Set.of(fluids));
-    }
-
-    public void setAllowedFluids(@NotNull Set<RebarFluid> fluids) {
-        this.allowedFluids = fluids;
-
-        if (this.fluid != null && !fluids.contains(this.fluid)) {
-            fluid = null;
-            setCapacity(0);
-            getFluidDisplay().setTransformationMatrix(new TransformBuilder()
-                    .scale(0, 0, 0)
-                    .buildForItemDisplay()
-            );
-            this.fluid = null;
-        }
-        checkFormed();
-    }
-
-    public boolean canAcceptFluid(@NotNull RebarFluid fluid, double amount) {
-        return fluidAmount + amount < capacity && ((this.fluid == null && allowedFluids.contains(fluid)) || Objects.equals(this.fluid, fluid));
-    }
-
-    public boolean canAcceptFluid(@NotNull RebarFluid fluid) {
-        return canAcceptFluid(fluid, 0);
-    }
-
-    private void setCapacity(double capacity) {
-        this.capacity = capacity;
-        this.fluidAmount = Math.min(this.fluidAmount, capacity);
-    }
-
-    public @NotNull ItemDisplay getFluidDisplay() {
-        return getHeldEntityOrThrow(ItemDisplay.class, "fluid");
+        setCapacity(0);
     }
 }

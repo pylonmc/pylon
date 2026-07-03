@@ -122,8 +122,8 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setAllowedFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.HYDRAULIC_FLUID);
     }
 
     @Override
@@ -170,7 +170,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
                         )
                 );
                 inputHatch.removeFluid(toPurify);
-                outputHatch.addFluid(PylonFluids.HYDRAULIC_FLUID, toPurify * purificationEfficiency);
+                outputHatch.addFluid(toPurify * purificationEfficiency);
             }, 45);
 
             for (int i = 0; i < 15; i++) {

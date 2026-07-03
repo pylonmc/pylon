@@ -145,9 +145,6 @@ public class FluidExperienceBottler extends RebarBlock implements
         if (outputFluid != null && outputHatch == null) {
             return;
         }
-        if (inputHatch.getFluid() == null || xpHatch.getFluid() == null) {
-            return;
-        }
         if (inputHatch.getFluidAmount() < inputFluidAmount) {
             return;
         }
@@ -167,7 +164,7 @@ public class FluidExperienceBottler extends RebarBlock implements
         inputHatch.removeFluid(inputFluidAmount);
         xpHatch.removeFluid(xpAmount);
         if (outputFluid != null) {
-            outputHatch.addFluid(outputFluid, outputFluidAmount);
+            outputHatch.addFluid(outputFluidAmount);
         }
         bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
         startProcess((int) Math.round(bottleProductionTime * 20));
@@ -184,8 +181,8 @@ public class FluidExperienceBottler extends RebarBlock implements
         FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
         FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
         Preconditions.checkState(inputHatch != null && xpHatch != null);
-        inputHatch.setAllowedFluids(inputFluid);
-        xpHatch.setAllowedFluids(PylonFluids.LIQUID_XP);
+        inputHatch.setAllowedFluid(inputFluid);
+        xpHatch.setAllowedFluid(PylonFluids.LIQUID_XP);
         if (outputFluid != null) {
             FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH_POS);
             outputHatch.setAllowedFluids(outputFluid);

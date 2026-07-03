@@ -43,6 +43,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
+import org.joml.Vector3i;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 

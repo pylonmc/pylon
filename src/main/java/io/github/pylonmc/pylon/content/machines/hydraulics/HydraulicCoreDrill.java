@@ -112,7 +112,7 @@ public class HydraulicCoreDrill extends CoreDrill {
         }
 
         inputHatch.removeFluid(hydraulicFluidPerRotation);
-        outputHatch.addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerRotation);
+        outputHatch.addFluid(hydraulicFluidPerRotation);
 
         if (!isProcessing()) {
             startCycle();
@@ -132,7 +132,7 @@ public class HydraulicCoreDrill extends CoreDrill {
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
+                .setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
                 .setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }

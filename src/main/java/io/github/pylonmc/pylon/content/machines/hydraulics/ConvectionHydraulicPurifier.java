@@ -199,13 +199,15 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         }
 
         hydraulicInput.removeFluid(fluidToPurify);
-        hydraulicOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, efficiency * fluidToPurify);
+        hydraulicOutput.addFluid(efficiency * fluidToPurify);
     }
 
     @Override
     public void onMultiblockFormed() {
-        getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT).setAllowedFluids(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT).setAllowedFluids(PylonFluids.HYDRAULIC_FLUID);
+        FluidInputHatch hydraulicInput = getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT);
+        FluidOutputHatch hydraulicOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT);
+        hydraulicInput.setAllowedFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        hydraulicOutput.setFluidType(PylonFluids.HYDRAULIC_FLUID);
         Block light = getBlock().getRelative(BlockFace.UP);
         if (light.getType().isAir()) {
             light.setType(Material.LIGHT);

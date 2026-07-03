@@ -186,7 +186,7 @@ public class Fermenter extends RebarBlock implements
         double ethanolToOutput = Math.min(outputSpaceRemaining, sugarcaneProportion * maxEthanolOutputRate * getTickInterval() / 20);
         if (ethanolToOutput > RebarUtils.FLUID_EPSILON) {
             removeFluid(PylonFluids.SUGARCANE, ethanolToOutput);
-            outputHatch.addFluid(PylonFluids.ETHANOL, ethanolToOutput);
+            outputHatch.addFluid(ethanolToOutput);
         }
     }
 

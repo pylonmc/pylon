@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -215,8 +214,8 @@ public class Kiln extends RebarBlock implements
                     .inventory.canHold(recipe.outputItem());
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
             boolean canHoldOutputFluid = recipe.outputFluid() == null
-                    || fluidOutputHatch.getFluid() == null
-                    || fluidOutputHatch.canAcceptFluid(recipe.outputFluid(), recipe.outputFluidAmount());
+                    || fluidOutputHatch.getFluidType() == null
+                    || recipe.outputFluid().equals(fluidOutputHatch.getFluidType()) && fluidOutputHatch.canSetFluid(fluidOutputHatch.getFluidAmount() + recipe.outputFluidAmount());
             if (canHoldOutputItem && canHoldOutputFluid && temperature > recipe.temperature()) {
                 progressRecipe(getTickInterval());
             }
@@ -254,9 +253,9 @@ public class Kiln extends RebarBlock implements
 
         if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-            boolean canHoldFluidOutput = fluidOutputHatch.getFluid() == null
+            boolean canHoldFluidOutput = fluidOutputHatch.getFluidType() == null
                     || fluidOutputHatch.getFluidAmount() < 1.0e-6
-                    || fluidOutputHatch.getFluid().equals(recipe.outputFluid()) && fluidOutputHatch.getFluidSpaceRemaining() > recipe.outputFluidAmount();
+                    || fluidOutputHatch.getFluidType().equals(recipe.outputFluid()) && fluidOutputHatch.getFluidSpaceRemaining() > recipe.outputFluidAmount();
             if (!canHoldFluidOutput) {
                 return false;
             }
