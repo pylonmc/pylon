@@ -7,7 +7,6 @@ import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import org.bukkit.Material;
@@ -19,7 +18,6 @@ import org.bukkit.event.block.CauldronLevelChangeEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 
 public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandler, FluidTankRebarBlock {
@@ -123,8 +121,6 @@ public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandl
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(getFluidType(), getFluidCapacity(), getFluidAmount()))
-        ));
+        return WailaDisplay.of(this, player).add(ProgressBar.fluidContentsWithName(getFluidType(), getFluidCapacity(), getFluidAmount()));
     }
 }
