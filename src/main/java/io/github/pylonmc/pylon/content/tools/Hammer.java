@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
@@ -24,7 +23,6 @@ import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -262,13 +260,5 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
                 RebarArgument.of("base-block", baseBlock.createItemStack().effectiveName()),
                 RebarArgument.of("cooldown", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
         );
-    }
-
-    private static MiningLevel getMiningLevel(@NotNull NamespacedKey key) {
-        return Map.of(
-                PylonKeys.STONE_HAMMER, MiningLevel.STONE,
-                PylonKeys.IRON_HAMMER, MiningLevel.IRON,
-                PylonKeys.DIAMOND_HAMMER, MiningLevel.DIAMOND
-        ).get(key);
     }
 }
