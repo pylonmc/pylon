@@ -39,8 +39,8 @@ public record CastingRecipe(
         }
     };
 
-    public boolean isSimilar(RebarFluid fluid, ItemStack mold) {
-        return input.contains(fluid) && this.mold.isSimilar(mold);
+    public boolean matches(RebarFluid fluid, ItemStack mold) {
+        return input.matchesIgnoringAmount(fluid) && this.mold.matches(mold);
     }
 
     @Override
