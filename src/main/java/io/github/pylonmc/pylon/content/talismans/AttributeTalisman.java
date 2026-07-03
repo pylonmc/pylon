@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AttributeTalisman extends Talisman {
-    public final double attrBonus = getSettings().getOrThrow("attr-bonus", ConfigAdapter.DOUBLE);
+    public final double attrBonus = getSettingOrThrow("attr-bonus", ConfigAdapter.DOUBLE);
     private final AttributeModifier modifier = new AttributeModifier(
             getTalismanKey(),
             attrBonus,

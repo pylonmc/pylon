@@ -1,3 +1,3 @@
 material: green_terracotta
-fluid-per-second: 350.0
+fluid-per-second: 300.0
 allowed-temperatures: [normal] # can be cold (cryogenic), normal, or hot (molten)

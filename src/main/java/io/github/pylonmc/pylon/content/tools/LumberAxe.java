@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.tools;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarTool;
+import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.Tool;
@@ -27,7 +27,7 @@ import java.util.*;
 
 
 @SuppressWarnings("UnstableApiUsage")
-public class LumberAxe extends RebarItem implements RebarTool {
+public class LumberAxe extends RebarItem implements BlockBreakRebarItemHandler {
 
     public LumberAxe( @NotNull ItemStack stack) {
         super(stack);
@@ -36,7 +36,7 @@ public class LumberAxe extends RebarItem implements RebarTool {
     private static final Set<Event> eventsToIgnore = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onUsedToBreakBlock(@NotNull BlockBreakEvent event, @NotNull EventPriority priority) {
+    public void onBreakBlock(@NotNull BlockBreakEvent event, @NotNull EventPriority priority) {
         if (!Tag.LOGS.isTagged(event.getBlock().getType()) || BlockStorage.isRebarBlock(event.getBlock())) {
             return;
         }
@@ -52,7 +52,8 @@ public class LumberAxe extends RebarItem implements RebarTool {
 
     private void breakAttachedWood(Block block, Player player, ItemStack tool) {
         // Recursive function, for every adjacent block check if it's a log, if so delete it and give the drop to the player and check all its adjacent blocks
-        if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)) {
+        if (!Tag.LOGS.isTagged(block.getType()) || BlockStorage.isRebarBlock(block)
+            || !block.getWorld().getWorldBorder().isInside(block.getLocation())) {
             return;
         }
         BlockBreakEvent blockBreakEvent = new BlockBreakEvent(block, player);

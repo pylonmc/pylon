@@ -4,16 +4,16 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarBlockInteractor;
-import io.github.pylonmc.rebar.item.base.RebarBucket;
-import io.github.pylonmc.rebar.item.base.RebarDispensable;
+import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.DispenseRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
@@ -26,7 +26,10 @@ import java.util.List;
 import java.util.Random;
 
 
-public class WateringCan extends RebarItem implements RebarBlockInteractor, RebarBucket, RebarDispensable {
+public class WateringCan extends RebarItem implements
+        BlockInteractRebarItemHandler,
+        BucketRebarItemHandler,
+        DispenseRebarItemHandler {
 
     public final WateringSettings settings = WateringSettings.fromConfig(getSettings());
 
@@ -42,7 +45,7 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClickBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
@@ -56,7 +59,7 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onBucketFilled(@NotNull PlayerBucketFillEvent event, @NotNull EventPriority priority) {
+    public void onBucketFill(@NotNull PlayerBucketFillEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
@@ -70,12 +73,13 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
 
                 // Search down (for a maximum of RANGE blocks) to find the first solid block
                 int remainingYSteps = settings.verticalRange();
-                while (block.getType().isAir() && remainingYSteps > 0) {
+                BlockData blockData = block.getBlockData();
+                while (blockData.getMaterial().isAir() && remainingYSteps > 0) {
                     block = block.getRelative(BlockFace.DOWN);
                     remainingYSteps--;
                 }
 
-                wasAnyTickAttempted |= tryGrowBlock(block, settings);
+                wasAnyTickAttempted |= tryGrowBlock(block, blockData, settings);
             }
         }
 
@@ -84,89 +88,50 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
         }
     }
 
-    private static boolean tryGrowBlock(Block block, WateringSettings settings) {
-        if (block.getType() == Material.SUGAR_CANE) {
-            return growSugarCane(block, settings);
-        } else if (block.getType() == Material.CACTUS) {
-            return growCactus(block, settings);
-        } else if (block.getBlockData() instanceof Ageable ageable && ageable.getAge() < ageable.getMaximumAge()) {
-            return growCrop(block, ageable, settings);
-        } else if (Tag.SAPLINGS.isTagged(block.getType())) {
-            return growSapling(block, settings);
+    private static boolean tryGrowBlock(Block block, BlockData blockData, WateringSettings settings) {
+        Material material = blockData.getMaterial();
+        if (material == Material.CACTUS) {
+            return growTallBlockWithRandomTick(block, material, settings.cactusChance(), settings.cactusTicks(), settings.particleChance());
+        } else if (material == Material.SUGAR_CANE) {
+            return growTallBlockWithRandomTick(block, material, settings.sugarCaneChance(), settings.sugarCaneTicks(), settings.particleChance());
+        } else if (Tag.BEE_GROWABLES.isTagged(material)) {
+            return growWithBonemeal(block, settings.cropChance(), settings.cropTicks(), settings.particleChance());
+        } else if (Tag.SAPLINGS.isTagged(material)) {
+            return growWithBonemeal(block, settings.saplingChance(), settings.saplingTicks(), settings.particleChance());
         }
         return false;
     }
 
-    private static boolean growSugarCane(@NotNull Block block, WateringSettings settings) {
-        int height = 1;
-
-        Block bottomBlock = block.getRelative(BlockFace.DOWN);
-        while (bottomBlock.getType() == Material.SUGAR_CANE) {
-            height++;
-            bottomBlock = bottomBlock.getRelative(BlockFace.DOWN);
-        }
-
+    private static boolean growTallBlockWithRandomTick(@NotNull Block block, Material material, double tickChance, int ticks, double particleChance) {
         Block topBlock = block.getRelative(BlockFace.UP);
-        while (topBlock.getType() == Material.SUGAR_CANE) {
-            height++;
+        while (topBlock.getType() == material) {
             topBlock = topBlock.getRelative(BlockFace.UP);
         }
 
-        if (height < 3 && topBlock.getType() == Material.AIR) {
-            if (random.nextDouble() < settings.particleChance()) {
-                new ParticleBuilder(Particle.HAPPY_VILLAGER)
-                        .count(1)
-                        .location(topBlock.getLocation().add(0.5, 0.0, 0.5))
-                        .offset(0.3, 0.3, 0.3)
-                        .spawn();
-            }
-
-            if (random.nextDouble() < settings.sugarCaneChance()) {
-                topBlock.setType(Material.SUGAR_CANE);
-            }
-
-            return true;
+        if (!topBlock.isEmpty()) {
+            return false;
         }
 
-        return false;
+        topBlock = topBlock.getRelative(BlockFace.DOWN);
+        if (random.nextDouble() < particleChance) {
+            new ParticleBuilder(Particle.HAPPY_VILLAGER)
+                    .count(1)
+                    .location(topBlock.getLocation().add(0.5, 0.0, 0.5))
+                    .offset(0.3, 0.3, 0.3)
+                    .spawn();
+        }
+
+        if (random.nextDouble() < tickChance) {
+            for (int i = 0; i < ticks; i++) {
+                topBlock.randomTick();
+            }
+        }
+
+        return true;
     }
 
-    private static boolean growCactus(@NotNull Block block, WateringSettings settings) {
-        int height = 1;
-
-        Block bottomBlock = block.getRelative(BlockFace.DOWN);
-        while (bottomBlock.getType() == Material.CACTUS) {
-            height++;
-            bottomBlock = bottomBlock.getRelative(BlockFace.DOWN);
-        }
-
-        Block topBlock = block.getRelative(BlockFace.UP);
-        while (topBlock.getType() == Material.CACTUS) {
-            height++;
-            topBlock = topBlock.getRelative(BlockFace.UP);
-        }
-
-        if (height < 3 && topBlock.getType() == Material.AIR) {
-            if (random.nextDouble() < settings.particleChance()) {
-                new ParticleBuilder(Particle.HAPPY_VILLAGER)
-                        .count(1)
-                        .location(topBlock.getLocation().add(0.5, 0.0, 0.5))
-                        .offset(0.3, 0.3, 0.3)
-                        .spawn();
-            }
-
-            if (random.nextDouble() < settings.cactusChance()) {
-                topBlock.setType(Material.CACTUS);
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private static boolean growCrop(@NotNull Block block, @NotNull Ageable ageable, WateringSettings settings) {
-        if (random.nextDouble() < settings.particleChance()) {
+    private static boolean growWithBonemeal(@NotNull Block block, double boneMealChance, int ticks, double particleChance) {
+        if (random.nextDouble() < particleChance) {
             new ParticleBuilder(Particle.SPLASH)
                     .count(3)
                     .location(block.getLocation().add(0.5, 0.0, 0.5))
@@ -174,17 +139,10 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
                     .spawn();
         }
 
-        if (random.nextDouble() < settings.cropChance()) {
-            ageable.setAge(ageable.getAge() + 1);
-            block.setBlockData(ageable);
-        }
-
-        return true;
-    }
-
-    private static boolean growSapling(@NotNull Block block, WateringSettings settings) {
-        if (random.nextDouble() < settings.saplingChance()) {
-            block.applyBoneMeal(BlockFace.UP);
+        if (random.nextDouble() < boneMealChance) {
+            for (int i = 0; i < ticks; i++) {
+                block.applyBoneMeal(BlockFace.UP);
+            }
         }
 
         return true;
@@ -195,7 +153,7 @@ public class WateringCan extends RebarItem implements RebarBlockInteractor, Reba
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onDispense(@NotNull BlockDispenseEvent event, @NotNull EventPriority priority) {
+    public void onDispensed(@NotNull BlockDispenseEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 }

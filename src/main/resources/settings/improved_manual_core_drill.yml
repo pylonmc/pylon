@@ -2,3 +2,4 @@ rotation-duration-ticks: 16 # must be a multiple of 4
 rotations-per-cycle: 25
 output: "pylon:subsurface_core_chunk"
 drill-material: cyan_terracotta
+spawn-block-particles: true

@@ -8,21 +8,26 @@ import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarRecipeProcessor;
-import io.github.pylonmc.rebar.block.base.RebarSimpleMultiblock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -30,27 +35,26 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class ShimmerAltar extends RebarBlock
-        implements RebarSimpleMultiblock, RebarInteractBlock, RebarTickingBlock, RebarRecipeProcessor<ShimmerAltarRecipe> {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, RecipeProcessorRebarBlock<ShimmerAltarRecipe>, BlockBreakRebarBlockHandler {
 
     public static final int PEDESTAL_COUNT = 8;
 
     private static final Random random = new Random();
 
-    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = new RebarSimpleMultiblock.RebarMultiblockComponent(PylonKeys.SHIMMER_PEDESTAL);
+    private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
 
-    private final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         setTickInterval(tickInterval);
 
@@ -68,7 +72,7 @@ public class ShimmerAltar extends RebarBlock
 
     @SuppressWarnings("unused")
     public ShimmerAltar(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
@@ -87,7 +91,7 @@ public class ShimmerAltar extends RebarBlock
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -106,7 +110,7 @@ public class ShimmerAltar extends RebarBlock
         ItemStack displayItem = itemDisplay.getItemStack();
         if (!isProcessingRecipe() && !displayItem.isEmpty()) {
             event.getPlayer().give(displayItem);
-            itemDisplay.setItemStack(new ItemStack(Material.AIR));
+            itemDisplay.setItemStack(ItemStack.of(Material.AIR));
             return;
         }
 
@@ -231,5 +235,26 @@ public class ShimmerAltar extends RebarBlock
                 .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
+    }
+
+    @Override
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        if (!getItemDisplay().getItemStack().getType().isAir()) {
+            drops.add(getItemDisplay().getItemStack());
+        }
+        for (Pedestal pedestal : getPedestals()) {
+            if (pedestal != null) {
+                pedestal.setLocked(false);
+            }
+        }
+    }
+    
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (getCurrentRecipe() != null) {
+            display.add(ProgressBar.recipeProgress(getRecipeProgress()));
+        }
+        return display;
     }
 }

@@ -7,18 +7,23 @@ baking:
   - pylon:monster_jerky
 
 showing_off:
-  item: stone_brick_wall
+  item: pylon:pedestal
   cost: 2
   unlocks:
     - pylon:pedestal
     - pylon:confetti_popper
+
+tape_measure:
+  item: pylon:tape_measure
+  cost: 3
+  unlocks:
+    - pylon:tape_measure
 
 talismans_1:
   item: pylon:health_talisman_simple
   cost: 10
   unlocks:
     - pylon:health_talisman_simple
-    - pylon:hunger_talisman_simple
     - pylon:farming_talisman_simple
     - pylon:bartering_talisman_simple
     - pylon:water_breathing_talisman_simple
@@ -26,13 +31,13 @@ talismans_1:
     - pylon:breeding_talisman_simple
     - pylon:enchanting_talisman_simple
     - pylon:hunting_talisman_simple
+    - pylon:experience_talisman_simple
 
 talismans_2:
-  item: pylon:health_talisman_simple
+  item: pylon:health_talisman_advanced
   cost: 25
   unlocks:
     - pylon:health_talisman_advanced
-    - pylon:hunger_talisman_advanced
     - pylon:farming_talisman_advanced
     - pylon:bartering_talisman_advanced
     - pylon:water_breathing_talisman_advanced
@@ -40,13 +45,13 @@ talismans_2:
     - pylon:breeding_talisman_advanced
     - pylon:enchanting_talisman_advanced
     - pylon:hunting_talisman_advanced
+    - pylon:experience_talisman_advanced
 
 talismans_3:
-  item: pylon:health_talisman_simple
+  item: pylon:health_talisman_ultimate
   cost: 60
   unlocks:
     - pylon:health_talisman_ultimate
-    - pylon:hunger_talisman_ultimate
     - pylon:farming_talisman_ultimate
     - pylon:bartering_talisman_ultimate
     - pylon:water_breathing_talisman_ultimate
@@ -55,6 +60,22 @@ talismans_3:
     - pylon:water_breathing_talisman_ultimate
     - pylon:enchanting_talisman_ultimate
     - pylon:hunting_talisman_ultimate
+    - pylon:experience_talisman_ultimate
+
+talismans_4:
+  item: pylon:health_talisman_palladium
+  cost: 175
+  unlocks:
+    - pylon:health_talisman_palladium
+    - pylon:farming_talisman_palladium
+    - pylon:bartering_talisman_palladium
+    - pylon:water_breathing_talisman_palladium
+    - pylon:luck_talisman_palladium
+    - pylon:breeding_talisman_palladium
+    - pylon:water_breathing_talisman_palladium
+    - pylon:enchanting_talisman_palladium
+    - pylon:hunting_talisman_palladium
+    - pylon:experience_talisman_palladium
 
 drilling_1:
   item: pylon:subsurface_core_chunk
@@ -65,20 +86,25 @@ drilling_1:
 
 drilling_2:
   item: pylon:subsurface_core_chunk
-  cost: 40
+  cost: 30
   unlocks:
     - pylon:hydraulic_core_drill
     - pylon:intermediate_core_chunk
     - pylon:gypsum
+    - pylon:gypsum_block
     - pylon:gypsum_dust
+
+drilling_3:
+  item: pylon:deep_core_chunk
+  cost: 70
+  unlocks:
+    - pylon:diesel_core_drill
+    - pylon:deep_core_chunk
 
 smelting_1:
   item: pylon:smeltery_controller
   cost: 5
   unlocks:
-  - pylon:pit_kiln
-  - pylon:carbon
-  - pylon:sulfur
   - pylon:bronze_ingot
   - pylon:bronze_dust
   - pylon:bronze_sheet
@@ -86,6 +112,15 @@ smelting_1:
   - pylon:bronze_block
 
 smelting_2:
+  item: pylon:smeltery_controller
+  cost: 20
+  unlocks:
+    - pylon:kiln
+    - pylon:carbon
+    - pylon:sulfur
+    - pylon:sulfur_block
+
+smelting_3:
   item: pylon:smeltery_controller
   cost: 35
   unlocks:
@@ -106,24 +141,53 @@ smelting_2:
     - pylon:steel_nugget
     - pylon:steel_block
     - pylon:steel_sheet
+    - pylon:casting_unit
+    - pylon:mold_nugget
+    - pylon:mold_ingot
+    - pylon:mold_block
+    - pylon:mold_sheet
+    - pylon:mold_pipe
+    - pylon:forming_table
 
-smelting_3:
+smelting_4:
   item: pylon:smeltery_controller
   cost: 50
   unlocks:
     - pylon:smeltery_controller
     - pylon:smeltery_burner
     - pylon:diesel_smeltery_heater
-    - pylon:smeltery_caster
     - pylon:smeltery_hopper
     - pylon:smeltery_input_hatch
     - pylon:smeltery_output_hatch
 
 pressing:
   item: pylon:press
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:press
+
+silos_1:
+  item: pylon:bronze_silo
+  cost: 5
+  unlocks:
+    - pylon:silo_converter
+    - pylon:wooden_silo
+    - pylon:copper_silo
+    - pylon:tin_silo
+
+silos_2:
+  item: pylon:bronze_silo
+  cost: 10
+  unlocks:
+    - pylon:iron_silo
+    - pylon:bronze_silo
+
+silos_3:
+  item: pylon:bronze_silo
+  cost: 15
+  unlocks:
+    - pylon:steel_silo
+    - pylon:palladium_silo
 
 pumps:
   item: pylon:water_pump
@@ -144,7 +208,7 @@ irrigation:
 
 fluid_handling_1:
   item: pylon:fluid_pipe_copper
-  cost: 15
+  cost: 5
   unlocks:
     - pylon:fluid_pipe_copper
     - pylon:portable_fluid_tank_copper
@@ -155,7 +219,7 @@ fluid_handling_1:
 
 fluid_handling_2:
   item: pylon:fluid_pipe_copper
-  cost: 15
+  cost: 10
   unlocks:
     - pylon:fluid_pipe_bronze
     - pylon:portable_fluid_tank_bronze
@@ -168,8 +232,11 @@ fluid_handling_2:
 
 fluid_handling_3:
   item: pylon:fluid_pipe_copper
-  cost: 30
+  cost: 20
   unlocks:
+    - pylon:fluid_pipe_obsidian
+    - pylon:portable_fluid_tank_obsidian
+    - pylon:fluid_tank_casing_obsidian
     - pylon:fluid_pipe_igneous_composite
     - pylon:portable_fluid_tank_igneous_composite
     - pylon:fluid_tank_casing_igneous_composite
@@ -184,7 +251,7 @@ fluid_handling_4:
 
 fluid_handling_5:
   item: pylon:fluid_pipe_palladium
-  cost: 60
+  cost: 200
   unlocks:
     - pylon:fluid_pipe_palladium
     - pylon:portable_fluid_tank_palladium
@@ -211,7 +278,6 @@ fluid_machines_3:
   unlocks:
     - pylon:fluid_meter
     - pylon:fluid_accumulator
-    - pylon:fluid_voider_3
 
 bronze_equipment:
   item: pylon:bronze_pickaxe
@@ -236,7 +302,7 @@ improved_hammers:
 
 elevators:
   item: pylon:elevator_1
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:elevator_1
     - pylon:elevator_2
@@ -278,35 +344,39 @@ hydraulic_machines:
     - pylon:hydraulic_hammer_head
     - pylon:hydraulic_pipe_bender
     - pylon:hydraulic_table_saw
-    - pylon:hydraulic_miner
     - pylon:hydraulic_breaker
     - pylon:hydraulic_farmer
     - pylon:hydraulic_refueling_station
+    - pylon:hydraulic_experience_bottler
 
-hydraulic_purification_1:
-  item: pylon:solar_purification_tower_1
+manual_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 5
+  unlocks:
+    - pylon:manual_hydraulic_purifier
+
+solar_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 10
   unlocks:
-    - pylon:solar_purification_tower_1
-    - pylon:solar_purification_tower_2
-    - pylon:solar_purification_tower_3
-    - pylon:purification_tower_glass
-    - pylon:purification_tower_cap
-    - pylon:solar_lens
+    - pylon:solar_hydraulic_purifier_1
+    - pylon:solar_hydraulic_purifier_2
+    - pylon:solar_hydraulic_purifier_3
+    - pylon:solar_hydraulic_purifier_4
+    - pylon:solar_hydraulic_purifier_5
 
-hydraulic_purification_2:
-  item: pylon:solar_purification_tower_1
-  cost: 15
-  unlocks:
-    - pylon:coal_fired_purification_tower
-    - pylon:solar_purification_tower_3
-
-hydraulic_purification_3:
-  item: pylon:solar_purification_tower_1
+thermal_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
   cost: 20
   unlocks:
-    - pylon:solar_purification_tower_4
-    - pylon:solar_purification_tower_5
+    - pylon:burner_hydraulic_purifier
+    - pylon:convection_hydraulic_purifier
+
+liselette_hydraulic_purification:
+  item: pylon:manual_hydraulic_purifier
+  cost: 40
+  unlocks:
+    - pylon:liselette_hydraulic_purifier
 
 hydraulic_combat:
   item: pylon:hydraulic_cannon
@@ -363,7 +433,7 @@ igneous_magic:
 
 shimmer_field_manipulation:
   item: pylon:cohesive_unit
-  cost: 20
+  cost: 15
   unlocks:
     - pylon:collimator
     - pylon:collimator_pillar
@@ -371,10 +441,21 @@ shimmer_field_manipulation:
     - pylon:liselette_conductor
     - pylon:liselette_cathode
     - pylon:liselette_anode
+    - pylon:liselette_collector
+
+potion_magic:
+  item: pylon:potion_altar
+  cost: 20
+  unlocks:
+    - pylon:potion_pedestal
+    - pylon:potion_altar
+    - pylon:ascendant_ember
+    - pylon:chronicle_resin
+    - pylon:eon_weave_crystal
 
 assembling:
   item: pylon:assembly_table
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:assembly_table
     - pylon:copper_screwdriver
@@ -385,7 +466,7 @@ assembling:
 
 cargo_1:
   item: pylon:cargo_buffer
-  cost: 30
+  cost: 20
   unlocks:
     - pylon:cargo_duct
     - pylon:cargo_extractor
@@ -422,24 +503,25 @@ diesel_machines:
     - pylon:diesel_hammer_head
     - pylon:diesel_pipe_bender
     - pylon:diesel_table_saw
-    - pylon:diesel_miner
+    - pylon:diesel_quarry
     - pylon:diesel_breaker
     - pylon:diesel_furnace
     - pylon:diesel_brick_molder
+    - pylon:diesel_refueling_station
+    - pylon:diesel_experience_bottler
 
 diesel_production:
   item: pylon:biorefinery
   cost: 40
   unlocks:
     - pylon:fermenter
-    - pylon:fermenter_core
-    - pylon:fermenter_casing
     - pylon:biorefinery
-    - pylon:biorefinery_foundation
-    - pylon:biorefinery_plating
-    - pylon:biorefinery_tower_ring
-    - pylon:biorefinery_smokestack_ring
-    - pylon:biorefinery_smokestack_cap
+
+diesel_booster:
+  item: pylon:diesel_booster
+  cost: 10
+  unlocks:
+    - pylon:diesel_booster
 
 portable_workstations:
   item: pylon:portable_crafting_table
@@ -451,26 +533,20 @@ portable_workstations:
   - pylon:portable_ender_chest
 
 scientific_revolution_1:
-  item: pylon:research_pack_1
-  cost: 10
-  unlocks:
-  - pylon:research_pack_1
-
-scientific_revolution_2:
-  item: pylon:research_pack_1
-  cost: 40
+  item: pylon:research_pack_2
+  cost: 20
   unlocks:
   - pylon:research_pack_2
 
+scientific_revolution_2:
+  item: pylon:research_pack_1
+  cost: 50
+  unlocks:
+  - pylon:research_pack_3
+
 scientific_revolution_3:
   item: pylon:research_pack_3
-  cost: 70
-  unlocks:
-    - pylon:research_pack_3
-
-scientific_revolution_4:
-  item: pylon:research_pack_4
-  cost: 100
+  cost: 90
   unlocks:
     - pylon:research_pack_4
 
@@ -480,6 +556,7 @@ components_1:
   unlocks:
   - pylon:rotor
   - pylon:backflow_valve
+  - pylon:leaf_valve
   - pylon:analogue_display
   - pylon:filter_mesh
   - pylon:nozzle
@@ -495,6 +572,12 @@ components_1:
   - pylon:fluid_output_hatch
   - pylon:item_input_hatch
   - pylon:item_output_hatch
+  - pylon:iron_support_beam
+  - pylon:bronze_foundation
+  - pylon:bronze_grating
+  - pylon:copper_framed_glass
+  - pylon:quartz_cap
+  - pylon:solar_lens
 
 components_2:
   item: pylon:steel_crankshaft
@@ -504,16 +587,25 @@ components_2:
     - pylon:steel_crankshaft
     - pylon:kinetic_control_mechanism
     - pylon:internal_combustion_engine
+    - pylon:cargo_controller
+    - pylon:steel_support_beam
+    - pylon:reinforced_glass
+    - pylon:reinforced_glass_casing
+    - pylon:reinforced_plating
+    - pylon:distillation_tower_ring
+    - pylon:smokestack_ring
+    - pylon:smokestack_cap
+    - pylon:steel_drill_bit
 
 straining:
   item: pylon:fluid_strainer
-  cost: 20
+  cost: 10
   unlocks:
   - pylon:fluid_strainer
 
 fletching:
   item: pylon:recoil_arrow
-  cost: 10
+  cost: 5
   unlocks:
     - pylon:recoil_arrow
     - pylon:ice_arrow
@@ -554,9 +646,28 @@ wither_reactivation:
     - pylon:reactivated_wither_skull
     - pylon:hyper_activated_wither_skull
 
+steel_tools:
+  item: pylon:steel_sword
+  cost: 60
+  unlocks:
+    - pylon:steel_sword
+    - pylon:steel_axe
+    - pylon:steel_pickaxe
+    - pylon:steel_shovel
+    - pylon:steel_hoe
+
+steel_armor:
+  item: pylon:steel_chestplate
+  cost: 60
+  unlocks:
+    - pylon:steel_helmet
+    - pylon:steel_chestplate
+    - pylon:steel_leggings
+    - pylon:steel_boots
+
 palladium_tools:
   item: pylon:palladium_sword
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_sword
     - pylon:palladium_axe
@@ -566,9 +677,37 @@ palladium_tools:
 
 palladium_armor:
   item: pylon:palladium_chestplate
-  cost: 150
+  cost: 250
   unlocks:
     - pylon:palladium_helmet
     - pylon:palladium_chestplate
     - pylon:palladium_leggings
     - pylon:palladium_boots
+
+palladium_production:
+  item: pylon:palladium_ingot
+  cost: 150
+  unlocks:
+    - pylon:palladium_condenser
+    - pylon:palladium_nugget
+    - pylon:palladium_ingot
+    - pylon:palladium_block
+    - pylon:palladium_dust
+    - pylon:palladium_sheet
+
+creative_flight:
+  item: pylon:flight_ring
+  cost: 1000
+  unlocks:
+    - pylon:flight_ring
+
+experience_liquefaction:
+  item: pylon:experience_fountain
+  cost: 10
+  unlocks:
+    - pylon:experience_fountain
+    - pylon:experience_fountain_spout
+    - pylon:experience_drain
+    - pylon:liquid_xp_bottle
+    - pylon:liquid_xp_bottle_super
+    - pylon:liquid_xp_bottle_ultra

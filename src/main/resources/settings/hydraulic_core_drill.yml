@@ -3,3 +3,4 @@ rotations-per-cycle: 20
 output: "pylon:intermediate_core_chunk"
 drill-material: gray_concrete
 hydraulic-fluid-usage: 80
+spawn-block-particles: true

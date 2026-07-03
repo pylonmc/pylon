@@ -3,7 +3,7 @@ package io.github.pylonmc.pylon.content.talismans;
 import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInventoryEffectItem;
+import io.github.pylonmc.rebar.item.interfaces.InventoryEffectRebarItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,16 +11,16 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class Talisman extends RebarItem implements RebarInventoryEffectItem {
-    public final int level = getSettings().getOrThrow("level", ConfigAdapter.INTEGER);
+public abstract class Talisman extends RebarItem implements InventoryEffectRebarItem {
+    public final int level = getSettingOrThrow("level", ConfigAdapter.INTEGER);
 
-    public Talisman(@NotNull ItemStack stack) {
+    protected Talisman(@NotNull ItemStack stack) {
         super(stack);
     }
 
     @Override
     public void onAddedToInventory(@NotNull Player player) {
-        RebarInventoryEffectItem.super.onAddedToInventory(player);
+        InventoryEffectRebarItem.super.onAddedToInventory(player);
         Integer currentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
         if (currentTalismanLevel == null) {
             applyEffect(player);
@@ -32,12 +32,26 @@ public abstract class Talisman extends RebarItem implements RebarInventoryEffect
 
     @Override
     public void onRemovedFromInventory(@NotNull Player player) {
-        RebarInventoryEffectItem.super.onRemovedFromInventory(player);
+        InventoryEffectRebarItem.super.onRemovedFromInventory(player);
         Integer currentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
-        if (currentTalismanLevel == null)
+        if (currentTalismanLevel == null) {
             return; // really shouldn't happen, but in this case less likely to crash by not calling removeEffect
+        }
         if (currentTalismanLevel == getLevel()) {
             removeEffect(player);
+        }
+
+        // Check if there are any other talismans which will override this one
+        // e.g. if the player just removed a health talisman 3, is there another health talisman to fall back to?
+        for (ItemStack stack : player.getInventory()) {
+            if (fromStack(stack) instanceof Talisman talisman) {
+                if (talisman.getTalismanKey().equals(getTalismanKey())) {
+                    Integer newCurrentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
+                    if (newCurrentTalismanLevel == null || newCurrentTalismanLevel < currentTalismanLevel) {
+                        talisman.applyEffect(player);
+                    }
+                }
+            }
         }
     }
 
@@ -62,7 +76,7 @@ public abstract class Talisman extends RebarItem implements RebarInventoryEffect
     }
 
     @Override
-    public long getTickInterval() {
+    public long getBaseTickInterval() {
         return PylonConfig.DEFAULT_TALISMAN_TICK_INTERVAL;
     }
 

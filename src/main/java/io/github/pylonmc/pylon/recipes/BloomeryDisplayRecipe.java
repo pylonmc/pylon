@@ -5,6 +5,9 @@ import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +21,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public record BloomeryDisplayRecipe(
         NamespacedKey key,
-        ItemStack input,
+        ItemChoice input,
         ItemStack result
 ) implements RebarRecipe {
 
@@ -27,7 +30,7 @@ public record BloomeryDisplayRecipe(
         protected @NotNull BloomeryDisplayRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new BloomeryDisplayRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.ITEM_STACK),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK)
             );
         }
@@ -39,8 +42,8 @@ public record BloomeryDisplayRecipe(
     }
 
     @Override
-    public @NotNull List<@NotNull RecipeInput> getInputs() {
-        return List.of(RecipeInput.of(input));
+    public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {
+        return List.of(input);
     }
 
     @Override
@@ -59,9 +62,9 @@ public record BloomeryDisplayRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', new ItemButton(input))
-                .addIngredient('b', new ItemButton(PylonItems.BLOOMERY))
-                .addIngredient('r', new ItemButton(result))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('b', ItemButton.of(PylonItems.BLOOMERY))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }

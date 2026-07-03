@@ -5,12 +5,13 @@ import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.pylon.recipes.StrainingRecipe;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.RebarFluidTag;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.registry.RegistryHandler;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -22,14 +23,29 @@ public class Slurry extends RebarFluid implements RegistryHandler {
 
     @Getter
     private final ItemStack slurryStack;
-    
-    public Slurry(@NotNull NamespacedKey key, @NotNull Component name, @NotNull ItemStack slurryStack, @NotNull List<RebarFluidTag> tags) {
-        super(key, name, Material.LIGHT_GRAY_CONCRETE, tags);
+
+    @Getter
+    private final int amount;
+
+    public Slurry(
+            @NotNull NamespacedKey key,
+            @NotNull TextColor color,
+            @NotNull ItemStack slurryStack,
+            @NotNull RebarFluidTag @NotNull ... tags
+    ) {
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
+        this.amount = 1000;
         this.slurryStack = slurryStack;
     }
 
-    public Slurry(@NotNull NamespacedKey key, @NotNull ItemStack slurryStack, @NotNull RebarFluidTag @NotNull ... tags) {
-        super(key, Material.LIGHT_GRAY_CONCRETE, tags);
+    public Slurry(
+            @NotNull NamespacedKey key,
+            @NotNull TextColor color,
+            @NotNull ItemStack slurryStack,
+            int amount,
+            @NotNull RebarFluidTag @NotNull ... tags) {
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
+        this.amount = amount;
         this.slurryStack = slurryStack;
     }
 
@@ -37,14 +53,14 @@ public class Slurry extends RebarFluid implements RegistryHandler {
     public void onRegister(@NotNull RebarRegistry<?> registry) {
         MixingPotRecipe.RECIPE_TYPE.addRecipe(new MixingPotRecipe(
                 getKey(),
-                List.of(RecipeInput.of(slurryStack)),
-                RecipeInput.of(PylonFluids.SLURRY, 1000),
-                FluidOrItem.of(this, 1000),
+                List.of(ItemChoice.fuzzy(slurryStack)),
+                FluidChoice.of(PylonFluids.SLURRY, amount),
+                FluidOrItem.of(this, amount),
                 false
         ));
         StrainingRecipe.RECIPE_TYPE.addRecipe(new StrainingRecipe(
                 getKey(),
-                RecipeInput.of(this, 1000),
+                FluidChoice.of(this, amount),
                 PylonFluids.SLURRY,
                 slurryStack
         ));

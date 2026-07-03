@@ -7,17 +7,23 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Settings;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
+import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,14 +51,14 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Bloomery extends RebarBlock implements
-        RebarSimpleMultiblock,
-        RebarInteractBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarBreakHandler {
+        SimpleRebarMultiblock,
+        InteractRebarBlockHandler,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        BlockBreakRebarBlockHandler {
 
-    public static final int TICK_INTERVAL = Settings.get(PylonKeys.BLOOMERY).getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public static final float HEAT_CHANCE = Settings.get(PylonKeys.BLOOMERY).getOrThrow("heat-chance", ConfigAdapter.FLOAT);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final float heatChance = getSettingOrThrow("heat-chance", ConfigAdapter.FLOAT);
 
     @SuppressWarnings("unused")
     public Bloomery(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -65,7 +71,7 @@ public final class Bloomery extends RebarBlock implements
                         .rotate(Math.PI / 2, 0, 0))
                 .build(getBlock().getLocation().toCenterLocation())
         );
-        setTickInterval(TICK_INTERVAL);
+        setTickInterval(tickInterval);
         setMultiblockDirection(context.getFacing());
     }
 
@@ -80,7 +86,8 @@ public final class Bloomery extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        drops.clear();
         ItemStack stack = getItemDisplay().getItemStack();
         if (!stack.isEmpty()) {
             drops.add(stack);
@@ -88,7 +95,7 @@ public final class Bloomery extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
         Player player = event.getPlayer();
         if (player.isSneaking() || !isFormedAndFullyLoaded()) return;
@@ -103,7 +110,7 @@ public final class Bloomery extends RebarBlock implements
         ItemStack oldStack = itemDisplay.getItemStack();
         if (oldStack.isEmpty()) {
             if (placedItem != null) {
-                if (RebarItem.fromStack(placedItem) instanceof IronBloom bloom) {
+                if (RebarItem.fromStack(placedItem, IronBloom.class) instanceof IronBloom bloom) {
                     bloom.setDisplayGlowOn(itemDisplay);
                 }
                 itemDisplay.setItemStack(placedItem.asOne());
@@ -122,7 +129,7 @@ public final class Bloomery extends RebarBlock implements
         ItemStack stack = itemDisplay.getItemStack();
         if (stack.getType().isAir()) return;
 
-        if (stack.isSimilar(PylonItems.SPONGE_IRON)) {
+        if (RebarItem.isRebarItem(stack, PylonKeys.SPONGE_IRON)) {
             IronBloom bloom = new IronBloom(PylonItems.IRON_BLOOM.clone());
             bloom.setTemperature(0);
             bloom.setWorking(ThreadLocalRandom.current().nextInt(IronBloom.MIN_WORKING, IronBloom.MAX_WORKING + 1));
@@ -130,9 +137,12 @@ public final class Bloomery extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(stack) instanceof IronBloom bloom)) return;
+        if (!(RebarItem.fromStack(stack, IronBloom.class) instanceof IronBloom bloom)) return;
 
         Runnable particleSpawner = () -> {
+            if (!isChunkLoaded()) {
+                return;
+            }
             Location pos = getBlock().getLocation().add(
                     ThreadLocalRandom.current().nextDouble(1),
                     1.2,
@@ -150,11 +160,11 @@ public final class Bloomery extends RebarBlock implements
             Bukkit.getScheduler().runTaskLater(
                     Pylon.getInstance(),
                     particleSpawner,
-                    ThreadLocalRandom.current().nextInt(TICK_INTERVAL)
+                    ThreadLocalRandom.current().nextInt(tickInterval)
             );
         }
 
-        if (ThreadLocalRandom.current().nextFloat() > HEAT_CHANCE) return;
+        if (ThreadLocalRandom.current().nextFloat() > heatChance) return;
 
         int temperature = bloom.getTemperature();
         if (isFormedAndFullyLoaded()) {
@@ -174,10 +184,10 @@ public final class Bloomery extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(
-                new Vector3i(0, 2, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(1, 1, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(-1, 1, 0), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS),
-                new Vector3i(0, 1, 1), new RebarMultiblockComponent(PylonKeys.REFRACTORY_BRICKS)
+                new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(1, 1, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(-1, 1, 0), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS),
+                new Vector3i(0, 1, 1), MultiblockComponent.of(PylonKeys.REFRACTORY_BRICKS)
         );
     }
 
@@ -186,21 +196,23 @@ public final class Bloomery extends RebarBlock implements
         private void onSetFire(@NotNull BlockPlaceEvent event) {
             Block fire = event.getBlockPlaced();
             if (fire.getType() != Material.FIRE) return;
+
             Block against = event.getBlockAgainst();
             if (against.getType() != Material.COAL_BLOCK) return;
-            List<Item> items = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
-                    .filter(e -> e instanceof Item)
-                    .map(e -> (Item) e)
-                    .toList();
-            if (items.isEmpty()) return;
-            Item gypsum = null;
-            for (Item item : items) {
-                if (item.getItemStack().isSimilar(PylonItems.GYPSUM_DUST)) {
-                    gypsum = item;
-                    break;
-                }
-            }
+
+            Item gypsum = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
+                    .filter(Item.class::isInstance)
+                    .map(Item.class::cast)
+                    .filter(item -> RebarItem.isRebarItem(item.getItemStack(), PylonKeys.GYPSUM_DUST))
+                    .findFirst()
+                    .orElse(null);
             if (gypsum == null) return;
+
+            if (!Research.canPlayerUse(event.getPlayer(), PylonKeys.BLOOMERY, true)) {
+                event.setCancelled(true);
+                return;
+            }
+
             gypsum.remove();
             BlockStorage.placeBlock(against, PylonKeys.BLOOMERY);
             fire.setType(Material.AIR);

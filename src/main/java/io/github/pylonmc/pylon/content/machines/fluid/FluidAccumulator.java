@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -16,9 +16,12 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -39,29 +42,28 @@ import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class FluidAccumulator extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarFluidTank,
-        RebarGuiBlock {
+        DirectionalRebarBlock,
+        FluidTankRebarBlock,
+        GuiRebarBlock {
 
     public static final NamespacedKey IS_DISCHARGING_KEY = pylonKey("is_discharging");
 
     public final ItemStackBuilder mainStack = ItemStackBuilder.of(Material.WHITE_CONCRETE)
             .addCustomModelDataString(getKey() + ":main");
 
-    public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
-    public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
+    public final int minAmount = getSettingOrThrow("min-amount", ConfigAdapter.INTEGER);
+    public final int maxAmount = getSettingOrThrow("max-amount", ConfigAdapter.INTEGER);
 
     private boolean isDischarging;
 
     public static class Item extends RebarItem {
 
-        public final int minAmount = getSettings().getOrThrow("min-amount", ConfigAdapter.INTEGER);
-        public final int maxAmount = getSettings().getOrThrow("max-amount", ConfigAdapter.INTEGER);
+        public final int minAmount = getSettingOrThrow("min-amount", ConfigAdapter.INTEGER);
+        public final int maxAmount = getSettingOrThrow("max-amount", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -84,7 +86,7 @@ public class FluidAccumulator extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public FluidAccumulator(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
 
         this.isDischarging = false;
 
@@ -114,7 +116,7 @@ public class FluidAccumulator extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public FluidAccumulator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
 
         this.isDischarging = pdc.get(IS_DISCHARGING_KEY, RebarSerializers.BOOLEAN);
     }
@@ -131,18 +133,12 @@ public class FluidAccumulator extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
-        ));
+                        getFluidAmount()
+                ));
     }
 
     @Override
@@ -165,7 +161,7 @@ public class FluidAccumulator extends RebarBlock implements
             return 0.0;
         }
 
-        if (getFluidAmount() < 1.0e-6) {
+        if (getFluidAmount() < RebarUtils.FLUID_EPSILON) {
             isDischarging = false;
             getHeldEntityOrThrow(BlockDisplay.class, "lamp")
                 .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=false]"));
@@ -175,26 +171,26 @@ public class FluidAccumulator extends RebarBlock implements
             return 0.0;
         }
 
-        return RebarFluidTank.super.fluidAmountRequested(fluid);
+        return FluidTankRebarBlock.super.fluidAmountRequested(fluid);
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         if (getBlock().isBlockIndirectlyPowered()) {
-            return RebarFluidTank.super.getSuppliedFluids();
+            return FluidTankRebarBlock.super.getSuppliedFluids();
         }
 
-        if (getFluidSpaceRemaining() < 1.0e-6) {
+        if (getFluidSpaceRemaining() < RebarUtils.FLUID_EPSILON) {
             isDischarging = true;
             getHeldEntityOrThrow(BlockDisplay.class, "lamp")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
         }
 
         if (isDischarging) {
-            return RebarFluidTank.super.getSuppliedFluids();
+            return FluidTankRebarBlock.super.getSuppliedFluids();
         }
 
-        return Map.of();
+        return List.of();
     }
 
     public class AmountItem extends AbstractItem {

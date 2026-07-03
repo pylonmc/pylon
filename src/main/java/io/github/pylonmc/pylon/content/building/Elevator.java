@@ -3,8 +3,8 @@ package io.github.pylonmc.pylon.content.building;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarJumpBlock;
-import io.github.pylonmc.rebar.block.base.RebarSneakableBlock;
+import io.github.pylonmc.rebar.block.interfaces.JumpRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.SneakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJumpBlock {
+public class Elevator extends RebarBlock implements SneakRebarBlockHandler, JumpRebarBlockHandler {
 
     public static class Item extends RebarItem {
 
@@ -38,25 +38,25 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(RebarArgument.of(
                     "elevator_range",
-                    UnitFormat.BLOCKS.format(getSettings().getOrThrow("range", ConfigAdapter.INTEGER))
+                    UnitFormat.BLOCKS.format(getSettingOrThrow("range", ConfigAdapter.INTEGER))
             ));
         }
     }
 
-    private final RandomizedSound useSound = getSettings().getOrThrow("use-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    private final RandomizedSound useSound = getSettingOrThrow("use-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {
-        int range = getSettings().getOrThrow("range", ConfigAdapter.INTEGER);
+        int range = getSettingOrThrow("range", ConfigAdapter.INTEGER);
         int checkingLevel = 1;
         List<RebarBlock> blocks = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public class Elevator extends RebarBlock implements RebarSneakableBlock, RebarJu
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSneakedOn(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
+    public void onSneakStart(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
         teleportPlayer(event.getPlayer(), getBlock().getLocation(), true);
     }
 

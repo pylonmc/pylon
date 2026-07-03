@@ -12,6 +12,10 @@ public record WateringSettings(
         double sugarCaneChance,
         double cactusChance,
         double saplingChance,
+        int cropTicks,
+        int sugarCaneTicks,
+        int cactusTicks,
+        int saplingTicks,
         double particleChance,
         @NotNull RandomizedSound sound
 ) {
@@ -23,6 +27,10 @@ public record WateringSettings(
                 config.getOrThrow("chances.sugar-cane", ConfigAdapter.DOUBLE),
                 config.getOrThrow("chances.cactus", ConfigAdapter.DOUBLE),
                 config.getOrThrow("chances.sapling", ConfigAdapter.DOUBLE),
+                config.getOrThrow("ticks.crops", ConfigAdapter.INTEGER),
+                config.getOrThrow("ticks.sugar-cane", ConfigAdapter.INTEGER),
+                config.getOrThrow("ticks.cactus", ConfigAdapter.INTEGER),
+                config.getOrThrow("ticks.sapling", ConfigAdapter.INTEGER),
                 config.getOrThrow("particle-chance", ConfigAdapter.DOUBLE),
                 config.getOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND)
         );

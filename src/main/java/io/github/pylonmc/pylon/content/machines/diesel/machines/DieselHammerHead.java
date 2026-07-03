@@ -7,7 +7,13 @@ import io.github.pylonmc.pylon.content.tools.Hammer;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -20,10 +26,10 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -40,25 +46,26 @@ import org.joml.Matrix4f;
 import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
+import xyz.xenondevs.invui.inventory.event.UpdateReason;
 
 import java.util.List;
 import java.util.Map;
 
 
 public class DieselHammerHead extends RebarBlock implements
-        RebarTickingBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarProcessor,
-        RebarDirectionalBlock,
-        RebarLogisticBlock {
+        TickingRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock,
+        LogisticRebarBlock {
 
-    public final int goDownTimeTicks = getSettings().getOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
-    public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int goDownTimeTicks = getSettingOrThrow("go-down-time-ticks", ConfigAdapter.INTEGER);
+    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+    public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     private final VirtualInventory hammerInventory = new VirtualInventory(1);
 
@@ -76,9 +83,9 @@ public class DieselHammerHead extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final double speed = getSettings().getOrThrow("speed", ConfigAdapter.DOUBLE);
-        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+        public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
+        public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -154,7 +161,7 @@ public class DieselHammerHead extends RebarBlock implements
     }
 
     public void updateHammerTip(ItemStack newItem) {
-        if (!(RebarItem.fromStack(newItem) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(newItem, Hammer.class) instanceof Hammer hammer)) {
             getHammerTip().setItemStack(null);
             return;
         }
@@ -187,7 +194,7 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!(RebarItem.fromStack(hammerInventory.getItem(0)) instanceof Hammer hammer)) {
+        if (!(RebarItem.fromStack(hammerInventory.getItem(0), Hammer.class) instanceof Hammer hammer)) {
             return;
         }
 
@@ -200,14 +207,20 @@ public class DieselHammerHead extends RebarBlock implements
             return;
         }
 
-        if (!hammer.tryDoRecipe(baseBlock, null, null, BlockFace.UP)) {
+        if (!hammer.tryDoRecipe(baseBlock, null, null)) {
             return;
         }
+        // update hammer inv w/ damaged hammer
+        hammerInventory.setItem(UpdateReason.SUPPRESSED, 0, hammer.getStack());
 
         PylonUtils.animate(getHammerHead(), goDownTimeTicks, getHeadTransformation(-0.5));
         PylonUtils.animate(getHammerTip(), goDownTimeTicks, getTipTransformation(-1.5));
 
         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            if (!isChunkLoaded()) {
+                return;
+            }
+
             PylonUtils.animate(getHammerHead(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getHeadTransformation(0.7));
             PylonUtils.animate(getHammerTip(), (int)(hammer.cooldownTicks / speed) - goDownTimeTicks, getTipTransformation(-0.3));
 
@@ -235,9 +248,9 @@ public class DieselHammerHead extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     public @NotNull ItemDisplay getHammerHead() {
@@ -264,14 +277,16 @@ public class DieselHammerHead extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 ))
-        ));
+                .add(isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override

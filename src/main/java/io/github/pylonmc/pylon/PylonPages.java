@@ -26,6 +26,7 @@ public class PylonPages {
     public static final SimpleStaticGuidePage FOOD = new SimpleStaticGuidePage(pylonKey("food"));
 
     public static final SimpleStaticGuidePage SIMPLE_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_simple_machines"));
+    public static final SimpleStaticGuidePage STORAGE = new SimpleStaticGuidePage(pylonKey("machines_storage"));
     public static final SimpleStaticGuidePage SMELTING = new SimpleStaticGuidePage(pylonKey("machines_smelting"));
     public static final SimpleStaticGuidePage FLUID_PIPES_AND_TANKS = new SimpleStaticGuidePage(pylonKey("machines_fluid_pipes_and_tanks"));
     public static final SimpleStaticGuidePage FLUID_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_fluid_machines"));
@@ -62,11 +63,12 @@ public class PylonPages {
         RebarGuide.getRootPage().addPage(Material.APPLE, FOOD);
 
         MACHINES.addPage(PylonItems.PRESS, SIMPLE_MACHINES);
+        MACHINES.addPage(PylonItems.TIN_SILO, STORAGE);
         MACHINES.addPage(PylonItems.SMELTERY_CONTROLLER, SMELTING);
         MACHINES.addPage(PylonItems.FLUID_PIPE_COPPER, FLUID_PIPES_AND_TANKS);
         MACHINES.addPage(PylonItems.FLUID_METER, FLUID_MACHINES);
         MACHINES.addPage(PylonItems.HYDRAULIC_PIPE_BENDER, HYDRAULIC_MACHINES);
-        MACHINES.addPage(PylonItems.SOLAR_PURIFICATION_TOWER_3, HYDRAULIC_PURIFICATION);
+        MACHINES.addPage(PylonItems.SOLAR_HYDRAULIC_PURIFIER_3, HYDRAULIC_PURIFICATION);
         MACHINES.addPage(PylonItems.CARGO_BUFFER, CARGO);
         MACHINES.addPage(PylonItems.DIESEL_PIPE_BENDER, DIESEL_MACHINES);
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);

@@ -1,23 +1,25 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import kotlin.Pair;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+public final class SmelteryOutputHatch extends SmelteryComponent implements FluidRebarBlock, DirectionalRebarBlock {
 
-public final class SmelteryOutputHatch extends SmelteryComponent implements RebarFluidBlock, RebarDirectionalBlock {
-
-    public final double flowRate = getSettings().getOrThrow("flow-rate", ConfigAdapter.DOUBLE);
+    public final double flowRate = getSettingOrThrow("flow-rate", ConfigAdapter.DOUBLE);
 
     @SuppressWarnings("unused")
     public SmelteryOutputHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -32,14 +34,15 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
     }
 
     @Override
-    public @NotNull Map<RebarFluid, Double> getSuppliedFluids() {
+    public @NotNull List<Pair<RebarFluid, Double>> getSuppliedFluids() {
         SmelteryController controller = getController();
-        if (controller == null) return Map.of();
+        if (controller == null) return List.of();
 
-        Pair<RebarFluid, Double> supplied = controller.getBottomFluid();
-        return supplied == null
-                ? Map.of()
-                : Map.of(supplied.getFirst(), Math.min(supplied.getSecond(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0));
+        return controller.getFluids().entrySet().stream()
+                .filter(entry -> entry.getKey().hasTag(MeltingPoint.class))
+                .filter(entry -> entry.getKey().getTag(MeltingPoint.class).temperature() <= controller.getTemperature())
+                .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
+                .toList();
     }
 
     @Override
@@ -48,5 +51,4 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Reba
         if (controller == null) return;
         controller.removeFluid(fluid, amount);
     }
-
 }

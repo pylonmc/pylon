@@ -9,6 +9,9 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Material;
@@ -33,8 +36,8 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  */
 public record ShimmerAltarRecipe(
         @NotNull NamespacedKey key,
-        @NotNull List<RecipeInput.@Nullable Item> inputs,
-        @NotNull RecipeInput.Item catalyst,
+        @NotNull List<@Nullable ItemChoice> inputs,
+        @NotNull ItemChoice catalyst,
         @NotNull ItemStack result,
         int timeSeconds
 ) implements RebarRecipe {
@@ -56,9 +59,9 @@ public record ShimmerAltarRecipe(
                     throw new IllegalArgumentException("Invalid shape row length, must be 3");
                 }
             }
-            Map<Character, RecipeInput.Item> itemMap = section.getOrThrow("key", ConfigAdapter.MAP.from(
+            Map<Character, ItemChoice> itemMap = section.getOrThrow("key", ConfigAdapter.MAP.from(
                     ConfigAdapter.CHAR,
-                    ConfigAdapter.RECIPE_INPUT_ITEM
+                    ConfigAdapter.ITEM_CHOICE
             ));
 
             StringBuilder ingredientChars = new StringBuilder();
@@ -66,7 +69,7 @@ public record ShimmerAltarRecipe(
             ingredientChars.append(shape.get(1).charAt(2));
             ingredientChars.append(new StringBuilder(shape.get(2)).reverse());
             ingredientChars.append(shape.get(1).charAt(0));
-            List<RecipeInput.Item> inputs = new ArrayList<>(8);
+            List<ItemChoice> inputs = new ArrayList<>(8);
             for (int i = 0; i < ingredientChars.length(); i++) {
                 char c = ingredientChars.charAt(i);
                 if (c == ' ') {
@@ -78,7 +81,7 @@ public record ShimmerAltarRecipe(
                 }
             }
 
-            RecipeInput.Item catalyst = itemMap.get(shape.get(1).charAt(1));
+            ItemChoice catalyst = itemMap.get(shape.get(1).charAt(1));
             if (catalyst == null) {
                 throw new IllegalArgumentException("Catalyst (center item) cannot be empty");
             }
@@ -109,8 +112,10 @@ public record ShimmerAltarRecipe(
         for (int i = 0; i < ShimmerAltar.PEDESTAL_COUNT; i++) {
             boolean allIngredientsMatch = true;
             for (int j = 0; j < ShimmerAltar.PEDESTAL_COUNT; j++) {
-                RecipeInput.Item input = this.inputs.get(j);
-                if (input != null && !input.matches(ingredients.get(j))) {
+                ItemChoice input = inputs.get(j);
+                if ((input == null && ingredients.get(j).getType() != Material.AIR)
+                        || (input != null && !input.matches(ingredients.get(j)))
+                ) {
                     allIngredientsMatch = false;
                     break;
                 }
@@ -131,9 +136,9 @@ public record ShimmerAltarRecipe(
     }
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
-        List<RecipeInput> inputResult = new ArrayList<>();
-        for (RecipeInput.Item input : inputs) {
+    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+        List<FluidOrItemChoice> inputResult = new ArrayList<>();
+        for (ItemChoice input : inputs) {
             if (input != null) {
                 inputResult.add(input);
             }
@@ -158,16 +163,16 @@ public record ShimmerAltarRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('m', ItemButton.from(PylonItems.SHIMMER_ALTAR))
-                .addIngredient('c', ItemButton.from(catalyst))
-                .addIngredient('0', ItemButton.from(inputs.get(0)))
-                .addIngredient('1', ItemButton.from(inputs.get(1)))
-                .addIngredient('2', ItemButton.from(inputs.get(2)))
-                .addIngredient('3', ItemButton.from(inputs.get(3)))
-                .addIngredient('4', ItemButton.from(inputs.get(4)))
-                .addIngredient('5', ItemButton.from(inputs.get(5)))
-                .addIngredient('6', ItemButton.from(inputs.get(6)))
-                .addIngredient('7', ItemButton.from(inputs.get(7)))
+                .addIngredient('m', ItemButton.of(PylonItems.SHIMMER_ALTAR))
+                .addIngredient('c', ItemButton.of(catalyst))
+                .addIngredient('0', ItemButton.of(inputs.get(0)))
+                .addIngredient('1', ItemButton.of(inputs.get(1)))
+                .addIngredient('2', ItemButton.of(inputs.get(2)))
+                .addIngredient('3', ItemButton.of(inputs.get(3)))
+                .addIngredient('4', ItemButton.of(inputs.get(4)))
+                .addIngredient('5', ItemButton.of(inputs.get(5)))
+                .addIngredient('6', ItemButton.of(inputs.get(6)))
+                .addIngredient('7', ItemButton.of(inputs.get(7)))
                 .addIngredient('t', GuiItems.progressCyclingItem((int) (timeSeconds * 20),
                         ItemStackBuilder.of(Material.CLOCK)
                                 .name(net.kyori.adventure.text.Component.translatable(
@@ -175,7 +180,7 @@ public record ShimmerAltarRecipe(
                                         RebarArgument.of("time", UnitFormat.SECONDS.format(timeSeconds))
                                 ))
                 ))
-                .addIngredient('r', ItemButton.from(result))
+                .addIngredient('r', ItemButton.of(result))
                 .build();
     }
 }

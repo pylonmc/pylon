@@ -1,12 +1,11 @@
 package io.github.pylonmc.pylon.content.machines.hydraulics;
 
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -19,9 +18,9 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import kotlin.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,14 +36,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class HydraulicRefuelingStation extends RebarBlock implements
-        RebarFluidBlock,
-        RebarDirectionalBlock,
-        RebarLogisticBlock,
-        RebarInteractBlock {
+        FluidRebarBlock,
+        DirectionalRebarBlock,
+        LogisticRebarBlock,
+        InteractRebarBlockHandler {
 
     @SuppressWarnings("unused")
     public HydraulicRefuelingStation(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -87,7 +85,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR }, ignoreCancelled = true)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getHand() != EquipmentSlot.HAND
                 || !event.getAction().isRightClick()
                 || event.getPlayer().isSneaking()
@@ -111,7 +109,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
             return;
         }
 
-        if (RebarItem.fromStack(toInsert) instanceof HydraulicRefuelable) {
+        if (RebarItem.isRebarItem(toInsert, HydraulicRefuelable.class)) {
             itemDisplay.setItemStack(toInsert.asQuantity(1));
             toInsert.subtract();
         }
@@ -119,7 +117,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
 
     public @Nullable HydraulicRefuelable getHeldRefuelableItem() {
         ItemStack stack = getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack();
-        if (RebarItem.fromStack(stack) instanceof HydraulicRefuelable refuelable) {
+        if (RebarItem.fromStack(stack, HydraulicRefuelable.class) instanceof HydraulicRefuelable refuelable) {
             return refuelable;
         }
         return null;
@@ -128,43 +126,29 @@ public class HydraulicRefuelingStation extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         HydraulicRefuelable refuelable = getHeldRefuelableItem();
-        if (refuelable == null) {
-            return new WailaDisplay(
-                    getDefaultWailaTranslationKey().arguments(RebarArgument.of("extra", "")
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (refuelable != null) {
+            display.add(ProgressBar.fluidContents(
+                            PylonFluids.HYDRAULIC_FLUID,
+                            refuelable.getHydraulicFluidCapacity(),
+                            refuelable.getHydraulicFluid()
+                    ))
+                    .add(ProgressBar.fluidContents(
+                            PylonFluids.DIRTY_HYDRAULIC_FLUID,
+                            refuelable.getDirtyHydraulicFluidCapacity(),
+                            refuelable.getDirtyHydraulicFluid()
                     ));
         }
-        Component hydraulicFluidBar = PylonUtils.createFluidAmountBar(
-                refuelable.getHydraulicFluid(),
-                refuelable.getHydraulicFluidCapacity(),
-                20,
-                TextColor.fromHexString("#212d99")
-        );
-        Component dirtyHydraulicFluidBar = PylonUtils.createFluidAmountBar(
-                refuelable.getDirtyHydraulicFluid(),
-                refuelable.getDirtyHydraulicFluidCapacity(),
-                20,
-                TextColor.fromHexString("#48459b")
-        );
-        return new WailaDisplay(
-                getDefaultWailaTranslationKey().arguments(
-                        RebarArgument.of(
-                                "extra",
-                                Component.translatable("pylon.message.hydraulic_refueling_station.extra").arguments(
-                                        RebarArgument.of("hydraulic-fluid-bar", hydraulicFluidBar),
-                                        RebarArgument.of("dirty-hydraulic-fluid-bar", dirtyHydraulicFluidBar)
-                                )
-                        )
-                )
-        );
+        return display;
     }
 
     @Override
-    public @NotNull Map<@NotNull RebarFluid, @NotNull Double> getSuppliedFluids() {
+    public @NotNull List<Pair<@NotNull RebarFluid, @NotNull Double>> getSuppliedFluids() {
         HydraulicRefuelable refuelable = getHeldRefuelableItem();
         if (refuelable == null) {
-            return Map.of();
+            return List.of();
         }
-        return Map.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, refuelable.getDirtyHydraulicFluid());
+        return List.of(new Pair<>(PylonFluids.DIRTY_HYDRAULIC_FLUID, refuelable.getDirtyHydraulicFluid()));
     }
 
     @Override
@@ -200,7 +184,7 @@ public class HydraulicRefuelingStation extends RebarBlock implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         ItemStack stack = getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack();
         if (!stack.isEmpty()) {
             drops.add(stack);
@@ -213,10 +197,9 @@ public class HydraulicRefuelingStation extends RebarBlock implements
             super(display);
         }
 
-
         @Override
         public long getMaxAmount(@NotNull ItemStack stack) {
-            return RebarItem.fromStack(stack) instanceof HydraulicRefuelable
+            return RebarItem.isRebarItem(stack, HydraulicRefuelable.class)
                     ? super.getMaxAmount(stack)
                     : 0;
         }

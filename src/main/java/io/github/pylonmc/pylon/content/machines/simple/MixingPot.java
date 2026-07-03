@@ -7,21 +7,21 @@ import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCauldron;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -43,10 +43,10 @@ import java.util.List;
 
 
 public final class MixingPot extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarInteractBlock,
+        DirectionalRebarBlock,
+        InteractRebarBlockHandler,
         FluidTankWithDisplayEntity,
-        RebarCauldron {
+        CauldronRebarBlockHandler {
 
     public static class MixingPotItem extends RebarItem {
 
@@ -64,7 +64,7 @@ public final class MixingPot extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public MixingPot(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidDisplay();
         setFacing(context.getFacing());
         setCapacity(1000.0);
@@ -74,7 +74,7 @@ public final class MixingPot extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public MixingPot(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
@@ -83,7 +83,7 @@ public final class MixingPot extends RebarBlock implements
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
-    public void onLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
+    public void onCauldronLevelChange(@NotNull CauldronLevelChangeEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
     }
 
@@ -99,21 +99,16 @@ public final class MixingPot extends RebarBlock implements
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                getFluidType() == null
-                    ? RebarArgument.of("fluid", Component.translatable("pylon.fluid.none"))
-                    : RebarArgument.of("fluid", getFluidType().getName())
-        ));
+                        getFluidAmount()
+                ));
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getPlayer().isSneaking()
                 || event.getHand() != EquipmentSlot.HAND
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -126,7 +121,9 @@ public final class MixingPot extends RebarBlock implements
             return;
         }
 
-        tryDoRecipe();
+        if (priority == EventPriority.MONITOR) {
+            tryDoRecipe();
+        }
     }
 
     public boolean tryDoRecipe() {
@@ -160,11 +157,18 @@ public final class MixingPot extends RebarBlock implements
             return true;
         }
 
+        new ParticleBuilder(Particle.SMOKE)
+                .count(50)
+                .extra(0)
+                .offset(0.1, 0, 0.1)
+                .location(getBlock().getLocation().toCenterLocation().add(0, 0.4, 0))
+                .spawn();
+
         return false;
     }
 
     private void doRecipe(@NotNull MixingPotRecipe recipe, @NotNull List<Item> items) {
-        for (RecipeInput.Item choice : recipe.inputItems()) {
+        for (ItemChoice choice : recipe.inputItems()) {
             for (Item item : items) {
                 ItemStack stack = item.getItemStack();
                 if (choice.matches(stack)) {
@@ -175,7 +179,7 @@ public final class MixingPot extends RebarBlock implements
         }
         switch (recipe.output()) {
             case FluidOrItem.Item item -> {
-                removeFluid(recipe.inputFluid().amountMillibuckets());
+                removeFluid(recipe.inputFluid().getAmount());
                 getBlock().getWorld().dropItemNaturally(
                     getBlock().getLocation().toCenterLocation(),
                     item.item(),
@@ -184,7 +188,7 @@ public final class MixingPot extends RebarBlock implements
                     }
                 );
             }
-            case FluidOrItem.Fluid fluid -> {
+            case FluidWithAmount fluid -> {
                 setFluidType(fluid.fluid());
                 setFluid(fluid.amountMillibuckets());
             }

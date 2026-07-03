@@ -3,9 +3,14 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.MoldingRecipe;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -20,9 +25,10 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -43,28 +49,28 @@ import java.util.Map;
 
 
 public class DieselBrickMolder extends RebarBlock implements
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarFluidBufferBlock,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarLogisticBlock,
-        RebarRecipeProcessor<MoldingRecipe> {
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        FluidBufferRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        LogisticRebarBlock,
+        RecipeProcessorRebarBlock<MoldingRecipe> {
 
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+    public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int ticksPerMoldingCycle = getSettingOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
     private final VirtualInventory inputInventory = new VirtualInventory(1);
     private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
-        public final double dieselPerSecond = getSettings().getOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
-        public final int ticksPerMoldingCycle = getSettings().getOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
+        public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int ticksPerMoldingCycle = getSettingOrThrow("ticks-per-molding-cycle", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -114,7 +120,7 @@ public class DieselBrickMolder extends RebarBlock implements
                 .itemStack(sideStack2)
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
-                        .scale(0.9, 0.8, 1.1))
+                        .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("plank", new ItemDisplayBuilder()
@@ -171,10 +177,11 @@ public class DieselBrickMolder extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        new ParticleBuilder(Particle.BLOCK)
+        new ParticleBuilder(Particle.ITEM)
                 .count(5)
+                .extra(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
-                .data(getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack().getType().createBlockData())
+                .data(getHeldEntityOrThrow(ItemDisplay.class, "item").getItemStack())
                 .spawn();
     }
 
@@ -184,21 +191,31 @@ public class DieselBrickMolder extends RebarBlock implements
         }
 
         ItemStack stack = inputInventory.getItem(0);
-        if (stack == null) {
+        if (stack == null || stack.isEmpty()) {
+            return;
+        }
+
+        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
             return;
         }
 
         for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
-            if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
-                continue;
+            if (tryStartRecipe(recipe, stack)) {
+                break;
             }
-
-            startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
-            getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-            getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-            inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-            break;
         }
+    }
+
+    private boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
+        if (!recipe.input().matches(stack) || !outputInventory.canHold(recipe.result())) {
+            return false;
+        }
+
+        startRecipe(recipe, recipe.moldingCycles() * tickInterval * ticksPerMoldingCycle);
+        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
+        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
+        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
+        return true;
     }
 
     @Override
@@ -227,20 +244,22 @@ public class DieselBrickMolder extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("diesel-bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 ))
-        ));
+                .add(isProcessingRecipe()
+                        ? ProgressBar.recipeProgress(getRecipeProgress())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        RebarVirtualInventoryBlock.super.onBreak(drops, context);
-        RebarFluidBufferBlock.super.onBreak(drops, context);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override

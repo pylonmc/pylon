@@ -1,7 +1,7 @@
 pylon:bronze:
   inputs:
-    pylon:copper: 0.88
-    pylon:tin: 0.12
+    pylon:copper: 0.85
+    pylon:tin: 0.15
   outputs:
     pylon:bronze: 1
   temperature: 950
@@ -48,18 +48,6 @@ pylon:gold_smelting:
     pylon:slurry_raw_tin: 500
     pylon:mercury: 800
   temperature: 1064
-
-pylon:palladium_smelting:
-  inputs:
-    pylon:slurry_raw_gold: 1000
-    pylon:mercury: 1000
-  outputs:
-    pylon:gold: 144
-    pylon:slurry: 200
-    pylon:slurry_raw_tin: 400
-    pylon:mercury: 756
-    pylon:palladium: 144
-  temperature: 1555
 
 pylon:iron_smelting:
   inputs:

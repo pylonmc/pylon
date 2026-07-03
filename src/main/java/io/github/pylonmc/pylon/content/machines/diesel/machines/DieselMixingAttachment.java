@@ -7,10 +7,10 @@ import io.github.pylonmc.pylon.content.machines.simple.MixingPot;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidBufferBlock;
-import io.github.pylonmc.rebar.block.base.RebarProcessor;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -19,10 +19,11 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -42,17 +43,17 @@ import java.util.List;
 
 
 public class DieselMixingAttachment extends RebarBlock implements
-        RebarTickingBlock,
-        RebarFluidBufferBlock,
-        RebarProcessor,
-        RebarDirectionalBlock {
+        TickingRebarBlock,
+        FluidBufferRebarBlock,
+        ProcessorRebarBlock,
+        DirectionalRebarBlock {
 
-    public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
-    public final int downAnimationTimeTicks = getSettings().getOrThrow("down-animation-time-ticks", ConfigAdapter.INTEGER);
-    public final int upAnimationTimeTicks = getSettings().getOrThrow("up-animation-time-ticks", ConfigAdapter.INTEGER);
-    public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-    public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+    public final int downAnimationTimeTicks = getSettingOrThrow("down-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final int upAnimationTimeTicks = getSettingOrThrow("up-animation-time-ticks", ConfigAdapter.INTEGER);
+    public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+    public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -63,9 +64,9 @@ public class DieselMixingAttachment extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int cooldownTicks = getSettings().getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
-        public final double dieselPerCraft = getSettings().getOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
-        public final double dieselBuffer = getSettings().getOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
+        public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
+        public final double dieselPerCraft = getSettingOrThrow("diesel-per-craft", ConfigAdapter.INTEGER);
+        public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -109,7 +110,7 @@ public class DieselMixingAttachment extends RebarBlock implements
                 .itemStack(sideStack2)
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
-                        .scale(0.9, 0.8, 1.1))
+                        .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("mixing_attachment_shaft", new ItemDisplayBuilder()
@@ -160,9 +161,12 @@ public class DieselMixingAttachment extends RebarBlock implements
         Bukkit.getScheduler().runTaskLater(
                 Pylon.getInstance(),
                 () -> {
+                    if (!isChunkLoaded()) {
+                        return;
+                    }
+
                     PylonUtils.animate(getMixingAttachmentShaft(), upAnimationTimeTicks, getShaftTransformation(0.7));
                     startProcess(cooldownTicks);
-
                 },
                 downAnimationTimeTicks
         );
@@ -181,13 +185,15 @@ public class DieselMixingAttachment extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.BIODIESEL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.BIODIESEL,
                         fluidCapacity(PylonFluids.BIODIESEL),
-                        20,
-                        TextColor.fromHexString("#eaa627")
+                        fluidAmount(PylonFluids.BIODIESEL)
                 ))
-        ));
+                .add(isProcessing()
+                        ? ProgressBar.timeRemaining(getProcessTimeSeconds(), getProcessSecondsRemaining())
+                        : Component.translatable("pylon.message.idle")
+                );
     }
 }

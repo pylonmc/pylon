@@ -2,10 +2,9 @@ package io.github.pylonmc.pylon.content.machines.simple;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -23,9 +22,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Hopper;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -37,20 +37,20 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractBoundItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class VacuumHopper extends RebarBlock implements
-        RebarTickingBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarLogisticBlock {
+        TickingRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock {
 
     public static class Item extends RebarItem {
-        public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
-        public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+        public final int radius = getSettingOrThrow("radius-blocks", ConfigAdapter.INTEGER);
+        public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -75,8 +75,8 @@ public class VacuumHopper extends RebarBlock implements
     @Getter
     private final @NotNull VirtualInventory filterInventory = new VirtualInventory(9);
 
-    public final int radius = getSettings().getOrThrow("radius-blocks", ConfigAdapter.INTEGER);
-    public final int tickInterval = getSettings().getOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final int radius = getSettingOrThrow("radius-blocks", ConfigAdapter.INTEGER);
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     public final ItemStackBuilder filterGuiStack = ItemStackBuilder.gui(Material.PINK_STAINED_GLASS_PANE, getKey() + "filter")
             .name(Component.translatable("pylon.gui.filter"));
@@ -110,13 +110,26 @@ public class VacuumHopper extends RebarBlock implements
         return Map.of("filter", filterInventory);
     }
 
+
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onItemMoveTo(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
+        // RebarNoVanillaContainerBlock cancels item move events by default, so we need to manually allow moving items to the hopper inventory
+    }
+
+    @Override
+    public void onItemMoveFrom(@NotNull InventoryMoveItemEvent event, @NotNull EventPriority priority) {
+        // RebarNoVanillaContainerBlock cancels item move events by default, so we need to manually allow moving items from the hopper inventory
+    }
+
+    @Override
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         for (ItemStack item : hopperInventory.getItems()) {
             if (item != null) {
                 drops.add(item);
             }
         }
+
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
@@ -145,16 +158,15 @@ public class VacuumHopper extends RebarBlock implements
         }
 
         // loops item entities to add
-        for (Entity entity : block.getLocation().toCenterLocation().getNearbyEntities(radius + 0.5, radius + 0.5, radius + 0.5)) {
-            if (!(entity instanceof org.bukkit.entity.Item item)) {
-                continue;
-            }
-
+        Collection<org.bukkit.entity.Item> items = block.getLocation().toCenterLocation().getNearbyEntitiesByType(
+                org.bukkit.entity.Item.class,
+                radius + 0.5,
+                radius + 0.5,
+                radius + 0.5,
+                item -> isFiltered(item.getItemStack())
+        );
+        for (org.bukkit.entity.Item item : items) {
             ItemStack stack = item.getItemStack();
-            if (!isFiltered(stack)) {
-                continue;
-            }
-
             int surplus = hopperInventory.addItem(new MachineUpdateReason(), stack);
             if (surplus == stack.getAmount()) {
                 // Could not add any items in the stack

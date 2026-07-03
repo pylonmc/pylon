@@ -1,6 +1,22 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
+import io.github.pylonmc.rebar.config.ConfigSection;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.guide.button.FluidButton;
+import io.github.pylonmc.rebar.guide.button.ItemButton;
+import io.github.pylonmc.rebar.item.ItemTypeWrapper;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import xyz.xenondevs.invui.gui.Gui;
 
 
 public class PylonRecipes {
@@ -25,8 +41,148 @@ public class PylonRecipes {
         PipeBendingRecipe.RECIPE_TYPE.register();
         PressRecipe.RECIPE_TYPE.register();
         SmelteryRecipe.RECIPE_TYPE.register();
-        PitKilnRecipe.RECIPE_TYPE.register();
+        KilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        SiloConverterRecipe.RECIPE_TYPE.register();
+        HydraulicPurifier.RECIPE_TYPE.register();
+        CrudeAlloyFurnaceRecipe.RECIPE_TYPE.register();
+        FormingRecipe.RECIPE_TYPE.register();
+
+        //hardcoded
+        initCollimator();
+        initPalladiumCondenser();
+        initBiorefinery();
+        initFermenter();
+    }
+
+    private static void initCollimator() {
+        NamespacedKey key = PylonKeys.COLLIMATOR;
+        FluidChoice input = FluidChoice.of(PylonFluids.OBSCYRA, ConfigSection.fromSettings(key).getOrThrow("obscyra-per-cohesive-unit", ConfigAdapter.INTEGER));
+        FluidOrItem output = FluidOrItem.of(PylonItems.COHESIVE_UNIT);
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# i # # x # # o #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('i', FluidButton.of(input.getAmount(), PylonFluids.OBSCYRA))
+                        .addIngredient('x', ItemButton.of(PylonItems.COLLIMATOR))
+                        .addIngredient('o', ItemButton.of(PylonItems.COHESIVE_UNIT))
+                        .build()
+        ).register();
+    }
+
+    private static void initPalladiumCondenser() {
+        NamespacedKey key = PylonKeys.PALLADIUM_CONDENSER;
+        ConfigSection setting = ConfigSection.fromSettings(key);
+
+        int totalTicks = setting.getOrThrow("machine-ticks-per-cycle", ConfigAdapter.INTEGER) * setting.getOrThrow("tick-interval", ConfigAdapter.INTEGER) / 20;
+        int hydraulicUse = setting.getOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER) * totalTicks;
+        int dieselUse = setting.getOrThrow("diesel-per-second", ConfigAdapter.INTEGER) * totalTicks;
+
+        ItemStack dusts = PylonItems.SHIMMER_DUST_2.asQuantity(setting.getOrThrow("shimmer-dust-per-cycle", ConfigAdapter.INTEGER));
+        List<FluidOrItemChoice> input = List.of(
+                ItemChoice.fuzzy(dusts),
+                FluidChoice.of(PylonFluids.BIODIESEL, dieselUse),
+                FluidChoice.of(PylonFluids.HYDRAULIC_FLUID, hydraulicUse)
+        );
+
+        List<FluidOrItem> output = List.of(
+                FluidOrItem.of(PylonItems.PALLADIUM_DUST),
+                FluidOrItem.of(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicUse)
+        );
+
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# H # # # # # p #",
+                                "# d # # x # # # #",
+                                "# s # # # # # D #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('x', ItemButton.of(PylonItems.PALLADIUM_CONDENSER))
+                        .addIngredient('H', FluidButton.of((double) dieselUse, PylonFluids.BIODIESEL))
+                        .addIngredient('d', FluidButton.of((double) hydraulicUse, PylonFluids.HYDRAULIC_FLUID))
+                        .addIngredient('s', ItemButton.of(dusts))
+                        .addIngredient('p', ItemButton.of(PylonItems.PALLADIUM_DUST))
+                        .addIngredient('D', FluidButton.of((double) hydraulicUse, PylonFluids.DIRTY_HYDRAULIC_FLUID))
+                        .build()
+        ).register();
+    }
+
+    private static void initBiorefinery() {
+        NamespacedKey key = PylonKeys.BIOREFINERY;
+        ConfigSection setting = ConfigSection.fromSettings(key);
+
+        double ethanolPerMbOfBiodiesel = setting.getOrThrow("ethanol-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+        double plantOilPerMbOfBiodiesel = setting.getOrThrow("plant-oil-per-mb-of-biodiesel", ConfigAdapter.DOUBLE);
+
+
+        FluidChoice ethanol = FluidChoice.of(PylonFluids.ETHANOL, ethanolPerMbOfBiodiesel);
+        FluidChoice plantOil = FluidChoice.of(PylonFluids.PLANT_OIL, plantOilPerMbOfBiodiesel);
+
+        FluidOrItem output = FluidOrItem.of(PylonFluids.BIODIESEL, 1);
+
+        new SingleRecipe(
+                key,
+                List.of(ethanol, plantOil),
+                List.of(output),
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# p # # # # # # #",
+                                "# # # # x # # o #",
+                                "# e # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('x', ItemButton.of(PylonItems.BIOREFINERY))
+                        .addIngredient('o', FluidButton.of(1.0, PylonFluids.BIODIESEL))
+                        .addIngredient('p', FluidButton.of(plantOilPerMbOfBiodiesel, PylonFluids.PLANT_OIL))
+                        .addIngredient('e', FluidButton.of(ethanolPerMbOfBiodiesel, PylonFluids.ETHANOL))
+                        .build()
+        ).register();
+    }
+
+    private static void initFermenter() {
+        NamespacedKey key = PylonKeys.FERMENTER;
+        ConfigSection setting = ConfigSection.fromSettings(key);
+
+        double ethanolPerSugarcane = setting.getOrThrow("ethanol-per-sugarcane", ConfigAdapter.DOUBLE);
+
+        ItemChoice input = ItemChoice.fuzzy(ItemTypeWrapper.of(Material.SUGAR_CANE));
+        FluidOrItem output = FluidOrItem.of(PylonFluids.ETHANOL, ethanolPerSugarcane);
+
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# i # # x # # o #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('i', ItemButton.of(ItemStack.of(Material.SUGAR_CANE)))
+                        .addIngredient('x', ItemButton.of(PylonItems.FERMENTER))
+                        .addIngredient('o', FluidButton.of(ethanolPerSugarcane, PylonFluids.ETHANOL))
+                        .build()
+        ).register();
     }
 }

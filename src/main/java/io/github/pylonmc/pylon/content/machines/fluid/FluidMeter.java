@@ -2,10 +2,10 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarFluidTank;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
@@ -50,27 +51,29 @@ import java.util.List;
 
 
 public class FluidMeter extends RebarBlock implements
-        RebarFluidTank,
-        RebarDirectionalBlock,
-        RebarTickingBlock,
-        RebarGuiBlock {
+        FluidTankRebarBlock,
+        DirectionalRebarBlock,
+        TickingRebarBlock,
+        GuiRebarBlock {
 
     public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
     public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
 
-    public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-    public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-    public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+    public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
+    public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+    public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
     private double fluidAddedLastUpdate;
     private final List<Double> measurements;
     private int numberOfMeasurements;
 
+    private int lastAverage;
+
     public static class Item extends RebarItem {
 
-        public final double buffer = getSettings().getOrThrow("buffer", ConfigAdapter.DOUBLE);
-        public final int minNumberOfMeasurements = getSettings().getOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
-        public final int maxNumberOfMeasurements = getSettings().getOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
+        public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
+        public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
+        public final int maxNumberOfMeasurements = getSettingOrThrow("max-number-of-measurements", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -153,7 +156,7 @@ public class FluidMeter extends RebarBlock implements
                         .translate(new Vector3d(0.0, 0.3, 0.0))
                         .scale(0.07, 0.07, 0.07)
                 )
-                .itemStack(new ItemStack(Material.BARRIER))
+                .itemStack(ItemStack.of(Material.BARRIER))
                 .billboard(Display.Billboard.VERTICAL)
                 .build(block.getLocation().toCenterLocation())
         );
@@ -192,7 +195,7 @@ public class FluidMeter extends RebarBlock implements
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
-        RebarFluidTank.super.onFluidAdded(fluid, amount);
+        FluidTankRebarBlock.super.onFluidAdded(fluid, amount);
         fluidAddedLastUpdate = amount;
         getHeldEntityOrThrow(ItemDisplay.class, "fluid").setItemStack(fluid.getItem());
     }
@@ -206,10 +209,16 @@ public class FluidMeter extends RebarBlock implements
                 measurements.removeFirst();
             }
         }
+
         double total = measurements.stream()
                 .mapToDouble(x -> x)
                 .sum();
-        double average = (total / measurements.size()) * 20.0 / getTickInterval();
+        int average = (int) ((total / measurements.size()) * 20.0 / getTickInterval());
+        if (average == lastAverage) {
+            return;
+        }
+        lastAverage = average;
+
         Component component = UnitFormat.MILLIBUCKETS_PER_SECOND.format(average).decimalPlaces(0).asComponent();
         getHeldEntityOrThrow(TextDisplay.class, "flow_rate").text(component);
     }
@@ -221,19 +230,13 @@ public class FluidMeter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                ),
-                RebarArgument.of("duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true))
-        ));
+                        getFluidAmount()
+                ))
+                .add(UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true));
     }
 
     public static Duration getDuration(int numberOfMeasurements) {

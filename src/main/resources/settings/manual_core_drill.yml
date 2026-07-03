@@ -2,3 +2,4 @@ rotation-duration-ticks: 20 # must be a multiple of 4
 rotations-per-cycle: 30
 output: "pylon:shallow_core_chunk"
 drill-material: gray_concrete
+spawn-block-particles: true

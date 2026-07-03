@@ -1,3 +1,11 @@
+pylon:raw_tin_from_raw_tin_block:
+  ingredients:
+    - pylon:raw_tin_block
+  result:
+    pylon:raw_tin: 9
+  category: misc
+  priority: -2
+
 pylon:tin_nuggets_from_tin_ingot:
   ingredients:
     - pylon:tin_ingot
@@ -51,13 +59,29 @@ pylon:steel_ingots_from_steel_block:
   category: misc
   priority: -2
 
+pylon:sulfur_from_sulfur_block:
+  ingredients:
+    - pylon:sulfur_block
+  result:
+    pylon:sulfur: 9
+  category: building
+  priority: -2
+
+pylon:gypsum_from_gypsum_block:
+  ingredients:
+    - pylon:gypsum_block
+  result:
+    pylon:gypsum: 9
+  category: building
+  priority: -2
+
 pylon:shimmer_dust_1:
   ingredients:
     - pylon:copper_dust
     - minecraft:flint
     - minecraft:clay_ball
   result:
-    pylon:shimmer_dust_1: 1
+    pylon:shimmer_dust_1: 3
   category: misc
 
 pylon:medkit:
@@ -71,7 +95,6 @@ pylon:medkit:
 
 pylon:research_pack_1:
   ingredients:
-    - pylon:bronze_ingot
     - pylon:shimmer_dust_2
     - pylon:monster_jerky
     - pylon:sulfur
@@ -101,3 +124,35 @@ pylon:liselette_anode:
   result:
     pylon:liselette_anode: 1
   category: misc
+
+pylon:gunpowder:
+  ingredients:
+    - pylon:sulfur
+    - pylon:gypsum
+    - minecraft:charcoal
+  result:
+    minecraft:gunpowder: 3
+
+pylon:palladium_ingots_from_palladium_block:
+  ingredients:
+    - pylon:palladium_block
+  result:
+    pylon:palladium_ingot: 9
+    
+pylon:palladium_nuggets_from_palladium_ingot:
+  ingredients:
+    - pylon:palladium_ingot: 1
+  result:
+    pylon:palladium_nugget: 9
+
+pylon:forming_table:
+  ingredients:
+    - minecraft:crafting_table
+    - minecraft:clay_ball
+  result: pylon:forming_table
+
+pylon:cleansing_potion:
+  ingredients:
+    - minecraft:potion[potion_contents={potion:"healing"}]: 1
+    - pylon:disinfectant: 1
+  result: pylon:cleansing_potion

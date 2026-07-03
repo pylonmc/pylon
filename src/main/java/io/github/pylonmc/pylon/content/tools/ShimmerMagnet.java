@@ -5,14 +5,14 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.base.RebarInteractor;
+import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.InventoryTickerRebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
-import io.papermc.paper.persistence.PersistentDataContainerView;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -21,18 +21,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
 
-public class ShimmerMagnet extends RebarItem implements RebarInteractor {
+public class ShimmerMagnet extends RebarItem implements InteractRebarItemHandler, InventoryTickerRebarItem {
     @Getter
-    private final double pickupDistance = getSettings().getOrThrow("pickup-distance", ConfigAdapter.DOUBLE);
+    private final double pickupDistance = getSettingOrThrow("pickup-distance", ConfigAdapter.DOUBLE);
     @Getter
-    private final double attractForce = getSettings().getOrThrow("attract-force", ConfigAdapter.DOUBLE);
+    private final double attractForce = getSettingOrThrow("attract-force", ConfigAdapter.DOUBLE);
 
     private static final NamespacedKey ENABLED_KEY = PylonUtils.pylonKey("shimmer_magnet_toggler");
 
@@ -47,7 +46,7 @@ public class ShimmerMagnet extends RebarItem implements RebarInteractor {
 
     @SuppressWarnings("UnstableApiUsage")
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.useItemInHand() == Event.Result.DENY) {
             return;
         }
@@ -88,48 +87,37 @@ public class ShimmerMagnet extends RebarItem implements RebarInteractor {
      * @return true is enabled else otherwise
      */
     public boolean isEnabled() {
-        PersistentDataContainerView pdc = getStack().getPersistentDataContainer();
-
-        if (!pdc.has(ENABLED_KEY)) {
-            return true;
-        }
-
-        return pdc.get(ENABLED_KEY, PersistentDataType.BOOLEAN) == Boolean.TRUE;
+        return getStack().getPersistentDataContainer().getOrDefault(ENABLED_KEY, PersistentDataType.BOOLEAN, true);
     }
 
-    public static class Ticker extends BukkitRunnable {
-
-        @Override
-        public void run() {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                Vector playerPosition = player.getLocation().toVector();
-                for (var stack : player.getInventory()) {
-                    RebarItem rebarItem = fromStack(stack);
-                    if (!(rebarItem instanceof ShimmerMagnet shimmerMagnet)) continue;
-
-                    if (!shimmerMagnet.isEnabled()) continue;
-
-                    Collection<Item> nearbyItems = player.getLocation().getNearbyEntitiesByType(
-                            Item.class,
-                            shimmerMagnet.getPickupDistance()
-                    );
-
-
-                    for (Item item : nearbyItems) {
-                        if (item.getPickupDelay() > 0) continue;
-
-                        Vector direction = playerPosition.clone().subtract(item.getLocation().toVector()).normalize();
-
-                        // it is near enough
-                        if (direction.distanceSquared(playerPosition) < 0.25) continue;
-
-                        Vector toMove = direction.multiply(shimmerMagnet.getAttractForce());
-                        item.setVelocity(toMove);
-                    }
-
-                    break;
-                }
-            }
+    @Override
+    public void onTick(@NotNull Player player) {
+        if (!isEnabled()) {
+            return;
         }
+
+        Location location = player.getLocation();
+        Collection<Item> nearbyItems = location.getNearbyEntitiesByType(
+                Item.class,
+                getPickupDistance()
+        );
+
+        Vector position = location.toVector();
+        for (Item item : nearbyItems) {
+            if (item.getPickupDelay() > 0) continue;
+
+            Vector direction = position.clone().subtract(item.getLocation().toVector()).normalize();
+
+            // it is near enough
+            if (direction.distanceSquared(position) < 0.25) continue;
+
+            Vector toMove = direction.multiply(getAttractForce());
+            item.setVelocity(toMove);
+        }
+    }
+
+    @Override
+    public long getBaseTickInterval() {
+        return 1;
     }
 }

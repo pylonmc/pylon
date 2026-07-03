@@ -2,8 +2,8 @@ package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarPiston;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.PistonRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -37,20 +37,20 @@ import java.util.Set;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHandler {
+public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, BlockBreakRebarBlockHandler {
     public static HashMap<BlockPosition, Set<Player>> frozenPlayers = new HashMap<>();
     private final NamespacedKey cooldownKey = pylonKey("immobilizer_cooldown_millis");
-    private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-    private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
-    private final long cooldownMillis = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
-    private final int particleCount = getSettings().getOrThrow("particle.count", ConfigAdapter.INTEGER);
-    private final double particleRadius = getSettings().getOrThrow("particle.radius", ConfigAdapter.DOUBLE);
-    private final int particlePeriod = getSettings().getOrThrow("particle.period", ConfigAdapter.INTEGER);
+    private final double radius = getSettingOrThrow("radius", ConfigAdapter.DOUBLE);
+    private final int duration = getSettingOrThrow("duration", ConfigAdapter.INTEGER);
+    private final long cooldownMillis = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
+    private final int particleCount = getSettingOrThrow("particle.count", ConfigAdapter.INTEGER);
+    private final double particleRadius = getSettingOrThrow("particle.radius", ConfigAdapter.DOUBLE);
+    private final int particlePeriod = getSettingOrThrow("particle.period", ConfigAdapter.INTEGER);
 
     public static class Item extends RebarItem {
-        private final double radius = getSettings().getOrThrow("radius", ConfigAdapter.DOUBLE);
-        private final int duration = getSettings().getOrThrow("duration", ConfigAdapter.INTEGER);
-        private final int cooldown = getSettings().getOrThrow("cooldown", ConfigAdapter.INTEGER);
+        private final double radius = getSettingOrThrow("radius", ConfigAdapter.DOUBLE);
+        private final int duration = getSettingOrThrow("duration", ConfigAdapter.INTEGER);
+        private final int cooldown = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -66,16 +66,18 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
         }
     }
 
+    @SuppressWarnings("unused")
     public Immobilizer(Block block, BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
+    @SuppressWarnings("unused")
     public Immobilizer(Block block, PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override @MultiHandler(priorities = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
+    public void onPistonExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
 
         BukkitScheduler scheduler = Bukkit.getScheduler();
@@ -106,9 +108,8 @@ public class Immobilizer extends RebarBlock implements RebarPiston, RebarBreakHa
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        BlockPosition position = new BlockPosition(context.getBlock());
-        frozenPlayers.remove(position);
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        frozenPlayers.remove(new BlockPosition(context.getBlock()));
     }
 
     public static class PlayerVFX extends BukkitRunnable {

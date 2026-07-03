@@ -1,10 +1,10 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarCargoBlock;
-import io.github.pylonmc.rebar.block.base.RebarDirectionalBlock;
-import io.github.pylonmc.rebar.block.base.RebarGuiBlock;
-import io.github.pylonmc.rebar.block.base.RebarVirtualInventoryBlock;
+import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -21,6 +21,8 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -47,17 +49,17 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class CargoSplitter extends RebarBlock implements
-        RebarDirectionalBlock,
-        RebarGuiBlock,
-        RebarVirtualInventoryBlock,
-        RebarCargoBlock {
+        DirectionalRebarBlock,
+        GuiRebarBlock,
+        VirtualInventoryRebarBlock,
+        CargoRebarBlock {
 
     public static final NamespacedKey RATIO_LEFT_KEY = pylonKey("ratio_left");
     public static final NamespacedKey RATIO_RIGHT_KEY = pylonKey("ratio_right");
     public static final NamespacedKey IS_LEFT_KEY = pylonKey("is_left");
     public static final NamespacedKey ITEMS_REMAINING_KEY = pylonKey("items_remaining");
 
-    public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+    public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
     public int ratioLeft = 1;
     public int ratioRight = 1;
@@ -126,7 +128,7 @@ public class CargoSplitter extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
-        public final int transferRate = getSettings().getOrThrow("transfer-rate", ConfigAdapter.INTEGER);
+        public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -137,7 +139,7 @@ public class CargoSplitter extends RebarBlock implements
             return List.of(
                     RebarArgument.of(
                             "transfer-rate",
-                            UnitFormat.ITEMS_PER_SECOND.format(RebarCargoBlock.cargoItemsTransferredPerSecond(transferRate))
+                            UnitFormat.ITEMS_PER_SECOND.format(CargoRebarBlock.cargoItemsTransferredPerSecond(transferRate))
                     )
             );
         }
@@ -274,14 +276,12 @@ public class CargoSplitter extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("left", ratioLeft),
-                RebarArgument.of("right", ratioRight),
-                RebarArgument.of("side", isLeft
-                        ? Component.translatable("pylon.waila.cargo_splitter.left")
-                        : Component.translatable("pylon.waila.cargo_splitter.right")
+        return WailaDisplay.of(this, player)
+                .add(Component.text(ratioLeft).color(TextColor.fromHexString("#efae15"))
+                        .append(Component.text("-").color(NamedTextColor.WHITE))
+                        .append(Component.text(ratioRight).color(TextColor.fromHexString("#2386c4")))
                 )
-        ));
+                .add(Component.translatable("pylon.inventory." + (isLeft ? "left" : "right")));
     }
 
     private void doSplit() {

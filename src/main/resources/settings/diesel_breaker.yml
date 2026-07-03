@@ -1,4 +1,4 @@
 tick-interval: 10
 speed: 0.8
-diesel-per-block: 15
-diesel-buffer: 200
+diesel-per-block: 3
+diesel-buffer: 40

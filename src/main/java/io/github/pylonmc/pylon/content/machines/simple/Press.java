@@ -6,10 +6,14 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.*;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.ComposterRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.Config;
-import io.github.pylonmc.rebar.config.Settings;
+import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -18,11 +22,16 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.event.entity.EntityCompostItemEvent;
+import kotlin.Pair;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,24 +44,28 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class Press extends RebarBlock implements
-        RebarInteractBlock,
-        RebarFluidBufferBlock,
-        RebarComposter,
-        RebarDirectionalBlock,
-        RebarRecipeProcessor<PressRecipe> {
+        InteractRebarBlockHandler,
+        FluidBufferRebarBlock,
+        ComposterRebarBlockHandler,
+        DirectionalRebarBlock,
+        RecipeProcessorRebarBlock<PressRecipe>,
+        NoJobRebarBlock {
 
-    private static final Config settings = Settings.get(PylonKeys.PRESS);
-    public static final int TIME_PER_ITEM_TICKS = settings.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
-    public static final int RETURN_TO_START_TIME_TICKS = settings.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INTEGER);
-    public static final int CAPACITY_MB = settings.getOrThrow("capacity-mb", ConfigAdapter.INTEGER);
+    public static final ConfigSection CONFIG = ConfigSection.fromSettings(PylonKeys.PRESS);
+    public static final int TIME_PER_ITEM_TICKS = CONFIG.getOrThrow("time-per-item-ticks", ConfigAdapter.INTEGER);
+    public static final int RETURN_TO_START_TIME_TICKS = CONFIG.getOrThrow("return-to-start-time-ticks", ConfigAdapter.INTEGER);
+    public static final int CAPACITY_MB = CONFIG.getOrThrow("capacity-mb", ConfigAdapter.INTEGER);
 
     public static class PressItem extends RebarItem {
 
@@ -69,9 +82,11 @@ public class Press extends RebarBlock implements
         }
     }
 
+    private UUID lastPressedItem = null;
+
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         setFacing(context.getFacing());
         addEntity("press_cover", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(Material.SPRUCE_PLANKS)
@@ -86,7 +101,7 @@ public class Press extends RebarBlock implements
 
     @SuppressWarnings("unused")
     public Press(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
@@ -98,18 +113,16 @@ public class Press extends RebarBlock implements
 
     @Override
     public @NotNull WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bar", PylonUtils.createFluidAmountBar(
-                        fluidAmount(PylonFluids.PLANT_OIL),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContents(
+                        PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
-                        20,
-                        TextColor.fromHexString("#c4b352")
-                ))
-        ));
+                        fluidAmount(PylonFluids.PLANT_OIL)
+                ));
     }
 
     @Override  @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking()
                 || event.useInteractedBlock() == Event.Result.DENY) {
             return;
@@ -118,6 +131,8 @@ public class Press extends RebarBlock implements
         if (priority == EventPriority.NORMAL) {
             event.setUseItemInHand(Event.Result.DENY);
             return;
+        } else {
+            event.setUseInteractedBlock(Event.Result.DENY);
         }
 
         tryStartRecipe();
@@ -133,42 +148,76 @@ public class Press extends RebarBlock implements
             return false;
         }
 
-        List<Item> items = getBlock()
-                .getLocation()
-                .toCenterLocation()
-                .getNearbyEntities(0.5, 0.8, 0.5)
-                .stream()
-                .filter(Item.class::isInstance)
-                .map(Item.class::cast)
-                .toList();
+        double fluidSpaceRemaining = fluidSpaceRemaining(PylonFluids.PLANT_OIL);
+        if (fluidSpaceRemaining <= RebarUtils.FLUID_EPSILON) {
+            return false;
+        }
 
-        List<ItemStack> stacks = items.stream()
-                .map(Item::getItemStack)
-                .toList();
+        Location center = getBlock().getLocation().toCenterLocation();
+        PressRecipe lastRecipe = getLastRecipe();
+        if (lastRecipe != null && lastPressedItem != null
+                && Bukkit.getEntity(lastPressedItem) instanceof Item item
+                && getBlock().getWorld() == item.getWorld()
+                && BoundingBox.of(center, 0.5, 0.8, 0.5).contains(item.getBoundingBox())
+                && tryStartRecipe(lastRecipe, new Pair<>(item, item.getItemStack()), fluidSpaceRemaining)) {
+            return true;
+        }
+
+        List<Pair<Item, ItemStack>> stacks = new ArrayList<>();
+        for (Item item : center.getNearbyEntitiesByType(Item.class, 0.5, 0.8, 0.5)) {
+            stacks.add(new Pair<>(item, item.getItemStack()));
+        }
+
+        if (stacks.isEmpty()) {
+            return false;
+        }
+
+        if (lastRecipe != null) {
+            for (Pair<Item, ItemStack> stack : stacks) {
+                if (tryStartRecipe(lastRecipe, stack, fluidSpaceRemaining)) {
+                    return true;
+                }
+            }
+        }
 
         for (PressRecipe recipe : PressRecipe.RECIPE_TYPE.getRecipes()) {
-            for (ItemStack stack : stacks) {
-                if (!recipe.input().contains(stack)
-                        || recipe.oilAmount() > fluidSpaceRemaining(PylonFluids.PLANT_OIL)) {
-                    continue;
+            for (Pair<Item, ItemStack> stack : stacks) {
+                if (tryStartRecipe(recipe, stack, fluidSpaceRemaining)) {
+                    return true;
                 }
-
-                stack.subtract();
-                startRecipe(recipe, TIME_PER_ITEM_TICKS);
-                PylonUtils.animate(getCover(), TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS, getCoverTransform(0.0));
-                Bukkit.getScheduler().runTaskLater(
-                        Pylon.getInstance(),
-                        () -> {
-                            PylonUtils.animate(getCover(), RETURN_TO_START_TIME_TICKS, getCoverTransform(0.4));
-                            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), this::finishRecipe, RETURN_TO_START_TIME_TICKS);
-                        },
-                        TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS
-                );
-                return true;
             }
         }
 
         return false;
+    }
+
+    private boolean tryStartRecipe(PressRecipe recipe, Pair<Item, ItemStack> stack, double fluidSpaceRemaining) {
+        if (recipe.oilAmount() > fluidSpaceRemaining || !recipe.input().matchesIgnoringAmount(stack.getSecond())) {
+            return false;
+        }
+
+        stack.getSecond().subtract();
+        if (!stack.getSecond().isEmpty()) {
+            lastPressedItem = stack.getFirst().getUniqueId();
+        } else {
+            lastPressedItem = null;
+        }
+
+        startRecipe(recipe, TIME_PER_ITEM_TICKS);
+        PylonUtils.animate(getCover(), TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS, getCoverTransform(0.0));
+        Bukkit.getScheduler().runTaskLater(
+                Pylon.getInstance(),
+                () -> {
+                    if (!isChunkLoaded()) {
+                        return;
+                    }
+
+                    PylonUtils.animate(getCover(), RETURN_TO_START_TIME_TICKS, getCoverTransform(0.4));
+                    Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), this::finishRecipe, RETURN_TO_START_TIME_TICKS);
+                },
+                TIME_PER_ITEM_TICKS - RETURN_TO_START_TIME_TICKS
+        );
+        return true;
     }
 
     @Override

@@ -1,15 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import io.github.pylonmc.pylon.recipes.MeltingRecipe;
-import io.github.pylonmc.rebar.block.base.RebarBreakHandler;
-import io.github.pylonmc.rebar.block.base.RebarLogisticBlock;
-import io.github.pylonmc.rebar.block.base.RebarTickingBlock;
-import io.github.pylonmc.rebar.block.base.RebarVanillaContainerBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventPriority;
@@ -20,16 +11,30 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.recipes.MeltingRecipe;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.VanillaInventoryRebarBlockHandler;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
+import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.logistics.slot.VanillaInventoryLogisticSlot;
+
 public final class SmelteryHopper extends SmelteryComponent implements
-        RebarTickingBlock,
-        RebarVanillaContainerBlock,
-        RebarLogisticBlock,
-        RebarBreakHandler {
+        TickingRebarBlock,
+        VanillaInventoryRebarBlockHandler,
+        LogisticRebarBlock,
+        BlockBreakRebarBlockHandler {
+
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public SmelteryHopper(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(SmelteryController.TICK_INTERVAL);
+        setTickInterval(tickInterval);
     }
 
     @SuppressWarnings("unused")
@@ -43,11 +48,11 @@ public final class SmelteryHopper extends SmelteryComponent implements
         createLogisticGroup(
                 "input",
                 LogisticGroupType.INPUT,
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 0),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 1),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 2),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 3),
-                new VanillaInventoryLogisticSlot(hopper.getInventory(), 4)
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 0),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 1),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 2),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 3),
+                new VanillaInventoryLogisticSlot(getBlock(), hopper.getInventory(), 4)
         );
     }
 
@@ -57,7 +62,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
     }
 
     @Override
-    public void onBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
         Hopper hopper = (Hopper) getBlock().getState();
 
         for (ItemStack item : hopper.getInventory()) {
@@ -76,16 +81,18 @@ public final class SmelteryHopper extends SmelteryComponent implements
             if (item == null) continue;
             MeltingRecipe recipe = null;
             for (MeltingRecipe meltingRecipe : MeltingRecipe.RECIPE_TYPE) {
-                if (meltingRecipe.input().contains(item)) {
+                if (meltingRecipe.input().matchesIgnoringAmount(item)) {
                     recipe = meltingRecipe;
                     break;
                 }
             }
             if (recipe == null) continue;
             double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
-            if (controller.getTemperature() >= recipe.temperature() && fluidAmountAfterAdding <= controller.getCapacity()) {
+            double temperature = recipe.result().getTag(MeltingPoint.class).temperature();
+            if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();
+                break;
             }
         }
     }

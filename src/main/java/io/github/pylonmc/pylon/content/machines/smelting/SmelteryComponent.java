@@ -18,11 +18,11 @@ public class SmelteryComponent extends RebarBlock {
 
     @SuppressWarnings("unused")
     public SmelteryComponent(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
     }
 
     @SuppressWarnings("unused")
     public SmelteryComponent(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 }

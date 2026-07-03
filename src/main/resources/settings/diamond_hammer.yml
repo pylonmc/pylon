@@ -9,3 +9,8 @@ sound:
   source: block
   volume: 0.5
   pitch: 0.5
+fail-sound:
+  sound: minecraft:block.anvil.land
+  source: block
+  volume: 0.25
+  pitch: 0.8

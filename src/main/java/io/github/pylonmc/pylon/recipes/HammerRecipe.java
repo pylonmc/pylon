@@ -9,18 +9,20 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -28,14 +30,14 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
  * @param input  the input item (setting the itemstack to have an amount that's not 1 will have no effect)
  * @param result the output item (respects amount)
  * @param level  the minimum hammer mining level
- * @param chance the chance to succeed per attempt
+ * @param uses   the number of uses of the hammer this recipe takes
  */
 public record HammerRecipe(
         @NotNull NamespacedKey key,
-        @NotNull RecipeInput.Item input,
+        @NotNull ItemChoice input,
         @NotNull ItemStack result,
         @NotNull MiningLevel level,
-        float chance
+        int uses
 ) implements RebarRecipe {
 
     @Override
@@ -51,16 +53,16 @@ public record HammerRecipe(
         protected @NotNull HammerRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             return new HammerRecipe(
                     key,
-                    section.getOrThrow("input", ConfigAdapter.RECIPE_INPUT_ITEM),
+                    section.getOrThrow("input", ConfigAdapter.ITEM_CHOICE),
                     section.getOrThrow("result", ConfigAdapter.ITEM_STACK),
                     section.getOrThrow("mining-level", MINING_LEVEL_ADAPTER),
-                    section.getOrThrow("chance", ConfigAdapter.FLOAT)
+                    section.getOrThrow("uses", ConfigAdapter.INTEGER)
             );
         }
     };
 
     @Override
-    public @NotNull List<RecipeInput> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return List.of(input);
     }
 
@@ -80,37 +82,32 @@ public record HammerRecipe(
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
-                .addIngredient('i', ItemButton.from(input))
-                .addIngredient('h', new ItemButton(getHammers()))
-                .addIngredient('o', ItemButton.from(result))
+                .addIngredient('i', ItemButton.of(input))
+                .addIngredient('h', ItemButton.of(getHammers()))
+                .addIngredient('o', ItemButton.of(result))
                 .build();
     }
 
-    public float getChanceFor(@NotNull MiningLevel hammerLevel) {
-        if (!hammerLevel.isAtLeast(level)) {
-            return 0f;
-        }
-        // Each tier is twice as likely to succeed as the previous one
-        return chance * (1 << hammerLevel.getNumericalLevel() - level.getNumericalLevel());
-    }
-
-    private List<ItemStack> getHammers() {
+    private @NonNull List<ItemStack> getHammers() {
         List<ItemStack> hammers = new ArrayList<>();
         for (RebarItemSchema itemSchema : RebarRegistry.ITEMS.getValues()) {
-            ItemStack stack = itemSchema.getItemStack();
-            RebarItem item = RebarItem.fromStack(stack);
-            if (item instanceof Hammer hammer) {
-                float chance = Math.min(1, getChanceFor(hammer.miningLevel));
-                if (chance <= 0f) continue;
-                List<Component> lore = stack.lore();
-                Preconditions.checkNotNull(lore);
-                lore.add(Component.empty());
-                lore.add(Component.translatable("pylon.guide.recipe.hammer",
-                        RebarArgument.of("chance", UnitFormat.PERCENT.format(chance * 100f).significantFigures(3))
-                ));
-                stack.lore(lore);
-                hammers.add(stack);
+            Hammer hammer = RebarItem.fromStack(itemSchema.getOriginalTemplate(), Hammer.class);
+            if (hammer == null) {
+                continue;
             }
+
+            ItemStack stack = itemSchema.getItemStack();
+            if (!hammer.miningLevel.isAtLeast(level)) {
+                continue;
+            }
+            List<Component> lore = stack.lore();
+            Preconditions.checkNotNull(lore);
+            lore.add(Component.empty());
+            lore.add(Component.translatable("pylon.guide.recipe.hammer",
+                    RebarArgument.of("uses", uses)
+            ));
+            stack.lore(lore);
+            hammers.add(stack);
         }
         return hammers;
     }

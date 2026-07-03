@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.base.RebarInteractBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -15,8 +15,11 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -32,23 +35,25 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
-public class PortableFluidTank extends RebarBlock implements FluidTankWithDisplayEntity, RebarInteractBlock {
+public class PortableFluidTank extends RebarBlock implements FluidTankWithDisplayEntity, InteractRebarBlockHandler {
 
     public static class Item extends RebarItem {
         public static final NamespacedKey FLUID_AMOUNT_KEY = pylonKey("fluid_amount");
         public static final NamespacedKey FLUID_TYPE_KEY = pylonKey("fluid_type");
 
         @Getter
-        private final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
+        private final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
 
         @Getter
-        private final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+        private final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
                 "allowed-temperatures",
                 ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
         );
@@ -67,6 +72,18 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
         public void setFluid(@Nullable RebarFluid fluid) {
             getStack().editPersistentDataContainer(pdc -> RebarUtils.setNullable(pdc, FLUID_TYPE_KEY, RebarSerializers.REBAR_FLUID, fluid));
+
+            CustomModelData data = getStack().getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
+            List<String> newStrings = new ArrayList<>(data.strings());
+            newStrings.removeIf(s -> s.startsWith("pylon:fluid:"));
+            newStrings.add("pylon:fluid:" + Objects.toString(fluid, "empty"));
+            CustomModelData newData = CustomModelData.customModelData()
+                .addStrings(newStrings)
+                .addFlags(data.flags())
+                .addColors(data.colors())
+                .addFloats(data.floats())
+                .build();
+            getStack().setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
         }
 
         public void setAmount(double amount) {
@@ -84,12 +101,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
         @Override
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("fluid", getFluid() == null
-                            ? Component.translatable("pylon.fluid.none")
-                            : getFluid().getName()
-                    ),
-                    RebarArgument.of("amount", Math.round(getAmount())),
-                    RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity)),
+                    RebarArgument.of("fluid", ProgressBar.fluidContentsWithName(getFluid(), capacity, getAmount())),
                     RebarArgument.of("temperatures", Component.join(
                             JoinConfiguration.separator(Component.text(", ")),
                             allowedTemperatures.stream()
@@ -100,16 +112,16 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
         }
     }
 
-    public final double capacity = getSettings().getOrThrow("capacity", ConfigAdapter.DOUBLE);
+    public final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
 
-    public final List<FluidTemperature> allowedTemperatures = getSettings().getOrThrow(
+    public final List<FluidTemperature> allowedTemperatures = getSettingOrThrow(
             "allowed-temperatures",
             ConfigAdapter.LIST.from(ConfigAdapter.FLUID_TEMPERATURE)
     );
 
     @SuppressWarnings("unused")
     public PortableFluidTank(@NotNull Block block, @NotNull BlockCreateContext context) {
-        super(block);
+        super(block, context);
         createFluidDisplay();
         createFluidPoint(FluidPointType.INPUT, BlockFace.UP);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.DOWN);
@@ -118,7 +130,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     @SuppressWarnings("unused")
     public PortableFluidTank(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
-        super(block);
+        super(block, pdc);
     }
 
     @Override
@@ -129,27 +141,25 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return new WailaDisplay(getDefaultWailaTranslationKey().arguments(
-                RebarArgument.of("bars", PylonUtils.createFluidAmountBar(
-                        getFluidAmount(),
+        return WailaDisplay.of(this, player)
+                .add(ProgressBar.fluidContentsWithName(
+                        getFluidType(),
                         getFluidCapacity(),
-                        20,
-                        TextColor.color(200, 255, 255)
-                )),
-                RebarArgument.of("fluid", getFluidType() == null
-                        ? Component.translatable("pylon.fluid.none")
-                        : getFluidType().getName()
-                )
-        ));
+                        getFluidAmount()
+                ));
     }
 
     @Override
     public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
-        return getPickItem();
+        return getDrop();
     }
 
     @Override
-    public @Nullable ItemStack getPickItem() {
+    public @Nullable ItemStack getPickItem(@NotNull Player player) {
+        return getDrop();
+    }
+
+    public ItemStack getDrop() {
         // TODO implement clone for RebarItem and just clone it
         ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).getItemStack();
 
@@ -161,7 +171,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR }, ignoreCancelled = true)
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         PylonUtils.handleFluidTankRightClick(this, event, priority);
     }
 }

@@ -2,54 +2,54 @@ pylon:fluid_pipe_wood:
   input: "#minecraft:logs"
   result:
     pylon:fluid_pipe_wood: 4
-  particle-data: minecraft:oak_log
+  particle-item: minecraft:oak_log
   time-ticks: 160
 
 pylon:fluid_pipe_copper:
   input: minecraft:copper_block
   result:
     pylon:fluid_pipe_copper: 18
-  particle-data: minecraft:copper_block
+  particle-item: minecraft:copper_block
   time-ticks: 360
 
 pylon:fluid_pipe_tin:
   input: pylon:tin_block
   result:
     pylon:fluid_pipe_tin: 18
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
   time-ticks: 360
 
 pylon:fluid_pipe_bronze:
   input: pylon:bronze_block
   result:
     pylon:fluid_pipe_bronze: 18
-  particle-data: minecraft:copper_block
+  particle-item: minecraft:copper_block
   time-ticks: 360
 
 pylon:fluid_pipe_iron:
   input: minecraft:iron_block
   result:
     pylon:fluid_pipe_iron: 18
-  particle-data: minecraft:iron_block
+  particle-item: minecraft:iron_block
   time-ticks: 360
 
 pylon:fluid_pipe_steel:
   input: pylon:steel_block
   result:
     pylon:fluid_pipe_steel: 18
-  particle-data: minecraft:netherite_block
+  particle-item: minecraft:netherite_block
   time-ticks: 360
 
 pylon:fluid_pipe_igneous_composite:
   input: pylon:igneous_composite
   result:
     pylon:fluid_pipe_igneous_composite: 2
-  particle-data: minecraft:obsidian
+  particle-item: minecraft:obsidian
   time-ticks: 40
 
 pylon:fluid_pipe_palladium:
   input: pylon:palladium_block
   result:
     pylon:fluid_pipe_palladium: 18
-  particle-data: minecraft:diamond_block
+  particle-item: minecraft:diamond_block
   time-ticks: 400
