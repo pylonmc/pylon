@@ -23,6 +23,7 @@ public class OilService {
         SimplexNoiseGenerator generator = generators.computeIfAbsent(block.getWorld().getUID(), _ -> new SimplexNoiseGenerator(block.getWorld()));
         // noise value at this block normalized between 0 and 1
         double normalized = (1.0 + generator.noise(PylonConfig.OIL_SCALE * block.getX(), PylonConfig.OIL_SCALE * block.getZ())) / 2.0;
-        return Math.max(0, normalized - PylonConfig.OIL_CUTOFF) / (1.0 - PylonConfig.OIL_CUTOFF);
+        double amount = Math.max(0, normalized - PylonConfig.OIL_CUTOFF) / (1.0 - PylonConfig.OIL_CUTOFF);
+        return amount <= 0 ? null : amount;
     }
 }

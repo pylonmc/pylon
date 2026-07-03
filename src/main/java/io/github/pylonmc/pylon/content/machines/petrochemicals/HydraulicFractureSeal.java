@@ -17,11 +17,13 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
@@ -52,10 +54,12 @@ public class HydraulicFractureSeal extends RebarBlock implements VirtualInventor
 
     private final VirtualInventory inventory = new VirtualInventory(1);
 
+    @SuppressWarnings("unused")
     public HydraulicFractureSeal(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
     }
 
+    @SuppressWarnings("unused")
     public HydraulicFractureSeal(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
@@ -67,8 +71,8 @@ public class HydraulicFractureSeal extends RebarBlock implements VirtualInventor
             if (ItemTypeWrapper.of(Material.GRAVEL).matches(event.getNewItem())
                     && event.getNewItem().getAmount() >= gravelAmount
                     && fracture != null
+                    && BlockStorage.breakBlock(fracture) != null
             ) {
-                BlockStorage.breakBlock(fracture);
                 BlockStorage.breakBlock(this);
 
                 getBlock().getWorld().createExplosion(getBlock().getLocation(), explosionPower);

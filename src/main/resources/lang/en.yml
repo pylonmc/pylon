@@ -1713,6 +1713,9 @@ item:
 
   smokestack:
     name: "Smokestack"
+    lore: |-
+      <arrow> Releases excess <#b0abce>gases</#b0abce>
+      <arrow> <attr>Gas per second:</attr> %gas-per-second%
 
   smokestack_ring:
     name: "Smokestack Ring"
@@ -2470,7 +2473,7 @@ item:
   oil_sample_drill:
     name: "Oil Sample Drill"
     lore: |-
-      <arrow> Samples the maximum oil yield in a particular location
+      <arrow> Samples the maximum oil yield at the block where it's built
       <arrow> Requires fuel to operate
       <arrow> Gives a reading of <#8f2121>none<gray>, <#e06100>low<gray>, <#efae15>medium<gray>, or <#5ea918>high<gray>
       <arrow> <attr>Time to sample:</attr> %sample-time%
@@ -2481,10 +2484,22 @@ item:
     lore: |-
       <arrow> Uses steam, hydraulic fluid, and sand to create a hydraulic fracture from which oil can be pumped
       <arrow> The created fracture has a yield between zero and the maximum yield (which you can find out with a <white><item:pylon:oil_sample_drill/></white>)
-      <arrow> <attr>Time to create hydraulic fracture: </attr> %time-to-create-fracture%
+      <arrow> The fracture will be created in place of the <item:pylon:hydraulic_fracture_cap/>
+      <arrow> <attr>Time to create hydraulic fracture:</attr> %time-to-create-fracture%
       <arrow> <attr>Steam per fracture:</attr> %steam-per-fracture%
       <arrow> <attr>Hydraulic fluid per fracture:</attr> %hydraulic-fluid-per-fracture%
       <arrow> <attr>Sand per fracture:</attr> %sand-per-fracture%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:steel_foundation/></yellow>
+      <diamond> 1x <yellow><item:pylon:reinforced_glass_casing/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_fracture_cap/></yellow>
+      <diamond> 2x <yellow><item:pylon:flare_stack_structure/></yellow>
+      <diamond> 5x <yellow><item:pylon:injection_pipe/></yellow>
+      <diamond> 9x <yellow><item:pylon:reinforced_plating/></yellow>
+      <diamond> 13x <yellow><item:pylon:steel_support_beam/></yellow>
 
   hydraulic_fracture_seal:
     name: "Hydraulic Fracture Seal"
@@ -2509,12 +2524,26 @@ item:
       <arrow> Gradually reduces the yield of the fracture
       <arrow> <attr>Max oil per second:</attr> %max-oil-per-second%
       <arrow> <attr>Hydraulic fluid per second:</attr> %hydraulic-fluid-per-second%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_fracture/></yellow>
+      <diamond> 1x <yellow><item:pylon:reinforced_plating/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_motor/></yellow>
+      <diamond> 2x <yellow><item:pylon:reinforced_glass_casing/></yellow>
+      <diamond> 2x <yellow><item:pylon:flare_stack_structure/></yellow>
+      <diamond> 7x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 11x <yellow><item:pylon:steel_foundation/></yellow>
 
   steel_foundation:
     name: "Steel Foundation"
 
   flare_stack:
     name: "Flare Stack"
+    lore: |-
+      <arrow> Burns excess <#ff6702>flammable</#ff6702> fluids
+      <arrow> <attr>Fluid per second:</attr> %fluid-per-second%
 
   flare_stack_structure:
     name: "Flare Stack Structure"
@@ -2877,6 +2906,13 @@ message:
     no-ammo: "<red>The cannon is out of ammunition"
   pumpjack:
     no-oil: "<red>No oil"
+  oil-sample-drill:
+    sampling: "<green>Sampling"
+    no-fuel: "<red>No fuel"
+    none: "<#8f2121>None"
+    low: "<#e06100>Low"
+    medium: "<#efae15>Medium"
+    high: "<#5ea918>High"
 
 gui:
   fluid-selector-title: "Select Fluid"

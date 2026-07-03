@@ -995,7 +995,7 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(INJECTION_PIPE);
     }
 
-    public static final ItemStack STEEL_FOUNDATION = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.STEEL_FOUNDATION)
+    public static final ItemStack STEEL_FOUNDATION = ItemStackBuilder.rebar(Material.GRAY_CONCRETE, PylonKeys.STEEL_FOUNDATION)
             .build();
     static {
         RebarItem.register(RebarItem.class, STEEL_FOUNDATION, PylonKeys.STEEL_FOUNDATION);
@@ -2756,14 +2756,14 @@ public final class PylonItems {
     public static final ItemStack SMOKESTACK = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMOKESTACK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, SMOKESTACK, PylonKeys.SMOKESTACK);
+        RebarItem.register(Smokestack.Item.class, SMOKESTACK, PylonKeys.SMOKESTACK);
         PylonPages.FLUID_MACHINES.addItem(SMOKESTACK);
     }
 
     public static final ItemStack FLARE_STACK = ItemStackBuilder.rebar(Material.NETHER_BRICKS, PylonKeys.FLARE_STACK)
             .build();
     static {
-        RebarItem.register(RebarItem.class, FLARE_STACK, PylonKeys.FLARE_STACK);
+        RebarItem.register(FlareStack.Item.class, FLARE_STACK, PylonKeys.FLARE_STACK);
         PylonPages.FLUID_MACHINES.addItem(FLARE_STACK);
     }
 
@@ -3065,7 +3065,7 @@ public final class PylonItems {
 
     //<editor-fold desc="Machines - Petrochemicals" defaultstate=collapsed>
 
-    public static final ItemStack OIL_SAMPLE_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.OIL_SAMPLE_DRILL)
+    public static final ItemStack OIL_SAMPLE_DRILL = ItemStackBuilder.rebar(Material.CHISELED_DEEPSLATE, PylonKeys.OIL_SAMPLE_DRILL)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.getKey())
             .build();
     static {

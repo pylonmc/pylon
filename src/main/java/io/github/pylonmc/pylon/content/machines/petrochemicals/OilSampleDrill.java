@@ -23,6 +23,7 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -70,8 +71,18 @@ public class OilSampleDrill extends RebarBlock implements
         }
     }
 
+    public enum SampleResult {
+        NONE,
+        LOW,
+        MEDIUM,
+        HIGH
+    }
+
     public static final NamespacedKey SAMPLE_PROCESSOR = PylonUtils.pylonKey("sample_processor");
     public static final NamespacedKey FUEL_PROCESSOR = PylonUtils.pylonKey("fuel_processor");
+
+    public final ItemStackBuilder fuelStack = ItemStackBuilder.gui(Material.BLACK_STAINED_GLASS_PANE, getKey() + "fuel")
+            .name(Component.translatable("pylon.gui.fuel"));
 
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double radiansPerSecond = getSettingOrThrow("radians-per-second", ConfigAdapter.DOUBLE);
@@ -151,18 +162,12 @@ public class OilSampleDrill extends RebarBlock implements
     @Override
     public void postInitialise() {
         sampleProcessor.onFinish(() -> {
-            Material material;
-            Double oil = OilService.getOilYield(getBlock());
-            if (oil == null) {
-                material = Material.RED_CONCRETE;
-            } else if (oil < 1 / 3.0) {
-                material = Material.ORANGE_CONCRETE;
-            } else if (oil < 2 / 3.0) {
-                material = Material.YELLOW_CONCRETE;
-            } else {
-                material = Material.LIME_CONCRETE;
-            }
-
+            Material material = switch (getSampleResult()) {
+                case NONE -> Material.RED_CONCRETE;
+                case LOW -> Material.ORANGE_CONCRETE;
+                case MEDIUM -> Material.YELLOW_CONCRETE;
+                case HIGH -> Material.LIME_CONCRETE;
+            };
             getHeldEntityOrThrow(ItemDisplay.class, "screen").setItemStack(new ItemStack(material));
         });
     }
@@ -224,8 +229,9 @@ public class OilSampleDrill extends RebarBlock implements
     @Override
     public @NotNull Gui createGui() {
         return Gui.builder()
-                .setStructure("# # # # x # # # #")
+                .setStructure("# # # F x F # # #")
                 .addIngredient('#', GuiItems.background())
+                .addIngredient('F', fuelStack)
                 .addIngredient('x', fuelInventory)
                 .build();
     }
@@ -238,6 +244,15 @@ public class OilSampleDrill extends RebarBlock implements
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         WailaDisplay display =  WailaDisplay.of(this, player);
+
+        if (fuelProcessor.isRunning()) {
+            display.add(Component.translatable("pylon.message.oil-sample-drill.sampling"));
+        } else if (sampleProcessor.isRunning()) {
+            display.add(Component.translatable("pylon.message.oil-sample-drill.no-fuel"));
+        } else {
+            display.add(Component.translatable("pylon.message.oil-sample-drill." + getSampleResult().toString().toLowerCase()));
+        }
+
         if (sampleProcessor.isRunning()) {
             display.add(ProgressBar.recipeProgress(sampleProcessor.getElapsedProportion()));
         }
@@ -245,5 +260,19 @@ public class OilSampleDrill extends RebarBlock implements
             display.add(ProgressBar.fuelRemaining(fuelProcessor.getDurationSeconds(), fuelProcessor.getRemainingSeconds()));
         }
         return display;
+    }
+
+    public SampleResult getSampleResult() {
+        Double oil = OilService.getOilYield(getBlock());
+        if (oil == null) {
+            return SampleResult.NONE;
+        }
+        if (oil < 1 / 3.0) {
+            return SampleResult.LOW;
+        }
+        if (oil < 2 / 3.0) {
+            return SampleResult.MEDIUM;
+        }
+        return SampleResult.HIGH;
     }
 }

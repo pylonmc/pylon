@@ -206,7 +206,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT, Material.END_ROD, RebarBlock.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
-        RebarBlock.register(PylonKeys.OIL_SAMPLE_DRILL, Material.NETHERITE_BLOCK, OilSampleDrill.class);
+        RebarBlock.register(PylonKeys.OIL_SAMPLE_DRILL, Material.CHISELED_DEEPSLATE, OilSampleDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURING_DRILL, Material.NETHERITE_BLOCK, HydraulicFracturingDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_PUMPJACK, Material.POLISHED_TUFF, HydraulicPumpjack.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_CAP, Material.POLISHED_ANDESITE, RebarBlock.class);
@@ -214,7 +214,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE, Material.LIGHT_BLUE_CONCRETE_POWDER, HydraulicFracture.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_SEAL, Material.TNT, HydraulicFractureSeal.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_MOTOR, Material.PISTON, RebarBlock.class);
-        RebarBlock.register(PylonKeys.STEEL_FOUNDATION, Material.NETHERITE_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.STEEL_FOUNDATION, Material.GRAY_CONCRETE, RebarBlock.class);
         RebarBlock.register(PylonKeys.FLARE_STACK_STRUCTURE, Material.NETHER_BRICK_FENCE, RebarBlock.class);
         RebarBlock.register(PylonKeys.SMALL_BOILER, Material.BRICKS, SmallBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_BOILER, Material.BRICK_STAIRS, LargeBoiler.class);

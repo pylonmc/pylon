@@ -58,6 +58,10 @@ public class FlareStack extends RebarBlock implements SimpleRebarMultiblock, Flu
 
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
+        if (!isFormedAndFullyLoaded()) {
+            return 0.0;
+        }
+
         return fluid.hasTag(FlammableTag.class)
                 ? fluidPerFluidTick()
                 : 0.0;

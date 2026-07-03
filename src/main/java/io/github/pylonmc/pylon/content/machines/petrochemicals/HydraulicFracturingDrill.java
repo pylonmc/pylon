@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.processor.RebarProcessor;
@@ -68,7 +69,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
                     RebarArgument.of("time-to-create-fracture", UnitFormat.formatDuration(Duration.ofSeconds(ticksToCreateFracture / 20))),
                     RebarArgument.of("steam-per-fracture", UnitFormat.MILLIBUCKETS.format(steamPerFracture)),
                     RebarArgument.of("hydraulic-fluid-per-fracture", UnitFormat.MILLIBUCKETS.format(hydraulicFluidPerFracture)),
-                    RebarArgument.of("sand-per-fracture", (int) (machineTicksPerSand * 20.0 / tickInterval))
+                    RebarArgument.of("sand-per-fracture", ticksToCreateFracture / (machineTicksPerSand * tickInterval))
             );
         }
     }
@@ -79,7 +80,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
     public static final Vector3i HYDRAULIC_FLUID_INPUT_HATCH = new Vector3i(-1, -1, 0);
     public static final Vector3i STEAM_FLUID_INPUT_HATCH = new Vector3i(1, -1, 0);
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final int ticksToCreateFracture = getSettingOrThrow("ticks-to-create-fracture", ConfigAdapter.INTEGER);
@@ -95,6 +96,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
 
     public RebarProcessor processor;
 
+    @SuppressWarnings("unused")
     public HydraulicFracturingDrill(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
@@ -144,6 +146,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         processor.start(ticksToCreateFracture);
     }
 
+    @SuppressWarnings("unused")
     public HydraulicFracturingDrill(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         processor = pdc.get(PROCESSOR, RebarSerializers.PROCESSOR);
@@ -158,10 +161,10 @@ public class HydraulicFracturingDrill extends RebarBlock implements
     public void postInitialise() {
         processor.onFinish(() -> {
             Block block = getMultiblockBlock(new Vector3i(0, -2, 0));
-            BlockStorage.breakBlock(block);
-            BlockStorage.placeBlock(block, PylonKeys.HYDRAULIC_FRACTURE);
-            Double maxYield = OilService.getOilYield(block);
-            BlockStorage.getAs(HydraulicFracture.class, block).yield = random.nextDouble() * (maxYield == null ? 0.0 : maxYield);
+            if (BlockStorage.breakBlock(block) != null && BlockStorage.placeBlock(block, PylonKeys.HYDRAULIC_FRACTURE) != null) {
+                Double maxYield = OilService.getOilYield(block);
+                BlockStorage.getAs(HydraulicFracture.class, block).setYield(RANDOM.nextDouble() * (maxYield == null ? 0.0 : maxYield));
+            }
         });
     }
 
@@ -236,7 +239,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
 
         boolean shouldTakeSand = (processor.getElapsedTicks() / getTickInterval()) % machineTicksPerSand == 0;
 
-        if (shouldTakeSand && (sand == null || RebarItem.isRebarItem(sand) || sand.getType() != Material.SAND)
+        if (shouldTakeSand && !ItemTypeWrapper.of(Material.SAND).matches(sand)
                 || hydraulicFluidInput.getFluidAmount() < hydraulicFluidPerTick
                 || steamInput.getFluidAmount() < steamPerTick
         ) {

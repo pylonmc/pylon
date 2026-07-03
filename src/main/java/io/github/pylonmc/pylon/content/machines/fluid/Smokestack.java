@@ -56,6 +56,10 @@ public class Smokestack extends RebarBlock implements SimpleRebarMultiblock, Dir
 
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
+        if (!isFormedAndFullyLoaded()) {
+            return 0.0;
+        }
+
         return fluid.hasTag(GasTag.class)
                 ? gasPerFluidTick()
                 : 0.0;

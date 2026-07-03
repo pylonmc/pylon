@@ -228,7 +228,7 @@ public class HydraulicPumpjack extends RebarBlock implements
         FluidOutputHatch oilOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, OIL_OUTPUT);
         HydraulicFracture fracture = getMultiblockComponentOrThrow(HydraulicFracture.class, HYDRAULIC_FRACTURE);
 
-        if (fracture.yield < 1.0e-3) {
+        if (fracture.getYield() < 1.0e-3) {
             return;
         }
 
@@ -244,7 +244,7 @@ public class HydraulicPumpjack extends RebarBlock implements
         hydraulicFluidInput.removeFluid(hydraulicFluidPerSecond * getTickInterval() / 20.0);
         dirtyHydraulicFluidOutput.addFluid(hydraulicFluidPerSecond * getTickInterval() / 20.0);
         if (isUpStroke) {
-            oilOutput.addFluid(2.0 * fracture.yield * maxOilPerSecond * getTickInterval() / 20.0);
+            oilOutput.addFluid(2.0 * fracture.getYield() * maxOilPerSecond * getTickInterval() / 20.0);
         }
 
         double displacement = animationAmplitude * Math.cos(Math.PI * 2.0 * animationTick / strokeDuration);
@@ -291,7 +291,7 @@ public class HydraulicPumpjack extends RebarBlock implements
         );
 
         if (isUpStroke) {
-            new ParticleBuilder(Particle.SMOKE)
+            new ParticleBuilder(Particle.WHITE_SMOKE)
                     .location(getMultiblockBlock(HYDRAULIC_FRACTURE).getLocation().toCenterLocation().add(0, 0.6, 0))
                     .count((int) (10 * -Math.sin(Math.PI * 2.0 * animationTick / strokeDuration)))
                     .offset(0.2, 0, 0.2)
@@ -314,7 +314,7 @@ public class HydraulicPumpjack extends RebarBlock implements
         }
 
         if (animationTick == strokeDuration / 2) {
-            fracture.yield /= (1 + yieldDepletion);
+            fracture.setYield(fracture.getYield() / (1 + yieldDepletion));
         }
 
         animationTick = (animationTick + 1) % strokeDuration;
@@ -322,15 +322,19 @@ public class HydraulicPumpjack extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        if (!isFormedAndFullyLoaded()) {
+            return WailaDisplay.of(this, player);
+        }
+
         HydraulicFracture fracture = getMultiblockComponentOrThrow(HydraulicFracture.class, HYDRAULIC_FRACTURE);
-        double oilPerSecond = fracture.yield * maxOilPerSecond;
+        double oilPerSecond = fracture.getYield() * maxOilPerSecond;
         return WailaDisplay.of(this, player)
-                .add(fracture.yield < 1.0e-3
+                .add(fracture.getYield() < 1.0e-3
                         ? Component.translatable("pylon.message.pumpjack.no-oil")
                         : new ProgressBar()
-                        .barColor(TextColor.color(HSVLike.hsvLike((float) (fracture.yield * 0.324F), 1.0F, 1.0F)))
+                        .barColor(TextColor.color(HSVLike.hsvLike((float) (fracture.getYield() * 0.324F), 1.0F, 1.0F)))
                         .bars(30)
-                        .proportion(fracture.yield)
+                        .proportion(fracture.getYield())
                         .suffix(Component.text(" ").append(UnitFormat.MILLIBUCKETS_PER_SECOND.format(oilPerSecond).decimalPlaces(1)))
                 );
     }
