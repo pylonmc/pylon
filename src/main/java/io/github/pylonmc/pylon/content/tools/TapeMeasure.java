@@ -242,18 +242,12 @@ public class TapeMeasure extends RebarItem {
             }
         }
 
+        // includes dropping
         @EventHandler
         private static void onInventoryChange(@NonNull PlayerInventorySlotChangeEvent event) {
             if (event.getSlot() == event.getPlayer().getInventory().getHeldItemSlot()
                     && isRebarItem(event.getOldItemStack(), TapeMeasure.class)
                     && !isRebarItem(event.getNewItemStack(), TapeMeasure.class)) {
-                TapeMeasureService.cancel(event.getPlayer().getUniqueId());
-            }
-        }
-
-        @EventHandler
-        private static void onDrop(@NonNull PlayerDropItemEvent event) {
-            if (isRebarItem(event.getItemDrop().getItemStack(), TapeMeasure.class)) {
                 TapeMeasureService.cancel(event.getPlayer().getUniqueId());
             }
         }
