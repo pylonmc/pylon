@@ -61,7 +61,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     // is fine because the memory usage is so tiny and it would be very annoying to fix
     public static final Map<UUID, Integer> remainingUseMap = new HashMap<>();
 
-    public final HammerAnvil baseBlock = HammerAnvil.of(getSettings().getOrThrow("anvil-block", ConfigAdapter.NAMESPACED_KEY));
+    public final HammerAnvil baseBlock = HammerAnvil.of(getSettings().getOrThrow("base-block", ConfigAdapter.NAMESPACED_KEY));
     public final MiningLevel miningLevel = getMiningLevel(getKey());
     public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final RandomizedSound sound = getSettingOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);

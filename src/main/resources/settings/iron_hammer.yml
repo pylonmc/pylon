@@ -5,7 +5,7 @@ attack-speed: 0.5
 attack-damage: 3
 attack-knockback: 1.5
 
-anvil-block: minecraft:iron_block
+base-block: minecraft:iron_block
 mining-level: IRON
 
 sound:

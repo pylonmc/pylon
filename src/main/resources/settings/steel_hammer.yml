@@ -5,7 +5,7 @@ attack-speed: 1.2
 attack-damage: 7
 attack-knockback: 3
 
-anvil-block: pylon:steel_block
+base-block: pylon:steel_block
 mining-level: NETHERITE
 
 sound:

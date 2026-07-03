@@ -5,7 +5,7 @@ attack-speed: 0.33
 attack-damage: 1
 attack-knockback: 1
 
-anvil-block: minecraft:stone
+base-block: minecraft:stone
 mining-level: STONE
 
 sound:
