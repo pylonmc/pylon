@@ -197,11 +197,6 @@ public final class Bloomery extends RebarBlock implements
         return null;
     }
 
-    @Override
-    public @Nullable ItemStack getPickItem(@NotNull Player player) {
-        return null;
-    }
-
     public static class CreationListener implements Listener {
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         private void onSetFire(@NotNull BlockPlaceEvent event) {

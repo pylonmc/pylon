@@ -8,12 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-
-@SuppressWarnings("UnstableApiUsage")
 public class LumberAxe extends VeinminingTool {
     private final int maxVeinSize = getSettingOrThrow("max-vein-size", ConfigAdapter.INTEGER);
 
-    public LumberAxe(@NotNull ItemStack stack) {
+    protected LumberAxe(@NotNull ItemStack stack) {
         super(stack);
     }
 
