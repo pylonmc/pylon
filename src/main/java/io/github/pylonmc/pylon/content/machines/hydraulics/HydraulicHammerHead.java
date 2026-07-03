@@ -137,7 +137,7 @@ public class HydraulicHammerHead extends RebarBlock implements
             getHammerTip().setItemStack(null);
             return;
         }
-        getHammerTip().setItemStack(ItemStackBuilder.of(hammer.baseBlock.getBlockItem())
+        getHammerTip().setItemStack(ItemStackBuilder.of(hammer.baseBlock.createItemStack())
                 .addCustomModelDataString(getKey() + ":hammer_tip:" + hammer.getKey().key())
                 .build()
         );
@@ -157,7 +157,7 @@ public class HydraulicHammerHead extends RebarBlock implements
         }
 
         Block baseBlock = getBlock().getRelative(BlockFace.DOWN, 3);
-        if (BlockStorage.isRebarBlock(baseBlock) || !hammer.baseBlock.isValid(baseBlock)) {
+        if (BlockStorage.isRebarBlock(baseBlock) || !hammer.baseBlock.matches(baseBlock)) {
             return;
         }
 

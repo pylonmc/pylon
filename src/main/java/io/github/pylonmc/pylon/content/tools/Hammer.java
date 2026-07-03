@@ -6,6 +6,7 @@ import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.BlockTypeWrapper;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
@@ -14,7 +15,6 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MiningLevel;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -26,7 +26,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.Registry;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -53,6 +52,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
+    private static final ConfigAdapter<MiningLevel> MINING_LEVEL_ADAPTER = ConfigAdapter.ENUM.from(MiningLevel.class);
     private static final Map<BlockPosition, Pair<HammerRecipe, UUID>> lastHammeredItems = new HashMap<>();
     public static final Random random = new Random();
 
@@ -61,8 +61,8 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     // is fine because the memory usage is so tiny and it would be very annoying to fix
     public static final Map<UUID, Integer> remainingUseMap = new HashMap<>();
 
-    public final HammerAnvil baseBlock = HammerAnvil.of(getSettings().getOrThrow("base-block", ConfigAdapter.NAMESPACED_KEY));
-    public final MiningLevel miningLevel = getMiningLevel(getKey());
+    public final BlockTypeWrapper baseBlock = getSettingOrThrow("base-block", ConfigAdapter.BLOCK_TYPE_WRAPPER);
+    public final MiningLevel miningLevel = getSettingOrThrow("mining-level", MINING_LEVEL_ADAPTER);
     public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final RandomizedSound sound = getSettingOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
     public final RandomizedSound failSound = getSettingOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
@@ -72,7 +72,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     }
 
     public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot) {
-        if (!baseBlock.isValid(block)) {
+        if (!baseBlock.matches(block)) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
             }
@@ -132,6 +132,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
         }
 
         if (player != null) {
+            player.swingHand(slot);
             player.setCooldown(getStack(), cooldownTicks);
             RebarUtils.damageItem(getStack(), 1, player, slot);
         } else {
@@ -258,7 +259,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
         return List.of(
-                RebarArgument.of("base-block", baseBlock.getDisplay()),
+                RebarArgument.of("base-block", baseBlock.createItemStack().effectiveName()),
                 RebarArgument.of("cooldown", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
         );
     }
@@ -269,53 +270,5 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
                 PylonKeys.IRON_HAMMER, MiningLevel.IRON,
                 PylonKeys.DIAMOND_HAMMER, MiningLevel.DIAMOND
         ).get(key);
-    }
-
-     public interface HammerAnvil {
-        boolean isValid(Block block);
-
-        ItemStack getBlockItem();
-
-        default Component getDisplay() {
-            return getBlockItem().effectiveName();
-        }
-
-        static HammerAnvil of(NamespacedKey key) {
-            if (key.getNamespace().equals(NamespacedKey.MINECRAFT)) {
-                var material = Registry.MATERIAL.getOrThrow(key);
-                return new VanillaAnvil(material);
-            } else {
-                return new PylonAnvil(key);
-            }
-        }
-    }
-
-    public record VanillaAnvil(Material material) implements HammerAnvil {
-
-        @Override
-        public boolean isValid(Block block) {
-            return block.getType() == material;
-        }
-
-        @Override
-        public ItemStack getBlockItem() {
-            return new ItemStack(material);
-        }
-    }
-
-    public record PylonAnvil(NamespacedKey key) implements HammerAnvil {
-
-        @Override
-        public boolean isValid(Block block) {
-            var rebarBlock = BlockStorage.get(block);
-            if (rebarBlock == null) return false;
-
-            return rebarBlock.getKey().equals(key);
-        }
-
-        @Override
-        public ItemStack getBlockItem() {
-            return RebarRegistry.ITEMS.getOrThrow(key).getItemStack();
-        }
     }
 }
