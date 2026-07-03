@@ -258,6 +258,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
         return List.of(
+                RebarArgument.of("base-block", baseBlock.getDisplay()),
                 RebarArgument.of("cooldown", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
         );
     }
@@ -274,6 +275,10 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
         boolean isValid(Block block);
 
         ItemStack getBlockItem();
+
+        default Component getDisplay() {
+            return getBlockItem().effectiveName();
+        }
 
         static HammerAnvil of(NamespacedKey key) {
             if (key.getNamespace().equals(NamespacedKey.MINECRAFT)) {
