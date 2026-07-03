@@ -97,7 +97,7 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
                     .runTaskTimer(Pylon.getInstance(),0, particlePeriod);
         }
 
-        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), Immobilizer::checkFrozenPlayers, duration);
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), Immobilizer::checkFrozenPlayers, duration + 1);
     }
 
     @Override
