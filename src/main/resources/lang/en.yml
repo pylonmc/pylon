@@ -2464,6 +2464,14 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  tape_measure:
+    name: "Tape Measure"
+    lore: |-
+      <arrow> Measures the distance between two points
+      <arrow> <insn>Right click</insn> to start measuring
+      <arrow> <insn>Right click again</insn> to set the end point
+      <arrow> <insn>Left click</insn> to clear
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
@@ -2515,6 +2523,7 @@ research:
   irrigation: "<#77a7d1>Irrigation"
   portable_workstations: "<#9b816c>Portable workstations"
   showing_off: "<rainbow>Showing off"
+  tape_measure: "<#c3e2c5>Tape measure"
   combat_engineering: "<#ef8c4a>Combat engineering"
   igneous_magic: "<#45336d>Igneous Magic"
   shimmer_field_manipulation: "<#e5c4ef>Shimmer field manipulation"
