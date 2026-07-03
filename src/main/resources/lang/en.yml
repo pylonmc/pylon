@@ -2286,8 +2286,8 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
-  electricity_pylon:
-    name: "Electricity Pylon"
+  power_bus:
+    name: "Power Bus"
     lore: |-
       <arrow> Acts as a multidirectional bus for wires to connect to
       <arrow> Power may be transmitted from any port to any other port
@@ -2296,8 +2296,7 @@ item:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
       <arrow> Produces <unit:zetta:watts>1</unit> of power
-      
-      <story>An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
+    story: An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
 
   electricity_input_hatch:
     name: "Electricity Input Hatch"

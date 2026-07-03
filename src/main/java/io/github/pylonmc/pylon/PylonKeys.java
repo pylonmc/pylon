@@ -455,7 +455,7 @@ public class PylonKeys {
 
     public static final NamespacedKey SLEEPING_BAG = pylonKey("sleeping_bag");
 
-    public static final NamespacedKey ELECTRICITY_PYLON = pylonKey("electricity_pylon");
+    public static final NamespacedKey POWER_BUS = pylonKey("power_bus");
     public static final NamespacedKey CAPACITOR_1_KJ = pylonKey("capacitor_1_kj");
     public static final NamespacedKey WIRE_1_GAUGE = pylonKey("wire_1_gauge");
     public static final NamespacedKey CREATIVE_POWER_SOURCE = pylonKey("creative_power_source");
