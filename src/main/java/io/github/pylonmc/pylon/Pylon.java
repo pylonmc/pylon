@@ -9,6 +9,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.FireproofRune;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
+import io.github.pylonmc.pylon.content.tools.TapeMeasure;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.addon.RebarAddon;
 import io.github.pylonmc.rebar.config.ConfigSection;
@@ -71,6 +72,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new HuntingTalisman.HuntingTalismanListener(), this);
         pm.registerEvents(new ExperienceTalisman.XPTalismanListener(), this);
         pm.registerEvents(new SleepingBag.PlaceListener(), this);
+        pm.registerEvents(new TapeMeasure.TapeMeasureListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
         RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));
@@ -82,12 +84,12 @@ public class Pylon extends JavaPlugin implements RebarAddon {
     }
 
     @Override
-    public @NotNull Set<@NotNull Locale> getLanguages() {
-        return Set.of(Locale.ENGLISH);
+    public @NotNull Material getMaterial() {
+        return Material.COPPER_INGOT;
     }
 
     @Override
-    public @NotNull Material getMaterial() {
-        return Material.COPPER_INGOT;
+    public @NotNull Locale getDefaultLanguage() {
+        return PylonConfig.DEFAULT_LANGUAGE;
     }
 }

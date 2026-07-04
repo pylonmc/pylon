@@ -1424,8 +1424,7 @@ item:
       <arrow> A hard and durable material, held together by forces currently beyond our comprehension
       <arrow> Can withstand very high temperatures
       <arrow> Wither proof
-      
-      <story>When obscyra is mixed with covalent binder and nether bricks, it solidifies into a remarkably durable material. The obscyra residue helps create contours in the shimmer field along the solids, contributing to the material's strength, but little more than that is known.
+    story: <story>When obscyra is mixed with covalent binder and nether bricks, it solidifies into a remarkably durable material. The obscyra residue helps create contours in the shimmer field along the solids, contributing to the material's strength, but little more than that is known.
 
   rotor:
     name: "Rotor"
@@ -2142,35 +2141,31 @@ item:
       
       <u>Components</u>
       <diamond> 3x <yellow><item:pylon:collimator_pillar/></yellow>
-      
+    story: |-
       <story>Chaudresker's fourteenth experiment finally yielded results - but results so unexpected that they collapsed what was left of Leiber's Model. The potential applications were immediately obvious. Since then, several refinements to the synthesis process have led to the Collimator, a significant simplification over Chaudresker's setup.
+      
 
   collimator_pillar:
     name: "Collimation Pillar"
-    lore: |-
-      <story>A breakthrough in shimmer theory came when Liselette discovered that the shimmer field could be weakly ordered with the help of a shimmer bronze cylinder (or 'pillar'). The field resists entering the cylinder at the bottom, allowing the shimmer bronze to force the field to separate evenly along the cylinder. This crude method only works deep underground, where the shimmer field is stronger.
+    story: <story>A breakthrough in shimmer theory came when Liselette discovered that the shimmer field could be weakly ordered with the help of a shimmer bronze cylinder (or 'pillar'). The field resists entering the cylinder at the bottom, allowing the shimmer bronze to force the field to separate evenly along the cylinder. This crude method only works deep underground, where the shimmer field is stronger.
 
   cohesive_unit:
     name: "Cohesive Unit"
     lore: |-
       <arrow> Synthesized using a Collimator
-      
-      <story>Obscyra naturally resonates with shimmer fields, but in nature such fields are chaotic and overlapping. A Cohesive Unit results from a coordinated and persistent shaping of the fields that forces the obscyra into a smaller and smaller space, until it collapses completely as predicted by the Chaudresker Correspondance. This collapse is termed 'Collimation.'
+    story: <story>Obscyra naturally resonates with shimmer fields, but in nature such fields are chaotic and overlapping. A Cohesive Unit results from a coordinated and persistent shaping of the fields that forces the obscyra into a smaller and smaller space, until it collapses completely as predicted by the Chaudresker Correspondance. This collapse is termed 'Collimation.'
 
   liselette_cathode:
     name: "Liselette Cathode"
-    lore: |-
-      <story>Creates a Liselette gradient when paired with a Liselette Anode and appropriate mediating conductors.
+    story: <story>Creates a Liselette gradient when paired with a Liselette Anode and appropriate mediating conductors.
 
   liselette_conductor:
     name: "Liselette Conductor"
-    lore: |-
-      <story>Facilitates the creation of Liselette gradients; dynamical systems which can be thought of as similar a conveyor belt. The gradient allows mass to be slowly transferred from a Liselette cathode to a Liselette anode while respecting Leibar's conservation laws.
+    story: <story>Facilitates the creation of Liselette gradients; dynamical systems which can be thought of as similar a conveyor belt. The gradient allows mass to be slowly transferred from a Liselette cathode to a Liselette anode while respecting Leibar's conservation laws.
 
   liselette_anode:
     name: "Liselette Anode"
-    lore: |-
-      <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
+    story: <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
 
   cargo_controller:
     name: "Cargo Controller"
@@ -2469,6 +2464,14 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  tape_measure:
+    name: "Tape Measure"
+    lore: |-
+      <arrow> Measures the distance between two points
+      <arrow> <insn>Right click</insn> to start measuring
+      <arrow> <insn>Right click again</insn> to set the end point
+      <arrow> <insn>Left click</insn> to clear
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
@@ -2520,6 +2523,7 @@ research:
   irrigation: "<#77a7d1>Irrigation"
   portable_workstations: "<#9b816c>Portable workstations"
   showing_off: "<rainbow>Showing off"
+  tape_measure: "<#c3e2c5>Tape measure"
   combat_engineering: "<#ef8c4a>Combat engineering"
   igneous_magic: "<#45336d>Igneous Magic"
   shimmer_field_manipulation: "<#e5c4ef>Shimmer field manipulation"

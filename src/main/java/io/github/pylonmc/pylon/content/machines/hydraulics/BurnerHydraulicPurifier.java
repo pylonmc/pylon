@@ -189,7 +189,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     public void tryConsumeFuel() {
         ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT);
         ItemStack stack = inputHatch.inventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
+        if (stack == null || RebarItem.isRebarItem(stack) || stack.isEmpty()) {
             return;
         }
 

@@ -2,12 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.production;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
@@ -17,7 +15,6 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -28,6 +25,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +36,6 @@ import org.joml.Vector3i;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Biorefinery extends RebarBlock implements
         DirectionalRebarBlock,
@@ -217,15 +213,13 @@ public class Biorefinery extends RebarBlock implements
 
         // Consume fuel
         if (!isProcessing()) {
-            ItemInputHatch fuelInputHatch = getMultiblockComponent(ItemInputHatch.class, FUEL_INPUT_HATCH);
+            ItemInputHatch fuelInputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, FUEL_INPUT_HATCH);
             ItemStack input = fuelInputHatch.inventory.getItem(0);
-            if (input != null) {
-                for (Fuel fuel : FUELS) {
-                    if (fuel.stack.isSimilar(input)) {
-                        fuelInputHatch.inventory.setItem(new MachineUpdateReason(), 0, input.subtract());
-                        startProcess(fuel.burnTimeSeconds * 20);
-                        break;
-                    }
+            if (input != null && !RebarItem.isRebarItem(input)) {
+                ItemType itemType = input.getType().asItemType();
+                if (itemType != null && !itemType.isFuel()) {
+                    fuelInputHatch.inventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+                    startProcess(itemType.getBurnDuration());
                 }
             }
         }
@@ -249,32 +243,5 @@ public class Biorefinery extends RebarBlock implements
         public @NotNull NamespacedKey getKey() {
             return key;
         }
-    }
-
-    public static final NamespacedKey FUELS_KEY = pylonKey("biorefinery_fuels");
-    public static final RebarRegistry<Fuel> FUELS = new RebarRegistry<>(FUELS_KEY);
-
-    static {
-        RebarRegistry.addRegistry(FUELS);
-        FUELS.register(new Fuel(
-                pylonKey("coal"),
-                ItemStack.of(Material.COAL),
-                15
-        ));
-        FUELS.register(new Fuel(
-                pylonKey("coal_block"),
-                ItemStack.of(Material.COAL_BLOCK),
-                135
-        ));
-        FUELS.register(new Fuel(
-                pylonKey("charcoal"),
-                ItemStack.of(Material.CHARCOAL),
-                10
-        ));
-        FUELS.register(new Fuel(
-                pylonKey("charcoal_block"),
-                PylonItems.CHARCOAL_BLOCK,
-                90
-        ));
     }
 }

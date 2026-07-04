@@ -7,11 +7,17 @@ baking:
   - pylon:monster_jerky
 
 showing_off:
-  item: stone_brick_wall
+  item: pylon:pedestal
   cost: 2
   unlocks:
     - pylon:pedestal
     - pylon:confetti_popper
+
+tape_measure:
+  item: pylon:tape_measure
+  cost: 3
+  unlocks:
+    - pylon:tape_measure
 
 talismans_1:
   item: pylon:health_talisman_simple

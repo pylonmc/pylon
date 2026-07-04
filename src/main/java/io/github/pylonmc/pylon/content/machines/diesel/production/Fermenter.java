@@ -155,11 +155,9 @@ public class Fermenter extends RebarBlock implements
 
         for (Vector3i position : getComponents().keySet()) {
             ReinforcedGlassCasing casing = getMultiblockComponent(ReinforcedGlassCasing.class, position);
-            if (casing == null) {
-                continue;
+            if (casing != null) {
+                casing.reset();
             }
-
-            casing.setPosition(ReinforcedGlassCasing.Position.BOTTOM);
         }
 
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(null);

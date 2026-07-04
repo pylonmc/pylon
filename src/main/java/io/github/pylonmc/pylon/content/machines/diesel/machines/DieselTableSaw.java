@@ -212,7 +212,7 @@ public class DieselTableSaw extends RebarBlock implements
     private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
         double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
         if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
-                || !recipe.input().isSimilar(stack)
+                || !recipe.input().matches(stack)
                 || !outputInventory.canHold(recipe.result())
         ) {
             return false;
