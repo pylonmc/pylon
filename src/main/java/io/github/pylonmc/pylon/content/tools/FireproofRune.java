@@ -2,14 +2,11 @@ package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
+import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.event.RebarBlockBreakEvent;
-import io.github.pylonmc.rebar.event.RebarBlockDeserializeEvent;
-import io.github.pylonmc.rebar.event.RebarBlockPlaceEvent;
-import io.github.pylonmc.rebar.event.RebarBlockSerializeEvent;
-import io.github.pylonmc.rebar.event.RebarBlockUnloadEvent;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RandomizedSound;
@@ -24,17 +21,22 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -140,58 +142,88 @@ public class FireproofRune extends Rune {
     }
 
     public static class FireproofRuneListener implements Listener {
-        private final List<RebarBlock> fireproofBlocks = new ArrayList<>();
-
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockPlace(RebarBlockPlaceEvent event) {
-            ItemStack itemStack = event.getContext().getItem();
+        public void onBlockPlace(BlockPlaceEvent event) { // use chunk pdc
+            ItemStack itemStack = event.getItemInHand();
             if (itemStack == null || itemStack.isEmpty()) {
                 return;
             }
 
-            if (itemStack.getPersistentDataContainer().has(FIREPROOF_KEY)) {
-                fireproofBlocks.add(event.getRebarBlock());
+            Block block = event.getBlock();
+            if (hasRuneApplied(itemStack)) {
+                block.getChunk().getPersistentDataContainer()
+                    .set(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK, itemStack.asOne());
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onDeserialize(@NotNull RebarBlockDeserializeEvent event) {
-            RebarBlock block = event.getRebarBlock();
-            if (event.getPdc().has(FIREPROOF_KEY) && !fireproofBlocks.contains(block)) {
-                fireproofBlocks.add(block);
+        public void onBlockBreak(@NotNull BlockBreakEvent event) { //for vanilla shulkerbox
+            Block block = event.getBlock();
+
+            if (BlockStorage.isRebarBlock(block) || !block.getChunk().getPersistentDataContainer().has(getChunkPDC(block.getLocation()))) {
+                return;
+            }
+            ItemStack pdcItemStack = block.getChunk().getPersistentDataContainer()
+                    .get(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK);
+
+            if (block.getState() instanceof ShulkerBox box) {
+                event.setDropItems(false);
+                BlockStateMeta meta = (BlockStateMeta) pdcItemStack.getItemMeta();
+
+                meta.setBlockState(box);
+                pdcItemStack.setItemMeta(meta);
+
+                block.getWorld().dropItemNaturally(block.getLocation(), pdcItemStack);
+
+                block.getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getLocation()));
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onSerialize(@NotNull RebarBlockSerializeEvent event) {
-            if (fireproofBlocks.contains(event.getRebarBlock())) {
-                event.getPdc().set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true);
-            }
-        }
+        public void onBlockDropItem(@NotNull BlockDropItemEvent event) { // for vanilla block
+            Block block = event.getBlock();
 
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockBreak(@NotNull RebarBlockBreakEvent event) {
-            RebarBlock block = event.getRebarBlock();
-            if (!fireproofBlocks.remove(block)) {
+            if (!block.getChunk().getPersistentDataContainer().has(getChunkPDC(block.getLocation()))) {
                 return;
             }
 
+            ItemStack pdcItemStack = block.getChunk().getPersistentDataContainer()
+                    .get(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK);
+            for (Item item : event.getItems()) {
+                ItemStack itemStack = item.getItemStack();
+                if (pdcItemStack.getType() != itemStack.getType()) {
+                    continue;
+                }
+                event.getItems().remove(item);
+                block.getWorld().dropItemNaturally(block.getLocation(), pdcItemStack);
+                break;
+            }
+
+            block.getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getLocation()));
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onRebarBlockBreak(@NotNull RebarBlockBreakEvent event) { // for rebar block
+            RebarBlock block = event.getRebarBlock();
+            if (!block.getBlock().getChunk().getPersistentDataContainer().has(getChunkPDC(block.getBlock().getLocation()))) {
+                return;
+            }
             for (ItemStack itemStack : event.getDrops()) {
                 RebarItemSchema dropSchema = RebarItemSchema.fromStack(itemStack);
                 if (dropSchema == null || !block.getKey().equals(dropSchema.getRebarBlockKey())) {
                     continue;
                 }
-
                 ItemStack fireproofStack = applyRune(itemStack, 1);
                 itemStack.subtract();
                 event.getDrops().add(fireproofStack);
                 break;
             }
+            block.getBlock().getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getBlock().getLocation()));
         }
 
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockUnload(@NotNull RebarBlockUnloadEvent event) {
-            fireproofBlocks.remove(event.getRebarBlock());
+        public NamespacedKey getChunkPDC(Location location) {
+            return pylonKey(String.format("%s_%d_%d_%d",
+                "fireproof", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
         }
     }
 }
