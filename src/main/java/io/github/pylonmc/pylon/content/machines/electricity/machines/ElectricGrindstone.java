@@ -8,11 +8,15 @@ import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ElectricGrindstone extends GenericGrindstone implements SimpleElectricRebarBlock {
 
@@ -48,5 +52,14 @@ public class ElectricGrindstone extends GenericGrindstone implements SimpleElect
     public void tick() {
         if (!isProcessingRecipe() || !isPowered()) return;
         progressRecipe(tickInterval);
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (!isPowered()) {
+            display.add(Component.translatable("pylon.message.no_power"));
+        }
+        return display;
     }
 }

@@ -287,7 +287,7 @@ public class ElectricMixer extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return WailaDisplay.of(this, player)
+        WailaDisplay display = WailaDisplay.of(this, player)
                 .add(ProgressBar.fluidContentsWithName(
                         inputFluid == null ? null : inputFluid.fluid(),
                         inputCapacity,
@@ -298,5 +298,9 @@ public class ElectricMixer extends RebarBlock implements
                         outputCapacity,
                         outputFluid == null ? 0 : outputFluid.amount()
                 ));
+        if (!isPowered()) {
+            display.add(Component.translatable("pylon.message.no_power"));
+        }
+        return display;
     }
 }

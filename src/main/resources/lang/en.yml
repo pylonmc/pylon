@@ -2731,6 +2731,7 @@ message:
   idle: "<#f9e981>Idle"
   invalid_recipe: "<red>Invalid recipe"
   no_fuel: "<red>No fuel"
+  no_power: "<red>No power"
   assembly_table:
     full: "<red>Output full!"
   fluid_selector:

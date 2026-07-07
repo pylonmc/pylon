@@ -13,6 +13,7 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -65,12 +66,16 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return WailaDisplay.of(this, player)
+        WailaDisplay display = WailaDisplay.of(this, player)
                 .add(ProgressBar.fluidContents(
                         PylonFluids.PLANT_OIL,
                         fluidCapacity(PylonFluids.PLANT_OIL),
                         fluidAmount(PylonFluids.PLANT_OIL))
                 );
+        if (!isPowered()) {
+            display.add(Component.translatable("pylon.message.no_power"));
+        }
+        return display;
     }
 }
 
