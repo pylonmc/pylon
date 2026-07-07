@@ -41,7 +41,7 @@ public abstract class GenericPipeBender extends GenericMachine<PipeBendingRecipe
 
     @Override
     protected @NotNull List<ItemStack> getResults(@NonNull PipeBendingRecipe recipe) {
-        return List.of(recipe.result().clone());
+        return List.of(recipe.result());
     }
 
     @Override

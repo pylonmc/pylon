@@ -30,6 +30,6 @@ public abstract class GenericBrickMolder extends GenericMachine<MoldingRecipe> {
 
     @Override
     protected @NotNull List<ItemStack> getResults(@NonNull MoldingRecipe recipe) {
-        return List.of(recipe.result().clone());
+        return List.of(recipe.result());
     }
 }

@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.NamespacedKey;
@@ -57,7 +58,7 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
     public GenericMachine(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setTickInterval(tickInterval);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
+        setRecipeProgressItem(new ProgressItem(GuiItems.background(), false));
         setFacing(context.getFacing());
     }
 
@@ -107,8 +108,16 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
         }
     }
 
+    /**
+     * Returns the number of ticks the recipe will take
+     */
     protected abstract int getRecipeTicks(@NotNull T recipe);
-    protected abstract @NotNull List<ItemStack> getResults(@NotNull T recipe);
+
+    /**
+     * Returns the results of the recipe. Neither the resulting list nor the items within it will ever be modified
+     * by callers of this function.
+     */
+    protected abstract @NotNull List<@NotNull ItemStack> getResults(@NotNull T recipe);
 
     protected boolean tryStartRecipe(T recipe, ItemStack stack) {
         ItemChoice input = (ItemChoice) recipe.getInputs().getFirst();
@@ -125,7 +134,11 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
             return true;
         }
 
-        this.results = results;
+        this.results = new ArrayList<>(results.size());
+        for (ItemStack item : results) {
+            this.results.add(item.clone());
+        }
+
         startRecipe(recipe, getRecipeTicks(recipe));
         getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
         inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(input.getAmount()));

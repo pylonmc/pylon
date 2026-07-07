@@ -59,7 +59,7 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
 
     @Override
     protected @NotNull List<ItemStack> getResults(@NonNull HammerRecipe recipe) {
-        return List.of(recipe.result().clone());
+        return List.of(recipe.result());
     }
 
     @Override

@@ -49,7 +49,7 @@ public abstract class GenericTableSaw extends GenericMachine<TableSawRecipe> imp
 
     @Override
     protected @NotNull List<ItemStack> getResults(@NonNull TableSawRecipe recipe) {
-        return List.of(recipe.result().clone());
+        return List.of(recipe.result());
     }
 
     @Override
