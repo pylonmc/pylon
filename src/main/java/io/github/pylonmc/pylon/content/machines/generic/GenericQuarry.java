@@ -67,7 +67,7 @@ public abstract class GenericQuarry extends RebarBlock implements
             for (int x = -radius; x <= radius; x++) {
                 for (int z = -radius; z <= radius; z++) {
                     Block neighbour = getBlock().getRelative(x, y, z);
-                    if (border.isInside(neighbour.getLocation())) {
+                    if (border.isInside(neighbour.getLocation()) && !neighbour.isEmpty()) {
                         BlockPosition blockPosition = new BlockPosition(neighbour);
                         blockPositions.add(blockPosition);
                         chunkPositions.add(blockPosition.getChunk());
