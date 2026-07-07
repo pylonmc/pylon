@@ -155,6 +155,7 @@ public class FluidLimiter extends RebarBlock implements DirectionalRebarBlock, F
                         .valueGetter(() -> maxFlowRate)
                         .valueSetter(value -> maxFlowRate = value)
                         .valueFormatter(UnitFormat.MILLIBUCKETS_PER_SECOND::format)
+                        .key(pylonKey(getKey() + ":max_flow_rate"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

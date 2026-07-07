@@ -232,6 +232,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                         .valueGetter(() -> itemThreshold)
                         .valueSetter(value -> itemThreshold = value)
                         .valueFormatter(UnitFormat.ITEMS::format)
+                        .key(pylonKey(getKey() + ":item_threshold"))
                         .reopenWindow(this::open)
                         .build())
                 .addIngredient('T', NumberInputButton.builder()
@@ -244,6 +245,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                         .valueGetter(() -> fluidThreshold)
                         .valueSetter(value -> fluidThreshold = value)
                         .valueFormatter(UnitFormat.MILLIBUCKETS::format)
+                        .key(pylonKey(getKey() + ":fluid_threshold"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

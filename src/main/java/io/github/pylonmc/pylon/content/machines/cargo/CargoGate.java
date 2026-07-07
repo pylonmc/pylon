@@ -193,6 +193,7 @@ public class CargoGate extends RebarBlock implements
                         .valueGetter(() -> threshold)
                         .valueSetter(value -> threshold = value)
                         .valueFormatter(UnitFormat.ITEMS::format)
+                        .key(pylonKey(getKey() + ":threshold"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

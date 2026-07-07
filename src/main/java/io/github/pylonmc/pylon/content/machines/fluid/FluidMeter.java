@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
 import io.github.pylonmc.pylon.util.NumberInputButton;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -43,6 +42,8 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 
 public class FluidMeter extends RebarBlock implements
         FluidTankRebarBlock,
@@ -50,8 +51,8 @@ public class FluidMeter extends RebarBlock implements
         TickingRebarBlock,
         GuiRebarBlock {
 
-    public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
-    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
+    public static final NamespacedKey MEASUREMENTS_KEY = pylonKey("measurements");
+    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = pylonKey("number_of_measurements");
 
     public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
     public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
@@ -193,6 +194,7 @@ public class FluidMeter extends RebarBlock implements
                         .valueGetter(() -> numberOfMeasurements)
                         .valueSetter(value -> numberOfMeasurements = value)
                         .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
+                        .key(pylonKey(getKey() + ":measurement-duration"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

@@ -154,6 +154,7 @@ public class FluidAccumulator extends RebarBlock implements
                         .valueGetter(() -> (int) getFluidCapacity())
                         .valueSetter(this::setCapacity)
                         .valueFormatter(UnitFormat.MILLIBUCKETS::format)
+                        .key(pylonKey(getKey() + ":amount"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

@@ -1,7 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import io.github.pylonmc.pylon.util.NumberInputButton;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.*;
@@ -40,6 +39,8 @@ import org.joml.Vector3d;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 
 public class CargoMeter extends RebarBlock implements
         DirectionalRebarBlock,
@@ -48,8 +49,8 @@ public class CargoMeter extends RebarBlock implements
         CargoRebarBlock,
         TickingRebarBlock {
 
-    public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
-    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
+    public static final NamespacedKey MEASUREMENTS_KEY = pylonKey("measurements");
+    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = pylonKey("number_of_measurements");
 
     public final int transferRate = getSettingOrThrow("transfer-rate", ConfigAdapter.INTEGER);
     public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
@@ -247,6 +248,7 @@ public class CargoMeter extends RebarBlock implements
                         .valueGetter(() -> numberOfMeasurements)
                         .valueSetter(value -> numberOfMeasurements = value)
                         .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
+                        .key(pylonKey(getKey() + ":measurement_duration"))
                         .reopenWindow(this::open)
                         .build())
                 .build();

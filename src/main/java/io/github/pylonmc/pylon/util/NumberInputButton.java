@@ -11,6 +11,7 @@ import lombok.Builder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.item.AbstractBoundItem;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 @Builder
 public class NumberInputButton extends AbstractBoundItem {
@@ -36,11 +35,13 @@ public class NumberInputButton extends AbstractBoundItem {
     private final Supplier<Integer> valueGetter;
     private final Consumer<Integer> valueSetter;
 
+    private final NamespacedKey key;
+
     @lombok.Builder.Default
     private final Function<Integer, ComponentLike> valueFormatter = Component::text;
 
     @lombok.Builder.Default
-    private final Consumer<Player> reopenWindow = _unused -> {};
+    private final Consumer<Player> reopenWindow = _ -> {};
 
     @Override
     public @NotNull ItemProvider getItemProvider(@NotNull Player viewer) {
@@ -57,7 +58,7 @@ public class NumberInputButton extends AbstractBoundItem {
         if (max != null) {
             lore.add(Component.translatable("pylon.gui.number-button.max", RebarArgument.of("max", valueFormatter.apply(max))));
         }
-        return ItemStackBuilder.gui(material, pylonKey("number_input_button"))
+        return ItemStackBuilder.gui(material, key)
                 .name(Component.translatable(
                         "pylon.gui.number-button.name",
                         RebarArgument.of("name", name),
