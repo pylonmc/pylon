@@ -2770,17 +2770,6 @@ pylon:experience_drain:
   result: pylon:experience_drain
   category: building
 
-pylon:tape_measure:
-  pattern:
-    - " SS"
-    - "SNS"
-    - " S "
-  key:
-    S: minecraft:string
-    N: minecraft:iron_nugget
-  result: pylon:tape_measure
-  category: equipment
-
 pylon:large_copper_pipe_assembly:
   pattern:
     - " C "
@@ -2865,3 +2854,14 @@ pylon:large_fluid_boiler:
     C: pylon:large_copper_pipe_assembly
   result: pylon:large_fluid_boiler
   category: building
+
+pylon:tape_measure:
+  pattern:
+    - " SS"
+    - "SNS"
+    - " S "
+  key:
+    S: minecraft:string
+    N: minecraft:iron_nugget
+  result: pylon:tape_measure
+  category: equipment
