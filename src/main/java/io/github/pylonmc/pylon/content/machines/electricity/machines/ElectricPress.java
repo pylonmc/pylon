@@ -5,6 +5,7 @@ import io.github.pylonmc.pylon.content.machines.generic.GenericPress;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -47,7 +48,7 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
         super(block, context);
         addPressEntities(block);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
-        createSimpleElectricPort(NodeType.CONSUMER, getFacing());
+        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
     }
 

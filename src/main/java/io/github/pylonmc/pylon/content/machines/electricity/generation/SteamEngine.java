@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -63,7 +64,7 @@ public class SteamEngine extends RebarBlock implements
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, context.getFacing());
         createFluidBuffer(PylonFluids.STEAM, steamCapacity, true, false);
-        createSimpleElectricPort(NodeType.PRODUCER, getFacing().getOppositeFace());
+        createSimpleElectricPort(ElectricNode.Type.PRODUCER, getFacing().getOppositeFace());
     }
 
     @SuppressWarnings("unused")

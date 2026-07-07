@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -98,7 +99,7 @@ public class ElectricMixer extends RebarBlock implements
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
         createFluidPoint(FluidPointType.INPUT, BlockFace.EAST, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.WEST, context, false);
-        createSimpleElectricPort(NodeType.CONSUMER, getFacing());
+        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
     }
 
