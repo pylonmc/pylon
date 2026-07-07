@@ -3493,7 +3493,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(RebarItem.class, POWER_BUS, PylonKeys.POWER_BUS);
-        PylonPages.ELECTRICITY.addItem(POWER_BUS);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(POWER_BUS);
     }
 
     public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)
@@ -3501,7 +3501,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
-        PylonPages.ELECTRICITY.addItem(CAPACITOR_1_KJ);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(CAPACITOR_1_KJ);
     }
 
     public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_1_GAUGE)
@@ -3509,7 +3509,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
-        PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(WIRE_1_GAUGE);
     }
 
     public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)
@@ -3541,7 +3541,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(SteamEngine.Item.class, STEAM_ENGINE, PylonKeys.STEAM_ENGINE);
-        PylonPages.ELECTRICITY.addItem(STEAM_ENGINE);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(STEAM_ENGINE);
     }
 
     public static final ItemStack GAS_TURBINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.GAS_TURBINE)
@@ -3549,7 +3549,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(RebarItem.class, GAS_TURBINE, PylonKeys.GAS_TURBINE);
-        PylonPages.ELECTRICITY.addItem(GAS_TURBINE);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(GAS_TURBINE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.GAS_TURBINE)
                 .addButton(new MachineRecipesButton(GasTurbineRecipe.RECIPE_TYPE));
     }
@@ -3559,7 +3559,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(CombustionTower.Item.class, COMBUSTION_TOWER, PylonKeys.COMBUSTION_TOWER);
-        PylonPages.ELECTRICITY.addItem(COMBUSTION_TOWER);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(COMBUSTION_TOWER);
     }
 
     public static final ItemStack HEAT_EXCHANGER = ItemStackBuilder.rebar(Material.RED_NETHER_BRICK_WALL, PylonKeys.HEAT_EXCHANGER)
@@ -3567,7 +3567,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(RebarItem.class, HEAT_EXCHANGER, PylonKeys.HEAT_EXCHANGER);
-        PylonPages.ELECTRICITY.addItem(HEAT_EXCHANGER);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(HEAT_EXCHANGER);
     }
 
     public static final ItemStack ELECTRIC_GRINDSTONE = ItemStackBuilder.rebar(Material.SMOOTH_STONE, PylonKeys.ELECTRIC_GRINDSTONE)
@@ -3575,7 +3575,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricGrindstone.Item.class, ELECTRIC_GRINDSTONE, PylonKeys.ELECTRIC_GRINDSTONE);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_GRINDSTONE);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_GRINDSTONE);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_GRINDSTONE)
                 .addButton(new MachineRecipesButton(GrindstoneRecipe.RECIPE_TYPE));
     }
@@ -3585,7 +3585,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricBrickMolder.Item.class, ELECTRIC_BRICK_MOLDER, PylonKeys.ELECTRIC_BRICK_MOLDER);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_BRICK_MOLDER);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_BRICK_MOLDER);
     }
 
     public static final ItemStack ELECTRIC_COMPRESSOR = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_COMPRESSOR)
@@ -3593,7 +3593,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricCompressor.Item.class, ELECTRIC_COMPRESSOR, PylonKeys.ELECTRIC_COMPRESSOR);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_COMPRESSOR);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_COMPRESSOR);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_COMPRESSOR)
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
@@ -3603,7 +3603,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricMixer.Item.class, ELECTRIC_MIXER, PylonKeys.ELECTRIC_MIXER);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_MIXER);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_MIXER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_MIXER)
                 .addButton(new MachineRecipesButton(MixingPotRecipe.RECIPE_TYPE));
     }
@@ -3614,7 +3614,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricPress.Item.class, ELECTRIC_PRESS, PylonKeys.ELECTRIC_PRESS);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_PRESS);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_PRESS);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_PRESS)
                 .addButton(PressableItemsPage.getButton());
     }
@@ -3625,7 +3625,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricTableSaw.Item.class, ELECTRIC_TABLE_SAW, PylonKeys.ELECTRIC_TABLE_SAW);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_TABLE_SAW);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_TABLE_SAW);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_TABLE_SAW)
                 .addButton(new MachineRecipesButton(TableSawRecipe.RECIPE_TYPE));
     }
@@ -3635,7 +3635,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricQuarry.Item.class, ELECTRIC_QUARRY, PylonKeys.ELECTRIC_QUARRY);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_QUARRY);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_QUARRY);
     }
 
     public static final ItemStack ELECTRIC_PIPE_BENDER = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.ELECTRIC_PIPE_BENDER)
@@ -3643,7 +3643,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricPipeBender.Item.class, ELECTRIC_PIPE_BENDER, PylonKeys.ELECTRIC_PIPE_BENDER);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_PIPE_BENDER);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_PIPE_BENDER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.ELECTRIC_PIPE_BENDER)
                 .addButton(new MachineRecipesButton(PipeBendingRecipe.RECIPE_TYPE));
     }
@@ -3653,7 +3653,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricBreaker.Item.class, ELECTRIC_BREAKER, PylonKeys.ELECTRIC_BREAKER);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_BREAKER);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_BREAKER);
     }
 
     public static final ItemStack ELECTRIC_FURNACE = ItemStackBuilder.rebar(Material.FURNACE, PylonKeys.ELECTRIC_FURNACE)
@@ -3661,7 +3661,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(ElectricFurnace.Item.class, ELECTRIC_FURNACE, PylonKeys.ELECTRIC_FURNACE);
-        PylonPages.ELECTRICITY.addItem(ELECTRIC_FURNACE);
+        PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_FURNACE);
     }
     // </editor-fold>
 
