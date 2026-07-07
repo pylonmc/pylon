@@ -2379,6 +2379,7 @@ item:
     lore: |-
       <arrow> Uses hot gases to produce power
       <arrow> The more hot gases piped into it, the more power it produces
+      <arrow> Different gases produce different amounts of power
      
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:gas_turbine/></yellow>
@@ -2398,11 +2399,14 @@ item:
      
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
 
   heat_exchanger:
     name: "Heat Exchanger"
     lore: |-
       <arrow> Exchanges heat between two fluids
+      <arrow> Useful in generating <fluid:pylon:steam> from <fluid:pylon:hot_exhaust>
      
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:heat_exchanger/></yellow>
@@ -2413,13 +2417,15 @@ item:
     name: "1-Gauge Wire"
     lore: |-
       <arrow> Transmits electricity
+      <arrow> <insn>Right click</insn> on an electric port to start connecting
+      <arrow> <insn>Right click</insn> on another electric port to connect the two ports
       <arrow> <attr>Max power:</attr> %max-power%
 
   capacitor_1_kj:
     name: "1 kJ Capacitor"
     lore: |-
       <arrow> Stores electricity
-      <arrow> Capacitors have a lower priority than most electric blocks, so they will only take excess power that other blocks can't use
+      <arrow> Capacitors will only take excess power that other blocks can't use
       <arrow> <attr>Capacity:</attr> %capacity%
 
   electric_grindstone:
