@@ -129,14 +129,18 @@ public class GasTurbine extends RebarBlock implements
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return WailaDisplay.of(this, player)
-                .add(Component.translatable("pylon.message.producing-power",
-                        RebarArgument.of("power", UnitFormat.WATTS.format(getMultiblockComponentOrThrow(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH).getPowerProduced())
-                                .ignoreCommonlyUnusedPrefixes()
-                                .selectPrefixAndRescale()
-                                .decimalPlaces(1)
-                        )
-                ));
+        WailaDisplay display = WailaDisplay.of(this, player);
+        ElectricityOutputHatch outputHatch = getMultiblockComponent(ElectricityOutputHatch.class, ELECTRICITY_OUTPUT_HATCH);
+        if (outputHatch != null) {
+            display.add(Component.translatable("pylon.message.producing-power",
+                    RebarArgument.of("power", UnitFormat.WATTS.format(outputHatch.getPowerProduced())
+                            .ignoreCommonlyUnusedPrefixes()
+                            .selectPrefixAndRescale()
+                            .decimalPlaces(1)
+                    )
+            ));
+        }
+        return display;
     }
 
     private static final Vector3i FLUID_INPUT_HATCH = new Vector3i(0, 0, -2);
@@ -173,7 +177,7 @@ public class GasTurbine extends RebarBlock implements
     }
 
     @Override
-    public @Nullable ItemStack getBlockTextureItem() {
+    public @NotNull ItemStack getBlockTextureItem() {
         return isFormedAndFullyLoaded() ? ItemStack.empty() : super.getBlockTextureItem();
     }
 

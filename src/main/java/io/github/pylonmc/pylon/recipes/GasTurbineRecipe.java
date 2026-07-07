@@ -54,6 +54,8 @@ public record GasTurbineRecipe(
         return List.of(output);
     }
 
+    private static final UnitFormat WATTS_PER_MILLIBUCKET = UnitFormat.WATTS.divide(UnitFormat.MILLIBUCKETS);
+
     @Override
     public @NonNull Gui display() {
         return Gui.builder()
@@ -71,7 +73,7 @@ public record GasTurbineRecipe(
                                 Component.empty(),
                                 Component.translatable(
                                         "pylon.gui.watts-per-mb",
-                                        RebarArgument.of("power", UnitFormat.WATTS_PER_MILLIBUCKET.format(powerProduction / input.getAmount()).decimalPlaces(1))
+                                        RebarArgument.of("power", WATTS_PER_MILLIBUCKET.format(powerProduction / input.getAmount()).decimalPlaces(1))
                                 )
                         )
                         .build()))
