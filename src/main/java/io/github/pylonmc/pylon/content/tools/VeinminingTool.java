@@ -27,7 +27,7 @@ public abstract class VeinminingTool extends RebarItem implements BlockBreakReba
     private static final Set<UUID> VEIN_MINING = new HashSet<>();
     private static final Set<BlockBreakEvent> IGNORED_EVENTS = new HashSet<>();
 
-    public VeinminingTool(@NotNull ItemStack stack) {
+    protected VeinminingTool(@NotNull ItemStack stack) {
         super(stack);
     }
 

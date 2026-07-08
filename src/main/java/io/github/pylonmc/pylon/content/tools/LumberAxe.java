@@ -11,7 +11,7 @@ import java.util.*;
 public class LumberAxe extends VeinminingTool {
     private final int maxVeinSize = getSettingOrThrow("max-vein-size", ConfigAdapter.INTEGER);
 
-    protected LumberAxe(@NotNull ItemStack stack) {
+    public LumberAxe(@NotNull ItemStack stack) {
         super(stack);
     }
 
