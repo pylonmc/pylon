@@ -8,15 +8,15 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -50,37 +50,41 @@ public abstract class VeinminingTool extends RebarItem implements BlockBreakReba
 
         VEIN_MINING.add(playerId);
         Set<BlockPosition> vein = new HashSet<>();
+        Location rootLocation = root.getLocation();
         vein.add(new BlockPosition(root));
-        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            tryVeinMine(player, root, root.getRelative(face), face, vein);
+        for (Vector3i offset : getVeinminingOffsets()) {
+            tryVeinMine(player, root, rootLocation, root.getRelative(offset.x, offset.y, offset.z), vein);
         }
         VEIN_MINING.remove(playerId);
     }
 
-    public void tryVeinMine(Player player, Block root, Block block, BlockFace sourceFace, Set<BlockPosition> vein) {
-        if (vein.size() >= getMaxVeinSize() || getStack().isEmpty()|| RebarUtils.isBroken(getStack())) {
+    public void tryVeinMine(Player player, Block root, Location rootLocation, Block block, Set<BlockPosition> vein) {
+        if (cannotVeinMine(player, vein)) {
             return;
         }
 
         BlockPosition position = new BlockPosition(block);
-        if (!vein.add(position) || !isInVein(root, block) || (preventRebarBlocks() && BlockStorage.isRebarBlock(block))) {
+        if (!isInVein(root, block) || (preventRebarBlocks() && BlockStorage.isRebarBlock(block)) || !vein.add(position)) {
             return;
         } else if (!player.breakBlock(block)) {
             vein.remove(position);
             return;
+        } else if (cannotVeinMine(player, vein)) {
+            return;
         }
 
-        for (BlockFace face : getWeightedFaces(root, block)) {
-            if (face != sourceFace.getOppositeFace()) {
-                tryVeinMine(player, root, block.getRelative(face), face, vein);
-            }
+        for (Vector3i offset : getWeightedOffsets(rootLocation)) {
+            tryVeinMine(player, root, rootLocation, block.getRelative(offset.x, offset.y, offset.z), vein);
         }
     }
 
-    private List<BlockFace> getWeightedFaces(Block root, Block block) {
-        List<BlockFace> faces = new ArrayList<>(Arrays.asList(RebarUtils.IMMEDIATE_FACES));
-        Location rootLocation = root.getLocation();
-        faces.sort(Comparator.comparingDouble(face -> rootLocation.distanceSquared(block.getRelative(face).getLocation())));
+    private boolean cannotVeinMine(Player player, Set<BlockPosition> vein) {
+        return vein.size() >= getMaxVeinSize() || getStack().isEmpty() || RebarUtils.hasOneDurabilityLeft(getStack()) || !getStack().equals(player.getInventory().getItemInMainHand());
+    }
+
+    private List<Vector3i> getWeightedOffsets(Location rootLocation) {
+        List<Vector3i> faces = new ArrayList<>(getVeinminingOffsets());
+        faces.sort(Comparator.comparingDouble(offset -> rootLocation.distanceSquared(rootLocation.clone().add(offset.x, offset.y, offset.z))));
         return faces;
     }
 
@@ -97,5 +101,6 @@ public abstract class VeinminingTool extends RebarItem implements BlockBreakReba
         return true;
     }
 
+    public abstract Collection<Vector3i> getVeinminingOffsets();
     public abstract int getMaxVeinSize();
 }
