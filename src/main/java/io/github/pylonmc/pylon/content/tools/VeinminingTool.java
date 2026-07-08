@@ -41,8 +41,10 @@ public abstract class VeinminingTool extends RebarItem implements BlockBreakReba
         }
 
         Block root = event.getBlock();
-        if (priority == EventPriority.LOWEST && (!canVeinmine(root) || (preventRebarBlocks() && BlockStorage.isRebarBlock(root)))) {
-            IGNORED_EVENTS.add(event);
+        if (priority == EventPriority.LOWEST) {
+            if (!canVeinmine(root) || (preventRebarBlocks() && BlockStorage.isRebarBlock(root))) {
+                IGNORED_EVENTS.add(event);
+            }
             return;
         } else if (IGNORED_EVENTS.remove(event)) {
             return;
