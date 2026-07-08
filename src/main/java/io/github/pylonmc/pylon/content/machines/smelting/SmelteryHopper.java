@@ -84,7 +84,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
         for (ItemStack item : hopper.getInventory().getContents()) {
             if (item == null || item.isEmpty()) continue;
 
-            if (tryRecipe(controller, lastMeltingRecipe, item)) {
+            if (lastMeltingRecipe != null && tryRecipe(controller, lastMeltingRecipe, item)) {
                 return;
             }
 

@@ -152,7 +152,7 @@ public class VacuumHopper extends RebarBlock implements
     @Override
     public void tick() {
         Block block = getBlock();
-        Hopper hopper = (Hopper) block.getBlockData();
+        Hopper hopper = getBlockData(Hopper.class);
         if (!hopper.isEnabled()) {
             return; // don't vacuum if powered
         }

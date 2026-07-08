@@ -71,17 +71,13 @@ public class FluidDrainer extends RebarBlock
         setFacing(context.getFacing());
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, true);
         createFluidBuffer(fluid, buffer, false, true);
-        Preconditions.checkState(getBlock().getBlockData() instanceof Directional);
-        Directional directional = (Directional) getBlock().getBlockData();
-        drainBlock = getBlock().getRelative(directional.getFacing());
+        drainBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
     }
 
     @SuppressWarnings("unused")
     public FluidDrainer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        Preconditions.checkState(getBlock().getBlockData() instanceof Directional);
-        Directional directional = (Directional) getBlock().getBlockData();
-        drainBlock = getBlock().getRelative(directional.getFacing());
+        drainBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
     }
 
     @Override

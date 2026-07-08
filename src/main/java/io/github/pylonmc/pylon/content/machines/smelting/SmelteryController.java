@@ -204,7 +204,7 @@ public final class SmelteryController extends SmelteryComponent
     // <editor-fold desc="Multiblock" defaultstate="collapsed">
     private final BlockPosition center = new BlockPosition(
             getBlock().getRelative(
-                    ((Directional) getBlock().getBlockData()).getFacing().getOppositeFace(),
+                    getBlockData(Directional.class).getFacing().getOppositeFace(),
                     2
             )
     );
