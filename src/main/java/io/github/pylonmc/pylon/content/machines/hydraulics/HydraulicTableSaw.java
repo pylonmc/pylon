@@ -186,7 +186,7 @@ public class HydraulicTableSaw extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
-        if (!stack.isSimilar(recipe.input())) {
+        if (!recipe.input().matches(stack)) {
             return false;
         }
 

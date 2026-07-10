@@ -115,6 +115,7 @@ public class PylonKeys {
 
     public static final NamespacedKey BRICK_MOLD = pylonKey("brick_mold");
     public static final NamespacedKey CONFETTI_POPPER = pylonKey("confetti_popper");
+    public static final NamespacedKey TAPE_MEASURE = pylonKey("tape_measure");
 
     public static final NamespacedKey MONSTER_JERKY = pylonKey("monster_jerky");
 

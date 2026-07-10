@@ -97,7 +97,7 @@ public final class CastingUnit extends RebarBlock implements
         castInv.addPreUpdateHandler(event -> {
             if (event.getNewItem() == null) return;
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-                if (recipe.mold().isSimilar(event.getNewItem())) {
+                if (recipe.mold().matches(event.getNewItem())) {
                     return;
                 }
             }
@@ -195,9 +195,9 @@ public final class CastingUnit extends RebarBlock implements
         if (castItem == null) return 0;
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.mold())) {
+            if (recipe.isInput(fluid) && recipe.mold().matches(castItem)) {
                 if (outputInv.simulateSingleAdd(recipe.result()) > 0) return 0;
-                return recipe.input().amountMillibuckets() - fluidAmount;
+                return recipe.input().getAmount() - fluidAmount;
             }
         }
 
@@ -212,10 +212,10 @@ public final class CastingUnit extends RebarBlock implements
         if (castItem == null) throw new AssertionError("Should not happen");
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && castItem.isSimilar(recipe.mold())) {
+            if (recipe.isInput(fluid) && recipe.mold().matches(castItem)) {
                 fluidType = fluid;
                 fluidAmount += amount;
-                if (Math.abs(fluidAmount - recipe.input().amountMillibuckets()) < 1e-6) {
+                if (Math.abs(fluidAmount - recipe.input().getAmount()) < 1e-6) {
                     fluidType = null;
                     fluidAmount = 0;
                     outputInv.addItem(new MachineUpdateReason(), recipe.result());
