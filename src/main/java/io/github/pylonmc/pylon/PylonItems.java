@@ -8,6 +8,7 @@ import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
 import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
+import io.github.pylonmc.pylon.content.building.Launchpad;
 import io.github.pylonmc.pylon.content.combat.BeheadingSword;
 import io.github.pylonmc.pylon.content.combat.IceArrow;
 import io.github.pylonmc.pylon.content.combat.ReactivatedWitherSkull;
@@ -3341,6 +3342,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SLEEPING_BAG, PylonKeys.SLEEPING_BAG);
         PylonPages.MISCELLANEOUS.addItem(SLEEPING_BAG);
+    }
+
+    public static final ItemStack LAUNCHPAD = ItemStackBuilder.rebar(Material.SLIME_BLOCK, PylonKeys.LAUNCHPAD)
+            .build();
+    static {
+        RebarItem.register(Launchpad.Item.class, LAUNCHPAD, PylonKeys.LAUNCHPAD);
+        PylonPages.BUILDING.addItem(LAUNCHPAD);
     }
 
     static {

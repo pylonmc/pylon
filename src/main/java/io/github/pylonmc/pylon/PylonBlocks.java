@@ -199,5 +199,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
+        RebarBlock.register(PylonKeys.LAUNCHPAD, Material.SLIME_BLOCK, Launchpad.class);
     }
 }

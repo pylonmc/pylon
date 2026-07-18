@@ -2472,6 +2472,12 @@ item:
       <arrow> <insn>Right click again</insn> to set the end point
       <arrow> <insn>Left click</insn> to clear
 
+  launchpad:
+    name: "Launchpad"
+    lore: |-
+      <arrow> Launches the player upwards and in their direction of travel
+      <arrow> <attr>Launch force:</attr> %launch-force%
+
 fluid:
   tag:
     melting-point: "Melting point: %temperature%"
