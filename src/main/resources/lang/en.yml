@@ -2912,3 +2912,6 @@ advancements:
   random_advancement:
     title: "<blue>Random advancement"
     description: "dilly dally doo"
+  root_advancement:
+    title: "Pylon"
+    description: "Pylon advancements"
