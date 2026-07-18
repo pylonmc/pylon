@@ -1,6 +1,19 @@
+pylon:root_advancement:
+  display-info:
+    icon:
+      item: pylon:bronze_anvil
+      count: 1
+    show-toast: false
+    announce-to-chat: false
+    hidden: false
+    background: minecraft:textures/gui/advancements/backgrounds/adventure.png
+  #criteria:
+  #  - criteria1:
+  #      key: pylon:root_advancement_criterion
+  #      type: rebar:unlock_on_join
 pylon:random_advancement:
   # The parent of this advancement in the tree
-  parent: minecraft:adventure/root
+  parent: pylon:root_advancement
   display-info:
     icon:
       # Namespaced key pointing to the item to use for the icon of the advancement (can be either vanilla or rebar item)
