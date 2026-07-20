@@ -10,23 +10,33 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
+import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.registry.keys.SoundEventKeys;
+import kotlin.Pair;
+import net.kyori.adventure.sound.Sound;
+
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -44,6 +54,7 @@ import java.util.List;
 
 public final class MixingPot extends RebarBlock implements
         DirectionalRebarBlock,
+        TickingRebarBlock,
         InteractRebarBlockHandler,
         FluidTankWithDisplayEntity,
         CauldronRebarBlockHandler {
@@ -67,6 +78,7 @@ public final class MixingPot extends RebarBlock implements
         super(block, context);
         createFluidDisplay();
         setFacing(context.getFacing());
+        setTickInterval(1);
         setCapacity(1000.0);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
@@ -123,6 +135,37 @@ public final class MixingPot extends RebarBlock implements
 
         if (priority == EventPriority.MONITOR) {
             tryDoRecipe();
+        }
+    }
+
+    @Override
+    public void tick() {
+        if (getFluidType() == null) {
+            if (getBlock().getType() != Material.CAULDRON) {
+                getBlock().setType(Material.CAULDRON);
+            }
+
+            return;
+        }
+        for (LivingEntity entity : getBlock().getLocation().toCenterLocation().getNearbyLivingEntities(0.4)) {
+            if (getFluidType().getTag(FluidTemperature.class) == FluidTemperature.HOT) {
+                entity.setFireTicks(300);
+                entity.damage(4.0F, DamageSource.builder(DamageType.LAVA).build());
+
+                new RandomizedSound(List.of(SoundEventKeys.ENTITY_GENERIC_BURN), //play sound like vanilla cauldron
+                        Sound.Source.NEUTRAL,
+                        new Pair<>(0.4, 0.4),
+                        new Pair<>(2.0, 2.4))
+                    .playAt(entity);
+
+            } else if (getFluidType().getTag(FluidTemperature.class) == FluidTemperature.COLD) {
+                int freezeTick = Math.min(entity.getFreezeTicks() + getTickInterval() + 2, entity.getMaxFreezeTicks());
+                entity.setFreezeTicks(freezeTick);
+
+                if (freezeTick == entity.getMaxFreezeTicks() && entity.getTicksLived() % 40 == 0) {
+                    entity.damage(1.0F, DamageSource.builder(DamageType.FREEZE).build());
+                }
+            }
         }
     }
 
