@@ -140,10 +140,6 @@ public final class MixingPot extends RebarBlock implements
 
     @Override
     public void tick() {
-        if (getFluidType() == null) {
-            if (getBlock().getType() != Material.CAULDRON) {
-                getBlock().setType(Material.CAULDRON);
-            }
 
             return;
         }
