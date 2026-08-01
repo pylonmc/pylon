@@ -140,9 +140,6 @@ public final class MixingPot extends RebarBlock implements
 
     @Override
     public void tick() {
-
-            return;
-        }
         for (LivingEntity entity : getBlock().getLocation().toCenterLocation().getNearbyLivingEntities(0.4)) {
             if (getFluidType().getTag(FluidTemperature.class) == FluidTemperature.HOT) {
                 entity.setFireTicks(300);
