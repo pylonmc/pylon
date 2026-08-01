@@ -1,31 +1,18 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.content.tools.base.Rune;
-import io.github.pylonmc.rebar.block.BlockStorage;
-import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.event.RebarBlockBreakEvent;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.ShulkerBox;
-import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDropItemEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -87,9 +74,8 @@ public class SoulboundRune extends Rune {
         return itemStack.getPersistentDataContainer().getOrDefault(SOULBOUND_KEY, RebarSerializers.BOOLEAN, false);
     }
 
-    public static class SoulboundRuneListener implements Listener {
-
-        @EventHandler
+   public static class SoulboundRuneListener extends BlockRuneListener {
+        @EventHandler(ignoreCancelled = true)
         public void onPlayerDeath(PlayerDeathEvent event) { // exception being generated
             Iterator<ItemStack> drops = event.getDrops().iterator();
             while (drops.hasNext()) {
@@ -101,90 +87,19 @@ public class SoulboundRune extends Rune {
             }
         }
         
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockPlace(BlockPlaceEvent event) { // use chunk pdc
-            ItemStack itemStack = event.getItemInHand();
-            if (itemStack == null || itemStack.isEmpty()) {
-                return;
-            }
-
-            Block block = event.getBlock();
-            if (hasRuneApplied(itemStack)) {
-                block.getChunk().getPersistentDataContainer()
-                    .set(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK, itemStack.asOne());
-            }
+        @Override
+        protected @NotNull String getKeyPrefix() {
+            return "soulbound";
         }
 
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockBreak(@NotNull BlockBreakEvent event) { //for vanilla shulkerbox
-            Block block = event.getBlock();
-
-            if (BlockStorage.isRebarBlock(block) || !block.getChunk().getPersistentDataContainer().has(getChunkPDC(block.getLocation()))) {
-                return;
-            }
-            ItemStack pdcItemStack = block.getChunk().getPersistentDataContainer()
-                    .get(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK);
-
-            if (block.getState() instanceof ShulkerBox box) {
-                event.setDropItems(false);
-                BlockStateMeta meta = (BlockStateMeta) pdcItemStack.getItemMeta();
-
-                meta.setBlockState(box);
-                pdcItemStack.setItemMeta(meta);
-
-                block.getWorld().dropItemNaturally(block.getLocation(), pdcItemStack);
-
-                block.getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getLocation()));
-            }
+        @Override
+        protected boolean hasRuneApplied(@NotNull ItemStack stack) {
+            return SoulboundRune.hasRuneApplied(stack);
         }
 
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onBlockDropItem(@NotNull BlockDropItemEvent event) { // for vanilla block
-            Block block = event.getBlock();
-
-            if (!block.getChunk().getPersistentDataContainer().has(getChunkPDC(block.getLocation()))) {
-                return;
-            }
-
-            ItemStack pdcItemStack = block.getChunk().getPersistentDataContainer()
-                    .get(getChunkPDC(block.getLocation()), RebarSerializers.ITEM_STACK);
-            for (Item item : event.getItems()) {
-                ItemStack itemStack = item.getItemStack();
-                if (pdcItemStack.getType() != itemStack.getType()) {
-                    continue;
-                }
-                event.getItems().remove(item);
-                block.getWorld().dropItemNaturally(block.getLocation(), pdcItemStack);
-                break;
-            }
-
-            block.getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getLocation()));
-        }
-
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onRebarBlockBreak(@NotNull RebarBlockBreakEvent event) { // for rebar block
-            RebarBlock block = event.getRebarBlock();
-            if (!block.getBlock().getChunk().getPersistentDataContainer().has(getChunkPDC(block.getBlock().getLocation()))) {
-                return;
-            }
-
-            for (ItemStack itemStack : event.getDrops()) {
-                RebarItemSchema dropSchema = RebarItemSchema.fromStack(itemStack);
-                if (dropSchema == null || !block.getKey().equals(dropSchema.getRebarBlockKey())) {
-                    continue;
-                }
-
-                ItemStack soulboundStack = applyRune(itemStack, 1);
-                itemStack.subtract();
-                event.getDrops().add(soulboundStack);
-                break;
-            }
-            block.getBlock().getChunk().getPersistentDataContainer().remove(getChunkPDC(block.getBlock().getLocation()));
-        }
-
-        public NamespacedKey getChunkPDC(Location location) {
-            return pylonKey(String.format("%s_%d_%d_%d",
-                "soulbound", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+        @Override
+        protected @NotNull ItemStack applyRune(@NotNull ItemStack stack, int amount) {
+            return SoulboundRune.applyRune(stack, amount);
         }
     }
 }
