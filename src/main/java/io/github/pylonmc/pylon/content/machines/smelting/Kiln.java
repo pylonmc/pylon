@@ -189,7 +189,7 @@ public class Kiln extends RebarBlock implements
         temperatureItem.notifyWindows();
 
         // Visual stuff
-        editBlockData(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
 
         int level = Math.clamp((int) Math.round(15 * temperature / maxTemperature), 0, 15);
         Block light = getLight();

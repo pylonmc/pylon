@@ -69,13 +69,13 @@ public class FluidPlacer extends RebarBlock implements FluidBufferRebarBlock, Ti
         setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.SOUTH, context, true);
         createFluidBuffer(fluid, buffer, true, false);
-        placeBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
+        placeBlock = getBlock().getRelative(getBlockDataAs(Directional.class).getFacing());
     }
 
     @SuppressWarnings("unused")
     public FluidPlacer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        placeBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
+        placeBlock = getBlock().getRelative(getBlockDataAs(Directional.class).getFacing());
     }
 
     @Override

@@ -124,7 +124,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
             }
 
             startProcess(itemType.getBurnDuration() / 2);
-            editBlockData(Furnace.class, furnace -> furnace.setLit(true));
+            editBlockDataAs(Furnace.class, furnace -> furnace.setLit(true));
             break;
         }
     }
@@ -132,7 +132,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public void onProcessFinished() {
         progressItem.setItem(notBurningProgressItem);
-        editBlockData(Furnace.class, furnace -> furnace.setLit(false));
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(false));
     }
 
     @Override

@@ -71,13 +71,13 @@ public class FluidDrainer extends RebarBlock
         setFacing(context.getFacing());
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, true);
         createFluidBuffer(fluid, buffer, false, true);
-        drainBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
+        drainBlock = getBlock().getRelative(getBlockDataAs(Directional.class).getFacing());
     }
 
     @SuppressWarnings("unused")
     public FluidDrainer(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        drainBlock = getBlock().getRelative(getBlockData(Directional.class).getFacing());
+        drainBlock = getBlock().getRelative(getBlockDataAs(Directional.class).getFacing());
     }
 
     @Override

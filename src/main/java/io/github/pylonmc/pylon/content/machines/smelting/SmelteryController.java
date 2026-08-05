@@ -204,7 +204,7 @@ public final class SmelteryController extends SmelteryComponent
     // <editor-fold desc="Multiblock" defaultstate="collapsed">
     private final BlockPosition center = new BlockPosition(
             getBlock().getRelative(
-                    getBlockData(Directional.class).getFacing().getOppositeFace(),
+                    getBlockDataAs(Directional.class).getFacing().getOppositeFace(),
                     2
             )
     );
@@ -594,7 +594,7 @@ public final class SmelteryController extends SmelteryComponent
 
     public void setRunning(boolean running) {
         this.running = running;
-        editBlockData(Furnace.class, furnace -> furnace.setLit(running));
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(running));
     }
 
     @Override

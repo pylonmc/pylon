@@ -74,7 +74,7 @@ public final class BronzeAnvil extends RebarBlock implements
     @SuppressWarnings("unused")
     public BronzeAnvil(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        BlockFace orientation = getBlockData(Directional.class).getFacing();
+        BlockFace orientation = getBlockDataAs(Directional.class).getFacing();
         addEntity("item", new ItemDisplayBuilder()
                 .transformation(new Matrix4f(BASE_TRANSFORM)
                         .rotateLocalY(getItemRotation(getBlockFace())))
@@ -268,7 +268,7 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     private BlockFace getBlockFace() {
-        return getBlockData(Directional.class).getFacing();
+        return getBlockDataAs(Directional.class).getFacing();
     }
 
     private static float getItemRotation(BlockFace face) {
