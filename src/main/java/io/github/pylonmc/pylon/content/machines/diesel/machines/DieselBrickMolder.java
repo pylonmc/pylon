@@ -207,7 +207,7 @@ public class DieselBrickMolder extends RebarBlock implements
     }
 
     private boolean tryStartRecipe(MoldingRecipe recipe, ItemStack stack) {
-        if (!recipe.input().isSimilar(stack) || !outputInventory.canHold(recipe.result())) {
+        if (!recipe.input().matches(stack) || !outputInventory.canHold(recipe.result())) {
             return false;
         }
 
