@@ -2470,6 +2470,60 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  small_boiler:
+    name: "Small Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_boiler:
+    name: "Large Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  small_fluid_boiler:
+    name: "Small Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_fluid_boiler:
+    name: "Large Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  firebox:
+    name: "Firebox"
+
+  fluid_firebox:
+    name: "Fluid Firebox"
+
+  copper_pipe_assembly:
+    name: "Copper Pipe Assembly"
+
+  large_copper_pipe_assembly:
+    name: "Large Copper Pipe Assembly"
+
   tape_measure:
     name: "Tape Measure"
     lore: |-

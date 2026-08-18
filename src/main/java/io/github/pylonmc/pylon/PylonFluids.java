@@ -16,6 +16,8 @@ import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
+import org.jetbrains.annotations.NotNull;
+
 
 public final class PylonFluids {
 
