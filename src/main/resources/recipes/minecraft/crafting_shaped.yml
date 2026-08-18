@@ -3147,7 +3147,7 @@ pylon:oil_sample_drill:
     D: pylon:bronze_drill_bit
     B: minecraft:bucket
   result: pylon:oil_sample_drill
-  category: builing
+  category: building
 
 pylon:hydraulic_fracturing_drill:
   pattern:
@@ -3161,7 +3161,7 @@ pylon:hydraulic_fracturing_drill:
     D: pylon:steel_drill_bit
     A: pylon:axle
   result: pylon:hydraulic_fracturing_drill
-  category: builing
+  category: building
 
 pylon:hydraulic_fracture_seal:
   pattern:
@@ -3173,7 +3173,7 @@ pylon:hydraulic_fracture_seal:
     W: pylon:weighted_shaft
     T: minecraft:tnt
   result: pylon:hydraulic_fracture_seal
-  category: builing
+  category: building
 
 pylon:hydraulic_pumpjack:
   pattern:
@@ -3187,7 +3187,7 @@ pylon:hydraulic_pumpjack:
     C: pylon:steel_crankshaft
     P: pylon:fluid_pipe_bronze
   result: pylon:hydraulic_pumpjack
-  category: builing
+  category: building
 
 pylon:smokestack:
   pattern:
