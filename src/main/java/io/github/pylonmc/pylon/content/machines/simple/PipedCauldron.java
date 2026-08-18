@@ -148,6 +148,19 @@ public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandl
     }
 
     @Override
+    public void setFluidType(@Nullable RebarFluid fluid) {
+        FluidTankRebarBlock.super.setFluidType(fluid);
+        updateCauldronLevel();
+    }
+
+    @Override
+    public boolean setFluid(double amount) {
+        boolean result = FluidTankRebarBlock.super.setFluid(amount);
+        updateCauldronLevel();
+        return result;
+    }
+
+    @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return WailaDisplay.of(this, player).add(ProgressBar.fluidContentsWithName(getFluidType(), getFluidCapacity(), getFluidAmount()));
     }
