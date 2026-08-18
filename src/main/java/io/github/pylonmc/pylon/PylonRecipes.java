@@ -1,11 +1,15 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
+import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.recipe.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
@@ -165,6 +169,35 @@ public class PylonRecipes {
 
         ItemChoice input = ItemChoice.fuzzy(ItemTypeWrapper.of(Material.SUGAR_CANE));
         FluidOrItem output = FluidOrItem.of(PylonFluids.ETHANOL, ethanolPerSugarcane);
+
+        new SingleRecipe(
+                key,
+                input,
+                output,
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# i # # x # # o #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('i', ItemButton.of(ItemStack.of(Material.SUGAR_CANE)))
+                        .addIngredient('x', ItemButton.of(PylonItems.FERMENTER))
+                        .addIngredient('o', FluidButton.of(ethanolPerSugarcane, PylonFluids.ETHANOL))
+                        .build()
+        ).register();
+    }
+
+    private static void initHydraulicFracture() {
+        NamespacedKey key = PylonKeys.HYDRAULIC_FRACTURE;
+
+        var input = List.of(
+                RecipeInput.of(PylonFluids.HYDRAULIC_FLUID, Rebar)
+        );
+
+        FluidOrItem output = FluidOrItem.of(PylonItems.HYDRAULIC_FRACTURE);
 
         new SingleRecipe(
                 key,
