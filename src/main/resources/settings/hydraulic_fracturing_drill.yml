@@ -1,0 +1,5 @@
+tick-interval: 5
+ticks-to-create-fracture: 7200
+steam-per-fracture: 180000
+hydraulic-fluid-per-fracture: 14400
+machine-ticks-per-sand: 10

@@ -343,6 +343,8 @@ public class PylonKeys {
 
     public static final NamespacedKey BIOREFINERY = pylonKey("biorefinery");
     public static final NamespacedKey BRONZE_FOUNDATION = pylonKey("bronze_foundation");
+    public static final NamespacedKey STEEL_FOUNDATION = pylonKey("steel_foundation");
+    public static final NamespacedKey FLARE_STACK_STRUCTURE = pylonKey("flare_stack_structure");
     public static final NamespacedKey BRONZE_GRATING = pylonKey("bronze_grating");
     public static final NamespacedKey FIREBOX = pylonKey("firebox");
     public static final NamespacedKey FLUID_FIREBOX = pylonKey("fluid_firebox");
@@ -437,6 +439,11 @@ public class PylonKeys {
     public static final NamespacedKey LISELETTE_ANODE = pylonKey("liselette_anode");
     public static final NamespacedKey LISELETTE_COLLECTOR = pylonKey("liselette_collector");
 
+    public static final NamespacedKey HYDRAULIC_FRACTURE_CAP = pylonKey("hydraulic_fracture_cap");
+    public static final NamespacedKey INJECTION_PIPE = pylonKey("injection_pipe");
+    public static final NamespacedKey HYDRAULIC_FRACTURE = pylonKey("hydraulic_fracture");
+    public static final NamespacedKey HYDRAULIC_FRACTURE_SEAL = pylonKey("hydraulic_fracture_seal");
+
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
@@ -495,4 +502,11 @@ public class PylonKeys {
     public static final NamespacedKey LIQUID_XP_BOTTLE_ULTRA = pylonKey("liquid_xp_bottle_ultra");
 
     public static final NamespacedKey SLEEPING_BAG = pylonKey("sleeping_bag");
+
+    public static final NamespacedKey OIL_SAMPLE_DRILL = pylonKey("oil_sample_drill");
+    public static final NamespacedKey HYDRAULIC_FRACTURING_DRILL = pylonKey("hydraulic_fracturing_drill");
+    public static final NamespacedKey HYDRAULIC_PUMPJACK = pylonKey("hydraulic_pumpjack");
+
+    public static final NamespacedKey SMOKESTACK = pylonKey("smokestack");
+    public static final NamespacedKey FLARE_STACK = pylonKey("flare_stack");
 }

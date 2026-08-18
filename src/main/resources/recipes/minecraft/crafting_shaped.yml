@@ -3049,3 +3049,174 @@ pylon:tape_measure:
     N: minecraft:iron_nugget
   result: pylon:tape_measure
   category: equipment
+
+pylon:large_copper_pipe_assembly:
+  pattern:
+    - " C "
+    - "C C"
+    - " C "
+  key:
+    C: pylon:copper_pipe_assembly
+  result: pylon:large_copper_pipe_assembly
+  category: misc
+
+pylon:firebox:
+  pattern:
+    - "RBR"
+    - "B B"
+    - "RRR"
+  key:
+    B: pylon:bronze_sheet
+    R: pylon:refractory_brick
+  result: pylon:firebox
+  category: building
+
+pylon:fluid_firebox:
+  pattern:
+    - "RBR"
+    - "V B"
+    - "RRR"
+  key:
+    B: pylon:bronze_sheet
+    V: pylon:backflow_valve
+    R: pylon:refractory_bricks
+  result: pylon:fluid_firebox
+  category: building
+
+pylon:small_boiler:
+  pattern:
+    - "RCR"
+    - "BFB"
+    - "RBR"
+  key:
+    B: pylon:bronze_sheet
+    R: minecraft:bricks
+    F: pylon:firebox
+    C: pylon:copper_pipe_assembly
+  result: pylon:large_boiler
+  category: building
+
+pylon:large_boiler:
+  pattern:
+    - "RCR"
+    - "FBF"
+    - "RBR"
+  key:
+    B: pylon:bronze_block
+    R: minecraft:bricks
+    F: pylon:firebox
+    C: pylon:large_copper_pipe_assembly
+  result: pylon:large_boiler
+  category: building
+
+pylon:small_fluid_boiler:
+  pattern:
+    - "RCR"
+    - "BFB"
+    - "RBR"
+  key:
+    B: pylon:bronze_sheet
+    R: minecraft:bricks
+    F: pylon:fluid_firebox
+    C: pylon:copper_pipe_assembly
+  result: pylon:small_fluid_boiler
+  category: building
+
+pylon:large_fluid_boiler:
+  pattern:
+    - "RCR"
+    - "FBF"
+    - "RBR"
+  key:
+    B: pylon:bronze_block
+    R: minecraft:bricks
+    F: pylon:fluid_firebox
+    C: pylon:large_copper_pipe_assembly
+  result: pylon:large_fluid_boiler
+  category: building
+
+pylon:oil_sample_drill:
+  pattern:
+    - "SBS"
+    - "RFR"
+    - "SDS"
+  key:
+    S: pylon:steel_sheet
+    R: pylon:bronze_sheet
+    F: minecraft:furnace
+    D: pylon:bronze_drill_bit
+    B: minecraft:bucket
+  result: pylon:oil_sample_drill
+  category: building
+
+pylon:hydraulic_fracturing_drill:
+  pattern:
+    - "SAS"
+    - "PAK"
+    - "SDS"
+  key:
+    S: pylon:steel_sheet
+    K: pylon:kinetic_control_mechanism
+    P: pylon:fluid_pipe_bronze
+    D: pylon:steel_drill_bit
+    A: pylon:axle
+  result: pylon:hydraulic_fracturing_drill
+  category: building
+
+pylon:hydraulic_fracture_seal:
+  pattern:
+    - " C "
+    - "CTC"
+    - " W "
+  key:
+    C: pylon:copper_sheet
+    W: pylon:weighted_shaft
+    T: minecraft:tnt
+  result: pylon:hydraulic_fracture_seal
+  category: building
+
+pylon:hydraulic_pumpjack:
+  pattern:
+    - "SBS"
+    - "KCP"
+    - "SSS"
+  key:
+    S: pylon:steel_sheet
+    B: minecraft:bucket
+    K: pylon:kinetic_control_mechanism
+    C: pylon:steel_crankshaft
+    P: pylon:fluid_pipe_bronze
+  result: pylon:hydraulic_pumpjack
+  category: building
+
+pylon:smokestack:
+  pattern:
+    - "BSB"
+    - "BBB"
+  key:
+    S: pylon:smokestack_ring
+    B: minecraft:brick
+  result: pylon:smokestack
+  category: building
+
+pylon:flare_stack:
+  pattern:
+    - "BSB"
+    - "BBB"
+  key:
+    S: pylon:flare_stack_structure
+    B: minecraft:nether_brick
+  result: pylon:flare_stack
+  category: building
+
+pylon:flare_stack_structure:
+  pattern:
+    - "B B"
+    - "I I"
+    - "B B"
+  key:
+    I: pylon:bronze_ingot
+    B: minecraft:nether_brick
+  result:
+    pylon:flare_stack_structure: 2
+  category: building

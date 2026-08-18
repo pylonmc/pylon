@@ -16,6 +16,11 @@ import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicPumpjack;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracture;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFractureSeal;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.OilSampleDrill;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.*;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
@@ -201,10 +206,22 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT, Material.END_ROD, RebarBlock.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
         RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
+        RebarBlock.register(PylonKeys.OIL_SAMPLE_DRILL, Material.CHISELED_DEEPSLATE, OilSampleDrill.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURING_DRILL, Material.NETHERITE_BLOCK, HydraulicFracturingDrill.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_PUMPJACK, Material.POLISHED_TUFF, HydraulicPumpjack.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_CAP, Material.POLISHED_ANDESITE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.INJECTION_PIPE, Material.IRON_CHAIN, RebarBlock.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE, Material.LIGHT_BLUE_CONCRETE_POWDER, HydraulicFracture.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURE_SEAL, Material.TNT, HydraulicFractureSeal.class);
+        RebarBlock.register(PylonKeys.HYDRAULIC_MOTOR, Material.PISTON, RebarBlock.class);
+        RebarBlock.register(PylonKeys.STEEL_FOUNDATION, Material.GRAY_CONCRETE, RebarBlock.class);
+        RebarBlock.register(PylonKeys.FLARE_STACK_STRUCTURE, Material.NETHER_BRICK_FENCE, RebarBlock.class);
         RebarBlock.register(PylonKeys.SMALL_BOILER, Material.BRICKS, SmallBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_BOILER, Material.BRICK_STAIRS, LargeBoiler.class);
         RebarBlock.register(PylonKeys.SMALL_FLUID_BOILER, Material.BRICKS, SmallFluidBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_FLUID_BOILER, Material.BRICK_STAIRS, LargeFluidBoiler.class);
+        RebarBlock.register(PylonKeys.SMOKESTACK, Material.BRICKS, Smokestack.class);
+        RebarBlock.register(PylonKeys.FLARE_STACK, Material.NETHER_BRICKS, FlareStack.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
     }
 }

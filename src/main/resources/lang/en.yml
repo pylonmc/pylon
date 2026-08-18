@@ -1167,6 +1167,7 @@ item:
       <arrow> <attr>Purification speed:</attr> %purification_speed%
       <arrow> <attr>Purification efficiency:</attr> %purification_efficiency%
       <arrow> <attr>Buffer:</attr> %buffer%
+      <arrow> <attr>Fuel burn rate:</attr> %fuel-burn-rate%
       
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:burner_hydraulic_purifier/></yellow>
@@ -1709,6 +1710,12 @@ item:
 
   distillation_tower_ring:
     name: "Distillation Tower Ring"
+
+  smokestack:
+    name: "Smokestack"
+    lore: |-
+      <arrow> Releases excess <#b0abce>gases</#b0abce>
+      <arrow> <attr>Gas per second:</attr> %gas-per-second%
 
   smokestack_ring:
     name: "Smokestack Ring"
@@ -2417,7 +2424,6 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:experience_fountain_spout/></yellow>
 
-
   experience_fountain_spout:
     name: "Experience Fountain Spout"
 
@@ -2463,6 +2469,92 @@ item:
       <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
+
+  tape_measure:
+    name: "Tape Measure"
+    lore: |-
+      <arrow> Measures the distance between two points
+      <arrow> <insn>Right click</insn> to start measuring
+      <arrow> <insn>Right click again</insn> to set the end point
+      <arrow> <insn>Left click</insn> to clear
+
+  oil_sample_drill:
+    name: "Oil Sample Drill"
+    lore: |-
+      <arrow> Samples the maximum oil yield at the block where it's built
+      <arrow> Requires fuel to operate
+      <arrow> Gives a reading of <#8f2121>none<gray>, <#e06100>low<gray>, <#efae15>medium<gray>, or <#5ea918>high<gray>
+      <arrow> <attr>Time to sample:</attr> %sample-time%
+      <arrow> <attr>Fuel burn rate:</attr> %fuel-burn-rate%
+
+  hydraulic_fracturing_drill:
+    name: "Hydraulic Fracturing Drill"
+    lore: |-
+      <arrow> Uses steam, hydraulic fluid, and sand to create a hydraulic fracture from which oil can be pumped
+      <arrow> The created fracture has a yield between zero and the maximum yield (which you can find out with a <white><item:pylon:oil_sample_drill/></white>)
+      <arrow> The fracture will be created in place of the <item:pylon:hydraulic_fracture_cap/>
+      <arrow> <attr>Time to create hydraulic fracture:</attr> %time-to-create-fracture%
+      <arrow> <attr>Steam per fracture:</attr> %steam-per-fracture%
+      <arrow> <attr>Hydraulic fluid per fracture:</attr> %hydraulic-fluid-per-fracture%
+      <arrow> <attr>Sand per fracture:</attr> %sand-per-fracture%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:steel_foundation/></yellow>
+      <diamond> 1x <yellow><item:pylon:reinforced_glass_casing/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_fracture_cap/></yellow>
+      <diamond> 2x <yellow><item:pylon:flare_stack_structure/></yellow>
+      <diamond> 5x <yellow><item:pylon:injection_pipe/></yellow>
+      <diamond> 9x <yellow><item:pylon:reinforced_plating/></yellow>
+      <diamond> 13x <yellow><item:pylon:steel_support_beam/></yellow>
+
+  hydraulic_fracture_seal:
+    name: "Hydraulic Fracture Seal"
+    lore: |-
+      <arrow> Place on top of a hydraulic fracture and fill with <white>%gravel% gravel</white> to destroy the fracture
+      <arrow> <red>Fracture sealing creates a small explosion</red>
+
+  hydraulic_fracture_cap:
+    name: "Hydraulic Fracture Cap"
+
+  injection_pipe:
+    name: "Injection Pipe"
+
+  hydraulic_fracture:
+    name: "<#60a7d6>Hydraulic Fracture"
+
+  hydraulic_pumpjack:
+    name: "Hydraulic Pumpjack"
+    lore: |-
+      <arrow> Pumps oil from a <item:pylon:hydraulic_fracture/>
+      <arrow> Requires hydraulic fluid to operate
+      <arrow> Gradually reduces the yield of the fracture
+      <arrow> <attr>Max oil per second:</attr> %max-oil-per-second%
+      <arrow> <attr>Hydraulic fluid per second:</attr> %hydraulic-fluid-per-second%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_fracture/></yellow>
+      <diamond> 1x <yellow><item:pylon:reinforced_plating/></yellow>
+      <diamond> 1x <yellow><item:pylon:hydraulic_motor/></yellow>
+      <diamond> 2x <yellow><item:pylon:reinforced_glass_casing/></yellow>
+      <diamond> 2x <yellow><item:pylon:flare_stack_structure/></yellow>
+      <diamond> 7x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 11x <yellow><item:pylon:steel_foundation/></yellow>
+
+  steel_foundation:
+    name: "Steel Foundation"
+
+  flare_stack:
+    name: "Flare Stack"
+    lore: |-
+      <arrow> Burns excess <#ff6702>flammable</#ff6702> fluids
+      <arrow> <attr>Fluid per second:</attr> %fluid-per-second%
+
+  flare_stack_structure:
+    name: "Flare Stack Structure"
 
   small_boiler:
     name: "Small Boiler"
@@ -2517,14 +2609,6 @@ item:
 
   large_copper_pipe_assembly:
     name: "Large Copper Pipe Assembly"
-    
-  tape_measure:
-    name: "Tape Measure"
-    lore: |-
-      <arrow> Measures the distance between two points
-      <arrow> <insn>Right click</insn> to start measuring
-      <arrow> <insn>Right click again</insn> to set the end point
-      <arrow> <insn>Left click</insn> to clear
 
 fluid:
   tag:
@@ -2533,12 +2617,13 @@ fluid:
     flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
   lava: "Lava"
+  steam: "Steam"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
-  steam: "Steam"
+  oil: "Oil"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
@@ -2632,6 +2717,7 @@ research:
   cargo_3: "<#e89888>Cargo III"
   tea_brewing: "<#cc9b6e>Tea brewing"
   advanced_tea_brewing: "<#cc9b6e>Advanced tea brewing"
+  oil_drilling: "<#404040>Oil drilling"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   diesel_booster: "<#e8c888>Diesel booster"
@@ -2674,6 +2760,7 @@ guide:
     machines_hydraulic_purification: "<white>Hydraulic Purification"
     machines_cargo: "<white>Cargo"
     machines_boilers: "<white>Boilers"
+    machines_petrochemicals: "<white>Petrochemicals"
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
@@ -2826,6 +2913,15 @@ message:
     empty: "<red>The cannon is out of hydraulic fluid"
     full: "<red>The cannon is full with dirty hydraulic fluid"
     no-ammo: "<red>The cannon is out of ammunition"
+  pumpjack:
+    no-oil: "<red>No oil"
+  oil-sample-drill:
+    sampling: "<green>Sampling"
+    no-fuel: "<red>No fuel"
+    none: "<#8f2121>None"
+    low: "<#e06100>Low"
+    medium: "<#efae15>Medium"
+    high: "<#5ea918>High"
 
 gui:
   fluid-selector-title: "Select Fluid"

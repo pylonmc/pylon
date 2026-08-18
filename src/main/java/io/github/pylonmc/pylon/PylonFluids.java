@@ -45,6 +45,15 @@ public final class PylonFluids {
         IngredientCalculator.addBaseIngredient(LAVA);
     }
 
+    public static final RebarFluid STEAM = new RebarFluid(
+            pylonKey("steam"),
+            TextColor.fromHexString("#ffffff"),
+            Material.WHITE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    static {
+        STEAM.register();
+    }
+
     public static final RebarFluid PLANT_OIL = new RebarFluid(
             pylonKey("plant_oil"),
             TextColor.fromHexString("#c4b352"),
@@ -92,13 +101,13 @@ public final class PylonFluids {
         RebarGuide.hideFluid(SUGARCANE.getKey());
     }
 
-    public static final RebarFluid STEAM = new RebarFluid(
-            pylonKey("steam"),
-            TextColor.fromHexString("#ffffff"),
-            Material.WHITE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    public static final RebarFluid OIL = new RebarFluid(
+            pylonKey("oil"),
+            TextColor.fromHexString("#404040"),
+            Material.BLACK_CONCRETE
+    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(160));
     static {
-        STEAM.register();
+        OIL.register();
     }
 
     public static final RebarFluid ETHANOL = new RebarFluid(

@@ -23,6 +23,10 @@ import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFractureSeal;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicPumpjack;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.OilSampleDrill;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
@@ -740,7 +744,7 @@ public final class PylonItems {
     public static final ItemStack HYDRAULIC_MOTOR = ItemStackBuilder.rebar(Material.PISTON, PylonKeys.HYDRAULIC_MOTOR)
             .build();
     static {
-        RebarItem.register(RebarItem.class, HYDRAULIC_MOTOR);
+        RebarItem.register(RebarItem.class, HYDRAULIC_MOTOR, PylonKeys.HYDRAULIC_MOTOR);
         PylonPages.COMPONENTS.addItem(HYDRAULIC_MOTOR);
     }
 
@@ -976,6 +980,35 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, LISELETTE_COLLECTOR, PylonKeys.LISELETTE_COLLECTOR);
         PylonPages.COMPONENTS.addItem(LISELETTE_COLLECTOR);
     }
+
+    public static final ItemStack HYDRAULIC_FRACTURE_CAP = ItemStackBuilder.rebar(Material.POLISHED_ANDESITE, PylonKeys.HYDRAULIC_FRACTURE_CAP)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HYDRAULIC_FRACTURE_CAP, PylonKeys.HYDRAULIC_FRACTURE_CAP);
+        PylonPages.COMPONENTS.addItem(HYDRAULIC_FRACTURE_CAP);
+    }
+
+    public static final ItemStack INJECTION_PIPE = ItemStackBuilder.rebar(Material.IRON_CHAIN, PylonKeys.INJECTION_PIPE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, INJECTION_PIPE, PylonKeys.INJECTION_PIPE);
+        PylonPages.COMPONENTS.addItem(INJECTION_PIPE);
+    }
+
+    public static final ItemStack STEEL_FOUNDATION = ItemStackBuilder.rebar(Material.GRAY_CONCRETE, PylonKeys.STEEL_FOUNDATION)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, STEEL_FOUNDATION, PylonKeys.STEEL_FOUNDATION);
+        PylonPages.COMPONENTS.addItem(STEEL_FOUNDATION);
+    }
+
+    public static final ItemStack FLARE_STACK_STRUCTURE = ItemStackBuilder.rebar(Material.NETHER_BRICK_FENCE, PylonKeys.FLARE_STACK_STRUCTURE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FLARE_STACK_STRUCTURE, PylonKeys.FLARE_STACK_STRUCTURE);
+        PylonPages.COMPONENTS.addItem(FLARE_STACK_STRUCTURE);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
@@ -2729,6 +2762,20 @@ public final class PylonItems {
         PylonPages.FLUID_MACHINES.addItem(FLUID_VOIDER_2);
     }
 
+    public static final ItemStack SMOKESTACK = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMOKESTACK)
+            .build();
+    static {
+        RebarItem.register(Smokestack.Item.class, SMOKESTACK, PylonKeys.SMOKESTACK);
+        PylonPages.FLUID_MACHINES.addItem(SMOKESTACK);
+    }
+
+    public static final ItemStack FLARE_STACK = ItemStackBuilder.rebar(Material.NETHER_BRICKS, PylonKeys.FLARE_STACK)
+            .build();
+    static {
+        RebarItem.register(FlareStack.Item.class, FLARE_STACK, PylonKeys.FLARE_STACK);
+        PylonPages.FLUID_MACHINES.addItem(FLARE_STACK);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Machines - Hydraulic Machines" defaultstate=collapsed>
@@ -3023,6 +3070,39 @@ public final class PylonItems {
         RebarItem.register(CargoFluidAccumulator.Item.class, CARGO_FLUID_ACCUMULATOR, PylonKeys.CARGO_FLUID_ACCUMULATOR);
         PylonPages.CARGO.addItem(CARGO_FLUID_ACCUMULATOR);
     }
+    //</editor-fold>
+
+    //<editor-fold desc="Machines - Petrochemicals" defaultstate=collapsed>
+
+    public static final ItemStack OIL_SAMPLE_DRILL = ItemStackBuilder.rebar(Material.CHISELED_DEEPSLATE, PylonKeys.OIL_SAMPLE_DRILL)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.getKey())
+            .build();
+    static {
+        RebarItem.register(OilSampleDrill.Item.class, OIL_SAMPLE_DRILL, PylonKeys.OIL_SAMPLE_DRILL);
+        PylonPages.PETROCHEMICALS.addItem(OIL_SAMPLE_DRILL);
+    }
+
+    public static final ItemStack HYDRAULIC_FRACTURING_DRILL = ItemStackBuilder.rebar(Material.NETHERITE_BLOCK, PylonKeys.HYDRAULIC_FRACTURING_DRILL)
+            .build();
+    static {
+        RebarItem.register(HydraulicFracturingDrill.Item.class, HYDRAULIC_FRACTURING_DRILL, PylonKeys.HYDRAULIC_FRACTURING_DRILL);
+        PylonPages.PETROCHEMICALS.addItem(HYDRAULIC_FRACTURING_DRILL);
+    }
+
+    public static final ItemStack HYDRAULIC_FRACTURE_SEAL = ItemStackBuilder.rebar(Material.TNT, PylonKeys.HYDRAULIC_FRACTURE_SEAL)
+            .build();
+    static {
+        RebarItem.register(HydraulicFractureSeal.Item.class, HYDRAULIC_FRACTURE_SEAL, PylonKeys.HYDRAULIC_FRACTURE_SEAL);
+        PylonPages.PETROCHEMICALS.addItem(HYDRAULIC_FRACTURE_SEAL);
+    }
+
+    public static final ItemStack HYDRAULIC_PUMPJACK = ItemStackBuilder.rebar(Material.POLISHED_TUFF, PylonKeys.HYDRAULIC_PUMPJACK)
+            .build();
+    static {
+        RebarItem.register(HydraulicPumpjack.Item.class, HYDRAULIC_PUMPJACK, PylonKeys.HYDRAULIC_PUMPJACK);
+        PylonPages.PETROCHEMICALS.addItem(HYDRAULIC_PUMPJACK);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Machines - Diesel Machines" defaultstate="collapsed">
@@ -3405,6 +3485,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, SLEEPING_BAG, PylonKeys.SLEEPING_BAG);
         PylonPages.MISCELLANEOUS.addItem(SLEEPING_BAG);
+    }
+
+    // Only used for displaying ghost blocks; unobtainable
+    public static final ItemStack HYDRAULIC_FRACTURE = ItemStackBuilder.rebar(Material.LIGHT_BLUE_CONCRETE_POWDER, PylonKeys.HYDRAULIC_FRACTURE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HYDRAULIC_FRACTURE, PylonKeys.HYDRAULIC_FRACTURE);
     }
 
     static {
