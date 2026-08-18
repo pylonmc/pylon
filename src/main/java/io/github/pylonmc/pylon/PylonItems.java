@@ -3492,7 +3492,6 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(RebarItem.class, HYDRAULIC_FRACTURE, PylonKeys.HYDRAULIC_FRACTURE);
-        RebarGuide.hideItem(PylonKeys.HYDRAULIC_FRACTURE);
     }
 
     static {

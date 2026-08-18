@@ -1,22 +1,22 @@
 package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
-import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.recipe.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.RecipeInput;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.List;
+
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -58,6 +58,8 @@ public class PylonRecipes {
         initPalladiumCondenser();
         initBiorefinery();
         initFermenter();
+        initHydraulicFracturingDrill();
+        initPumpjack();
     }
 
     private static void initCollimator() {
@@ -190,31 +192,83 @@ public class PylonRecipes {
         ).register();
     }
 
-    private static void initHydraulicFracture() {
+    private static void initHydraulicFracturingDrill() {
         NamespacedKey key = PylonKeys.HYDRAULIC_FRACTURE;
 
-        var input = List.of(
-                RecipeInput.of(PylonFluids.HYDRAULIC_FLUID, Rebar)
-        );
+        ConfigSection config = ConfigSection.fromSettings(PylonKeys.HYDRAULIC_FRACTURING_DRILL);
 
+        FluidWithAmount hydraulicFluid = new FluidWithAmount(
+                PylonFluids.HYDRAULIC_FLUID,
+                config.getOrThrow("hydraulic-fluid-per-fracture", ConfigAdapter.INTEGER)
+        );
+        FluidWithAmount steam = new FluidWithAmount(
+                PylonFluids.STEAM,
+                config.getOrThrow("steam-per-fracture", ConfigAdapter.INTEGER)
+        );
+        int sandAmount = config.getOrThrow("ticks-to-create-fracture", ConfigAdapter.INTEGER)
+                / config.getOrThrow("machine-ticks-per-sand", ConfigAdapter.INTEGER)
+                / config.getOrThrow("tick-interval", ConfigAdapter.INTEGER);
         FluidOrItem output = FluidOrItem.of(PylonItems.HYDRAULIC_FRACTURE);
 
         new SingleRecipe(
                 key,
-                input,
+                List.of(
+                        FluidChoice.of(hydraulicFluid),
+                        FluidChoice.of(steam),
+                        ItemChoice.exact(ItemStack.of(Material.SAND))
+                ),
+                List.of(output),
+                () -> Gui.builder()
+                        .setStructure(
+                                "# # # # # # # # #",
+                                "# # # # # # # # #",
+                                "# h s a # x # f #",
+                                "# # # # # # # # #",
+                                "# # # # # # # # #"
+                        )
+                        .addIngredient('#', GuiItems.backgroundBlack())
+                        .addIngredient('h', FluidButton.of(hydraulicFluid))
+                        .addIngredient('s', FluidButton.of(steam))
+                        .addIngredient('a', ItemButton.of(ItemStackBuilder.of(Material.SAND)
+                                .name(Component.text(sandAmount + " ").append(new ItemStack(Material.SAND).effectiveName()))
+                        ))
+                        .addIngredient('x', ItemButton.of(PylonItems.HYDRAULIC_FRACTURING_DRILL))
+                        .addIngredient('f', ItemButton.of(PylonItems.HYDRAULIC_FRACTURE))
+                        .build()
+        ).register();
+    }
+
+    private static void initPumpjack() {
+        NamespacedKey key = PylonFluids.OIL.getKey();
+
+        ConfigSection config = ConfigSection.fromSettings(PylonKeys.HYDRAULIC_PUMPJACK);
+
+        FluidWithAmount input = new FluidWithAmount(
+                PylonFluids.HYDRAULIC_FLUID,
+                config.getOrThrow("hydraulic-fluid-per-second", ConfigAdapter.INTEGER)
+        );
+
+        FluidWithAmount output = new FluidWithAmount(
+                PylonFluids.OIL,
+                config.getOrThrow("max-oil-per-second", ConfigAdapter.INTEGER)
+        );
+
+        new SingleRecipe(
+                key,
+                FluidChoice.of(input),
                 output,
                 () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
                                 "# # # # # # # # #",
-                                "# i # # x # # o #",
+                                "# # h # x # o # #",
                                 "# # # # # # # # #",
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('i', ItemButton.of(ItemStack.of(Material.SUGAR_CANE)))
-                        .addIngredient('x', ItemButton.of(PylonItems.FERMENTER))
-                        .addIngredient('o', FluidButton.of(ethanolPerSugarcane, PylonFluids.ETHANOL))
+                        .addIngredient('h', FluidButton.of(input))
+                        .addIngredient('x', ItemButton.of(PylonItems.HYDRAULIC_PUMPJACK))
+                        .addIngredient('o', FluidButton.of(output))
                         .build()
         ).register();
     }
