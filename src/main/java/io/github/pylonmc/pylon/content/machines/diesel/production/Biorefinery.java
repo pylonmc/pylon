@@ -37,8 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 public class Biorefinery extends RebarBlock implements
         DirectionalRebarBlock,
         SimpleRebarMultiblock,

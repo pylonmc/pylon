@@ -4,7 +4,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.pylonmc.pylon.content.machines.fluid.PortableFluidTank;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.OilService;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.rebar.command.RegistryCommandArgument;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
