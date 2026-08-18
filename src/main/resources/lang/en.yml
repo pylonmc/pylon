@@ -1,6 +1,9 @@
 addon: "Pylon"
 
 item:
+  sleeping_bag:
+    name: "Sleeping Bag"
+
   bandage:
     name: "Bandage"
     lore: |-
