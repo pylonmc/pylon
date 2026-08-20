@@ -39,9 +39,12 @@ public class Pylon extends JavaPlugin implements RebarAddon {
     public void onEnable() {
         instance = this;
 
-        metrics = new Metrics(this, BSTATS_ID);
-
         registerWithRebar();
+
+        // Do not initialize plugin services until the required Rebar platform has
+        // successfully accepted this addon. This keeps a failed Rebar startup from
+        // leaving Pylon partially initialized.
+        metrics = new Metrics(this, BSTATS_ID);
 
         saveDefaultConfig();
 
