@@ -5,6 +5,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +21,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public class ExperienceTalisman extends Talisman {
     public static final NamespacedKey XP_TALISMAN_KEY = pylonKey("xp_talisman");
     public static final NamespacedKey XP_MULTIPLIER_KEY = pylonKey("xp_talisman_multiplier");
+
     public final float xpMultiplier = getSettingOrThrow("xp-multiplier", ConfigAdapter.FLOAT);
 
     public ExperienceTalisman(@NotNull ItemStack stack) {
@@ -44,8 +46,10 @@ public class ExperienceTalisman extends Talisman {
     }
 
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("xp-boost", UnitFormat.PERCENT.format((xpMultiplier - 1) * 100).decimalPlaces(0)));
+    public @NotNull List<RebarArgument> getPlaceholders() {
+        return List.of(
+                RebarArgument.of("xp-boost", UnitFormat.PERCENT.format((xpMultiplier - 1) * 100).decimalPlaces(0))
+        );
     }
 
     public static class XPTalismanListener implements Listener {
@@ -55,9 +59,9 @@ public class ExperienceTalisman extends Talisman {
             if (xpMultiplier == null){
                 return;
             }
-            event.getExperienceOrb().setExperience(
-                    Math.round(event.getExperienceOrb().getExperience() * xpMultiplier)
-            );
+
+            ExperienceOrb orb = event.getExperienceOrb();
+            orb.setExperience(Math.round(orb.getExperience() * xpMultiplier));
         }
     }
 }

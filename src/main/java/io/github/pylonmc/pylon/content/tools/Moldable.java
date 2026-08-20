@@ -14,21 +14,21 @@ public interface Moldable extends Keyed {
         return RebarRegistry.ITEMS.getOrThrow(getKey()).getItemStack();
     }
 
-    default ItemStack moldingResult() {
+    default MoldingRecipe moldingRecipe() {
+        ItemStack input = moldingInputStack();
         for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(moldingInputStack())) {
-                return recipe.result();
+            if (recipe.isInput(input)) {
+                return recipe;
             }
         }
         throw new IllegalStateException("Moldable item " + getKey() + " does not have an associated molding recipe");
     }
 
+    default ItemStack moldingResult() {
+        return moldingRecipe().result();
+    }
+
     default int totalMoldingClicks() {
-        for (MoldingRecipe recipe : MoldingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(moldingInputStack())) {
-                return recipe.moldingCycles();
-            }
-        }
-        throw new IllegalStateException("Moldable item " + getKey() + " does not have an associated molding recipe");
+        return moldingRecipe().moldingCycles();
     }
 }

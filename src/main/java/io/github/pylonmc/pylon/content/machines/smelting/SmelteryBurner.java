@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
@@ -35,8 +36,6 @@ public final class SmelteryBurner extends SmelteryComponent implements
         LogisticRebarBlock,
         ProcessorRebarBlock {
 
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-
     private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.CHARCOAL)
             .name(Component.translatable("pylon.gui.smeltery_burner.not_burning"));
     private final ItemStackBuilder burningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
@@ -45,10 +44,11 @@ public final class SmelteryBurner extends SmelteryComponent implements
     private final VirtualInventory inventory = new VirtualInventory(3);
     private final ProgressItem progressItem = new ProgressItem(notBurningProgressItem);
 
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
     @SuppressWarnings("unused")
     public SmelteryBurner(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
         setTickInterval(tickInterval);
     }
 
@@ -101,7 +101,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);
-            if (item == null || RebarItem.isRebarItem(item)) {
+            if (item == null || RebarItem.isRebarItemAndIsNot(item, VanillaFurnaceFuel.class)) {
                 continue;
             }
 
@@ -124,10 +124,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
             }
 
             startProcess(itemType.getBurnDuration() / 2);
-            Furnace furnace = (Furnace) getBlock().getBlockData();
-            furnace.setLit(true);
-            getBlock().setBlockData(furnace);
-
+            editBlockDataAs(Furnace.class, furnace -> furnace.setLit(true));
             break;
         }
     }
@@ -135,10 +132,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public void onProcessFinished() {
         progressItem.setItem(notBurningProgressItem);
-
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(false);
-        getBlock().setBlockData(furnace);
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(false));
     }
 
     @Override

@@ -1134,6 +1134,7 @@ public final class PylonItems {
             .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
                     .withColor(Color.PURPLE)
                     .build())
+            .editPdc(pdc -> pdc.set(SoulboundRune.SOULBOUND_KEY, RebarSerializers.BOOLEAN, true))
             .hideFromTooltip(DataComponentTypes.FIREWORK_EXPLOSION)
             .build();
     static {

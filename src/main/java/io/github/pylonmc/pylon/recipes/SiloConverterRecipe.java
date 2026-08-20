@@ -59,10 +59,9 @@ public record SiloConverterRecipe(
 
     @Override
     public @NotNull Gui display() {
-        List<ItemStack> silos = RebarRegistry.ITEMS.getValues()
-                .stream()
+        List<ItemStack> silos = RebarRegistry.ITEMS.getValues().stream()
+                .filter(schema -> schema.isType(Silo.Item.class))
                 .map(RebarItemSchema::getItemStack)
-                .filter(item -> RebarItem.fromStack(item) instanceof Silo.Item)
                 .filter(item -> !item.isSimilar(result))
                 .toList();
 

@@ -4,34 +4,37 @@ import io.github.pylonmc.pylon.PylonConfig;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.loot.LootTableResultBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import org.bukkit.Location;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTable;
+import org.bukkit.loot.Lootable;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class HuntingTalisman extends Talisman {
-    public final double chanceForExtraItem = getSettingOrThrow("chance-for-extra-item", ConfigAdapter.DOUBLE);
     public static final NamespacedKey HUNTING_TALISMAN_KEY = PylonUtils.pylonKey("hunting_talisman");
     public static final NamespacedKey HUNTING_TALISMAN_BONUS_KEY = PylonUtils.pylonKey("hunting_talisman_bonus");
+
+    public final double chanceForExtraItem = getSettingOrThrow("chance-for-extra-item", ConfigAdapter.DOUBLE);
 
     public HuntingTalisman(@NotNull ItemStack stack) {
         super(stack);
     }
 
-
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+    public @NotNull List<RebarArgument> getPlaceholders() {
         return List.of(
                 RebarArgument.of("bonus_item_chance", UnitFormat.PERCENT.format(chanceForExtraItem * 100).decimalPlaces(2))
         );
@@ -58,27 +61,39 @@ public class HuntingTalisman extends Talisman {
 
         @EventHandler
         public void onEntityDeath(EntityDeathEvent event) {
-            if (!(event.getDamageSource().getCausingEntity() instanceof Player player)) {
+            Entity entity = event.getEntity();
+            if (!(entity instanceof Lootable lootable) || !(event.getDamageSource().getCausingEntity() instanceof Player player)) {
                 return;
             }
-            if (!player.getPersistentDataContainer().has(HUNTING_TALISMAN_BONUS_KEY)) {
+
+            Double chanceForExtraItem = player.getPersistentDataContainer().get(HUNTING_TALISMAN_BONUS_KEY, PersistentDataType.DOUBLE);
+            if (chanceForExtraItem == null) {
                 return;
             }
-            if (event.getEntity().getType() == EntityType.PLAYER) {
+
+            LootTable lootTable = lootable.getLootTable();
+            long lootTableSeed = lootable.getSeed();
+            if (lootTable == null) {
                 return;
             }
-            Location source = event.getEntity().getLocation();
-            @SuppressWarnings("DataFlowIssue")
-            double chanceForExtraItem = player.getPersistentDataContainer().get(HUNTING_TALISMAN_BONUS_KEY, PersistentDataType.DOUBLE);
-            for (ItemStack drop : event.getDrops()) {
-                if (drop.getItemMeta().hasRarity() && drop.getItemMeta().getRarity().ordinal() >= ItemRarity.RARE.ordinal()) {
+
+            boolean triggered = false;
+            Collection<ItemStack> additionalDrops = LootTableResultBuilder.of(event)
+                    .getRandomItems(entity.getWorld(), LootTableResultBuilder.ENTITY, lootTable, lootTableSeed);
+            for (ItemStack additionalDrop : additionalDrops) {
+                if (additionalDrop.hasData(DataComponentTypes.RARITY) && additionalDrop.getData(DataComponentTypes.RARITY).compareTo(ItemRarity.RARE) >= 0) {
                     continue;
                 }
-                if (ThreadLocalRandom.current().nextDouble() > chanceForExtraItem) {
-                    continue;
+
+                if (Math.random() <= chanceForExtraItem) {
+                    additionalDrop.setAmount(1);
+                    event.getDrops().add(additionalDrop);
+                    triggered = true;
                 }
-                drop.setAmount(drop.getAmount() + 1);
-                source.getWorld().playSound(PylonConfig.HUNTING_TALISMAN_TRIGGER_SOUND.create(), source.getX(), source.getY(), source.getZ());
+            }
+
+            if (triggered) {
+                PylonConfig.HUNTING_TALISMAN_TRIGGER_SOUND.playAt(entity);
             }
         }
     }

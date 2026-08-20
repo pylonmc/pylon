@@ -2,116 +2,84 @@ package io.github.pylonmc.pylon.content.tools.base;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonConfig;
+import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
-import io.github.pylonmc.rebar.item.interfaces.ArrowRebarItemHandler;
-import io.github.pylonmc.rebar.item.interfaces.BlockBreakRebarItemHandler;
-import io.github.pylonmc.rebar.item.interfaces.BowRebarItemHandler;
-import io.github.pylonmc.rebar.item.interfaces.BucketRebarItemHandler;
-import io.github.pylonmc.rebar.item.interfaces.EntityAttackRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.DropRebarItemHandler;
+import io.github.pylonmc.rebar.item.research.Research;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Collection;
-import java.util.List;
 
 /**
- * @author balugaq
+ * A {@link RebarItem} that can be {@link #onRuneApply(Player, Item, Item) applied} to
+ * {@link #isRuneApplicable(Player, Item, Item) applicable} {@link Item items} when dropped on the ground.
+ *
+ * @author balugaq, JustAHuman
  */
-public abstract class Rune extends RebarItem {
-    // These can be applied with runes
-    public static final List<Class<?>> DEFAULT_APPLICABLES = List.of(
-            ArrowRebarItemHandler.class,
-            BowRebarItemHandler.class,
-            BucketRebarItemHandler.class,
-            BlockBreakRebarItemHandler.class,
-            EntityAttackRebarItemHandler.class
-    );
-
+public abstract class Rune extends RebarItem implements DropRebarItemHandler {
     public Rune(@NotNull ItemStack stack) {
         super(stack);
     }
 
     /**
-     * Checks if the rune is applicable to the target item.
-     *
-     * @param event  The event
-     * @param rune   The rune item, amount may be > 1
-     * @param target The item to handle, amount may be > 1
-     * @return true if applicable, false otherwise
+     * Returns if the rune is applicable to a dropped item.
+     * @see RuneTarget
      */
-    public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        RebarItemSchema schema = RebarItemSchema.fromStack(target);
-        if (schema == null) {
-            // Non-Rebar items are always applicable
-            return true;
-        }
-
-        RuneApplicable checker = RebarItem.fromStack(target, RuneApplicable.class);
-        if (checker != null && checker.applicableToTarget(event, rune)) {
-            return true;
-        }
-
-        return DEFAULT_APPLICABLES.stream().anyMatch(clazz -> clazz.isAssignableFrom(schema.getItemClass()));
-    }
+    public abstract boolean isRuneApplicable(@NotNull Player player, @NotNull Item runeItem, @NotNull Item item);
 
     /**
-     * Handles contacting between an item and a rune.
+     * Called when a dropped {@link Rune} is applied to an applicable item nearby,
+     * <br>
+     * Note: If the rune should be consumed on use, you must do that yourself
      *
-     * @param event  The event
-     * @param rune   The rune item, amount may be > 1
-     * @param target The item to handle, amount may be > 1
+     * @param player     The player who dropped the rune
+     * @param runeItem   The rune dropped item entity, amount may be > 1
+     * @param targetItem The item to be applied to, amount may be > 1
+     * @see #isRuneApplicable(Player, Item, Item)
      */
-    public abstract void onContactItem(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target);
+    public abstract void onRuneApply(@NotNull Player player, @NotNull Item runeItem, @NotNull Item targetItem);
 
-    public static class RuneListener implements Listener {
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        void onRuneDrop(@NotNull PlayerDropItemEvent event) {
-            Player player = event.getPlayer();
-            Item runeEntity = event.getItemDrop();
-            ItemStack runeStack = runeEntity.getItemStack();
-            Rune rune = RebarItem.fromStack(runeStack, Rune.class);
-            if (rune == null) {
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onDrop(@NotNull PlayerDropItemEvent event, @NotNull EventPriority priority) {
+        Player player = event.getPlayer();
+        Item runeItem = event.getItemDrop();
+        if (!Research.canPlayerUse(player, this, true)) {
+            return;
+        }
+
+        Bukkit.getScheduler().runTaskTimer(Pylon.getInstance(), task -> {
+            if (!player.isValid() || !runeItem.isValid()) {
+                task.cancel();
                 return;
             }
 
-            // Fix #155 - Fireproof rune only checks proximity at the moment it's dropped
-            // Force run synchronously for entity handling
-            Bukkit.getScheduler().runTaskTimer(Pylon.getInstance(), task -> {
-                if (runeEntity.isDead() || !runeEntity.isValid()) {
-                    task.cancel();
-                    return;
+            if (!runeItem.isOnGround()) {
+                return;
+            }
+
+            Collection<Item> nearbyItems = runeItem.getWorld().getNearbyEntitiesByType(Item.class, runeItem.getLocation(), PylonConfig.RUNE_CHECK_RANGE, targetItem -> {
+                if (runeItem == targetItem || !isRuneApplicable(player, runeItem, targetItem)) {
+                    return false;
                 }
 
-                if (!runeEntity.isOnGround()) {
-                    return;
-                }
+                ItemStack targetItemStack = targetItem.getItemStack();
+                return !(fromStack(targetItemStack, RuneTarget.class) instanceof RuneTarget runeTarget) || runeTarget.isRuneSupported(player, this, runeItem, targetItem);
+            });
+            if (nearbyItems.isEmpty()) {
+                return;
+            }
 
-                Collection<Item> nearbyEntities = player.getWorld().getNearbyEntitiesByType(Item.class, runeEntity.getLocation(), PylonConfig.RUNE_CHECK_RANGE, item -> rune.isApplicableToTarget(event, runeStack, item.getItemStack()));
-                Item targetEntity = nearbyEntities
-                        .stream()
-                        .findFirst()
-                        .orElse(null);
-
-                if (targetEntity == null) {
-                    // No target, skip it.
-                    return;
-                }
-
-                ItemStack target = targetEntity.getItemStack();
-
-                // All actions are handled by devs
-                rune.onContactItem(event, runeStack, target);
-                runeEntity.setItemStack(runeStack);
-                targetEntity.setItemStack(target);
-            }, 1, 2);
-        }
+            onRuneApply(player, runeItem, nearbyItems.iterator().next());
+            task.cancel();
+        }, 20, 20);
     }
 }

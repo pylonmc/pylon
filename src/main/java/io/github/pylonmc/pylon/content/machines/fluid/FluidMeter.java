@@ -22,8 +22,8 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.util.Tick;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -210,9 +210,11 @@ public class FluidMeter extends RebarBlock implements
             }
         }
 
-        double total = measurements.stream()
-                .mapToDouble(x -> x)
-                .sum();
+        double total = 0.0;
+        for (Double measurement : measurements) {
+            total += measurement;
+        }
+
         int average = (int) ((total / measurements.size()) * 20.0 / getTickInterval());
         if (average == lastAverage) {
             return;
@@ -240,7 +242,7 @@ public class FluidMeter extends RebarBlock implements
     }
 
     public static Duration getDuration(int numberOfMeasurements) {
-        return Duration.ofMillis((long) numberOfMeasurements * RebarConfig.FLUID_TICK_INTERVAL * 50);
+        return Tick.of((long) numberOfMeasurements * RebarConfig.FLUID_TICK_INTERVAL);
     }
 
     public class MeasurementDurationItem extends AbstractItem {

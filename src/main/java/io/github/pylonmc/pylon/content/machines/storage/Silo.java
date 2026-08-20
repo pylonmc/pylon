@@ -42,6 +42,7 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
     public static final NamespacedKey AMOUNT_KEY = pylonKey("amount");
 
     public final long capacityStacks = getSettingOrThrow("capacity-stacks", ConfigAdapter.LONG);
+
     @Getter @Setter private @Nullable ItemStack stack;
     @Getter @Setter private long amount;
 
@@ -96,10 +97,7 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
     public Silo(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         ItemStack item = context.getItem();
-        if (item == null) {
-            stack = null;
-            amount = 0;
-        } else {
+        if (item != null) {
             stack = item.getPersistentDataContainer().get(STACK_KEY, RebarSerializers.ITEM_STACK);
             amount = item.getPersistentDataContainer().getOrDefault(AMOUNT_KEY, RebarSerializers.LONG, 0L);
         }
@@ -169,14 +167,14 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
 
     @Override
     public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
-        ItemStack stack = super.getDropItem(context);
-        stack.editPersistentDataContainer(pdc -> {
-            if (this.stack != null) {
+        ItemStack dropItem = super.getDropItem(context);
+        if (dropItem != null && this.stack != null) {
+            dropItem.editPersistentDataContainer(pdc -> {
                 pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, this.stack);
                 pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
-            }
-        });
-        return stack;
+            });
+        }
+        return dropItem;
     }
 
     @Override
@@ -184,6 +182,7 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
         WailaDisplay display = WailaDisplay.of(this, player);
         if (stack == null) {
             display.add(Component.translatable("pylon.message.silo.empty"));
+            return display;
         }
         return display.add(Component.translatable("pylon.message.silo.not-empty")
                 .arguments(

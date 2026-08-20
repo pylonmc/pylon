@@ -12,8 +12,8 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -44,6 +44,7 @@ public class Elevator extends RebarBlock implements SneakRebarBlockHandler, Jump
     }
 
     private final RandomizedSound useSound = getSettingOrThrow("use-sound", ConfigAdapter.RANDOMIZED_SOUND);
+    private final int range = getSettingOrThrow("range", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public Elevator(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -55,50 +56,39 @@ public class Elevator extends RebarBlock implements SneakRebarBlockHandler, Jump
         super(block, pdc);
     }
 
-    private @NotNull List<RebarBlock> getElevatorsInRange(boolean under, @NotNull Location location) {
-        int range = getSettingOrThrow("range", ConfigAdapter.INTEGER);
-        int checkingLevel = 1;
-        List<RebarBlock> blocks = new ArrayList<>();
-
-        while (checkingLevel <= range) {
-            location.add(0.0, under ? -1.0 : 1.0, 0.0);
-            RebarBlock rebarBlock = BlockStorage.get(location.getBlock());
-            if (rebarBlock instanceof Elevator) {
-                blocks.add(rebarBlock);
+    private @NotNull List<Elevator> getElevatorsInRange(boolean under) {
+        BlockPosition position = new BlockPosition(getBlock());
+        List<Elevator> elevators = new ArrayList<>();
+        for (int i = 0; i < range; i++) {
+            position.addScalar(0, under ? -1 : 1, 0);
+            Elevator elevator = BlockStorage.getAs(Elevator.class, position);
+            if (elevator != null) {
+                elevators.add(elevator);
             }
-            checkingLevel++;
         }
-
-        return blocks;
+        return elevators;
     }
 
-    private double getDistance(@NotNull Location playerLocation, @NotNull Location elevatorLocation) {
-        return elevatorLocation.y() - playerLocation.y();
-    }
-
-    private void teleportPlayer(@NotNull Player player, @NotNull Location location, boolean under) {
-        List<RebarBlock> elevators = getElevatorsInRange(under, location);
-
+    private void teleportPlayer(@NotNull Player player, boolean under) {
+        List<Elevator> elevators = getElevatorsInRange(under);
         if (elevators.isEmpty()) {
             player.sendActionBar(Component.translatable("pylon.message.elevator.none_within_range." + (under ? "below" : "above")));
             return;
         }
 
-        RebarBlock elevator = elevators.getFirst();
-        Location elevatorLocation = elevator.getBlock().getLocation();
-        double distance = getDistance(player.getLocation(), elevatorLocation);
-
-        player.teleport(player.getLocation().add(0, distance + 1, 0));
-        player.getWorld().playSound(useSound.create(), elevatorLocation.x(), elevatorLocation.y(), elevatorLocation.z());
+        Elevator elevator = elevators.getFirst();
+        Block elevatorBlock = elevator.getBlock();
+        player.teleport(player.getLocation().add(0, (elevatorBlock.getY() - player.getY()) + 1, 0));
+        useSound.play(elevatorBlock);
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSneakStart(@NotNull PlayerToggleSneakEvent event, @NotNull EventPriority priority) {
-        teleportPlayer(event.getPlayer(), getBlock().getLocation(), true);
+        teleportPlayer(event.getPlayer(), true);
     }
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJumpedOn(@NotNull PlayerJumpEvent event, @NotNull EventPriority priority) {
-        teleportPlayer(event.getPlayer(), getBlock().getLocation(), false);
+        teleportPlayer(event.getPlayer(), false);
     }
 }

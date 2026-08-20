@@ -22,6 +22,7 @@ import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.util.Tick;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -259,9 +260,10 @@ public class CargoMeter extends RebarBlock implements
                 measurements.removeFirst();
             }
         }
-        double total = measurements.stream()
-                .mapToDouble(x -> x)
-                .sum();
+        double total = 0.0;
+        for (Integer measurement : measurements) {
+            total += measurement;
+        }
         double average = (total / measurements.size()) * 20.0 / getTickInterval();
         Component component = UnitFormat.ITEMS_PER_SECOND.format(average).decimalPlaces(2).asComponent();
         getHeldEntityOrThrow(TextDisplay.class, "flow_rate").text(component);
@@ -279,7 +281,7 @@ public class CargoMeter extends RebarBlock implements
     }
 
     public static Duration getDuration(int numberOfMeasurements) {
-        return Duration.ofMillis((long) numberOfMeasurements * RebarConfig.CARGO_TICK_INTERVAL * 50);
+        return Tick.of((long) numberOfMeasurements * RebarConfig.CARGO_TICK_INTERVAL);
     }
 
     public class MeasurementDurationItem extends AbstractItem {

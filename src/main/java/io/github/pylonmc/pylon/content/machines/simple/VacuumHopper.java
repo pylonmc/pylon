@@ -152,7 +152,7 @@ public class VacuumHopper extends RebarBlock implements
     @Override
     public void tick() {
         Block block = getBlock();
-        Hopper hopper = (Hopper) block.getBlockData();
+        Hopper hopper = getBlockDataAs(Hopper.class);
         if (!hopper.isEnabled()) {
             return; // don't vacuum if powered
         }
@@ -191,7 +191,7 @@ public class VacuumHopper extends RebarBlock implements
     }
 
     public boolean isFiltered(@NotNull ItemStack item) {
-        for (ItemStack filterStack : filterInventory.getItems()) {
+        for (ItemStack filterStack : filterInventory.getUnsafeItems()) {
             if (item.isSimilar(filterStack)) {
                 return whitelist;
             }

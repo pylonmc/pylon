@@ -23,8 +23,10 @@ public class LuckTalisman extends AttributeTalisman {
     }
 
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("bonus_luck", Component.text(attrBonus)));
+    public @NotNull List<RebarArgument> getPlaceholders() {
+        return List.of(
+                RebarArgument.of("bonus_luck", Component.text(attrBonus))
+        );
     }
 
     @Override

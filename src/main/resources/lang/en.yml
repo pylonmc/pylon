@@ -2015,7 +2015,7 @@ item:
   hunting_talisman_simple:
     name: "Simple Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2023,7 +2023,7 @@ item:
   hunting_talisman_advanced:
     name: "Advanced Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2031,7 +2031,7 @@ item:
   hunting_talisman_ultimate:
     name: "Ultimate Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2039,7 +2039,7 @@ item:
   hunting_talisman_palladium:
     name: "Palladium Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%

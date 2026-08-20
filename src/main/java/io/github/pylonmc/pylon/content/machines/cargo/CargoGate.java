@@ -261,26 +261,31 @@ public class CargoGate extends RebarBlock implements
 
     private void doSplit() {
         getHeldEntityOrThrow(BlockDisplay.class, "repeater")
-                .setBlock(Material.REPEATER.createBlockData("[powered=" + (itemsRemaining == 0 ? "true" : "false") + "]"));
+                .setBlock(Material.REPEATER.createBlockData("[powered=" + (itemsRemaining == 0) + "]"));
 
         VirtualInventory inputInventory = itemsRemaining == 0 ? rightInventory : leftInventory;
-        ItemStack input = inputInventory.getItem(0);
+        ItemStack input = inputInventory.getUnsafeItem(0);
         if (input == null) {
             return;
         }
 
-        ItemStack output = outputInventory.getItem(0);
-        if (output == null || (output.isSimilar(input) && output.getAmount() < output.getMaxStackSize())) {
-            if (output == null) {
-                outputInventory.setItem(new MachineUpdateReason(), 0, input.asOne());
-            } else {
-                outputInventory.setItem(new MachineUpdateReason(), 0, output.add());
-            }
-            inputInventory.setItem(new MachineUpdateReason(), 0, input.subtract());
-            itemsRemaining = itemsRemaining == 0
-                    ? threshold
-                    : itemsRemaining - 1;
-            doSplit();
+        ItemStack output = outputInventory.getUnsafeItem(0);
+        if (output != null && (output.getAmount() >= output.getMaxStackSize() || !output.isSimilar(input))) {
+            return;
         }
+
+        if (output == null) {
+            RebarUtils.unsafeSet(outputInventory, 0, input);
+            RebarUtils.unsafeSet(inputInventory, 0, null);
+        } else {
+            int newAmount = Math.min(output.getMaxStackSize(), output.getAmount() + input.getAmount());
+            int toSubtract = newAmount - output.getAmount();
+            RebarUtils.unsafeSetAmount(outputInventory, 0, newAmount);
+            RebarUtils.unsafeSubtract(inputInventory, 0, toSubtract);
+        }
+        itemsRemaining = itemsRemaining == 0
+                ? threshold
+                : itemsRemaining - 1;
+        doSplit();
     }
 }
