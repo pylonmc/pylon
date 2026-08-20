@@ -2520,7 +2520,6 @@ fluid:
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
-  steam: "Steam"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
@@ -2917,7 +2916,7 @@ gui:
   threshold: "Threshold"
   item-threshold: "Item threshold"
   fluid-threshold: "Fluid threshold"
-  watts-per-mb: "<attr>Power production:</attr> %power%"
+  joules-per-mb: "<attr>Power production:</attr> %power%"
 
 inventory:
   fuel: "Fuel"
@@ -2933,3 +2932,9 @@ inventory:
   input1: "Input 1"
   input2: "Input 2"
   input3: "Input 3"
+
+unit:
+  joules_per_millibucket:
+    one: "joule per millibucket"
+    other: "joules per millibucket"
+    abbr: "W/mB"
