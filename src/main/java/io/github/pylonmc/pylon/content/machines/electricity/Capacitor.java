@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricAcceptorNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricPort;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricProducerNode;
 import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
