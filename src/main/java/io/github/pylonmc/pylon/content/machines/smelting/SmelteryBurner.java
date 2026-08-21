@@ -1,5 +1,12 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.pylon.util.BurnerProgressItem;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.Map;
+import kotlin.Pair;
+import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
@@ -16,15 +23,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
-
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
-import kotlin.Pair;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 
@@ -37,13 +35,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
-    private final ItemStackBuilder notBurningProgressItem = ItemStackBuilder.of(Material.CHARCOAL)
-            .name(Component.translatable("pylon.gui.smeltery_burner.not_burning"));
-    private final ItemStackBuilder burningProgressItem = ItemStackBuilder.of(Material.BLAZE_POWDER)
-            .name(Component.translatable("pylon.gui.smeltery_burner.burning"));
-
-    private final VirtualInventory inventory = new VirtualInventory(3);
-    private final ProgressItem progressItem = new ProgressItem(notBurningProgressItem);
+    private final VirtualInventory fuelInventory = new VirtualInventory(3);
+    private final BurnerProgressItem progressItem = new BurnerProgressItem();
 
     @SuppressWarnings("unused")
     public SmelteryBurner(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -60,7 +53,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
     @Override
     public void postInitialise() {
         setProcessProgressItem(progressItem);
-        createLogisticGroup("fuel", LogisticGroupType.BOTH, inventory);
+        createLogisticGroup("fuel", LogisticGroupType.BOTH, fuelInventory);
     }
 
     @Override
@@ -75,13 +68,15 @@ public final class SmelteryBurner extends SmelteryComponent implements
         return Gui.builder()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # # f # # # #",
-                        "# # # x x x # # #",
+                        "# # # i p i # # #",
+                        "# # # i x i # # #",
+                        "# # # i i i # # #",
                         "# # # # # # # # #"
                 )
-                .addIngredient('f', progressItem)
-                .addIngredient('x', inventory)
                 .addIngredient('#', GuiItems.background())
+                .addIngredient('i', GuiItems.input())
+                .addIngredient('p', progressItem)
+                .addIngredient('x', fuelInventory)
                 .build();
     }
 
@@ -99,8 +94,8 @@ public final class SmelteryBurner extends SmelteryComponent implements
             return;
         }
 
-        for (int i = 0; i < inventory.getSize(); i++) {
-            ItemStack item = inventory.getItem(i);
+        for (int i = 0; i < fuelInventory.getSize(); i++) {
+            ItemStack item = fuelInventory.getItem(i);
             if (item == null || RebarItem.isRebarItem(item)) {
                 continue;
             }
@@ -110,17 +105,15 @@ public final class SmelteryBurner extends SmelteryComponent implements
                 continue;
             }
 
-            progressItem.setItem(burningProgressItem);
-
             if (itemType.getCraftingRemainingItem() != null) {
                 ItemStack remainder = itemType.getCraftingRemainingItem().createItemStack();
-                if (!inventory.canHold(remainder)) {
+                if (!fuelInventory.canHold(remainder)) {
                     continue;
                 }
-                inventory.setItem(null, i, item.subtract());
-                inventory.addItem(null, remainder);
+                fuelInventory.setItem(null, i, item.subtract());
+                fuelInventory.addItem(null, remainder);
             } else {
-                inventory.setItem(null, i, item.subtract());
+                fuelInventory.setItem(null, i, item.subtract());
             }
 
             startProcess(itemType.getBurnDuration() / 2);
@@ -134,8 +127,6 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     @Override
     public void onProcessFinished() {
-        progressItem.setItem(notBurningProgressItem);
-
         Furnace furnace = (Furnace) getBlock().getBlockData();
         furnace.setLit(false);
         getBlock().setBlockData(furnace);
@@ -143,6 +134,6 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
     @Override
     public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of("fuels", inventory);
+        return Map.of("fuels", fuelInventory);
     }
 }

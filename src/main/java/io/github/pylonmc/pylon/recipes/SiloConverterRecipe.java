@@ -8,19 +8,18 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.recipe.ConfigurableRecipeType;
+import io.github.pylonmc.rebar.recipe.RebarRecipe;
+import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
-import io.github.pylonmc.rebar.recipe.RebarRecipe;
-import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.List;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -61,7 +60,7 @@ public record SiloConverterRecipe(
     public @NotNull Gui display() {
         List<ItemStack> silos = RebarRegistry.ITEMS.getValues()
                 .stream()
-                .map(RebarItemSchema::getItemStack)
+                .map(RebarItemSchema::createNewItemStack)
                 .filter(item -> RebarItem.fromStack(item) instanceof Silo.Item)
                 .filter(item -> !item.isSimilar(result))
                 .toList();

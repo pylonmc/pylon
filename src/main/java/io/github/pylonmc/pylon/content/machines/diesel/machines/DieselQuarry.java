@@ -2,16 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.content.machines.hydraulics.Quarry;
-import io.github.pylonmc.pylon.util.PylonUtils;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
+import io.github.pylonmc.pylon.content.machines.generic.GenericQuarry;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -20,16 +14,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.event.block.BlockBreakBlockEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -41,23 +30,10 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
 
-import java.util.List;
-import java.util.Map;
+public class DieselQuarry extends GenericQuarry implements
+        FluidBufferRebarBlock {
 
-
-public class DieselQuarry extends Quarry implements
-        TickingRebarBlock,
-        DirectionalRebarBlock,
-        FluidBufferRebarBlock,
-        GuiRebarBlock,
-        VirtualInventoryRebarBlock,
-        LogisticRebarBlock {
-
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
     public final int dieselPerBlock = getSettingOrThrow("diesel-per-block", ConfigAdapter.INTEGER);
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
 
@@ -84,29 +60,13 @@ public class DieselQuarry extends Quarry implements
         }
     }
 
-    public final ItemStackBuilder toolStack = ItemStackBuilder.gui(Material.LIME_STAINED_GLASS_PANE, getKey() + ":tool")
-            .name(Component.translatable("pylon.gui.tool"));
-    public ItemStackBuilder topStack = ItemStackBuilder.of(Material.YELLOW_TERRACOTTA)
-            .addCustomModelDataString(getKey() + ":top");
-    public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
-            .addCustomModelDataString(getKey() + ":side1");
-    public ItemStackBuilder sideStack2 = ItemStackBuilder.of(Material.BRICKS)
-            .addCustomModelDataString(getKey() + ":side2");
-    public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
-            .addCustomModelDataString(getKey() + ":chimney");
-
-    public VirtualInventory toolInventory = new VirtualInventory(1);
-    public VirtualInventory outputInventory = new VirtualInventory(3);
-
     @SuppressWarnings("unused")
     public DieselQuarry(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
-        setTickInterval(tickInterval);
-        setFacing(context.getFacing());
-
         addEntity("chimney", new ItemDisplayBuilder()
-                .itemStack(chimneyStack)
+                .itemStack(ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
+                        .addCustomModelDataString(getKey() + ":chimney"))
                 .transformation(new TransformBuilder()
                         .lookAlong(getFacing())
                         .translate(0.4, 0.0, -0.4)
@@ -114,27 +74,31 @@ public class DieselQuarry extends Quarry implements
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("side1", new ItemDisplayBuilder()
-                .itemStack(sideStack1)
+                .itemStack(ItemStackBuilder.of(Material.BRICKS)
+                        .addCustomModelDataString(getKey() + ":side1"))
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
                         .scale(1.1, 0.8, 0.8))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("side2", new ItemDisplayBuilder()
-                .itemStack(sideStack2)
+                .itemStack(ItemStackBuilder.of(Material.BRICKS)
+                        .addCustomModelDataString(getKey() + ":side2"))
                 .transformation(new TransformBuilder()
                         .translate(0, -0.5, 0)
                         .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("top1", new ItemDisplayBuilder()
-                .itemStack(topStack)
+                .itemStack(ItemStackBuilder.of(Material.YELLOW_TERRACOTTA)
+                        .addCustomModelDataString(getKey() + ":top"))
                 .transformation(new TransformBuilder()
                         .scale(0.6, 0.199, 0.6))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
         addEntity("top2", new ItemDisplayBuilder()
-                .itemStack(topStack)
+                .itemStack(ItemStackBuilder.of(Material.YELLOW_TERRACOTTA)
+                        .addCustomModelDataString(getKey() + ":top"))
                 .transformation(new TransformBuilder()
                         .scale(0.6, 0.2, 0.6)
                         .rotate(0, Math.PI / 4, 0))
@@ -149,20 +113,6 @@ public class DieselQuarry extends Quarry implements
     @SuppressWarnings("unused")
     public DieselQuarry(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-    }
-
-    @Override
-    public void postInitialise() {
-        super.postInitialise();
-        createLogisticGroup("tool", LogisticGroupType.INPUT, toolInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        toolInventory.addPostUpdateHandler(event -> {
-            stopProcess();
-            updateQuarry();
-        });
-        outputInventory.addPostUpdateHandler(event -> updateQuarry());
-        updateQuarry();
     }
 
     @Override
@@ -195,55 +145,13 @@ public class DieselQuarry extends Quarry implements
     }
 
     @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # T # O O O # #",
-                        "# # t # o o o # #",
-                        "# # T # O O O # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('t', toolInventory)
-                .addIngredient('T', toolStack)
-                .addIngredient('o', outputInventory)
-                .addIngredient('O', GuiItems.output())
-                .build();
+    protected boolean canBreakBlock() {
+        return fluidAmount(PylonFluids.BIODIESEL) >= dieselPerBlock;
     }
 
     @Override
-    public void onProcessFinished() {
-        Block block = blockPositions.get(index).getBlock();
-        ItemStack tool = toolInventory.getItem(0);
-        List<ItemStack> drops = block.getDrops().stream().toList();
-        if (tool == null
-                || !PylonUtils.shouldBreakBlockUsingTool(block, tool)
-                || !new BlockBreakBlockEvent(block, getBlock(), drops).callEvent()
-                || !outputInventory.canHold(drops)
-        ) {
-            return;
-        }
-
-        for (ItemStack drop : drops) {
-            outputInventory.addItem(new MachineUpdateReason(), drop);
-        }
-        block.setType(Material.AIR);
-        RebarUtils.damageItem(tool, 1, block.getWorld());
-        toolInventory.setItem(new MachineUpdateReason(), 0, tool);
+    protected void onBreakBlock() {
         removeFluid(PylonFluids.BIODIESEL, dieselPerBlock);
-        updateQuarry();
-    }
-
-    @Override
-    protected @Nullable Integer getBreakTicks(@NotNull Block block) {
-        ItemStack tool = toolInventory.getItem(0);
-        if (tool == null
-                || !PylonUtils.shouldBreakBlockUsingTool(block, tool)
-                || !outputInventory.canHold(block.getDrops().stream().toList())
-                || fluidAmount(PylonFluids.BIODIESEL) < dieselPerBlock
-        ) {
-            return null;
-        }
-        return (int) Math.round(RebarUtils.getBlockBreakTicks(tool, block) / speed);
     }
 
     @Override
@@ -254,15 +162,7 @@ public class DieselQuarry extends Quarry implements
 
     @Override
     public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        super.onBlockBreak(drops, context);
         FluidBufferRebarBlock.super.onBlockBreak(drops, context);
-        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "tool", toolInventory,
-                "output", outputInventory
-        );
     }
 }

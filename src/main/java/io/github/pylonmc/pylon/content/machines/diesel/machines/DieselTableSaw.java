@@ -2,17 +2,10 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.recipes.TableSawRecipe;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
+import io.github.pylonmc.pylon.content.machines.generic.GenericTableSaw;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -20,20 +13,16 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -41,38 +30,11 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
 
-import java.util.List;
-import java.util.Map;
-
-
-public class DieselTableSaw extends RebarBlock implements
-        GuiRebarBlock,
-        VirtualInventoryRebarBlock,
-        FluidBufferRebarBlock,
-        DirectionalRebarBlock,
-        TickingRebarBlock,
-        LogisticRebarBlock,
-        RecipeProcessorRebarBlock<TableSawRecipe> {
+public class DieselTableSaw extends GenericTableSaw implements FluidBufferRebarBlock {
 
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
-
-    public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
-            .addCustomModelDataString(getKey() + ":side1");
-    public ItemStackBuilder sideStack2 = ItemStackBuilder.of(Material.BRICKS)
-            .addCustomModelDataString(getKey() + ":side2");
-    public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
-            .addCustomModelDataString(getKey() + ":chimney");
-    public final ItemStackBuilder sawItem = ItemStackBuilder.of(Material.IRON_BARS)
-            .addCustomModelDataString(getKey() + ":saw");
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
@@ -94,12 +56,17 @@ public class DieselTableSaw extends RebarBlock implements
         }
     }
 
+    public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
+            .addCustomModelDataString(getKey() + ":side1");
+    public ItemStackBuilder sideStack2 = ItemStackBuilder.of(Material.BRICKS)
+            .addCustomModelDataString(getKey() + ":side2");
+    public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
+            .addCustomModelDataString(getKey() + ":chimney");
+
     @SuppressWarnings("unused")
     public DieselTableSaw(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.55F);
-        setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
@@ -122,20 +89,7 @@ public class DieselTableSaw extends RebarBlock implements
                         .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
-        addEntity("item", new ItemDisplayBuilder()
-                .transformation(new TransformBuilder()
-                        .scale(0.3))
-                .build(block.getLocation().toCenterLocation().add(0, 0.65, 0))
-        );
-        addEntity("saw", new ItemDisplayBuilder()
-                .itemStack(sawItem)
-                .transformation(new TransformBuilder()
-                        .scale(0.6, 0.4, 0.4))
-                .build(block.getLocation().toCenterLocation().add(0, 0.7, 0))
-        );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        setRecipeType(TableSawRecipe.RECIPE_TYPE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
     @SuppressWarnings("unused")
@@ -144,21 +98,8 @@ public class DieselTableSaw extends RebarBlock implements
     }
 
     @Override
-    public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, inputInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        outputInventory.addPostUpdateHandler(event -> tryStartRecipe());
-        inputInventory.addPostUpdateHandler(event -> {
-            if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
-                tryStartRecipe();
-            }
-        });
-    }
-
-    @Override
     public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        super.onBlockBreak(drops, context);
         FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
@@ -188,60 +129,6 @@ public class DieselTableSaw extends RebarBlock implements
         progressRecipe(tickInterval);
     }
 
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
-            return;
-        }
-
-        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
-            return;
-        }
-
-        for (TableSawRecipe recipe : TableSawRecipe.RECIPE_TYPE) {
-            if (tryStartRecipe(recipe, stack)) {
-                break;
-            }
-        }
-    }
-
-    private boolean tryStartRecipe(TableSawRecipe recipe, ItemStack stack) {
-        double dieselAmount = dieselPerSecond * recipe.timeTicks() / 20.0;
-        if (fluidAmount(PylonFluids.BIODIESEL) < dieselAmount
-                || !recipe.input().matches(stack)
-                || !outputInventory.canHold(recipe.result())
-        ) {
-            return false;
-        }
-
-        startRecipe(recipe, recipe.timeTicks());
-        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
-        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(stack);
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-        return true;
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # I # # # O # #",
-                        "# # i # p # o # #",
-                        "# # I # # # O # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .addIngredient('O', GuiItems.output())
-                .addIngredient('o', outputInventory)
-                .build();
-    }
-
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         return WailaDisplay.of(this, player)
@@ -254,20 +141,5 @@ public class DieselTableSaw extends RebarBlock implements
                         ? ProgressBar.recipeProgress(getRecipeProgress())
                         : Component.translatable("pylon.message.idle")
                 );
-    }
-
-    @Override
-    public void onRecipeFinished(@NotNull TableSawRecipe recipe) {
-        getRecipeProgressItem().setItem(GuiItems.background());
-        getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(null);
-        outputInventory.addItem(null, recipe.result().clone());
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "input", inputInventory,
-                "output", outputInventory
-        );
     }
 }

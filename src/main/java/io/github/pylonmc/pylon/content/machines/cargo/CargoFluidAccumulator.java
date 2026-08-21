@@ -1,15 +1,11 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
 import com.google.common.base.Preconditions;
-import io.github.pylonmc.pylon.util.PylonUtils;
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -21,35 +17,27 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -83,10 +71,6 @@ public class CargoFluidAccumulator extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":input");
     public final ItemStackBuilder outputStack = ItemStackBuilder.of(Material.RED_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":output");
-    public final ItemStackBuilder itemThresholdButtonStack = ItemStackBuilder.gui(Material.WHITE_CONCRETE, getKey() + "item_threshold_button")
-            .lore(Component.translatable("pylon.gui.item_threshold_button.lore"));
-    public final ItemStackBuilder fluidThresholdButtonStack = ItemStackBuilder.gui(Material.WHITE_CONCRETE, getKey() + "fluid_threshold_button")
-            .lore(Component.translatable("pylon.gui.fluid_threshold_button.lore"));
 
     public static class Item extends RebarItem {
 
@@ -169,7 +153,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
         allowFluidInputs = true;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public CargoFluidAccumulator(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         itemThreshold = pdc.get(ITEM_THRESHOLD_KEY, RebarSerializers.INTEGER);
@@ -238,8 +222,32 @@ public class CargoFluidAccumulator extends RebarBlock implements
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('o', outputInventory)
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', new ItemThresholdButton())
-                .addIngredient('T', new FluidThresholdButton())
+                .addIngredient('t', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.item-threshold"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(1)
+                        .max(64)
+                        .valueGetter(() -> itemThreshold)
+                        .valueSetter(value -> itemThreshold = value)
+                        .valueFormatter(UnitFormat.ITEMS::format)
+                        .key(pylonKey(getKey() + ":item_threshold"))
+                        .reopenWindow(this::open)
+                        .build())
+                .addIngredient('T', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.fluid-threshold"))
+                        .increment(10)
+                        .shiftIncrement(100)
+                        .min(10)
+                        .max(fluidBuffer)
+                        .valueGetter(() -> fluidThreshold)
+                        .valueSetter(value -> fluidThreshold = value)
+                        .valueFormatter(UnitFormat.MILLIBUCKETS::format)
+                        .key(pylonKey(getKey() + ":fluid_threshold"))
+                        .reopenWindow(this::open)
+                        .build())
                 .build();
     }
 
@@ -311,51 +319,6 @@ public class CargoFluidAccumulator extends RebarBlock implements
                 inputInventory.setItem(new MachineUpdateReason(), slot, null);
             }
             allowFluidInputs = false;
-        }
-    }
-
-    public class ItemThresholdButton extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NotNull Player viewer) {
-            return itemThresholdButtonStack
-                .name((Component.translatable("pylon.gui.item_threshold_button.name").arguments(
-                        RebarArgument.of("threshold", itemThreshold)
-                )));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            if (clickType.isLeftClick()) {
-                itemThreshold += 1;
-            } else {
-                itemThreshold = Math.max(1, itemThreshold - 1);
-            }
-            notifyWindows();
-            doTransfer();
-        }
-    }
-
-    public class FluidThresholdButton extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NotNull Player viewer) {
-            return fluidThresholdButtonStack
-                .name((Component.translatable("pylon.gui.fluid_threshold_button.name").arguments(
-                        RebarArgument.of("threshold", fluidThreshold)
-                )));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            int amount = clickType.isShiftClick() ? 100 : 10;
-            if (clickType.isLeftClick()) {
-                fluidThreshold = Math.min(fluidBuffer, fluidThreshold + amount);
-            } else {
-                fluidThreshold = Math.min(fluidBuffer, Math.max(10, fluidThreshold - amount));
-            }
-            notifyWindows();
-            doTransfer();
         }
     }
 }

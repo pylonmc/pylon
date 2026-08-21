@@ -7,12 +7,8 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.ProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
@@ -20,8 +16,11 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Lightable;
@@ -35,11 +34,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class BurnerHydraulicPurifier extends RebarBlock implements
@@ -87,7 +81,6 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
     }
 
     @SuppressWarnings("unused")
@@ -204,11 +197,9 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     @Override
     public void onMultiblockFormed() {
+        SimpleRebarMultiblock.super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT)
                 .setAllowedFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
-        SimpleRebarMultiblock.super.onMultiblockFormed();
     }
 
     @Override
