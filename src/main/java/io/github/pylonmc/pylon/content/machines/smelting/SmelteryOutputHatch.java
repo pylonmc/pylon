@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -39,8 +39,8 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Flui
         if (controller == null) return List.of();
 
         return controller.getFluids().entrySet().stream()
-                .filter(entry -> entry.getKey().hasTag(MeltingPoint.class))
-                .filter(entry -> entry.getKey().getTag(MeltingPoint.class).temperature() <= controller.getTemperature())
+                .filter(entry -> entry.getKey().hasTag(MeltingPointTag.class))
+                .filter(entry -> entry.getKey().getTag(MeltingPointTag.class).temperature() <= controller.getTemperature())
                 .map(entry -> new Pair<>(entry.getKey(), Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)))
                 .toList();
     }

@@ -2954,6 +2954,91 @@ pylon:experience_drain:
   result: pylon:experience_drain
   category: building
 
+pylon:large_copper_pipe_assembly:
+  pattern:
+    - " C "
+    - "C C"
+    - " C "
+  key:
+    C: pylon:copper_pipe_assembly
+  result: pylon:large_copper_pipe_assembly
+  category: misc
+
+pylon:firebox:
+  pattern:
+    - "RBR"
+    - "B B"
+    - "RRR"
+  key:
+    B: pylon:bronze_sheet
+    R: pylon:refractory_brick
+  result: pylon:firebox
+  category: building
+
+pylon:fluid_firebox:
+  pattern:
+    - "RBR"
+    - "V B"
+    - "RRR"
+  key:
+    B: pylon:bronze_sheet
+    V: pylon:backflow_valve
+    R: pylon:refractory_bricks
+  result: pylon:fluid_firebox
+  category: building
+
+pylon:small_boiler:
+  pattern:
+    - "RCR"
+    - "BFB"
+    - "RBR"
+  key:
+    B: pylon:bronze_sheet
+    R: minecraft:bricks
+    F: pylon:firebox
+    C: pylon:copper_pipe_assembly
+  result: pylon:large_boiler
+  category: building
+
+pylon:large_boiler:
+  pattern:
+    - "RCR"
+    - "FBF"
+    - "RBR"
+  key:
+    B: pylon:bronze_block
+    R: minecraft:bricks
+    F: pylon:firebox
+    C: pylon:large_copper_pipe_assembly
+  result: pylon:large_boiler
+  category: building
+
+pylon:small_fluid_boiler:
+  pattern:
+    - "RCR"
+    - "BFB"
+    - "RBR"
+  key:
+    B: pylon:bronze_sheet
+    R: minecraft:bricks
+    F: pylon:fluid_firebox
+    C: pylon:copper_pipe_assembly
+  result: pylon:small_fluid_boiler
+  category: building
+
+pylon:large_fluid_boiler:
+  pattern:
+    - "RCR"
+    - "FBF"
+    - "RBR"
+  key:
+    B: pylon:bronze_block
+    R: minecraft:bricks
+    F: pylon:fluid_firebox
+    C: pylon:large_copper_pipe_assembly
+  result: pylon:large_fluid_boiler
+  category: building
+
 pylon:tape_measure:
   pattern:
     - " SS"
