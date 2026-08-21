@@ -206,5 +206,5 @@ pylon:gravel_from_slag:
 pylon:clay_ball:
   input: minecraft:clay
   results:
-    minecraft:clay_ball: 3
+    minecraft:clay_ball: 4
   cycles: 1
