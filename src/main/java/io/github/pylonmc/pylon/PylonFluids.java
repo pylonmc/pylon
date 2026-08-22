@@ -39,6 +39,16 @@ public final class PylonFluids {
         IngredientCalculator.addBaseIngredient(LAVA);
     }
 
+    public static final RebarFluid POWDER_SNOW = new RebarFluid(
+            pylonKey("powder_snow"),
+            TextColor.fromHexString("#e8e8e8"),
+            Material.POWDER_SNOW
+    ).addTag(FluidTemperature.COLD);
+    static {
+        POWDER_SNOW.register();
+        IngredientCalculator.addBaseIngredient(POWDER_SNOW);
+    }
+
     public static final RebarFluid PLANT_OIL = new RebarFluid(
             pylonKey("plant_oil"),
             TextColor.fromHexString("#c4b352"),

@@ -159,6 +159,7 @@ public class PylonKeys {
     public static final NamespacedKey KILN = pylonKey("kiln");
 
     public static final NamespacedKey MIXING_POT = pylonKey("mixing_pot");
+    public static final NamespacedKey PIPED_CAULDRON = pylonKey("piped_cauldron");
     public static final NamespacedKey CRUCIBLE = pylonKey("crucible");
 
     public static final NamespacedKey PRESS = pylonKey("press");

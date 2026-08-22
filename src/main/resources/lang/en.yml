@@ -2464,6 +2464,12 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  piped_cauldron:
+    name: "Piped Cauldron"
+    lore: |-
+      <arrow> A cauldron which can have pipes attached to it
+    waila: "Piped Cauldron"
+
   tape_measure:
     name: "Tape Measure"
     lore: |-
@@ -2477,6 +2483,7 @@ fluid:
     melting-point: "Melting point: %temperature%"
   water: "Water"
   lava: "Lava"
+  powder_snow: "Powder Snow"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
