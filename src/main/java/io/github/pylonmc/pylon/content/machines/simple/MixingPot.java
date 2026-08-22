@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
@@ -59,6 +60,8 @@ public final class MixingPot extends RebarBlock implements
         FluidTankWithDisplayEntity,
         CauldronRebarBlockHandler {
 
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+
     public static class MixingPotItem extends RebarItem {
 
         public MixingPotItem(@NotNull ItemStack stack) {
@@ -78,7 +81,7 @@ public final class MixingPot extends RebarBlock implements
         super(block, context);
         createFluidDisplay();
         setFacing(context.getFacing());
-        setTickInterval(1);
+        setTickInterval(tickInterval);
         setCapacity(1000.0);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
