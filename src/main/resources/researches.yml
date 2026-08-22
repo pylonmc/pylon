@@ -292,6 +292,7 @@ bronze_equipment:
     - pylon:bronze_leggings
     - pylon:bronze_chestplate
     - pylon:bronze_helmet
+    - pylon:bronze_hammer
 
 improved_hammers:
   item: pylon:iron_hammer
@@ -655,6 +656,7 @@ steel_tools:
     - pylon:steel_pickaxe
     - pylon:steel_shovel
     - pylon:steel_hoe
+    - pylon:steel_hammer
 
 steel_armor:
   item: pylon:steel_chestplate

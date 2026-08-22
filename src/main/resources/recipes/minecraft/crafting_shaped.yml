@@ -1623,6 +1623,17 @@ pylon:iron_hammer:
   result: pylon:iron_hammer
   category: equipment
 
+pylon:bronze_hammer:
+  pattern:
+    - " M "
+    - " SM"
+    - "S  "
+  key:
+    M: pylon:bronze_ingot
+    S: minecraft:stick
+  result: pylon:bronze_hammer
+  category: equipment
+
 pylon:diamond_hammer:
   pattern:
     - " M "
@@ -1632,6 +1643,17 @@ pylon:diamond_hammer:
     M: minecraft:diamond
     S: minecraft:stick
   result: pylon:diamond_hammer
+  category: equipment
+
+pylon:steel_hammer:
+  pattern:
+    - " M "
+    - " SM"
+    - "S  "
+  key:
+    M: pylon:steel_ingot
+    S: minecraft:stick
+  result: pylon:steel_hammer
   category: equipment
 
 pylon:vacuum_hopper_1:

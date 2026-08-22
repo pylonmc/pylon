@@ -1,12 +1,12 @@
-cooldown-ticks: 32
-durability: 125
+cooldown-ticks: 20
+durability: 1197
 attack-durability-damage: 1
-attack-speed: 0.5
-attack-damage: 3
-attack-knockback: 1.5
+attack-speed: 1.2
+attack-damage: 7
+attack-knockback: 3
 
-base-block: minecraft:iron_block
-mining-level: IRON
+base-block: pylon:steel_block
+mining-level: NETHERITE
 
 sound:
   sound: minecraft:block.anvil.use
