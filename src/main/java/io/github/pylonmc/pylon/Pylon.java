@@ -7,6 +7,7 @@ import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
+import io.github.pylonmc.pylon.content.tools.FireproofRune;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
 import io.github.pylonmc.pylon.content.tools.TapeMeasure;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
@@ -61,6 +62,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
         pm.registerEvents(new Rune.RuneListener(), this);
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);
+        pm.registerEvents(new FireproofRune.FireproofRuneListener(), this);
         pm.registerEvents(new Bloomery.CreationListener(), this);
         pm.registerEvents(new Grindstone.PlaceListener(), this);
         pm.registerEvents(new FarmingTalisman.FarmingTalismanListener(), this);

@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.tools;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -10,11 +11,10 @@ import io.papermc.paper.datacomponent.item.DamageResistant;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
-import io.papermc.paper.registry.set.RegistrySet;
 import io.papermc.paper.registry.tag.Tag;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.damage.DamageType;
@@ -22,6 +22,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
  * @author balugaq
@@ -32,6 +34,8 @@ public class FireproofRune extends Rune {
 
     public static final Component SUCCESS = Component.translatable("pylon.message.fireproof_result.success");
     public static final Component TOOLTIP = Component.translatable("pylon.message.fireproof_result.tooltip");
+
+    public static final NamespacedKey FIREPROOF_KEY = pylonKey("have_fireproof");
 
     private final RandomizedSound applySound = getSettingOrThrow("apply-sound", ConfigAdapter.RANDOMIZED_SOUND);
 
@@ -51,6 +55,7 @@ public class FireproofRune extends Rune {
      */
     @Override
     public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
+        if (hasRuneApplied(target)) return false;
         DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
         if (data == null) return true;
         return !data.types().equals(IS_FIRE_TAG);
@@ -69,10 +74,7 @@ public class FireproofRune extends Rune {
         int consume = Math.min(rune.getAmount(), target.getAmount());
 
         Player player = event.getPlayer();
-        ItemStack handle = ItemStackBuilder.of(target.asQuantity(consume)) // Already cloned in `asQuantity`
-                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
-                .lore(GlobalTranslator.render(TOOLTIP, player.locale()))
-                .build();
+        ItemStack handle = applyRune(target, consume);
 
         // (N)Either left runes or targets
         int leftRunes = rune.getAmount() - consume;
@@ -105,5 +107,39 @@ public class FireproofRune extends Rune {
                 .offset(0, 0, 0)
                 .count(count)
                 .spawn();
+    }
+
+    public static ItemStack applyRune(@NotNull ItemStack itemStack, int amount) {
+        return ItemStackBuilder.of(itemStack.asQuantity(amount))
+                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
+                .editPdc(pdc -> pdc.set(FIREPROOF_KEY, RebarSerializers.BOOLEAN, true))
+                .lore(TOOLTIP)
+                .build();
+    }
+
+    /**
+     * Checks if the target already has the fireproof rune applied
+     *
+     * @return true if the fireproof rune has been used on the item, false otherwise
+     */
+    public static boolean hasRuneApplied(@NotNull ItemStack itemStack) {
+        return itemStack.getPersistentDataContainer().getOrDefault(FIREPROOF_KEY, RebarSerializers.BOOLEAN, false);
+    }
+
+    public static class FireproofRuneListener extends BlockRuneListener {
+        @Override
+        protected @NotNull String getKeyPrefix() {
+            return "fireproof";
+        }
+
+        @Override
+        protected boolean hasRuneApplied(@NotNull ItemStack stack) {
+            return FireproofRune.hasRuneApplied(stack);
+        }
+
+        @Override
+        protected @NotNull ItemStack applyRune(@NotNull ItemStack stack, int amount) {
+            return FireproofRune.applyRune(stack, amount);
+        }
     }
 }
