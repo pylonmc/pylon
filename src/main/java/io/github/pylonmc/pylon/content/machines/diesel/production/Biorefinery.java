@@ -153,8 +153,8 @@ public class Biorefinery extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
-        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluid(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluid(PylonFluids.PLANT_OIL);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
@@ -172,20 +172,20 @@ public class Biorefinery extends RebarBlock implements
             FluidOutputHatch biodieselOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
 
             double biodieselToProduce = Math.min(
-                    biodieselOutputHatch.fluidSpaceRemaining(PylonFluids.BIODIESEL),
+                    biodieselOutputHatch.getFluidSpaceRemaining(),
                     Math.min(
                             biodieselPerSecond * getTickInterval() / 20.0,
                             Math.min(
-                                    ethanolInputHatch.fluidAmount(PylonFluids.ETHANOL) / ethanolPerMbOfBiodiesel,
-                                    plantOilInputHatch.fluidAmount(PylonFluids.PLANT_OIL) / plantOilPerMbOfBiodiesel
+                                    ethanolInputHatch.getFluidAmount() / ethanolPerMbOfBiodiesel,
+                                    plantOilInputHatch.getFluidAmount() / plantOilPerMbOfBiodiesel
                             )
                     )
             );
 
             if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
-                ethanolInputHatch.removeFluid(PylonFluids.ETHANOL, biodieselToProduce * ethanolPerMbOfBiodiesel);
-                plantOilInputHatch.removeFluid(PylonFluids.PLANT_OIL, biodieselToProduce * plantOilPerMbOfBiodiesel);
-                biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);
+                ethanolInputHatch.removeFluid(biodieselToProduce * ethanolPerMbOfBiodiesel);
+                plantOilInputHatch.removeFluid(biodieselToProduce * plantOilPerMbOfBiodiesel);
+                biodieselOutputHatch.addFluid(biodieselToProduce);
             }
 
             Vector smokePosition1 = Vector.fromJOML(RebarUtils.rotateVectorToFace(

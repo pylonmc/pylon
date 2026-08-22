@@ -303,7 +303,7 @@ pylon:health_talisman_palladium:
     - pylon:health_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -315,7 +315,7 @@ pylon:health_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -323,7 +323,7 @@ pylon:health_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -331,7 +331,7 @@ pylon:health_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -339,7 +339,7 @@ pylon:health_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -347,7 +347,7 @@ pylon:health_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -355,7 +355,7 @@ pylon:health_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -363,7 +363,7 @@ pylon:health_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -540,7 +540,7 @@ pylon:farming_talisman_palladium:
     - pylon:farming_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -552,7 +552,7 @@ pylon:farming_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -560,7 +560,7 @@ pylon:farming_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -568,7 +568,7 @@ pylon:farming_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -576,7 +576,7 @@ pylon:farming_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -584,7 +584,7 @@ pylon:farming_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -592,7 +592,7 @@ pylon:farming_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -600,7 +600,7 @@ pylon:farming_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -777,7 +777,7 @@ pylon:bartering_talisman_palladium:
     - pylon:bartering_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -789,7 +789,7 @@ pylon:bartering_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -797,7 +797,7 @@ pylon:bartering_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -805,7 +805,7 @@ pylon:bartering_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -813,7 +813,7 @@ pylon:bartering_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -821,7 +821,7 @@ pylon:bartering_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -829,7 +829,7 @@ pylon:bartering_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -837,7 +837,7 @@ pylon:bartering_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -1014,7 +1014,7 @@ pylon:water_breathing_talisman_palladium:
     - pylon:water_breathing_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -1026,7 +1026,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -1034,7 +1034,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -1042,7 +1042,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -1050,7 +1050,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -1058,7 +1058,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -1066,7 +1066,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -1074,7 +1074,7 @@ pylon:water_breathing_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -1251,7 +1251,7 @@ pylon:luck_talisman_palladium:
     - pylon:luck_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -1263,7 +1263,7 @@ pylon:luck_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -1271,7 +1271,7 @@ pylon:luck_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -1279,7 +1279,7 @@ pylon:luck_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -1287,7 +1287,7 @@ pylon:luck_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -1295,7 +1295,7 @@ pylon:luck_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -1303,7 +1303,7 @@ pylon:luck_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -1311,7 +1311,7 @@ pylon:luck_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -1488,7 +1488,7 @@ pylon:breeding_talisman_palladium:
     - pylon:breeding_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -1500,7 +1500,7 @@ pylon:breeding_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -1508,7 +1508,7 @@ pylon:breeding_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -1516,7 +1516,7 @@ pylon:breeding_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -1524,7 +1524,7 @@ pylon:breeding_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -1532,7 +1532,7 @@ pylon:breeding_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -1540,7 +1540,7 @@ pylon:breeding_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -1548,7 +1548,7 @@ pylon:breeding_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -1725,7 +1725,7 @@ pylon:enchanting_talisman_palladium:
     - pylon:enchanting_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -1737,7 +1737,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -1745,7 +1745,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -1753,7 +1753,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -1761,7 +1761,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -1769,7 +1769,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -1777,7 +1777,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -1785,7 +1785,7 @@ pylon:enchanting_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -1962,7 +1962,7 @@ pylon:hunting_talisman_palladium:
     - pylon:hunting_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -1974,7 +1974,7 @@ pylon:hunting_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -1982,7 +1982,7 @@ pylon:hunting_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -1990,7 +1990,7 @@ pylon:hunting_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -1998,7 +1998,7 @@ pylon:hunting_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -2006,7 +2006,7 @@ pylon:hunting_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -2014,7 +2014,7 @@ pylon:hunting_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -2022,7 +2022,7 @@ pylon:hunting_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -2199,7 +2199,7 @@ pylon:experience_talisman_palladium:
     - pylon:experience_talisman_palladium
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -2211,7 +2211,7 @@ pylon:experience_talisman_palladium:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -2219,7 +2219,7 @@ pylon:experience_talisman_palladium:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -2227,7 +2227,7 @@ pylon:experience_talisman_palladium:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -2235,7 +2235,7 @@ pylon:experience_talisman_palladium:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -2243,7 +2243,7 @@ pylon:experience_talisman_palladium:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -2251,7 +2251,7 @@ pylon:experience_talisman_palladium:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -2259,7 +2259,7 @@ pylon:experience_talisman_palladium:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -2437,7 +2437,7 @@ pylon:flight_ring:
     - pylon:flight_ring
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust1"
@@ -2449,7 +2449,7 @@ pylon:flight_ring:
           position: [ 0.5, 0.5 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust2"
@@ -2457,7 +2457,7 @@ pylon:flight_ring:
           position: [ 0.5, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust3"
@@ -2465,7 +2465,7 @@ pylon:flight_ring:
           position: [ 1.0, 1.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust4"
@@ -2473,7 +2473,7 @@ pylon:flight_ring:
           position: [ 1.0, 0.5]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust5"
@@ -2481,7 +2481,7 @@ pylon:flight_ring:
           position: [ 1.0, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust6"
@@ -2489,7 +2489,7 @@ pylon:flight_ring:
           position: [ 0.5, 0.0 ]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust7"
@@ -2497,7 +2497,7 @@ pylon:flight_ring:
           position: [ 0.0, 0.0]
           scale: [ 0.25, 0.25, 0.25 ]
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 1
       add-displays:
         - name: "pldust8"
@@ -2812,7 +2812,7 @@ pylon:research_pack_4:
     - pylon:research_pack_4: 1
   steps:
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 4
       add-displays:
         - name: "CenterBlock"
@@ -2988,5 +2988,79 @@ pylon:research_pack_4:
         - "Sheet4P2"
         - "Unit4P2"
     - tool: "hammer"
-      icon: pylon:diamond_hammer
+      icon: pylon:iron_hammer
       clicks: 4
+
+pylon:copper_pipe_assembly:
+  inputs:
+    - pylon:fluid_pipe_copper: 32
+  results:
+    - pylon:copper_pipe_assembly: 1
+  steps:
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe1"
+          item: minecraft:orange_terracotta
+          position: [0.15, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe2"
+          item: minecraft:orange_terracotta
+          position: [0.25, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe3"
+          item: minecraft:orange_terracotta
+          position: [0.35, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe4"
+          item: minecraft:orange_terracotta
+          position: [0.45, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe5"
+          item: minecraft:orange_terracotta
+          position: [0.55, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe6"
+          item: minecraft:orange_terracotta
+          position: [0.65, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe7"
+          item: minecraft:orange_terracotta
+          position: [0.75, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
+      add-displays:
+        - name: "Pipe8"
+          item: minecraft:orange_terracotta
+          position: [0.85, 0.5]
+          scale: [0.03, 0.03, 0.8]
+    - tool: "hammer"
+      icon: pylon:iron_hammer
+      clicks: 1
