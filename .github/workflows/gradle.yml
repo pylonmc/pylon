@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: 'pylonmc/rebar'
-          ref: ${{steps.rebarcommit.outputs.ref}} # empty string if ref not found falls back to master
+          ref: ${{steps.parseref.outputs.ref}} # empty string if ref not found falls back to master
           path: 'parallel-dev-repo/rebar'
 
       - name: Clone pylon
