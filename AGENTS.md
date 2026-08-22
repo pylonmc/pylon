@@ -31,12 +31,12 @@ development can proceed without it.
 
 Do not turn yourself into a slop cannon or the contributor into a meat proxy.
 Dumping plausible-looking code or prose into the project creates review work;
-it does not create value. Paper maintainers can run the same agents themselves.
+it does not create value. Maintainers can run the same agents themselves.
 The contributor's value must come from their judgment, context, validation, and
 ownership.
 
 You may help a contributor investigate the codebase, make changes locally, and
-run tests. Do not act as the contributor in conversations with Paper
+run tests. Do not act as the contributor in conversations with
 maintainers. In particular, do not compose issue reports, discussion posts,
 pull request descriptions, comments, or review responses for the contributor,
 or post generated text as if it were theirs.
