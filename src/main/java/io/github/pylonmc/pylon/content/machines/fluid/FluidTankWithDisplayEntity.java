@@ -10,6 +10,8 @@ import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
 
 
 /**
@@ -21,11 +23,16 @@ import org.joml.Vector3d;
  */
 public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
 
-    default void createFluidDisplay() {
+    default void createFluidDisplay(@NonNull Vector3i offset) {
         addEntity("fluid", new ItemDisplayBuilder()
-            .build(getBlock().getLocation().toCenterLocation().add(0, 0, 0))
+            .build(getBlock().getLocation().toCenterLocation().add(offset.x, offset.y, offset.z))
         );
     }
+
+    default void createFluidDisplay() {
+        createFluidDisplay(new Vector3i(0, 0, 0));
+    }
+
 
     default @NotNull ItemDisplay getFluidDisplay() {
         return getHeldEntityOrThrow(ItemDisplay.class, "fluid");
@@ -45,11 +52,34 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
             return false;
         }
 
+        updateFluidDisplay();
+
+        return true;
+    }
+
+    @Override
+    default void setCapacity(double capacity) {
+        double oldCapacity = getFluidAmount();
+        FluidTankRebarBlock.super.setCapacity(capacity);
+        if (!(Math.abs(oldCapacity - capacity) < RebarUtils.FLUID_EPSILON)) {
+            updateFluidDisplay();
+        }
+    }
+
+    default void updateFluidDisplay() {
+        if (getFluidCapacity() < 1.0e-6 || getFluidAmount() < 1.0e-6) {
+            getFluidDisplay().setTransformationMatrix(new TransformBuilder()
+                    .scale(0, 0, 0)
+                    .buildForItemDisplay()
+            );
+            return;
+        }
+
         ItemDisplay fluidDisplay = getFluidDisplay();
         Vector3d translation = fluidDisplayTranslation();
         Vector3d scale = fluidDisplayScale();
 
-        float proportion = (float) (amount / getFluidCapacity());
+        float proportion = (float) (getFluidAmount() / getFluidCapacity());
 
         fluidDisplay.setInterpolationDelay(0);
         fluidDisplay.setInterpolationDuration(RebarConfig.FLUID_TICK_INTERVAL);
@@ -58,8 +88,6 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
                 .scale(scale.x, scale.y * proportion, scale.z)
                 .buildForItemDisplay()
         );
-
-        return true;
     }
 
     default Vector3d fluidDisplayTranslation() {

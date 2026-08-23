@@ -144,13 +144,10 @@ public class FluidExperienceBottler extends RebarBlock implements
         if (outputFluid != null && outputHatch == null) {
             return;
         }
-        if (!inputHatch.hasFluid(inputFluid) || !xpHatch.hasFluid(PylonFluids.LIQUID_XP)) {
+        if (inputHatch.getFluidAmount() < inputFluidAmount) {
             return;
         }
-        if (inputHatch.fluidAmount(inputFluid) < inputFluidAmount) {
-            return;
-        }
-        if (xpHatch.fluidAmount(PylonFluids.LIQUID_XP) < xpAmount) {
+        if (xpHatch.getFluidAmount() < xpAmount) {
             return;
         }
         if (bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE) {
@@ -160,13 +157,13 @@ public class FluidExperienceBottler extends RebarBlock implements
         if (bottleOutputItem != null && (!bottleOutputItem.getKey().equals(PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getStack().getAmount() == bottleOutputItem.getStack().getMaxStackSize())) {
             return;
         }
-        if (outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < outputFluidAmount) {
+        if (outputFluid != null && outputHatch.getFluidSpaceRemaining() < outputFluidAmount) {
             return;
         }
-        inputHatch.removeFluid(inputFluid, inputFluidAmount);
-        xpHatch.removeFluid(PylonFluids.LIQUID_XP, xpAmount);
+        inputHatch.removeFluid(inputFluidAmount);
+        xpHatch.removeFluid(xpAmount);
         if (outputFluid != null) {
-            outputHatch.addFluid(outputFluid, outputFluidAmount);
+            outputHatch.addFluid(outputFluidAmount);
         }
         bottleInput.setItem(new MachineUpdateReason(), 0, bottleInput.getItem(0).subtract());
         startProcess((int) Math.round(bottleProductionTime * 20));
@@ -183,8 +180,8 @@ public class FluidExperienceBottler extends RebarBlock implements
         FluidInputHatch inputHatch = getMultiblockComponent(FluidInputHatch.class, FLUID_INPUT_HATCH_POS);
         FluidInputHatch xpHatch = getMultiblockComponent(FluidInputHatch.class, EXPERIENCE_INPUT_HATCH_POS);
         Preconditions.checkState(inputHatch != null && xpHatch != null);
-        inputHatch.setFluidType(inputFluid);
-        xpHatch.setFluidType(PylonFluids.LIQUID_XP);
+        inputHatch.setAllowedFluid(inputFluid);
+        xpHatch.setAllowedFluid(PylonFluids.LIQUID_XP);
         if (outputFluid != null) {
             FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH_POS);
             outputHatch.setFluidType(outputFluid);

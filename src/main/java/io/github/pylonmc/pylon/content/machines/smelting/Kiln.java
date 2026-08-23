@@ -26,7 +26,6 @@ import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -217,8 +216,8 @@ public class Kiln extends RebarBlock implements
                     .inventory.canHold(recipe.outputItem());
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
             boolean canHoldOutputFluid = recipe.outputFluid() == null
-                    || fluidOutputHatch.fluid == null
-                    || fluidOutputHatch.canSetFluid(recipe.outputFluid(), fluidOutputHatch.fluidAmount() + recipe.outputFluidAmount());
+                    || fluidOutputHatch.getFluidType() == null
+                    || recipe.outputFluid().equals(fluidOutputHatch.getFluidType()) && fluidOutputHatch.canSetFluid(fluidOutputHatch.getFluidAmount() + recipe.outputFluidAmount());
             if (canHoldOutputItem && canHoldOutputFluid && temperature > recipe.temperature()) {
                 progressRecipe(getTickInterval());
             }
@@ -256,9 +255,9 @@ public class Kiln extends RebarBlock implements
 
         if (recipe.outputFluid() != null && recipe.outputFluidAmount() != null) {
             FluidOutputHatch fluidOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
-            boolean canHoldFluidOutput = fluidOutputHatch.fluid == null
-                    || fluidOutputHatch.fluidAmount(fluidOutputHatch.fluid) < 1.0e-6
-                    || fluidOutputHatch.fluid.equals(recipe.outputFluid()) && fluidOutputHatch.fluidSpaceRemaining(fluidOutputHatch.fluid) > recipe.outputFluidAmount();
+            boolean canHoldFluidOutput = fluidOutputHatch.getFluidType() == null
+                    || fluidOutputHatch.getFluidAmount() < 1.0e-6
+                    || fluidOutputHatch.getFluidType().equals(recipe.outputFluid()) && fluidOutputHatch.getFluidSpaceRemaining() > recipe.outputFluidAmount();
             if (!canHoldFluidOutput) {
                 return false;
             }

@@ -2464,6 +2464,60 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  small_boiler:
+    name: "Small Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_boiler:
+    name: "Large Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  small_fluid_boiler:
+    name: "Small Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  large_fluid_boiler:
+    name: "Large Fluid Boiler"
+    lore: |-
+      <arrow> Turns water into steam
+      <arrow> Burns <#ff6702>flammable</#ff6702> fluids
+      <arrow> Burns a lot of fuel when heating up
+      <arrow> Burns fuel much slower when idle
+      <arrow> <attr>Water input:</attr> %water-input%
+      <arrow> <attr>Steam output:</attr> %steam-output%
+      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+
+  firebox:
+    name: "Firebox"
+
+  fluid_firebox:
+    name: "Fluid Firebox"
+
+  copper_pipe_assembly:
+    name: "Copper Pipe Assembly"
+
+  large_copper_pipe_assembly:
+    name: "Large Copper Pipe Assembly"
+    
   tape_measure:
     name: "Tape Measure"
     lore: |-
@@ -2474,7 +2528,9 @@ item:
 
 fluid:
   tag:
-    melting-point: "Melting point: %temperature%"
+    melting-point: "<arrow> Melting point: %temperature%"
+    gas: "<arrow> <#b0abce>Gas</#b0abce>"
+    flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
   lava: "Lava"
   plant_oil: "Plant Oil"
@@ -2482,6 +2538,7 @@ fluid:
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
+  steam: "Steam"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
@@ -2573,6 +2630,8 @@ research:
   cargo_1: "<#e89888>Cargo I"
   cargo_2: "<#e89888>Cargo II"
   cargo_3: "<#e89888>Cargo III"
+  tea_brewing: "<#cc9b6e>Tea brewing"
+  advanced_tea_brewing: "<#cc9b6e>Advanced tea brewing"
   diesel_machines: "<#e8c888>Diesel machines"
   diesel_production: "<#ce8c77>Diesel production"
   diesel_booster: "<#e8c888>Diesel booster"
@@ -2614,6 +2673,7 @@ guide:
     machines_hydraulic_machines: "<white>Hydraulic Machines"
     machines_hydraulic_purification: "<white>Hydraulic Purification"
     machines_cargo: "<white>Cargo"
+    machines_boilers: "<white>Boilers"
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"

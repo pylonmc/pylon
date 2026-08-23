@@ -65,9 +65,7 @@ public class FluidTank extends RebarBlock
     public FluidTank(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        addEntity("fluid", new ItemDisplayBuilder()
-                .build(getBlock().getLocation().toCenterLocation().add(0, 1, 0))
-        );
+        createFluidDisplay(new Vector3i(0, 1, 0));
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
         FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);

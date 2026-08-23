@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.pylon.recipes.MeltingRecipe;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
@@ -88,7 +88,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
             }
             if (recipe == null) continue;
             double fluidAmountAfterAdding = controller.getTotalFluid() + recipe.resultAmount();
-            double temperature = recipe.result().getTag(MeltingPoint.class).temperature();
+            double temperature = recipe.result().getTag(MeltingPointTag.class).temperature();
             if (controller.getTemperature() >= temperature && fluidAmountAfterAdding <= controller.getCapacity()) {
                 controller.addFluid(recipe.result(), recipe.resultAmount());
                 item.subtract();
