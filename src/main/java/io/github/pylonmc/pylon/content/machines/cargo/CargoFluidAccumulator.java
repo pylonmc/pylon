@@ -90,7 +90,7 @@ public class CargoFluidAccumulator extends RebarBlock implements
                     ),
                     RebarArgument.of(
                             "fluid-buffer",
-                            UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidBuffer)
+                            UnitFormat.MILLIBUCKETS.format(fluidBuffer)
                     )
             );
         }

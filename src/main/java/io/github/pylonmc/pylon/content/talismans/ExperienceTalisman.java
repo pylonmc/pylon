@@ -5,6 +5,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -52,12 +53,13 @@ public class ExperienceTalisman extends Talisman {
         @EventHandler(priority = EventPriority.LOWEST)
         public void onPlayerGainXP(PlayerPickupExperienceEvent event){
             Float xpMultiplier = event.getPlayer().getPersistentDataContainer().get(XP_MULTIPLIER_KEY, PersistentDataType.FLOAT);
-            if (xpMultiplier == null){
+            if (xpMultiplier == null) {
                 return;
             }
-            event.getExperienceOrb().setExperience(
-                    Math.round(event.getExperienceOrb().getExperience() * xpMultiplier)
-            );
+            ExperienceOrb orb = event.getExperienceOrb();
+            if (orb.getSpawnReason() != ExperienceOrb.SpawnReason.CUSTOM) {
+                orb.setExperience(Math.round(orb.getExperience() * xpMultiplier));
+            }
         }
     }
 }
