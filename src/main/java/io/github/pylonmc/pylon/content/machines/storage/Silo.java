@@ -170,12 +170,14 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
     @Override
     public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
         ItemStack stack = super.getDropItem(context);
-        stack.editPersistentDataContainer(pdc -> {
-            if (this.stack != null) {
-                pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, this.stack);
-                pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
-            }
-        });
+        if (stack != null) {
+            stack.editPersistentDataContainer(pdc -> {
+                if (this.stack != null) {
+                    pdc.set(STACK_KEY, RebarSerializers.ITEM_STACK, this.stack);
+                    pdc.set(AMOUNT_KEY, RebarSerializers.LONG, amount);
+                }
+            });
+        }
         return stack;
     }
 
@@ -183,7 +185,7 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         WailaDisplay display = WailaDisplay.of(this, player);
         if (stack == null) {
-            display.add(Component.translatable("pylon.message.silo.empty"));
+            return display.add(Component.translatable("pylon.message.silo.empty"));
         }
         return display.add(Component.translatable("pylon.message.silo.not-empty")
                 .arguments(

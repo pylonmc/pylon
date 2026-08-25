@@ -22,6 +22,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 
 public class PylonRecipes {
 
