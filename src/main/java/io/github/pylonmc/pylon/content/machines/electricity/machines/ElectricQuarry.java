@@ -1,17 +1,23 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.content.machines.generic.GenericQuarry;
+import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -49,6 +55,21 @@ public class ElectricQuarry extends GenericQuarry implements SimpleElectricRebar
         setFacing(context.getFacing());
         createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
+
+        addEntity("shaft", new ItemDisplayBuilder()
+                .itemStack(ItemStackBuilder.of(Material.IRON_BLOCK).addCustomModelDataString(getKey() + ":shaft"))
+                .transformation(new TransformBuilder()
+                        .scale(0.3, 1, 0.3))
+                .build(block.getLocation().toCenterLocation().add(0, 0.51, 0))
+        );
+        addEntity("bucket", new ItemDisplayBuilder()
+                .itemStack(ItemStackBuilder.of(Material.COMPOSTER).addCustomModelDataString(getKey() + ":bucket"))
+                .transformation(new TransformBuilder()
+                        .translate(0, -0.5, 0)
+                        .scale(0.3)
+                )
+                .build(block.getLocation().toCenterLocation().add(0, 0.51, 0).add(getFacing().getDirection().multiply(-0.3)))
+        );
     }
 
     @SuppressWarnings("unused")
@@ -63,6 +84,16 @@ public class ElectricQuarry extends GenericQuarry implements SimpleElectricRebar
         }
 
         progressProcess(tickInterval);
+
+        ItemDisplay bucket = getHeldEntityOrThrow(ItemDisplay.class, "bucket");
+        PylonUtils.animate(
+                bucket,
+                getTickInterval(),
+                new TransformBuilder()
+                        .translate(0, bucket.getTransformation().getTranslation().y() < 0 ? 0.49 : -0.5, 0)
+                        .scale(0.3)
+                        .buildForItemDisplay()
+        );
     }
 
     @Override

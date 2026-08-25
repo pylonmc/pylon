@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.electricity.machines;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.generic.GenericMachine;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
+import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -100,15 +101,12 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
 
         int ticks = getRecipeTicks(recipe);
         if (ticks <= 5) return true;
-        display.setTransformationMatrix(startTransform.translate(0, -0.7f, 0, new Matrix4f()));
-        display.setInterpolationDuration(ticks - 5);
-        display.setInterpolationDelay(0);
-
-        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            display.setTransformationMatrix(startTransform);
-            display.setInterpolationDuration(5);
-            display.setInterpolationDelay(0);
-        }, ticks - 5);
+        PylonUtils.animate(display, ticks - 5, startTransform.translate(0, -0.7f, 0, new Matrix4f()));
+        Bukkit.getScheduler().runTaskLater(
+                Pylon.getInstance(),
+                () -> PylonUtils.animate(display, 5, startTransform),
+                ticks - 5
+        );
 
         return true;
     }

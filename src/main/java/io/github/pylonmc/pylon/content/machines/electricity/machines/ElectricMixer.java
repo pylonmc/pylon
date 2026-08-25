@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
+import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -248,14 +249,12 @@ public class ElectricMixer extends RebarBlock implements
 
     private void rotateDisplay(ItemDisplay display) {
         Matrix4f matrix = TransformUtil.transformationToMatrix(display.getTransformation());
-        display.setTransformationMatrix(matrix.rotateY((float) (Math.PI / 2), new Matrix4f()));
-        display.setInterpolationDelay(0);
-        display.setInterpolationDuration(getTickInterval() / 2);
-        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            display.setTransformationMatrix(matrix.rotateY((float) Math.PI));
-            display.setInterpolationDelay(0);
-            display.setInterpolationDuration(getTickInterval() / 2);
-        }, getTickInterval() / 2);
+        PylonUtils.animate(display, getTickInterval() / 2, matrix.rotateY((float) (Math.PI / 2), new Matrix4f()));
+        Bukkit.getScheduler().runTaskLater(
+                Pylon.getInstance(),
+                () -> PylonUtils.animate(display, getTickInterval() / 2, matrix.rotateY((float) Math.PI)),
+                getTickInterval() / 2)
+        ;
     }
 
     @Override
