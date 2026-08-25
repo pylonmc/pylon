@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -8,6 +9,9 @@ import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -30,15 +34,18 @@ import java.util.Map;
 import java.util.Objects;
 import kotlin.Pair;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
@@ -93,7 +100,7 @@ public class ElectricMixer extends RebarBlock implements
     @SuppressWarnings("unused")
     public ElectricMixer(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setFacing(context.getFacingVertical());
+        setFacing(context.getFacing());
         setTickInterval(tickInterval);
         setRecipeType(MixingPotRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
@@ -101,6 +108,22 @@ public class ElectricMixer extends RebarBlock implements
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.WEST, context, false);
         createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
+
+        addEntity("whisk_0", new ItemDisplayBuilder()
+                .itemStack(ItemStackBuilder.of(Material.IRON_BARS).addCustomModelDataString("whisk"))
+                .transformation(new TransformBuilder()
+                        .scale(0.6)
+                )
+                .build(block.getLocation().toCenterLocation().add(0, 0.55, 0))
+        );
+        addEntity("whisk_1", new ItemDisplayBuilder()
+                .itemStack(ItemStackBuilder.of(Material.IRON_BARS).addCustomModelDataString("whisk"))
+                .transformation(new TransformBuilder()
+                        .scale(0.6)
+                        .rotate(0, Math.PI / 2, 0)
+                )
+                .build(block.getLocation().toCenterLocation().add(0, 0.55, 0))
+        );
     }
 
     @SuppressWarnings("unused")
@@ -214,6 +237,21 @@ public class ElectricMixer extends RebarBlock implements
     public void tick() {
         if (!isProcessingRecipe() || !isPowered()) return;
         progressRecipe(getTickInterval());
+
+        rotateDisplay(getHeldEntityOrThrow(ItemDisplay.class, "whisk_0"));
+        rotateDisplay(getHeldEntityOrThrow(ItemDisplay.class, "whisk_1"));
+    }
+
+    private void rotateDisplay(ItemDisplay display) {
+        Matrix4f matrix = TransformUtil.transformationToMatrix(display.getTransformation());
+        display.setTransformationMatrix(matrix.rotateY((float) (Math.PI / 2), new Matrix4f()));
+        display.setInterpolationDelay(0);
+        display.setInterpolationDuration(getTickInterval() / 2);
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            display.setTransformationMatrix(matrix.rotateY((float) Math.PI));
+            display.setInterpolationDelay(0);
+            display.setInterpolationDuration(getTickInterval() / 2);
+        }, getTickInterval() / 2);
     }
 
     @Override
