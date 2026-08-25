@@ -97,6 +97,10 @@ public class ElectricMixer extends RebarBlock implements
         }
     }
 
+    private final ItemStack whiskStack = ItemStackBuilder.of(Material.IRON_BARS)
+            .addCustomModelDataString(getKey() + ":whisk")
+            .build();
+
     @SuppressWarnings("unused")
     public ElectricMixer(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
@@ -110,14 +114,14 @@ public class ElectricMixer extends RebarBlock implements
         setRequiredPower(powerUsage);
 
         addEntity("whisk_0", new ItemDisplayBuilder()
-                .itemStack(ItemStackBuilder.of(Material.IRON_BARS).addCustomModelDataString("whisk"))
+                .itemStack(whiskStack)
                 .transformation(new TransformBuilder()
                         .scale(0.6)
                 )
                 .build(block.getLocation().toCenterLocation().add(0, 0.55, 0))
         );
         addEntity("whisk_1", new ItemDisplayBuilder()
-                .itemStack(ItemStackBuilder.of(Material.IRON_BARS).addCustomModelDataString("whisk"))
+                .itemStack(whiskStack)
                 .transformation(new TransformBuilder()
                         .scale(0.6)
                         .rotate(0, Math.PI / 2, 0)

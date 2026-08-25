@@ -1,23 +1,32 @@
 package io.github.pylonmc.pylon.content.machines.electricity.machines;
 
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.content.machines.generic.GenericMachine;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
+import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 import org.jspecify.annotations.NonNull;
 
 public class ElectricCompressor extends GenericMachine<HammerRecipe> implements SimpleElectricRebarBlock {
@@ -49,6 +58,15 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
         setRecipeType(HammerRecipe.RECIPE_TYPE);
         createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
+
+        addEntity("shaft", new ItemDisplayBuilder()
+                .itemStack(ItemStackBuilder.of(Material.NETHERITE_BLOCK).addCustomModelDataString(getKey() + ":shaft"))
+                .transformation(new TransformBuilder()
+                        .scale(0.3, 0.7, 0.3)
+                        .translate(0, 0.4, 0)
+                )
+                .build(block.getLocation().toCenterLocation().add(0, 0.51, 0))
+        );
     }
 
     @SuppressWarnings("unused")
@@ -70,6 +88,29 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
     public void tick() {
         if (!isPowered() || !isProcessingRecipe()) return;
         progressRecipe(getTickInterval());
+    }
+
+    @Override
+    protected boolean tryStartRecipe(HammerRecipe recipe, ItemStack stack) {
+        boolean started = super.tryStartRecipe(recipe, stack);
+        if (!started) return false;
+
+        ItemDisplay display = getHeldEntityOrThrow(ItemDisplay.class, "shaft");
+        Matrix4f startTransform = TransformUtil.transformationToMatrix(display.getTransformation());
+
+        int ticks = getRecipeTicks(recipe);
+        if (ticks <= 5) return true;
+        display.setTransformationMatrix(startTransform.translate(0, -0.7f, 0, new Matrix4f()));
+        display.setInterpolationDuration(ticks - 5);
+        display.setInterpolationDelay(0);
+
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            display.setTransformationMatrix(startTransform);
+            display.setInterpolationDuration(5);
+            display.setInterpolationDelay(0);
+        }, ticks - 5);
+
+        return true;
     }
 
     @Override
