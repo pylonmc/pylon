@@ -18,6 +18,7 @@ import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.text.Component;
+import java.util.List;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,8 +30,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 
 public class HydraulicCannon extends RebarItem implements InteractRebarItemHandler, HydraulicRefuelable {
@@ -131,6 +130,7 @@ public class HydraulicCannon extends RebarItem implements InteractRebarItemHandl
         Vector direction = player.getEyeLocation().getDirection();
         EntityStorage.add(new DisplayProjectile(
                 player,
+                PylonKeys.TIN_PROJECTILE,
                 projectileMaterial,
                 source,
                 direction,

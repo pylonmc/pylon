@@ -40,7 +40,6 @@ public abstract class AbstractBoiler extends RebarBlock implements SimpleRebarMu
     protected AbstractBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         temperature = minTemperature;
     }

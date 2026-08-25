@@ -6,13 +6,9 @@ import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.GrindstoneRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
-import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -23,8 +19,9 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
-import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -46,9 +43,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3i;
-
-import java.util.List;
-import java.util.Map;
 
 
 public class Grindstone extends RebarBlock implements

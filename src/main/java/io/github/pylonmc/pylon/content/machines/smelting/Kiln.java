@@ -8,13 +8,8 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -25,6 +20,9 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -45,10 +43,6 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -99,14 +93,13 @@ public class Kiln extends RebarBlock implements
     public Kiln(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         setRecipeType(KilnRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background(), false));
         temperature = minTemperature;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public Kiln(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         temperature = pdc.get(TEMPERATURE_KEY, RebarSerializers.DOUBLE);

@@ -270,15 +270,6 @@ item:
       <arrow> <attr>Fluid:</attr> %fluid_per_second%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
-  fluid_pipe_palladium:
-    name: "Palladium Fluid Pipe"
-    lore: |-
-      <arrow> <insn>Right click</insn> a connection point, another pipe, or a block to start placing
-      <arrow> <insn>Right click</insn> a placed pipe with a block to make it look like that block
-      <arrow> You can only connect pipes of the same type
-      <arrow> <attr>Fluid:</attr> %fluid_per_second%
-      <arrow> <attr>Temperatures:</attr> %temperatures%
-
   fluid_pipe_creative:
     name: "<#ff00ff>Creative Fluid Pipe"
     lore: |-
@@ -360,15 +351,6 @@ item:
 
   portable_fluid_tank_steel:
     name: "Steel Portable Fluid Tank"
-    lore: |-
-      <arrow> Can be placed down and connected with pipes
-      <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
-      <arrow> <attr>Fluid:</attr> %fluid%
-      <arrow> <attr>Allowed temperatures:</attr> %temperatures%
-
-  portable_fluid_tank_palladium:
-    name: "Palladium Portable Fluid Tank"
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
@@ -759,12 +741,6 @@ item:
       <arrow> <insn>Right click</insn> to open
       <arrow> <attr>Research points:</attr> %points%
 
-  research_pack_4:
-    name: "Research Pack IV"
-    lore: |-
-      <arrow> <insn>Right click</insn> to open
-      <arrow> <attr>Research points:</attr> %points%
-
   rock_dust:
     name: "Rock Dust"
 
@@ -877,21 +853,6 @@ item:
   steel_sheet:
     name: "Steel Sheet"
 
-  palladium_dust:
-    name: "Palladium Dust"
-
-  palladium_ingot:
-    name: "Palladium Ingot"
-
-  palladium_nugget:
-    name: "Palladium Nugget"
-
-  palladium_block:
-    name: "Block of Palladium"
-
-  palladium_sheet:
-    name: "Palladium Sheet"
-
   charcoal_block:
     name: "Block of Charcoal"
 
@@ -941,14 +902,6 @@ item:
 
   health_talisman_ultimate:
     name: "Ultimate Health Talisman"
-    lore: |-
-      <arrow> Increases your maximum health
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Max health increase:</attr> %health-boost%
-
-  health_talisman_palladium:
-    name: "Palladium Health Talisman"
     lore: |-
       <arrow> Increases your maximum health
       <arrow> Does not stack
@@ -1289,12 +1242,6 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Temperatures:</attr> %temperatures%
 
-  fluid_tank_casing_palladium:
-    name: "Palladium Fluid Tank Casing"
-    lore: |-
-      <arrow> <attr>Capacity:</attr> %capacity%
-      <arrow> <attr>Temperatures:</attr> %temperatures%
-
   manual_core_drill_lever:
     name: "Manual Core Drill Lever"
     lore: |-
@@ -1581,14 +1528,14 @@ item:
   diesel_grindstone:
     name: "Diesel Grindstone"
     lore: |-
-      <arrow> Grinds items
+      <arrow> Grinds items using diesel
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
 
   diesel_brick_molder:
     name: "Diesel Brick Molder"
     lore: |-
-      <arrow> Molds materials into bricks
+      <arrow> Molds materials into bricks using diesel
       <arrow> <attr>Diesel usage:</attr> %diesel-usage%
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Molding cycles:</attr> %molding-cycles%
@@ -1844,14 +1791,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %extra_crop_chance%
 
-  farming_talisman_palladium:
-    name: "Palladium Farming Talisman"
-    lore: |-
-      <arrow> Get an extra drop when breaking a crop
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %extra_crop_chance%
-
   bartering_talisman_simple:
     name: "Simple Bartering Talisman"
     lore: |-
@@ -1870,14 +1809,6 @@ item:
 
   bartering_talisman_ultimate:
     name: "Ultimate Bartering Talisman"
-    lore: |-
-      <arrow> Don't consume items traded to piglins
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %chance_to_not_consume_input%
-
-  bartering_talisman_palladium:
-    name: "Palladium Bartering Talisman"
     lore: |-
       <arrow> Don't consume items traded to piglins
       <arrow> Does not stack
@@ -1908,14 +1839,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
 
-  water_breathing_talisman_palladium:
-    name: "Palladium Water Breathing Talisman"
-    lore: |-
-      <arrow> Allows you to breathe longer underwater
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Additional oxygen:</attr> %bonus_oxygen%
-
   luck_talisman_simple:
     name: "Simple Luck Talisman"
     lore: |-
@@ -1934,14 +1857,6 @@ item:
 
   luck_talisman_ultimate:
     name: "Ultimate Luck Talisman"
-    lore: |-
-      <arrow> Increases your chances of looting higher quality items
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Bonus luck:</attr> %bonus_luck%
-
-  luck_talisman_palladium:
-    name: "Palladium Luck Talisman"
     lore: |-
       <arrow> Increases your chances of looting higher quality items
       <arrow> Does not stack
@@ -1972,14 +1887,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %adult_chance%
 
-  breeding_talisman_palladium:
-    name: "Palladium Breeding Talisman"
-    lore: |-
-      <arrow> Bred children grow up instantly
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %adult_chance%
-
   enchanting_talisman_simple:
     name: "Simple Enchanting Talisman"
     lore: |-
@@ -1998,14 +1905,6 @@ item:
 
   enchanting_talisman_ultimate:
     name: "Ultimate Enchanting Talisman"
-    lore: |-
-      <arrow> Increase the level of enchantments in the enchanting table by 1
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %bonus_level_chance%
-
-  enchanting_talisman_palladium:
-    name: "Palladium Enchanting Talisman"
     lore: |-
       <arrow> Increase the level of enchantments in the enchanting table by 1
       <arrow> Does not stack
@@ -2036,14 +1935,6 @@ item:
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
 
-  hunting_talisman_palladium:
-    name: "Palladium Hunting Talisman"
-    lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Success rate:</attr> %bonus_item_chance%
-
   flight_ring:
     name: "Flight Ring"
     lore: |-
@@ -2068,14 +1959,6 @@ item:
 
   experience_talisman_ultimate:
     name: "Ultimate Experience Talisman"
-    lore: |-
-      <arrow> Boost your experience gain
-      <arrow> Does not stack
-      <arrow> Only works while in your inventory
-      <arrow> <attr>Bonus experience gain:</attr> %xp-boost%
-
-  experience_talisman_palladium:
-    name: "Palladium Experience Talisman"
     lore: |-
       <arrow> Boost your experience gain
       <arrow> Does not stack
@@ -2197,57 +2080,8 @@ item:
   steel_hoe:
     name: "Steel Hoe"
 
-  palladium_helmet:
-    name: "Palladium Helmet"
-
-  palladium_chestplate:
-    name: "Palladium Chestplate"
-
-  palladium_leggings:
-    name: "Palladium Leggings"
-
-  palladium_boots:
-    name: "Palladium Boots"
-
-  palladium_sword:
-    name: "Palladium Sword"
-
-  palladium_axe:
-    name: "Palladium Axe"
-
-  palladium_pickaxe:
-    name: "Palladium Pickaxe"
-
-  palladium_shovel:
-    name: "Palladium Shovel"
-
-  palladium_hoe:
-    name: "Palladium Hoe"
-
   fine_sediment:
     name: "Fine Sediment"
-
-  palladium_condenser:
-    name: "Palladium Condenser"
-    lore: |-
-      <arrow> Condenses Shimmer Dust II into Palladium Dust using Diesel and Hydraulic Fluid
-      <arrow> Outputs dirty hydraulic fluid
-      <arrow> <attr>Cycle duration:</attr> %cycle-duration%
-      <arrow> <attr>Shimmer Dust II per cycle:</attr> %shimmer-dust-per-cycle%
-      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
-      <arrow> <attr>Hydraulic fluid usage:</attr> %hydraulic-fluid-usage%
-      
-      <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:palladium_condenser/></yellow>
-      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
-      <diamond> 1x <yellow><item:pylon:item_output_hatch/></yellow>
-      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
-      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
-      <diamond> 6x <yellow><item:pylon:bronze_foundation/></yellow>
-      <diamond> 8x <yellow><item:pylon:steel_support_beam/></yellow>
-      <diamond> 8x <yellow><item:pylon:collimator_pillar/></yellow>
-      <diamond> 16x <yellow><item:pylon:bronze_grating/></yellow>
-      <diamond> 3 or more <yellow>Fluid Tank Casing</yellow>
 
   crude_alloy_furnace:
     name: "Crude Alloy Furnace"
@@ -2337,18 +2171,6 @@ item:
 
   steel_silo:
     name: "Steel Silo"
-    lore: |-
-      <arrow> Stores one type of item
-      <arrow> Retains its contents when broken
-      <arrow> <insn>Right click</insn> to add one item
-      <arrow> <insn>Shift right click</insn> to add a stack
-      <arrow> <insn>Left click</insn> to remove one item
-      <arrow> <insn>Shift left click</insn> to remove a stack
-      <arrow> <attr>Capacity:</attr> %capacity%
-      <arrow> <attr>Contents:</attr> %contents%
-
-  palladium_silo:
-    name: "Palladium Silo"
     lore: |-
       <arrow> Stores one type of item
       <arrow> Retains its contents when broken
@@ -2517,7 +2339,166 @@ item:
 
   large_copper_pipe_assembly:
     name: "Large Copper Pipe Assembly"
-    
+
+  power_bus:
+    name: "Power Bus"
+    lore: |-
+      <arrow> Acts as a multidirectional bus for wires to connect to
+      <arrow> Power may be transmitted from any port to any other port
+
+  creative_power_source:
+    name: "<#ff00ff>Creative Power Source"
+    lore: |-
+      <arrow> Produces <unit:zetta:watts>1</unit> of power
+    story: An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
+
+  electricity_input_hatch:
+    name: "Electricity Input Hatch"
+    lore: |-
+      <arrow> Accepts power from wires
+
+  electricity_output_hatch:
+    name: "Electricity Output Hatch"
+    lore: |-
+      <arrow> Outputs power to wires
+
+  steam_engine:
+    name: "Steam Engine"
+    lore: |-
+      <arrow> Uses steam to produce power
+      <arrow> <attr>Steam usage:</attr> %steam-usage%
+      <arrow> <attr>Steam capacity:</attr> %steam-capacity%
+      <arrow> <attr>Power production:</attr> %power-production%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:steam_engine/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+
+  gas_turbine:
+    name: "Gas Turbine"
+    lore: |-
+      <arrow> Uses hot gases to produce power
+      <arrow> The more hot gases piped into it, the more power it produces
+      <arrow> Different gases produce different amounts of power
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:gas_turbine/></yellow>
+      <diamond> 9x <yellow><item:pylon:reinforced_glass/></yellow>
+      <diamond> 3x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 10x <yellow><item:pylon:bronze_foundation/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:electricity_output_hatch/></yellow>
+
+  combustion_tower:
+    name: "Combustion Tower"
+    lore: |-
+      <arrow> Burns diesel to produce very hot exhaust
+      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
+      <arrow> <attr>Very hot exhaust production:</attr> %exhaust-production%
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+
+  heat_exchanger:
+    name: "Heat Exchanger"
+    lore: |-
+      <arrow> Exchanges heat between two fluids
+      <arrow> Useful in generating <fluid:pylon:steam> from <fluid:pylon:hot_exhaust>
+     
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:heat_exchanger/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
+
+  wire_1_gauge:
+    name: "1-Gauge Wire"
+    lore: |-
+      <arrow> Transmits electricity
+      <arrow> <insn>Right click</insn> on an electric port to start connecting
+      <arrow> <insn>Right click</insn> on another electric port to connect the two ports
+      <arrow> <attr>Max power:</attr> %max-power%
+
+  capacitor_1_kj:
+    name: "1 kJ Capacitor"
+    lore: |-
+      <arrow> Stores electricity
+      <arrow> Capacitors will only take excess power that other blocks can't use
+      <arrow> <attr>Capacity:</attr> %capacity%
+
+  electric_grindstone:
+    name: "Electric Grindstone"
+    lore: |-
+      <arrow> Grinds items
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
+  electric_brick_molder:
+    name: "Electric Brick Molder"
+    lore: |-
+      <arrow> Molds materials into bricks
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Molding cycles:</attr> %molding-cycles%
+
+  electric_compressor:
+    name: "Electric Compressor"
+    lore: |-
+      <arrow> Performs hammer recipes
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Hammer time:</attr> %hammer-time%
+
+  electric_mixer:
+    name: "Electric Mixer"
+    lore: |-
+      <arrow> Automatically performs the functions of a <item:pylon:mixing_pot/>
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Mixing time:</attr> %mixing-time%
+
+  electric_press:
+    name: "Electric Press"
+    lore: |-
+      <arrow> Presses plants into plant oil
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Time per item:</attr> %time-per-item%
+
+  electric_table_saw:
+    name: "Electric Table Saw"
+    lore: |-
+      <arrow> Efficiently cuts logs into planks, and planks into sticks
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Speed:</attr> %speed%
+
+  electric_quarry:
+    name: "Electric Quarry"
+    lore: |-
+      <arrow> Mines blocks in a large area
+      <arrow> <attr>Mining area:</attr> %mining-area%
+      <arrow> <attr>Speed:</attr> %speed%
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
+  electric_pipe_bender:
+    name: "Electric Pipe Bender"
+    lore: |-
+      <arrow> Efficiently bends materials into pipes
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Speed:</attr> %speed%
+
+  electric_breaker:
+    name: "Electric Breaker"
+    lore: |-
+      <arrow> Breaks the block directly in front of it using the stored tool
+      <arrow> Only breaks blocks that can be broken by the stored tool
+      <arrow> <attr>Speed:</attr> %speed%
+      <arrow> <attr>Power usage:</attr> %power-usage%
+
+  electric_furnace:
+    name: "Electric Furnace"
+    lore: |-
+      <arrow> Smelts items
+      <arrow> <attr>Power usage:</attr> %power-usage%
+      <arrow> <attr>Smelting speed:</attr> %speed%
+
   tape_measure:
     name: "Tape Measure"
     lore: |-
@@ -2532,13 +2513,13 @@ fluid:
     gas: "<arrow> <#b0abce>Gas</#b0abce>"
     flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
+  steam: "Steam"
   lava: "Lava"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
   reflector_fluid: "Reflector Fluid"
   sugarcane: "Sugarcane"
-  steam: "Steam"
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
@@ -2550,7 +2531,6 @@ fluid:
   bronze: "Liquid Bronze"
   gold: "Liquid Gold"
   steel: "Liquid Steel"
-  palladium: "Liquid Palladium"
   slurry: "Slurry"
   slurry_coal: "Coal Slurry"
   slurry_carbon: "Carbon Slurry"
@@ -2561,6 +2541,8 @@ fluid:
   slurry_redstone: "Redstone Slurry"
   slurry_sponge_iron: "Sponge Iron Slurry"
   liquid_xp: "Liquid Experience"
+  very_hot_exhaust: "<#ff2b0f>Very Hot Exhaust"
+  hot_exhaust: "<#ff6b0f>Hot Exhaust"
 
 research:
   baking: "<#e2b42b>Baking"
@@ -2638,10 +2620,6 @@ research:
   assembling: "<#846e5a>Assembling"
   steel_tools: "<gray>Steel tools"
   steel_armor: "<gray>Steel armor"
-  palladium_tools: "<#2937e3>Palladium tools"
-  palladium_armor: "<#2937e3>Palladium armor"
-  creative_flight: "<#2937e3>Creative flight"
-  palladium_production: "<#2937e3>Palladium Production"
   silos_1: "<#ea9335>Silos I"
   silos_2: "<#ea9335>Silos II"
   silos_3: "<#ea9335>Silos III"
@@ -2677,6 +2655,9 @@ guide:
     machines_diesel_machines: "<white>Diesel Machines"
     machines_diesel_production: "<white>Diesel Production"
     machines_smelting: "<white>Smelting"
+    machines_electricity_production: "<yellow>Electricity Production"
+    machines_electric_machines: "<yellow>Electric Machines"
+    machines_electricity_utilities: "<yellow>Electricity Utilties"
     machines: "<white>Machines"
     assembling: "<white>Assembling"
     building: "<white>Building"
@@ -2740,12 +2721,6 @@ guide:
         diesel_machines:
           name: "Diesel Machines"
           lore: ""
-        palladium:
-          name: "Palladium Age"
-          lore: ""
-        palladium_flight_ring:
-          name: "Palladium Flight Ring"
-          lore: ""
       bloomery:
         bloomer:
           name: "The Bloomery"
@@ -2755,6 +2730,7 @@ message:
   idle: "<#f9e981>Idle"
   invalid_recipe: "<red>Invalid recipe"
   no_fuel: "<red>No fuel"
+  no_power: "<red>No power"
   assembly_table:
     full: "<red>Output full!"
   fluid_selector:
@@ -2826,6 +2802,9 @@ message:
     empty: "<red>The cannon is out of hydraulic fluid"
     full: "<red>The cannon is full with dirty hydraulic fluid"
     no-ammo: "<red>The cannon is out of ammunition"
+  creative-power-source:
+    set-power: "Enter a new amount of power to produce (min 0):"
+  producing-power: "Producing %power%"
 
 gui:
   fluid-selector-title: "Select Fluid"
@@ -2845,23 +2824,6 @@ gui:
     lore: |-
       <arrow> The <item:pylon:cargo_overflow_gate/> will always send items to this side unless it's full
       <arrow> <insn>Left click</insn> to cycle priority
-  threshold_button:
-    name: "Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  item_threshold_button:
-    name: "Item Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-  fluid_threshold_button:
-    name: "Fluid Threshold: <light_purple>%threshold%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Right click</insn> to decrease by <unit:milli:buckets>10</unit>
-      <arrow> <insn>Shift left click</insn> to increase by <unit:milli:buckets>100</unit>
-      <arrow> <insn>Shift right click</insn> to decrease by <unit:milli:buckets>100</unit>
   whitelist-blacklist-toggle:
     whitelist:
       name: "Whitelist mode"
@@ -2904,7 +2866,7 @@ gui:
       name: "Contents"
       fluid: "%amount% of %fluid%"
       empty: "Empty"
-  smeltery_burner:
+  burning:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
   vacuum_hopper:
@@ -2914,27 +2876,6 @@ gui:
     name: "Current inventory: <yellow>%inventory%"
     lore: |-
       <arrow> <insn>Click</insn> to cycle
-  fluid_meter:
-    name: "<attr>Measurement duration:</attr> %measurement-duration%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_accumulator:
-    name: "<attr>Amount:</attr> %amount%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
-  fluid_limiter:
-    name: "<attr>Max flow rate:</attr> %max-flow-rate%"
-    lore: |-
-      <arrow> <insn>Left click</insn> to increase
-      <arrow> <insn>Right click</insn> to decrease
-      <arrow> <insn>Shift left click</insn> to increase <yellow>(10x)</yellow>
-      <arrow> <insn>Shift right click</insn> to decrease <yellow>(10x)</yellow>
   assembly_table:
     step: "<#adc5ce>Step %step_index%: <white>%tool% <gray>(x%clicks%)"
     no_recipe: "<red>No recipe"
@@ -2961,6 +2902,21 @@ gui:
       <arrow> <attr>Automatic casting:</attr> %auto-cast%
     casting: "Casting %fluid%: %amount%<br><br>"
     mold-border: "Mold"
+  number-button:
+    name: "<white><attr>%name%:</attr> %value%"
+    lore: |-
+      <arrow> <insn>Left click</insn> to increase by <yellow>%increment%</yellow>
+      <arrow> <insn>Right click</insn> to decrease by <yellow>%increment%</yellow>
+      <arrow> <insn>Shift left click</insn> to increase by <yellow>%increment-shift%</yellow>
+      <arrow> <insn>Shift right click</insn> to decrease by <yellow>%increment-shift%</yellow>
+  mixing: "Mixing"
+  max-flow-rate: "Max flow rate"
+  amount: "Amount"
+  measurement-duration: "Measurement duration"
+  threshold: "Threshold"
+  item-threshold: "Item threshold"
+  fluid-threshold: "Fluid threshold"
+  joules-per-mb: "<attr>Power production:</attr> %power%"
 
 inventory:
   fuel: "Fuel"
@@ -2976,3 +2932,9 @@ inventory:
   input1: "Input 1"
   input2: "Input 2"
   input3: "Input 3"
+
+unit:
+  joules_per_millibucket:
+    one: "joule per millibucket"
+    other: "joules per millibucket"
+    abbr: "W/mB"

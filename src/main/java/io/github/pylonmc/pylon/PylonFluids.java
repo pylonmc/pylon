@@ -1,23 +1,18 @@
 package io.github.pylonmc.pylon;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 import io.github.pylonmc.pylon.api.FlammableTag;
 import io.github.pylonmc.pylon.api.GasTag;
-import io.github.pylonmc.rebar.fluid.RebarFluidTag;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
-import org.jetbrains.annotations.NotNull;
+import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class PylonFluids {
 
@@ -43,6 +38,15 @@ public final class PylonFluids {
     static {
         LAVA.register();
         IngredientCalculator.addBaseIngredient(LAVA);
+    }
+
+    public static final RebarFluid STEAM = new RebarFluid(
+            pylonKey("steam"),
+            TextColor.fromHexString("#ffffff"),
+            Material.WHITE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    static {
+        STEAM.register();
     }
 
     public static final RebarFluid PLANT_OIL = new RebarFluid(
@@ -90,15 +94,6 @@ public final class PylonFluids {
     static {
         SUGARCANE.register();
         RebarGuide.hideFluid(SUGARCANE.getKey());
-    }
-
-    public static final RebarFluid STEAM = new RebarFluid(
-            pylonKey("steam"),
-            TextColor.fromHexString("#ffffff"),
-            Material.WHITE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
-    static {
-        STEAM.register();
     }
 
     public static final RebarFluid ETHANOL = new RebarFluid(
@@ -200,15 +195,6 @@ public final class PylonFluids {
         STEEL.register();
     }
 
-    public static final RebarFluid PALLADIUM = new RebarFluid(
-            pylonKey("palladium"),
-            TextColor.fromHexString("#b1d4de"),
-            Material.LIGHT_BLUE_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1555));
-    static {
-        PALLADIUM.register();
-    }
-
     public static final RebarFluid SLURRY = new RebarFluid(
             pylonKey("slurry"),
             TextColor.fromHexString("#bcbcbc"),
@@ -298,6 +284,24 @@ public final class PylonFluids {
     ).addTag(FluidTemperature.NORMAL);
     static {
         LIQUID_XP.register();
+    }
+
+    public static final RebarFluid VERY_HOT_EXHAUST = new RebarFluid(
+            pylonKey("very_hot_exhaust"),
+            TextColor.fromHexString("#ff0000"),
+            Material.RED_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    static {
+        VERY_HOT_EXHAUST.register();
+    }
+
+    public static final RebarFluid HOT_EXHAUST = new RebarFluid(
+            pylonKey("hot_exhaust"),
+            TextColor.fromHexString("#ff8000"),
+            Material.ORANGE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    static {
+        HOT_EXHAUST.register();
     }
 
     /**

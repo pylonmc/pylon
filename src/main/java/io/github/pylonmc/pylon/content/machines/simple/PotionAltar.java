@@ -99,7 +99,6 @@ public class PotionAltar extends RebarBlock
 
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(getFacing());
 
         addEntity("brewing_stand", new BlockDisplayBuilder()
                 .transformation(new TransformBuilder()
@@ -406,7 +405,10 @@ public class PotionAltar extends RebarBlock
 
     @NotNull
     private List<Vector3i> getBlockOffsets(@NotNull MultiblockComponent component) {
-        return validStructures().getFirst().entrySet().stream().filter(entry -> entry.getValue() == component).map(Map.Entry::getKey).toList();
+        return SimpleRebarMultiblock.rotateComponentsToFace(getComponents(), getFacing()).entrySet().stream()
+                .filter(entry -> entry.getValue() == component)
+                .map(Map.Entry::getKey)
+                .toList();
     }
 
     @NotNull

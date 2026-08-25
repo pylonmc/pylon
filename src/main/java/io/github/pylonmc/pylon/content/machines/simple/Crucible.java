@@ -7,13 +7,9 @@ import io.github.pylonmc.pylon.recipes.CrucibleRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -26,6 +22,8 @@ import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
@@ -46,9 +44,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
-
-import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -178,14 +173,14 @@ public final class Crucible extends RebarBlock implements
             return;
         }
 
-        if (getFluidSpaceRemaining() < recipe.output().amountMillibuckets()) {
+        if (getFluidSpaceRemaining() < recipe.output().amount()) {
             return;
         }
 
         FluidWithAmount fluid = recipe.output();
 
         setFluidType(fluid.fluid());
-        addFluid(fluid.amountMillibuckets());
+        addFluid(fluid.amount());
 
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .count(20)

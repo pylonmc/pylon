@@ -24,6 +24,9 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,10 +38,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 
 
 public class Collimator extends RebarBlock implements
@@ -78,7 +77,6 @@ public class Collimator extends RebarBlock implements
         setFacing(context.getFacing());
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         setCapacity(obscyraPerCohesiveUnit);
-        setMultiblockDirection(context.getFacing());
         startProcess(secondsPerCohesiveUnit * 20);
     }
 

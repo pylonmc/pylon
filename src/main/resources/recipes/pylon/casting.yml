@@ -173,41 +173,6 @@ pylon:steel_pipe:
   result: pylon:fluid_pipe_steel
   priority: -1
   
-pylon:palladium_nugget:
-  mold: pylon:mold_nugget
-  input:
-    pylon:palladium: 16
-  result: pylon:palladium_nugget
-  priority: -1
-
-pylon:palladium_ingot:
-  mold: pylon:mold_ingot
-  input:
-    pylon:palladium: 144
-  result: pylon:palladium_ingot
-  priority: -1
-
-pylon:palladium_block:
-  mold: pylon:mold_block
-  input:
-    pylon:palladium: 1296
-  result: pylon:palladium_block
-  priority: -1
-
-pylon:palladium_sheet:
-  mold: pylon:mold_sheet
-  input:
-    pylon:palladium: 144
-  result: pylon:palladium_sheet
-  priority: -1
-
-pylon:palladium_pipe:
-  mold: pylon:mold_pipe
-  input:
-    pylon:palladium: 72
-  result: pylon:fluid_pipe_palladium
-  priority: -1
-  
 pylon:bronze_nugget:
   mold: pylon:mold_nugget
   input:
