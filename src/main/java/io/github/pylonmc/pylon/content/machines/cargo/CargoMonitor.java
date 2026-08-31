@@ -182,8 +182,8 @@ public class CargoMonitor extends RebarBlock implements
         inventory.addPostUpdateHandler(event -> {
             ItemStack newStack = event.getNewItem();
             if (newStack != null && !newStack.isEmpty()) {
-                getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(event.getNewItem());
-                getHeldEntityOrThrow(TextDisplay.class, "amount").text(Component.text(event.getNewItem().getAmount()));
+                getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(newStack);
+                getHeldEntityOrThrow(TextDisplay.class, "amount").text(Component.text(newStack.getAmount()));
             } else {
                 getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(ItemStack.of(Material.BARRIER));
                 getHeldEntityOrThrow(TextDisplay.class, "amount").text(Component.text(0));

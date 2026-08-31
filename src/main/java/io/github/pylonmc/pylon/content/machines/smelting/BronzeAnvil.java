@@ -56,25 +56,25 @@ public final class BronzeAnvil extends RebarBlock implements
         InteractRebarBlockHandler,
         FallingRebarBlockHandler {
 
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final float coolChance = getSettingOrThrow("cool-chance", ConfigAdapter.FLOAT);
-    public final int tolerance = getSettingOrThrow("tolerance", ConfigAdapter.INTEGER);
-    public final Sound hammerSound = getSettingOrThrow("sound.hammer", ConfigAdapter.SOUND);
-    public final Sound tongsSound = getSettingOrThrow("sound.tongs", ConfigAdapter.SOUND);
-
-    public static final NamespacedKey DIRECTION_FALLING = pylonKey("direction_falling");
-    public static final NamespacedKey STORED_ITEM = pylonKey("stored_item");
-
     private static final Matrix4f BASE_TRANSFORM = new TransformBuilder()
             .scale(0.3)
             .translate(0, (1 - .5 + 1d / 16) * 3, 0)
             .rotate(Math.PI / 2, 0, 0)
             .buildForItemDisplay();
 
+    public static final NamespacedKey DIRECTION_FALLING = pylonKey("direction_falling");
+    public static final NamespacedKey STORED_ITEM = pylonKey("stored_item");
+
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
+    public final float coolChance = getSettingOrThrow("cool-chance", ConfigAdapter.FLOAT);
+    public final int tolerance = getSettingOrThrow("tolerance", ConfigAdapter.INTEGER);
+    public final Sound hammerSound = getSettingOrThrow("sound.hammer", ConfigAdapter.SOUND);
+    public final Sound tongsSound = getSettingOrThrow("sound.tongs", ConfigAdapter.SOUND);
+
     @SuppressWarnings("unused")
     public BronzeAnvil(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        BlockFace orientation = ((Directional) block.getBlockData()).getFacing();
+        BlockFace orientation = getBlockDataAs(Directional.class).getFacing();
         addEntity("item", new ItemDisplayBuilder()
                 .transformation(new Matrix4f(BASE_TRANSFORM)
                         .rotateLocalY(getItemRotation(getBlockFace())))
@@ -127,62 +127,58 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     private void onRightClick(@NotNull PlayerInteractEvent event) {
-        ItemStack placedItem = event.getItem();
-
         ItemDisplay itemDisplay = getItemDisplay();
-
-        if (itemDisplay != null) {
-            ItemStack oldStack = itemDisplay.getItemStack();
-
-            if (oldStack.isEmpty()) {
-                if (placedItem != null) {
-                    itemDisplay.setItemStack(placedItem.asOne());
-                    placedItem.subtract();
-                    if (RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom) {
-                        transformForWorking(bloom.getWorking(), false);
-                        bloom.setDisplayGlowOn(itemDisplay);
-                    }
-                    event.setUseInteractedBlock(Event.Result.DENY);
-                }
-            } else {
-                event.getPlayer().give(oldStack);
-                itemDisplay.setItemStack(null);
-
-                ItemDisplay display = getItemDisplay();
-                if (display != null) {
-                    Matrix4f transform = new Matrix4f(BASE_TRANSFORM)
-                        .rotateLocalY(getItemRotation(getBlockFace()))
-                        .scaleLocal(1, 1, 1);
-                    display.setTransformationMatrix(transform);
-                }
-                event.setUseInteractedBlock(Event.Result.DENY);
-            }
+        if (itemDisplay == null) {
+            return;
         }
 
-        event.getPlayer().swingHand(EquipmentSlot.HAND);
+        Player player = event.getPlayer();
+        ItemStack itemInHand = event.getItem();
+        ItemStack oldStack = itemDisplay.getItemStack();
+        if (oldStack.isEmpty()) {
+            if (itemInHand == null || itemInHand.isEmpty()) {
+                return;
+            }
+
+            itemDisplay.setItemStack(itemInHand.asOne());
+            itemInHand.subtract();
+            if (RebarItem.fromStack(itemInHand, IronBloom.class) instanceof IronBloom bloom) {
+                transformForWorking(bloom.getWorking(), false);
+                bloom.setDisplayGlowOn(itemDisplay);
+            }
+        } else {
+            player.give(oldStack);
+            itemDisplay.setItemStack(null);
+            transformForWorking(0, false);
+        }
+        player.swingMainHand();
+        event.setUseInteractedBlock(Event.Result.DENY);
     }
 
     private void onLeftClick(@NotNull PlayerInteractEvent event) {
-        ItemDisplay itemDisplay = getItemDisplay();
-        if (!(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) return;
+        ItemStack itemInHand = event.getItem();
+        if (itemInHand == null || itemInHand.isEmpty()) {
+            return;
+        }
 
-        ItemStack item = event.getItem();
-        if (item == null || item.isEmpty()) return;
+        ItemDisplay itemDisplay = getItemDisplay();
+        if (itemDisplay == null || !(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) {
+            return;
+        }
 
         Player player = event.getPlayer();
-
         int temperature = bloom.getTemperature();
         int workingChange = ThreadLocalRandom.current().nextInt(-1, 2);
         if (temperature == 0) {
-            player.swingHand(EquipmentSlot.HAND);
+            player.swingMainHand();
             return;
-        } else if (RebarItem.isRebarItem(item, PylonKeys.TONGS)) {
+        } else if (RebarItem.isRebarItem(itemInHand, PylonKeys.TONGS)) {
             workingChange -= temperature;
             getBlock().getWorld().playSound(tongsSound, player);
-        } else if (RebarItem.fromStack(item, Hammer.class) instanceof Hammer hammer) {
-            if (!player.hasCooldown(item)) {
+        } else if (RebarItem.fromStack(itemInHand, Hammer.class) instanceof Hammer hammer) {
+            if (!player.hasCooldown(itemInHand)) {
                 workingChange += temperature;
-                player.setCooldown(item, hammer.cooldownTicks);
+                player.setCooldown(itemInHand, hammer.cooldownTicks);
                 getBlock().getWorld().playSound(hammerSound, player);
             }
         } else {
@@ -190,38 +186,30 @@ public final class BronzeAnvil extends RebarBlock implements
         }
 
         int working = bloom.getWorking();
-        int newWorking = working + workingChange;
-        Location centerLoc = getBlock().getRelative(BlockFace.UP).getLocation().toCenterLocation();
-        if (Math.abs(newWorking) > IronBloom.MAX_WORKING) {
-            bloom.setWorking(
-                Math.max(
-                    - IronBloom.MAX_WORKING,
-                    Math.min(
-                        newWorking,
-                        IronBloom.MAX_WORKING
-                    )
-                )
-            );
-            return;
-        } else {
-            new ParticleBuilder(Particle.LAVA).location(centerLoc)
-                    .receivers(32, true)
-                    .offset(0.1, 0.1, 0.1)
-                    .extra(0.03)
-                    .count(temperature)
-                    .spawn();
-        }
+        int newWorking = Math.clamp(working + workingChange, IronBloom.MIN_WORKING, IronBloom.MAX_WORKING);
+        new ParticleBuilder(Particle.LAVA).location(getBlock().getRelative(BlockFace.UP).getLocation().toCenterLocation())
+                .receivers(32, true)
+                .offset(0.1, 0.1, 0.1)
+                .extra(0.03)
+                .count(temperature)
+                .spawn();
+
         bloom.setWorking(newWorking);
         itemDisplay.setItemStack(bloom.getStack());
-        transformForWorking(newWorking, RebarItem.isRebarItem(item, PylonKeys.TONGS));
+        transformForWorking(newWorking, RebarItem.isRebarItem(itemInHand, PylonKeys.TONGS));
     }
 
     @Override
     public void tick() {
-        if (ThreadLocalRandom.current().nextFloat() > coolChance) return;
+        if (Math.random() > coolChance) {
+            return;
+        }
+
         ItemDisplay itemDisplay = getItemDisplay();
-        if (itemDisplay == null) return;
-        if (!(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) return;
+        if (itemDisplay == null || !(RebarItem.fromStack(itemDisplay.getItemStack(), IronBloom.class) instanceof IronBloom bloom)) {
+            return;
+        }
+
         int newTemperature = Math.max(0, bloom.getTemperature() - 1);
         bloom.setTemperature(newTemperature);
         bloom.setDisplayGlowOn(itemDisplay);
@@ -262,6 +250,9 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     private void transformForWorking(int working, boolean interpolate) {
+        ItemDisplay display = getItemDisplay();
+        if (display == null) return;
+
         Matrix4f transform = new Matrix4f(BASE_TRANSFORM)
                 .rotateLocalY(getItemRotation(getBlockFace()))
                 .scaleLocal(
@@ -269,10 +260,6 @@ public final class BronzeAnvil extends RebarBlock implements
                         1,
                         Math.max(0, -working * 0.5f) + 1
                 );
-
-        ItemDisplay display = getItemDisplay();
-        if (display == null) return;
-
         if (interpolate) {
             PylonUtils.animate(display, 5, transform);
         } else {
@@ -281,7 +268,7 @@ public final class BronzeAnvil extends RebarBlock implements
     }
 
     private BlockFace getBlockFace() {
-        return ((Directional) getBlock().getBlockData()).getFacing();
+        return getBlockDataAs(Directional.class).getFacing();
     }
 
     private static float getItemRotation(BlockFace face) {

@@ -156,8 +156,8 @@ public class FluidExperienceBottler extends RebarBlock implements
         if (bottleInput.getItem(0) == null || bottleInput.getItem(0).getType() != Material.GLASS_BOTTLE) {
             return;
         }
-        RebarItem bottleOutputItem = RebarItem.fromStack(bottleOutput.getItem(0));
-        if (bottleOutputItem != null && (!bottleOutputItem.getKey().equals(PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getStack().getAmount() == bottleOutputItem.getStack().getMaxStackSize())) {
+        ItemStack bottleOutputItem = bottleOutput.getItem(0);
+        if (bottleOutputItem != null && (!RebarItem.isRebarItem(bottleOutputItem, PylonKeys.LIQUID_XP_BOTTLE) || bottleOutputItem.getAmount() == bottleOutputItem.getMaxStackSize())) {
             return;
         }
         if (outputFluid != null && outputHatch.fluidSpaceRemaining(outputFluid) < outputFluidAmount) {

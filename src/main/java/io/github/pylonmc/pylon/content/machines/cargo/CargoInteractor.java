@@ -55,6 +55,7 @@ public abstract class CargoInteractor extends RebarBlock implements DirectionalR
 
     protected CargoInteractor(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+        setTargetLogisticGroup(pdc.get(TARGET_LOGISTIC_GROUP_KEY, RebarSerializers.STRING));
     }
 
     @Override

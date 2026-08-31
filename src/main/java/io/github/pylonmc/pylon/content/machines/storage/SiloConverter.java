@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
@@ -87,7 +88,7 @@ public class SiloConverter extends RebarBlock implements GuiRebarBlock, VirtualI
         ItemStack input = inputInventory.getItem(0);
         ItemStack material = materialInventory.getItem(0);
 
-        if (material == null || !(RebarItem.fromStack(input) instanceof Silo.Item inputSilo)) {
+        if (material == null || !(RebarItem.fromStack(input, Silo.Item.class) instanceof Silo.Item inputSilo)) {
             outputInventory.setItem(new MachineUpdateReason(), 0, null);
             return;
         }
@@ -101,8 +102,7 @@ public class SiloConverter extends RebarBlock implements GuiRebarBlock, VirtualI
             }
 
             Silo.Item newSilo = RebarItem.fromStack(recipe.result().clone(), Silo.Item.class);
-
-            if (newSilo.getKey().equals(RebarItem.fromStack(input).getKey())) {
+            if (newSilo.getKey().equals(RebarItemSchema.fromStack(input).getKey())) {
                 continue;
             }
 

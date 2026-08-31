@@ -16,7 +16,9 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
@@ -32,6 +34,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -182,18 +185,24 @@ public class CrudeAlloyFurnace extends RebarBlock implements
             return;
         }
 
-        ItemStack fuel = fuelInventory.getItem(0);
+        ItemStack fuel = fuelInventory.getUnsafeItem(0);
         if (fuel == null) {
             return;
         }
 
+        ItemType type = fuel.getType().asItemType();
+        if (type == null || !type.isFuel()|| RebarItem.isRebarItemAndIsNot(fuel, VanillaFurnaceFuel.class)) {
+            return;
+        }
+
+        RebarUtils.unsafeSubtract(fuelInventory, 0, 1);
+
         // dividing by 10 due to suspected bug with getBurnDuration
-        fuelTicksTotal = fuel.getType().asItemType().getBurnDuration() / 10;
+        fuelTicksTotal = type.getBurnDuration() / 10;
         fuelTicksRemaining = fuelTicksTotal;
         fuelProgressItem.setItem(fuelLeftStack);
         fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
         fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
-        fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
     }
 
     public boolean tryStartRecipe(@NonNull CrudeAlloyFurnaceRecipe recipe) {

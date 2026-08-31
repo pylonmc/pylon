@@ -219,19 +219,12 @@ public class PotionAltar extends RebarBlock
             return null;
         }
 
-        ItemStack potion1 = getPotionPedestal1().getItemDisplay().getItemStack();
-        ItemStack potion2 = getPotionPedestal2().getItemDisplay().getItemStack();
         ItemStack catalystItem = getCatalystPedestal().getItemDisplay().getItemStack();
-        RebarItem rebar = RebarItem.fromStack(catalystItem);
-        @Nullable PotionCatalyst catalyst = null;
-        if (!catalystItem.getType().isAir()) {
-            if (rebar instanceof PotionCatalyst clyst) {
-                catalyst = clyst;
-            } else {
-                // invalid catalyst
-                sendMessage("invalid-catalyst");
-                return null;
-            }
+        PotionCatalyst catalyst = RebarItem.fromStack(catalystItem, PotionCatalyst.class);
+        if (catalyst == null) {
+            // invalid catalyst
+            sendMessage("invalid-catalyst");
+            return null;
         }
 
         // Player could use the altar with:
@@ -239,6 +232,8 @@ public class PotionAltar extends RebarBlock
         // 2 potions,
         // 2 potions + catalyst
         // since catalyst is not required.
+        ItemStack potion1 = getPotionPedestal1().getItemDisplay().getItemStack();
+        ItemStack potion2 = getPotionPedestal2().getItemDisplay().getItemStack();
         if (isInvalidRecipe(potion1, potion2, catalyst, interactor)) {
             return null;
         }

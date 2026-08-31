@@ -108,7 +108,7 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
 
     @Override
     public void tick() {
-        for (Player player : getBlock().getWorld().getNearbyPlayers(getBlock().getLocation(), 1d, 5d, Player::isSneaking)) {
+        for (Player player : getBlock().getWorld().getNearbyPlayers(getBlock().getLocation().toCenterLocation(), 1d, 1d, Player::isSneaking)) {
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
             if (actualSubtracted != 0) {

@@ -146,7 +146,7 @@ public abstract class CoreDrill extends RebarBlock implements
                 PylonUtils.animate(getDrillDisplay(), rotationDuration / 4, getDrillDisplayMatrix(rotation));
                 if (spawnBlockParticles) {
                     Material type = getBlock().getRelative(BlockFace.DOWN, 3).getType();
-                    if (!type.isItem()) return;
+                    if (type.isAir() || !type.isItem()) return;
                     new ParticleBuilder(Particle.ITEM)
                             .count(5)
                             .extra(0.05)
