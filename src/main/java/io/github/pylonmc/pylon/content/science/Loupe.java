@@ -5,6 +5,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 import com.destroystokyo.paper.ParticleBuilder;
 
 import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -83,7 +84,8 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
     private static final Map<UUID, RayTraceResult> SCANNING = new HashMap<>();
 
     static {
-        ConfigSection loupeConfig = ConfigSection.fromSettings(PylonKeys.LOUPE);
+        ConfigSection loupeConfig = ConfigSection.fromDataFolderOrThrow(Pylon.getInstance(), "config.yml")
+                .getSectionOrThrow("loupe");
 
         ConfigSection itemOverridesConfig = loupeConfig.getSection("item_overrides");
         Map<ItemRarity, EntryConfig> itemConfigs = new EnumMap<>(ItemRarity.class);
@@ -98,7 +100,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
             for (String type : itemOverridesConfig.getKeys()) {
                 Material material = Registry.MATERIAL.get(Key.key(type));
                 if (material == null) {
-                    Pylon.getInstance().getLogger().warning("Invalid item type '" + type + "' under loupe.yml/item_overrides, skipping!");
+                    Pylon.getInstance().getLogger().warning("Invalid item type '" + type + "' under copper_loupe.yml/item_overrides, skipping!");
                     continue;
                 }
 
@@ -116,14 +118,14 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
                 Tag<EntityType> tag = Registry.ENTITY_TYPE.getTag(TagKey.create(RegistryKey.ENTITY_TYPE, tagKey));
                 entityConfigs.put(tag, EntryConfig.loadFrom(entities.getSectionOrThrow(tagKey)));
             } catch (Exception e) {
-                Pylon.getInstance().getLogger().warning("Invalid entity tag '" + tagKey + "' under loupe.yml/entities, skipping!");
+                Pylon.getInstance().getLogger().warning("Invalid entity tag '" + tagKey + "' under copper_loupe.yml/entities, skipping!");
             }
         }
         if (entityOverridesConfig != null) {
             for (String type : entityOverridesConfig.getKeys()) {
                 EntityType entityType = Registry.ENTITY_TYPE.get(Key.key(type));
                 if (entityType == null) {
-                    Pylon.getInstance().getLogger().warning("Invalid entity type '" + type + "' under loupe.yml/entity_overrides, skipping!");
+                    Pylon.getInstance().getLogger().warning("Invalid entity type '" + type + "' under copper_loupe.yml/entity_overrides, skipping!");
                     continue;
                 }
 
@@ -139,10 +141,19 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
         ENTITY_OVERRIDES = Map.copyOf(entityOverrides);
     }
 
+    public final int useTicks = getSettingOrThrow("use-ticks", ConfigAdapter.INTEGER);
     public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
 
     public Loupe(@NotNull ItemStack stack) {
         super(stack);
+    }
+
+    @Override
+    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+        return List.of(
+                RebarArgument.of("examining-time", UnitFormat.SECONDS.format(useTicks / 20.0)),
+                RebarArgument.of("cooldown-time", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
+        );
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })

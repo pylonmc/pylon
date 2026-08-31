@@ -51,7 +51,6 @@ import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 
-import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
 import io.papermc.paper.registry.set.RegistrySet;
 import net.kyori.adventure.key.Key;
 import org.bukkit.*;
@@ -59,10 +58,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.recipe.CraftingBookCategory;
-import org.bukkit.potion.PotionType;
-
-import java.util.Objects;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -75,24 +70,23 @@ public final class PylonItems {
 
     //<editor-fold desc="Research" defaultstate=collapsed>
 
-    public static final ItemStack LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LOUPE)
+    public static final ItemStack COPPER_LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_LOUPE)
             .set(DataComponentTypes.ITEM_MODEL, Material.GLASS_PANE.getKey())
             .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
                     .animation(ItemUseAnimation.SPYGLASS)
                     .hasConsumeParticles(false)
-                    .consumeSeconds(ConfigSection.fromSettings(PylonKeys.LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .consumeSeconds(ConfigSection.fromSettings(PylonKeys.COPPER_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
                     .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
             )
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
-                            ConfigSection.fromSettings(PylonKeys.LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
-                    .cooldownGroup(PylonKeys.LOUPE)
+                            ConfigSection.fromSettings(PylonKeys.COPPER_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                    .cooldownGroup(PylonKeys.COPPER_LOUPE)
             )
             .build();
     static {
-        RebarItem.register(Loupe.class, LOUPE);
-        PylonPages.SCIENCE.addItem(LOUPE);
+        RebarItem.register(Loupe.class, COPPER_LOUPE);
+        PylonPages.SCIENCE.addItem(COPPER_LOUPE);
     }
-
 
     public static final ItemStack BRONZE_LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BRONZE_LOUPE)
             .set(DataComponentTypes.ITEM_MODEL, Material.GLASS_PANE.getKey())
@@ -104,12 +98,30 @@ public final class PylonItems {
             )
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
                     ConfigSection.fromSettings(PylonKeys.BRONZE_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
-                .cooldownGroup(PylonKeys.LOUPE)
+                .cooldownGroup(PylonKeys.COPPER_LOUPE)
             )
             .build();
     static {
         RebarItem.register(Loupe.class, BRONZE_LOUPE);
         PylonPages.SCIENCE.addItem(BRONZE_LOUPE);
+    }
+
+    public static final ItemStack STEEL_LOUPE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_LOUPE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.GLASS_PANE.getKey())
+            .set(DataComponentTypes.CONSUMABLE, Consumable.consumable()
+                .animation(ItemUseAnimation.SPYGLASS)
+                .hasConsumeParticles(false)
+                .consumeSeconds(ConfigSection.fromSettings(PylonKeys.STEEL_LOUPE).getOrThrow("use-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .sound(SoundEventKeys.INTENTIONALLY_EMPTY)
+            )
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(
+                    ConfigSection.fromSettings(PylonKeys.STEEL_LOUPE).getOrThrow("cooldown-ticks", ConfigAdapter.INTEGER) / 20.0F)
+                .cooldownGroup(PylonKeys.COPPER_LOUPE)
+            )
+            .build();
+    static {
+        RebarItem.register(Loupe.class, STEEL_LOUPE);
+        PylonPages.SCIENCE.addItem(STEEL_LOUPE);
     }
 
     public static final ItemStack RESEARCH_PACK_1 = ItemStackBuilder.rebar(Material.RED_BANNER, PylonKeys.RESEARCH_PACK_1)

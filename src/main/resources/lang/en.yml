@@ -570,13 +570,16 @@ item:
   sponge_iron:
     name: "Sponge Iron"
 
-  loupe:
-    name: "Loupe"
+  copper_loupe:
+    name: "Copper Loupe"
     lore: |-
       <arrow> Examining items/blocks with the loupe yields research points
       <arrow> The rarer the item/block, the more times it can be examined
       <arrow> <red>The examined item/block will be consumed</red>
       <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
+      <arrow> <attr>Examining time:<attr> %examining-time%
+      <arrow> <attr>Cooldown time:<attr> %cooldown-time%
+
   bronze_loupe:
     name: "Bronze Loupe"
     lore: |-
@@ -584,6 +587,18 @@ item:
       <arrow> The rarer the item/block, the more times it can be examined
       <arrow> <red>The examined item/block will be consumed</red>
       <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
+      <arrow> <attr>Examining time:<attr> %examining-time%
+      <arrow> <attr>Cooldown time:<attr> %cooldown-time%
+
+  steel_loupe:
+    name: "Steel Loupe"
+    lore: |-
+      <arrow> Examining items/blocks with the loupe yields research points
+      <arrow> The rarer the item/block, the more times it can be examined
+      <arrow> <red>The examined item/block will be consumed</red>
+      <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
+      <arrow> <attr>Examining time:<attr> %examining-time%
+      <arrow> <attr>Cooldown time:<attr> %cooldown-time%
 
   lumber_axe:
     name: "Lumber Axe"

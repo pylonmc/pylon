@@ -283,6 +283,7 @@ bronze_equipment:
   item: pylon:bronze_pickaxe
   cost: 10
   unlocks:
+    - pylon:bronze_loupe
     - pylon:bronze_sword
     - pylon:bronze_axe
     - pylon:bronze_pickaxe
@@ -646,20 +647,16 @@ wither_reactivation:
     - pylon:reactivated_wither_skull
     - pylon:hyper_activated_wither_skull
 
-steel_tools:
+steel_equipment:
   item: pylon:steel_sword
   cost: 60
   unlocks:
+    - pylon:steel_loupe
     - pylon:steel_sword
     - pylon:steel_axe
     - pylon:steel_pickaxe
     - pylon:steel_shovel
     - pylon:steel_hoe
-
-steel_armor:
-  item: pylon:steel_chestplate
-  cost: 60
-  unlocks:
     - pylon:steel_helmet
     - pylon:steel_chestplate
     - pylon:steel_leggings

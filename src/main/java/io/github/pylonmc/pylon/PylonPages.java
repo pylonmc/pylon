@@ -47,7 +47,7 @@ public class PylonPages {
     };
 
     public static void initialise() {
-        RebarGuide.getRootPage().addPage(PylonItems.LOUPE, SCIENCE);
+        RebarGuide.getRootPage().addPage(PylonItems.COPPER_LOUPE, SCIENCE);
 
         RESOURCES.addPage(PylonItems.BRONZE_INGOT, METALS);
         RESOURCES.addPage(PylonItems.SHALLOW_CORE_CHUNK, CORE_CHUNKS);

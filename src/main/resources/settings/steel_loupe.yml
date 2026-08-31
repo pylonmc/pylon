@@ -1,0 +1,5 @@
+# how long it takes to scan an object
+use-ticks: 30
+
+# after a successful scan, how long should the item be on cooldown
+cooldown-ticks: 30
