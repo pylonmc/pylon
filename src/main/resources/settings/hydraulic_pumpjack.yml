@@ -1,0 +1,9 @@
+tick-interval: 4
+max-oil-per-second: 60
+hydraulic-fluid-per-second: 120
+# in machine ticks
+stroke-duration: 26
+# how far in blocks from the neutral position the rods should go
+animation-amplitude: 0.6
+# every time a stroke is completed, fracture yield is divided by (1 + yield depletion)
+yield-depletion: 0.0002

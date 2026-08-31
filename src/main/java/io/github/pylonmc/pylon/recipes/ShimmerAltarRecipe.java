@@ -136,7 +136,7 @@ public record ShimmerAltarRecipe(
     }
 
     @Override
-    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         List<FluidOrItemChoice> inputResult = new ArrayList<>();
         for (ItemChoice input : inputs) {
             if (input != null) {

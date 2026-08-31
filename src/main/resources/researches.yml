@@ -271,6 +271,7 @@ fluid_machines_2:
     - pylon:fluid_filter
     - pylon:fluid_limiter
     - pylon:fluid_voider_2
+    - pylon:smokestack
 
 fluid_machines_3:
   item: pylon:fluid_filter
@@ -278,6 +279,7 @@ fluid_machines_3:
   unlocks:
     - pylon:fluid_meter
     - pylon:fluid_accumulator
+    - pylon:flare_stack
 
 bronze_equipment:
   item: pylon:bronze_pickaxe
@@ -506,6 +508,15 @@ advanced_tea_brewing:
   unlocks:
     - pylon:large_boiler
     - pylon:large_fluid_boiler
+
+oil_drilling:
+  item: pylon:hydraulic_pumpjack
+  cost: 80
+  unlocks:
+    - pylon:oil_sample_drill
+    - pylon:hydraulic_fracturing_drill
+    - pylon:hydraulic_fracture_seal
+    - pylon:hydraulic_pumpjack
 
 diesel_machines:
   item: pylon:diesel_pipe_bender
