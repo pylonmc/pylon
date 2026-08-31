@@ -154,6 +154,16 @@ item:
       <diamond> 1x <yellow><item:pylon:bloomery/></yellow>
       <diamond> 4x <yellow><item:pylon:refractory_bricks/></yellow>
 
+  glass_breaker:
+    name: "Glass Breaker"
+    lore: |-
+      <arrow> Breaks glass like material faster, includes:
+      <arrow> - All types of glass blocks
+      <arrow> - All types of glass panes
+      <arrow> - Sea Lantern
+      <arrow> - Glowstone Block
+      <arrow> - Redstone Lamp
+      <arrow> - Beacon
   bronze_anvil:
     name: "Bronze Anvil"
     lore: |-
@@ -562,6 +572,13 @@ item:
 
   loupe:
     name: "Loupe"
+    lore: |-
+      <arrow> Examining items/blocks with the loupe yields research points
+      <arrow> The rarer the item/block, the more times it can be examined
+      <arrow> <red>The examined item/block will be consumed</red>
+      <arrow> <insn>Hold right click</insn> on a block or dropped item to examine it
+  bronze_loupe:
+    name: "Bronze Loupe"
     lore: |-
       <arrow> Examining items/blocks with the loupe yields research points
       <arrow> The rarer the item/block, the more times it can be examined
