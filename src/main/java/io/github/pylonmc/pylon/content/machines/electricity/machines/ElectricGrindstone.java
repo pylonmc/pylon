@@ -4,7 +4,7 @@ import io.github.pylonmc.pylon.content.machines.generic.GenericGrindstone;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -39,7 +39,7 @@ public class ElectricGrindstone extends GenericGrindstone implements SimpleElect
     @SuppressWarnings("unused")
     public ElectricGrindstone(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
+        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
     }
 

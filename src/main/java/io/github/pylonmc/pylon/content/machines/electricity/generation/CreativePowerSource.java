@@ -4,7 +4,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -27,7 +27,7 @@ public final class CreativePowerSource extends RebarBlock implements SimpleElect
         super(block, context);
         setTickInterval(1);
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            createSimpleElectricPort(ElectricNode.Type.PRODUCER, face);
+            createSimpleElectricPort(ElectricNodeType.PRODUCER, face);
         }
         addEntity("black_hole", new BlockDisplayBuilder()
                 .material(Material.END_GATEWAY)

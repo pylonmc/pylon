@@ -7,7 +7,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
@@ -57,7 +57,7 @@ public class ElectricCompressor extends GenericMachine<HammerRecipe> implements 
     public ElectricCompressor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setRecipeType(HammerRecipe.RECIPE_TYPE);
-        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
+        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
 
         addEntity("shaft", new ItemDisplayBuilder()

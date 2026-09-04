@@ -4,7 +4,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,7 +18,7 @@ public final class PowerBus extends RebarBlock implements SimpleElectricRebarBlo
         super(block, context);
 
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
-            createSimpleElectricPort(ElectricNode.Type.CONNECTOR, face, ElectricRebarBlock.PORT_SCALE);
+            createSimpleElectricPort(ElectricNodeType.CONNECTOR, face, ElectricRebarBlock.PORT_SCALE);
         }
     }
 

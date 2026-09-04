@@ -5,7 +5,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DispenserRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
@@ -85,7 +85,7 @@ public class ElectricBreaker extends GenericBreaker implements SimpleElectricReb
                         .rotate(0, 0, Math.PI / 4))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
-        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing().getOppositeFace(), 0.55);
+        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing().getOppositeFace(), 0.55);
     }
 
     @SuppressWarnings("unused")

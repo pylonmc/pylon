@@ -9,7 +9,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricNode;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
@@ -111,7 +111,7 @@ public class ElectricMixer extends RebarBlock implements
         setRecipeProgressItem(new ProgressItem(GuiItems.background()));
         createFluidPoint(FluidPointType.INPUT, BlockFace.EAST, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.WEST, context, false);
-        createSimpleElectricPort(ElectricNode.Type.CONSUMER, getFacing());
+        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing());
         setRequiredPower(powerUsage);
 
         addEntity("whisk_0", new ItemDisplayBuilder()
