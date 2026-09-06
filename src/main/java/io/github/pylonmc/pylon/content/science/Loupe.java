@@ -310,7 +310,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
                     return;
                 }
 
-                hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, hit.getBlockData());
+                hit.getWorld().playEffect(hit.getLocation(), Effect.DESTROY_BLOCK, hit.getBlockData());
                 hit.setType(Material.AIR, true);
             } else {
                 // Prevents scanning the same instance of an unbreakable block again

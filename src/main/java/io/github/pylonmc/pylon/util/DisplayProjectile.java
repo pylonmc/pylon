@@ -14,7 +14,6 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -104,17 +103,15 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
                 .map(Damageable.class::cast)
                 .findFirst();
         maybeHitEntity.ifPresent(hitEntity -> {
-            EntityDamageEvent event = new EntityDamageEvent(
-                    hitEntity,
-                    EntityDamageEvent.DamageCause.ENTITY_ATTACK,
+            var previousDamageEvent = hitEntity.getLastDamageCause();
+            hitEntity.damage(
+                    damage,
                     DamageSource.builder(DamageType.ARROW)
                             .withCausingEntity(player)
                             .withDirectEntity(hitEntity)
-                            .build(),
-                    damage
+                            .build()
             );
-            if (event.callEvent()) {
-                hitEntity.damage(damage, player);
+            if (hitEntity.getLastDamageCause() != previousDamageEvent) {
                 hitEntity.setVelocity(locationStep.clone().normalize().multiply(0.2));
                 if (hitSound != null) {
                     player.getWorld().playSound(hitSound, hitEntity);
