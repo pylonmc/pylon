@@ -8,7 +8,7 @@ import io.github.pylonmc.rebar.fluid.RebarFluidTag;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 
-public record MeltingPoint(double temperature) implements RebarFluidTag {
+public record MeltingPointTag(double temperature) implements RebarFluidTag {
     @Override
     public @NotNull Component getDisplayText() {
         return Component.translatable(

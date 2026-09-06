@@ -180,8 +180,8 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         FluidInputHatch hydraulicInput = getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT);
         FluidOutputHatch hydraulicOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT);
 
-        double inputFluidAvailable = hydraulicInput.fluidAmount(PylonFluids.DIRTY_HYDRAULIC_FLUID);
-        double outputSpaceRemaining = hydraulicOutput.fluidSpaceRemaining(PylonFluids.HYDRAULIC_FLUID);
+        double inputFluidAvailable = hydraulicInput.getFluidAmount();
+        double outputSpaceRemaining = hydraulicOutput.getFluidSpaceRemaining();
         double fluidToPurify = Math.min(purificationSpeed, Math.min(inputFluidAvailable, outputSpaceRemaining)) * getTickInterval() / 20;
         double efficiency = getEfficiency();
 
@@ -200,15 +200,15 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
                     .spawn();
         }
 
-        hydraulicInput.removeFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, fluidToPurify);
-        hydraulicOutput.addFluid(PylonFluids.HYDRAULIC_FLUID, efficiency * fluidToPurify);
+        hydraulicInput.removeFluid(fluidToPurify);
+        hydraulicOutput.addFluid(efficiency * fluidToPurify);
     }
 
     @Override
     public void onMultiblockFormed() {
         FluidInputHatch hydraulicInput = getMultiblockComponentOrThrow(FluidInputHatch.class, HYDRAULIC_FLUID_INPUT);
         FluidOutputHatch hydraulicOutput = getMultiblockComponentOrThrow(FluidOutputHatch.class, HYDRAULIC_FLUID_OUTPUT);
-        hydraulicInput.setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
+        hydraulicInput.setAllowedFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID);
         hydraulicOutput.setFluidType(PylonFluids.HYDRAULIC_FLUID);
         Block light = getBlock().getRelative(BlockFace.UP);
         if (light.getType().isAir()) {

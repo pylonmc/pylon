@@ -105,15 +105,15 @@ public class HydraulicCoreDrill extends CoreDrill {
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH);
         ItemOutputHatch itemOutputHatch = getMultiblockComponentOrThrow(ItemOutputHatch.class, ITEM_OUTPUT_HATCH);
 
-        if (inputHatch.fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerRotation
-                || outputHatch.fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerRotation
+        if (inputHatch.getFluidAmount() < hydraulicFluidPerRotation
+                || outputHatch.getFluidSpaceRemaining() < hydraulicFluidPerRotation
                 || !itemOutputHatch.inventory.canHold(output)
         ) {
             return;
         }
 
-        inputHatch.removeFluid(PylonFluids.HYDRAULIC_FLUID, hydraulicFluidPerRotation);
-        outputHatch.addFluid(PylonFluids.DIRTY_HYDRAULIC_FLUID, hydraulicFluidPerRotation);
+        inputHatch.removeFluid(hydraulicFluidPerRotation);
+        outputHatch.addFluid(hydraulicFluidPerRotation);
 
         if (!isProcessing()) {
             startCycle();
@@ -133,7 +133,7 @@ public class HydraulicCoreDrill extends CoreDrill {
     public void onMultiblockFormed() {
         super.onMultiblockFormed();
         getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT_HATCH)
-                .setFluidType(PylonFluids.HYDRAULIC_FLUID);
+                .setAllowedFluid(PylonFluids.HYDRAULIC_FLUID);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, FLUID_OUTPUT_HATCH)
                 .setFluidType(PylonFluids.DIRTY_HYDRAULIC_FLUID);
     }

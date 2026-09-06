@@ -2,16 +2,22 @@ package io.github.pylonmc.pylon;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
+import io.github.pylonmc.pylon.api.FlammableTag;
+import io.github.pylonmc.pylon.api.GasTag;
+import io.github.pylonmc.rebar.fluid.RebarFluidTag;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
+import org.jetbrains.annotations.NotNull;
+
 
 public final class PylonFluids {
 
@@ -53,7 +59,7 @@ public final class PylonFluids {
             pylonKey("plant_oil"),
             TextColor.fromHexString("#c4b352"),
             Material.YELLOW_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(110));
     static {
         PLANT_OIL.register();
         IngredientCalculator.addBaseIngredient(PLANT_OIL);
@@ -67,7 +73,6 @@ public final class PylonFluids {
     static {
         HYDRAULIC_FLUID.register();
     }
-
 
     public static final RebarFluid DIRTY_HYDRAULIC_FLUID = new RebarFluid(
             pylonKey("dirty_hydraulic_fluid"),
@@ -97,11 +102,20 @@ public final class PylonFluids {
         RebarGuide.hideFluid(SUGARCANE.getKey());
     }
 
+    public static final RebarFluid STEAM = new RebarFluid(
+            pylonKey("steam"),
+            TextColor.fromHexString("#ffffff"),
+            Material.WHITE_STAINED_GLASS
+    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    static {
+        STEAM.register();
+    }
+
     public static final RebarFluid ETHANOL = new RebarFluid(
             pylonKey("ethanol"),
             TextColor.fromHexString("#d8d8d8"),
             Material.LIGHT_GRAY_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(150));
     static {
         ETHANOL.register();
     }
@@ -110,7 +124,7 @@ public final class PylonFluids {
             pylonKey("biodiesel"),
             TextColor.fromHexString("#eaa627"),
             Material.YELLOW_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(250));
     static {
         BIODIESEL.register();
     }
@@ -128,7 +142,7 @@ public final class PylonFluids {
             pylonKey("sulfur"),
             TextColor.fromHexString("#fff387"),
             Material.YELLOW_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(112.8));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(112.8));
     static {
         SULFUR.register();
     }
@@ -146,7 +160,7 @@ public final class PylonFluids {
             pylonKey("tin"),
             TextColor.fromHexString("#62b98e"),
             Material.GREEN_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(231.9));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(231.9));
     static {
         TIN.register();
     }
@@ -155,7 +169,7 @@ public final class PylonFluids {
             pylonKey("copper"),
             TextColor.fromHexString("#e16f22"),
             Material.TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1083));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1083));
     static {
         COPPER.register();
     }
@@ -164,7 +178,7 @@ public final class PylonFluids {
             pylonKey("iron"),
             TextColor.fromHexString("#e5d7b9"),
             Material.RED_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1538));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1538));
     static {
         IRON.register();
     }
@@ -173,7 +187,7 @@ public final class PylonFluids {
             pylonKey("bronze"),
             TextColor.fromHexString("#d4a796"),
             Material.BROWN_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(950));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(950));
     static {
         BRONZE.register();
     }
@@ -182,7 +196,7 @@ public final class PylonFluids {
             pylonKey("gold"),
             TextColor.fromHexString("#debc57"),
             Material.YELLOW_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1064));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1064));
     static {
         GOLD.register();
     }
@@ -191,7 +205,7 @@ public final class PylonFluids {
             pylonKey("steel"),
             TextColor.fromHexString("#848484"),
             Material.GRAY_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1410));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1410));
     static {
         STEEL.register();
     }
@@ -200,7 +214,7 @@ public final class PylonFluids {
             pylonKey("palladium"),
             TextColor.fromHexString("#b1d4de"),
             Material.LIGHT_BLUE_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPoint(1555));
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1555));
     static {
         PALLADIUM.register();
     }

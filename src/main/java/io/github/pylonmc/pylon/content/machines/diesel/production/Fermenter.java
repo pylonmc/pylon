@@ -185,11 +185,11 @@ public class Fermenter extends RebarBlock implements
         }
 
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);
-        double outputSpaceRemaining = outputHatch.fluidSpaceRemaining(PylonFluids.ETHANOL);
+        double outputSpaceRemaining = outputHatch.getFluidSpaceRemaining();
         double ethanolToOutput = Math.min(outputSpaceRemaining, sugarcaneProportion * maxEthanolOutputRate * getTickInterval() / 20);
         if (ethanolToOutput > RebarUtils.FLUID_EPSILON) {
             removeFluid(PylonFluids.SUGARCANE, ethanolToOutput);
-            outputHatch.addFluid(PylonFluids.ETHANOL, ethanolToOutput);
+            outputHatch.addFluid(ethanolToOutput);
         }
     }
 

@@ -12,6 +12,7 @@ import io.github.pylonmc.pylon.content.combat.BeheadingSword;
 import io.github.pylonmc.pylon.content.combat.IceArrow;
 import io.github.pylonmc.pylon.content.combat.ReactivatedWitherSkull;
 import io.github.pylonmc.pylon.content.combat.RecoilArrow;
+import io.github.pylonmc.pylon.content.machines.boiler.AbstractBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
@@ -32,6 +33,7 @@ import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
+import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
@@ -887,6 +889,38 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(BRONZE_GRATING);
     }
 
+    public static final ItemStack FIREBOX = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FIREBOX)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BLAST_FURNACE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FIREBOX, PylonKeys.FIREBOX);
+        PylonPages.COMPONENTS.addItem(FIREBOX);
+    }
+
+    public static final ItemStack FLUID_FIREBOX = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FLUID_FIREBOX)
+            .set(DataComponentTypes.ITEM_MODEL, Material.BLAST_FURNACE.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, FLUID_FIREBOX, PylonKeys.FLUID_FIREBOX);
+        PylonPages.COMPONENTS.addItem(FLUID_FIREBOX);
+    }
+
+    public static final ItemStack COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_PIPE_ASSEMBLY)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_CHAIN.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, COPPER_PIPE_ASSEMBLY, PylonKeys.COPPER_PIPE_ASSEMBLY);
+        PylonPages.COMPONENTS.addItem(COPPER_PIPE_ASSEMBLY);
+    }
+
+    public static final ItemStack LARGE_COPPER_PIPE_ASSEMBLY = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.LARGE_COPPER_PIPE_ASSEMBLY)
+            .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_CHAIN.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, LARGE_COPPER_PIPE_ASSEMBLY, PylonKeys.LARGE_COPPER_PIPE_ASSEMBLY);
+        PylonPages.COMPONENTS.addItem(LARGE_COPPER_PIPE_ASSEMBLY);
+    }
+
     public static final ItemStack REINFORCED_PLATING = ItemStackBuilder.rebar(Material.GRAY_STAINED_GLASS_PANE, PylonKeys.REINFORCED_PLATING)
             .build();
     static {
@@ -943,7 +977,6 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, LISELETTE_COLLECTOR, PylonKeys.LISELETTE_COLLECTOR);
         PylonPages.COMPONENTS.addItem(LISELETTE_COLLECTOR);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="Tools" defaultstate=collapsed>
@@ -2873,6 +2906,42 @@ public final class PylonItems {
     static {
         RebarItem.register(LiseletteHydraulicPurifier.Item.class, LISELETTE_HYDRAULIC_PURIFIER, PylonKeys.LISELETTE_HYDRAULIC_PURIFIER);
         PylonPages.HYDRAULIC_PURIFICATION.addItem(LISELETTE_HYDRAULIC_PURIFIER);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Machines - Boilers" defaultstate="collapsed">
+
+    public static final ItemStack SMALL_BOILER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMALL_BOILER)
+            .build();
+    static {
+        RebarItem.register(AbstractBoiler.Item.class, SMALL_BOILER, PylonKeys.SMALL_BOILER);
+        PylonPages.BOILERS.addItem(SMALL_BOILER);
+    }
+
+    public static final ItemStack LARGE_BOILER = ItemStackBuilder.rebar(Material.BRICK_STAIRS, PylonKeys.LARGE_BOILER)
+            .build();
+    static {
+        RebarItem.register(AbstractBoiler.Item.class, LARGE_BOILER, PylonKeys.LARGE_BOILER);
+        PylonPages.BOILERS.addItem(LARGE_BOILER);
+    }
+
+    public static final ItemStack SMALL_FLUID_BOILER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMALL_FLUID_BOILER)
+            .build();
+    static {
+        RebarItem.register(AbstractBoiler.Item.class, SMALL_FLUID_BOILER, PylonKeys.SMALL_FLUID_BOILER);
+        PylonPages.BOILERS.addItem(SMALL_FLUID_BOILER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.SMALL_FLUID_BOILER)
+                .addButton(LiquidFuelsPage.getButton());
+    }
+
+    public static final ItemStack LARGE_FLUID_BOILER = ItemStackBuilder.rebar(Material.BRICK_STAIRS, PylonKeys.LARGE_FLUID_BOILER)
+            .build();
+    static {
+        RebarItem.register(AbstractBoiler.Item.class, LARGE_FLUID_BOILER, PylonKeys.LARGE_FLUID_BOILER);
+        PylonPages.BOILERS.addItem(LARGE_FLUID_BOILER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.LARGE_FLUID_BOILER)
+                .addButton(LiquidFuelsPage.getButton());
     }
 
     //</editor-fold>

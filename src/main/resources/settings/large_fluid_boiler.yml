@@ -1,0 +1,10 @@
+tick-interval: 10
+water-input: 75
+steam-output: 750
+min-fuel-consumption: 0.5
+max-fuel-consumption: 6.0
+min-temperature: 20.0
+max-temperature: 380.0
+heating-speed: 16.0
+min-cooling-speed: 2.0
+max-cooling-speed: 12.0
