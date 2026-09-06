@@ -54,6 +54,7 @@ public final class CastingUnit extends RebarBlock implements
 
     private int queuedCasts;
     private boolean autoCast;
+    private CastingRecipe lastRecipe;
 
     private @Nullable RebarFluid fluidType;
     private double fluidAmount;
@@ -96,8 +97,10 @@ public final class CastingUnit extends RebarBlock implements
     public void postInitialise() {
         castInv.addPreUpdateHandler(event -> {
             if (event.getNewItem() == null) return;
+            if (lastRecipe != null && lastRecipe.mold().matches(event.getNewItem())) return;
             for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
                 if (recipe.mold().matches(event.getNewItem())) {
+                    lastRecipe = recipe;
                     return;
                 }
             }
@@ -192,10 +195,16 @@ public final class CastingUnit extends RebarBlock implements
         if (queuedCasts == 0 && !autoCast) return 0;
         if (fluidType != null && !fluidType.equals(fluid)) return 0;
         ItemStack castItem = castInv.getItem(0);
-        if (castItem == null) return 0;
+        if (castItem == null || castItem.isEmpty()) return 0;
+
+        if (lastRecipe != null && lastRecipe.matches(fluid, castItem)) {
+            if (outputInv.simulateSingleAdd(lastRecipe.result()) > 0) return 0;
+            return lastRecipe.input().getAmount() - fluidAmount;
+        }
 
         for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && recipe.mold().matches(castItem)) {
+            if (recipe.matches(fluid, castItem)) {
+                lastRecipe = recipe;
                 if (outputInv.simulateSingleAdd(recipe.result()) > 0) return 0;
                 return recipe.input().getAmount() - fluidAmount;
             }
@@ -211,21 +220,33 @@ public final class CastingUnit extends RebarBlock implements
         ItemStack castItem = castInv.getItem(0);
         if (castItem == null) throw new AssertionError("Should not happen");
 
-        for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
-            if (recipe.isInput(fluid) && recipe.mold().matches(castItem)) {
-                fluidType = fluid;
-                fluidAmount += amount;
-                if (Math.abs(fluidAmount - recipe.input().getAmount()) < 1e-6) {
-                    fluidType = null;
-                    fluidAmount = 0;
-                    outputInv.addItem(new MachineUpdateReason(), recipe.result());
-                    if (!autoCast) {
-                        queuedCasts--;
-                    }
+        if (lastRecipe != null && !lastRecipe.matches(fluid, castItem)) {
+            lastRecipe = null;
+        }
+
+        if (lastRecipe == null) {
+            for (CastingRecipe recipe : CastingRecipe.RECIPE_TYPE) {
+                if (recipe.matches(fluid, castItem)) {
+                    lastRecipe = recipe;
+                    break;
                 }
-                castingControlItem.notifyWindows();
-                break;
             }
         }
+
+        if (lastRecipe == null) {
+            return;
+        }
+
+        fluidType = fluid;
+        fluidAmount += amount;
+        if (Math.abs(fluidAmount - lastRecipe.input().getAmount()) < 1e-6) {
+            fluidType = null;
+            fluidAmount = 0;
+            outputInv.addItem(new MachineUpdateReason(), lastRecipe.result());
+            if (!autoCast) {
+                queuedCasts--;
+            }
+        }
+        castingControlItem.notifyWindows();
     }
 }

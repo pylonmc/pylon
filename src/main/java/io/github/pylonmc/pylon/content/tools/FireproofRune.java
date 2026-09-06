@@ -9,7 +9,9 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.DamageResistant;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.tags.DamageTypeTagKeys;
+import io.papermc.paper.registry.set.RegistryKeySet;
 import io.papermc.paper.registry.set.RegistrySet;
 import io.papermc.paper.registry.tag.Tag;
 import net.kyori.adventure.text.Component;
@@ -18,10 +20,13 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author balugaq
@@ -39,67 +44,63 @@ public class FireproofRune extends Rune {
         super(stack);
     }
 
-    /**
-     * Fixes #156 - Fireproof rune can be applied multiple times
-     * <p>
-     * Checks if the rune is applicable to the target item.
-     *
-     * @param event  The event
-     * @param rune   The rune item, amount may be > 1
-     * @param target The item to handle, amount may be > 1
-     * @return true if applicable, false otherwise
-     */
     @Override
-    public boolean isApplicableToTarget(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        DamageResistant data = target.getData(DataComponentTypes.DAMAGE_RESISTANT);
-        if (data == null) return true;
-        return !data.types().equals(IS_FIRE_TAG);
+    public boolean isRuneApplicable(@NotNull Player player, @NotNull Item runeItem, @NotNull Item item) {
+        DamageResistant data = item.getItemStack().getData(DataComponentTypes.DAMAGE_RESISTANT);
+        if (data == null) {
+            return true;
+        }
+
+        RegistryKeySet<DamageType> types = data.types();
+        for (TypedKey<DamageType> fireType : IS_FIRE_TAG.values()) {
+            if (!types.contains(fireType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    /**
-     * Handles contacting between an item and a rune.
-     *
-     * @param event  The event
-     * @param rune   The rune item, amount may be > 1
-     * @param target The item to handle, amount may be > 1
-     */
     @Override
-    public void onContactItem(@NotNull PlayerDropItemEvent event, @NotNull ItemStack rune, @NotNull ItemStack target) {
-        // As many runes as possible to consume
-        int consume = Math.min(rune.getAmount(), target.getAmount());
+    public void onRuneApply(@NotNull Player player, @NotNull Item runeItem, @NotNull Item targetItem) {
+        ItemStack targetItemStack = targetItem.getItemStack();
+        int consumed = Math.min(getStack().getAmount(), targetItemStack.getAmount());
 
-        Player player = event.getPlayer();
-        ItemStack handle = ItemStackBuilder.of(target.asQuantity(consume)) // Already cloned in `asQuantity`
-                .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(IS_FIRE_TAG))
-                .lore(GlobalTranslator.render(TOOLTIP, player.locale()))
+        ItemStack fireProof = ItemStackBuilder.of(targetItemStack.asQuantity(consumed))
+                .editDataOrSet(DataComponentTypes.DAMAGE_RESISTANT, resistance -> {
+                    if (resistance == null) {
+                        return DamageResistant.damageResistant(IS_FIRE_TAG);
+                    }
+                    Set<TypedKey<DamageType>> types = new HashSet<>(resistance.types().values());
+                    types.addAll(IS_FIRE_TAG.values());
+                    return DamageResistant.damageResistant(RegistrySet.keySet(RegistryKey.DAMAGE_TYPE, types));
+                })
+                .lore(TOOLTIP)
                 .build();
 
-        // (N)Either left runes or targets
-        int leftRunes = rune.getAmount() - consume;
-        int leftTargets = target.getAmount() - consume;
+        int remainingRunes = getStack().getAmount() - consumed;
+        int remainingTargets = targetItemStack.getAmount() - consumed;
 
-        Location explodeLoc = event.getItemDrop().getLocation();
-        World world = explodeLoc.getWorld();
-        if (leftRunes > 0) {
-            world.dropItemNaturally(explodeLoc, rune.asQuantity(leftRunes)).setGlowing(true);
+        Location runeLocation = runeItem.getLocation();
+        World world = runeItem.getWorld();
+        if (remainingRunes > 0) {
+            world.dropItemNaturally(runeLocation, getStack().asQuantity(remainingRunes)).setGlowing(true);
         }
-        if (leftTargets > 0) {
-            world.dropItemNaturally(explodeLoc, target.asQuantity(leftTargets)).setGlowing(true);
+        if (remainingTargets > 0) {
+            world.dropItemNaturally(runeLocation, targetItemStack.asQuantity(remainingTargets)).setGlowing(true);
         }
-        world.dropItemNaturally(explodeLoc, handle).setGlowing(true);
+        world.dropItemNaturally(runeLocation, fireProof).setGlowing(true);
 
-        // simple particles
-        spawnParticle(Particle.EXPLOSION, explodeLoc, 1);
-        spawnParticle(Particle.FLAME, explodeLoc, 50);
-        spawnParticle(Particle.SMOKE, explodeLoc, 40);
-        world.playSound(applySound.create(), explodeLoc.x(), explodeLoc.y(), explodeLoc.z());
+        spawnParticles(Particle.EXPLOSION, runeLocation, 1);
+        spawnParticles(Particle.FLAME, runeLocation, 50);
+        spawnParticles(Particle.SMOKE, runeLocation, 40);
+        applySound.play(runeLocation);
 
-        target.setAmount(0);
-        rune.setAmount(0);
+        runeItem.remove();
+        targetItem.remove();
         player.sendMessage(SUCCESS);
     }
 
-    public void spawnParticle(@NotNull Particle particle, @NotNull Location location, int count) {
+    public void spawnParticles(@NotNull Particle particle, @NotNull Location location, int count) {
         new ParticleBuilder(particle)
                 .location(location)
                 .offset(0, 0, 0)

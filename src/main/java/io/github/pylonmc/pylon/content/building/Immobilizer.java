@@ -1,6 +1,7 @@
 package io.github.pylonmc.pylon.content.building;
 
 import io.github.pylonmc.pylon.Pylon;
+import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.PistonRebarBlockHandler;
@@ -12,8 +13,8 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
+import io.papermc.paper.util.Tick;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -24,25 +25,24 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+import java.util.UUID;
 
 public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, BlockBreakRebarBlockHandler {
-    public static HashMap<BlockPosition, Set<Player>> frozenPlayers = new HashMap<>();
-    private final NamespacedKey cooldownKey = pylonKey("immobilizer_cooldown_millis");
+    private static final Map<BlockPosition, Set<UUID>> FROZEN_PLAYERS = new HashMap<>();
+    private static final Map<UUID, Long> FREEZE_TIMES = new HashMap<>();
+
     private final double radius = getSettingOrThrow("radius", ConfigAdapter.DOUBLE);
     private final int duration = getSettingOrThrow("duration", ConfigAdapter.INTEGER);
-    private final long cooldownMillis = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER) * 50L;
+    private final long cooldown = getSettingOrThrow("cooldown", ConfigAdapter.INTEGER);
+
     private final int particleCount = getSettingOrThrow("particle.count", ConfigAdapter.INTEGER);
     private final double particleRadius = getSettingOrThrow("particle.radius", ConfigAdapter.DOUBLE);
     private final int particlePeriod = getSettingOrThrow("particle.period", ConfigAdapter.INTEGER);
@@ -59,9 +59,9 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
         @Override
         public @NotNull List<RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("duration", UnitFormat.formatDuration(Duration.ofSeconds(duration / 20))),
+                    RebarArgument.of("duration", UnitFormat.formatDuration(Tick.of(duration))),
                     RebarArgument.of("radius", UnitFormat.BLOCKS.format(radius)),
-                    RebarArgument.of("cooldown", UnitFormat.formatDuration(Duration.ofMillis(cooldown * 50L)))
+                    RebarArgument.of("cooldown", UnitFormat.formatDuration(Tick.of(cooldown)))
             );
         }
     }
@@ -80,49 +80,58 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
     public void onPistonExtend(@NotNull BlockPistonExtendEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
 
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        BlockPosition position = new BlockPosition(event.getBlock());
-
-        for (Player player : event.getBlock().getLocation().getNearbyPlayers(radius)) {
-            PersistentDataContainer playerPdc = player.getPersistentDataContainer();
-
-            long now = System.currentTimeMillis();
-            if (playerPdc.has(cooldownKey, PersistentDataType.LONG)) {
-                long lastUsed = playerPdc.get(cooldownKey, PersistentDataType.LONG);
-                if (now - lastUsed < cooldownMillis) {
-                    continue;
-                }
+        long now = Bukkit.getCurrentTick();
+        BlockPosition position = new BlockPosition(getBlock());
+        for (Player player : getBlock().getLocation().getNearbyPlayers(radius)) {
+            UUID playerId = player.getUniqueId();
+            long freezeTime = FREEZE_TIMES.getOrDefault(playerId, 0L);
+            if (freezeTime != 0 && freezeTime + cooldown > now) {
+                continue;
             }
 
-            Set<Player> players = frozenPlayers.getOrDefault(position, new HashSet<>());
-            players.add(player);
-            frozenPlayers.put(position, players);
-
-            int times = duration / particlePeriod;
-            new PlayerVFX(player, this, times).runTaskTimer(Pylon.getInstance(),0, particlePeriod);
-
-            playerPdc.set(cooldownKey, PersistentDataType.LONG, now);
+            FREEZE_TIMES.put(playerId, now);
+            FROZEN_PLAYERS.computeIfAbsent(position, _ -> new HashSet<>()).add(playerId);
+            new ImmobilizeEffect(playerId, position, particleRadius, particleCount, duration / particlePeriod)
+                    .runTaskTimer(Pylon.getInstance(),0, particlePeriod);
         }
 
-        scheduler.runTaskLater(Pylon.getInstance(), () -> frozenPlayers.clear(), duration);
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), Immobilizer::checkFrozenPlayers, duration + 1);
     }
 
     @Override
-    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        frozenPlayers.remove(new BlockPosition(context.getBlock()));
+    public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
+        FROZEN_PLAYERS.remove(new BlockPosition(getBlock()));
     }
 
-    public static class PlayerVFX extends BukkitRunnable {
-        private final Player player;
-        private final Immobilizer block;
-        private final BlockPosition pos;
+    private static void checkFrozenPlayers() {
+        long now = Bukkit.getCurrentTick();
+        for (Map.Entry<BlockPosition, Set<UUID>> entry: FROZEN_PLAYERS.entrySet()) {
+            Immobilizer immobilizer = BlockStorage.getAs(Immobilizer.class, entry.getKey());
+            if (immobilizer == null) {
+                continue;
+            }
+
+            entry.getValue().removeIf(playerId -> {
+                long freezeTime = FREEZE_TIMES.getOrDefault(playerId, 0L);
+                return freezeTime == 0 || now > freezeTime + immobilizer.duration;
+            });
+        }
+    }
+
+    private static class ImmobilizeEffect extends BukkitRunnable {
+        private final UUID playerId;
+        private final BlockPosition block;
+        private final double particleRadius;
+        private final int particleCount;
+
         private final int duration;
         private int tick = 0;
 
-        public PlayerVFX(Player player, Immobilizer block, int duration) {
-            this.player = player;
+        public ImmobilizeEffect(UUID playerId, BlockPosition block, double particleRadius, int particleCount, int duration) {
+            this.playerId = playerId;
             this.block = block;
-            this.pos = new BlockPosition(block.getBlock());
+            this.particleRadius = particleRadius;
+            this.particleCount = particleCount;
             this.duration = duration;
         }
 
@@ -134,14 +143,20 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
                 return;
             }
 
-            // block is gone
-            if (frozenPlayers.get(pos) == null) {
+            Player player = Bukkit.getPlayer(playerId);
+            if (player == null) {
                 cancel();
                 return;
             }
 
-            player.spawnParticle(Particle.ELECTRIC_SPARK, player.getLocation(), block.particleCount,
-                    block.particleRadius, block.particleRadius, block.particleRadius);
+            // block is gone
+            Set<UUID> playerIds = FROZEN_PLAYERS.get(block);
+            if (playerIds == null || !playerIds.contains(playerId)) {
+                cancel();
+                return;
+            }
+
+            player.spawnParticle(Particle.ELECTRIC_SPARK, player.getLocation(), particleCount, particleRadius, particleRadius, particleRadius);
         }
     }
 
@@ -154,8 +169,8 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
                 return;
             }
 
-            for (Set<Player> playerSet : frozenPlayers.values()) {
-                if (playerSet.contains(event.getPlayer())) {
+            for (Set<UUID> playerIds : FROZEN_PLAYERS.values()) {
+                if (playerIds.contains(event.getPlayer().getUniqueId())) {
                     event.setCancelled(true);
                     return;
                 }

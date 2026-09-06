@@ -524,24 +524,38 @@ item:
     name: "Grindstone Handle"
     lore: "<star> Grindstone multiblock component"
 
+  steel_hammer:
+    name: "Steel Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
   diamond_hammer:
     name: "Diamond Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of diamond</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  bronze_hammer:
+    name: "Bronze Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   iron_hammer:
     name: "Iron Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of iron</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   stone_hammer:
     name: "Stone Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>stone block</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
@@ -2015,7 +2029,7 @@ item:
   hunting_talisman_simple:
     name: "Simple Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2023,7 +2037,7 @@ item:
   hunting_talisman_advanced:
     name: "Advanced Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2031,7 +2045,7 @@ item:
   hunting_talisman_ultimate:
     name: "Ultimate Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2039,7 +2053,7 @@ item:
   hunting_talisman_palladium:
     name: "Palladium Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2134,6 +2148,7 @@ item:
   collimator:
     name: "Collimator"
     lore: |-
+      <star> Multiblock
       <arrow> Slowly synthesizes Cohesive Units
       <arrow> Only works below <white>y = 0
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
@@ -2464,6 +2479,12 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  piped_cauldron:
+    name: "Piped Cauldron"
+    lore: |-
+      <arrow> A cauldron which can have pipes attached to it
+    waila: "Piped Cauldron"
+
   small_boiler:
     name: "Small Boiler"
     lore: |-
@@ -2553,7 +2574,7 @@ item:
 
   large_copper_pipe_assembly:
     name: "Large Copper Pipe Assembly"
-    
+
   tape_measure:
     name: "Tape Measure"
     lore: |-
@@ -2569,6 +2590,7 @@ fluid:
     flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
   water: "Water"
   lava: "Lava"
+  powder_snow: "Powder Snow"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"

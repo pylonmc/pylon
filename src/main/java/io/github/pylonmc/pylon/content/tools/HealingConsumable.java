@@ -16,7 +16,10 @@ import java.util.List;
 public class HealingConsumable extends RebarItem implements ConsumeRebarItemHandler {
     private final double consumeSeconds = getSettingOrThrow("consume-seconds", ConfigAdapter.DOUBLE);
     private final double healAmount = getSettingOrThrow("heal-amount", ConfigAdapter.DOUBLE);
-    public HealingConsumable(@NotNull ItemStack stack){ super(stack); }
+
+    public HealingConsumable(@NotNull ItemStack stack) {
+        super(stack);
+    }
 
     @Override
     public @NotNull List<RebarArgument> getPlaceholders() {

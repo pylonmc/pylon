@@ -172,16 +172,16 @@ public class Fermenter extends RebarBlock implements
         ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, INPUT_HATCH);
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH);
 
-        ItemStack sugarcane = inputHatch.inventory.getItem(0);
+        ItemStack sugarcane = inputHatch.inventory.getUnsafeItem(0);
         if (sugarcane != null
-                && RebarItemSchema.fromStack(sugarcane) == null
                 && sugarcane.getType() == Material.SUGAR_CANE
+                && !RebarItem.isRebarItem(sugarcane)
                 && fluidSpaceRemaining(PylonFluids.SUGARCANE) > ethanolPerSugarcane
         ) {
             int max = (int) (fluidSpaceRemaining(PylonFluids.SUGARCANE) / ethanolPerSugarcane);
             int sugarcaneToConsume = Math.min(max, sugarcane.getAmount());
             addFluid(PylonFluids.SUGARCANE, sugarcaneToConsume * ethanolPerSugarcane);
-            inputHatch.inventory.setItem(new MachineUpdateReason(), 0, sugarcane.subtract(sugarcaneToConsume));
+            RebarUtils.unsafeSubtract(inputHatch.inventory, 0, sugarcaneToConsume);
         }
 
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);

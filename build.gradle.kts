@@ -6,7 +6,7 @@ plugins {
     idea
     id("com.gradleup.shadow") version "9.0.0"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
-    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("xyz.jpenilla.run-paper") version "3.1.0"
     id("io.freefair.lombok") version "9.5.0"
     `maven-publish`
     signing
@@ -29,8 +29,8 @@ repositories {
     }
 }
 
-val rebarVersion = project.properties["rebar.version"] as String
-val minecraftVersion = project.properties["minecraft.version"] as String
+val rebarVersion = providers.gradleProperty("rebar.version").get()
+val minecraftVersion = providers.gradleProperty("minecraft.version").get()
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:$minecraftVersion.build.+")

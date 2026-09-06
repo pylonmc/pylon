@@ -1004,6 +1004,17 @@ public final class PylonItems {
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
+    public static final ItemStack BRONZE_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.BRONZE_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, BRONZE_HAMMER);
+        PylonPages.TOOLS.addItem(BRONZE_HAMMER);
+    }
+
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
                     .cooldownGroup(PylonKeys.HAMMER)
@@ -1014,6 +1025,18 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIAMOND_HAMMER)
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
+    }
+
+
+    public static final ItemStack STEEL_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.STEEL_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, STEEL_HAMMER);
+        PylonPages.TOOLS.addItem(STEEL_HAMMER);
     }
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
@@ -1167,6 +1190,7 @@ public final class PylonItems {
             .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
                     .withColor(Color.PURPLE)
                     .build())
+            .editPdc(pdc -> pdc.set(SoulboundRune.SOULBOUND_KEY, RebarSerializers.BOOLEAN, true))
             .hideFromTooltip(DataComponentTypes.FIREWORK_EXPLOSION)
             .build();
     static {
@@ -2023,6 +2047,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, GRINDSTONE_HANDLE, PylonKeys.GRINDSTONE_HANDLE);
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE_HANDLE);
+    }
+
+    public static final ItemStack PIPED_CAULDRON = ItemStackBuilder.rebar(Material.CAULDRON, PylonKeys.PIPED_CAULDRON)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPED_CAULDRON, PylonKeys.PIPED_CAULDRON);
+        PylonPages.SIMPLE_MACHINES.addItem(PIPED_CAULDRON);
     }
 
     public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)

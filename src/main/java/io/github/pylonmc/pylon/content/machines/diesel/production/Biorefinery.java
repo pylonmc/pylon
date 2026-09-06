@@ -15,6 +15,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -214,11 +215,11 @@ public class Biorefinery extends RebarBlock implements
         // Consume fuel
         if (!isProcessing()) {
             ItemInputHatch fuelInputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, FUEL_INPUT_HATCH);
-            ItemStack input = fuelInputHatch.inventory.getItem(0);
-            if (input != null && !RebarItem.isRebarItem(input)) {
+            ItemStack input = fuelInputHatch.inventory.getUnsafeItem(0);
+            if (input != null && !RebarItem.isRebarItemAndIsNot(input, VanillaFurnaceFuel.class)) {
                 ItemType itemType = input.getType().asItemType();
-                if (itemType != null && !itemType.isFuel()) {
-                    fuelInputHatch.inventory.setItem(new MachineUpdateReason(), 0, input.subtract());
+                if (itemType != null && itemType.isFuel()) {
+                    RebarUtils.unsafeSubtract(fuelInputHatch.inventory, 0, 1);
                     startProcess(itemType.getBurnDuration());
                 }
             }

@@ -5,11 +5,11 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,12 +21,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class FarmingTalisman extends Talisman {
-    public float extraCropChance = getSettingOrThrow("extra-crop-chance", ConfigAdapter.FLOAT);
     public static final NamespacedKey FARMING_TALISMAN_KEY = PylonUtils.pylonKey("farming_talisman");
     public static final NamespacedKey FARMING_TALISMAN_CHANCE_KEY = PylonUtils.pylonKey("farming_talisman_chance");
+
+    public float extraCropChance = getSettingOrThrow("extra-crop-chance", ConfigAdapter.FLOAT);
 
     public FarmingTalisman(@NotNull ItemStack stack) {
         super(stack);
@@ -38,7 +38,7 @@ public class FarmingTalisman extends Talisman {
     }
 
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+    public @NotNull List<RebarArgument> getPlaceholders() {
         return List.of(RebarArgument.of("extra_crop_chance", UnitFormat.PERCENT.format(extraCropChance * 100).decimalPlaces(2)));
     }
 
@@ -57,24 +57,31 @@ public class FarmingTalisman extends Talisman {
     public static class FarmingTalismanListener implements Listener {
         @EventHandler
         public void onBlockBreak(BlockDropItemEvent event) {
-            BlockState block = event.getBlockState();
-            Location loc = block.getLocation();
-            if (!Tag.CROPS.isTagged(block.getType())
-                    || !event.getPlayer().getPersistentDataContainer().has(FARMING_TALISMAN_CHANCE_KEY)
-                    || !(block.getBlockData() instanceof Ageable ageable)
-                    || ageable.getAge() != ageable.getMaximumAge())
-            {
+            Float duplicateDropChance = event.getPlayer().getPersistentDataContainer().get(FARMING_TALISMAN_CHANCE_KEY, PersistentDataType.FLOAT);
+            if (duplicateDropChance == null) {
                 return;
             }
+
+            BlockState block = event.getBlockState();
+            BlockData data = block.getBlockData();
+            if (!(data instanceof Ageable ageable)
+                    || ageable.getAge() != ageable.getMaximumAge()
+                    || !Tag.CROPS.isTagged(data.getMaterial())) {
+                return;
+            }
+
             List<Item> additionalDrops = new ArrayList<>();
             for (Item drop : event.getItems()) {
-                if (ThreadLocalRandom.current().nextFloat() > event.getPlayer().getPersistentDataContainer().get(FARMING_TALISMAN_CHANCE_KEY, PersistentDataType.FLOAT)) {
+                if (Math.random() > duplicateDropChance) {
                     continue;
                 }
-                additionalDrops.add(drop.getWorld().dropItem(drop.getLocation(), drop.getItemStack().clone()));
-                loc.getWorld().playSound(PylonConfig.FARMING_TALISMAN_TRIGGER_SOUND.create(), loc.getX(), loc.getY(), loc.getZ());
+                additionalDrops.add(drop.getWorld().dropItemNaturally(drop.getLocation(), drop.getItemStack().clone()));
             }
-            event.getItems().addAll(additionalDrops);
+
+            if (!additionalDrops.isEmpty()) {
+                event.getItems().addAll(additionalDrops);
+                PylonConfig.FARMING_TALISMAN_TRIGGER_SOUND.play(event.getBlock());
+            }
         }
     }
 }
