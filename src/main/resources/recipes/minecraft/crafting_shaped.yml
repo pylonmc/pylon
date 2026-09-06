@@ -2997,7 +2997,7 @@ pylon:small_boiler:
     R: minecraft:bricks
     F: pylon:firebox
     C: pylon:copper_pipe_assembly
-  result: pylon:large_boiler
+  result: pylon:small_boiler
   category: building
 
 pylon:large_boiler:

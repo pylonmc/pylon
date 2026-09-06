@@ -10,15 +10,43 @@ import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
+import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
 
+import java.util.List;
+
 
 public abstract class AbstractBoiler extends RebarBlock implements SimpleRebarMultiblock, TickingRebarBlock, DirectionalRebarBlock {
+
+    public static class Item extends RebarItem {
+
+        public final int waterInput = getSettingOrThrow("water-input", ConfigAdapter.INTEGER);
+        public final int steamOutput = getSettingOrThrow("steam-output", ConfigAdapter.INTEGER);
+        public final double minFuelConsumption = getSettingOrThrow("min-fuel-consumption", ConfigAdapter.DOUBLE);
+        public final double maxFuelConsumption = getSettingOrThrow("max-fuel-consumption", ConfigAdapter.DOUBLE);
+
+        public Item(@NotNull ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
+            return List.of(
+                    RebarArgument.of("water-input", UnitFormat.MILLIBUCKETS_PER_SECOND.format(waterInput)),
+                    RebarArgument.of("steam-output", UnitFormat.MILLIBUCKETS_PER_SECOND.format(steamOutput)),
+                    RebarArgument.of("min-fuel-consumption", UnitFormat.PERCENT.format(100 * minFuelConsumption).decimalPlaces(0)),
+                    RebarArgument.of("max-fuel-consumption", UnitFormat.PERCENT.format(100 * maxFuelConsumption).decimalPlaces(0))
+            );
+        }
+    }
 
     public static final double WATER_BOILING_POINT = 100;
 
@@ -122,5 +150,5 @@ public abstract class AbstractBoiler extends RebarBlock implements SimpleRebarMu
     /**
      * returns the proportion of [fuelToConsumeSeconds] which could actually be consumed
      */
-    abstract double tryConsumeFuel(double fuelToConsumeSeconds);
+    protected abstract double tryConsumeFuel(double fuelToConsumeSeconds);
 }

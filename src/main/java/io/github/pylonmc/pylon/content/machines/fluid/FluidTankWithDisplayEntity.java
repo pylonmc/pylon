@@ -10,7 +10,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 
 
@@ -23,16 +22,16 @@ import org.jspecify.annotations.NonNull;
  */
 public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
 
-    default void createFluidDisplay(@NonNull Vector3i offset) {
+    default void createFluidDisplay(@NonNull Vector3d offset) {
         addEntity("fluid", new ItemDisplayBuilder()
-            .build(getBlock().getLocation().toCenterLocation().add(offset.x, offset.y, offset.z))
+                .transformation(new TransformBuilder().scale(0, 0, 0))
+                .build(getBlock().getLocation().toCenterLocation().add(offset.x, offset.y, offset.z))
         );
     }
 
     default void createFluidDisplay() {
-        createFluidDisplay(new Vector3i(0, 0, 0));
+        createFluidDisplay(new Vector3d(0.0, -0.5, 0.0));
     }
-
 
     default @NotNull ItemDisplay getFluidDisplay() {
         return getHeldEntityOrThrow(ItemDisplay.class, "fluid");
@@ -59,11 +58,11 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
 
     @Override
     default void setCapacity(double capacity) {
-        double oldCapacity = getFluidAmount();
         FluidTankRebarBlock.super.setCapacity(capacity);
-        if (!(Math.abs(oldCapacity - capacity) < RebarUtils.FLUID_EPSILON)) {
-            updateFluidDisplay();
+        if (getFluidCapacity() != 0 && getFluidAmount() > getFluidCapacity()) {
+            setFluid(getFluidCapacity());
         }
+        updateFluidDisplay();
     }
 
     default void updateFluidDisplay() {
@@ -91,7 +90,7 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
     }
 
     default Vector3d fluidDisplayTranslation() {
-        return new Vector3d(0, -0.45, 0);
+        return new Vector3d(0, 0.05, 0);
     }
 
     default Vector3d fluidDisplayScale() {

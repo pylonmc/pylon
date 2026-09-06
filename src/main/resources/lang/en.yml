@@ -2472,7 +2472,16 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 4x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 3x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
 
   large_boiler:
     name: "Large Boiler"
@@ -2482,7 +2491,17 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 21x <yellow><item:minecraft:brick_stairs/></yellow>
+      <diamond> 9x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 6x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
 
   small_fluid_boiler:
     name: "Small Fluid Boiler"
@@ -2493,7 +2512,15 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 4x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
 
   large_fluid_boiler:
     name: "Large Fluid Boiler"
@@ -2504,7 +2531,16 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 21x <yellow><item:minecraft:brick_stairs/></yellow>
+      <diamond> 9x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 6x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
   firebox:
     name: "Firebox"
@@ -2692,6 +2728,7 @@ guide:
     grindstone: "Grindstone"
     hammer: "Hammer"
     pressable_items: "Pressable items"
+    liquid_fuels: "Liquid fuels"
     smeltery_burner_fuels: "Smeltery burner fuels"
     hydraulic_refuelable_items: "Hydraulic refuelable items"
   recipe:
