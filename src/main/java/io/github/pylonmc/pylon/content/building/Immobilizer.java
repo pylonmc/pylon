@@ -106,7 +106,7 @@ public class Immobilizer extends RebarBlock implements PistonRebarBlockHandler, 
     private static void checkFrozenPlayers() {
         long now = Bukkit.getCurrentTick();
         for (Map.Entry<BlockPosition, Set<UUID>> entry: FROZEN_PLAYERS.entrySet()) {
-            Immobilizer immobilizer = BlockStorage.getAs(Immobilizer.class, entry.getKey());
+            Immobilizer immobilizer = BlockStorage.getAs(entry.getKey(), Immobilizer.class);
             if (immobilizer == null) {
                 continue;
             }

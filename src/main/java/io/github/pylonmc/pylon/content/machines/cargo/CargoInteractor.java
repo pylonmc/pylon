@@ -82,7 +82,7 @@ public abstract class CargoInteractor extends RebarBlock implements DirectionalR
 
         // Refresh list of target groups
         targetGroups.clear();
-        LogisticRebarBlock targetLogisticBlock = BlockStorage.getAs(LogisticRebarBlock.class, targetBlock);
+        LogisticRebarBlock targetLogisticBlock = BlockStorage.getAs(targetBlock, LogisticRebarBlock.class);
         if (targetLogisticBlock != null) {
             targetGroups.putAll(targetLogisticBlock.getLogisticGroups());
         } else {

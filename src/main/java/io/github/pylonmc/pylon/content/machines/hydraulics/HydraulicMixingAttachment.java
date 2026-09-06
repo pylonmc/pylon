@@ -106,7 +106,7 @@ public class HydraulicMixingAttachment extends RebarBlock implements
             return;
         }
 
-        MixingPot mixingPot = BlockStorage.getAs(MixingPot.class, getBlock().getRelative(BlockFace.DOWN, 2));
+        MixingPot mixingPot = BlockStorage.getAs(getBlock().getRelative(BlockFace.DOWN, 2), MixingPot.class);
         if (mixingPot == null || fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerCraft
                 || fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerCraft
                 || !mixingPot.tryDoRecipe()) {

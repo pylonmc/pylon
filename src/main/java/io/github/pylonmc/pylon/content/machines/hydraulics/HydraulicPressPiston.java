@@ -88,7 +88,7 @@ public class HydraulicPressPiston extends RebarBlock implements
 
     @Override
     public void tick() {
-        Press press = BlockStorage.getAs(Press.class, getBlock().getRelative(BlockFace.DOWN, 2));
+        Press press = BlockStorage.getAs(getBlock().getRelative(BlockFace.DOWN, 2), Press.class);
         if (press == null
                 || fluidAmount(PylonFluids.HYDRAULIC_FLUID) < hydraulicFluidPerCraft
                 || fluidSpaceRemaining(PylonFluids.DIRTY_HYDRAULIC_FLUID) < hydraulicFluidPerCraft

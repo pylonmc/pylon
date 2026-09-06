@@ -74,7 +74,7 @@ public abstract class FluidHatch extends RebarBlock implements
     public boolean checkFormed() {
         boolean formed = SimpleRebarMultiblock.super.checkFormed();
         if (formed) {
-            FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
+            FluidTankCasing casing = BlockStorage.getAs(getBlock().getRelative(BlockFace.UP), FluidTankCasing.class);
             Preconditions.checkState(casing != null);
             Waila.addWailaOverride(casing.getBlock(), this);
             if (fluid != null) {
@@ -156,7 +156,7 @@ public abstract class FluidHatch extends RebarBlock implements
             createFluidBuffer(fluid, 0, true, true);
         }
         if (isFormedAndFullyLoaded() && fluid != null) {
-            FluidTankCasing casing = BlockStorage.getAs(FluidTankCasing.class, getBlock().getRelative(BlockFace.UP));
+            FluidTankCasing casing = BlockStorage.getAs(getBlock().getRelative(BlockFace.UP), FluidTankCasing.class);
             Preconditions.checkState(casing != null);
             setFluidCapacity(fluid, casing.capacity);
         }

@@ -44,8 +44,8 @@ public class ManualCoreDrillLever extends RebarBlock implements InteractRebarBlo
 
         Switch blockData = getBlockDataAs(Switch.class);
         ManualCoreDrill drill = BlockStorage.getAs(
-                ManualCoreDrill.class,
-                getBlock().getRelative(blockData.getFacing().getOppositeFace())
+                getBlock().getRelative(blockData.getFacing().getOppositeFace()),
+                ManualCoreDrill.class
         );
         if (drill == null || drill.isProcessing()) {
             event.setUseInteractedBlock(Event.Result.DENY);

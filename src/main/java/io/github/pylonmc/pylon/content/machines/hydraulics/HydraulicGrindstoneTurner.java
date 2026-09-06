@@ -71,7 +71,7 @@ public class HydraulicGrindstoneTurner extends RebarBlock implements
 
     @Override
     public void tick() {
-        Grindstone grindstone = BlockStorage.getAs(Grindstone.class, getBlock().getRelative(BlockFace.UP));
+        Grindstone grindstone = BlockStorage.getAs(getBlock().getRelative(BlockFace.UP), Grindstone.class);
         if (grindstone == null || grindstone.isProcessingRecipe() || !grindstone.isFormedAndFullyLoaded()) {
             return;
         }

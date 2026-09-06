@@ -61,7 +61,7 @@ public class Elevator extends RebarBlock implements SneakRebarBlockHandler, Jump
         List<Elevator> elevators = new ArrayList<>();
         for (int i = 0; i < range; i++) {
             position.addScalar(0, under ? -1 : 1, 0);
-            Elevator elevator = BlockStorage.getAs(Elevator.class, position);
+            Elevator elevator = BlockStorage.getAs(position, Elevator.class);
             if (elevator != null) {
                 elevators.add(elevator);
             }

@@ -89,8 +89,8 @@ public class FluidTank extends RebarBlock
         casings.clear();
         for (int i = 0; i < maxHeight; i++) {
             FluidTankCasing casing = BlockStorage.getAs(
-                    FluidTankCasing.class,
-                    getBlock().getRelative(0, i + 1, 0)
+                    getBlock().getRelative(0, i + 1, 0),
+                    FluidTankCasing.class
             );
 
             FluidTankCasing casingType = casings.isEmpty() ? casing : casings.getFirst();

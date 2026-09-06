@@ -196,7 +196,7 @@ public class ShimmerAltar extends RebarBlock
         List<Pedestal> pedestals = new ArrayList<>();
         for (Vector3i vector : getComponents().keySet()) {
             Block block = getBlock().getRelative(vector.x, vector.y, vector.z);
-            pedestals.add(BlockStorage.getAs(Pedestal.class, block));
+            pedestals.add(BlockStorage.getAs(block, Pedestal.class));
         }
         return pedestals;
     }

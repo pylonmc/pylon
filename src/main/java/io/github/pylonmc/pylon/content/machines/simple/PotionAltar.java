@@ -384,19 +384,19 @@ public class PotionAltar extends RebarBlock
     @Nullable
     private Pedestal getPotionPedestal1() {
         Vector3i offset = getBlockOffsets(POTION_PEDESTAL_COMPONENT).get(0);
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
+        return BlockStorage.getAs(getBlock().getRelative(offset.x(), offset.y(), offset.z()), Pedestal.class);
     }
 
     @Nullable
     private Pedestal getPotionPedestal2() {
         Vector3i offset = getBlockOffsets(POTION_PEDESTAL_COMPONENT).get(1);
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
+        return BlockStorage.getAs(getBlock().getRelative(offset.x(), offset.y(), offset.z()), Pedestal.class);
     }
 
     @Nullable
     private Pedestal getCatalystPedestal() {
         Vector3i offset = getBlockOffsets(SHIMMER_PEDESTAL_COMPONENT).getFirst();
-        return BlockStorage.getAs(Pedestal.class, getBlock().getRelative(offset.x(), offset.y(), offset.z()));
+        return BlockStorage.getAs(getBlock().getRelative(offset.x(), offset.y(), offset.z()), Pedestal.class);
     }
 
     @NotNull

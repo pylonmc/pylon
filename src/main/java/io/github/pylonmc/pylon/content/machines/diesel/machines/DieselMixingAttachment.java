@@ -152,7 +152,7 @@ public class DieselMixingAttachment extends RebarBlock implements
             return;
         }
 
-        MixingPot mixingPot = BlockStorage.getAs(MixingPot.class, getBlock().getRelative(BlockFace.DOWN, 2));
+        MixingPot mixingPot = BlockStorage.getAs(getBlock().getRelative(BlockFace.DOWN, 2), MixingPot.class);
         if (mixingPot == null || !mixingPot.tryDoRecipe()) {
             return;
         }
