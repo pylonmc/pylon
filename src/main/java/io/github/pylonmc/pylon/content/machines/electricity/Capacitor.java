@@ -7,7 +7,7 @@ import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricAcceptorNode;
-import io.github.pylonmc.rebar.electricity.nodes.ElectricPort;
+import io.github.pylonmc.rebar.electricity.nodes.ElectricPortSpec;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricProducerNode;
 import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -56,8 +56,8 @@ public class Capacitor extends RebarBlock implements
 
         setFacing(context.getFacing());
 
-        addElectricPort(new ElectricPort(new ElectricAcceptorNode("input", new BlockPosition(block)), getFacing()));
-        addElectricPort(new ElectricPort(new ElectricProducerNode("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
+        addElectricPort(new ElectricPortSpec(new ElectricAcceptorNode("input", new BlockPosition(block)), getFacing()));
+        addElectricPort(new ElectricPortSpec(new ElectricProducerNode("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
 
         addEntity("text_0", new TextDisplayBuilder()
                 .transformation(new TransformBuilder()
