@@ -3504,7 +3504,8 @@ public final class PylonItems {
         PylonPages.ELECTRICITY_UTILITIES.addItem(CAPACITOR_1_KJ);
     }
 
-    public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_1_GAUGE)
+    public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.WIRE_1_GAUGE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.STRING.key())
             .build();
 
     static {
