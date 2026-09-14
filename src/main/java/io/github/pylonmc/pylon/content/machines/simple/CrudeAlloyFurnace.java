@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
@@ -58,6 +59,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         DirectionalRebarBlock,
         TickingRebarBlock,
         LogisticRebarBlock,
+        NoJobRebarBlock,
         RecipeProcessorRebarBlock<CrudeAlloyFurnaceRecipe> {
 
     public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");

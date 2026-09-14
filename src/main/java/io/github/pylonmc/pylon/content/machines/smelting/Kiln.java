@@ -10,6 +10,7 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
@@ -64,6 +65,7 @@ public class Kiln extends RebarBlock implements
         RecipeProcessorRebarBlock<KilnRecipe>,
         DirectionalRebarBlock,
         VirtualInventoryRebarBlock,
+        NoJobRebarBlock,
         TickingRebarBlock {
 
     public static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
