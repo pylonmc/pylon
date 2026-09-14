@@ -13,6 +13,7 @@ import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -56,6 +57,7 @@ public final class Crucible extends RebarBlock implements
         FluidTankWithDisplayEntity,
         DirectionalRebarBlock,
         CauldronRebarBlockHandler,
+        NoJobRebarBlock,
         TickingRebarBlock,
         LogisticRebarBlock {
 

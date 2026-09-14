@@ -11,6 +11,7 @@ import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
@@ -54,6 +55,7 @@ public class FluidExperienceBottler extends RebarBlock implements
         LogisticRebarBlock,
         SimpleRebarMultiblock,
         DirectionalRebarBlock,
+        NoJobRebarBlock,
         ProcessorRebarBlock {
 
     private final int xpAmount = ConfigSection.fromSettings(PylonKeys.LIQUID_XP_BOTTLE)
