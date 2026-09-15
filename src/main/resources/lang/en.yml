@@ -2934,7 +2934,7 @@ inventory:
   input3: "Input 3"
 
 unit:
-  joules_per_millibucket:
+  joules-per-millibucket:
     one: "joule per millibucket"
     other: "joules per millibucket"
     abbr: "W/mB"
