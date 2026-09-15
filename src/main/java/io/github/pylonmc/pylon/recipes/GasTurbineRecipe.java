@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.recipes;
 
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -55,8 +56,8 @@ public record GasTurbineRecipe(
     }
 
     private static final UnitFormat JOULES_PER_MILLIBUCKET = new UnitFormat(
-            "pylon.unit.joules-per-millibucket",
-            true
+            Pylon.getInstance(),
+            "joules-per-millibucket"
     ).withDefaultStyle(UnitFormat.JOULES.getDefaultStyle());
 
     @Override

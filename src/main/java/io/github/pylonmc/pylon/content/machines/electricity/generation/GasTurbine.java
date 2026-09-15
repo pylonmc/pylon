@@ -134,7 +134,6 @@ public class GasTurbine extends RebarBlock implements
         if (outputHatch != null) {
             display.add(Component.translatable("pylon.message.producing-power",
                     RebarArgument.of("power", UnitFormat.WATTS.format(outputHatch.getPowerProduced())
-                            .ignoreCommonlyUnusedPrefixes()
                             .selectPrefixAndRescale()
                             .decimalPlaces(1)
                     )
