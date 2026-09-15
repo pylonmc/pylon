@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
@@ -33,15 +34,14 @@ public final class SmelteryBurner extends SmelteryComponent implements
         LogisticRebarBlock,
         ProcessorRebarBlock {
 
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-
     private final VirtualInventory fuelInventory = new VirtualInventory(3);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();
+
+    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
 
     @SuppressWarnings("unused")
     public SmelteryBurner(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-
         setTickInterval(tickInterval);
     }
 
@@ -96,7 +96,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
 
         for (int i = 0; i < fuelInventory.getSize(); i++) {
             ItemStack item = fuelInventory.getItem(i);
-            if (item == null || RebarItem.isRebarItem(item)) {
+            if (item == null || RebarItem.isRebarItemAndIsNot(item, VanillaFurnaceFuel.class)) {
                 continue;
             }
 
@@ -117,19 +117,14 @@ public final class SmelteryBurner extends SmelteryComponent implements
             }
 
             startProcess(itemType.getBurnDuration() / 2);
-            Furnace furnace = (Furnace) getBlock().getBlockData();
-            furnace.setLit(true);
-            getBlock().setBlockData(furnace);
-
+            editBlockDataAs(Furnace.class, furnace -> furnace.setLit(true));
             break;
         }
     }
 
     @Override
     public void onProcessFinished() {
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(false);
-        getBlock().setBlockData(furnace);
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(false));
     }
 
     @Override

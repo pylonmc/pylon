@@ -10,7 +10,6 @@ import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
@@ -65,7 +64,7 @@ public class FluidTank extends RebarBlock
     public FluidTank(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        createFluidDisplay(new Vector3i(0, 1, 0));
+        createFluidDisplay(new Vector3d(0.0, 0.5, 0.0));
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false);
         FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);

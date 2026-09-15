@@ -77,6 +77,7 @@ public class Collimator extends RebarBlock implements
         setFacing(context.getFacing());
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false);
         setCapacity(obscyraPerCohesiveUnit);
+        setTickInterval(tickInterval);
         startProcess(secondsPerCohesiveUnit * 20);
     }
 
@@ -91,7 +92,7 @@ public class Collimator extends RebarBlock implements
 
     @Override
     public void tick() {
-        double obscyraToUse = (double) obscyraPerCohesiveUnit / (secondsPerCohesiveUnit * getTickInterval());
+        double obscyraToUse = (double) obscyraPerCohesiveUnit / (secondsPerCohesiveUnit * 20.0 / getTickInterval());
         if (isFormedAndFullyLoaded()
                 && getFluidAmount() > obscyraToUse
                 && inventory.canHold(PylonItems.COHESIVE_UNIT)

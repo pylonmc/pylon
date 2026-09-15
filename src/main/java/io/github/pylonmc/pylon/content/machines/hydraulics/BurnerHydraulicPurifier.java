@@ -12,8 +12,9 @@ import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.HashMap;
@@ -135,10 +136,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             return;
         }
 
-        Lightable lightable = (Lightable) getBlock().getBlockData();
-        lightable.setLit(false);
-        getBlock().setBlockData(lightable);
-
+        editBlockDataAs(Lightable.class, lightable -> lightable.setLit(false));
         if (getProcessTimeTicks() != null) {
 
             FluidInputHatch fluidInput = getMultiblockComponentOrThrow(FluidInputHatch.class, FLUID_INPUT);
@@ -154,9 +152,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
                 return;
             }
 
-            lightable = (Lightable) getBlock().getBlockData();
-            lightable.setLit(true);
-            getBlock().setBlockData(lightable);
+            editBlockDataAs(Lightable.class, lightable -> lightable.setLit(true));
 
             fluidInput.removeFluid(fluidToPurify);
             fluidOutput.addFluid(fluidToPurify * purificationEfficiency);
@@ -181,17 +177,17 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
 
     public void tryConsumeFuel() {
         ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT);
-        ItemStack stack = inputHatch.inventory.getItem(0);
-        if (stack == null || RebarItem.isRebarItem(stack) || stack.isEmpty()) {
+        ItemStack stack = inputHatch.inventory.getUnsafeItem(0);
+        if (stack == null || RebarItem.isRebarItemAndIsNot(stack, VanillaFurnaceFuel.class)) {
             return;
         }
 
         ItemType itemType = stack.getType().asItemType();
-        if (itemType == null) {
+        if (itemType == null || !itemType.isFuel()) {
             return;
         }
 
-        inputHatch.inventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
+        RebarUtils.unsafeSubtract(inputHatch.inventory, 0, 1);
         startProcess(itemType.getBurnDuration() / 10);
     }
 

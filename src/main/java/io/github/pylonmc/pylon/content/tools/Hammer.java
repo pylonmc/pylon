@@ -1,11 +1,11 @@
 package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.machines.smelting.BronzeAnvil;
 import io.github.pylonmc.pylon.recipes.HammerRecipe;
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.BlockTypeWrapper;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
@@ -23,7 +23,6 @@ import kotlin.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -51,6 +50,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
+    private static final ConfigAdapter<MiningLevel> MINING_LEVEL_ADAPTER = ConfigAdapter.ENUM.from(MiningLevel.class);
     private static final Map<BlockPosition, Pair<HammerRecipe, UUID>> lastHammeredItems = new HashMap<>();
     public static final Random random = new Random();
 
@@ -59,8 +59,8 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     // is fine because the memory usage is so tiny and it would be very annoying to fix
     public static final Map<UUID, Integer> remainingUseMap = new HashMap<>();
 
-    public final Material baseBlock = getBaseBlock(getKey());
-    public final MiningLevel miningLevel = getMiningLevel(getKey());
+    public final BlockTypeWrapper baseBlock = getSettingOrThrow("base-block", ConfigAdapter.BLOCK_TYPE_WRAPPER);
+    public final MiningLevel miningLevel = getSettingOrThrow("mining-level", MINING_LEVEL_ADAPTER);
     public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
     public final RandomizedSound sound = getSettingOrThrow("sound", ConfigAdapter.RANDOMIZED_SOUND);
     public final RandomizedSound failSound = getSettingOrThrow("fail-sound", ConfigAdapter.RANDOMIZED_SOUND);
@@ -70,7 +70,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     }
 
     public boolean tryDoRecipe(@NotNull Block block, @Nullable Player player, @Nullable EquipmentSlot slot) {
-        if (baseBlock != block.getType()) {
+        if (!baseBlock.matches(block)) {
             if (player != null && !(BlockStorage.get(block) instanceof BronzeAnvil)) {
                 player.sendMessage(Component.translatable("pylon.message.hammer_cant_use"));
             }
@@ -130,6 +130,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
         }
 
         if (player != null) {
+            player.swingHand(slot);
             player.setCooldown(getStack(), cooldownTicks);
             RebarUtils.damageItem(getStack(), 1, player, slot);
         } else {
@@ -256,23 +257,8 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
     @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
         return List.of(
+                RebarArgument.of("base-block", baseBlock.createItemStack().effectiveName()),
                 RebarArgument.of("cooldown", UnitFormat.SECONDS.format(cooldownTicks / 20.0))
         );
-    }
-
-    private static Material getBaseBlock(@NotNull NamespacedKey key) {
-        return Map.of(
-                PylonKeys.STONE_HAMMER, Material.STONE,
-                PylonKeys.IRON_HAMMER, Material.IRON_BLOCK,
-                PylonKeys.DIAMOND_HAMMER, Material.DIAMOND_BLOCK
-        ).get(key);
-    }
-
-    private static MiningLevel getMiningLevel(@NotNull NamespacedKey key) {
-        return Map.of(
-                PylonKeys.STONE_HAMMER, MiningLevel.STONE,
-                PylonKeys.IRON_HAMMER, MiningLevel.IRON,
-                PylonKeys.DIAMOND_HAMMER, MiningLevel.DIAMOND
-        ).get(key);
     }
 }

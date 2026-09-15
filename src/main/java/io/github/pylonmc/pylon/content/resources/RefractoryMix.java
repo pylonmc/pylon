@@ -35,7 +35,7 @@ public class RefractoryMix extends RebarBlock implements Moldable {
     @SuppressWarnings("unused")
     public RefractoryMix(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-        moldingClicksRemaining = pdc.get(MOLDING_CLICKS_KEY, RebarSerializers.INTEGER);
+        moldingClicksRemaining = pdc.getOrDefault(MOLDING_CLICKS_KEY, RebarSerializers.INTEGER, totalMoldingClicks());
     }
 
     @Override

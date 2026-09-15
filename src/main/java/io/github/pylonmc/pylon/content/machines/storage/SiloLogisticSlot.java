@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class SiloLogisticSlot implements LogisticSlot {
-
     private final Silo silo;
 
     public SiloLogisticSlot(Silo silo) {

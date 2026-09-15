@@ -6,10 +6,7 @@ import io.github.pylonmc.pylon.api.FlammableTag;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
-import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
@@ -17,7 +14,6 @@ import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,29 +27,7 @@ import java.util.Random;
 
 public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
 
-    public static class Item extends RebarItem {
-
-        public final int waterInput = getSettingOrThrow("water-input", ConfigAdapter.INTEGER);
-        public final int steamOutput = getSettingOrThrow("steam-output", ConfigAdapter.INTEGER);
-        public final double minFuelConsumption = getSettingOrThrow("min-fuel-consumption", ConfigAdapter.DOUBLE);
-        public final double maxFuelConsumption = getSettingOrThrow("max-fuel-consumption", ConfigAdapter.DOUBLE);
-
-        public Item(@NotNull ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return List.of(
-                    RebarArgument.of("water-input", UnitFormat.MILLIBUCKETS_PER_SECOND.format(waterInput)),
-                    RebarArgument.of("steam-output", UnitFormat.MILLIBUCKETS_PER_SECOND.format(steamOutput)),
-                    RebarArgument.of("min-fuel-consumption", Math.round(100 * minFuelConsumption)),
-                    RebarArgument.of("max-fuel-consumption", UnitFormat.PERCENT.format(100 * maxFuelConsumption).decimalPlaces(0))
-            );
-        }
-    }
-
-    public static final Random random = new Random();
+    public static final Random RANDOM = new Random();
 
     @SuppressWarnings("unused")
     protected AbstractFluidFuelBoiler(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -77,7 +51,7 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
     }
 
     @Override
-    double tryConsumeFuel(double fuelToConsumeSeconds) {
+    protected double tryConsumeFuel(double fuelToConsumeSeconds) {
         if (fuelToConsumeSeconds == 0) {
             return 1.0;
         }

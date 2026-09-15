@@ -19,7 +19,6 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
@@ -32,6 +31,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -47,7 +47,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class Bloomery extends RebarBlock implements
         SimpleRebarMultiblock,
@@ -86,7 +92,6 @@ public final class Bloomery extends RebarBlock implements
 
     @Override
     public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        drops.clear();
         ItemStack stack = getItemDisplay().getItemStack();
         if (!stack.isEmpty()) {
             drops.add(stack);
@@ -96,6 +101,7 @@ public final class Bloomery extends RebarBlock implements
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
     public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) return;
+
         Player player = event.getPlayer();
         if (player.isSneaking() || !isFormedAndFullyLoaded()) return;
 
@@ -126,7 +132,7 @@ public final class Bloomery extends RebarBlock implements
     public void tick() {
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack stack = itemDisplay.getItemStack();
-        if (stack.getType().isAir()) return;
+        if (stack.isEmpty()) return;
 
         if (RebarItem.isRebarItem(stack, PylonKeys.SPONGE_IRON)) {
             IronBloom bloom = new IronBloom(PylonItems.IRON_BLOOM.clone());
@@ -190,31 +196,37 @@ public final class Bloomery extends RebarBlock implements
         );
     }
 
+    @Override
+    public @Nullable ItemStack getDropItem(@NotNull BlockBreakContext context) {
+        return null;
+    }
+
     public static class CreationListener implements Listener {
-        @EventHandler
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         private void onSetFire(@NotNull BlockPlaceEvent event) {
             Block fire = event.getBlockPlaced();
-            if (fire.getType() != Material.FIRE) return;
+            if (fire.getType() != Material.FIRE || BlockStorage.isRebarBlock(fire)) return;
 
             Block against = event.getBlockAgainst();
             if (against.getType() != Material.COAL_BLOCK) return;
 
-            Item gypsum = against.getWorld().getNearbyEntities(BoundingBox.of(fire)).stream()
-                    .filter(Item.class::isInstance)
-                    .map(Item.class::cast)
-                    .filter(item -> RebarItem.isRebarItem(item.getItemStack(), PylonKeys.GYPSUM_DUST))
-                    .findFirst()
-                    .orElse(null);
-            if (gypsum == null) return;
+            Collection<Entity> gypsumDusts = against.getWorld().getNearbyEntities(BoundingBox.of(fire), entity -> entity instanceof Item item && RebarItem.isRebarItem(item.getItemStack(), PylonKeys.GYPSUM_DUST));
+            if (gypsumDusts.isEmpty()) {
+                return;
+            }
 
             if (!Research.canPlayerUse(event.getPlayer(), PylonKeys.BLOOMERY, true)) {
                 event.setCancelled(true);
                 return;
             }
 
-            gypsum.remove();
-            BlockStorage.placeBlock(against, PylonKeys.BLOOMERY);
-            fire.setType(Material.AIR);
+            if (BlockStorage.placeBlock(against, PylonKeys.BLOOMERY) != null) {
+                Item gypsumDust = (Item) gypsumDusts.iterator().next();
+                ItemStack gypsumStack = gypsumDust.getItemStack();
+                gypsumStack.subtract();
+                gypsumDust.setItemStack(gypsumStack);
+                fire.setType(Material.AIR);
+            }
         }
     }
 

@@ -506,24 +506,38 @@ item:
     name: "Grindstone Handle"
     lore: "<star> Grindstone multiblock component"
 
+  steel_hammer:
+    name: "Steel Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
   diamond_hammer:
     name: "Diamond Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of diamond</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
+      <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
+      <arrow> <attr>Cooldown:</attr> %cooldown%
+
+  bronze_hammer:
+    name: "Bronze Hammer"
+    lore: |-
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   iron_hammer:
     name: "Iron Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>block of iron</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
   stone_hammer:
     name: "Stone Hammer"
     lore: |-
-      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>stone block</white> to use the hammer on it
+      <arrow> <insn>Right click</insn> an item dropped on top of a placed <white>%base-block%</white> to use the hammer on it
       <arrow> Higher tier hammers are twice as likely to succeed than the tier below them for a given recipe
       <arrow> <attr>Cooldown:</attr> %cooldown%
 
@@ -1914,7 +1928,7 @@ item:
   hunting_talisman_simple:
     name: "Simple Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -1922,7 +1936,7 @@ item:
   hunting_talisman_advanced:
     name: "Advanced Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -1930,7 +1944,7 @@ item:
   hunting_talisman_ultimate:
     name: "Ultimate Hunting Talisman"
     lore: |-
-      <arrow> Get an extra item for each drop when you kill a mob
+      <arrow> Get extra drops when you kill a mob
       <arrow> Does not stack
       <arrow> Only works while in your inventory
       <arrow> <attr>Success rate:</attr> %bonus_item_chance%
@@ -2017,6 +2031,7 @@ item:
   collimator:
     name: "Collimator"
     lore: |-
+      <star> Multiblock
       <arrow> Slowly synthesizes Cohesive Units
       <arrow> Only works below <white>y = 0
       <arrow> <attr>Obscyra per Cohesive Unit:</attr> %obscyra-per-cohesive-unit%
@@ -2286,6 +2301,12 @@ item:
       <diamond> 1x <yellow>Lapis Block</yellow>
       <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
 
+  piped_cauldron:
+    name: "Piped Cauldron"
+    lore: |-
+      <arrow> A cauldron which can have pipes attached to it
+    waila: "Piped Cauldron"
+
   small_boiler:
     name: "Small Boiler"
     lore: |-
@@ -2294,7 +2315,16 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 4x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 3x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
 
   large_boiler:
     name: "Large Boiler"
@@ -2304,7 +2334,17 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 21x <yellow><item:minecraft:brick_stairs/></yellow>
+      <diamond> 9x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 6x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:item_input_hatch/></yellow>
 
   small_fluid_boiler:
     name: "Small Fluid Boiler"
@@ -2315,7 +2355,15 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 4x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
 
   large_fluid_boiler:
     name: "Large Fluid Boiler"
@@ -2326,7 +2374,16 @@ item:
       <arrow> Burns fuel much slower when idle
       <arrow> <attr>Water input:</attr> %water-input%
       <arrow> <attr>Steam output:</attr> %steam-output%
-      <arrow> <attr>Fuel consumption:</attr> %min-fuel-consumption%-%max-fuel-consumption%
+      <arrow> <attr>Fuel consumption (idle):</attr> %min-fuel-consumption%
+      <arrow> <attr>Fuel consumption (max):</attr> %max-fuel-consumption%
+      
+      <u>Components</u>
+      <diamond> 21x <yellow><item:minecraft:brick_stairs/></yellow>
+      <diamond> 9x <yellow><item:pylon:smokestack_ring/></yellow>
+      <diamond> 6x <yellow><item:minecraft:bricks/></yellow>
+      <diamond> 2x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
   firebox:
     name: "Firebox"
@@ -2498,7 +2555,6 @@ item:
       <arrow> Smelts items
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Smelting speed:</attr> %speed%
-
   tape_measure:
     name: "Tape Measure"
     lore: |-
@@ -2515,6 +2571,7 @@ fluid:
   water: "Water"
   steam: "Steam"
   lava: "Lava"
+  powder_snow: "Powder Snow"
   plant_oil: "Plant Oil"
   hydraulic_fluid: "Hydraulic Fluid"
   dirty_hydraulic_fluid: "Dirty Hydraulic Fluid"
@@ -2673,6 +2730,7 @@ guide:
     grindstone: "Grindstone"
     hammer: "Hammer"
     pressable_items: "Pressable items"
+    liquid_fuels: "Liquid fuels"
     smeltery_burner_fuels: "Smeltery burner fuels"
     hydraulic_refuelable_items: "Hydraulic refuelable items"
   recipe:

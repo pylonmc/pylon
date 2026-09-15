@@ -18,8 +18,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 
 public class PylonRecipes {
 
@@ -50,6 +48,7 @@ public class PylonRecipes {
         HydraulicPurifier.RECIPE_TYPE.register();
         CrudeAlloyFurnaceRecipe.RECIPE_TYPE.register();
         FormingRecipe.RECIPE_TYPE.register();
+        BoilerDisplayRecipe.RECIPE_TYPE.register();
         GasTurbineRecipe.RECIPE_TYPE.register();
         HeatExchangerRecipe.RECIPE_TYPE.register();
 

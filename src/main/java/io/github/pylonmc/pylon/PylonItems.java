@@ -11,7 +11,7 @@ import io.github.pylonmc.pylon.content.combat.BeheadingSword;
 import io.github.pylonmc.pylon.content.combat.IceArrow;
 import io.github.pylonmc.pylon.content.combat.ReactivatedWitherSkull;
 import io.github.pylonmc.pylon.content.combat.RecoilArrow;
-import io.github.pylonmc.pylon.content.machines.boiler.AbstractSolidFuelBoiler;
+import io.github.pylonmc.pylon.content.machines.boiler.AbstractBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
@@ -36,6 +36,7 @@ import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
+import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
@@ -1068,6 +1069,17 @@ public final class PylonItems {
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
+    public static final ItemStack BRONZE_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.BRONZE_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, BRONZE_HAMMER);
+        PylonPages.TOOLS.addItem(BRONZE_HAMMER);
+    }
+
     public static final ItemStack DIAMOND_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.DIAMOND_HAMMER, true, true, false)
             .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
                     .cooldownGroup(PylonKeys.HAMMER)
@@ -1079,6 +1091,18 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(DIAMOND_HAMMER);
         RebarGuide.getOrCreateInfoPage(PylonKeys.DIAMOND_HAMMER)
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
+    }
+
+
+    public static final ItemStack STEEL_HAMMER = ItemStackBuilder.rebarWeapon(Material.DIAMOND_PICKAXE, PylonKeys.STEEL_HAMMER, true, true, false)
+            .set(DataComponentTypes.USE_COOLDOWN, UseCooldown.useCooldown(0.00001f)
+                    .cooldownGroup(PylonKeys.HAMMER)
+                    .build())
+            .set(DataComponentTypes.ITEM_MODEL, Material.NETHERITE_PICKAXE.getKey())
+            .noTool().build();
+    static {
+        RebarItem.register(Hammer.class, STEEL_HAMMER);
+        PylonPages.TOOLS.addItem(STEEL_HAMMER);
     }
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
@@ -1250,6 +1274,7 @@ public final class PylonItems {
             .set(DataComponentTypes.FIREWORK_EXPLOSION, FireworkEffect.builder()
                     .withColor(Color.PURPLE)
                     .build())
+            .editPdc(pdc -> pdc.set(SoulboundRune.SOULBOUND_KEY, RebarSerializers.BOOLEAN, true))
             .hideFromTooltip(DataComponentTypes.FIREWORK_EXPLOSION)
             .build();
 
@@ -1988,6 +2013,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, GRINDSTONE_HANDLE, PylonKeys.GRINDSTONE_HANDLE);
         PylonPages.SIMPLE_MACHINES.addItem(GRINDSTONE_HANDLE);
+    }
+
+    public static final ItemStack PIPED_CAULDRON = ItemStackBuilder.rebar(Material.CAULDRON, PylonKeys.PIPED_CAULDRON)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, PIPED_CAULDRON, PylonKeys.PIPED_CAULDRON);
+        PylonPages.SIMPLE_MACHINES.addItem(PIPED_CAULDRON);
     }
 
     public static final ItemStack CRUDE_ALLOY_FURNACE = ItemStackBuilder.rebar(Material.BLAST_FURNACE, PylonKeys.CRUDE_ALLOY_FURNACE)
@@ -2915,29 +2947,33 @@ public final class PylonItems {
     public static final ItemStack SMALL_BOILER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMALL_BOILER)
             .build();
     static {
-        RebarItem.register(AbstractSolidFuelBoiler.Item.class, SMALL_BOILER, PylonKeys.SMALL_BOILER);
+        RebarItem.register(AbstractBoiler.Item.class, SMALL_BOILER, PylonKeys.SMALL_BOILER);
         PylonPages.BOILERS.addItem(SMALL_BOILER);
     }
 
     public static final ItemStack LARGE_BOILER = ItemStackBuilder.rebar(Material.BRICK_STAIRS, PylonKeys.LARGE_BOILER)
             .build();
     static {
-        RebarItem.register(AbstractSolidFuelBoiler.Item.class, LARGE_BOILER, PylonKeys.LARGE_BOILER);
+        RebarItem.register(AbstractBoiler.Item.class, LARGE_BOILER, PylonKeys.LARGE_BOILER);
         PylonPages.BOILERS.addItem(LARGE_BOILER);
     }
 
     public static final ItemStack SMALL_FLUID_BOILER = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.SMALL_FLUID_BOILER)
             .build();
     static {
-        RebarItem.register(AbstractSolidFuelBoiler.Item.class, SMALL_FLUID_BOILER, PylonKeys.SMALL_FLUID_BOILER);
+        RebarItem.register(AbstractBoiler.Item.class, SMALL_FLUID_BOILER, PylonKeys.SMALL_FLUID_BOILER);
         PylonPages.BOILERS.addItem(SMALL_FLUID_BOILER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.SMALL_FLUID_BOILER)
+                .addButton(LiquidFuelsPage.getButton());
     }
 
     public static final ItemStack LARGE_FLUID_BOILER = ItemStackBuilder.rebar(Material.BRICK_STAIRS, PylonKeys.LARGE_FLUID_BOILER)
             .build();
     static {
-        RebarItem.register(AbstractSolidFuelBoiler.Item.class, LARGE_FLUID_BOILER, PylonKeys.LARGE_FLUID_BOILER);
+        RebarItem.register(AbstractBoiler.Item.class, LARGE_FLUID_BOILER, PylonKeys.LARGE_FLUID_BOILER);
         PylonPages.BOILERS.addItem(LARGE_FLUID_BOILER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.LARGE_FLUID_BOILER)
+                .addButton(LiquidFuelsPage.getButton());
     }
 
     //</editor-fold>

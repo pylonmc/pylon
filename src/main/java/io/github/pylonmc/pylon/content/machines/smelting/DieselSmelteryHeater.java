@@ -77,23 +77,21 @@ public class DieselSmelteryHeater extends SmelteryComponent implements
     @Override
     public void tick() {
         SmelteryController controller = getController();
-        if (controller == null
-                || !controller.isRunning()
-                || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * tickInterval / 20
-        ) {
-            if (lit) {
-                lit = false;
-                refreshBlockTextureItem();
-            }
+        if (controller == null || !controller.isRunning() || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * tickInterval / 20) {
+            setLit(false);
             return;
         }
 
-        if (!lit) {
-            lit = true;
-            refreshBlockTextureItem();
-        }
+        setLit(true);
         removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * tickInterval / 20);
         controller.heatAsymptotically(temperature);
+    }
+
+    private void setLit(boolean lit) {
+        if (this.lit != lit) {
+            this.lit = lit;
+            refreshBlockTextureItem();
+        }
     }
 
     @Override

@@ -12,8 +12,6 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Talisman extends RebarItem implements InventoryEffectRebarItem {
-    public final int level = getSettingOrThrow("level", ConfigAdapter.INTEGER);
-
     protected Talisman(@NotNull ItemStack stack) {
         super(stack);
     }
@@ -34,24 +32,24 @@ public abstract class Talisman extends RebarItem implements InventoryEffectRebar
     public void onRemovedFromInventory(@NotNull Player player) {
         InventoryEffectRebarItem.super.onRemovedFromInventory(player);
         Integer currentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
-        if (currentTalismanLevel == null) {
-            return; // really shouldn't happen, but in this case less likely to crash by not calling removeEffect
-        }
-        if (currentTalismanLevel == getLevel()) {
-            removeEffect(player);
+        if (currentTalismanLevel == null || getLevel() != currentTalismanLevel) {
+            return;
         }
 
         // Check if there are any other talismans which will override this one
         // e.g. if the player just removed a health talisman 3, is there another health talisman to fall back to?
+        Talisman bestTalisman = null;
         for (ItemStack stack : player.getInventory()) {
-            if (fromStack(stack) instanceof Talisman talisman) {
-                if (talisman.getTalismanKey().equals(getTalismanKey())) {
-                    Integer newCurrentTalismanLevel = player.getPersistentDataContainer().get(getTalismanKey(), PersistentDataType.INTEGER);
-                    if (newCurrentTalismanLevel == null || newCurrentTalismanLevel < currentTalismanLevel) {
-                        talisman.applyEffect(player);
-                    }
+            if (fromStack(stack, Talisman.class) instanceof Talisman talisman) {
+                if (talisman.getTalismanKey().equals(getTalismanKey()) && (bestTalisman == null || bestTalisman.getLevel() < talisman.getLevel())) {
+                    bestTalisman = talisman;
                 }
             }
+        }
+
+        if (bestTalisman != null && bestTalisman.getLevel() != getLevel()) {
+            removeEffect(player);
+            bestTalisman.applyEffect(player);
         }
     }
 
@@ -81,10 +79,12 @@ public abstract class Talisman extends RebarItem implements InventoryEffectRebar
     }
 
     /**
-     * Get the level of the talisman, this is used to determine which talismans should overwrite other ones
+     * Get the level of the talisman, this is used to determine which talismans should overwrite other ones.
+     * <br>
+     * By default, this is determined by a {@link RebarItem} {@link #getSettingOrThrow(String, ConfigAdapter) setting}
      */
     public int getLevel() {
-        return level;
+        return getSettingOrThrow("level", ConfigAdapter.INTEGER);
     }
 
     /**

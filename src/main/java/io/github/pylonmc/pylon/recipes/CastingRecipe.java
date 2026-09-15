@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.recipes;
 import io.github.pylonmc.pylon.PylonItems;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.recipe.*;
@@ -37,6 +38,10 @@ public record CastingRecipe(
             );
         }
     };
+
+    public boolean matches(RebarFluid fluid, ItemStack mold) {
+        return input.matchesIgnoringAmount(fluid) && this.mold.matches(mold);
+    }
 
     @Override
     public @NotNull List<@NotNull FluidOrItemChoice> getInputs() {

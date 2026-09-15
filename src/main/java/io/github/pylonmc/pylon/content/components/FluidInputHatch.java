@@ -46,15 +46,15 @@ public class FluidInputHatch extends FluidHatch {
 
     @Override
     public boolean isAllowedFluid(@NotNull RebarFluid fluid) {
-        return allowedFluids.contains(fluid);
+        return allowedFluids != null && allowedFluids.contains(fluid);
     }
 
     @Override
     public void setFluidType(@Nullable RebarFluid fluid) {
-        super.setFluidType(fluid);
-        if (fluid != null && (allowedFluids == null || !allowedFluids.contains(fluid))) {
+        if (fluid != null && !isAllowedFluid(fluid)) {
             throw new IllegalStateException("You should call FluidInputHatch#setAllowedFluid[s] to set the fluid type of an input hatch rather than calling setFluidType directly");
         }
+        super.setFluidType(fluid);
     }
 
     @Override

@@ -17,6 +17,7 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -213,14 +214,14 @@ public class CargoAccumulator extends RebarBlock implements
 
     private void doTransfer() {
         int inputTotal = 0;
-        for (ItemStack stack : inputInventory.getItems()) {
+        for (ItemStack stack : inputInventory.getUnsafeItems()) {
             if (stack != null) {
                 inputTotal += stack.getAmount();
             }
         }
 
         int outputTotal = 0;
-        for (ItemStack stack : outputInventory.getItems()) {
+        for (ItemStack stack : outputInventory.getUnsafeItems()) {
             if (stack != null) {
                 outputTotal += stack.getAmount();
             }
@@ -235,16 +236,16 @@ public class CargoAccumulator extends RebarBlock implements
         }
 
         if (inputTotal >= threshold) {
-            List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
+            List<ItemStack> stacks = Arrays.asList(inputInventory.getUnsafeItems());
             if (!outputInventory.canHold(stacks)) return;
 
             for (ItemStack stack : stacks) {
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }
-            for (int slot = 0; slot < inputInventory.getItems().length; slot++) {
-                inputInventory.setItem(new MachineUpdateReason(), slot, null);
+            for (int slot = 0; slot < inputInventory.getSize(); slot++) {
+                RebarUtils.unsafeSet(inputInventory, slot, null);
             }
-            getLogisticGroupOrThrow("input").setFilter(stack -> false);
+            getLogisticGroupOrThrow("input").setFilter(_ -> false);
             getHeldEntityOrThrow(BlockDisplay.class, "side1")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
             getHeldEntityOrThrow(BlockDisplay.class, "side2")
