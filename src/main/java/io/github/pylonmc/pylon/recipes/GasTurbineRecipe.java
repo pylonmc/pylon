@@ -19,10 +19,12 @@ import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import java.util.List;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.item.Item;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -67,20 +69,17 @@ public record GasTurbineRecipe(
                         "# # # # # # # # #",
                         "# # # # # # # # #",
                         "# i # # x # # o #",
-                        "# # # # # # # # #",
+                        "# # # # p # # # #",
                         "# # # # # # # # #"
                 )
                 .addIngredient('#', GuiItems.backgroundBlack())
                 .addIngredient('i', FluidButton.of(input))
-                .addIngredient('x', ItemButton.of(ItemStackBuilder.of(PylonItems.GAS_TURBINE.clone())
-                        .lore(
-                                Component.empty(),
-                                Component.translatable(
-                                        "pylon.gui.joules-per-mb",
-                                        RebarArgument.of("power", JOULES_PER_MILLIBUCKET.format(powerProduction / input.getAmount()).decimalPlaces(1))
-                                )
-                        )
-                        .build()))
+                .addIngredient('x', ItemButton.of(PylonItems.GAS_TURBINE))
+                .addIngredient('p', Item.simple(ItemStackBuilder.of(Material.BLAZE_POWDER)
+                        .name(Component.translatable(
+                                "pylon.gui.joules-per-mb",
+                                RebarArgument.of("power", JOULES_PER_MILLIBUCKET.format(powerProduction / input.getAmount()).decimalPlaces(1))
+                        ))))
                 .addIngredient('o', FluidButton.of(output))
                 .build();
     }

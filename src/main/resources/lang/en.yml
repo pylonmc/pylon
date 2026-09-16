@@ -2974,7 +2974,7 @@ gui:
   threshold: "Threshold"
   item-threshold: "Item threshold"
   fluid-threshold: "Fluid threshold"
-  joules-per-mb: "<attr>Power production:</attr> %power%"
+  joules-per-mb: "Produces %power%"
 
 inventory:
   fuel: "Fuel"
@@ -2995,4 +2995,4 @@ unit:
   joules-per-millibucket:
     one: "joule per millibucket"
     other: "joules per millibucket"
-    abbr: "W/mB"
+    abbr: "J/mB"
