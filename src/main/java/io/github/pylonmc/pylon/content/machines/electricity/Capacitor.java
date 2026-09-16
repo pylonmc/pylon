@@ -4,6 +4,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.ElectricRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.InteractRebarBlockHandler;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricAcceptorNode;
@@ -13,21 +14,33 @@ import io.github.pylonmc.rebar.entity.display.TextDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
+import java.util.Locale;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Capacitor extends RebarBlock implements
         ElectricRebarBlock,
-        DirectionalRebarBlock {
+        DirectionalRebarBlock,
+        InteractRebarBlockHandler {
 
     public static final class Item extends RebarItem {
 
@@ -58,20 +71,6 @@ public class Capacitor extends RebarBlock implements
 
         addElectricPort(new ElectricPortSpec(new ElectricAcceptorNode("input", new BlockPosition(block)), getFacing()));
         addElectricPort(new ElectricPortSpec(new ElectricProducerNode("output", new BlockPosition(block), 0), getFacing().getOppositeFace()));
-
-        addEntity("text_0", new TextDisplayBuilder()
-                .transformation(new TransformBuilder()
-                        .lookAlong(getFacing())
-                        .rotate(0, Math.PI / 2, 0))
-                .build(getBlock().getLocation().toCenterLocation().add(getFacing().getDirection().multiply(0.5001).rotateAroundY(Math.PI / 2)))
-        );
-
-        addEntity("text_1", new TextDisplayBuilder()
-                .transformation(new TransformBuilder()
-                        .lookAlong(getFacing())
-                        .rotate(0, -Math.PI / 2, 0))
-                .build(getBlock().getLocation().toCenterLocation().add(getFacing().getDirection().multiply(0.5001).rotateAroundY(-Math.PI / 2)))
-        );
 
         storedEnergy = 0;
     }
@@ -107,10 +106,49 @@ public class Capacitor extends RebarBlock implements
         setStoredEnergy(storedEnergy);
     }
 
+    @Override
+    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
+        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND) return;
+
+        BlockFace face = event.getBlockFace();
+        Vector direction = face.getDirection();
+        String name = displayName(face);
+        TextDisplay display = getHeldEntity(TextDisplay.class, name);
+        if (display == null) {
+            addEntity(name, new TextDisplayBuilder()
+                    .transformation(new TransformBuilder()
+                            .lookAlong(direction.toVector3f()))
+                    .build(getBlock().getLocation().toCenterLocation().add(direction.clone().multiply(0.5001)))
+            );
+            setStoredEnergy(storedEnergy);
+        } else {
+            display.remove();
+        }
+    }
+
+    private static String displayName(BlockFace face) {
+        return "text_" + face.name().toLowerCase(Locale.ROOT);
+    }
+
     public void setStoredEnergy(double energy) {
         storedEnergy = energy;
-        getHeldEntityOrThrow(TextDisplay.class, "text_0").text(UnitFormat.JOULES.format(storedEnergy).decimalPlaces(1).asComponent());
-        getHeldEntityOrThrow(TextDisplay.class, "text_1").text(UnitFormat.JOULES.format(storedEnergy).decimalPlaces(1).asComponent());
+        for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
+            TextDisplay display = getHeldEntity(TextDisplay.class, displayName(face));
+            if (display == null) continue;
+            display.text(formatEnergy(storedEnergy));
+        }
         output.setPower(storedEnergy);
+    }
+
+    @Override
+    public @Nullable WailaDisplay getWaila(@NotNull Player player) {
+        return WailaDisplay.of(this, player).add(formatEnergy(storedEnergy));
+    }
+
+    private static Component formatEnergy(double energy) {
+        return UnitFormat.JOULES.format(energy)
+                .selectPrefixAndRescale()
+                .decimalPlaces(1)
+                .asComponent();
     }
 }

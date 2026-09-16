@@ -2483,6 +2483,8 @@ item:
     lore: |-
       <arrow> Stores electricity
       <arrow> Capacitors will only take excess power that other blocks can't use
+      <arrow> <insn>Right click the block</insn> to display the stored power on that block face
+      <arrow> <insn>Right click again</insn> to stop displaying the power
       <arrow> <attr>Capacity:</attr> %capacity%
 
   electric_grindstone:
