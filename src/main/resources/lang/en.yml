@@ -2397,11 +2397,11 @@ item:
   large_copper_pipe_assembly:
     name: "Large Copper Pipe Assembly"
 
-  power_bus:
-    name: "Power Bus"
+  wire_hub:
+    name: "Wire Hub"
     lore: |-
-      <arrow> Acts as a multidirectional bus for wires to connect to
-      <arrow> Power may be transmitted from any port to any other port
+      <arrow> Provides two ports on the top and bottom for wires to connect to
+      <arrow> Power can be transmitted between the two ports without penalties
 
   creative_power_source:
     name: "<#ff00ff>Creative Power Source"

@@ -3523,13 +3523,13 @@ public final class PylonItems {
     }
 
     // <editor-fold desc="Electricity" defaultstate=collapsed>
-    public static final ItemStack POWER_BUS = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.POWER_BUS)
+    public static final ItemStack WIRE_HUB = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.WIRE_HUB)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.key())
             .build();
 
     static {
-        RebarItem.register(RebarItem.class, POWER_BUS, PylonKeys.POWER_BUS);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(POWER_BUS);
+        RebarItem.register(RebarItem.class, WIRE_HUB, PylonKeys.WIRE_HUB);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(WIRE_HUB);
     }
 
     public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)

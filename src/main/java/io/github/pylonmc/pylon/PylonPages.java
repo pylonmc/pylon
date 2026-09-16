@@ -79,7 +79,7 @@ public class PylonPages {
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);
         MACHINES.addPage(PylonItems.GAS_TURBINE, ELECTRICITY_PRODUCTION);
         MACHINES.addPage(PylonItems.ELECTRIC_GRINDSTONE, ELECTRIC_MACHINES);
-        MACHINES.addPage(PylonItems.POWER_BUS, ELECTRICITY_UTILITIES);
+        MACHINES.addPage(PylonItems.WIRE_HUB, ELECTRICITY_UTILITIES);
         RebarGuide.getRootPage().addPage(PylonItems.MIXING_POT, MACHINES);
         RebarGuide.getRootPage().addPage(PylonItems.ASSEMBLY_TABLE, ASSEMBLING);
 

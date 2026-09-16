@@ -14,7 +14,7 @@ import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electricity.ElectricityInputHatch;
 import io.github.pylonmc.pylon.content.machines.electricity.ElectricityOutputHatch;
-import io.github.pylonmc.pylon.content.machines.electricity.PowerBus;
+import io.github.pylonmc.pylon.content.machines.electricity.WireHub;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
@@ -208,7 +208,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SMALL_FLUID_BOILER, Material.BRICKS, SmallFluidBoiler.class);
         RebarBlock.register(PylonKeys.LARGE_FLUID_BOILER, Material.BRICK_STAIRS, LargeFluidBoiler.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
-        RebarBlock.register(PylonKeys.POWER_BUS, Material.STRUCTURE_VOID, PowerBus.class);
+        RebarBlock.register(PylonKeys.WIRE_HUB, Material.STRUCTURE_VOID, WireHub.class);
         RebarBlock.register(PylonKeys.CAPACITOR_1_KJ, Material.BLUE_GLAZED_TERRACOTTA, Capacitor.class);
         RebarBlock.register(PylonKeys.CREATIVE_POWER_SOURCE, Material.PINK_STAINED_GLASS, CreativePowerSource.class);
         RebarBlock.register(PylonKeys.ELECTRICITY_INPUT_HATCH, Material.GREEN_CONCRETE, ElectricityInputHatch.class);
