@@ -212,39 +212,3 @@ pylon:steel_from_pipe:
   result: pylon:steel
   amount: 72
   priority: -1
-
-pylon:palladium_from_ingot:
-  input: pylon:palladium_ingot
-  result: pylon:palladium
-  amount: 144
-  priority: -1
-
-pylon:palladium_from_dust:
-  input: pylon:palladium_dust
-  result: pylon:palladium
-  amount: 144
-  priority: -1
-
-pylon:palladium_from_nugget:
-  input: pylon:palladium_nugget
-  result: pylon:palladium
-  amount: 16
-  priority: -1
-
-pylon:palladium_from_block:
-  input: pylon:palladium_block
-  result: pylon:palladium
-  amount: 1296
-  priority: -1
-
-pylon:palladium_from_sheet:
-  input: pylon:palladium_sheet
-  result: pylon:palladium
-  amount: 144
-  priority: -1
-
-pylon:palladium_from_pipe:
-  input: pylon:fluid_pipe_palladium
-  result: pylon:palladium
-  amount: 72
-  priority: -1

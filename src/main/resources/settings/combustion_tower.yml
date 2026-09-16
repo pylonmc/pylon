@@ -1,0 +1,5 @@
+tick-interval: 10
+diesel-usage: 50
+diesel-buffer: 1000
+exhaust-production: 100
+exhaust-buffer: 1000

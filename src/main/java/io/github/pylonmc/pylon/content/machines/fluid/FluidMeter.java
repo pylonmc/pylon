@@ -1,12 +1,12 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
-import io.github.pylonmc.pylon.util.PylonUtils;
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -18,11 +18,14 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import io.papermc.paper.util.Tick;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -33,21 +36,14 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class FluidMeter extends RebarBlock implements
@@ -56,8 +52,8 @@ public class FluidMeter extends RebarBlock implements
         TickingRebarBlock,
         GuiRebarBlock {
 
-    public static final NamespacedKey MEASUREMENTS_KEY = PylonUtils.pylonKey("measurements");
-    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = PylonUtils.pylonKey("number_of_measurements");
+    public static final NamespacedKey MEASUREMENTS_KEY = pylonKey("measurements");
+    public static final NamespacedKey NUMBER_OF_MEASUREMENTS_KEY = pylonKey("number_of_measurements");
 
     public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.DOUBLE);
     public final int minNumberOfMeasurements = getSettingOrThrow("min-number-of-measurements", ConfigAdapter.INTEGER);
@@ -189,7 +185,19 @@ public class FluidMeter extends RebarBlock implements
         return Gui.builder()
                 .setStructure("# # # # m # # # #")
                 .addIngredient('#', GuiItems.background())
-                .addIngredient('m', new MeasurementDurationItem())
+                .addIngredient('m', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.measurement-duration"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(minNumberOfMeasurements)
+                        .max(maxNumberOfMeasurements)
+                        .valueGetter(() -> numberOfMeasurements)
+                        .valueSetter(value -> numberOfMeasurements = value)
+                        .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
+                        .key(pylonKey(getKey() + ":measurement-duration"))
+                        .reopenWindow(this::open)
+                        .build())
                 .build();
     }
 
@@ -243,31 +251,5 @@ public class FluidMeter extends RebarBlock implements
 
     public static Duration getDuration(int numberOfMeasurements) {
         return Tick.of((long) numberOfMeasurements * RebarConfig.FLUID_TICK_INTERVAL);
-    }
-
-    public class MeasurementDurationItem extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NotNull Player viewer) {
-            return ItemStackBuilder.of(Material.WHITE_CONCRETE)
-                    .name(Component.translatable("pylon.gui.fluid_meter.name").arguments(
-                            RebarArgument.of("measurement-duration", UnitFormat.formatDuration(getDuration(numberOfMeasurements), true, true))
-                    ))
-                    .lore(Component.translatable("pylon.gui.fluid_meter.lore"));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            int newValue;
-            if (clickType.isLeftClick()) {
-                newValue = numberOfMeasurements + (clickType.isShiftClick() ? 10 : 1);
-            } else if (clickType.isRightClick()) {
-                newValue = numberOfMeasurements + (clickType.isShiftClick() ? -10 : -1);
-            } else {
-                newValue = numberOfMeasurements;
-            }
-            numberOfMeasurements = Math.clamp(newValue, minNumberOfMeasurements, maxNumberOfMeasurements);
-            notifyWindows();
-        }
     }
 }

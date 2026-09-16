@@ -1,0 +1,5 @@
+power-usage: 20
+tick-interval: 10
+mixing-time: 3
+input-capacity: 1000
+output-capacity: 1000

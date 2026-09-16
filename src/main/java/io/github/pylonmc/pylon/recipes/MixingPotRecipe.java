@@ -7,25 +7,22 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
-import io.github.pylonmc.rebar.recipe.*;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
-import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
+import io.github.pylonmc.rebar.recipe.ConfigurableRecipeType;
+import io.github.pylonmc.rebar.recipe.RebarRecipe;
+import io.github.pylonmc.rebar.recipe.RecipeType;
+import io.github.pylonmc.rebar.recipe.ingredient.*;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 /**
- * @param inputItems the items needed inside the mixing pot (max. 7) (respects item amount)
+ * @param inputItems the items needed inside the mixing pot (max. 9)
  * @param inputFluid the fluid that must be in the mixing pot already
  * @param output the item or fluid that will be output
  * @param requiresEnrichedFire whether enriched fire must be placed below to do this recipe
@@ -37,6 +34,10 @@ public record MixingPotRecipe(
         @NotNull FluidOrItem output,
         boolean requiresEnrichedFire
 ) implements RebarRecipe {
+
+    public MixingPotRecipe {
+        Preconditions.checkArgument(inputItems.size() <= 9, "Too many input items for mixing pot recipe (max. 9)");
+    }
 
     @Override
     public @NotNull NamespacedKey getKey() {
@@ -118,7 +119,7 @@ public record MixingPotRecipe(
                 'o',
                 switch (output) {
                     case FluidOrItem.Item item -> ItemButton.of(item.item());
-                    case FluidWithAmount fluid -> FluidButton.of(fluid.amountMillibuckets(), fluid.fluid());
+                    case FluidWithAmount fluid -> FluidButton.of(fluid.amount(), fluid.fluid());
                     default -> throw new AssertionError();
                 }
         );

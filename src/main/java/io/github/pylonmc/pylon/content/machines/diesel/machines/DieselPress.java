@@ -2,16 +2,7 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.recipes.PressRecipe;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
+import io.github.pylonmc.pylon.content.machines.generic.GenericPress;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
@@ -21,14 +12,11 @@ import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -41,29 +29,11 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
 
-import java.util.List;
-import java.util.Map;
-
-
-public class DieselPress extends RebarBlock implements
-        GuiRebarBlock,
-        VirtualInventoryRebarBlock,
-        DirectionalRebarBlock,
-        FluidBufferRebarBlock,
-        TickingRebarBlock,
-        LogisticRebarBlock,
-        RecipeProcessorRebarBlock<PressRecipe> {
+public class DieselPress extends GenericPress {
 
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
-    public final double plantOilBuffer = getSettingOrThrow("plant-oil-buffer", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    public final double timePerItem = getSettingOrThrow("time-per-item", ConfigAdapter.DOUBLE);
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
@@ -85,10 +55,6 @@ public class DieselPress extends RebarBlock implements
         }
     }
 
-    public ItemStackBuilder pressStack = ItemStackBuilder.of(Material.COMPOSTER)
-            .addCustomModelDataString(getKey() + ":press");
-    public ItemStackBuilder pressLidStack = ItemStackBuilder.of(Material.COMPOSTER)
-            .addCustomModelDataString(getKey() + ":press_lid");
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
     public ItemStackBuilder sideStack2 = ItemStackBuilder.of(Material.BRICKS)
@@ -99,10 +65,9 @@ public class DieselPress extends RebarBlock implements
     @SuppressWarnings("unused")
     public DieselPress(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
+        addPressEntities(block);
         createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH, context, false, 0.55F);
         createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH, context, false, 0.55F);
-        setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
@@ -125,25 +90,7 @@ public class DieselPress extends RebarBlock implements
                         .scale(0.8, 0.8, 1.1))
                 .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
         );
-        addEntity("press", new ItemDisplayBuilder()
-                .itemStack(pressStack)
-                .transformation(new TransformBuilder()
-                        .translate(0, 0.3, 0)
-                        .scale(0.6))
-                .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
-        );
-        addEntity("press_lid", new ItemDisplayBuilder()
-                .itemStack(pressLidStack)
-                .transformation(new TransformBuilder()
-                        .translate(0, 0.3, 0)
-                        .rotate(Math.PI, 0, 0)
-                        .scale(0.5999))
-                .build(block.getLocation().toCenterLocation().add(0, 0.5, 0))
-        );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        createFluidBuffer(PylonFluids.PLANT_OIL, plantOilBuffer, false, true);
-        setRecipeType(PressRecipe.RECIPE_TYPE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
     @SuppressWarnings("unused")
@@ -152,19 +99,9 @@ public class DieselPress extends RebarBlock implements
     }
 
     @Override
-    public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, inputInventory);
-        inputInventory.addPostUpdateHandler(event -> {
-            if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
-                tryStartRecipe();
-            }
-        });
-    }
-
-    @Override
     public boolean setFluid(@NotNull RebarFluid fluid, double amount) {
         double current = fluidAmount(fluid);
-        boolean output = FluidBufferRebarBlock.super.setFluid(fluid, amount);
+        boolean output = super.setFluid(fluid, amount);
         if (amount < current) {
             tryStartRecipe();
         }
@@ -192,60 +129,6 @@ public class DieselPress extends RebarBlock implements
                 .spawn();
     }
 
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
-            return;
-        }
-
-        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
-            return;
-        }
-
-        for (PressRecipe recipe : PressRecipe.RECIPE_TYPE) {
-            if (tryStartRecipe(recipe, stack)) {
-                break;
-            }
-        }
-    }
-
-    private boolean tryStartRecipe(PressRecipe recipe, ItemStack stack) {
-        double plantOilAmount = recipe.oilAmount();
-        if (fluidSpaceRemaining(PylonFluids.PLANT_OIL) < plantOilAmount || !recipe.input().matches(stack)) {
-            return false;
-        }
-
-        startRecipe(recipe, (int) (timePerItem * 20));
-        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(recipe.input().getAmount()));
-        return true;
-    }
-
-    @Override
-    public void onRecipeFinished(@NotNull PressRecipe recipe) {
-        addFluid(PylonFluids.PLANT_OIL, recipe.oilAmount());
-        getRecipeProgressItem().setItem(GuiItems.background());
-        tryStartRecipe();
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # # # I # # # #",
-                        "# # # # i # # # #",
-                        "# # # # p # # # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .build();
-    }
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
@@ -264,18 +147,5 @@ public class DieselPress extends RebarBlock implements
                         ? ProgressBar.recipeProgress(getRecipeProgress())
                         : Component.translatable("pylon.message.idle")
                 );
-    }
-
-    @Override
-    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
-        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of(
-                "input", inputInventory
-        );
     }
 }

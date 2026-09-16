@@ -7,15 +7,17 @@ import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.RebarItemSchema;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
 import io.github.pylonmc.rebar.recipe.RecipeType;
-import io.github.pylonmc.rebar.recipe.ingredient.*;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.List;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
-
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -31,7 +33,7 @@ public record BoilerDisplayRecipe(
 
     static {
         for (RebarItemSchema item : RebarRegistry.ITEMS) {
-            if (item.getRebarItem() instanceof AbstractBoiler.Item boiler) {
+            if (item.createNewRebarItem() instanceof AbstractBoiler.Item boiler) {
                 RECIPE_TYPE.addRecipe(new BoilerDisplayRecipe(
                         boiler.getKey(),
                         boiler.getStack(),

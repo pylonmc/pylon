@@ -34,7 +34,6 @@ public class PylonHelpPages {
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.QUARTZ, Pylon.getInstance(), "help.progression.gypsum")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.BLAST_FURNACE, Pylon.getInstance(), "help.progression.steel_age")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.PISTON, Pylon.getInstance(), "help.progression.diesel_machines")));
-        PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.NETHERITE_INGOT, Pylon.getInstance(), "help.progression.palladium")));
         PROGRESSION.addButton(Item.simple(ItemStackBuilder.guide(Material.ELYTRA, Pylon.getInstance(), "help.progression.flight_ring")));
         HELP.addPage(Material.BOOKSHELF, PROGRESSION);
 
