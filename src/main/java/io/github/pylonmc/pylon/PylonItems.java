@@ -3130,6 +3130,8 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, ASSEMBLY_TABLE, PylonKeys.ASSEMBLY_TABLE);
         PylonPages.ASSEMBLING.addItem(ASSEMBLY_TABLE);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.ASSEMBLY_TABLE)
+                .addButton(new MachineRecipesButton(AssemblingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack COPPER_SCREWDRIVER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_SCREWDRIVER)
