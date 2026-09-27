@@ -47,7 +47,9 @@ public abstract class Talisman extends RebarItem implements InventoryEffectRebar
             }
         }
 
-        if (bestTalisman != null && bestTalisman.getLevel() != getLevel()) {
+        if (bestTalisman == null) {
+            removeEffect(player);
+        } else if (bestTalisman.getLevel() != getLevel()) {
             removeEffect(player);
             bestTalisman.applyEffect(player);
         }
