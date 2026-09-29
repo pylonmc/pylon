@@ -195,7 +195,7 @@ public class FluidMeter extends RebarBlock implements
                         .valueGetter(() -> numberOfMeasurements)
                         .valueSetter(value -> numberOfMeasurements = value)
                         .valueFormatter(value -> UnitFormat.formatDuration(getDuration(value), true, true))
-                        .key(pylonKey(getKey() + ":measurement-duration"))
+                        .key(pylonKey(getKey() + ":measurement_duration"))
                         .reopenWindow(this::open)
                         .build())
                 .build();
