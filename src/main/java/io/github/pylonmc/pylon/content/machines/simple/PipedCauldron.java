@@ -5,6 +5,7 @@ import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.CauldronRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.util.ProgressBar;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandler, FluidTankRebarBlock {
+public class PipedCauldron extends RebarBlock implements CauldronRebarBlockHandler, FluidTankRebarBlock, NoJobRebarBlock {
 
     public static final double BOTTLE_FLUID_AMOUNT = 333.333333333333333333333333333333333333333333333333333;
 

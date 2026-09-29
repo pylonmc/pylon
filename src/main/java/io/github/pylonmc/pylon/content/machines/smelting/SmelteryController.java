@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.smelting;
 import com.google.common.base.Preconditions;
 
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 
@@ -88,7 +89,7 @@ import xyz.xenondevs.invui.item.ItemProvider;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public final class SmelteryController extends SmelteryComponent
-        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler {
+        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler, NoJobRebarBlock {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");

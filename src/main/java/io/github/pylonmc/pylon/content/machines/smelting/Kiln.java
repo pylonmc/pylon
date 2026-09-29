@@ -57,6 +57,7 @@ public class Kiln extends RebarBlock implements
         RecipeProcessorRebarBlock<KilnRecipe>,
         DirectionalRebarBlock,
         VirtualInventoryRebarBlock,
+        NoJobRebarBlock,
         TickingRebarBlock {
 
     public static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");

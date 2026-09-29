@@ -51,6 +51,7 @@ public final class Crucible extends RebarBlock implements
         FluidTankWithDisplayEntity,
         DirectionalRebarBlock,
         CauldronRebarBlockHandler,
+        NoJobRebarBlock,
         TickingRebarBlock,
         LogisticRebarBlock {
 

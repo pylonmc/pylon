@@ -43,6 +43,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
         TickingRebarBlock,
         ProcessorRebarBlock,
         InteractRebarBlockHandler,
+        NoJobRebarBlock,
         HydraulicPurifier {
 
     public static final Vector3i ITEM_INPUT = new Vector3i(0, 0, 2);

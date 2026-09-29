@@ -46,6 +46,7 @@ public class FluidExperienceBottler extends RebarBlock implements
         LogisticRebarBlock,
         SimpleRebarMultiblock,
         DirectionalRebarBlock,
+        NoJobRebarBlock,
         ProcessorRebarBlock {
 
     private final int xpAmount = ConfigSection.fromSettings(PylonKeys.LIQUID_XP_BOTTLE)
