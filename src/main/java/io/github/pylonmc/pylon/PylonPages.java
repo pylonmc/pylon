@@ -32,9 +32,13 @@ public class PylonPages {
     public static final SimpleStaticGuidePage FLUID_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_fluid_machines"));
     public static final SimpleStaticGuidePage HYDRAULIC_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_hydraulic_machines"));
     public static final SimpleStaticGuidePage HYDRAULIC_PURIFICATION = new SimpleStaticGuidePage(pylonKey("machines_hydraulic_purification"));
+    public static final SimpleStaticGuidePage BOILERS = new SimpleStaticGuidePage(pylonKey("machines_boilers"));
     public static final SimpleStaticGuidePage CARGO = new SimpleStaticGuidePage(pylonKey("machines_cargo"));
     public static final SimpleStaticGuidePage DIESEL_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_diesel_machines"));
     public static final SimpleStaticGuidePage DIESEL_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_diesel_production"));
+    public static final SimpleStaticGuidePage ELECTRICITY_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_electricity_production"));
+    public static final SimpleStaticGuidePage ELECTRIC_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_electric_machines"));
+    public static final SimpleStaticGuidePage ELECTRICITY_UTILITIES = new SimpleStaticGuidePage(pylonKey("machines_electricity_utilities"));
     public static final SimpleStaticGuidePage MACHINES = new SimpleStaticGuidePage(pylonKey("machines"));
 
     public static final SimpleStaticGuidePage ASSEMBLING = new SimpleStaticGuidePage(pylonKey("assembling"));
@@ -69,9 +73,13 @@ public class PylonPages {
         MACHINES.addPage(PylonItems.FLUID_METER, FLUID_MACHINES);
         MACHINES.addPage(PylonItems.HYDRAULIC_PIPE_BENDER, HYDRAULIC_MACHINES);
         MACHINES.addPage(PylonItems.SOLAR_HYDRAULIC_PURIFIER_3, HYDRAULIC_PURIFICATION);
+        MACHINES.addPage(PylonItems.SMALL_BOILER, BOILERS);
         MACHINES.addPage(PylonItems.CARGO_BUFFER, CARGO);
         MACHINES.addPage(PylonItems.DIESEL_PIPE_BENDER, DIESEL_MACHINES);
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);
+        MACHINES.addPage(PylonItems.GAS_TURBINE, ELECTRICITY_PRODUCTION);
+        MACHINES.addPage(PylonItems.ELECTRIC_GRINDSTONE, ELECTRIC_MACHINES);
+        MACHINES.addPage(PylonItems.WIRE_HUB, ELECTRICITY_UTILITIES);
         RebarGuide.getRootPage().addPage(PylonItems.MIXING_POT, MACHINES);
         RebarGuide.getRootPage().addPage(PylonItems.ASSEMBLY_TABLE, ASSEMBLING);
 

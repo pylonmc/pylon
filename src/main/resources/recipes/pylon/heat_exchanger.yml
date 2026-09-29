@@ -1,0 +1,21 @@
+pylon:very_hot_exhaust:
+  from:
+    input:
+      pylon:very_hot_exhaust: 500
+    output:
+      pylon:hot_exhaust: 50
+  to:
+    input:
+      pylon:water: 50
+    output:
+      pylon:steam: 500
+
+pylon:hot_exhaust:
+  from:
+    input:
+      pylon:hot_exhaust: 500
+  to:
+    input:
+      pylon:water: 50
+    output:
+      pylon:steam: 500

@@ -22,6 +22,10 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.research.Research;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
+import io.github.pylonmc.rebar.util.position.BlockPosition;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -73,7 +77,7 @@ public final class Bloomery extends RebarBlock implements
                 .build(getBlock().getLocation().toCenterLocation())
         );
         setTickInterval(tickInterval);
-        setMultiblockDirection(context.getFacing());
+        setFacing(context.getFacing());
     }
 
     @SuppressWarnings("unused")

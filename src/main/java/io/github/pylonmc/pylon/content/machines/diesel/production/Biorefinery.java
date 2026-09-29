@@ -21,8 +21,14 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Keyed;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +43,8 @@ import org.joml.Vector3i;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class Biorefinery extends RebarBlock implements
         DirectionalRebarBlock,
@@ -77,7 +85,6 @@ public class Biorefinery extends RebarBlock implements
     public Biorefinery(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
     }
 
@@ -154,8 +161,8 @@ public class Biorefinery extends RebarBlock implements
     @Override
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
-        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
-        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setFluidType(PylonFluids.PLANT_OIL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, ETHANOL_INPUT_HATCH).setAllowedFluid(PylonFluids.ETHANOL);
+        getMultiblockComponentOrThrow(FluidInputHatch.class, PLANT_OIL_INPUT_HATCH).setAllowedFluid(PylonFluids.PLANT_OIL);
         getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH).setFluidType(PylonFluids.BIODIESEL);
     }
 
@@ -173,20 +180,20 @@ public class Biorefinery extends RebarBlock implements
             FluidOutputHatch biodieselOutputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, BIODIESEL_OUTPUT_HATCH);
 
             double biodieselToProduce = Math.min(
-                    biodieselOutputHatch.fluidSpaceRemaining(PylonFluids.BIODIESEL),
+                    biodieselOutputHatch.getFluidSpaceRemaining(),
                     Math.min(
                             biodieselPerSecond * getTickInterval() / 20.0,
                             Math.min(
-                                    ethanolInputHatch.fluidAmount(PylonFluids.ETHANOL) / ethanolPerMbOfBiodiesel,
-                                    plantOilInputHatch.fluidAmount(PylonFluids.PLANT_OIL) / plantOilPerMbOfBiodiesel
+                                    ethanolInputHatch.getFluidAmount() / ethanolPerMbOfBiodiesel,
+                                    plantOilInputHatch.getFluidAmount() / plantOilPerMbOfBiodiesel
                             )
                     )
             );
 
             if (biodieselToProduce > RebarUtils.FLUID_EPSILON) {
-                ethanolInputHatch.removeFluid(PylonFluids.ETHANOL, biodieselToProduce * ethanolPerMbOfBiodiesel);
-                plantOilInputHatch.removeFluid(PylonFluids.PLANT_OIL, biodieselToProduce * plantOilPerMbOfBiodiesel);
-                biodieselOutputHatch.addFluid(PylonFluids.BIODIESEL, biodieselToProduce);
+                ethanolInputHatch.removeFluid(biodieselToProduce * ethanolPerMbOfBiodiesel);
+                plantOilInputHatch.removeFluid(biodieselToProduce * plantOilPerMbOfBiodiesel);
+                biodieselOutputHatch.addFluid(biodieselToProduce);
             }
 
             Vector smokePosition1 = Vector.fromJOML(RebarUtils.rotateVectorToFace(
