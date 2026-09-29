@@ -18,6 +18,12 @@ import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -150,7 +156,7 @@ public class PortableFluidTank extends RebarBlock implements FluidTankWithDispla
 
     public ItemStack getDrop() {
         // TODO implement clone for RebarItem and just clone it
-        ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).getItemStack();
+        ItemStack stack = RebarRegistry.ITEMS.getOrThrow(getKey()).createNewItemStack();
 
         Item item = new Item(stack);
         item.setFluid(getFluidType());

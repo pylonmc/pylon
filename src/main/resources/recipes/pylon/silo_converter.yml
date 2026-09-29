@@ -21,7 +21,3 @@ pylon:convert_to_bronze:
 pylon:convert_to_steel:
   material: pylon:steel_ingot
   result: pylon:steel_silo
-
-pylon:convert_to_palladium:
-  material: pylon:palladium_ingot
-  result: pylon:palladium_silo

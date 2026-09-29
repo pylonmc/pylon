@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -43,7 +43,7 @@ public final class SmelteryOutputHatch extends SmelteryComponent implements Flui
         List<Pair<RebarFluid, Double>> suppliedFluids = new ArrayList<>();
         for (Map.Entry<RebarFluid, Double> entry : controller.getFluids().entrySet()) {
             RebarFluid fluid = entry.getKey();
-            if (fluid.hasTag(MeltingPoint.class) && fluid.getTag(MeltingPoint.class).temperature() <= controller.getTemperature()) {
+            if (fluid.hasTag(MeltingPointTag.class) && fluid.getTag(MeltingPointTag.class).temperature() <= controller.getTemperature()) {
                 suppliedFluids.add(new Pair<>(fluid, Math.min(entry.getValue(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20.0)));
             }
         }

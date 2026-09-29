@@ -33,6 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
@@ -154,11 +155,13 @@ public class CrudeAlloyFurnace extends RebarBlock implements
                 tryConsumeFuel();
             }
             if (fuelTicksRemaining <= 0) {
+                editBlockDataAs(Furnace.class, furnace -> furnace.setLit(false));
                 return;
             }
         }
 
         fuelTicksRemaining -= getTickInterval();
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
         fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
         fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
         if (fuelTicksRemaining <= 0) {
