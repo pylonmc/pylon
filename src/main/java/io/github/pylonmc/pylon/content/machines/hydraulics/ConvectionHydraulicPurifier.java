@@ -19,6 +19,10 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -34,11 +38,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class ConvectionHydraulicPurifier extends RebarBlock implements
@@ -91,7 +90,6 @@ public class ConvectionHydraulicPurifier extends RebarBlock implements
         super(block, context);
         setTickInterval(tickInterval);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         addEntity("lava1", new ItemDisplayBuilder()
                 .material(Material.ORANGE_CONCRETE)
                 .brightness(0)

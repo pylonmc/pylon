@@ -1,11 +1,12 @@
 package io.github.pylonmc.pylon.content.machines.cargo;
 
+import io.github.pylonmc.pylon.util.NumberInputButton;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.BlockDisplayBuilder;
@@ -16,31 +17,25 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemProvider;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -66,8 +61,6 @@ public class CargoAccumulator extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":input");
     public final ItemStackBuilder outputStack = ItemStackBuilder.of(Material.RED_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":output");
-    public final ItemStackBuilder thresholdButtonStack = ItemStackBuilder.gui(Material.WHITE_CONCRETE, getKey() + "threshold_button")
-            .lore(Component.translatable("pylon.gui.threshold_button.lore"));
 
     public static class Item extends RebarItem {
 
@@ -176,7 +169,18 @@ public class CargoAccumulator extends RebarBlock implements
                 .addIngredient('I', GuiItems.input())
                 .addIngredient('o', outputInventory)
                 .addIngredient('O', GuiItems.output())
-                .addIngredient('t', new ThresholdButton())
+                .addIngredient('t', NumberInputButton.builder()
+                        .material(Material.WHITE_CONCRETE)
+                        .name(Component.translatable("pylon.gui.threshold"))
+                        .increment(1)
+                        .shiftIncrement(10)
+                        .min(1)
+                        .valueGetter(() -> threshold)
+                        .valueSetter(value -> threshold = value)
+                        .valueFormatter(UnitFormat.ITEMS::format)
+                        .key(pylonKey(getKey() + ":threshold"))
+                        .reopenWindow(this::open)
+                        .build())
                 .build();
     }
 
@@ -210,14 +214,14 @@ public class CargoAccumulator extends RebarBlock implements
 
     private void doTransfer() {
         int inputTotal = 0;
-        for (ItemStack stack : inputInventory.getItems()) {
+        for (ItemStack stack : inputInventory.getUnsafeItems()) {
             if (stack != null) {
                 inputTotal += stack.getAmount();
             }
         }
 
         int outputTotal = 0;
-        for (ItemStack stack : outputInventory.getItems()) {
+        for (ItemStack stack : outputInventory.getUnsafeItems()) {
             if (stack != null) {
                 outputTotal += stack.getAmount();
             }
@@ -232,42 +236,20 @@ public class CargoAccumulator extends RebarBlock implements
         }
 
         if (inputTotal >= threshold) {
-            List<ItemStack> stacks = Arrays.stream(inputInventory.getItems()).toList();
+            List<ItemStack> stacks = Arrays.asList(inputInventory.getUnsafeItems());
             if (!outputInventory.canHold(stacks)) return;
 
             for (ItemStack stack : stacks) {
                 outputInventory.addItem(new MachineUpdateReason(), stack);
             }
-            for (int slot = 0; slot < inputInventory.getItems().length; slot++) {
-                inputInventory.setItem(new MachineUpdateReason(), slot, null);
+            for (int slot = 0; slot < inputInventory.getSize(); slot++) {
+                RebarUtils.unsafeSet(inputInventory, slot, null);
             }
-            getLogisticGroupOrThrow("input").setFilter(stack -> false);
+            getLogisticGroupOrThrow("input").setFilter(_ -> false);
             getHeldEntityOrThrow(BlockDisplay.class, "side1")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
             getHeldEntityOrThrow(BlockDisplay.class, "side2")
                     .setBlock(Material.REDSTONE_LAMP.createBlockData("[lit=true]"));
-        }
-    }
-
-    public class ThresholdButton extends AbstractItem {
-
-        @Override
-        public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            return thresholdButtonStack
-                .name((Component.translatable("pylon.gui.threshold_button.name").arguments(
-                        RebarArgument.of("threshold", threshold)
-                )));
-        }
-
-        @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-            if (clickType.isLeftClick()) {
-                threshold += 1;
-            } else {
-                threshold = Math.max(1, threshold - 1);
-            }
-            notifyWindows();
-            doTransfer();
         }
     }
 }

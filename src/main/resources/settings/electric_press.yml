@@ -1,0 +1,4 @@
+power-usage: 20
+tick-interval: 10
+time-per-item: 1
+plant-oil-buffer: 1000

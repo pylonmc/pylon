@@ -23,8 +23,10 @@ public class WaterBreathingTalisman extends AttributeTalisman {
     }
 
     @Override
-    public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-        return List.of(RebarArgument.of("bonus_oxygen", UnitFormat.PERCENT.format(attrBonus * 100).decimalPlaces(2)));
+    public @NotNull List<RebarArgument> getPlaceholders() {
+        return List.of(
+                RebarArgument.of("bonus_oxygen", UnitFormat.PERCENT.format(attrBonus * 100).decimalPlaces(2))
+        );
     }
 
     @Override

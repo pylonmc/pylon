@@ -11,11 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AttributeTalisman extends Talisman {
     public final double attrBonus = getSettingOrThrow("attr-bonus", ConfigAdapter.DOUBLE);
-    private final AttributeModifier modifier = new AttributeModifier(
-            getTalismanKey(),
-            attrBonus,
-            AttributeModifier.Operation.ADD_NUMBER
-    );
 
     public AttributeTalisman(@NotNull ItemStack stack) {
         super(stack);
@@ -26,7 +21,11 @@ public abstract class AttributeTalisman extends Talisman {
         super.applyEffect(player);
         AttributeInstance attr = player.getAttribute(getAttribute());
         Preconditions.checkNotNull(attr);
-        attr.addModifier(modifier);
+        attr.addModifier(new AttributeModifier(
+                getTalismanKey(),
+                attrBonus,
+                AttributeModifier.Operation.ADD_NUMBER
+        ));
     }
 
     @Override

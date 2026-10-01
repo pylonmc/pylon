@@ -8,23 +8,24 @@ import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.KilnRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,6 +36,7 @@ import org.bukkit.block.data.type.Light;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -46,10 +48,6 @@ import xyz.xenondevs.invui.inventory.VirtualInventory;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
@@ -59,6 +57,7 @@ public class Kiln extends RebarBlock implements
         RecipeProcessorRebarBlock<KilnRecipe>,
         DirectionalRebarBlock,
         VirtualInventoryRebarBlock,
+        NoJobRebarBlock,
         TickingRebarBlock {
 
     public static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
@@ -99,14 +98,13 @@ public class Kiln extends RebarBlock implements
     public Kiln(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         setRecipeType(KilnRecipe.RECIPE_TYPE);
         setRecipeProgressItem(new ProgressItem(GuiItems.background(), false));
         temperature = minTemperature;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public Kiln(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
         temperature = pdc.get(TEMPERATURE_KEY, RebarSerializers.DOUBLE);
@@ -184,16 +182,13 @@ public class Kiln extends RebarBlock implements
         temperatureItem.notifyWindows();
 
         // Visual stuff
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(fuelTicksRemaining > 0);
-        getBlock().setBlockData(furnace);
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
 
         int level = Math.clamp((int) Math.round(15 * temperature / maxTemperature), 0, 15);
         Block light = getLight();
-        if (light.getType() == Material.LIGHT) {
-            Light blockData = (Light) light.getBlockData();
-            blockData.setLevel(level);
-            light.setBlockData(blockData);
+        if (light.getBlockData() instanceof Light lightData) {
+            lightData.setLevel(level);
+            light.setBlockData(lightData);
         }
 
         for (int i = 0; i < level; i++) {
@@ -229,15 +224,20 @@ public class Kiln extends RebarBlock implements
             return;
         }
 
-        ItemStack fuel = fuelInventory.getItem(0);
+        ItemStack fuel = fuelInventory.getUnsafeItem(0);
         if (fuel == null) {
             return;
         }
 
+        ItemType type = fuel.getType().asItemType();
+        if (type == null || !type.isFuel() || RebarItem.isRebarItemAndIsNot(fuel, VanillaFurnaceFuel.class)) {
+            return;
+        }
+
         // dividing by 10 due to suspected bug with getBurnDuration
-        fuelTicksTotal = fuel.getType().asItemType().getBurnDuration() / 10;
+        fuelTicksTotal = type.getBurnDuration() / 10;
         fuelTicksRemaining = fuelTicksTotal;
-        fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
+        RebarUtils.unsafeSubtract(fuelInventory, 0, 1);
     }
 
     public boolean tryStartRecipe(@NonNull KilnRecipe recipe) {
@@ -265,27 +265,27 @@ public class Kiln extends RebarBlock implements
 
         ItemInputHatch itemInputHatch1 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_1);
         ItemInputHatch itemInputHatch2 = getMultiblockComponentOrThrow(ItemInputHatch.class, ITEM_INPUT_HATCH_2);
-        ItemStack input1 = itemInputHatch1.inventory.getItem(0);
-        ItemStack input2 = itemInputHatch2.inventory.getItem(0);
+        ItemStack input1 = itemInputHatch1.inventory.getUnsafeItem(0);
+        ItemStack input2 = itemInputHatch2.inventory.getUnsafeItem(0);
 
         boolean matches = false;
         if (recipe.input2() == null) {
             if (recipe.input1().matches(input1)) {
-                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
+                RebarUtils.unsafeSubtract(itemInputHatch1.inventory, 0, recipe.input1().getAmount());
                 matches = true;
             } else if (recipe.input1().matches(input2)) {
-                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
+                RebarUtils.unsafeSubtract(itemInputHatch2.inventory, 0, recipe.input1().getAmount());
                 matches = true;
             }
         } else {
             if (recipe.input1().matches(input1) && recipe.input2().matches(input2)) {
-                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input1().getAmount()));
-                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input2().getAmount()));
+                RebarUtils.unsafeSubtract(itemInputHatch1.inventory, 0, recipe.input1().getAmount());
+                RebarUtils.unsafeSubtract(itemInputHatch2.inventory, 0, recipe.input2().getAmount());
                 matches = true;
             }
             if (recipe.input1().matches(input2) && recipe.input2().matches(input1)) {
-                itemInputHatch1.inventory.setItem(new MachineUpdateReason(), 0, input1.subtract(recipe.input2().getAmount()));
-                itemInputHatch2.inventory.setItem(new MachineUpdateReason(), 0, input2.subtract(recipe.input1().getAmount()));
+                RebarUtils.unsafeSubtract(itemInputHatch2.inventory, 0, recipe.input1().getAmount());
+                RebarUtils.unsafeSubtract(itemInputHatch1.inventory, 0, recipe.input2().getAmount());
                 matches = true;
             }
         }
@@ -355,11 +355,10 @@ public class Kiln extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         Block light = getLight();
-        if (light.getType().isAir()) {
-            light.setType(Material.LIGHT);
-            Light blockData = (Light) light.getBlockData();
-            blockData.setLevel(0);
-            light.setBlockData(blockData);
+        if (light.isEmpty()) {
+            Light lightData = (Light) Material.LIGHT.createBlockData();
+            lightData.setLevel(0);
+            light.setBlockData(lightData, false);
         }
     }
 
@@ -368,7 +367,7 @@ public class Kiln extends RebarBlock implements
         SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Block light = getLight();
         if (light.getType() == Material.LIGHT) {
-            light.setType(Material.AIR);
+            light.setType(Material.AIR, false);
         }
     }
 

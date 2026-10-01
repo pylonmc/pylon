@@ -14,6 +14,8 @@ import io.github.pylonmc.rebar.addon.RebarAddon;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import java.util.Locale;
+import java.util.Set;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -21,9 +23,6 @@ import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-import java.util.Set;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -58,7 +57,6 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Sprinkler.SprinklerPlaceListener(), this);
         pm.registerEvents(new Immobilizer.FreezeListener(), this);
-        pm.registerEvents(new Rune.RuneListener(), this);
         pm.registerEvents(new SoulboundRune.SoulboundRuneListener(), this);
         pm.registerEvents(new Bloomery.CreationListener(), this);
         pm.registerEvents(new Grindstone.PlaceListener(), this);

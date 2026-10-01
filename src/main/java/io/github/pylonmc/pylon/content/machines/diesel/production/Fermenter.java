@@ -6,11 +6,11 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ReinforcedGlassCasing;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -23,6 +23,9 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,10 +36,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Fermenter extends RebarBlock implements
         SimpleRebarMultiblock,
@@ -76,7 +75,6 @@ public class Fermenter extends RebarBlock implements
     public Fermenter(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         createFluidBuffer(PylonFluids.SUGARCANE, ethanolPerSugarcane * sugarcaneCapacity, false, false);
         addEntity("sugarcane", new ItemDisplayBuilder()
@@ -127,7 +125,6 @@ public class Fermenter extends RebarBlock implements
     public void onMultiblockFormed() {
         SimpleRebarMultiblock.super.onMultiblockFormed();
         onMultiblockRefreshed();
-        getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH).setFluidType(PylonFluids.ETHANOL);
         getHeldEntityOrThrow(ItemDisplay.class, "sugarcane").setItemStack(PylonFluids.SUGARCANE.getItem());
     }
 
@@ -172,16 +169,16 @@ public class Fermenter extends RebarBlock implements
         ItemInputHatch inputHatch = getMultiblockComponentOrThrow(ItemInputHatch.class, INPUT_HATCH);
         FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH);
 
-        ItemStack sugarcane = inputHatch.inventory.getItem(0);
+        ItemStack sugarcane = inputHatch.inventory.getUnsafeItem(0);
         if (sugarcane != null
-                && RebarItemSchema.fromStack(sugarcane) == null
                 && sugarcane.getType() == Material.SUGAR_CANE
+                && !RebarItem.isRebarItem(sugarcane)
                 && fluidSpaceRemaining(PylonFluids.SUGARCANE) > ethanolPerSugarcane
         ) {
             int max = (int) (fluidSpaceRemaining(PylonFluids.SUGARCANE) / ethanolPerSugarcane);
             int sugarcaneToConsume = Math.min(max, sugarcane.getAmount());
             addFluid(PylonFluids.SUGARCANE, sugarcaneToConsume * ethanolPerSugarcane);
-            inputHatch.inventory.setItem(new MachineUpdateReason(), 0, sugarcane.subtract(sugarcaneToConsume));
+            RebarUtils.unsafeSubtract(inputHatch.inventory, 0, sugarcaneToConsume);
         }
 
         double sugarcaneProportion = fluidAmount(PylonFluids.SUGARCANE) / fluidCapacity(PylonFluids.SUGARCANE);

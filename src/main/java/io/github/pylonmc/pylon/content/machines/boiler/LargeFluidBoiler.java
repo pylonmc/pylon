@@ -183,9 +183,9 @@ public class LargeFluidBoiler extends AbstractFluidFuelBoiler {
         super.update(minFuelConsumption, maxFuelConsumption, WATER_INPUT, STEAM_OUTPUT);
 
         if (fuelBurntLastUpdate > 0.01) {
-            int count = random.nextInt(2 + (int) (10 * fuelBurntLastUpdate / maxFuelConsumption));
+            int count = RANDOM.nextInt(2 + (int) (10 * fuelBurntLastUpdate / maxFuelConsumption));
             for (int i = 0; i < count; i++) {
-                double offset = 0.3 * random.nextDouble();
+                double offset = 0.3 * RANDOM.nextDouble();
                 new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                         .offset(0, 1, 0)
                         .count(0)
@@ -194,9 +194,9 @@ public class LargeFluidBoiler extends AbstractFluidFuelBoiler {
                         .spawn();
             }
 
-            count = random.nextInt(2 + (int) (10 * fuelBurntLastUpdate / maxFuelConsumption));
+            count = RANDOM.nextInt(2 + (int) (10 * fuelBurntLastUpdate / maxFuelConsumption));
             for (int i = 0; i < count; i++) {
-                double offset = 0.3 * random.nextDouble();
+                double offset = 0.3 * RANDOM.nextDouble();
                 new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                         .offset(0, 1, 0)
                         .count(0)

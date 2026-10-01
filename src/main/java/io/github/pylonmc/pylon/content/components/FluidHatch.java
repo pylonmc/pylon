@@ -15,6 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 import org.joml.Vector3i;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public abstract class FluidHatch extends RebarBlock implements
     protected FluidHatch(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        createFluidDisplay(new Vector3i(0, 1, 0));
+        createFluidDisplay(new Vector3d(0.0, 0.5, 0.0));
     }
 
     protected FluidHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {

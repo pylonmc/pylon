@@ -2,17 +2,11 @@ package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FurnaceRebarBlockHandler;
-import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.pylon.content.machines.generic.GenericMachine;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.FurnaceRebarBlockHandler;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
@@ -21,16 +15,13 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRebarRecipe;
 import io.github.pylonmc.rebar.recipe.vanilla.SmeltingRecipeType;
-import io.github.pylonmc.rebar.util.MachineUpdateReason;
-import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
-import io.github.pylonmc.rebar.util.gui.ProgressItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -46,28 +37,15 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.inventory.VirtualInventory;
+import org.jspecify.annotations.NonNull;
 
-import java.util.List;
-import java.util.Map;
-
-
-public class DieselFurnace extends RebarBlock implements
-        GuiRebarBlock,
-        VirtualInventoryRebarBlock,
+public class DieselFurnace extends GenericMachine<SmeltingRebarRecipe> implements
         FluidBufferRebarBlock,
-        DirectionalRebarBlock,
-        TickingRebarBlock,
-        LogisticRebarBlock,
-        FurnaceRebarBlockHandler,
-        RecipeProcessorRebarBlock<SmeltingRebarRecipe> {
+        FurnaceRebarBlockHandler {
 
     public final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
     public final double dieselPerSecond = getSettingOrThrow("diesel-per-second", ConfigAdapter.DOUBLE);
-    public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double speed = getSettingOrThrow("speed", ConfigAdapter.DOUBLE);
-    public final int recipeTime = (int) Math.round(20 * 8 / speed);
 
     public ItemStackBuilder sideStack1 = ItemStackBuilder.of(Material.BRICKS)
             .addCustomModelDataString(getKey() + ":side1");
@@ -75,9 +53,6 @@ public class DieselFurnace extends RebarBlock implements
             .addCustomModelDataString(getKey() + ":side2");
     public ItemStackBuilder chimneyStack = ItemStackBuilder.of(Material.CYAN_TERRACOTTA)
             .addCustomModelDataString(getKey() + ":chimney");
-
-    private final VirtualInventory inputInventory = new VirtualInventory(1);
-    private final VirtualInventory outputInventory = new VirtualInventory(1);
 
     public static class Item extends RebarItem {
 
@@ -102,9 +77,7 @@ public class DieselFurnace extends RebarBlock implements
     @SuppressWarnings("unused")
     public DieselFurnace(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
-        setTickInterval(tickInterval);
         createFluidPoint(FluidPointType.INPUT, BlockFace.UP);
-        setFacing(context.getFacing());
         addEntity("chimney", new ItemDisplayBuilder()
                 .itemStack(chimneyStack)
                 .transformation(new TransformBuilder()
@@ -131,7 +104,6 @@ public class DieselFurnace extends RebarBlock implements
         );
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
         setRecipeType(SmeltingRecipeType.INSTANCE);
-        setRecipeProgressItem(new ProgressItem(GuiItems.background()));
     }
 
     @SuppressWarnings("unused")
@@ -140,31 +112,28 @@ public class DieselFurnace extends RebarBlock implements
     }
 
     @Override
-    public void postInitialise() {
-        createLogisticGroup("input", LogisticGroupType.INPUT, inputInventory);
-        createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
-        outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
-        outputInventory.addPostUpdateHandler(event -> tryStartRecipe());
-        inputInventory.addPostUpdateHandler(event -> {
-            if (!(event.getUpdateReason() instanceof MachineUpdateReason)) {
-                tryStartRecipe();
-            }
-        });
+    protected int getRecipeTicks(@NonNull SmeltingRebarRecipe recipe) {
+        return (int) Math.ceil(recipe.getBukkitRecipe().getCookingTime() / speed);
+    }
+
+    @Override
+    protected @NotNull List<ItemStack> getResults(@NonNull SmeltingRebarRecipe recipe) {
+        return List.of(recipe.getBukkitRecipe().getResult());
     }
 
     @Override
     public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
+        super.onBlockBreak(drops, context);
         FluidBufferRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
     public void tick() {
-        if (!isProcessingRecipe() || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond * tickInterval / 20) {
+        if (!isProcessingRecipe() || fluidAmount(PylonFluids.BIODIESEL) < dieselPerSecond / getTicksPerSecond()) {
             return;
         }
 
-        removeFluid(PylonFluids.BIODIESEL, dieselPerSecond * tickInterval / 20);
+        removeFluid(PylonFluids.BIODIESEL, dieselPerSecond / getTicksPerSecond());
         Vector smokePosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
                 new Vector3d(0.4, 0.7, -0.4),
                 getFacing().getOppositeFace()
@@ -175,56 +144,7 @@ public class DieselFurnace extends RebarBlock implements
                 .count(0)
                 .extra(0.05)
                 .spawn();
-        progressRecipe(tickInterval);
-    }
-
-    public void tryStartRecipe() {
-        if (isProcessingRecipe()) {
-            return;
-        }
-
-        ItemStack stack = inputInventory.getItem(0);
-        if (stack == null || stack.isEmpty()) {
-            return;
-        }
-
-        if (getLastRecipe() != null && tryStartRecipe(getLastRecipe(), stack)) {
-            return;
-        }
-
-        for (SmeltingRebarRecipe recipe : SmeltingRecipeType.INSTANCE) {
-            if (tryStartRecipe(recipe, stack)) {
-                break;
-            }
-        }
-    }
-
-    private boolean tryStartRecipe(SmeltingRebarRecipe recipe, ItemStack stack) {
-        if (!recipe.isInput(stack) || !outputInventory.canHold(recipe.getBukkitRecipe().getResult())) {
-            return false;
-        }
-
-        startRecipe(recipe, recipeTime);
-        getRecipeProgressItem().setItem(ItemStackBuilder.asOne(stack).clearLore());
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract());
-        return true;
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return Gui.builder()
-                .setStructure(
-                        "# # I # # # O # #",
-                        "# # i # p # o # #",
-                        "# # I # # # O # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('I', GuiItems.input())
-                .addIngredient('i', inputInventory)
-                .addIngredient('p', getRecipeProgressItem())
-                .addIngredient('O', GuiItems.output())
-                .addIngredient('o', outputInventory)
-                .build();
+        progressRecipe(getTickInterval());
     }
 
     @Override
@@ -249,16 +169,5 @@ public class DieselFurnace extends RebarBlock implements
     @Override @MultiHandler(priorities = EventPriority.LOWEST)
     public void onFurnaceBurnFuel(@NotNull FurnaceBurnEvent event, @NotNull EventPriority priority) {
         event.setCancelled(true);
-    }
-
-    @Override
-    public void onRecipeFinished(@NotNull SmeltingRebarRecipe recipe) {
-        getRecipeProgressItem().setItem(GuiItems.background());
-        outputInventory.addItem(null, recipe.getBukkitRecipe().getResult().clone());
-    }
-
-    @Override
-    public @NotNull Map<String, VirtualInventory> getVirtualInventories() {
-        return Map.of("input", inputInventory, "output", outputInventory);
     }
 }

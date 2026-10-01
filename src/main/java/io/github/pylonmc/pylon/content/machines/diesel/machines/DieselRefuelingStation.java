@@ -94,7 +94,7 @@ public class DieselRefuelingStation extends RebarBlock implements
     }
 
     public void updateDisplayItem(ItemStack newItem) {
-        if (RebarItem.fromStack(newItem) instanceof DieselRefuelable) {
+        if (RebarItem.isRebarItem(newItem, DieselRefuelable.class)) {
             getDisplayItem().setItemStack(newItem.asOne());
             return;
         }
@@ -102,7 +102,7 @@ public class DieselRefuelingStation extends RebarBlock implements
     }
 
     public @Nullable DieselRefuelable getHeldRefuelableItem() {
-        if (RebarItem.fromStack(containerInventory.getItem(0)) instanceof DieselRefuelable refuelable) {
+        if (RebarItem.fromStack(containerInventory.getItem(0), DieselRefuelable.class) instanceof DieselRefuelable refuelable) {
             return refuelable;
         }
         return null;

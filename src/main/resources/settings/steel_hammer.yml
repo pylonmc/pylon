@@ -1,0 +1,20 @@
+cooldown-ticks: 20
+durability: 1197
+attack-durability-damage: 1
+attack-speed: 1.2
+attack-damage: 7
+attack-knockback: 3
+
+base-block: pylon:steel_block
+mining-level: netherite
+
+sound:
+  sound: minecraft:block.anvil.use
+  source: block
+  volume: 0.5
+  pitch: 0.5
+fail-sound:
+  sound: minecraft:block.anvil.land
+  source: block
+  volume: 0.25
+  pitch: 0.8

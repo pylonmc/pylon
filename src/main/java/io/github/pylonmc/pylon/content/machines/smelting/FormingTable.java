@@ -9,7 +9,6 @@ import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -55,21 +54,25 @@ public class FormingTable extends RebarBlock implements
         return Map.of("input", input, "output", output);
     }
 
-    @AllArgsConstructor
     private class FormButton extends AbstractItem {
         private final FormingRecipe recipe;
+        private final ItemProvider provider;
+
+        public FormButton(FormingRecipe recipe) {
+            this.recipe = recipe;
+            this.provider = new ItemWrapper(recipe.result());
+        }
 
         @Override
         public @NotNull ItemProvider getItemProvider(@NotNull Player viewer) {
-            return new ItemWrapper(recipe.result());
+            return provider;
         }
 
         @Override
         public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
             ItemStack inputItem = input.getItem(0);
             if (inputItem == null || !recipe.input().matches(inputItem) || !output.canHold(recipe.result())) return;
-            inputItem.subtract(recipe.input().getAmount());
-            input.setItem(new MachineUpdateReason(), 0, inputItem);
+            input.setItemAmount(new MachineUpdateReason(), 0, inputItem.getAmount() - recipe.input().getAmount());
             output.addItem(new MachineUpdateReason(), recipe.result());
         }
     }
