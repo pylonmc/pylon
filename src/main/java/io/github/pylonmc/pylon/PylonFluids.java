@@ -43,7 +43,7 @@ public final class PylonFluids {
     public static final RebarFluid POWDER_SNOW = new RebarFluid(
             pylonKey("powder_snow"),
             TextColor.fromHexString("#e8e8e8"),
-            Material.POWDER_SNOW
+            Material.SNOW_BLOCK
     ).addTag(FluidTemperature.COLD);
     static {
         POWDER_SNOW.register();
