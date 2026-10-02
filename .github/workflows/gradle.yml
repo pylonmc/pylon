@@ -58,13 +58,13 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version }}
+          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.sha }}
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v7
         with:
-          name: pylon-${{ inputs.version }}
-          path: 'pylon/build/libs/pylon-${{ inputs.version }}.jar'
+          name: pylon-${{ inputs.version || github.sha }}
+          path: 'pylon/build/libs/pylon-${{ inputs.version || github.sha }}.jar'
           archive: false
 
   dependency-submission:

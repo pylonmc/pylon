@@ -26,7 +26,7 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew :pylon:shadowJar -Pversion=${{ github.ref_name }}
+          ./gradlew :shadowJar -Pversion=${{ github.ref_name }}
 
       - name: Create Release
         uses: marvinpinto/action-automatic-releases@latest
