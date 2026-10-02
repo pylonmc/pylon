@@ -26,6 +26,11 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -38,12 +43,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
-
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 
 public class HydraulicFracturingDrill extends RebarBlock implements
@@ -100,7 +99,6 @@ public class HydraulicFracturingDrill extends RebarBlock implements
     public HydraulicFracturingDrill(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
         addEntity("beam-1", new ItemDisplayBuilder()
                 .itemStack(beamStack)

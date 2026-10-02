@@ -23,6 +23,9 @@ import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.util.HSVLike;
@@ -39,10 +42,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class HydraulicPumpjack extends RebarBlock implements
@@ -100,7 +99,6 @@ public class HydraulicPumpjack extends RebarBlock implements
         super(block, context);
 
         setFacing(context.getFacing());
-        setMultiblockDirection(context.getFacing());
         setTickInterval(tickInterval);
 
         Vector engineRodPosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
