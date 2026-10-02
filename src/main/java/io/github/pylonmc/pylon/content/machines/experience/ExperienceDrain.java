@@ -29,6 +29,7 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
     public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettingOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettingOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
+    public final Particle drainParticleType = getSettingOrThrow("particle-type", ConfigAdapter.ENUM.from(Particle.class));
 
     public static class Item extends RebarItem {
         public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
@@ -112,7 +113,7 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
             if (actualSubtracted != 0) {
-                getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
+                getBlock().getWorld().spawnParticle(drainParticleType, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
             }
         }
     }
