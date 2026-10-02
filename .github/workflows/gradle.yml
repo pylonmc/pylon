@@ -8,7 +8,7 @@ on:
   workflow_call:
     inputs:
       version:
-        default: ${{ github.sha }}
+        default: ${{ github.run_number }}
         required: false
         type: string
 
@@ -58,13 +58,13 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.sha }}
+          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.run_number }}
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v7
         with:
-          name: pylon-${{ inputs.version || github.sha }}
-          path: 'pylon/build/libs/pylon-${{ inputs.version || github.sha }}.jar'
+          name: pylon-${{ inputs.version || github.run_number }}
+          path: 'pylon/build/libs/pylon-${{ inputs.version || github.run_number }}.jar'
           archive: false
 
   dependency-submission:
