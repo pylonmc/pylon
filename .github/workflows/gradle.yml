@@ -3,13 +3,12 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "master" ]
-    tags: ['*']
   pull_request:
     branches: [ "*" ]
   workflow_call:
     inputs:
       version:
-        default: ${{ github.run_number }}
+        default: ${{ github.sha }}
         required: false
         type: string
 
@@ -59,13 +58,13 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.run_number }}
+          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version }}
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v7
         with:
-          name: pylon-${{ inputs.version || github.run_number }}
-          path: 'pylon/build/libs/pylon-${{ inputs.version || github.run_number }}.jar'
+          name: pylon-${{ inputs.version }}
+          path: 'pylon/build/libs/pylon-${{ inputs.version }}.jar'
           archive: false
 
   dependency-submission:
