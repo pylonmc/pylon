@@ -18,7 +18,7 @@ jobs:
     - name: Download Pylon
       uses: actions/download-artifact@v4.1.8
       with:
-        name: pylon-${{ github.ref_name }}
+        name: pylon-${{ github.ref_name }}.jar
 
     - name: Create Release
       uses: marvinpinto/action-automatic-releases@latest
