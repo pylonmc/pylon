@@ -34,6 +34,7 @@ public class PylonPages {
     public static final SimpleStaticGuidePage HYDRAULIC_PURIFICATION = new SimpleStaticGuidePage(pylonKey("machines_hydraulic_purification"));
     public static final SimpleStaticGuidePage BOILERS = new SimpleStaticGuidePage(pylonKey("machines_boilers"));
     public static final SimpleStaticGuidePage CARGO = new SimpleStaticGuidePage(pylonKey("machines_cargo"));
+    public static final SimpleStaticGuidePage PETROCHEMICALS = new SimpleStaticGuidePage(pylonKey("machines_petrochemicals"));
     public static final SimpleStaticGuidePage DIESEL_MACHINES = new SimpleStaticGuidePage(pylonKey("machines_diesel_machines"));
     public static final SimpleStaticGuidePage DIESEL_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_diesel_production"));
     public static final SimpleStaticGuidePage ELECTRICITY_PRODUCTION = new SimpleStaticGuidePage(pylonKey("machines_electricity_production"));
@@ -75,6 +76,7 @@ public class PylonPages {
         MACHINES.addPage(PylonItems.SOLAR_HYDRAULIC_PURIFIER_3, HYDRAULIC_PURIFICATION);
         MACHINES.addPage(PylonItems.SMALL_BOILER, BOILERS);
         MACHINES.addPage(PylonItems.CARGO_BUFFER, CARGO);
+        MACHINES.addPage(PylonItems.HYDRAULIC_FRACTURING_DRILL, PETROCHEMICALS);
         MACHINES.addPage(PylonItems.DIESEL_PIPE_BENDER, DIESEL_MACHINES);
         MACHINES.addPage(PylonItems.BIOREFINERY, DIESEL_PRODUCTION);
         MACHINES.addPage(PylonItems.GAS_TURBINE, ELECTRICITY_PRODUCTION);

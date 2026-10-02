@@ -1,4 +1,5 @@
-purification-speed: 280 # mb/s
+purification-speed: 350 # mb/s
 purification-efficiency: 0.95
 buffer: 200 # mb
 tick-interval: 20
+fuel-burn-rate: 3.0

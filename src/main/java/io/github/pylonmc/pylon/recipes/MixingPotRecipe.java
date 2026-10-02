@@ -85,7 +85,7 @@ public record MixingPotRecipe(
     }
 
     @Override
-    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         List<FluidOrItemChoice> inputs = new ArrayList<>(inputItems);
         inputs.add(inputFluid);
         return inputs;

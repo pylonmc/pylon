@@ -55,6 +55,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
     public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
     public final double hydraulicFluidPerMachineTick = purificationSpeed * tickInterval / 20;
+    public final double fuelBurnRate = getSettingOrThrow("fuel-burn-rate", ConfigAdapter.DOUBLE);
 
     private static final Random RANDOM = new Random();
 
@@ -63,6 +64,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
         public final double purificationSpeed = getSettingOrThrow("purification-speed", ConfigAdapter.INTEGER);
         public final double purificationEfficiency = getSettingOrThrow("purification-efficiency", ConfigAdapter.DOUBLE);
         public final double buffer = getSettingOrThrow("buffer", ConfigAdapter.INTEGER);
+        public final double fuelBurnRate = getSettingOrThrow("fuel-burn-rate", ConfigAdapter.DOUBLE);
 
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -73,7 +75,8 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
             return List.of(
                     RebarArgument.of("purification_speed", UnitFormat.MILLIBUCKETS_PER_SECOND.format(purificationSpeed)),
                     RebarArgument.of("purification_efficiency", UnitFormat.PERCENT.format(purificationEfficiency * 100)),
-                    RebarArgument.of("buffer", UnitFormat.MILLIBUCKETS.format(buffer))
+                    RebarArgument.of("buffer", UnitFormat.MILLIBUCKETS.format(buffer)),
+                    RebarArgument.of("fuel-burn-rate", UnitFormat.SECONDS.format(fuelBurnRate))
             );
         }
     }
@@ -189,7 +192,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
         }
 
         RebarUtils.unsafeSubtract(inputHatch.inventory, 0, 1);
-        startProcess(itemType.getBurnDuration() / 10);
+        startProcess((int) (itemType.getBurnDuration() / fuelBurnRate));
     }
 
     @Override
