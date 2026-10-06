@@ -6,7 +6,9 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import java.util.Collections;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
@@ -40,7 +42,13 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
     @Override
     default void setFluidType(@Nullable RebarFluid fluid) {
         FluidTankRebarBlock.super.setFluidType(fluid);
-        getFluidDisplay().setItemStack(fluid == null ? null : fluid.getItem());
+        if (fluid == null) {
+            getFluidDisplay().setItemStack(null);
+        } else {
+            ItemStack item = fluid.getItem();
+            item.lore(Collections.emptyList()); // bandaid fix for Rebar#922
+            getFluidDisplay().setItemStack(item);
+        }
     }
 
     @Override
