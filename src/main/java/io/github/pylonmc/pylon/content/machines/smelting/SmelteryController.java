@@ -239,20 +239,45 @@ public final class SmelteryController extends SmelteryComponent
             return display;
         }
 
-        display.add(new ProgressBar()
-                .proportion(Math.clamp((temperature - roomTemperature) / (avgTarget - roomTemperature), 0.0, 1.0))
-                .barColor(PylonUtils.colorFromTemperature(temperature))
-                .bars(30)
-                .suffix(Component.text(" ").append(UnitFormat.CELSIUS.format(temperature).decimalPlaces(0)))
-        );
+        display.add(UnitFormat.CELSIUS.format(temperature).decimalPlaces(0));
 
+        RebarFluid mostAbundantFluid = null;
+        double mostAbundantAmount = 0;
         for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
-            display.add(ProgressBar.fluidContentsWithName(
-                    entry.getKey(),
-                    capacity,
-                    entry.getDoubleValue()
-            ));
+            if (entry.getDoubleValue() > mostAbundantAmount) {
+                mostAbundantFluid = entry.getKey();
+                mostAbundantAmount = entry.getDoubleValue();
+            }
         }
+
+        if (mostAbundantFluid != null && capacity > 0) {
+            Component suffix = Component.space().append(Component.translatable(
+                    "pylon.message.smeltery.fluid",
+                    RebarArgument.of("amount", UnitFormat.MILLIBUCKETS.format(mostAbundantAmount).decimalPlaces(0)),
+                    RebarArgument.of("fluid", mostAbundantFluid.getName())
+            ));
+
+            int otherFluids = fluids.size() - 1;
+            if (otherFluids > 0) {
+                suffix = suffix
+                        .append(Component.space())
+                        .append(Component.translatable(
+                                "pylon.message.smeltery.more-fluids",
+                                RebarArgument.of("amount", otherFluids)
+                        ));
+            }
+
+            display.add(new ProgressBar()
+                    .proportion(Math.clamp(mostAbundantAmount / capacity, 0.0, 1.0))
+                    .barColor(mostAbundantFluid)
+                    .suffix(suffix)
+            );
+        }
+
+        display.add(Component.translatable(
+                "pylon.message.smeltery.capacity",
+                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0))
+        ));
 
         return display;
     }
