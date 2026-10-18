@@ -129,6 +129,15 @@ public class HydraulicBreaker extends RebarBlock implements
     public void postInitialise() {
         tryStartDrilling();
         createLogisticGroup("tool", LogisticGroupType.INPUT, toolInventory);
+        toolInventory.addPreUpdateHandler(event -> {
+            if (event.isRemove()) {
+                return;
+            }
+            ItemStack newItem = event.getNewItem();
+            if (newItem != null && !PylonUtils.isTool(newItem)) {
+                event.setCancelled(true);
+            }
+        });
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -160,11 +169,16 @@ public class HydraulicBreaker extends RebarBlock implements
 
         // insert new item
         ItemStack newStack = event.getItem();
-        if (newStack != null) {
-            toolInventory.setItem(new MachineUpdateReason(), 0, newStack.clone());
-            newStack.setAmount(0);
-            tryStartDrilling();
+        if (newStack == null) {
+            return;
         }
+        if (!PylonUtils.isTool(newStack)) {
+            event.getPlayer().sendMessage(Component.translatable("pylon.message.breaker.not-a-tool"));
+            return;
+        }
+        toolInventory.setItem(new MachineUpdateReason(), 0, newStack.clone());
+        newStack.setAmount(0);
+        tryStartDrilling();
     }
 
     @Override

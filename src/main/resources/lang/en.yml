@@ -2881,6 +2881,8 @@ message:
   no_power: "<red>No power"
   assembly_table:
     full: "<red>Output full!"
+  breaker:
+    not-a-tool: "<red>You can only put tools in this machine"
   fluid_selector:
     current_fluid: "<white>Current fluid: %fluid%"
     clear: "<white>Clear"

@@ -59,6 +59,15 @@ public abstract class GenericBreaker extends RebarBlock implements
         createLogisticGroup("tool", LogisticGroupType.INPUT, toolInventory);
         createLogisticGroup("output", LogisticGroupType.OUTPUT, outputInventory);
         outputInventory.addPreUpdateHandler(RebarUtils.DISALLOW_PLAYERS_FROM_ADDING_ITEMS_HANDLER);
+        toolInventory.addPreUpdateHandler(event -> {
+            if (event.isRemove()) {
+                return;
+            }
+            ItemStack newItem = event.getNewItem();
+            if (newItem != null && !PylonUtils.isTool(newItem)) {
+                event.setCancelled(true);
+            }
+        });
         toolInventory.addPostUpdateHandler(event -> tryStartDrilling());
         outputInventory.addPostUpdateHandler(event -> tryStartDrilling());
         tryStartDrilling();
