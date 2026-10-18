@@ -151,6 +151,13 @@ public class PylonUtils {
         animate(display, 0, duration, matrix);
     }
 
+    /**
+     * Whether the item is a tool, i.e. it has the {@code minecraft:tool} component.
+     */
+    public boolean isTool(@NotNull ItemStack item) {
+        return item.hasData(DataComponentTypes.TOOL);
+    }
+
     public boolean shouldBreakBlockUsingTool(@NotNull Block block, @NotNull ItemStack tool) {
         return !block.getType().isAir()
                 && block.getWorld().getFluidData(block.getLocation()).getFluidType() == Fluid.EMPTY
@@ -158,7 +165,7 @@ public class PylonUtils {
                 && !BlockStorage.isRebarBlock(block)
                 && block.getType().getHardness() >= 0
                 && block.isPreferredTool(tool)
-                && tool.hasData(DataComponentTypes.TOOL)
+                && isTool(tool)
                 && tool.hasData(DataComponentTypes.DAMAGE);
     }
 
