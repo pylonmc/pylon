@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.experience;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -114,7 +115,11 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
             if (actualSubtracted != 0) {
-                getBlock().getWorld().spawnParticle(drainParticleType, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
+                new ParticleBuilder(drainParticleType)
+                        .location(getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0))
+                        .count(1)
+                        .offset(0.2, 0.2, 0.2)
+                        .spawn();
             }
         }
     }
