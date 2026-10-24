@@ -14,6 +14,7 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import org.bukkit.Particle;
+import org.bukkit.Registry;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
     public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettingOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettingOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
-    public final Particle drainParticleType = getSettingOrThrow("particle-type", ConfigAdapter.ENUM.from(Particle.class));
+    public final Particle drainParticleType = getSettingOrThrow("particle-type", ConfigAdapter.KEYED.fromRegistry(Particle.class, Registry.PARTICLE_TYPE));
 
     public static class Item extends RebarItem {
         public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
