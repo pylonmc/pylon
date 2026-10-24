@@ -8,7 +8,7 @@ on:
   workflow_call:
     inputs:
       version:
-        default: ${{ github.run_number }}
+        default: ${{ github.sha }}
         required: false
         type: string
 
@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: 'pylonmc/rebar'
-          ref: ${{steps.rebarcommit.outputs.ref}} # empty string if ref not found falls back to master
+          ref: ${{steps.parseref.outputs.ref}} # empty string if ref not found falls back to master
           path: 'parallel-dev-repo/rebar'
 
       - name: Clone pylon
@@ -58,13 +58,14 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.run_number }}
+          ./gradlew :pylon:shadowJar -Pversion=${{ inputs.version || github.sha }}
 
       - name: Upload the artifact
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v7
         with:
-          name: pylon-${{ inputs.version || github.run_number }}
-          path: 'pylon/build/libs/pylon-${{ inputs.version || github.run_number }}.jar'
+          name: pylon-${{ inputs.version || github.sha }}
+          path: 'pylon/build/libs/pylon-${{ inputs.version || github.sha }}.jar'
+          archive: false
 
   dependency-submission:
     needs: [build]

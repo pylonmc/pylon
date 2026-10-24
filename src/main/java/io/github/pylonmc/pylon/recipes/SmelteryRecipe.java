@@ -104,7 +104,7 @@ public class SmelteryRecipe implements RebarRecipe {
     }
 
     @Override
-    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         return fluidInputs.entrySet()
                 .stream()
                 .map(pair -> (FluidOrItemChoice) FluidChoice.of(pair.getKey(), pair.getValue()))

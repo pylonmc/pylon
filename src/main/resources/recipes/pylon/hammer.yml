@@ -69,12 +69,6 @@ pylon:steel_sheet:
   mining-level: diamond
   uses: 2
 
-pylon:palladium_sheet:
-  input: pylon:palladium_ingot
-  result: pylon:palladium_sheet
-  mining-level: diamond
-  uses: 2
-
 pylon:gravel_from_rocks:
   input: "#rebar:rocks"
   result: minecraft:gravel

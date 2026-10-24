@@ -113,12 +113,12 @@ public class CreativeItemSource extends RebarBlock
 
         @Override
         public @Nullable ItemStack getItemStack() {
-            return inventory.getItem(0);
+            return inventory.getUnsafeItem(0);
         }
 
         @Override
         public long getAmount() {
-            ItemStack stack = inventory.getItem(0);
+            ItemStack stack = inventory.getUnsafeItem(0);
             return stack == null ? 0 : stack.getMaxStackSize();
         }
 
@@ -146,6 +146,6 @@ public class CreativeItemSource extends RebarBlock
     public void postInitialise() {
         setDisableBlockTextureEntity(true);
         createLogisticGroup("output", LogisticGroupType.OUTPUT, new InfiniteLogisticSlot());
-        inventory.addPostUpdateHandler(event -> getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(inventory.getItem(0)));
+        inventory.addPostUpdateHandler(event -> getHeldEntityOrThrow(ItemDisplay.class, "item").setItemStack(event.getNewItem()));
     }
 }

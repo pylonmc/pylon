@@ -6,10 +6,13 @@ import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import java.util.Collections;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
+import org.jspecify.annotations.NonNull;
 
 
 /**
@@ -21,10 +24,15 @@ import org.joml.Vector3d;
  */
 public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
 
-    default void createFluidDisplay() {
+    default void createFluidDisplay(@NonNull Vector3d offset) {
         addEntity("fluid", new ItemDisplayBuilder()
-            .build(getBlock().getLocation().toCenterLocation().add(0, 0, 0))
+                .transformation(new TransformBuilder().scale(0, 0, 0))
+                .build(getBlock().getLocation().toCenterLocation().add(offset.x, offset.y, offset.z))
         );
+    }
+
+    default void createFluidDisplay() {
+        createFluidDisplay(new Vector3d(0.0, -0.5, 0.0));
     }
 
     default @NotNull ItemDisplay getFluidDisplay() {
@@ -34,7 +42,13 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
     @Override
     default void setFluidType(@Nullable RebarFluid fluid) {
         FluidTankRebarBlock.super.setFluidType(fluid);
-        getFluidDisplay().setItemStack(fluid == null ? null : fluid.getItem());
+        if (fluid == null) {
+            getFluidDisplay().setItemStack(null);
+        } else {
+            ItemStack item = fluid.getItem();
+            item.lore(Collections.emptyList()); // bandaid fix for Rebar#922
+            getFluidDisplay().setItemStack(item);
+        }
     }
 
     @Override
@@ -45,11 +59,34 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
             return false;
         }
 
+        updateFluidDisplay();
+
+        return true;
+    }
+
+    @Override
+    default void setCapacity(double capacity) {
+        FluidTankRebarBlock.super.setCapacity(capacity);
+        if (getFluidCapacity() != 0 && getFluidAmount() > getFluidCapacity()) {
+            setFluid(getFluidCapacity());
+        }
+        updateFluidDisplay();
+    }
+
+    default void updateFluidDisplay() {
+        if (getFluidCapacity() < 1.0e-6 || getFluidAmount() < 1.0e-6) {
+            getFluidDisplay().setTransformationMatrix(new TransformBuilder()
+                    .scale(0, 0, 0)
+                    .buildForItemDisplay()
+            );
+            return;
+        }
+
         ItemDisplay fluidDisplay = getFluidDisplay();
         Vector3d translation = fluidDisplayTranslation();
         Vector3d scale = fluidDisplayScale();
 
-        float proportion = (float) (amount / getFluidCapacity());
+        float proportion = (float) (getFluidAmount() / getFluidCapacity());
 
         fluidDisplay.setInterpolationDelay(0);
         fluidDisplay.setInterpolationDuration(RebarConfig.FLUID_TICK_INTERVAL);
@@ -58,12 +95,10 @@ public interface FluidTankWithDisplayEntity extends FluidTankRebarBlock {
                 .scale(scale.x, scale.y * proportion, scale.z)
                 .buildForItemDisplay()
         );
-
-        return true;
     }
 
     default Vector3d fluidDisplayTranslation() {
-        return new Vector3d(0, -0.45, 0);
+        return new Vector3d(0, 0.05, 0);
     }
 
     default Vector3d fluidDisplayScale() {

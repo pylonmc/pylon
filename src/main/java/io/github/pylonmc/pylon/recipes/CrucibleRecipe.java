@@ -31,7 +31,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 public record CrucibleRecipe(
     @NotNull NamespacedKey key,
     @NotNull ItemChoice input,
-    @NotNull io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount output
+    @NotNull FluidWithAmount output
 ) implements RebarRecipe {
 
     private static Set<NamespacedKey> HEATED_BLOCKS = null;

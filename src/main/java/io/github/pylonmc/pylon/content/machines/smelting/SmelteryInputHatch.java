@@ -6,9 +6,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.pylonmc.pylon.api.MeltingPoint;
+import io.github.pylonmc.pylon.api.MeltingPointTag;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
-import io.github.pylonmc.rebar.block.interfaces.FluidRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -34,7 +33,7 @@ public final class SmelteryInputHatch extends SmelteryComponent implements Fluid
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
         SmelteryController controller = getController();
-        if (controller == null || !fluid.hasTag(FluidTemperature.class) || !fluid.hasTag(MeltingPoint.class) || fluid.getTag(MeltingPoint.class).temperature() > controller.getTemperature()) return 0.0;
+        if (controller == null || !fluid.hasTag(FluidTemperature.class) || !fluid.hasTag(MeltingPointTag.class) || fluid.getTag(MeltingPointTag.class).temperature() > controller.getTemperature()) return 0.0;
         return Math.min(controller.getCapacity() - controller.getTotalFluid(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20);
     }
 

@@ -6,9 +6,8 @@ import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.item.RebarItem;
+import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.item.interfaces.InventoryTickerRebarItem;
-import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.NamespacedKey;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -21,16 +20,15 @@ import org.jetbrains.annotations.NotNull;
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class IronBloom extends RebarItem implements InventoryTickerRebarItem {
+    private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
+    private static final NamespacedKey WORKING_KEY = pylonKey("working");
+
+    public static final int MAX_TEMPERATURE = 12;
+    public static final int MIN_WORKING = -15;
+    public static final int MAX_WORKING = 15;
 
     public final long damageInterval = getSettingOrThrow("damage-interval", ConfigAdapter.LONG);
     public final int unprotectedDamage = getSettingOrThrow("unprotected-damage", ConfigAdapter.INTEGER);
-
-    private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
-    public static final int MAX_TEMPERATURE = 12;
-
-    private static final NamespacedKey WORKING_KEY = pylonKey("working");
-    public static final int MIN_WORKING = -15;
-    public static final int MAX_WORKING = 15;
 
     public IronBloom(@NotNull ItemStack stack) {
         super(stack);
@@ -46,19 +44,14 @@ public class IronBloom extends RebarItem implements InventoryTickerRebarItem {
     /**
      * @param temperature the temperature to set, must be between 0 and 12 inclusive.
      */
-    @SuppressWarnings("UnstableApiUsage")
     public void setTemperature(int temperature) {
         Preconditions.checkArgument(temperature >= 0 && temperature <= MAX_TEMPERATURE, "Temperature must be between 0 and 12 inclusive.");
-        ItemStack stack = getStack();
-        stack.editPersistentDataContainer((pdc) -> pdc.set(TEMPERATURE_KEY, RebarSerializers.INTEGER, temperature));
-        CustomModelData data = stack.getDataOrDefault(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().build());
-        CustomModelData newData = CustomModelData.customModelData()
-                .addStrings(data.strings())
-                .addFlags(data.flags())
-                .addColors(data.colors())
-                .addFloat(temperature)
-                .build();
-        stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, newData);
+        ItemStackBuilder.of(getStack())
+                .editPdc(pdc -> pdc.set(TEMPERATURE_KEY, RebarSerializers.INTEGER, temperature))
+                .editCustomModelData(data -> {
+                    data.getFloats().clear();
+                    data.addFloat(temperature);
+                });
     }
 
     /**

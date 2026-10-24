@@ -1,6 +1,5 @@
 package io.github.pylonmc.pylon.content.building;
 
-import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -52,16 +51,12 @@ public class ExplosiveTarget extends RebarBlock implements TargetRebarBlockHandl
 
     @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTargetHit(@NotNull TargetHitEvent event, @NotNull EventPriority priority) {
-        Block hitBlock = event.getHitBlock();
-        Preconditions.checkState(hitBlock != null);
-
-        Boolean tntExplodes = hitBlock.getWorld().getGameRuleValue(GameRules.TNT_EXPLODES);
-        if (tntExplodes != null && !tntExplodes) {
+        if (!getBlock().getWorld().getGameRuleValue(GameRules.TNT_EXPLODES)) {
             return;
         }
 
         Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> {
-            if (!hitBlock.getWorld().createExplosion(hitBlock.getLocation(), (float) explosivePower, createsFire)) {
+            if (!getBlock().getWorld().createExplosion(getBlock().getLocation(), (float) explosivePower, createsFire)) {
                 return;
             }
 

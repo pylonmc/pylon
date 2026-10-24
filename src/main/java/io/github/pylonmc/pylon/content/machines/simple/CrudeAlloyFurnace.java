@@ -7,6 +7,7 @@ import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.RecipeProcessorRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
@@ -16,7 +17,9 @@ import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.TransformBuilder;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
+import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
+import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.VirtualInventoryLogisticSlot;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
@@ -30,8 +33,10 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +60,7 @@ public class CrudeAlloyFurnace extends RebarBlock implements
         DirectionalRebarBlock,
         TickingRebarBlock,
         LogisticRebarBlock,
+        NoJobRebarBlock,
         RecipeProcessorRebarBlock<CrudeAlloyFurnaceRecipe> {
 
     public static final NamespacedKey FUEL_TICKS_TOTAL_KEY = pylonKey("fuel_ticks_total");
@@ -149,11 +155,13 @@ public class CrudeAlloyFurnace extends RebarBlock implements
                 tryConsumeFuel();
             }
             if (fuelTicksRemaining <= 0) {
+                editBlockDataAs(Furnace.class, furnace -> furnace.setLit(false));
                 return;
             }
         }
 
         fuelTicksRemaining -= getTickInterval();
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(fuelTicksRemaining > 0));
         fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
         fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
         if (fuelTicksRemaining <= 0) {
@@ -182,18 +190,24 @@ public class CrudeAlloyFurnace extends RebarBlock implements
             return;
         }
 
-        ItemStack fuel = fuelInventory.getItem(0);
+        ItemStack fuel = fuelInventory.getUnsafeItem(0);
         if (fuel == null) {
             return;
         }
 
+        ItemType type = fuel.getType().asItemType();
+        if (type == null || !type.isFuel()|| RebarItem.isRebarItemAndIsNot(fuel, VanillaFurnaceFuel.class)) {
+            return;
+        }
+
+        RebarUtils.unsafeSubtract(fuelInventory, 0, 1);
+
         // dividing by 10 due to suspected bug with getBurnDuration
-        fuelTicksTotal = fuel.getType().asItemType().getBurnDuration() / 10;
+        fuelTicksTotal = type.getBurnDuration() / 10;
         fuelTicksRemaining = fuelTicksTotal;
         fuelProgressItem.setItem(fuelLeftStack);
         fuelProgressItem.setTotalTimeTicks(fuelTicksTotal);
         fuelProgressItem.setRemainingTimeTicks(fuelTicksRemaining);
-        fuelInventory.setItem(new MachineUpdateReason(), 0, fuel.subtract());
     }
 
     public boolean tryStartRecipe(@NonNull CrudeAlloyFurnaceRecipe recipe) {

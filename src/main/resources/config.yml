@@ -6,6 +6,17 @@ rune-check-range: 1.75
 # eg if this is 4 and the inventory ticker base rate is 10, then talismans update every 40 ticks
 default-talisman-tick-interval: 4
 
+worlds-with-oil: [world]
+
+# Lower values = oil deposits change over a larger distance
+# WARNING: Changing this will change the existing distribution of oil
+oil-scale: 0.005
+
+# Lower values = less areas with no oil
+# Can be between 0 (oil everywhere) and 1 (oil nowhere).
+# WARNING: Changing this will change the existing distribution of oil
+oil-cutoff: 0.4
+
 talismans:
   bartering-trigger-sound:
     sound: minecraft:block.amethyst_block.resonate

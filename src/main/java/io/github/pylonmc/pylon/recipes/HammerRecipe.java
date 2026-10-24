@@ -96,7 +96,7 @@ public record HammerRecipe(
                 continue;
             }
 
-            ItemStack stack = itemSchema.getItemStack();
+            ItemStack stack = itemSchema.createNewItemStack();
             if (!hammer.miningLevel.isAtLeast(level)) {
                 continue;
             }

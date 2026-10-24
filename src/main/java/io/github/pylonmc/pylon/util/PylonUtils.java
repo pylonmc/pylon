@@ -110,6 +110,7 @@ public class PylonUtils {
     }
 
     public @NotNull TextDisplay spawnUnitSquareTextDisplay(@NotNull Location location, @NotNull Color color, Consumer<TextDisplay> initializer) {
+        // TODO use the TextDisplayBuilder
         return location.getWorld().spawn(location, TextDisplay.class, display -> {
             display.setTransformationMatrix( // https://github.com/TheCymaera/minecraft-hologram/blob/d67eb43308df61bdfe7283c6821312cca5f9dea9/src/main/java/com/heledron/hologram/utilities/rendering/textDisplays.kt#L15
                     new Matrix4f()

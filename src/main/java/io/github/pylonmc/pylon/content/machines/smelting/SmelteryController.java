@@ -1,10 +1,9 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
-import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
-
 import com.google.common.base.Preconditions;
 
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
+import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 
@@ -31,10 +30,12 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.SmelteryRecipe;
 import io.github.pylonmc.pylon.util.HslColor;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
+import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
@@ -54,16 +55,41 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import kotlin.Pair;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Furnace;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
+import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
 
+import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
+
 public final class SmelteryController extends SmelteryComponent
-        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler {
+        implements GuiRebarBlock, RebarMultiblock, TickingRebarBlock, BlockBreakRebarBlockHandler, NoJobRebarBlock {
 
     private static final NamespacedKey RUNNING_KEY = pylonKey("running");
     private static final NamespacedKey TEMPERATURE_KEY = pylonKey("temperature");
@@ -83,12 +109,9 @@ public final class SmelteryController extends SmelteryComponent
                     .thenComparing(fluid -> fluid.getKey().toString())
     );
 
-    @Getter
-    private boolean running;
-    @Getter
-    private double temperature;
-    @Getter
-    private double capacity;
+    @Getter private boolean running;
+    @Getter private double temperature;
+    @Getter private double capacity;
     private int height;
 
     @SuppressWarnings("unused")
@@ -177,41 +200,37 @@ public final class SmelteryController extends SmelteryComponent
 
         @Override
         public @NonNull ItemProvider getItemProvider(@NonNull Player viewer) {
-            List<Component> lore = new ArrayList<>();
+            ItemStackBuilder icon = ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
+                    .name(Component.translatable("pylon.gui.smeltery.contents.name"));
             if (fluids.isEmpty()) {
-                lore.add(Component.translatable("pylon.gui.smeltery.contents.empty"));
-            } else {
-                for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
-                    RebarFluid fluid = entry.getKey();
-                    double amount = entry.getDoubleValue();
-                    lore.add(Component.text().build().append(Component.translatable(
-                            "pylon.gui.smeltery.contents.fluid",
-                            RebarArgument.of(
-                                    "amount",
-                                    UnitFormat.MILLIBUCKETS.format(amount)
-                                            .decimalPlaces(1)
-                                            .unitStyle(Style.empty())
-                            ),
-                            RebarArgument.of("fluid", fluid.getName())
-                    )));
-                }
+                icon.lore(Component.translatable("pylon.gui.smeltery.contents.empty"));
+                return icon;
             }
-            return ItemStackBuilder.gui(Material.LAVA_BUCKET, pylonKey("smeltery-contents"))
-                    .name(Component.translatable("pylon.gui.smeltery.contents.name"))
-                    .lore(lore);
+
+            for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
+                icon.lore(Component.translatable(
+                        "pylon.gui.smeltery.contents.fluid",
+                        RebarArgument.of(
+                                "amount",
+                                UnitFormat.MILLIBUCKETS.format(entry.getDoubleValue())
+                                        .decimalPlaces(1)
+                                        .unitStyle(Style.empty())
+                        ),
+                        RebarArgument.of("fluid", entry.getKey().getName())
+                ));
+            }
+            return icon;
         }
 
         @Override
-        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
-        }
+        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {}
     }
-
     // </editor-fold>
 
     // <editor-fold desc="Multiblock" defaultstate="collapsed">
     private final BlockPosition center = new BlockPosition(
             getBlock().getRelative(
-                    ((Directional) getBlock().getBlockData()).getFacing().getOppositeFace(),
+                    getBlockDataAs(Directional.class).getFacing().getOppositeFace(),
                     2
             )
     );
@@ -290,7 +309,7 @@ public final class SmelteryController extends SmelteryComponent
         if (totalFluid > capacity) {
             double ratio = capacity / totalFluid;
             for (RebarFluid fluid : fluids.keySet()) {
-                fluids.computeDouble(fluid, (key, value) -> value * ratio);
+                fluids.computeDouble(fluid, (_, value) -> value * ratio);
             }
         }
 
@@ -421,7 +440,7 @@ public final class SmelteryController extends SmelteryComponent
     private void spawnPixels() {
         pixels.clear();
 
-        Location location = center.getLocation().add(-1, 0, -1);
+        Location location = center.toLocation().add(-1, 0, -1);
         for (int x = 0; x < pixelsPerSide; x++) {
             for (int z = 0; z < pixelsPerSide; z++) {
                 Location relative = location.clone().add((double) x / resolution, 0, (double) z / resolution);
@@ -522,75 +541,86 @@ public final class SmelteryController extends SmelteryComponent
     }
     // </editor-fold>
 
+    private SmelteryRecipe lastRecipe = null;
+
+    private boolean tryRecipe(SmelteryRecipe recipe) {
+        if (recipe.getTemperature() > temperature) {
+            return false;
+        }
+
+        if (!fluids.keySet().containsAll(recipe.getFluidInputs().keySet())) {
+            return false;
+        }
+
+        double totalInputFluid = 0.0;
+        for (Double v : recipe.getFluidInputs().values()) {
+            totalInputFluid += v;
+        }
+
+        double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
+        double maxFluidConsumption = fluidReactionPerTick * highestFluidRatio;
+        double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
+
+        double currentTemperature = temperature;
+        for (Map.Entry<RebarFluid, Double> entry : recipe.getFluidInputs().entrySet()) {
+            double amount = trueMaxConsumption * entry.getValue();
+            removeFluid(entry.getKey(), amount);
+        }
+        for (Map.Entry<RebarFluid, Double> entry : recipe.getFluidOutputs().entrySet()) {
+            double amount = trueMaxConsumption * entry.getValue();
+            addFluid(entry.getKey(), amount);
+        }
+        temperature = currentTemperature; // offset addFluid/removeFluid temperature change
+        return true;
+    }
+
     private void performRecipes() {
-        if (fluids.isEmpty()) return;
-        recipeLoop:
+        if (fluids.isEmpty() || tryRecipe(lastRecipe)) {
+            return;
+        }
+
         for (SmelteryRecipe recipe : SmelteryRecipe.RECIPE_TYPE) {
-            if (recipe.getTemperature() > temperature) continue;
-
-            for (RebarFluid fluid : recipe.getFluidInputs().keySet()) {
-                if (!fluids.containsKey(fluid)) continue recipeLoop;
+            if (tryRecipe(recipe)) {
+                break;
             }
-
-            double totalInputFluid = recipe.getFluidInputs().values().stream().mapToDouble(Double::doubleValue).sum();
-            double highestFluidRatio = 1 / totalInputFluid; // highest fluid is always normalized to 1
-            double maxFluidConsumption = fluidReactionPerTick * highestFluidRatio;
-            double trueMaxConsumption = Math.min(getFluidAmount(recipe.getHighestFluid()), maxFluidConsumption);
-
-            double currentTemperature = temperature;
-            for (var entry : recipe.getFluidInputs().entrySet()) {
-                RebarFluid fluid = entry.getKey();
-                double amount = trueMaxConsumption * entry.getValue();
-                removeFluid(fluid, amount);
-            }
-            for (var entry : recipe.getFluidOutputs().entrySet()) {
-                RebarFluid fluid = entry.getKey();
-                double amount = trueMaxConsumption * entry.getValue();
-                addFluid(fluid, amount);
-            }
-            temperature = currentTemperature; // offset addFluid/removeFluid temperature change
         }
     }
 
     @Override
     public void tick() {
-        if (isFormedAndFullyLoaded()) {
-            double oldTemperature = temperature;
-            if (running) {
-                applyHeat();
-                performRecipes();
-            }
-            if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
-                // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
-                // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
-                temperature -= (temperature - roomTemperature) * coolingFactor;
-            }
-            avgTarget = -1;
-            heaters = 0;
-            updateFluidDisplay();
-
-            BoundingBox box = BoundingBox.of(center.getLocation(), 2, 0, 2);
-            box.expand(BlockFace.UP, height);
-
-            double damage = Math.max(0, temperature / 100 + 1);
-
-            for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
-                if (!(entity instanceof LivingEntity livingEntity)) continue;
-                livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
-            }
+        if (!isFormedAndFullyLoaded()) {
+            return;
         }
+
+        double oldTemperature = temperature;
+        if (running) {
+            applyHeat();
+            performRecipes();
+        }
+        if (Math.abs(oldTemperature - temperature) < 1e-6 || temperature > avgTarget) {
+            // See https://www.desmos.com/calculator/cqwav0k4nj; you can never reach the target temperature if cooling
+            // and heating are running concurrently, so we apply cooling only if heating hasn't changed the temperature
+            temperature -= (temperature - roomTemperature) * coolingFactor;
+        }
+        avgTarget = -1;
+        heaters = 0;
+        updateFluidDisplay();
         infoItem.notifyWindows();
         contentsItem.notifyWindows();
+
+        BoundingBox box = BoundingBox.of(center.toLocation(), 2, 0, 2);
+        box.expand(BlockFace.UP, height);
+
+        double damage = Math.max(0, temperature / 100 + 1);
+        for (Entity entity : getBlock().getWorld().getNearbyEntities(box)) {
+            if (!(entity instanceof LivingEntity livingEntity)) continue;
+            livingEntity.damage(damage, DamageSource.builder(DamageType.LAVA).build());
+        }
     }
 
     public void setRunning(boolean running) {
         this.running = running;
-
-        Furnace furnace = (Furnace) getBlock().getBlockData();
-        furnace.setLit(running);
-        getBlock().setBlockData(furnace);
-
-        refreshBlockTextureItem();
+        editBlockDataAs(Furnace.class, furnace -> furnace.setLit(running));
     }
 
     @Override

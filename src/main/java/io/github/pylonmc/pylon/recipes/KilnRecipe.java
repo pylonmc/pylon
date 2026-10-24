@@ -73,7 +73,7 @@ public record KilnRecipe(
     };
 
     @Override
-    public @NotNull List<io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice> getInputs() {
+    public @NotNull List<FluidOrItemChoice> getInputs() {
         List<FluidOrItemChoice> inputs = new ArrayList<>();
         inputs.add(input1);
         if (input2 != null) {

@@ -28,11 +28,7 @@ public class ManualCoreDrillLever extends RebarBlock implements InteractRebarBlo
     @SuppressWarnings("unused")
     public ManualCoreDrillLever(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
-
-        if (getBlock().getBlockData() instanceof Switch switchData) {
-            switchData.setPowered(false);
-            getBlock().setBlockData(switchData);
-        }
+        editBlockDataAs(Switch.class, data -> data.setPowered(false));
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -46,10 +42,7 @@ public class ManualCoreDrillLever extends RebarBlock implements InteractRebarBlo
             return;
         }
 
-        if (!(getBlock().getBlockData() instanceof Switch blockData)) {
-            throw new IllegalStateException("Block data is not switch");
-        }
-
+        Switch blockData = getBlockDataAs(Switch.class);
         ManualCoreDrill drill = BlockStorage.getAs(
                 ManualCoreDrill.class,
                 getBlock().getRelative(blockData.getFacing().getOppositeFace())
@@ -74,10 +67,7 @@ public class ManualCoreDrillLever extends RebarBlock implements InteractRebarBlo
         }
 
         leverResetTask = Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
-            if (getBlock().getBlockData() instanceof Switch switchData) {
-                switchData.setPowered(false);
-                getBlock().setBlockData(switchData);
-            }
+            editBlockDataAs(Switch.class, data -> data.setPowered(false));
         }, (long) drill.getRotationDuration() * drill.getRotationsPerCycle());
     }
 }
