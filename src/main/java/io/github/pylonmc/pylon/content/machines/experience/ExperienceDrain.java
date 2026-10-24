@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.experience;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -14,6 +15,7 @@ import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import org.bukkit.Particle;
+import org.bukkit.Registry;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -29,6 +31,7 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
     public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
     public final int xpDrainAmount = getSettingOrThrow("xp-drain-amount", ConfigAdapter.INTEGER);
     public final int xpBufferAmount = getSettingOrThrow("xp-buffer-amount", ConfigAdapter.INTEGER);
+    public final Particle drainParticleType = getSettingOrThrow("particle-type", ConfigAdapter.KEYED.fromRegistry(Particle.class, Registry.PARTICLE_TYPE));
 
     public static class Item extends RebarItem {
         public final int xpDrainPeriodTicks = getSettingOrThrow("xp-drain-period-ticks", ConfigAdapter.INTEGER);
@@ -112,7 +115,11 @@ public class ExperienceDrain extends RebarBlock implements TickingRebarBlock, Fl
             int actualSubtracted = subtractExperience(player, Math.min(xpDrainAmount, (int) Math.floor(fluidSpaceRemaining(PylonFluids.LIQUID_XP))));
             addFluid(PylonFluids.LIQUID_XP, actualSubtracted);
             if (actualSubtracted != 0) {
-                getBlock().getWorld().spawnParticle(Particle.BUBBLE, getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0), 1);
+                new ParticleBuilder(drainParticleType)
+                        .location(getBlock().getLocation().toCenterLocation().clone().add(0, 0.25, 0))
+                        .count(1)
+                        .offset(0.2, 0.2, 0.2)
+                        .spawn();
             }
         }
     }
