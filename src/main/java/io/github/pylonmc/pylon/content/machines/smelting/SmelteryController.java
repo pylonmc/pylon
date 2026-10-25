@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -250,34 +251,31 @@ public final class SmelteryController extends SmelteryComponent
             }
         }
 
-        if (mostAbundantFluid != null && capacity > 0) {
+        if (capacity > 0) {
+            int otherFluids = fluids.size() - 1;
             Component suffix = Component.space().append(Component.translatable(
                     "pylon.message.smeltery.fluid",
-                    RebarArgument.of("amount", UnitFormat.MILLIBUCKETS.format(mostAbundantAmount).decimalPlaces(0)),
-                    RebarArgument.of("fluid", mostAbundantFluid.getName())
+                    RebarArgument.of("amount", UnitFormat.MILLIBUCKETS.format(getTotalFluid()).decimalPlaces(0)),
+                    RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0)),
+                    RebarArgument.of("fluid", mostAbundantFluid != null
+                            ? mostAbundantFluid.getName()
+                            : Component.translatable("rebar.fluid.none")
+                    ),
+                    RebarArgument.of("more", otherFluids > 0
+                            ? Component.translatable(
+                                    "pylon.message.smeltery.more-fluids",
+                                    RebarArgument.of("amount", otherFluids)
+                            )
+                            : Component.empty()
+                    )
             ));
 
-            int otherFluids = fluids.size() - 1;
-            if (otherFluids > 0) {
-                suffix = suffix
-                        .append(Component.space())
-                        .append(Component.translatable(
-                                "pylon.message.smeltery.more-fluids",
-                                RebarArgument.of("amount", otherFluids)
-                        ));
-            }
-
             display.add(new ProgressBar()
-                    .proportion(Math.clamp(mostAbundantAmount / capacity, 0.0, 1.0))
-                    .barColor(mostAbundantFluid)
+                    .proportion(Math.clamp(getTotalFluid() / capacity, 0.0, 1.0))
+                    .barColor(mostAbundantFluid != null ? mostAbundantFluid.getColor() : NamedTextColor.BLACK)
                     .suffix(suffix)
             );
         }
-
-        display.add(Component.translatable(
-                "pylon.message.smeltery.capacity",
-                RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0))
-        ));
 
         return display;
     }
