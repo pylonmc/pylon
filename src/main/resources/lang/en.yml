@@ -2650,6 +2650,21 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Smelting speed:</attr> %speed%
 
+  creative_battery:
+    name: "Creative Battery"
+    lore: |-
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+    story: The power of the gods themselves, compressed into a single cubic centimeter. Handle with care.
+
+  battery_1_kj:
+    name: "1 kJ Battery"
+    lore: |-
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
 fluid:
   tag:
     melting-point: "<arrow> Melting point: %temperature%"

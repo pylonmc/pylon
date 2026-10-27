@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.api.item.ConfigurableBatteryRebarItem;
 import io.github.pylonmc.pylon.content.armor.BronzeArmor;
 import io.github.pylonmc.pylon.content.armor.SteelArmor;
 import io.github.pylonmc.pylon.content.assembling.RedstoneSolderingIron;
@@ -3788,6 +3789,21 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricFurnace.Item.class, ELECTRIC_FURNACE, PylonKeys.ELECTRIC_FURNACE);
         PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_FURNACE);
+    }
+
+    public static final ItemStack CREATIVE_BATTERY = ItemStackBuilder.rebar(Material.PINK_CANDLE, PylonKeys.CREATIVE_BATTERY)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+    static {
+        RebarItem.register(CreativeBattery.class, CREATIVE_BATTERY, PylonKeys.CREATIVE_BATTERY);
+        PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_BATTERY);
+    }
+
+    public static final ItemStack BATTERY_1_KJ = ItemStackBuilder.rebar(Material.GREEN_CANDLE, PylonKeys.BATTERY_1_KJ)
+            .build();
+    static {
+        RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_KJ, PylonKeys.BATTERY_1_KJ);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(BATTERY_1_KJ);
     }
     // </editor-fold>
 
