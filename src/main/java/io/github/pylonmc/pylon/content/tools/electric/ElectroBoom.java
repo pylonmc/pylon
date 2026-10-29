@@ -6,6 +6,7 @@ import io.github.pylonmc.rebar.item.interfaces.ProjectileRebarItemHandler;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -37,6 +38,11 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             shooter.add(livingEntity);
         }
 
-        ElectricBolt.spawn(location, 1000, shooter);
+        int count = 1;
+        while (ThreadLocalRandom.current().nextBoolean()) {
+            count++;
+        }
+
+        ElectricBolt.spawn(location, 1000, shooter, count);
     }
 }

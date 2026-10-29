@@ -120,17 +120,20 @@ public class ElectricBolt {
     }
 
     /**
-     * Spawns a single electric bolt targeting an entity within range, randomly chosen with a bias towards nearer entities
+     * Spawns the specified amount of electric bolts targeting entities within range, randomly chosen with a bias towards nearer entities
      * @param location the location to start at
      * @param power the power (in joules) to set the bolt to
      * @param avoid a set of entities to avoid hitting
+     * @param count the number of bolts to spawn
      */
-    public static void spawn(@NotNull Location location, double power, @NotNull Set<LivingEntity> avoid) {
+    public static void spawn(@NotNull Location location, double power, @NotNull Set<LivingEntity> avoid, int count) {
         ElectricBolt bolt = new ElectricBolt();
         bolt.avoid.addAll(avoid);
-        LivingEntity target = bolt.chooseNearestWeighted(location, power / POWER_SCALE);
-        if (target == null) return;
-        bolt.avoid.add(target);
-        bolt.spawnSection(power, target, location, new ArrayList<>());
+        for (int i = 0; i < count; i++) {
+            LivingEntity target = bolt.chooseNearestWeighted(location, power / POWER_SCALE);
+            if (target == null) return;
+            bolt.avoid.add(target);
+            bolt.spawnSection(power, target, location, new ArrayList<>());
+        }
     }
 }
