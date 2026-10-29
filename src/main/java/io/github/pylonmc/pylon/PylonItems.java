@@ -40,6 +40,7 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
+import io.github.pylonmc.pylon.content.tools.electric.ElectroBoom;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
@@ -3799,11 +3800,18 @@ public final class PylonItems {
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_BATTERY);
     }
 
-    public static final ItemStack BATTERY_1_KJ = ItemStackBuilder.rebar(Material.GREEN_CANDLE, PylonKeys.BATTERY_1_KJ)
+    public static final ItemStack BATTERY_1_KJ = ItemStackBuilder.rebar(Material.LIME_CANDLE, PylonKeys.BATTERY_1_KJ)
             .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_KJ, PylonKeys.BATTERY_1_KJ);
         PylonPages.ELECTRICITY_UTILITIES.addItem(BATTERY_1_KJ);
+    }
+
+    public static final ItemStack ELECTRO_BOOM = ItemStackBuilder.rebar(Material.SNOWBALL, PylonKeys.ELECTRO_BOOM)
+            .build();
+    static {
+        RebarItem.register(ElectroBoom.class, ELECTRO_BOOM, PylonKeys.ELECTRO_BOOM);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(ELECTRO_BOOM);
     }
     // </editor-fold>
 

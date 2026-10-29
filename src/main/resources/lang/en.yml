@@ -2665,6 +2665,16 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Charge:</attr> %charge%
 
+  electro_boom:
+    name: "ElectroBOOM"
+    lore: |-
+      <star> Uses batteries
+      <arrow> Creates an electric explosion when thrown
+      <arrow> <insn>Right click to throw</insn>
+      <arrow> <attr>Charge:</attr> %charge%
+    story: |-
+      Ever wanted to know what happens when you short three megajoules of battery? Now you can with our patented ElectroBOOM™ system! Recommended for all ages 3000+.
+
 fluid:
   tag:
     melting-point: "<arrow> Melting point: %temperature%"
@@ -2894,6 +2904,7 @@ message:
   invalid_recipe: "<red>Invalid recipe"
   no_fuel: "<red>No fuel"
   no_power: "<red>No power"
+  no_battery: "<red>No battery installed"
   assembly_table:
     full: "<red>Output full!"
   breaker:
