@@ -97,7 +97,11 @@ public class PylonKeys {
 
     public static final NamespacedKey FIBER = pylonKey("fiber");
 
-    public static final NamespacedKey GLASS_BREAKER = pylonKey("glass_breaker");
+    public static final NamespacedKey COPPER_GLASS_BREAKER = pylonKey("copper_glass_breaker");
+    public static final NamespacedKey IRON_GLASS_BREAKER = pylonKey("iron_glass_breaker");
+    public static final NamespacedKey GOLD_GLASS_BREAKER = pylonKey("gold_glass_breaker");
+    public static final NamespacedKey BRONZE_GLASS_BREAKER = pylonKey("bronze_glass_breaker");
+    public static final NamespacedKey STEEL_GLASS_BREAKER = pylonKey("steel_glass_breaker");
 
     public static final NamespacedKey BRONZE_SWORD = pylonKey("bronze_sword");
     public static final NamespacedKey BRONZE_AXE = pylonKey("bronze_axe");

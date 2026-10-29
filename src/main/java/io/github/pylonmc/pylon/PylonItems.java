@@ -1020,14 +1020,13 @@ public final class PylonItems {
                 .addButton(new MachineRecipesButton(HammerRecipe.RECIPE_TYPE));
     }
 
-    public static final ItemStack GLASS_BREAKER = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.GLASS_BREAKER, RegistrySet.keySet(RegistryKey.BLOCK, PylonItemTag.GLASSLIKE.getValues().stream().map(it -> TypedKey.create(RegistryKey.BLOCK, it.getKey())).toList()), true, false, false)
+    public static final ItemStack COPPER_GLASS_BREAKER = ItemStackBuilder.rebarToolWeapon(Material.CLAY_BALL, PylonKeys.COPPER_GLASS_BREAKER, RegistrySet.keySet(RegistryKey.BLOCK, PylonItemTag.GLASSLIKE.getValues().stream().map(it -> TypedKey.create(RegistryKey.BLOCK, it.getKey())).toList()), true, false, false)
             .set(DataComponentTypes.ITEM_MODEL, Material.IRON_PICKAXE.getKey())
             .build();
     static {
-        RebarItem.register(RebarItem.class, GLASS_BREAKER);
-        PylonPages.TOOLS.addItem(GLASS_BREAKER);
+        RebarItem.register(RebarItem.class, COPPER_GLASS_BREAKER);
+        PylonPages.TOOLS.addItem(COPPER_GLASS_BREAKER);
     }
-
 
     public static final ItemStack BRONZE_AXE = ItemStackBuilder.rebarToolWeapon(Material.STONE_AXE, PylonKeys.BRONZE_AXE, RebarUtils.axeMineable(), true, false, true)
             .set(DataComponentTypes.ITEM_MODEL, Material.GOLDEN_AXE.getKey())
