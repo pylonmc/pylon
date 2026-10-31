@@ -43,6 +43,6 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             count++;
         }
 
-        ElectricBolt.spawn(location, 1000, shooter, count);
+        ElectricBolt.spawn(location, 10000, shooter, count);
     }
 }

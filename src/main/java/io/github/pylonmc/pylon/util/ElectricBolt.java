@@ -30,7 +30,10 @@ public class ElectricBolt {
         WeightedSet<LivingEntity> set = new WeightedSet<>();
         for (LivingEntity entity : location.getNearbyLivingEntities(radius)) {
             if (avoid.contains(entity)) continue;
-            set.add(new WeightedSet.Element<>(entity, (float) entity.getBoundingBox().getCenter().distance(location.toVector())));
+            Location entityLoc = entity.getBoundingBox().getCenter().toLocation(location.getWorld());
+            Vector interveningVector = entityLoc.toVector().subtract(location.toVector());
+            if (location.getWorld().rayTraceBlocks(location, interveningVector, interveningVector.length()) != null) continue;
+            set.add(new WeightedSet.Element<>(entity, (float) entityLoc.distance(location)));
         }
         if (set.isEmpty()) return null;
         return set.getRandom();
@@ -84,6 +87,14 @@ public class ElectricBolt {
                 }
                 target.damage(power / POWER_SCALE * 4, DamageSource.builder(DamageType.LIGHTNING_BOLT).build());
                 target.knockback(1, finalDirection.x, finalDirection.z);
+
+                if (power > 0 && target.isDead() && ThreadLocalRandom.current().nextBoolean()) {
+                    LivingEntity newTarget = chooseNearestWeighted(pos, power / POWER_SCALE);
+                    if (newTarget != null) {
+                        avoid.add(newTarget);
+                        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - POWER_SCALE, newTarget, pos, new ArrayList<>()), 1);
+                    }
+                }
             }, 1);
         } else {
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - POWER_SCALE, target, pos, prevPoints), 1);
