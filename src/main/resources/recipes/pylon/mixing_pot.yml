@@ -247,6 +247,16 @@ pylon:farming_talisman_advanced:
   output:
     pylon:farming_talisman_advanced: 1
 
+pylon:mining_talisman_advanced:
+  input-items:
+    - pylon:mining_talisman_simple: 1
+    - pylon:shimmer_dust_2: 2
+    - pylon:diamond_dust: 1
+  input-fluid:
+    pylon:plant_oil: 1000
+  output:
+    pylon:mining_talisman_advanced: 1
+
 pylon:health_talisman_ultimate:
   input-items:
     - pylon:health_talisman_advanced: 1
@@ -344,6 +354,17 @@ pylon:farming_talisman_ultimate:
     pylon:gold: 500
   output:
     pylon:farming_talisman_ultimate: 1
+  requires-enriched-fire: true
+
+pylon:mining_talisman_ultimate:
+  input-items:
+    - pylon:mining_talisman_advanced: 1
+    - pylon:shimmer_skull: 1
+    - pylon:shimmer_dust_3: 4
+  input-fluid:
+    pylon:gold: 500
+  output:
+    pylon:mining_talisman_ultimate: 1
   requires-enriched-fire: true
 
 pylon:shimmer_bronze:

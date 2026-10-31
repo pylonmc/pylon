@@ -33,6 +33,11 @@ talismans:
     source: block
     volume: 1
     pitch: 1.1
+  mining-trigger-sound:
+    sound: minecraft:block.stone.break
+    source: block
+    volume: 1
+    pitch: 1.2
   hunting-trigger-sound:
     sound: minecraft:block.dispenser.dispense
     source: player
