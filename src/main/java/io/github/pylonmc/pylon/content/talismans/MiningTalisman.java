@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +60,7 @@ public class MiningTalisman extends Talisman {
 
     public static class MiningTalismanListener implements Listener {
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-        public void onBlockBreak(BlockBreakEvent event) {
+        public void onBlockDrop(BlockDropItemEvent event) {
             Player player = event.getPlayer();
 
             Float extraOreChance = player.getPersistentDataContainer().get(MINING_TALISMAN_CHANCE_KEY, PersistentDataType.FLOAT);
@@ -96,7 +97,8 @@ public class MiningTalisman extends Talisman {
             }
 
             for (ItemStack drop : drops) {
-                event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop.clone());
+                event.getItems().add(
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop.clone()));
             }
 
             PylonConfig.MINING_TALISMAN_TRIGGER_SOUND.play(event.getBlock());
