@@ -20,6 +20,8 @@ public abstract class ChargeableRebarItem extends RebarItem {
 
     private static final NamespacedKey BATTERY_KEY = pylonKey("battery");
 
+    public static final Component NO_BATTERY_MESSAGE = Component.translatable("pylon.message.no_battery");
+
     public ChargeableRebarItem(@NotNull ItemStack stack) {
         super(stack);
     }
@@ -76,7 +78,7 @@ public abstract class ChargeableRebarItem extends RebarItem {
         List<RebarArgument> placeholders = new ArrayList<>();
         BatteryRebarItem battery = getBattery();
         ComponentLike charge = battery == null ?
-                Component.translatable("pylon.message.no_battery") :
+                NO_BATTERY_MESSAGE :
                 UnitFormat.JOULES.format(battery.getCharge()).decimalPlaces(2).selectPrefixAndRescale();
         placeholders.add(RebarArgument.of("charge", charge));
         return placeholders;

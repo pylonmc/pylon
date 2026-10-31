@@ -5,6 +5,8 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.util.WeightedSet;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -16,15 +18,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ElectricBolt {
 
-    private static final int PARTICLES_PER_BLOCK = 10;
-    private static final double POWER_SCALE = 100;
+    private static final int PARTICLES_PER_BLOCK = 5;
 
     private final Set<LivingEntity> avoid = new HashSet<>();
 
-    private ElectricBolt() {
-    }
+    private final @Nullable LivingEntity cause;
 
     private @Nullable LivingEntity chooseNearestWeighted(Location location, double radius) {
         WeightedSet<LivingEntity> set = new WeightedSet<>();
@@ -47,6 +48,7 @@ public class ElectricBolt {
         Vector3f originToTarget = targetLocation.toVector().toVector3f().sub(origin.toVector().toVector3f());
         boolean isLast = originToTarget.lengthSquared() <= 1;
         Vector3f direction;
+        float directionLength;
         int attempts = 0;
         do {
             if (attempts++ > 10) return;
@@ -55,8 +57,9 @@ public class ElectricBolt {
             } else {
                 direction = randomBiasedDirection(originToTarget, (float) (Math.PI / 6)).normalize();
             }
-        } while (target.getWorld().rayTraceBlocks(origin, Vector.fromJOML(direction).normalize(), direction.length()) != null);
-        if (power / POWER_SCALE < direction.length()) return;
+            directionLength = direction.length();
+        } while (target.getWorld().rayTraceBlocks(origin, Vector.fromJOML(direction).normalize(), directionLength) != null);
+        if (power < directionLength) return;
 
         Vector step = Vector.fromJOML(direction).multiply(1.0 / PARTICLES_PER_BLOCK);
         Location pos = origin.clone();
@@ -64,7 +67,7 @@ public class ElectricBolt {
             new ParticleBuilder(Particle.WAX_OFF)
                     .location(pos)
                     .offset(0, 0, 0)
-                    .count(3)
+                    .count(2)
                     .extra(0.1)
                     .receivers(32, true)
                     .spawn();
@@ -72,6 +75,7 @@ public class ElectricBolt {
             pos.add(step);
         }
 
+        float finalDirectionLength = directionLength;
         if (isLast) {
             Vector3f finalDirection = direction;
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
@@ -85,24 +89,28 @@ public class ElectricBolt {
                             .receivers(32, true)
                             .spawn();
                 }
-                target.damage(power / POWER_SCALE * 4, DamageSource.builder(DamageType.LIGHTNING_BOLT).build());
+                DamageSource.Builder source = DamageSource.builder(DamageType.LIGHTNING_BOLT);
+                if (cause != null) {
+                    source.withCausingEntity(cause);
+                }
+                target.damage(power * 2, source.build());
                 target.knockback(1, finalDirection.x, finalDirection.z);
 
                 if (power > 0 && target.isDead() && ThreadLocalRandom.current().nextBoolean()) {
-                    LivingEntity newTarget = chooseNearestWeighted(pos, power / POWER_SCALE);
+                    LivingEntity newTarget = chooseNearestWeighted(pos, power);
                     if (newTarget != null) {
                         avoid.add(newTarget);
-                        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - POWER_SCALE, newTarget, pos, new ArrayList<>()), 1);
+                        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>()), 1);
                     }
                 }
             }, 1);
         } else {
-            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - POWER_SCALE, target, pos, prevPoints), 1);
+            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, target, pos, prevPoints), 1);
             while (ThreadLocalRandom.current().nextFloat() < 0.25) {
-                LivingEntity newTarget = chooseNearestWeighted(pos, power / POWER_SCALE);
+                LivingEntity newTarget = chooseNearestWeighted(pos, power);
                 if (newTarget == null) break;
                 avoid.add(newTarget);
-                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - POWER_SCALE, newTarget, pos, new ArrayList<>(prevPoints)), 1);
+                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>(prevPoints)), 1);
             }
         }
     }
@@ -132,16 +140,18 @@ public class ElectricBolt {
 
     /**
      * Spawns the specified amount of electric bolts targeting entities within range, randomly chosen with a bias towards nearer entities
+     *
      * @param location the location to start at
-     * @param power the power (in joules) to set the bolt to
-     * @param avoid a set of entities to avoid hitting
-     * @param count the number of bolts to spawn
+     * @param count    the number of bolts to spawn
+     * @param power    the power to set the bolt to
+     * @param cause    the entity that is the ultimate cause of the bolt
+     * @param avoid    a set of entities to avoid hitting
      */
-    public static void spawn(@NotNull Location location, double power, @NotNull Set<LivingEntity> avoid, int count) {
-        ElectricBolt bolt = new ElectricBolt();
+    public static void spawn(@NotNull Location location, int count, double power, @Nullable LivingEntity cause, @NotNull Set<LivingEntity> avoid) {
+        ElectricBolt bolt = new ElectricBolt(cause);
         bolt.avoid.addAll(avoid);
         for (int i = 0; i < count; i++) {
-            LivingEntity target = bolt.chooseNearestWeighted(location, power / POWER_SCALE);
+            LivingEntity target = bolt.chooseNearestWeighted(location, power);
             if (target == null) return;
             bolt.avoid.add(target);
             bolt.spawnSection(power, target, location, new ArrayList<>());

@@ -10,8 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +21,16 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
 
     public ElectroBoom(@NotNull ItemStack stack) {
         super(stack);
+    }
+
+    @Override
+    public void onProjectileLaunched(@NotNull ProjectileLaunchEvent event, @NotNull EventPriority priority) {
+        if (hasBattery()) return;
+        event.setCancelled(true);
+        UUID ownerID = event.getEntity().getOwnerUniqueId();
+        if (ownerID != null && Bukkit.getEntity(ownerID) instanceof Player player) {
+            player.sendMessage(NO_BATTERY_MESSAGE);
+        }
     }
 
     @Override
@@ -32,10 +44,12 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             return;
         }
 
-        Set<LivingEntity> shooter = new HashSet<>();
+        LivingEntity shooter = null;
+        Set<LivingEntity> avoid = new HashSet<>();
         UUID ownerID = event.getEntity().getOwnerUniqueId();
         if (ownerID != null && Bukkit.getEntity(ownerID) instanceof LivingEntity livingEntity) {
-            shooter.add(livingEntity);
+            shooter = livingEntity;
+            avoid.add(livingEntity);
         }
 
         int count = 1;
@@ -43,6 +57,6 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             count++;
         }
 
-        ElectricBolt.spawn(location, 10000, shooter, count);
+        ElectricBolt.spawn(location, count, Math.cbrt(getCharge()), shooter, avoid);
     }
 }
