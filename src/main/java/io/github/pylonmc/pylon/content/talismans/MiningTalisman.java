@@ -13,6 +13,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -91,14 +92,14 @@ public class MiningTalisman extends Talisman {
                 return;
             }
 
-            Collection<ItemStack> drops = event.getBlock().getDrops(tool);
+            List<Item> drops = event.getItems();
             if (drops.isEmpty()) {
                 return;
             }
 
-            for (ItemStack drop : drops) {
+            for (Item drop : drops) {
                 event.getItems().add(
-                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop.clone()));
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop.getItemStack()));
             }
 
             PylonConfig.MINING_TALISMAN_TRIGGER_SOUND.play(event.getBlock());
