@@ -2675,6 +2675,14 @@ item:
     story: |-
       Ever wanted to know what happens when you short three megajoules of battery? Now you can with our patented ElectroBOOM™ system! Recommended for all ages 3000+.
 
+  entity_sensor:
+    name: "Entity Sensor"
+    lore: |-
+      <arrow> Useless on its own, it is used in various multiblocks to provide entity sensing capabilities.
+      <arrow> Consumes power proportional to the volume of the sphere it is sensing.
+      <arrow> <attr>Power consumption:</attr> %power%
+      <arrow> <attr>Max radius:</attr> %range%
+
 fluid:
   tag:
     melting-point: "<arrow> Melting point: %temperature%"
@@ -3100,6 +3108,12 @@ gui:
   item-threshold: "Item threshold"
   fluid-threshold: "Fluid threshold"
   joules-per-mb: "Produces %power%"
+  entity-sensor:
+    selector-hint: |-
+      Enter a <u><blue><click:open_url:\"https://minecraft.wiki/w/Target_selectors\">target selector</click></blue></u> to filter detected entities.
+      You may use multiple selectors to select different types; separate them by pipes (the | character).
+    range-hint: "Detection radius"
+    invalid-selector: "<red>At least one of the selectors you have inputted is invalid"
 
 inventory:
   fuel: "Fuel"
@@ -3117,7 +3131,15 @@ inventory:
   input3: "Input 3"
 
 unit:
+  # Only used by the gas turbine recipe
   joules-per-millibucket:
     one: "joule per millibucket"
     other: "joules per millibucket"
     abbr: "J/mB"
+  # Only used in the entity sensor lore
+  watts-per-block-encompassed:
+    one: "watt per block encompassed"
+    other: "watts per block encompassed"
+
+ok: "Ok"
+cancel: "Cancel"

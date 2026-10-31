@@ -504,4 +504,5 @@ public class PylonKeys {
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
     public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");
     public static final NamespacedKey ELECTRO_BOOM = pylonKey("electro_boom");
+    public static final NamespacedKey ENTITY_SENSOR = pylonKey("entity_sensor");
 }

@@ -22,16 +22,13 @@ import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
 import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicPumpjack;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracture;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFractureSeal;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicFracturingDrill;
-import io.github.pylonmc.pylon.content.machines.petrochemicals.OilSampleDrill;
+import io.github.pylonmc.pylon.content.machines.petrochemicals.*;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.*;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
+import io.github.pylonmc.pylon.content.tools.EntitySensor;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
 import org.bukkit.Material;
@@ -244,5 +241,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ELECTRIC_BREAKER, Material.DISPENSER, ElectricBreaker.class);
         RebarBlock.register(PylonKeys.ELECTRIC_FURNACE, Material.FURNACE, ElectricFurnace.class);
         RebarBlock.register(PylonKeys.ELECTRIC_TABLE_SAW, Material.IRON_BLOCK, ElectricTableSaw.class);
+        RebarBlock.register(PylonKeys.ENTITY_SENSOR, Material.CHISELED_QUARTZ_BLOCK, EntitySensor.class);
     }
 }

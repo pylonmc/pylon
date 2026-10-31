@@ -3811,7 +3811,14 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(ElectroBoom.class, ELECTRO_BOOM, PylonKeys.ELECTRO_BOOM);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(ELECTRO_BOOM);
+        PylonPages.COMBAT.addItem(ELECTRO_BOOM);
+    }
+
+    public static final ItemStack ENTITY_SENSOR = ItemStackBuilder.rebar(Material.CHISELED_QUARTZ_BLOCK, PylonKeys.ENTITY_SENSOR)
+            .build();
+    static {
+        RebarItem.register(EntitySensor.Item.class, ENTITY_SENSOR, PylonKeys.ENTITY_SENSOR);
+        PylonPages.COMPONENTS.addItem(ENTITY_SENSOR);
     }
     // </editor-fold>
 
