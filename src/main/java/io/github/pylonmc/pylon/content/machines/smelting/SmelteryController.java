@@ -253,27 +253,14 @@ public final class SmelteryController extends SmelteryComponent
 
         if (capacity > 0) {
             int otherFluids = fluids.size() - 1;
-            Component suffix = Component.space().append(Component.translatable(
-                    "pylon.message.smeltery.fluid",
-                    RebarArgument.of("amount", UnitFormat.MILLIBUCKETS.format(getTotalFluid()).decimalPlaces(0)),
-                    RebarArgument.of("capacity", UnitFormat.MILLIBUCKETS.format(capacity).decimalPlaces(0)),
-                    RebarArgument.of("fluid", mostAbundantFluid != null
-                            ? mostAbundantFluid.getName()
-                            : Component.translatable("rebar.fluid.none")
-                    ),
-                    RebarArgument.of("more", otherFluids > 0
-                            ? Component.translatable(
-                                    "pylon.message.smeltery.more-fluids",
-                                    RebarArgument.of("amount", otherFluids)
-                            )
-                            : Component.empty()
-                    )
-            ));
-
-            display.add(new ProgressBar()
-                    .proportion(Math.clamp(getTotalFluid() / capacity, 0.0, 1.0))
-                    .barColor(mostAbundantFluid != null ? mostAbundantFluid.getColor() : NamedTextColor.BLACK)
-                    .suffix(suffix)
+            display.add(ProgressBar.fluidContentsWithNameAndMore(
+                    mostAbundantFluid,
+                    capacity,
+                    getTotalFluid(),
+                    otherFluids > 0
+                            ? Component.translatable("pylon.message.smeltery.more-fluids",
+                                RebarArgument.of("amount", otherFluids))
+                            : null)
             );
         }
 
