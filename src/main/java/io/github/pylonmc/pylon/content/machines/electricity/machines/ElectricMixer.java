@@ -340,7 +340,10 @@ public class ElectricMixer extends RebarBlock implements
                         outputFluid == null ? 0 : outputFluid.amount()
                 ));
         if (!isPowered()) {
-            display.add(Component.translatable("pylon.message.no_power"));
+            display.add(Component.translatable(
+                    "pylon.message.no_power",
+                    RebarArgument.of("power",  UnitFormat.WATTS.format(getRequiredPower()).decimalPlaces(2).selectPrefixAndRescale())
+            ));
         }
         return display;
     }

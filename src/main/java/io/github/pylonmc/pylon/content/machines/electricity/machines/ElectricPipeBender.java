@@ -62,7 +62,10 @@ public class ElectricPipeBender extends GenericPipeBender implements SimpleElect
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         WailaDisplay display = WailaDisplay.of(this, player);
         if (!isPowered()) {
-            display.add(Component.translatable("pylon.message.no_power"));
+            display.add(Component.translatable(
+                    "pylon.message.no_power",
+                    RebarArgument.of("power",  UnitFormat.WATTS.format(getRequiredPower()).decimalPlaces(2).selectPrefixAndRescale())
+            ));
         }
         return display;
     }

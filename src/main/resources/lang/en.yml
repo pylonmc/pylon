@@ -2903,7 +2903,7 @@ message:
   idle: "<#f9e981>Idle"
   invalid_recipe: "<red>Invalid recipe"
   no_fuel: "<red>No fuel"
-  no_power: "<red>No power"
+  no_power: "<red>No power (requires %power%)"
   no_battery: "<red>No battery installed"
   assembly_table:
     full: "<red>Output full!"

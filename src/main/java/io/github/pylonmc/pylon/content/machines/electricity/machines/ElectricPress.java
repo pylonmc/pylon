@@ -73,7 +73,10 @@ public class ElectricPress extends GenericPress implements SimpleElectricRebarBl
                         fluidAmount(PylonFluids.PLANT_OIL))
                 );
         if (!isPowered()) {
-            display.add(Component.translatable("pylon.message.no_power"));
+            display.add(Component.translatable(
+                    "pylon.message.no_power",
+                    RebarArgument.of("power",  UnitFormat.WATTS.format(getRequiredPower()).decimalPlaces(2).selectPrefixAndRescale())
+            ));
         }
         return display;
     }
