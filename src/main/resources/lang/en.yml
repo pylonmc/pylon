@@ -2948,6 +2948,9 @@ message:
   silo:
     empty: "Empty"
     not-empty: "<gray>%item% <white>(<yellow>%amount%<white>/<yellow>%capacity%<white>)"
+  smeltery:
+    fluid: "<white>%amount% <gray>/ <white>%capacity% <gray>(%fluid%%more%<gray>)"
+    more-fluids: "<white> + %amount%"
   hydraulic-cannon:
     empty: "<red>The cannon is out of hydraulic fluid"
     full: "<red>The cannon is full with dirty hydraulic fluid"

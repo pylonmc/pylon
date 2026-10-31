@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.NoJobRebarBlock;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,6 +24,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 
@@ -49,10 +51,12 @@ import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
+import io.github.pylonmc.rebar.waila.WailaDisplay;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleRBTreeMap;
 import java.util.*;
@@ -78,6 +82,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
@@ -224,6 +229,42 @@ public final class SmelteryController extends SmelteryComponent
 
         @Override
         public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {}
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Waila" defaultstate="collapsed">
+    @Override
+    public WailaDisplay getWaila(@NotNull Player player) {
+        WailaDisplay display = WailaDisplay.of(this, player);
+        if (!isFormedAndFullyLoaded()) {
+            return display;
+        }
+
+        display.add(UnitFormat.CELSIUS.format(temperature).decimalPlaces(0));
+
+        RebarFluid mostAbundantFluid = null;
+        double mostAbundantAmount = 0;
+        for (Object2DoubleMap.Entry<RebarFluid> entry : fluids.object2DoubleEntrySet()) {
+            if (entry.getDoubleValue() > mostAbundantAmount) {
+                mostAbundantFluid = entry.getKey();
+                mostAbundantAmount = entry.getDoubleValue();
+            }
+        }
+
+        if (capacity > 0) {
+            int otherFluids = fluids.size() - 1;
+            display.add(ProgressBar.fluidContentsWithNameAndMore(
+                    mostAbundantFluid,
+                    capacity,
+                    getTotalFluid(),
+                    otherFluids > 0
+                            ? Component.translatable("pylon.message.smeltery.more-fluids",
+                                RebarArgument.of("amount", otherFluids))
+                            : null)
+            );
+        }
+
+        return display;
     }
     // </editor-fold>
 
@@ -575,12 +616,13 @@ public final class SmelteryController extends SmelteryComponent
     }
 
     private void performRecipes() {
-        if (fluids.isEmpty() || tryRecipe(lastRecipe)) {
+        if (fluids.isEmpty() || lastRecipe != null && tryRecipe(lastRecipe)) {
             return;
         }
 
         for (SmelteryRecipe recipe : SmelteryRecipe.RECIPE_TYPE) {
             if (tryRecipe(recipe)) {
+                lastRecipe = recipe;
                 break;
             }
         }
