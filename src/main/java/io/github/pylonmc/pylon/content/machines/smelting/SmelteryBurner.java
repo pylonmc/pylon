@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.smelting;
 import io.github.pylonmc.pylon.util.BurnerProgressItem;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.Map;
 import kotlin.Pair;
@@ -105,16 +106,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
                 continue;
             }
 
-            if (itemType.getCraftingRemainingItem() != null) {
-                ItemStack remainder = itemType.getCraftingRemainingItem().createItemStack();
-                if (!fuelInventory.canHold(remainder)) {
-                    continue;
-                }
-                fuelInventory.setItem(null, i, item.subtract());
-                fuelInventory.addItem(null, remainder);
-            } else {
-                fuelInventory.setItem(null, i, item.subtract());
-            }
+            RebarUtils.consumeItem(fuelInventory, i);
 
             startProcess(itemType.getBurnDuration() / 2);
             editBlockDataAs(Furnace.class, furnace -> furnace.setLit(true));
