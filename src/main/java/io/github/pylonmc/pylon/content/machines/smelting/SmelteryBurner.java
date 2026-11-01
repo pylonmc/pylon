@@ -35,7 +35,7 @@ public final class SmelteryBurner extends SmelteryComponent implements
         LogisticRebarBlock,
         ProcessorRebarBlock {
 
-    private final VirtualInventory fuelInventory = new VirtualInventory(3);
+    private final VirtualInventory fuelInventory = new VirtualInventory(1);
     private final BurnerProgressItem progressItem = new BurnerProgressItem();
 
     public final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
