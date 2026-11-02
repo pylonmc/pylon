@@ -2679,9 +2679,10 @@ item:
     name: "Entity Sensor"
     lore: |-
       <arrow> Useless on its own, it is used in various multiblocks to provide entity sensing capabilities.
+      <arrow> <insn>Right click</insn> to configure range and target selectors.
+      <arrow> Target selectors may be separated by pipes (the | character) to add multiple different selectors together.
       <arrow> Consumes power proportional to the volume of the sphere it is sensing.
       <arrow> <attr>Power consumption:</attr> %power%
-      <arrow> <attr>Max radius:</attr> %range%
 
 fluid:
   tag:
@@ -3109,9 +3110,7 @@ gui:
   fluid-threshold: "Fluid threshold"
   joules-per-mb: "Produces %power%"
   entity-sensor:
-    selector-hint: |-
-      Enter a <u><blue><click:open_url:\"https://minecraft.wiki/w/Target_selectors\">target selector</click></blue></u> to filter detected entities.
-      You may use multiple selectors to select different types; separate them by pipes (the | character).
+    selector-hint: "Target selectors:"
     range-hint: "Detection radius"
     invalid-selector: "<red>At least one of the selectors you have inputted is invalid"
 

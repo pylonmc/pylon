@@ -34,7 +34,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -52,12 +54,11 @@ public class EntitySensor extends RebarBlock implements
     public static class Item extends RebarItem {
 
 
-        public final int maxRange = getSettingOrThrow("max-range", ConfigAdapter.INTEGER);
         public final double powerPerBlock = getSettingOrThrow("power-per-block", ConfigAdapter.DOUBLE);
 
         private static final UnitFormat WATTS_PER_BLOCK_ENCOMPASSED = new UnitFormat(
                 Pylon.getInstance(),
-                "watts-per-block-compassed"
+                "watts-per-block-encompassed"
         ).withDefaultStyle(UnitFormat.WATTS.getDefaultStyle());
 
         @SuppressWarnings("unused")
@@ -68,8 +69,7 @@ public class EntitySensor extends RebarBlock implements
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("power", WATTS_PER_BLOCK_ENCOMPASSED.format(powerPerBlock).decimalPlaces(2).selectPrefixAndRescale()),
-                    RebarArgument.of("range", UnitFormat.BLOCKS.format(maxRange))
+                    RebarArgument.of("power", WATTS_PER_BLOCK_ENCOMPASSED.format(powerPerBlock).decimalPlaces(2).selectPrefixAndRescale())
             );
         }
     }
@@ -96,7 +96,7 @@ public class EntitySensor extends RebarBlock implements
     public EntitySensor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing().getOppositeFace());
+        createSimpleElectricPort(ElectricNodeType.CONSUMER, getFacing());
 
         selectors.add("@e");
 
@@ -132,49 +132,55 @@ public class EntitySensor extends RebarBlock implements
     }
 
     private static final Pattern PIPE = Pattern.compile("\\s*\\|\\s*");
-    private final Dialog dialog = Dialog.create(builder -> builder.empty()
-            .base(DialogBase.builder(getNameTranslationKey())
-                    .canCloseWithEscape(true)
-                    .inputs(List.of(
-                            DialogInput.text("selectors", Component.translatable("pylon.gui.entity-sensor.selector-hint"))
-                                    .initial(String.join(" | ", selectors))
-                                    .build(),
-                            DialogInput.numberRange(
-                                            "range",
-                                            Component.translatable("pylon.gui.entity-sensor.range-hint"),
-                                            0,
-                                            maxRange
-                                    )
-                                    .initial(range)
-                                    .build()
-                    ))
-                    .build())
-            .type(DialogType.confirmation(ActionButton.builder(Component.translatable("pylon.ok"))
-                            .action(DialogAction.customClick((view, audience) -> {
-                                String[] candidates = PIPE.split(view.getText("selectors"));
-                                CommandSender sender = getHeldEntityOrThrow("sender");
-                                for (String candidate : candidates) {
-                                    try {
-                                        Bukkit.selectEntities(sender, candidate);
-                                    } catch (IllegalArgumentException e) {
-                                        audience.sendMessage(Component.translatable("pylon.gui.entity-sensor.invalid-selector"));
-                                        return;
+
+    private Dialog getDialog() {
+        return Dialog.create(builder -> builder.empty()
+                .base(DialogBase.builder(getNameTranslationKey())
+                        .canCloseWithEscape(true)
+                        .inputs(List.of(
+                                DialogInput.text("selectors", Component.translatable("pylon.gui.entity-sensor.selector-hint"))
+                                        .initial(String.join(" | ", selectors))
+                                        .build(),
+                                DialogInput.numberRange(
+                                                "range",
+                                                Component.translatable("pylon.gui.entity-sensor.range-hint"),
+                                                0,
+                                                maxRange
+                                        )
+                                        .initial(range)
+                                        .step(0.5f)
+                                        .build()
+                        ))
+                        .build())
+                .type(DialogType.confirmation(ActionButton.builder(Component.translatable("pylon.ok"))
+                                .action(DialogAction.customClick((view, audience) -> {
+                                    String[] candidates = PIPE.split(view.getText("selectors"));
+                                    CommandSender sender = getHeldEntityOrThrow("sender");
+                                    for (String candidate : candidates) {
+                                        try {
+                                            Bukkit.selectEntities(sender, candidate);
+                                        } catch (IllegalArgumentException e) {
+                                            audience.sendMessage(Component.translatable("pylon.gui.entity-sensor.invalid-selector"));
+                                            return;
+                                        }
                                     }
-                                }
-                                selectors.clear();
-                                selectors.addAll(Arrays.asList(candidates));
-                                //noinspection DataFlowIssue
-                                setRange(view.getFloat("range"));
-                            }, ClickCallback.Options.builder().build()))
-                            .build(),
-                    ActionButton.builder(Component.translatable("pylon.cancel"))
-                            .action(DialogAction.staticAction(ClickEvent.callback(_ -> {
-                            })))
-                            .build())));
+                                    selectors.clear();
+                                    selectors.addAll(Arrays.asList(candidates));
+                                    //noinspection DataFlowIssue
+                                    setRange(view.getFloat("range"));
+                                }, ClickCallback.Options.builder().build()))
+                                .build(),
+                        ActionButton.builder(Component.translatable("pylon.cancel"))
+                                .action(DialogAction.staticAction(ClickEvent.callback(_ -> {
+                                })))
+                                .build())));
+    }
 
     @Override
     public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        event.getPlayer().showDialog(dialog);
+        if (event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getPlayer().isSneaking())
+            return;
+        event.getPlayer().showDialog(getDialog());
     }
 
     @Override
@@ -183,7 +189,7 @@ public class EntitySensor extends RebarBlock implements
         if (!isPowered()) {
             display.add(Component.translatable(
                     "pylon.message.no_power",
-                    RebarArgument.of("power",  UnitFormat.WATTS.format(getRequiredPower()).decimalPlaces(2).selectPrefixAndRescale())
+                    RebarArgument.of("power", UnitFormat.WATTS.format(getRequiredPower()).decimalPlaces(2).selectPrefixAndRescale())
             ));
         }
         return display;

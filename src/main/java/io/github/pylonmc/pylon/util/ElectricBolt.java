@@ -68,7 +68,7 @@ public class ElectricBolt {
                     .location(pos)
                     .offset(0, 0, 0)
                     .count(2)
-                    .extra(0.1)
+                    .speed(0.1)
                     .receivers(32, true)
                     .spawn();
             prevPoints.add(pos.clone());
@@ -85,7 +85,7 @@ public class ElectricBolt {
                             .location(point)
                             .offset(0.1, 0.1, 0.1)
                             .count(5)
-                            .extra(0.8)
+                            .speed(0.8)
                             .receivers(32, true)
                             .spawn();
                 }
