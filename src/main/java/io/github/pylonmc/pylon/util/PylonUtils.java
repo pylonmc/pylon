@@ -4,16 +4,22 @@ import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.interfaces.FluidTankRebarBlock;
-import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
+import io.papermc.paper.dialog.DialogResponseView;
+import io.papermc.paper.registry.data.dialog.ActionButton;
+import io.papermc.paper.registry.data.dialog.action.DialogAction;
+import io.papermc.paper.registry.data.dialog.type.DialogType;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import lombok.experimental.UtilityClass;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.event.ClickCallback;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -30,10 +36,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
-import org.jspecify.annotations.NonNull;
-
-import java.util.Map;
-import java.util.function.Consumer;
 
 @UtilityClass
 public class PylonUtils {
@@ -106,7 +108,8 @@ public class PylonUtils {
     }
 
     public @NotNull TextDisplay spawnUnitSquareTextDisplay(@NotNull Location location, @NotNull Color color) {
-        return spawnUnitSquareTextDisplay(location, color, display -> {});
+        return spawnUnitSquareTextDisplay(location, color, display -> {
+        });
     }
 
     public @NotNull TextDisplay spawnUnitSquareTextDisplay(@NotNull Location location, @NotNull Color color, Consumer<TextDisplay> initializer) {
@@ -170,15 +173,15 @@ public class PylonUtils {
     }
 
     private static final Map<Material, Material> BLOCK_ITEM_FALLBACK = Map.of(
-        Material.FIRE, Material.FLINT_AND_STEEL,
-        Material.SOUL_FIRE, Material.FLINT_AND_STEEL,
-        Material.LAVA, Material.LAVA_BUCKET,
-        Material.WATER, Material.WATER_BUCKET
+            Material.FIRE, Material.FLINT_AND_STEEL,
+            Material.SOUL_FIRE, Material.FLINT_AND_STEEL,
+            Material.LAVA, Material.LAVA_BUCKET,
+            Material.WATER, Material.WATER_BUCKET
     );
 
     /**
      * Returns an item representing the key.
-     *
+     * <p>
      * If no representative item exists (e.g. fire) a fallback for that item will be used (if one exists)
      */
     public static ItemStack itemFromKey(NamespacedKey key) {
@@ -198,8 +201,8 @@ public class PylonUtils {
 
         if (fallback == Material.BARRIER) {
             stack.setData(
-                DataComponentTypes.ITEM_NAME,
-                Component.text("ERROR: " + mat)
+                    DataComponentTypes.ITEM_NAME,
+                    Component.text("ERROR: " + mat)
             );
         }
 
@@ -303,5 +306,17 @@ public class PylonUtils {
             return true;
         }
         return triggered;
+    }
+
+    public static @NotNull DialogType okCancelDialogType(@NotNull BiConsumer<DialogResponseView, Audience> ok, @NotNull Consumer<Audience> onClose) {
+        return DialogType.confirmation(ActionButton.builder(Component.translatable("pylon.ok"))
+                        .action(DialogAction.customClick((view, audience) -> {
+                            ok.accept(view, audience);
+                            onClose.accept(audience);
+                        }, ClickCallback.Options.builder().build()))
+                        .build(),
+                ActionButton.builder(Component.translatable("pylon.cancel"))
+                        .action(DialogAction.staticAction(ClickEvent.callback(onClose::accept)))
+                        .build());
     }
 }
