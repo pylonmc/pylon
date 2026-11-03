@@ -8,18 +8,10 @@ import io.github.pylonmc.rebar.item.ItemTypeWrapper;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
-import io.papermc.paper.dialog.DialogResponseView;
-import io.papermc.paper.registry.data.dialog.ActionButton;
-import io.papermc.paper.registry.data.dialog.action.DialogAction;
-import io.papermc.paper.registry.data.dialog.type.DialogType;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import lombok.experimental.UtilityClass;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickCallback;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -306,17 +298,5 @@ public class PylonUtils {
             return true;
         }
         return triggered;
-    }
-
-    public static @NotNull DialogType okCancelDialogType(@NotNull BiConsumer<DialogResponseView, Audience> ok, @NotNull Consumer<Audience> onClose) {
-        return DialogType.confirmation(ActionButton.builder(Component.translatable("pylon.ok"))
-                        .action(DialogAction.customClick((view, audience) -> {
-                            ok.accept(view, audience);
-                            onClose.accept(audience);
-                        }, ClickCallback.Options.builder().build()))
-                        .build(),
-                ActionButton.builder(Component.translatable("pylon.cancel"))
-                        .action(DialogAction.staticAction(ClickEvent.callback(onClose::accept)))
-                        .build());
     }
 }

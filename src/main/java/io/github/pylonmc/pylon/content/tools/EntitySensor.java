@@ -2,11 +2,12 @@ package io.github.pylonmc.pylon.content.tools;
 
 import com.google.common.collect.Lists;
 import io.github.pylonmc.pylon.Pylon;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.*;
+import io.github.pylonmc.rebar.block.interfaces.ConfirmationDialogGuiRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.EntityHolderRebarBlock;
+import io.github.pylonmc.rebar.block.interfaces.SimpleElectricRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.electricity.nodes.ElectricNodeType;
@@ -15,13 +16,14 @@ import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import io.papermc.paper.dialog.Dialog;
+import io.papermc.paper.dialog.DialogResponseView;
 import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -29,10 +31,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -43,10 +41,9 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public class EntitySensor extends RebarBlock implements
         EntityHolderRebarBlock,
-        InteractRebarBlockHandler,
+        ConfirmationDialogGuiRebarBlock,
         SimpleElectricRebarBlock,
-        DirectionalRebarBlock,
-        BlockBreakRebarBlockHandler {
+        DirectionalRebarBlock{
 
     public static class Item extends RebarItem {
 
@@ -133,62 +130,40 @@ public class EntitySensor extends RebarBlock implements
 
     private static final Pattern PIPE = Pattern.compile("\\s*\\|\\s*");
 
-    private final Set<Player> haveOpenDialog = Collections.newSetFromMap(new WeakHashMap<>());
-
-    private Dialog getDialog() {
-        //noinspection SuspiciousMethodCalls
-        return Dialog.create(builder -> builder.empty()
-                .base(DialogBase.builder(getNameTranslationKey())
-                        .canCloseWithEscape(true)
-                        .inputs(List.of(
-                                DialogInput.text("selectors", Component.translatable("pylon.gui.entity-sensor.selector-hint"))
-                                        .initial(String.join(" | ", selectors))
-                                        .build(),
-                                DialogInput.numberRange(
-                                                "range",
-                                                Component.translatable("pylon.gui.entity-sensor.range-hint"),
-                                                0,
-                                                maxRange
-                                        )
-                                        .initial(range)
-                                        .step(0.5f)
-                                        .build()
-                        ))
-                        .build())
-                .type(PylonUtils.okCancelDialogType((view, audience) -> {
-                    List<@NotNull String> candidates = Arrays.asList(PIPE.split(view.getText("selectors")));
-                    try {
-                        var newSelectors = new ArrayList<>(Lists.transform(candidates, RebarUtils::targetSelectorToFunction));
-                        selectorFunctions.clear();
-                        selectorFunctions.addAll(newSelectors);
-                        selectors.clear();
-                        selectors.addAll(candidates);
-                        //noinspection DataFlowIssue
-                        setRange(view.getFloat("range"));
-                    } catch (IllegalArgumentException e) {
-                        audience.sendMessage(Component.translatable("pylon.gui.entity-sensor.invalid-selector"));
-                    }
-                }, haveOpenDialog::remove)));
+    @Override
+    public @NotNull DialogBase createDialogBase() {
+        return DialogBase.builder(getNameTranslationKey())
+                .canCloseWithEscape(true)
+                .inputs(List.of(
+                        DialogInput.text("selectors", Component.translatable("pylon.gui.entity-sensor.selector-hint"))
+                                .initial(String.join(" | ", selectors))
+                                .build(),
+                        DialogInput.numberRange(
+                                        "range",
+                                        Component.translatable("pylon.gui.entity-sensor.range-hint"),
+                                        0,
+                                        maxRange
+                                )
+                                .initial(range)
+                                .step(0.5f)
+                                .build()
+                ))
+                .build();
     }
 
     @Override
-    public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        Player player = event.getPlayer();
-        if (!event.getAction().isRightClick()
-                || (player.isSneaking() && event.isBlockInHand())
-                || event.getHand() != EquipmentSlot.HAND
-                || event.useInteractedBlock() == Event.Result.DENY)
-            return;
-        event.setUseInteractedBlock(Event.Result.DENY);
-        event.setUseItemInHand(Event.Result.DENY);
-        player.showDialog(getDialog());
-        haveOpenDialog.add(player);
-    }
-
-    @Override
-    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
-        for (Player player : haveOpenDialog) {
-            player.closeDialog();
+    public void onYesAction(@NotNull DialogResponseView response, @NotNull Audience audience) {
+        List<@NotNull String> candidates = Arrays.asList(PIPE.split(response.getText("selectors")));
+        try {
+            var newSelectors = new ArrayList<>(Lists.transform(candidates, RebarUtils::targetSelectorToFunction));
+            selectorFunctions.clear();
+            selectorFunctions.addAll(newSelectors);
+            selectors.clear();
+            selectors.addAll(candidates);
+            //noinspection DataFlowIssue
+            setRange(response.getFloat("range"));
+        } catch (IllegalArgumentException e) {
+            audience.sendMessage(Component.translatable("pylon.gui.entity-sensor.invalid-selector"));
         }
     }
 

@@ -3139,6 +3139,3 @@ unit:
   watts-per-block-encompassed:
     one: "watt per block encompassed"
     other: "watts per block encompassed"
-
-ok: "Ok"
-cancel: "Cancel"
