@@ -83,7 +83,7 @@ public class ElectricBolt {
             pos.add(step);
         }
 
-        float finalDirectionLength = directionLength;
+        double finalPower = power - directionLength;
         if (isLast) {
             Vector3f finalDirection = direction;
             Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
@@ -101,24 +101,24 @@ public class ElectricBolt {
                 if (cause != null) {
                     source.withCausingEntity(cause);
                 }
-                target.damage(power * 2, source.build());
+                target.damage(finalPower * 3, source.build());
                 target.knockback(1, finalDirection.x, finalDirection.z);
 
-                if (power > 0 && target.isDead() && ThreadLocalRandom.current().nextBoolean()) {
+                if (finalPower > 0 && target.isDead()) {
                     LivingEntity newTarget = chooseNearestWeighted(pos, power);
                     if (newTarget != null) {
                         addAnotherPredicate(e -> !newTarget.equals(e));
-                        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>()), 1);
+                        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(finalPower, newTarget, pos, new ArrayList<>()), 1);
                     }
                 }
             }, 1);
         } else {
-            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, target, pos, prevPoints), 1);
-            while (ThreadLocalRandom.current().nextFloat() < 0.25) {
+            Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(finalPower, target, pos, prevPoints), 1);
+            while (ThreadLocalRandom.current().nextFloat() < 0.3) {
                 LivingEntity newTarget = chooseNearestWeighted(pos, power);
                 if (newTarget == null) break;
                 addAnotherPredicate(e -> !newTarget.equals(e));
-                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>(prevPoints)), 1);
+                Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(finalPower, newTarget, pos, new ArrayList<>(prevPoints)), 1);
             }
         }
     }
