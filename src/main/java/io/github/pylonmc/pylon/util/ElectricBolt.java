@@ -99,7 +99,7 @@ public class ElectricBolt {
                 }
                 DamageSource.Builder source = DamageSource.builder(DamageType.LIGHTNING_BOLT);
                 if (cause != null) {
-                    source.withCausingEntity(cause);
+                    source.withDirectEntity(cause).withCausingEntity(cause);
                 }
                 target.damage(finalPower * 3, source.build());
                 target.knockback(1, finalDirection.x, finalDirection.z);

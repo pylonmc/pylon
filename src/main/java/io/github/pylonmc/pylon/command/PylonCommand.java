@@ -106,7 +106,7 @@ public class PylonCommand {
             return Command.SINGLE_SUCCESS;
         }
 
-        sender.sendRichMessage("<red>Successfully charged the item");
+        sender.sendRichMessage("<green>Successfully charged the item");
         return Command.SINGLE_SUCCESS;
     }
 }

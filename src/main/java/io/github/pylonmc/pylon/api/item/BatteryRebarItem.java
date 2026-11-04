@@ -1,31 +1,29 @@
 package io.github.pylonmc.pylon.api.item;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.InventoryClickRebarItemHandler;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
-public abstract class BatteryRebarItem extends RebarItem implements InteractRebarItemHandler {
+public abstract class BatteryRebarItem extends RebarItem implements InventoryClickRebarItemHandler {
 
     private static final NamespacedKey CHARGE_KEY = pylonKey("charge");
 
     public BatteryRebarItem(@NotNull ItemStack stack) {
         super(stack);
-        updateDurabilityBar(getCharge());
     }
 
     public double getCharge() {
@@ -33,8 +31,9 @@ public abstract class BatteryRebarItem extends RebarItem implements InteractReba
     }
 
     public void setCharge(double charge) {
-        getStack().editPersistentDataContainer(pdc -> pdc.set(CHARGE_KEY, RebarSerializers.DOUBLE, Math.clamp(charge, 0.0, getCapacity())));
-        updateDurabilityBar(charge);
+        double clamped = Math.clamp(charge, 0.0, getCapacity());
+        getStack().editPersistentDataContainer(pdc -> pdc.set(CHARGE_KEY, RebarSerializers.DOUBLE, clamped));
+        updateDurabilityBar(clamped);
     }
 
     public void charge(double charge) {
@@ -54,20 +53,15 @@ public abstract class BatteryRebarItem extends RebarItem implements InteractReba
     public abstract double getCapacity();
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick()
-                || event.getHand() != EquipmentSlot.HAND
-                || event.useItemInHand() == Event.Result.DENY
-                || event.hasBlock()) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-        ChargeableRebarItem chargeable = RebarItem.fromStack(player.getInventory().getItemInOffHand(), ChargeableRebarItem.class);
+    public void onClickedInCursor(@NotNull InventoryClickEvent event, @NotNull EventPriority priority) {
+        ChargeableRebarItem chargeable = RebarItem.fromStack(event.getCurrentItem(), ChargeableRebarItem.class);
         if (chargeable == null || chargeable.hasBattery()) return;
 
-        chargeable.setBattery(RebarItem.fromStack(getStack().asOne(), BatteryRebarItem.class));
-        getStack().subtract();
+        event.setCancelled(true);
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            chargeable.setBattery(RebarItem.fromStack(getStack().asOne(), BatteryRebarItem.class));
+            getStack().subtract();
+        }, 1);
     }
 
     @Override

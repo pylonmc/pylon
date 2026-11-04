@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.assembling;
 
+import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.api.item.BatteryRebarItem;
 import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
@@ -9,20 +10,21 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
-import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
+import io.github.pylonmc.rebar.item.interfaces.InventoryClickRebarItemHandler;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import java.util.List;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 
-public class Screwdriver extends RebarItem implements BlockInteractRebarItemHandler, InteractRebarItemHandler {
+public class Screwdriver extends RebarItem implements BlockInteractRebarItemHandler, InventoryClickRebarItemHandler {
 
     public final String toolType = getSetting("tool-type", ConfigAdapter.STRING);
     public final int cooldownTicks = getSettingOrThrow("cooldown-ticks", ConfigAdapter.INTEGER);
@@ -38,7 +40,8 @@ public class Screwdriver extends RebarItem implements BlockInteractRebarItemHand
         );
     }
 
-    @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
+    @Override
+    @MultiHandler(priorities = {EventPriority.NORMAL, EventPriority.MONITOR})
     public void onInteractWithBlock(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isLeftClick()
                 || event.getHand() != EquipmentSlot.HAND
@@ -61,25 +64,18 @@ public class Screwdriver extends RebarItem implements BlockInteractRebarItemHand
     }
 
     @Override
-    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick()
-                || event.getHand() != EquipmentSlot.HAND
-                || event.useItemInHand() == Event.Result.DENY
-                || event.hasBlock()) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-        ChargeableRebarItem chargeable = RebarItem.fromStack(player.getInventory().getItemInOffHand(), ChargeableRebarItem.class);
+    public void onClickedInCursor(@NotNull InventoryClickEvent event, @NotNull EventPriority priority) {
+        ChargeableRebarItem chargeable = RebarItem.fromStack(event.getCurrentItem(), ChargeableRebarItem.class);
         if (chargeable == null) return;
 
         BatteryRebarItem battery = chargeable.getBattery();
         if (battery == null) return;
-
-        event.setUseItemInHand(Event.Result.DENY);
-
-        chargeable.setBattery(null);
-        RebarUtils.addToInventoryOrDrop(player, battery.getStack());
+        event.setCancelled(true);
+        Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
+            chargeable.setBattery(null);
+            getStack().damage(1, event.getWhoClicked());
+            RebarUtils.addToInventoryOrDrop(event.getWhoClicked(), battery.getStack());
+        }, 1);
     }
 
     @Override
