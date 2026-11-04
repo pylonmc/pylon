@@ -3,10 +3,13 @@ package io.github.pylonmc.pylon.util;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.rebar.util.WeightedSet;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Predicate;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -18,22 +21,27 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ElectricBolt {
 
     private static final int PARTICLES_PER_BLOCK = 5;
 
-    private final Set<LivingEntity> avoid = new HashSet<>();
+    private Predicate<LivingEntity> predicate;
 
     private final @Nullable LivingEntity cause;
+
+    private void addAnotherPredicate(Predicate<LivingEntity> predicate) {
+        this.predicate = this.predicate.and(predicate);
+    }
 
     private @Nullable LivingEntity chooseNearestWeighted(Location location, double radius) {
         WeightedSet<LivingEntity> set = new WeightedSet<>();
         for (LivingEntity entity : location.getNearbyLivingEntities(radius)) {
-            if (avoid.contains(entity)) continue;
+            if (!predicate.test(entity)) continue;
             Location entityLoc = entity.getBoundingBox().getCenter().toLocation(location.getWorld());
             Vector interveningVector = entityLoc.toVector().subtract(location.toVector());
-            if (location.getWorld().rayTraceBlocks(location, interveningVector, interveningVector.length()) != null) continue;
+            if (location.getWorld().rayTraceBlocks(location, interveningVector, interveningVector.length()) != null)
+                continue;
             set.add(new WeightedSet.Element<>(entity, (float) entityLoc.distance(location)));
         }
         if (set.isEmpty()) return null;
@@ -99,7 +107,7 @@ public class ElectricBolt {
                 if (power > 0 && target.isDead() && ThreadLocalRandom.current().nextBoolean()) {
                     LivingEntity newTarget = chooseNearestWeighted(pos, power);
                     if (newTarget != null) {
-                        avoid.add(newTarget);
+                        addAnotherPredicate(e -> !newTarget.equals(e));
                         Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>()), 1);
                     }
                 }
@@ -109,7 +117,7 @@ public class ElectricBolt {
             while (ThreadLocalRandom.current().nextFloat() < 0.25) {
                 LivingEntity newTarget = chooseNearestWeighted(pos, power);
                 if (newTarget == null) break;
-                avoid.add(newTarget);
+                addAnotherPredicate(e -> !newTarget.equals(e));
                 Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> spawnSection(power - finalDirectionLength, newTarget, pos, new ArrayList<>(prevPoints)), 1);
             }
         }
@@ -141,19 +149,18 @@ public class ElectricBolt {
     /**
      * Spawns the specified amount of electric bolts targeting entities within range, randomly chosen with a bias towards nearer entities
      *
-     * @param location the location to start at
-     * @param count    the number of bolts to spawn
-     * @param power    the power to set the bolt to
-     * @param cause    the entity that is the ultimate cause of the bolt
-     * @param avoid    a set of entities to avoid hitting
+     * @param location  the location to start at
+     * @param count     the number of bolts to spawn
+     * @param power     the power to set the bolt to
+     * @param cause     the entity that is the ultimate cause of the bolt
+     * @param predicate only entities matching this predicate will be considered for electrocution
      */
-    public static void spawn(@NotNull Location location, int count, double power, @Nullable LivingEntity cause, @NotNull Set<LivingEntity> avoid) {
-        ElectricBolt bolt = new ElectricBolt(cause);
-        bolt.avoid.addAll(avoid);
+    public static void spawn(@NotNull Location location, int count, double power, @Nullable LivingEntity cause, @Nullable Predicate<LivingEntity> predicate) {
+        ElectricBolt bolt = new ElectricBolt(predicate, cause);
         for (int i = 0; i < count; i++) {
             LivingEntity target = bolt.chooseNearestWeighted(location, power);
             if (target == null) return;
-            bolt.avoid.add(target);
+            bolt.addAnotherPredicate(e -> !target.equals(e));
             bolt.spawnSection(power, target, location, new ArrayList<>());
         }
     }

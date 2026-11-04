@@ -2499,7 +2499,7 @@ item:
     name: "<#ff00ff>Creative Power Source"
     lore: |-
       <arrow> Produces <unit:zetta:watts>1</unit> of power
-    story: An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
+    story: <story>An ancient and mysterious device, the <item:pylon:creative_power_source> is a limitless font of energy. The black hole at the center of the device which it is powering seems to be unstable, but the device is keeping it contained... for now.
 
   electricity_input_hatch:
     name: "Electricity Input Hatch"
@@ -2561,6 +2561,11 @@ item:
       <diamond> 1x <yellow><item:pylon:heat_exchanger/></yellow>
       <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 2x <yellow><item:pylon:fluid_output_hatch/></yellow>
+
+  creative_wire:
+    name: "<#ff00ff>Creative Wire"
+    lore: |-
+      <arrow> Has absolutely zero resistance, allowing infinite power to flow through it per tick
 
   wire_1_gauge:
     name: "1-Gauge Wire"
@@ -2651,12 +2656,12 @@ item:
       <arrow> <attr>Smelting speed:</attr> %speed%
 
   creative_battery:
-    name: "Creative Battery"
+    name: "<#ff00ff>Creative Battery"
     lore: |-
       <arrow> Stores energy to be used in compatible items
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Charge:</attr> %charge%
-    story: The power of the gods themselves, compressed into a single cubic centimeter. Handle with care.
+    story: <story>The power of the gods themselves, compressed into a single cubic centimeter. Handle with care.
 
   battery_1_kj:
     name: "1 kJ Battery"
@@ -2672,17 +2677,30 @@ item:
       <arrow> Creates an electric explosion when thrown
       <arrow> <insn>Right click to throw</insn>
       <arrow> <attr>Charge:</attr> %charge%
-    story: |-
-      Ever wanted to know what happens when you short three megajoules of battery? Now you can with our patented ElectroBOOM™ system! Recommended for all ages 3000+.
+    story: <story>Ever wanted to know what happens when you short three megajoules of battery? Now you can with our patented ElectroBOOM™ system! Recommended for all ages 3000+.
 
   entity_sensor:
     name: "Entity Sensor"
     lore: |-
-      <arrow> Useless on its own, it is used in various multiblocks to provide entity sensing capabilities.
-      <arrow> <insn>Right click</insn> to configure range and target selectors.
-      <arrow> Target selectors may be separated by pipes (the | character) to add multiple different selectors together.
-      <arrow> Consumes power proportional to the volume of the sphere it is sensing.
+      <arrow> Useless on its own, it is used in various multiblocks to provide entity sensing capabilities
+      <arrow> <insn>Right click</insn> to configure range and target selectors
+      <arrow> Target selectors may be separated by pipes (the | character) to add multiple different selectors together
+      <arrow> Consumes power proportional to the volume of the sphere it is sensing
       <arrow> <attr>Power consumption:</attr> %power%
+    story: <story>After Waxwell's equations revealed a connection between the shimmer and electric fields, Nikorela Tezla put it into practice, creating his first prototype <item:pylon:entity_sensor>. With his eponymous Tower finally being viable, Tezla disappeared. His legacy did not however, as it kickstarted the field now known as shimmerelectrics.
+
+  tezla_tower:
+    name: "Tezla Tower"
+    lore: |-
+      <arrow> Zaps selected entities with electricity. It will only zap entities that are sensed by the entity sensor
+      <arrow> <bold><red>Make sure to exclude yourself from the sensor if you don't want to get zapped</red></bold>
+      <arrow> Maximum output is determined by the capacity of the capacitor
+      <arrow> <insn>Right Click</insn> to configure
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:tezla_tower/></yellow>
+      <diamond> 1x <yellow><item:pylon:entity_sensor/></yellow>
+      <diamond> 1x <yellow>of any capacitor</yellow>
 
 fluid:
   tag:
@@ -3110,9 +3128,11 @@ gui:
   fluid-threshold: "Fluid threshold"
   joules-per-mb: "Produces %power%"
   entity-sensor:
-    selector-hint: "Target selectors:"
+    selector-hint: "Target selectors"
     range-hint: "Detection radius"
     invalid-selector: "<red>At least one of the selectors you have inputted is invalid"
+  tezla-tower:
+    power-per-discharge: "Power use per discharge (J)"
 
 inventory:
   fuel: "Fuel"

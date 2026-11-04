@@ -1,4 +1,4 @@
-package io.github.pylonmc.pylon.content.tools;
+package io.github.pylonmc.pylon.content.tools.electric;
 
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.i18n.RebarArgument;

@@ -3,8 +3,7 @@ package io.github.pylonmc.pylon.content.tools.electric;
 import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
 import io.github.pylonmc.pylon.util.ElectricBolt;
 import io.github.pylonmc.rebar.item.interfaces.ProjectileRebarItemHandler;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
@@ -44,12 +43,12 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             return;
         }
 
-        LivingEntity shooter = null;
-        Set<LivingEntity> avoid = new HashSet<>();
+        LivingEntity shooter;
         UUID ownerID = event.getEntity().getOwnerUniqueId();
         if (ownerID != null && Bukkit.getEntity(ownerID) instanceof LivingEntity livingEntity) {
             shooter = livingEntity;
-            avoid.add(livingEntity);
+        } else {
+            shooter = null;
         }
 
         int count = 1;
@@ -57,6 +56,6 @@ public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarI
             count++;
         }
 
-        ElectricBolt.spawn(location, count, Math.cbrt(getCharge()), shooter, avoid);
+        ElectricBolt.spawn(location, count, Math.cbrt(getCharge()), shooter, e -> !Objects.equals(e, shooter));
     }
 }

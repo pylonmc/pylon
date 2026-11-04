@@ -40,7 +40,9 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
+import io.github.pylonmc.pylon.content.tools.electric.CreativeWire;
 import io.github.pylonmc.pylon.content.tools.electric.ElectroBoom;
+import io.github.pylonmc.pylon.content.tools.electric.PylonWire;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
@@ -3631,6 +3633,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY_UTILITIES.addItem(CAPACITOR_1_KJ);
     }
 
+    public static final ItemStack CREATIVE_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.CREATIVE_WIRE)
+            .build();
+    static {
+        RebarItem.register(CreativeWire.class, CREATIVE_WIRE, PylonKeys.CREATIVE_WIRE);
+        PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_WIRE);
+    }
+
     public static final ItemStack WIRE_1_GAUGE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.WIRE_1_GAUGE)
             .set(DataComponentTypes.ITEM_MODEL, Material.STRING.key())
             .build();
@@ -3819,6 +3828,13 @@ public final class PylonItems {
     static {
         RebarItem.register(EntitySensor.Item.class, ENTITY_SENSOR, PylonKeys.ENTITY_SENSOR);
         PylonPages.COMPONENTS.addItem(ENTITY_SENSOR);
+    }
+
+    public static final ItemStack TEZLA_TOWER = ItemStackBuilder.rebar(Material.LIGHTNING_ROD, PylonKeys.TEZLA_TOWER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, TEZLA_TOWER, PylonKeys.TEZLA_TOWER);
+        PylonPages.COMBAT.addItem(TEZLA_TOWER);
     }
     // </editor-fold>
 

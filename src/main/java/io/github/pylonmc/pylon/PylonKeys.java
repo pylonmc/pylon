@@ -482,6 +482,7 @@ public class PylonKeys {
 
     public static final NamespacedKey WIRE_HUB = pylonKey("wire_hub");
     public static final NamespacedKey CAPACITOR_1_KJ = pylonKey("capacitor_1_kj");
+    public static final NamespacedKey CREATIVE_WIRE = pylonKey("creative_wire");
     public static final NamespacedKey WIRE_1_GAUGE = pylonKey("wire_1_gauge");
     public static final NamespacedKey CREATIVE_POWER_SOURCE = pylonKey("creative_power_source");
     public static final NamespacedKey ELECTRICITY_INPUT_HATCH = pylonKey("electricity_input_hatch");
@@ -505,4 +506,5 @@ public class PylonKeys {
     public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");
     public static final NamespacedKey ELECTRO_BOOM = pylonKey("electro_boom");
     public static final NamespacedKey ENTITY_SENSOR = pylonKey("entity_sensor");
+    public static final NamespacedKey TEZLA_TOWER = pylonKey("tezla_tower");
 }

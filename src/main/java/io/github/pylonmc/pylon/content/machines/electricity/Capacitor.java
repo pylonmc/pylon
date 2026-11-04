@@ -20,6 +20,7 @@ import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import java.util.Locale;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -56,9 +57,12 @@ public class Capacitor extends RebarBlock implements
         }
     }
 
+    @Getter
     private final double capacity = getSettingOrThrow("capacity", ConfigAdapter.DOUBLE);
 
     private static final NamespacedKey STORED_ENERGY_KEY = pylonKey("stored_energy");
+
+    @Getter
     private double storedEnergy;
 
     private ElectricProducerNode output;
@@ -131,13 +135,17 @@ public class Capacitor extends RebarBlock implements
     }
 
     public void setStoredEnergy(double energy) {
-        storedEnergy = energy;
+        storedEnergy = Math.clamp(energy, 0, capacity);
         for (BlockFace face : RebarUtils.IMMEDIATE_FACES) {
             TextDisplay display = getHeldEntity(TextDisplay.class, displayName(face));
             if (display == null) continue;
             display.text(formatEnergy(storedEnergy));
         }
         output.setPower(storedEnergy);
+    }
+
+    public void discharge(double energy) {
+        setStoredEnergy(storedEnergy - energy);
     }
 
     @Override

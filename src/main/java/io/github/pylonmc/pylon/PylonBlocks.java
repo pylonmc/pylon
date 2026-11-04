@@ -29,6 +29,7 @@ import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
 import io.github.pylonmc.pylon.content.tools.EntitySensor;
+import io.github.pylonmc.pylon.content.tools.electric.TezlaTower;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
 import org.bukkit.Material;
@@ -242,5 +243,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ELECTRIC_FURNACE, Material.FURNACE, ElectricFurnace.class);
         RebarBlock.register(PylonKeys.ELECTRIC_TABLE_SAW, Material.IRON_BLOCK, ElectricTableSaw.class);
         RebarBlock.register(PylonKeys.ENTITY_SENSOR, Material.CHISELED_QUARTZ_BLOCK, EntitySensor.class);
+        RebarBlock.register(PylonKeys.TEZLA_TOWER, Material.LIGHTNING_ROD, TezlaTower.class);
     }
 }
