@@ -505,6 +505,10 @@ public class PylonKeys {
     public static final NamespacedKey ELECTRIC_BREAKER = pylonKey("electric_breaker");
     public static final NamespacedKey ELECTRIC_FURNACE = pylonKey("electric_furnace");
 
+    public static final NamespacedKey DISPOSABLE_BATTERY_100_J = pylonKey("disposable_battery_100_j");
+    public static final NamespacedKey DISPOSABLE_BATTERY_500_J = pylonKey("disposable_battery_500_j");
+    public static final NamespacedKey DISPOSABLE_BATTERY_1_KJ = pylonKey("disposable_battery_1_kj");
+
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
     public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");
     public static final NamespacedKey ELECTRO_BOOM = pylonKey("electro_boom");

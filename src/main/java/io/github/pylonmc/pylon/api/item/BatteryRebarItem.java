@@ -14,7 +14,7 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public abstract class BatteryRebarItem extends RebarItem implements ChargeableRebarItem {
 
-    private static final NamespacedKey CHARGE_KEY = pylonKey("charge");
+    protected static final NamespacedKey CHARGE_KEY = pylonKey("charge");
 
     public BatteryRebarItem(@NotNull ItemStack stack) {
         super(stack);

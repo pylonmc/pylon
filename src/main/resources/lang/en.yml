@@ -2669,6 +2669,30 @@ item:
       <arrow> <attr>Charge:</attr> %charge%
     story: <story>The power of the gods themselves, compressed into a single cubic centimeter. Handle with care.
 
+  disposable_battery_100_j:
+    name: "100 J Disposable Battery"
+    lore: |-
+      <arrow> Stores energy to be used in compatible items
+      <arrow> Can be used in a <item:pylon:grindstone> to get some of the resources back
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  disposable_battery_500_j:
+    name: "500 J Disposable Battery"
+    lore: |-
+      <arrow> Stores energy to be used in compatible items
+      <arrow> Can be used in a <item:pylon:grindstone> to get some of the resources back
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  disposable_battery_1_kj:
+    name: "1 kJ Disposable Battery"
+    lore: |-
+      <arrow> Stores energy to be used in compatible items
+      <arrow> Can be used in a <item:pylon:grindstone> to get some of the resources back
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
   battery_1_kj:
     name: "1 kJ Battery"
     lore: |-

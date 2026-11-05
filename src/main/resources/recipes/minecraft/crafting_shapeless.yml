@@ -152,3 +152,9 @@ pylon:cleansing_potion:
     - minecraft:potion[potion_contents={potion:"healing"}]: 1
     - pylon:disinfectant: 1
   result: pylon:cleansing_potion
+
+pylon:disposable_battery_100_j:
+  ingredients:
+    - pylon:copper_sheet: 1
+    - pylon:salt: 1
+  result: pylon:disposable_battery_100_j

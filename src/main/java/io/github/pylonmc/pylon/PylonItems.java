@@ -41,10 +41,7 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
-import io.github.pylonmc.pylon.content.tools.electric.CreativeBattery;
-import io.github.pylonmc.pylon.content.tools.electric.CreativeWire;
-import io.github.pylonmc.pylon.content.tools.electric.ElectroBoom;
-import io.github.pylonmc.pylon.content.tools.electric.PylonWire;
+import io.github.pylonmc.pylon.content.tools.electric.*;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
@@ -3815,6 +3812,27 @@ public final class PylonItems {
     static {
         RebarItem.register(ElectricFurnace.Item.class, ELECTRIC_FURNACE, PylonKeys.ELECTRIC_FURNACE);
         PylonPages.ELECTRIC_MACHINES.addItem(ELECTRIC_FURNACE);
+    }
+
+    public static final ItemStack DISPOSABLE_BATTERY_100_J = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_100_J)
+            .build();
+    static {
+        RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_100_J, PylonKeys.DISPOSABLE_BATTERY_100_J);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_100_J);
+    }
+
+    public static final ItemStack DISPOSABLE_BATTERY_500_J = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_500_J)
+            .build();
+    static {
+        RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_500_J, PylonKeys.DISPOSABLE_BATTERY_500_J);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_500_J);
+    }
+
+    public static final ItemStack DISPOSABLE_BATTERY_1_KJ = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_1_KJ)
+            .build();
+    static {
+        RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_1_KJ, PylonKeys.DISPOSABLE_BATTERY_1_KJ);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_1_KJ);
     }
 
     public static final ItemStack CREATIVE_BATTERY = ItemStackBuilder.rebar(Material.PINK_CANDLE, PylonKeys.CREATIVE_BATTERY)

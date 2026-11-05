@@ -2993,3 +2993,28 @@ pylon:flare_stack_structure:
   result:
     pylon:flare_stack_structure: 2
   category: building
+
+pylon:disposable_battery_500_j:
+  pattern:
+    - " C "
+    - "SSS"
+    - " C "
+  key:
+    C: pylon:copper_sheet
+    S: pylon:salt
+  result:
+    pylon:disposable_battery_500_j: 1
+  category: equipment
+
+pylon:disposable_battery_1_kj:
+  pattern:
+    - " C "
+    - "SRS"
+    - " C "
+  key:
+    C: pylon:copper_sheet
+    S: pylon:salt
+    R: pylon:carbon
+  result:
+    pylon:disposable_battery_1_kj: 1
+  category: equipment
