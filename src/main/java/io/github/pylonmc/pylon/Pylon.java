@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon;
 
-import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
+import io.github.pylonmc.pylon.api.item.BatteryHoldingRebarItem;
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
@@ -66,7 +66,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new ExperienceTalisman.XPTalismanListener(), this);
         pm.registerEvents(new SleepingBag.PlaceListener(), this);
         pm.registerEvents(new TapeMeasure.TapeMeasureListener(), this);
-        pm.registerEvents(new ChargeableRebarItem.CraftListener(), this);
+        pm.registerEvents(new BatteryHoldingRebarItem.CraftListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
         RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));

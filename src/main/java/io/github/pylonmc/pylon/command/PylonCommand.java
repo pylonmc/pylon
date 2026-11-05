@@ -4,8 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.github.pylonmc.pylon.api.item.BatteryHoldingRebarItem;
 import io.github.pylonmc.pylon.api.item.BatteryRebarItem;
-import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
 import io.github.pylonmc.pylon.content.machines.fluid.PortableFluidTank;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.rebar.command.RegistryCommandArgument;
@@ -95,7 +95,7 @@ public class PylonCommand {
         RebarItem item = RebarItem.fromStack(player.getInventory().getItemInMainHand());
         if (item instanceof BatteryRebarItem battery) {
             battery.charge(amount);
-        } else if (item instanceof ChargeableRebarItem chargeable) {
+        } else if (item instanceof BatteryHoldingRebarItem chargeable) {
             if (!chargeable.hasBattery()) {
                 sender.sendRichMessage("<red>This item does not have a battery inside");
                 return Command.SINGLE_SUCCESS;

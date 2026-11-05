@@ -1,6 +1,6 @@
 package io.github.pylonmc.pylon.content.tools.electric;
 
-import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
+import io.github.pylonmc.pylon.api.item.BatteryHoldingRebarItem;
 import io.github.pylonmc.pylon.util.ElectricBolt;
 import io.github.pylonmc.rebar.item.interfaces.ProjectileRebarItemHandler;
 import java.util.Objects;
@@ -16,7 +16,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectroBoom extends ChargeableRebarItem implements ProjectileRebarItemHandler {
+public class ElectroBoom extends BatteryHoldingRebarItem implements ProjectileRebarItemHandler {
 
     public ElectroBoom(@NotNull ItemStack stack) {
         super(stack);

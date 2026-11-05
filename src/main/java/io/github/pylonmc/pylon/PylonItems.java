@@ -40,6 +40,7 @@ import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
+import io.github.pylonmc.pylon.content.tools.electric.CreativeBattery;
 import io.github.pylonmc.pylon.content.tools.electric.CreativeWire;
 import io.github.pylonmc.pylon.content.tools.electric.ElectroBoom;
 import io.github.pylonmc.pylon.content.tools.electric.PylonWire;
