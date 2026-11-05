@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.api.item.ChargeableRebarItem;
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
@@ -9,13 +10,10 @@ import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
 import io.github.pylonmc.pylon.content.tools.TapeMeasure;
-import io.github.pylonmc.pylon.content.tools.base.Rune;
 import io.github.pylonmc.rebar.addon.RebarAddon;
-import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import java.util.Locale;
-import java.util.Set;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -68,6 +66,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new ExperienceTalisman.XPTalismanListener(), this);
         pm.registerEvents(new SleepingBag.PlaceListener(), this);
         pm.registerEvents(new TapeMeasure.TapeMeasureListener(), this);
+        pm.registerEvents(new ChargeableRebarItem.CraftListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
         RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));

@@ -1,15 +1,25 @@
 package io.github.pylonmc.pylon.api.item;
 
+import io.github.pylonmc.pylon.Pylon;
+import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -82,5 +92,94 @@ public abstract class ChargeableRebarItem extends RebarItem {
                 UnitFormat.JOULES.format(battery.getCharge()).decimalPlaces(2).selectPrefixAndRescale();
         placeholders.add(RebarArgument.of("charge", charge));
         return placeholders;
+    }
+
+    public static class CraftListener implements Listener {
+        @EventHandler
+        private void onPrepareCraft(PrepareItemCraftEvent event) {
+            CraftingInventory inventory = event.getInventory();
+            screwdriverRecipes.remove(inventory);
+            ChargeableRebarItem chargeable = null;
+            int chargeableSlot = 0;
+            BatteryRebarItem battery = null;
+            Screwdriver screwdriver = null;
+            int screwdriverSlot = 0;
+            int items = 0;
+            ItemStack[] matrix = inventory.getMatrix();
+            for (int slot = 0; slot < matrix.length; slot++) {
+                ItemStack item = matrix[slot];
+                if (item != null) {
+                    items++;
+                }
+                if (items > 2) return;
+
+                ChargeableRebarItem potentiallyChargeable = RebarItem.fromStack(item, ChargeableRebarItem.class);
+                if (potentiallyChargeable != null) {
+                    if (chargeable != null) return; // two chargeables
+                    chargeable = potentiallyChargeable;
+                    chargeableSlot = slot;
+                    continue;
+                }
+
+                BatteryRebarItem potentialBattery = RebarItem.fromStack(item, BatteryRebarItem.class);
+                if (potentialBattery != null) {
+                    if (battery != null) return; // two batteries
+                    battery = potentialBattery;
+                    continue;
+                }
+
+                Screwdriver potentialScrewdriver = RebarItem.fromStack(item, Screwdriver.class);
+                if (potentialScrewdriver != null) {
+                    if (screwdriver != null) return; // two screwdrivers
+                    screwdriver = potentialScrewdriver;
+                    screwdriverSlot = slot;
+                }
+            }
+            if (chargeable == null || (battery != null && screwdriver != null)) return;
+
+            if (battery != null) {
+                if (chargeable.hasBattery()) return;
+                ChargeableRebarItem result = RebarItem.fromStack(chargeable.getStack().asOne(), ChargeableRebarItem.class);
+                result.setBattery(battery);
+                inventory.setResult(result.getStack());
+            } else if (screwdriver != null) {
+                battery = chargeable.getBattery();
+                if (battery == null) return;
+                inventory.setResult(battery.getStack());
+                screwdriverRecipes.put(inventory, new ScrewdriverRecipe(chargeable, chargeableSlot, screwdriver, screwdriverSlot));
+            }
+        }
+
+        private record ScrewdriverRecipe(
+                ChargeableRebarItem chargeable,
+                int chargeableSlot,
+                Screwdriver screwdriver,
+                int screwdriverSlot
+        ) {
+        }
+
+        private final Map<CraftingInventory, ScrewdriverRecipe> screwdriverRecipes = new HashMap<>();
+
+        @EventHandler
+        private void onCraft(InventoryClickEvent event) {
+            if (!(event.getInventory() instanceof CraftingInventory inventory) || event.getRawSlot() != 0) return;
+            ScrewdriverRecipe recipe = screwdriverRecipes.remove(inventory);
+            if (recipe == null) return;
+            ItemStack result = inventory.getResult();
+            if (result == null) return;
+
+            ItemStack[] matrix = inventory.getMatrix();
+            ChargeableRebarItem chargeable = recipe.chargeable();
+            chargeable.setBattery(null);
+            matrix[recipe.chargeableSlot()] = chargeable.getStack();
+
+            Screwdriver screwdriver = recipe.screwdriver();
+            screwdriver.getStack().damage(1, event.getWhoClicked());
+            matrix[recipe.screwdriverSlot()] = screwdriver.getStack();
+
+            inventory.setMatrix(matrix);
+
+            Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> event.getWhoClicked().setItemOnCursor(result));
+        }
     }
 }
