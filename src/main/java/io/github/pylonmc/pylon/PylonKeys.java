@@ -14,6 +14,9 @@ public class PylonKeys {
     public static final NamespacedKey CARBON = pylonKey("carbon");
     public static final NamespacedKey CHARCOAL_BLOCK = pylonKey("charcoal_block");
 
+    public static final NamespacedKey SALT_BLOCK = pylonKey("salt_block");
+    public static final NamespacedKey SALT = pylonKey("salt");
+
     public static final NamespacedKey SULFUR = pylonKey("sulfur");
     public static final NamespacedKey SULFUR_BLOCK = pylonKey("sulfur_block");
 

@@ -568,6 +568,20 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(CARBON);
     }
 
+    public static final ItemStack SALT = ItemStackBuilder.rebar(Material.SUGAR, PylonKeys.SALT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SALT, PylonKeys.SALT);
+        PylonPages.MISCELLANEOUS.addItem(SALT);
+    }
+
+    public static final ItemStack SALT_BLOCK = ItemStackBuilder.rebar(Material.CALCITE, PylonKeys.SALT_BLOCK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SALT_BLOCK, PylonKeys.SALT_BLOCK);
+        PylonPages.MISCELLANEOUS.addItem(SALT_BLOCK);
+    }
+
     public static final ItemStack OBSIDIAN_CHIP = ItemStackBuilder.rebar(Material.POLISHED_BLACKSTONE_BUTTON, PylonKeys.OBSIDIAN_CHIP)
             .build();
 

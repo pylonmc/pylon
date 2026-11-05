@@ -374,3 +374,11 @@ pylon:slimeball:
     pylon:plant_oil: 200
   output:
     minecraft:slime_ball: 2
+
+pylon:salt_block:
+  input-items:
+    - minecraft:blaze_powder: 1
+  input-fluid:
+    pylon:water: 1000
+  output:
+    pylon:salt_block: 1

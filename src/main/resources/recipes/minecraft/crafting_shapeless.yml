@@ -75,6 +75,14 @@ pylon:gypsum_from_gypsum_block:
   category: building
   priority: -2
 
+pylon:salt_from_salt_block:
+  ingredients:
+    - pylon:salt_block
+  result:
+    pylon:salt: 9
+  category: building
+  priority: -2
+
 pylon:shimmer_dust_1:
   ingredients:
     - pylon:copper_dust

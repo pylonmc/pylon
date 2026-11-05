@@ -52,6 +52,12 @@ item:
   carbon:
     name: "Carbon"
 
+  salt_block:
+    name: "Block of Salt"
+
+  salt:
+    name: "Salt"
+
   compressed_obsidian:
     name: "Compressed Obsidian"
 

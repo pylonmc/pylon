@@ -101,6 +101,17 @@ pylon:gypsum_block_from_gypsum:
   result: pylon:gypsum_block
   category: building
 
+pylon:salt_block_from_salt:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:salt
+  result: pylon:salt_block
+  category: building
+  priority: -2
+
 pylon:bronze_sword:
   pattern:
     - " I "
