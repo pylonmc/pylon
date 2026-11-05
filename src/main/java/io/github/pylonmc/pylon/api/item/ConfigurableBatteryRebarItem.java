@@ -12,5 +12,6 @@ public class ConfigurableBatteryRebarItem extends BatteryRebarItem {
 
     public ConfigurableBatteryRebarItem(@NotNull ItemStack stack) {
         super(stack);
+        postCapacityConfiguration();
     }
 }

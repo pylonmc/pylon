@@ -21,6 +21,15 @@ public abstract class BatteryRebarItem extends RebarItem {
         super(stack);
     }
 
+    /**
+     * Must be called by subclasses in their constructor. The reason this exists is that we need to create/update the durability bar
+     * on creation, but can't in the superclass constructor because {@link BatteryRebarItem#getCapacity()} is abstract and may rely
+     * on subclass resources, e.x. {@link ConfigurableBatteryRebarItem}.
+     */
+    protected void postCapacityConfiguration() {
+        updateDurabilityBar(getCharge());
+    }
+
     public double getCharge() {
         return getStack().getPersistentDataContainer().getOrDefault(CHARGE_KEY, RebarSerializers.DOUBLE, 0.0);
     }
@@ -37,8 +46,8 @@ public abstract class BatteryRebarItem extends RebarItem {
     }
 
     private void updateDurabilityBar(double charge) {
-        getStack().setData(DataComponentTypes.MAX_DAMAGE, 1000);
-        getStack().setData(DataComponentTypes.DAMAGE, 1000 - (int) (charge / getCapacity() * 1000));
+        getStack().setData(DataComponentTypes.MAX_DAMAGE, 1001);
+        getStack().setData(DataComponentTypes.DAMAGE, 1000 - (int) (charge / getCapacity() * 1000) + 1);
     }
 
     public boolean isRechargeable() {
