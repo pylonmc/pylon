@@ -2666,6 +2666,7 @@ item:
   battery_1_kj:
     name: "1 kJ Battery"
     lore: |-
+      <star> Rechargeable
       <arrow> Stores energy to be used in compatible items
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Charge:</attr> %charge%
@@ -2701,6 +2702,13 @@ item:
       <diamond> 1x <yellow><item:pylon:tezla_tower/></yellow>
       <diamond> 1x <yellow><item:pylon:entity_sensor/></yellow>
       <diamond> 1x <yellow>of any capacitor</yellow>
+
+  charging_station:
+    name: "Charging Station"
+    lore: |-
+      <arrow> Charges batteries and items that use batteries
+      <arrow> <insn>Right Click</insn> to open the charging GUI
+      <arrow> <attr>Charge rate:</attr> %rate%
 
 fluid:
   tag:

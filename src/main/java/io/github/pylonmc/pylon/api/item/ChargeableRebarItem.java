@@ -8,12 +8,20 @@ public interface ChargeableRebarItem {
 
     double getCapacity();
 
-    default boolean isRechargeable() {
-        return true;
+    boolean isRechargeable();
+
+    default boolean isFull() {
+        return getCharge() == getCapacity();
     }
 
-    default void charge(double charge) {
-        setCharge(Math.clamp(getCharge() + charge, 0, getCapacity()));
+    /**
+     * @return the amount of charge that was actually used
+     */
+    default double charge(double charge) {
+        double oldCharge = getCharge();
+        double newCharge = Math.clamp(oldCharge + charge, 0, getCapacity());
+        setCharge(newCharge);
+        return newCharge - oldCharge;
     }
 
     default void discharge(double charge) {

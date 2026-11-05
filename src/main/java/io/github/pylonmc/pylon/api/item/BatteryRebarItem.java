@@ -41,6 +41,11 @@ public abstract class BatteryRebarItem extends RebarItem implements ChargeableRe
         updateDurabilityBar(clamped);
     }
 
+    @Override
+    public boolean isRechargeable() {
+        return true;
+    }
+
     private void updateDurabilityBar(double charge) {
         getStack().setData(DataComponentTypes.MAX_DAMAGE, 1001);
         getStack().setData(DataComponentTypes.DAMAGE, 1000 - (int) (charge / getCapacity() * 1000) + 1);

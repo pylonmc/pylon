@@ -88,6 +88,12 @@ public abstract class BatteryHoldingRebarItem extends RebarItem implements Charg
     }
 
     @Override
+    public boolean isRechargeable() {
+        BatteryRebarItem battery = getBattery();
+        return battery != null && battery.isRechargeable();
+    }
+
+    @Override
     public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
         List<RebarArgument> placeholders = new ArrayList<>();
         BatteryRebarItem battery = getBattery();

@@ -18,6 +18,7 @@ import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
+import io.github.pylonmc.pylon.content.machines.electricity.ChargingStation;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
@@ -3836,6 +3837,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, TEZLA_TOWER, PylonKeys.TEZLA_TOWER);
         PylonPages.COMBAT.addItem(TEZLA_TOWER);
+    }
+
+    public static final ItemStack CHARGING_STATION = ItemStackBuilder.rebar(Material.CRAFTING_TABLE, PylonKeys.CHARGING_STATION)
+            .build();
+    static {
+        RebarItem.register(ChargingStation.Item.class, CHARGING_STATION, PylonKeys.CHARGING_STATION);
+        PylonPages.ELECTRICITY_UTILITIES.addItem(CHARGING_STATION);
     }
     // </editor-fold>
 
