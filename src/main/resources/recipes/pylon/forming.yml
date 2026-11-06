@@ -17,3 +17,7 @@ pylon:sheet_mold:
 pylon:pipe_mold:
   input: minecraft:clay_ball
   result: pylon:mold_pipe
+
+pylon:wire_mold:
+  input: minecraft:clay_ball
+  result: pylon:mold_wire

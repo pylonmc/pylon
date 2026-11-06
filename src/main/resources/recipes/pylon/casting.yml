@@ -207,3 +207,9 @@ pylon:bronze_pipe:
     pylon:bronze: 72
   result: pylon:fluid_pipe_bronze
   priority: -1
+
+pylon:copper_wire:
+  mold: pylon:mold_wire
+  input:
+    pylon:copper: 9
+  result: pylon:copper_wire

@@ -2415,6 +2415,12 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(PIPE_MOLD);
     }
 
+    public static final ItemStack WIRE_MOLD = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_MOLD)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, WIRE_MOLD, PylonKeys.WIRE_MOLD);
+        PylonPages.SMELTING.addItem(WIRE_MOLD);
+    }
 
     //</editor-fold>
 
@@ -3644,6 +3650,13 @@ public final class PylonItems {
     static {
         RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
         PylonPages.BUILDING.addItem(CAPACITOR_1_KJ);
+    }
+    
+    public static final ItemStack COPPER_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.COPPER_WIRE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, COPPER_WIRE, PylonKeys.COPPER_WIRE);
+        PylonPages.COMPONENTS.addItem(COPPER_WIRE);
     }
 
     public static final ItemStack CREATIVE_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.CREATIVE_WIRE)

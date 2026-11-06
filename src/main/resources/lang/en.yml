@@ -2222,28 +2222,32 @@ item:
   mold_nugget:
     name: "Nugget Mold"
     lore: |-
-      <arrow> Used in a <item:pylon:casting_unit/> to cast a nugget
-      <arrow> <attr>Fluid used:</attr> <unit:milli:buckets>16</unit>
+      <arrow> Used in a <item:pylon:casting_unit/> to cast nuggets
 
   mold_ingot:
     name: "Ingot Mold"
     lore: |-
-      <arrow> Used in a <item:pylon:casting_unit/> to cast an ingot
+      <arrow> Used in a <item:pylon:casting_unit/> to cast ingots
 
   mold_block:
     name: "Block Mold"
     lore: |-
-      <arrow> Used in a <item:pylon:casting_unit/> to cast a block
+      <arrow> Used in a <item:pylon:casting_unit/> to cast blocks
 
   mold_sheet:
     name: "Sheet Mold"
     lore: |-
-      <arrow> Used in a <item:pylon:casting_unit/> to cast a sheet
+      <arrow> Used in a <item:pylon:casting_unit/> to cast metal sheets
 
   mold_pipe:
     name: "Pipe Mold"
     lore: |-
-      <arrow> Used in a <item:pylon:casting_unit/> to cast a pipe
+      <arrow> Used in a <item:pylon:casting_unit/> to cast pipes
+
+  mold_wire:
+    name: "Wire Mold"
+    lore: |-
+      <arrow> Used in a <item:pylon:casting_unit/> to cast wires
 
   forming_table:
     name: "Forming Table"
@@ -2572,6 +2576,9 @@ item:
     name: "<#ff00ff>Creative Wire"
     lore: |-
       <arrow> Has absolutely zero resistance, allowing infinite power to flow through it per tick
+      
+  copper_wire:
+    name: "Copper Wire"
 
   wire_1_gauge:
     name: "1-Gauge Wire"

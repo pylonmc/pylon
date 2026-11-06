@@ -252,6 +252,7 @@ public class PylonKeys {
     public static final NamespacedKey BLOCK_MOLD = pylonKey("mold_block");
     public static final NamespacedKey SHEET_MOLD = pylonKey("mold_sheet");
     public static final NamespacedKey PIPE_MOLD = pylonKey("mold_pipe");
+    public static final NamespacedKey WIRE_MOLD = pylonKey("mold_wire");
 
     public static final NamespacedKey EXPLOSIVE_TARGET = pylonKey("explosive_target");
     public static final NamespacedKey EXPLOSIVE_TARGET_FIERY = pylonKey("explosive_target_fiery");
@@ -508,6 +509,8 @@ public class PylonKeys {
     public static final NamespacedKey DISPOSABLE_BATTERY_100_J = pylonKey("disposable_battery_100_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_500_J = pylonKey("disposable_battery_500_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_1_KJ = pylonKey("disposable_battery_1_kj");
+
+    public static final NamespacedKey COPPER_WIRE = pylonKey("copper_wire");
 
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
     public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");
