@@ -2585,6 +2585,18 @@ item:
     name: "<#ff00ff>Creative Wire"
     lore: |-
       <arrow> Has absolutely zero resistance, allowing infinite power to flow through it per tick
+
+  magnetic_bar:
+    name: "Magnetic Bar"
+
+  electromagnet:
+    name: "Electromagnet"
+
+  electric_motor:
+    name: "Electric Motor"
+
+  dynamo:
+    name: "Dynamo"
       
   copper_wire:
     name: "Copper Wire"

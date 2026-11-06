@@ -3023,8 +3023,7 @@ pylon:disposable_battery_500_j:
   key:
     C: pylon:copper_sheet
     S: pylon:salt
-  result:
-    pylon:disposable_battery_500_j: 1
+  result: pylon:disposable_battery_500_j
   category: equipment
 
 pylon:disposable_battery_1_kj:
@@ -3036,6 +3035,40 @@ pylon:disposable_battery_1_kj:
     C: pylon:copper_sheet
     S: pylon:salt
     R: pylon:carbon
-  result:
-    pylon:disposable_battery_1_kj: 1
+  result: pylon:disposable_battery_1_kj
+  category: equipment
+
+pylon:electromagnet:
+  pattern:
+    - "WWW"
+    - "WBW"
+    - "WWW"
+  key:
+    W: pylon:copper_wire
+    B: pylon:magnetic_bar
+  result: pylon:electromagnet
+  category: equipment
+
+pylon:electric_motor:
+  pattern:
+    - "WMW"
+    - "WEW"
+    - "WMW"
+  key:
+    W: pylon:copper_wire
+    M: pylon:magnetic_bar
+    E: pylon:electromagnet
+  result: pylon:electric_motor
+  category: equipment
+
+pylon:dynamo:
+  pattern:
+    - "WEW"
+    - "WMW"
+    - "WEW"
+  key:
+    W: pylon:copper_wire
+    M: pylon:magnetic_bar
+    E: pylon:electromagnet
+  result: pylon:dynamo
   category: equipment

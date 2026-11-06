@@ -517,6 +517,10 @@ public class PylonKeys {
     public static final NamespacedKey DISPOSABLE_BATTERY_1_KJ = pylonKey("disposable_battery_1_kj");
 
     public static final NamespacedKey COPPER_WIRE = pylonKey("copper_wire");
+    public static final NamespacedKey MAGNETIC_BAR = pylonKey("magnetic_bar");
+    public static final NamespacedKey ELECTROMAGNET = pylonKey("electromagnet");
+    public static final NamespacedKey ELECTRIC_MOTOR = pylonKey("electric_motor");
+    public static final NamespacedKey DYNAMO = pylonKey("dynamo");
 
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
     public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");

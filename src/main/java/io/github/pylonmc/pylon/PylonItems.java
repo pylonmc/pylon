@@ -3687,6 +3687,35 @@ public final class PylonItems {
         PylonPages.BUILDING.addItem(CAPACITOR_1_KJ);
     }
     
+    public static final ItemStack MAGNETIC_BAR = ItemStackBuilder.rebar(Material.NETHERITE_INGOT, PylonKeys.MAGNETIC_BAR)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, MAGNETIC_BAR, PylonKeys.MAGNETIC_BAR);
+        PylonPages.COMPONENTS.addItem(MAGNETIC_BAR);
+    }
+    
+    public static final ItemStack ELECTROMAGNET = ItemStackBuilder.rebar(Material.NETHERITE_INGOT, PylonKeys.ELECTROMAGNET)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTROMAGNET, PylonKeys.ELECTROMAGNET);
+        PylonPages.COMPONENTS.addItem(ELECTROMAGNET);
+    }
+    
+    public static final ItemStack ELECTRIC_MOTOR = ItemStackBuilder.rebar(Material.DETECTOR_RAIL, PylonKeys.ELECTRIC_MOTOR)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTRIC_MOTOR, PylonKeys.ELECTRIC_MOTOR);
+        PylonPages.COMPONENTS.addItem(ELECTRIC_MOTOR);
+    }
+
+    public static final ItemStack DYNAMO = ItemStackBuilder.rebar(Material.POWERED_RAIL, PylonKeys.DYNAMO)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, DYNAMO, PylonKeys.DYNAMO);
+        PylonPages.COMPONENTS.addItem(DYNAMO);
+    }
+    
     public static final ItemStack COPPER_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.COPPER_WIRE)
             .build();
     static {

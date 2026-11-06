@@ -170,6 +170,12 @@ pylon:cleansing_potion:
 
 pylon:disposable_battery_100_j:
   ingredients:
-    - pylon:copper_sheet: 1
-    - pylon:salt: 1
+    - pylon:copper_sheet
+    - pylon:salt
   result: pylon:disposable_battery_100_j
+
+pylon:magnetic_bar:
+  ingredients:
+    - pylon:nickel_sheet
+    - minecraft:iron_ingot
+  result: pylon:magnetic_bar

@@ -69,6 +69,12 @@ pylon:steel_sheet:
   mining-level: diamond
   uses: 2
 
+pylon:nickel_sheet:
+  input: pylon:nickel_ingot
+  result: pylon:nickel_sheet
+  mining-level: diamond
+  uses: 2
+
 pylon:gravel_from_rocks:
   input: "#rebar:rocks"
   result: minecraft:gravel
