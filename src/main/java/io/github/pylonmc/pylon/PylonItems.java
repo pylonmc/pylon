@@ -3635,7 +3635,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(RebarItem.class, WIRE_HUB, PylonKeys.WIRE_HUB);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(WIRE_HUB);
+        PylonPages.BUILDING.addItem(WIRE_HUB);
     }
 
     public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)
@@ -3643,7 +3643,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(CAPACITOR_1_KJ);
+        PylonPages.BUILDING.addItem(CAPACITOR_1_KJ);
     }
 
     public static final ItemStack CREATIVE_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.CREATIVE_WIRE)
@@ -3659,7 +3659,7 @@ public final class PylonItems {
 
     static {
         RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(WIRE_1_GAUGE);
+        PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
     }
 
     public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)
@@ -3818,21 +3818,21 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_100_J, PylonKeys.DISPOSABLE_BATTERY_100_J);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_100_J);
+        PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_100_J);
     }
 
     public static final ItemStack DISPOSABLE_BATTERY_500_J = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_500_J)
             .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_500_J, PylonKeys.DISPOSABLE_BATTERY_500_J);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_500_J);
+        PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_500_J);
     }
 
     public static final ItemStack DISPOSABLE_BATTERY_1_KJ = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_1_KJ)
             .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_1_KJ, PylonKeys.DISPOSABLE_BATTERY_1_KJ);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(DISPOSABLE_BATTERY_1_KJ);
+        PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_1_KJ);
     }
 
     public static final ItemStack CREATIVE_BATTERY = ItemStackBuilder.rebar(Material.PINK_CANDLE, PylonKeys.CREATIVE_BATTERY)
@@ -3847,7 +3847,7 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_KJ, PylonKeys.BATTERY_1_KJ);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(BATTERY_1_KJ);
+        PylonPages.TOOLS.addItem(BATTERY_1_KJ);
     }
 
     public static final ItemStack ELECTRO_BOOM = ItemStackBuilder.rebar(Material.SNOWBALL, PylonKeys.ELECTRO_BOOM)
@@ -3875,7 +3875,7 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(ChargingStation.Item.class, CHARGING_STATION, PylonKeys.CHARGING_STATION);
-        PylonPages.ELECTRICITY_UTILITIES.addItem(CHARGING_STATION);
+        PylonPages.TOOLS.addItem(CHARGING_STATION);
     }
     // </editor-fold>
 

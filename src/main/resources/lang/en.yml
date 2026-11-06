@@ -2894,7 +2894,6 @@ guide:
     machines_smelting: "<white>Smelting"
     machines_electricity_production: "Electricity Production"
     machines_electric_machines: "Electric Machines"
-    machines_electricity_utilities: "Electricity Utilities"
     machines: "<white>Machines"
     assembling: "<white>Assembling"
     building: "<white>Building"
