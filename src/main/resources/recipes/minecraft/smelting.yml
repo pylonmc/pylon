@@ -21,3 +21,10 @@ pylon:steel_furnace:
   result: pylon:steel_ingot
   experience: 0.7
   category: misc
+
+pylon:salt:
+  ingredient: minecraft:water_bucket
+  result:
+    pylon:salt: 2
+  experience: 0.2
+  category: misc

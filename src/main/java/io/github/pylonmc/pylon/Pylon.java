@@ -10,6 +10,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.SoulboundRune;
 import io.github.pylonmc.pylon.content.tools.TapeMeasure;
+import io.github.pylonmc.pylon.recipes.SaltRecipeListener;
 import io.github.pylonmc.rebar.addon.RebarAddon;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -67,6 +68,7 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         pm.registerEvents(new SleepingBag.PlaceListener(), this);
         pm.registerEvents(new TapeMeasure.TapeMeasureListener(), this);
         pm.registerEvents(new BatteryHoldingRebarItem.CraftListener(), this);
+        pm.registerEvents(new SaltRecipeListener(), this);
 
         RebarRegistry.RESEARCHES.mapKey(pylonKey("simple_components"), pylonKey("components_1"));
         RebarRegistry.RESEARCHES.mapKey(pylonKey("scientific_revolution_4"), pylonKey("scientific_revolution_3"));
