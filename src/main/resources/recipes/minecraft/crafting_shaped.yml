@@ -3052,23 +3052,51 @@ pylon:electromagnet:
 pylon:electric_motor:
   pattern:
     - "WMW"
-    - "WEW"
+    - "REW"
     - "WMW"
   key:
     W: pylon:copper_wire
     M: pylon:magnetic_bar
     E: pylon:electromagnet
+    R: pylon:rotor
   result: pylon:electric_motor
   category: equipment
 
 pylon:dynamo:
   pattern:
     - "WEW"
-    - "WMW"
+    - "RMW"
     - "WEW"
   key:
     W: pylon:copper_wire
     M: pylon:magnetic_bar
     E: pylon:electromagnet
+    R: pylon:rotor
   result: pylon:dynamo
   category: equipment
+
+pylon:wire_1_gauge:
+  pattern:
+    - "   "
+    - "WWW"
+    - "   "
+  key:
+    W: pylon:copper_wire
+  result: pylon:wire_1_gauge
+  category: building
+  
+pylon:steam_engine:
+  pattern:
+    - "SNL"
+    - "PDC"
+    - "SSY"
+  key:
+    S: pylon:steel_sheet
+    N: pylon:nozzle
+    L: pylon:leaf_valve
+    P: pylon:fluid_pipe_steel
+    D: pylon:dynamo
+    C: pylon:steel_crankshaft
+    Y: pylon:steel_cylinder
+  result: pylon:steam_engine
+  category: building
