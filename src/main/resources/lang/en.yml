@@ -3120,6 +3120,7 @@ gui:
       name: "Contents"
       fluid: "%amount% of %fluid%"
       empty: "Empty"
+    temperature: "<attr>Temperature:</attr> %temperature%"
   burning:
     burning: "<green>Burning"
     not_burning: "<yellow>Not burning"
