@@ -71,6 +71,27 @@ pylon:steel_block_from_steel_ingots:
   result: pylon:steel_block
   category: misc
 
+pylon:nickel_ingot_from_nickel_nuggets:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:nickel_nugget
+  result: pylon:nickel_ingot
+  category: misc
+  priority: -2
+
+pylon:nickel_block_from_nickel_ingots:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:nickel_ingot
+  result: pylon:nickel_block
+  category: misc
+
 pylon:charcoal_block_from_charcoal:
   pattern:
     - "NNN"

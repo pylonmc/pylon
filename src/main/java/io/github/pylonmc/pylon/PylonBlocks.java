@@ -42,6 +42,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.RAW_TIN_BLOCK, Material.RAW_IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.TIN_BLOCK, Material.IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.BRONZE_BLOCK, Material.COPPER_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.NICKEL_BLOCK, Material.IRON_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.STEEL_BLOCK, Material.NETHERITE_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.CHARCOAL_BLOCK, Material.COAL_BLOCK, RebarBlock.class);
         RebarBlock.register(PylonKeys.SALT_BLOCK, Material.CALCITE, RebarBlock.class);

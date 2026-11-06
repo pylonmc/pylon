@@ -58,6 +58,17 @@ pylon:iron_smelting:
     pylon:slurry: 1356
   temperature: 1540
 
+pylon:nickel_smelting:
+  inputs:
+    pylon:slurry_raw_iron: 1000
+    pylon:slurry_carbon: 500
+    pylon:sulfur: 100
+  outputs:
+    pylon:iron: 144
+    pylon:nickel: 100
+    pylon:slurry: 1356
+  temperature: 1600
+
 pylon:tin_smelting:
   inputs:
     pylon:slurry_raw_tin: 1000

@@ -897,6 +897,21 @@ item:
   tin_sheet:
     name: "Tin Sheet"
 
+  nickel_dust:
+    name: "Nickel Dust"
+
+  nickel_ingot:
+    name: "Nickel Ingot"
+
+  nickel_nugget:
+    name: "Nickel Nugget"
+
+  nickel_block:
+    name: "Block of Nickel"
+
+  nickel_sheet:
+    name: "Nickel Sheet"
+
   watering_can:
     name: "Watering Can"
     lore: |-
@@ -2765,7 +2780,7 @@ fluid:
   ethanol: "Ethanol"
   biodiesel: "Biodiesel"
   obscyra: "Obscyra"
-  sulfur: "Sulfur"
+  sulfur: "Liquid Sulfur"
   mercury: "Mercury"
   tin: "Liquid Tin"
   copper: "Liquid Copper"
@@ -2773,6 +2788,7 @@ fluid:
   bronze: "Liquid Bronze"
   gold: "Liquid Gold"
   steel: "Liquid Steel"
+  nickel: "Liquid Nickel"
   slurry: "Slurry"
   slurry_coal: "Coal Slurry"
   slurry_carbon: "Carbon Slurry"

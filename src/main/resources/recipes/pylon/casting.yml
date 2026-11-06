@@ -208,6 +208,34 @@ pylon:bronze_pipe:
   result: pylon:fluid_pipe_bronze
   priority: -1
 
+pylon:nickel_nugget:
+  mold: pylon:mold_nugget
+  input:
+    pylon:nickel: 16
+  result: pylon:nickel_nugget
+  priority: -1
+
+pylon:nickel_ingot:
+  mold: pylon:mold_ingot
+  input:
+    pylon:nickel: 144
+  result: pylon:nickel_ingot
+  priority: -1
+
+pylon:nickel_block:
+  mold: pylon:mold_block
+  input:
+    pylon:nickel: 1296
+  result: pylon:nickel_block
+  priority: -1
+
+pylon:nickel_sheet:
+  mold: pylon:mold_sheet
+  input:
+    pylon:nickel: 144
+  result: pylon:nickel_sheet
+  priority: -1
+
 pylon:copper_wire:
   mold: pylon:mold_wire
   input:

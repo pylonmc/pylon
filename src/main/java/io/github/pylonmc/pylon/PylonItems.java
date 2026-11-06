@@ -275,6 +275,34 @@ public final class PylonItems {
         PylonPages.METALS.addItem(BRONZE_BLOCK);
     }
 
+    public static final ItemStack NICKEL_INGOT = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.NICKEL_INGOT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NICKEL_INGOT, PylonKeys.NICKEL_INGOT);
+        PylonPages.METALS.addItem(NICKEL_INGOT);
+    }
+    
+    public static final ItemStack NICKEL_DUST = ItemStackBuilder.rebar(Material.SUGAR, PylonKeys.NICKEL_DUST)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NICKEL_DUST, PylonKeys.NICKEL_DUST);
+        PylonPages.METALS.addItem(NICKEL_DUST);
+    }
+
+    public static final ItemStack NICKEL_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.NICKEL_NUGGET)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NICKEL_NUGGET, PylonKeys.NICKEL_NUGGET);
+        PylonPages.METALS.addItem(NICKEL_NUGGET);
+    }
+
+    public static final ItemStack NICKEL_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.NICKEL_BLOCK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NICKEL_BLOCK, PylonKeys.NICKEL_BLOCK);
+        PylonPages.METALS.addItem(NICKEL_BLOCK);
+    }
+
     public static final ItemStack SPONGE_IRON = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.SPONGE_IRON)
             .build();
 
@@ -711,6 +739,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, STEEL_SHEET);
         PylonPages.COMPONENTS.addItem(STEEL_SHEET);
+    }
+
+    public static final ItemStack NICKEL_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.NICKEL_SHEET)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, NICKEL_SHEET, PylonKeys.NICKEL_SHEET);
+        PylonPages.COMPONENTS.addItem(NICKEL_SHEET);
     }
 
     public static final ItemStack COPPER_DRILL_BIT = ItemStackBuilder.rebar(Material.LIGHTNING_ROD, PylonKeys.COPPER_DRILL_BIT)

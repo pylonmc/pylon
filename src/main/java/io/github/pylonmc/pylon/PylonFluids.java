@@ -214,6 +214,15 @@ public final class PylonFluids {
         STEEL.register();
     }
 
+    public static final RebarFluid NICKEL = new RebarFluid(
+            pylonKey("nickel"),
+            TextColor.fromHexString("#ededed"),
+            Material.LIGHT_GRAY_CONCRETE
+    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1455));
+    static {
+        NICKEL.register();
+    }
+
     public static final RebarFluid SLURRY = new RebarFluid(
             pylonKey("slurry"),
             TextColor.fromHexString("#bcbcbc"),

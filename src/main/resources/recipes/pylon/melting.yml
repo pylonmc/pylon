@@ -212,3 +212,33 @@ pylon:steel_from_pipe:
   result: pylon:steel
   amount: 72
   priority: -1
+
+pylon:nickel_from_ingot:
+  input: pylon:nickel_ingot
+  result: pylon:nickel
+  amount: 144
+  priority: -1
+
+pylon:nickel_from_dust:
+  input: pylon:nickel_dust
+  result: pylon:nickel
+  amount: 144
+  priority: -1
+
+pylon:nickel_from_nugget:
+  input: pylon:nickel_nugget
+  result: pylon:nickel
+  amount: 16
+  priority: -1
+
+pylon:nickel_from_block:
+  input: pylon:nickel_block
+  result: pylon:nickel
+  amount: 1296
+  priority: -1
+
+pylon:nickel_from_sheet:
+  input: pylon:nickel_sheet
+  result: pylon:nickel
+  amount: 144
+  priority: -1
