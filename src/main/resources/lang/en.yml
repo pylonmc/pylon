@@ -87,12 +87,6 @@ item:
   crushed_raw_tin:
     name: "Crushed Raw Tin"
 
-  dimensional_barrel:
-    name: "Dimensional Barrel"
-    lore: |-
-      <arrow> Uses the power of extra dimensions to store more items
-      <arrow> <attr>Size:</attr> %size%
-
   disinfectant:
     name: "Disinfectant"
     lore: |-
