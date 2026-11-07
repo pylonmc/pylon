@@ -189,7 +189,7 @@ public class LargeBoiler extends AbstractSolidFuelBoiler {
                 new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                         .offset(0, 1, 0)
                         .count(0)
-                        .extra(0.04)
+                        .speed(0.04)
                         .location(getMultiblockBlock(SMOKESTACK_CAP_1).getLocation().toCenterLocation().add(0, offset, 0))
                         .spawn();
             }
@@ -200,7 +200,7 @@ public class LargeBoiler extends AbstractSolidFuelBoiler {
                 new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                         .offset(0, 1, 0)
                         .count(0)
-                        .extra(0.04)
+                        .speed(0.04)
                         .location(getMultiblockBlock(SMOKESTACK_CAP_2).getLocation().toCenterLocation().add(0, offset, 0))
                         .spawn();
             }

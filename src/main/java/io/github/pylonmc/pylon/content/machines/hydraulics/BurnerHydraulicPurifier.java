@@ -168,7 +168,7 @@ public class BurnerHydraulicPurifier extends RebarBlock implements
                 new ParticleBuilder(Particle.CAMPFIRE_SIGNAL_SMOKE)
                         .location(getBlock().getLocation().toCenterLocation().add(getFacing().getOppositeFace().getDirection()).add(x, 0.6, z))
                         .offset(0.0, 1.5, 0.0)
-                        .extra(0.03)
+                        .speed(0.03)
                         .count(0)
                         .spawn();
             }

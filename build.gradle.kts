@@ -73,6 +73,14 @@ tasks.runServer {
     downloadPlugins {
         github("pylonmc", "rebar", rebarVersion, "rebar-$rebarVersion.jar")
     }
+    val run = file(providers.gradleProperty("server.run.dir").orElse("run"))
+    runDirectory.set(run)
+
+    doFirst {
+        run.resolve("eula.txt").writeText("eula=true")
+        run.resolve("plugins").mkdirs()
+    }
+
     maxHeapSize = "2G"
     minecraftVersion(minecraftVersion)
 }

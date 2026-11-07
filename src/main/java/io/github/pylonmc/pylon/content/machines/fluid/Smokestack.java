@@ -72,7 +72,7 @@ public class Smokestack extends RebarBlock implements SimpleRebarMultiblock, Dir
                     .location(getBlock().getLocation().toCenterLocation().add(0, 4, 0))
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.05)
+                    .speed(0.05)
                     .spawn();
         }
     }

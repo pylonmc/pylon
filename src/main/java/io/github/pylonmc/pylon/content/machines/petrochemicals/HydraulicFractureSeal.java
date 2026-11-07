@@ -79,7 +79,7 @@ public class HydraulicFractureSeal extends RebarBlock implements VirtualInventor
 
                 new ParticleBuilder(Particle.CAMPFIRE_SIGNAL_SMOKE)
                         .count(200)
-                        .extra(0.1)
+                        .speed(0.1)
                         .location(getBlock().getLocation().toCenterLocation().add(0, -1, 0))
                         .spawn();
             }

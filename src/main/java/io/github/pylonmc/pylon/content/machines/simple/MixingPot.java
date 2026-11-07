@@ -160,7 +160,7 @@ public final class MixingPot extends RebarBlock implements
 
         new ParticleBuilder(Particle.SMOKE)
                 .count(50)
-                .extra(0)
+                .speed(0)
                 .offset(0.1, 0, 0.1)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.4, 0))
                 .spawn();
@@ -205,7 +205,7 @@ public final class MixingPot extends RebarBlock implements
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .count(30)
                 .location(getBlock().getLocation().toCenterLocation())
-                .extra(0.05)
+                .speed(0.05)
                 .spawn();
     }
 

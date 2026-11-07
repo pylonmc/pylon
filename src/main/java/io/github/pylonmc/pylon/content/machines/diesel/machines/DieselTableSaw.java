@@ -118,11 +118,11 @@ public class DieselTableSaw extends GenericTableSaw implements FluidBufferRebarB
                 .location(getBlock().getLocation().toCenterLocation().add(smokePosition))
                 .offset(0, 1, 0)
                 .count(0)
-                .extra(0.05)
+                .speed(0.05)
                 .spawn();
         new ParticleBuilder(Particle.ITEM)
                 .count(5)
-                .extra(0.05)
+                .speed(0.05)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.75, 0))
                 .data(getCurrentRecipe().particleItem())
                 .spawn();
