@@ -3100,3 +3100,16 @@ pylon:steam_engine:
     Y: pylon:steel_cylinder
   result: pylon:steam_engine
   category: building
+  
+pylon:lathe:
+  pattern:
+    - "   "
+    - " AS"
+    - " KI"
+  key:
+    A: pylon:axle
+    S: pylon:steel_sheet
+    K: pylon:kinetic_control_mechanism
+    I: pylon:internal_combustion_engine
+  result: pylon:lathe
+  category: equipment

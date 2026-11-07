@@ -2506,6 +2506,12 @@ item:
     name: "Lathe"
     lore: |-
       <arrow> Allows cutting things while rotating them
+      <arrow> <insn>Right Click</insn> to insert an item and select a recipe
+      <arrow> <insn>Right Click again</insn> to remove it
+      <arrow> <insn>Right Click</insn> the lodestone button to start the lathe
+      <arrow> Once the pointer reaches green, <insn>right click</insn> the button again to stop it
+      <arrow> If you stop on red, or yellow, or you don't stop it at all, the item may get destroyed!
+      <arrow> <attr>Diesel usage:</attr> %usage%
 
   copper_pipe_assembly:
     name: "Copper Pipe Assembly"

@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.diesel.machines;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
@@ -27,6 +28,7 @@ import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.ArrayList;
@@ -75,6 +77,9 @@ public class Lathe extends RebarBlock implements
 
     public static class Item extends RebarItem {
 
+        @Getter
+        private final double dieselPerItem = getSettingOrThrow("diesel-per-item", ConfigAdapter.DOUBLE);
+
         @SuppressWarnings("unused")
         public Item(@NotNull ItemStack stack) {
             super(stack);
@@ -82,7 +87,7 @@ public class Lathe extends RebarBlock implements
 
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
-            return super.getPlaceholders();
+            return List.of(RebarArgument.of("usage", UnitFormat.MILLIBUCKETS_PER_ITEM.format(dieselPerItem)));
         }
     }
 
@@ -352,6 +357,13 @@ public class Lathe extends RebarBlock implements
             BukkitTask task = Bukkit.getScheduler().runTaskLater(Pylon.getInstance(), () -> {
                 applyTransform(itemDisplay, 2, matrix -> matrix.rotateLocal(rodRotation));
                 applyTransform(rod, 2, matrix -> matrix.rotateLocal(rodRotation));
+                new ParticleBuilder(Particle.ITEM)
+                        .location(itemDisplay.getLocation())
+                        .count(8)
+                        .data(itemDisplay.getItemStack())
+                        .speed(0.1)
+                        .receivers(32, true)
+                        .spawn();
             }, tick);
             tasks.add(task);
         }
@@ -420,9 +432,9 @@ public class Lathe extends RebarBlock implements
         }
         tasks.clear();
         removeSubdisplays();
-        PylonUtils.animate(getMovingThingy(), 2, defaultMovingThingyTransform);
-        PylonUtils.animate(getBit(), 2, defaultBitTransform);
-        PylonUtils.animate(getPointer(), 2, defaultPointerTransform);
+        PylonUtils.animate(getMovingThingy(), 5, defaultMovingThingyTransform);
+        PylonUtils.animate(getBit(), 5, defaultBitTransform);
+        PylonUtils.animate(getPointer(), 5, defaultPointerTransform);
     }
 
     private ItemDisplay getItemDisplay() {
