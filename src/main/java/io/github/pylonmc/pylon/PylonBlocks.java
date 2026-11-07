@@ -221,6 +221,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.LARGE_FLUID_BOILER, Material.BRICK_STAIRS, LargeFluidBoiler.class);
         RebarBlock.register(PylonKeys.SMOKESTACK, Material.BRICKS, Smokestack.class);
         RebarBlock.register(PylonKeys.FLARE_STACK, Material.NETHER_BRICKS, FlareStack.class);
+        RebarBlock.register(PylonKeys.LATHE, Material.STRUCTURE_VOID, Lathe.class);
         // RebarBlock.register(PylonKeys.SLEEPING_BAG, Material.RED_BED, SleepingBag.class);
         RebarBlock.register(PylonKeys.WIRE_HUB, Material.STRUCTURE_VOID, WireHub.class);
         RebarBlock.register(PylonKeys.CAPACITOR_1_KJ, Material.BLUE_GLAZED_TERRACOTTA, Capacitor.class);

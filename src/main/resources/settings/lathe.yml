@@ -1,0 +1,3 @@
+diesel-buffer: 100
+diesel-per-item: 50
+full-cycle-time: 60 # ticks

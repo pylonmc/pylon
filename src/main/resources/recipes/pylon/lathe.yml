@@ -1,0 +1,7 @@
+pylon:steel_crankshaft:
+  input: pylon:steel_block
+  result: pylon:steel_crankshaft
+  byproduct:
+    pylon:steel_dust: 8
+  completion-value: 0.7
+  margin-of-error: 0.1

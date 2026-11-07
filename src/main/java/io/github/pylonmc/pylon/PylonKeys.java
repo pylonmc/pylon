@@ -441,6 +441,7 @@ public class PylonKeys {
     public static final NamespacedKey HYDRAULIC_FRACTURE_SEAL = pylonKey("hydraulic_fracture_seal");
 
     public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
+    public static final NamespacedKey LATHE_BUTTON = pylonKey("lathe_button");
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 
@@ -489,6 +490,8 @@ public class PylonKeys {
 
     public static final NamespacedKey SMOKESTACK = pylonKey("smokestack");
     public static final NamespacedKey FLARE_STACK = pylonKey("flare_stack");
+
+    public static final NamespacedKey LATHE = pylonKey("lathe");
 
     public static final NamespacedKey WIRE_HUB = pylonKey("wire_hub");
     public static final NamespacedKey CAPACITOR_1_KJ = pylonKey("capacitor_1_kj");

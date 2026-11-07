@@ -11,11 +11,9 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
-import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
 import java.util.List;
-
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -55,6 +53,7 @@ public class PylonRecipes {
         BoilerDisplayRecipe.RECIPE_TYPE.register();
         GasTurbineRecipe.RECIPE_TYPE.register();
         HeatExchangerRecipe.RECIPE_TYPE.register();
+        LatheRecipe.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();

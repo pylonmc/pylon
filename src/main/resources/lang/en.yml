@@ -2501,6 +2501,11 @@ item:
 
   fluid_firebox:
     name: "Fluid Firebox"
+    
+  lathe:
+    name: "Lathe"
+    lore: |-
+      <arrow> Allows cutting things while rotating them
 
   copper_pipe_assembly:
     name: "Copper Pipe Assembly"
@@ -3200,6 +3205,9 @@ gui:
     invalid-selector: "<red>At least one of the selectors you have inputted is invalid"
   tezla-tower:
     power-per-discharge: "Power use per discharge (J)"
+  lathe:
+    select-recipe: "Select recipe"
+    no-fuel: "<red>There is not enough diesel in the lathe"
 
 inventory:
   fuel: "Fuel"

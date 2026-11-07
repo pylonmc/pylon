@@ -1124,6 +1124,14 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, FLARE_STACK_STRUCTURE, PylonKeys.FLARE_STACK_STRUCTURE);
         PylonPages.COMPONENTS.addItem(FLARE_STACK_STRUCTURE);
     }
+    
+    public static final ItemStack LATHE = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.LATHE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.LODESTONE.getKey())
+            .build();
+    static {
+        RebarItem.register(Lathe.Item.class, LATHE, PylonKeys.LATHE);
+        PylonPages.DIESEL_MACHINES.addItem(LATHE);
+    }
 
     //</editor-fold>
 
