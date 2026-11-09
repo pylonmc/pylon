@@ -6,11 +6,11 @@ pylon:root_advancement:
     show-toast: false
     announce-to-chat: false
     hidden: false
-    background: minecraft:textures/gui/advancements/backgrounds/adventure.png
-  #criteria:
-  #  - criteria1:
-  #      key: pylon:root_advancement_criterion
-  #      type: rebar:unlock_on_join
+    # The texture tiled behind this advancement's tab, without the textures/ prefix or .png suffix. Only used on root advancements.
+    background: minecraft:gui/advancements/backgrounds/adventure
+  criteria:
+    - criteria1:
+      - rebar:unlock_on_join
 pylon:random_advancement:
   # The parent of this advancement in the tree
   parent: pylon:root_advancement
@@ -27,8 +27,12 @@ pylon:random_advancement:
     hidden: false
     # The frame around the icon of the advancement
     frame: challenge
-    #background: minecraft:gui/advancements/backgrounds/adventure for root advancements
+  criteria:
+    - criteria1:
+      - rebar:unlock_on_item:
+          item: pylon:beheading_sword
   # What is unlocked upon completion
   rewards:
-    # amount of xp to grant
-    experience: 10
+    rebar:grant_experience:
+      # amount of xp to grant
+      amount: 10
