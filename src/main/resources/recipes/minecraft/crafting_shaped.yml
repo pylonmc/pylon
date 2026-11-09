@@ -3103,10 +3103,11 @@ pylon:steam_engine:
   
 pylon:lathe:
   pattern:
-    - "   "
-    - " AS"
+    - "DAS"
     - " KI"
+    - " S "
   key:
+    D: minecraft:diamond
     A: pylon:axle
     S: pylon:steel_sheet
     K: pylon:kinetic_control_mechanism
