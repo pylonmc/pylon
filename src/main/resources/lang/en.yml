@@ -2853,6 +2853,7 @@ research:
   smelting_2: "<#ff6b0f>Smelting II"
   smelting_3: "<#ff6b0f>Smelting III"
   smelting_4: "<#ff6b0f>Smelting IV"
+  smelting_5: "<#ff6b0f>Smelting V"
   drilling_1: "<#4f4641>Drilling I"
   drilling_2: "<#4f4641>Drilling II"
   drilling_3: "<#4f4641>Drilling III"
@@ -2901,6 +2902,10 @@ research:
   silos_3: "<#ea9335>Silos III"
   potion_magic: "<#e5c4ef>Potion magic"
   experience_liquefaction: "<#1dc420>Experience Liquefaction"
+  electromagnetic_theory: "<#f3c600>Electromagnetic Theory"
+  power_grids: "<#f3c600>Power Grids"
+  electric_machines: "<#f3c600>Electric Machines"
+  voltaic_cells: "<#f3c600>Voltaic Cells"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"

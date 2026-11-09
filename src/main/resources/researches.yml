@@ -145,6 +145,18 @@ smelting_4:
     - pylon:smeltery_input_hatch
     - pylon:smeltery_output_hatch
 
+smelting_5:
+  item: pylon:smeltery_controller
+  cost: 60
+  unlocks:
+    - pylon:mold_wire
+    - pylon:copper_wire
+    - pylon:nickel_dust
+    - pylon:nickel_ingot
+    - pylon:nickel_nugget
+    - pylon:nickel_block
+    - pylon:nickel_sheet
+
 pressing:
   item: pylon:press
   cost: 5
@@ -511,6 +523,7 @@ diesel_machines:
     - pylon:diesel_brick_molder
     - pylon:diesel_refueling_station
     - pylon:diesel_experience_bottler
+    - pylon:lathe
 
 diesel_production:
   item: pylon:biorefinery
@@ -676,3 +689,43 @@ experience_liquefaction:
     - pylon:liquid_xp_bottle
     - pylon:liquid_xp_bottle_super
     - pylon:liquid_xp_bottle_ultra
+
+electromagnetic_theory:
+  item: pylon:electric_motor
+  cost: 30
+  unlocks:
+    - pylon:magnetic_bar
+    - pylon:electromagnet
+    - pylon:electric_motor
+    - pylon:dynamo
+
+power_grids:
+  item: pylon:wire_1_gauge
+  cost: 40
+  unlocks:
+    - pylon:steam_engine
+    - pylon:wire_1_gauge
+    - pylon:wire_hub
+
+electric_machines:
+  item: pylon:electric_mixer
+  cost: 60
+  unlocks:
+    - pylon:electric_grindstone
+    - pylon:electric_brick_molder
+    - pylon:electric_compressor
+    - pylon:electric_mixer
+    - pylon:electric_press
+    - pylon:electric_table_saw
+    - pylon:electric_quarry
+    - pylon:electric_pipe_bender
+    - pylon:electric_breaker
+    - pylon:electric_furnace
+
+voltaic_cells:
+  item: pylon:disposable_battery_1_kj
+  cost: 50
+  unlocks:
+    - pylon:disposable_battery_100_j
+    - pylon:disposable_battery_500_j
+    - pylon:disposable_battery_1_kj
