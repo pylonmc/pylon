@@ -3104,7 +3104,7 @@ pylon:steam_engine:
 pylon:lathe:
   pattern:
     - "DAS"
-    - " KI"
+    - "KIP"
     - " S "
   key:
     D: minecraft:diamond
@@ -3112,5 +3112,156 @@ pylon:lathe:
     S: pylon:steel_sheet
     K: pylon:kinetic_control_mechanism
     I: pylon:internal_combustion_engine
+    P: pylon:analogue_display
   result: pylon:lathe
   category: equipment
+
+pylon:wire_hub:
+  pattern:
+    - "CWC"
+    - "WWW"
+    - "CWC"
+  key:
+    C: pylon:copper_wire
+    W: "#minecraft:wool_carpets"
+  result:
+    pylon:wire_hub: 4
+  category: building
+
+pylon:electric_grindstone:
+  pattern:
+    - "SHS"
+    - "WEW"
+    - "SSS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    S: minecraft:smooth_stone
+    H: pylon:grindstone_handle
+  result: pylon:electric_grindstone
+  category: building
+
+pylon:electric_brick_molder:
+  pattern:
+    - "SBS"
+    - "WEW"
+    - "SSS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    S: pylon:iron_sheet
+    B: pylon:brick_mold
+  result: pylon:electric_brick_molder
+  category: building
+
+pylon:electric_compressor:
+  pattern:
+    - "EHE"
+    - "SCS"
+    - "SBS"
+  key:
+    E: pylon:electric_motor
+    H: pylon:hydraulic_motor
+    S: pylon:steel_sheet
+    C: pylon:hydraulic_cannon_chamber
+    B: pylon:steel_block
+  result: pylon:electric_compressor
+  category: building
+
+pylon:electric_mixer:
+  pattern:
+    - "ER "
+    - "WMP"
+    - "SLS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    R: pylon:rotor
+    M: pylon:mixing_pot
+    P: pylon:fluid_pipe_steel
+    S: pylon:steel_sheet
+    L: pylon:enriched_soul_soil
+  result: pylon:electric_mixer
+  category: building
+
+pylon:electric_press:
+  pattern:
+    - "IRI"
+    - "WEP"
+    - "SSS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    P: pylon:fluid_pipe_iron
+    I: minecraft:piston
+    S: pylon:iron_sheet
+    R: pylon:press
+  result: pylon:electric_press
+  category: building
+
+pylon:electric_table_saw:
+  pattern:
+    - "SAS"
+    - "WEW"
+    - "SSS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    A: pylon:sawblade
+    S: pylon:iron_sheet
+  result: pylon:electric_table_saw
+  category: building
+
+pylon:electric_quarry:
+  pattern:
+    - "BDB"
+    - "WEW"
+    - "BSB"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    D: pylon:steel_drill_bit
+    S: pylon:iron_sheet
+    B: minecraft:iron_ingot
+  result: pylon:electric_quarry
+  category: building
+
+pylon:electric_pipe_bender:
+  pattern:
+    - "LSL"
+    - "WEW"
+    - "SSS"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    L: minecraft:lever
+    S: pylon:iron_sheet
+  result: pylon:electric_pipe_bender
+  category: building
+
+pylon:electric_breaker:
+  pattern:
+    - "SSS"
+    - "WEW"
+    - "BDB"
+  key:
+    W: pylon:copper_wire
+    E: pylon:electric_motor
+    D: pylon:steel_drill_bit
+    S: pylon:iron_sheet
+    B: minecraft:iron_ingot
+  result: pylon:electric_breaker
+  category: building
+
+#pylon:electric_furnace:
+#  pattern:
+#    - "SFS"
+#    - "WEW"
+#    - "SSS"
+#  key:
+#    W: pylon:copper_wire
+#    E: pylon:electric_motor
+#    S: pylon:iron_sheet
+#    F: minecraft:furnace
+#  result: pylon:electric_furnace
+#  category: building
