@@ -8,6 +8,7 @@ import io.github.pylonmc.pylon.recipes.LatheRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.*;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
@@ -112,7 +113,7 @@ public class Lathe extends RebarBlock implements
         super(block, context);
         setFacing(context.getFacing());
 
-        createFluidPoint(FluidPointType.INPUT, BlockFace.EAST);
+        createFluidPoint(FluidPointType.INPUT, BlockFace.WEST, context, false);
         createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
 
         Quaternionf facingQuat = new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0));
@@ -233,6 +234,15 @@ public class Lathe extends RebarBlock implements
         RebarUtils.setNullable(pdc, RECIPE_KEY, RECIPE_TYPE, recipe);
     }
 
+    @Override
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        FluidBufferRebarBlock.super.onBlockBreak(drops, context);
+        ItemStack heldStack = getItemDisplay().getItemStack();
+        if (!heldStack.isEmpty()) {
+            drops.add(heldStack);
+        }
+    }
+
     private final List<BukkitTask> tasks = new ArrayList<>();
     private int startTick = -1;
 
@@ -256,6 +266,7 @@ public class Lathe extends RebarBlock implements
             reset();
             RebarUtils.addToInventoryOrDrop(player, existingItem);
             display.setItemStack(null);
+            recipe = null;
             return;
         }
 
@@ -408,11 +419,13 @@ public class Lathe extends RebarBlock implements
         display.setItemStack(null);
         Location location = display.getLocation();
         location.getWorld().dropItemNaturally(location, recipe.result());
+        recipe = null;
     }
 
     private void fail() {
         ItemDisplay display = getItemDisplay();
         display.setItemStack(null);
+        recipe = null;
         Location location = display.getLocation();
         location.getWorld().createExplosion(location, 1, false, false);
     }
