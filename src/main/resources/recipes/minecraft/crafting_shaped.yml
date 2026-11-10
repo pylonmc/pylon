@@ -133,6 +133,17 @@ pylon:salt_block_from_salt:
   category: building
   priority: -2
 
+pylon:carbon_block_from_carbon:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:carbon
+  result: pylon:carbon_block
+  category: building
+  priority: -2
+
 pylon:bronze_sword:
   pattern:
     - " I "
@@ -3075,6 +3086,29 @@ pylon:dynamo:
   result: pylon:dynamo
   category: equipment
 
+pylon:resistor:
+  pattern:
+    - " C "
+    - "WRW"
+    - "   "
+  key:
+    C: "#minecraft:wool_carpets"
+    W: pylon:copper_wire
+    R: pylon:carbon_rod
+  result: pylon:resistor
+  category: misc
+
+pylon:heating_element:
+  pattern:
+    - "WRW"
+    - "R R"
+    - "WRW"
+  key:
+    W: pylon:copper_wire
+    R: pylon:resistor
+  result: pylon:heating_element
+  category: misc
+
 pylon:wire_1_gauge:
   pattern:
     - "   "
@@ -3253,15 +3287,110 @@ pylon:electric_breaker:
   result: pylon:electric_breaker
   category: building
 
-#pylon:electric_furnace:
-#  pattern:
-#    - "SFS"
-#    - "WEW"
-#    - "SSS"
-#  key:
-#    W: pylon:copper_wire
-#    E: pylon:electric_motor
-#    S: pylon:iron_sheet
-#    F: minecraft:furnace
-#  result: pylon:electric_furnace
-#  category: building
+pylon:electric_furnace:
+  pattern:
+    - "SSS"
+    - "HFH"
+    - "SSS"
+  key:
+    H: pylon:heating_element
+    S: pylon:iron_sheet
+    F: minecraft:furnace
+  result: pylon:electric_furnace
+  category: building
+  
+pylon:charging_station:
+  pattern:
+    - "HHH"
+    - "WCW"
+    - "PPP"
+  key:
+    H: pylon:battery_holder
+    W: pylon:copper_wire
+    C: pylon:capacitor
+    P: "#minecraft:planks"
+  result: pylon:charging_station
+  category: building
+
+pylon:fuse:
+  pattern:
+    - "   "
+    - "INI"
+    - "   "
+  key:
+    I: pylon:copper_ingot
+    N: pylon:tin_nugget
+  result: pylon:fuse
+  category: misc
+
+pylon:battery_holder:
+  pattern:
+    - "   "
+    - "N H"
+    - "WIW"
+  key:
+    N: minecraft:iron_nugget
+    H: minecraft:tripwire_hook
+    W: pylon:copper_wire
+    I: pylon:iron_sheet
+  result: pylon:battery_holder
+  category: misc
+
+pylon:capacitor:
+  pattern:
+    - " C "
+    - " P "
+    - " C "
+  key:
+    C: pylon:copper_sheet
+    P: pylon:electrolytic_powder
+  result: pylon:capacitor
+  category: misc
+
+pylon:electro_boom:
+  pattern:
+    - "   "
+    - "WHW"
+    - "WWW"
+  key:
+    W: pylon:copper_wire
+    H: pylon:battery_holder
+  result: pylon:electro_boom
+  category: equipment
+  
+pylon:battery_500_j:
+  pattern:
+    - "TWT"
+    - "EEE"
+    - "FAC"
+  key:
+    T: pylon:copper_sheet
+    W: minecraft:water_bucket
+    E: pylon:electrolytic_powder
+    F: pylon:fuse
+    C: pylon:nimh_cathode
+    A: pylon:carbon_rod
+  result: pylon:battery_500_j
+  category: equipment
+
+pylon:battery_1_kj:
+  pattern:
+    - "   "
+    - "BCB"
+    - "   "
+  key:
+    B: pylon:battery_500_j
+    C: pylon:copper_wire
+  result: pylon:battery_1_kj
+  category: equipment
+
+pylon:battery_5_kj:
+  pattern:
+    - "BCB"
+    - "CBC"
+    - "BCB"
+  key:
+    B: pylon:battery_1_kj
+    C: pylon:copper_wire
+  result: pylon:battery_5_kj
+  category: equipment

@@ -5,3 +5,12 @@ pylon:steel_crankshaft:
     pylon:steel_dust: 8
   completion-value: 0.7
   margin-of-error: 0.1
+
+pylon:carbon_rod:
+  input: pylon:carbon_block
+  result:
+    pylon:carbon_rod: 2
+  byproduct:
+    pylon:carbon: 6
+  completion-value: 0.85
+  margin-of-error: 0.03

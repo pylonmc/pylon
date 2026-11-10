@@ -49,6 +49,12 @@ item:
   coal_dust:
     name: "Coal Dust"
 
+  carbon_block:
+    name: "Block of Carbon"
+
+  carbon_rod:
+    name: "Carbon Rod"
+
   carbon:
     name: "Carbon"
 
@@ -1454,6 +1460,12 @@ item:
   gypsum_dust:
     name: "Gypsum Dust"
 
+  resistor:
+    name: "Resistor"
+
+  heating_element:
+    name: "Heating Element"
+
   brick_mold:
     name: "Brick Mold"
     lore: |- 
@@ -2700,6 +2712,24 @@ item:
       <arrow> <attr>Power usage:</attr> %power-usage%
       <arrow> <attr>Smelting speed:</attr> %speed%
 
+  electrolytic_powder:
+    name: "Electrolytic Powder"
+
+  nimh_mix:
+    name: "NiMH Mix"
+
+  nimh_cathode:
+    name: "NiMH Cathode"
+
+  fuse:
+    name: "Fuse"
+
+  battery_holder:
+    name: "Battery Holder"
+
+  capacitor:
+    name: "Capacitor"
+
   creative_battery:
     name: "<#ff00ff>Creative Battery"
     lore: |-
@@ -2732,8 +2762,24 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Charge:</attr> %charge%
 
+  battery_500_j:
+    name: "500 J Battery"
+    lore: |-
+      <star> Rechargeable
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
   battery_1_kj:
     name: "1 kJ Battery"
+    lore: |-
+      <star> Rechargeable
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  battery_5_kj:
+    name: "5 kJ Battery"
     lore: |-
       <star> Rechargeable
       <arrow> Stores energy to be used in compatible items

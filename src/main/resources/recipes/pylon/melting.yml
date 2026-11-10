@@ -40,6 +40,12 @@ pylon:copper_from_pipe:
   amount: 72
   priority: -1
 
+pylon:copper_from_wire:
+  input: pylon:copper_wire
+  result: pylon:copper
+  amount: 18
+  priority: -1
+
 pylon:gold_from_ingot:
   input: minecraft:gold_ingot
   result: pylon:gold

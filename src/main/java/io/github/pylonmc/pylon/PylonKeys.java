@@ -11,6 +11,8 @@ public class PylonKeys {
     public static final NamespacedKey OBSIDIAN_CHIP = pylonKey("obsidian_chip");
 
     public static final NamespacedKey COAL_DUST = pylonKey("coal_dust");
+    public static final NamespacedKey CARBON_BLOCK = pylonKey("carbon_block");
+    public static final NamespacedKey CARBON_ROD = pylonKey("carbon_rod");
     public static final NamespacedKey CARBON = pylonKey("carbon");
     public static final NamespacedKey CHARCOAL_BLOCK = pylonKey("charcoal_block");
 
@@ -515,6 +517,9 @@ public class PylonKeys {
     public static final NamespacedKey ELECTRIC_BREAKER = pylonKey("electric_breaker");
     public static final NamespacedKey ELECTRIC_FURNACE = pylonKey("electric_furnace");
 
+    public static final NamespacedKey RESISTOR = pylonKey("resistor");
+    public static final NamespacedKey HEATING_ELEMENT = pylonKey("heating_element");
+
     public static final NamespacedKey DISPOSABLE_BATTERY_100_J = pylonKey("disposable_battery_100_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_500_J = pylonKey("disposable_battery_500_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_1_KJ = pylonKey("disposable_battery_1_kj");
@@ -525,8 +530,18 @@ public class PylonKeys {
     public static final NamespacedKey ELECTRIC_MOTOR = pylonKey("electric_motor");
     public static final NamespacedKey DYNAMO = pylonKey("dynamo");
 
+    public static final NamespacedKey ELECTROLYTIC_POWDER = pylonKey("electrolytic_powder");
+    public static final NamespacedKey NIMH_MIX = pylonKey("nimh_mix");
+    public static final NamespacedKey NIMH_CATHODE = pylonKey("nimh_cathode");
+    public static final NamespacedKey FUSE = pylonKey("fuse");
+    public static final NamespacedKey BATTERY_HOLDER = pylonKey("battery_holder");
+    public static final NamespacedKey CAPACITOR = pylonKey("capacitor");
+
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
-    public static final NamespacedKey BATTERY_1_KJ= pylonKey("battery_1_kj");
+    public static final NamespacedKey BATTERY_500_J = pylonKey("battery_500_j");
+    public static final NamespacedKey BATTERY_1_KJ = pylonKey("battery_1_kj");
+    public static final NamespacedKey BATTERY_5_KJ = pylonKey("battery_5_kj");
+
     public static final NamespacedKey ELECTRO_BOOM = pylonKey("electro_boom");
     public static final NamespacedKey ENTITY_SENSOR = pylonKey("entity_sensor");
     public static final NamespacedKey TEZLA_TOWER = pylonKey("tezla_tower");

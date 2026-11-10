@@ -97,6 +97,14 @@ pylon:salt_from_salt_block:
     pylon:salt: 9
   category: building
   priority: -2
+  
+pylon:carbon_from_carbon_block:
+  ingredients:
+    - pylon:carbon_block
+  result:
+    pylon:carbon: 9
+  category: building
+  priority: -2
 
 pylon:shimmer_dust_1:
   ingredients:
@@ -179,3 +187,17 @@ pylon:magnetic_bar:
     - pylon:nickel_sheet
     - minecraft:iron_ingot
   result: pylon:magnetic_bar
+
+pylon:electrolytic_powder:
+  ingredients:
+    - pylon:salt
+    - minecraft:redstone
+  result: pylon:electrolytic_powder
+
+pylon:nimh_mix:
+  ingredients:
+    - pylon:nickel_dust
+    - pylon:tin_dust
+    - pylon:iron_dust
+  result:
+    pylon:nimh_mix: 2

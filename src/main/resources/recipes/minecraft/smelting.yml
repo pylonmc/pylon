@@ -28,3 +28,9 @@ pylon:salt:
     pylon:salt: 2
   experience: 0.2
   category: misc
+
+pylon:nimh_cathode:
+  ingredient: pylon:nimh_mix
+  result: pylon:nimh_cathode
+  experience: 1
+  category: misc

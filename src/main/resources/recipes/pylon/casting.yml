@@ -239,5 +239,5 @@ pylon:nickel_sheet:
 pylon:copper_wire:
   mold: pylon:mold_wire
   input:
-    pylon:copper: 9
+    pylon:copper: 18
   result: pylon:copper_wire
