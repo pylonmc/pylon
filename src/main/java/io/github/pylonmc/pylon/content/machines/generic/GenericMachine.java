@@ -141,7 +141,7 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
 
         startRecipe(recipe, getRecipeTicks(recipe));
         getRecipeProgressItem().setItem(ItemStackBuilder.of(stack.asOne()).clearLore());
-        inputInventory.setItem(new MachineUpdateReason(), 0, stack.subtract(input.getAmount()));
+        inputInventory.setItem(new MachineUpdateReason(), 0, RebarUtils.consumeItem(stack, input.getAmount(), replaceInputUseRemainder()));
         return true;
     }
 
@@ -178,5 +178,9 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
                 "input", inputInventory,
                 "output", outputInventory
         );
+    }
+
+    protected boolean replaceInputUseRemainder() {
+        return true;
     }
 }

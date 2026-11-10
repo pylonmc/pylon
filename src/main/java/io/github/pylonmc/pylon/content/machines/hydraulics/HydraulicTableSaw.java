@@ -3,7 +3,6 @@ package io.github.pylonmc.pylon.content.machines.hydraulics;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.TableSawRecipe;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -24,10 +23,10 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -206,7 +205,7 @@ public class HydraulicTableSaw extends RebarBlock implements
 
     @Override
     public void onRecipeFinished(@NotNull TableSawRecipe recipe) {
-        getItemDisplay().setItemStack(getItemDisplay().getItemStack().subtract(recipe.input().getAmount()));
+        RebarUtils.consumeItem(getItemDisplay(), recipe.input().getAmount());
         getBlock().getWorld().dropItemNaturally(
                 getBlock().getLocation().toCenterLocation().add(0, 0.75, 0),
                 recipe.result()
