@@ -3318,7 +3318,7 @@ pylon:fuse:
     - "INI"
     - "   "
   key:
-    I: pylon:copper_ingot
+    I: minecraft:copper_ingot
     N: pylon:tin_nugget
   result: pylon:fuse
   category: misc
