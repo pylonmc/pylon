@@ -277,48 +277,49 @@ public class Lathe extends RebarBlock implements
 
     private void chooseRecipe(Player player, ItemStack input) {
         if (input.isEmpty()) return;
-        var items = LatheRecipe.RECIPE_TYPE.stream()
+        List<LatheRecipe> recipes = LatheRecipe.RECIPE_TYPE.stream()
                 .filter(recipe -> recipe.input().matchesIgnoringAmount(input))
-                .map(recipe -> xyz.xenondevs.invui.item.Item.builder()
-                        .setItemProvider(new ItemWrapper(recipe.result()))
-                        .addClickHandler(_ -> {
-                            getItemDisplay().setItemStack(input.asOne());
-                            input.subtract();
-                            player.closeInventory();
-                            this.recipe = recipe;
-                            setUpNewRecipe();
-                        })
-                        .build()
-                )
                 .toList();
 
-        if (items.isEmpty()) {
+        if (recipes.isEmpty()) {
             player.sendMessage(Component.translatable("pylon.message.invalid_recipe"));
-            return;
-        }
+        } else if (recipes.size() == 1) {
+            setUpNewRecipe(player, input, recipes.getFirst());
+        } else {
+            var items = recipes.stream()
+                    .map(recipe -> xyz.xenondevs.invui.item.Item.builder()
+                            .setItemProvider(new ItemWrapper(recipe.result()))
+                            .addClickHandler(_ -> setUpNewRecipe(player, input, recipe))
+                            .build()
+                    )
+                    .toList();
 
-        Gui gui = PagedGui.itemsBuilder()
-                .setStructure(
-                        "# # # # # # # # #",
-                        "# x x x x x x x #",
-                        "# x x x x x x x #",
-                        "# x x x x x x x #",
-                        "# # # < # > # # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-                .addIngredient('<', GuiItems.pagePrevious())
-                .addIngredient('>', GuiItems.pageNext())
-                .setContent(items)
-                .build();
-        Window.builder()
-                .setUpperGui(gui)
-                .setTitle(Component.translatable("pylon.gui.lathe.select-recipe"))
-                .open(player);
+            Gui gui = PagedGui.itemsBuilder()
+                    .setStructure(
+                            "# # # # # # # # #",
+                            "# x x x x x x x #",
+                            "# x x x x x x x #",
+                            "# x x x x x x x #",
+                            "# # # < # > # # #"
+                    )
+                    .addIngredient('#', GuiItems.background())
+                    .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                    .addIngredient('<', GuiItems.pagePrevious())
+                    .addIngredient('>', GuiItems.pageNext())
+                    .setContent(items)
+                    .build();
+            Window.builder()
+                    .setUpperGui(gui)
+                    .setTitle(Component.translatable("pylon.gui.lathe.select-recipe"))
+                    .open(player);
+        }
     }
 
-    private void setUpNewRecipe() {
-        if (recipe == null) return;
+    private void setUpNewRecipe(Player player, ItemStack input, LatheRecipe recipe) {
+        getItemDisplay().setItemStack(input.asOne());
+        input.subtract();
+        player.closeInventory();
+        this.recipe = recipe;
 
         float completionValue = recipe.completionValue();
         float marginOfError = recipe.marginOfError();
