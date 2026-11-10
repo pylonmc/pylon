@@ -322,7 +322,7 @@ public class PotionAltar extends RebarBlock
             for (Block candle : getCandles()) {
                 new ParticleBuilder(Particle.FLAME)
                         .count(10)
-                        .extra(0.02)
+                        .speed(0.02)
                         .location(candle.getLocation().toCenterLocation())
                         .spawn();
             }
@@ -330,13 +330,13 @@ public class PotionAltar extends RebarBlock
             new ParticleBuilder(Particle.WAX_OFF)
                     .location(getBlock().getLocation().toCenterLocation().add(2*Math.sin(30*Math.toRadians(ticked)), 0.25+0.25*Math.sin(30*Math.toRadians(ticked)), 2*Math.cos(30*Math.toRadians(ticked))))
                     .count(50)
-                    .extra(0.5)
+                    .speed(0.5)
                     .spawn();
 
             new ParticleBuilder(Particle.WAX_ON)
                     .location(getBlock().getLocation().toCenterLocation().add(2*Math.sin(30*Math.toRadians(ticked)+Math.PI), 0.25+0.25*Math.sin(30*Math.toRadians(ticked)), 2*Math.cos(30*Math.toRadians(ticked)+Math.PI)))
                     .count(50)
-                    .extra(0.5)
+                    .speed(0.5)
                     .spawn();
 
             // sound
@@ -350,14 +350,14 @@ public class PotionAltar extends RebarBlock
         int speed = isProcessingRecipe() ? 40 : 10;
         new ParticleBuilder(Particle.DRAGON_BREATH)
                 .count(10)
-                .extra(0.02)
+                .speed(0.02)
                 .location(getBlock().getLocation().toCenterLocation().add(Math.sin(speed*Math.toRadians(ticked)), 0, Math.cos(speed*Math.toRadians(ticked))))
                 .data(1f)
                 .spawn();
 
         new ParticleBuilder(Particle.DUST)
                 .count(20)
-                .extra(0.02)
+                .speed(0.02)
                 .location(getBlock().getLocation().toCenterLocation())
                 .data(new Particle.DustOptions(Color.fromRGB(0x0055AAAA), 1))
                 .spawn();
@@ -433,7 +433,7 @@ public class PotionAltar extends RebarBlock
 
         new ParticleBuilder(Particle.VIBRATION)
                 .count(40)
-                .extra(0.02)
+                .speed(0.02)
                 .location(getBlock().getLocation().toCenterLocation())
                 .data(new Vibration(new BlockDestination(getBlock().getLocation().toCenterLocation().add(0, 3, 0)), 10))
                 .spawn();
@@ -472,7 +472,7 @@ public class PotionAltar extends RebarBlock
         for (Block candle : getCandles()) {
             new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                     .count(20)
-                    .extra(0.05)
+                    .speed(0.05)
                     .location(candle.getLocation().toCenterLocation())
                     .spawn();
         }

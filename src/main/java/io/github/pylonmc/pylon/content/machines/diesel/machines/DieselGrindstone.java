@@ -140,7 +140,7 @@ public class DieselGrindstone extends GenericGrindstone implements
                 .location(getBlock().getLocation().toCenterLocation().add(smokePosition))
                 .offset(0, 1, 0)
                 .count(0)
-                .extra(0.05)
+                .speed(0.05)
                 .spawn();
         stoneRotation += Math.PI / 2.2;
         PylonUtils.animate(

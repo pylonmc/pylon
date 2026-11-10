@@ -206,7 +206,7 @@ public class Grindstone extends RebarBlock implements
                     new ParticleBuilder(Particle.ITEM)
                             .data(particleItem)
                             .count(20)
-                            .extra(0.1)
+                            .speed(0.1)
                             .location(getBlock().getLocation().toCenterLocation())
                             .spawn();
 

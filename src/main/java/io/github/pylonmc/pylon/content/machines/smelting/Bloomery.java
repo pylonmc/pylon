@@ -154,7 +154,7 @@ public final class Bloomery extends RebarBlock implements
                     ThreadLocalRandom.current().nextDouble(1)
             );
             new ParticleBuilder(Particle.SMOKE)
-                    .extra(0.01)
+                    .speed(0.01)
                     .count(0)
                     .offset(0, 1, 0)
                     .location(pos)

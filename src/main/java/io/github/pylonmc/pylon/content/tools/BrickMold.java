@@ -60,7 +60,7 @@ public class BrickMold extends RebarItem implements BlockInteractRebarItemHandle
         }
         new ParticleBuilder(Particle.ITEM)
                 .count(50)
-                .extra(0.1)
+                .speed(0.1)
                 .offset(0.2, 0.2, 0.2)
                 .location(event.getClickedBlock().getLocation().toCenterLocation())
                 .data(particleType)

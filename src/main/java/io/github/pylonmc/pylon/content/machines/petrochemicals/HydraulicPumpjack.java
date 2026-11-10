@@ -293,7 +293,7 @@ public class HydraulicPumpjack extends RebarBlock implements
                     .location(getMultiblockBlock(HYDRAULIC_FRACTURE).getLocation().toCenterLocation().add(0, 0.6, 0))
                     .count((int) (10 * -Math.sin(Math.PI * 2.0 * animationTick / strokeDuration)))
                     .offset(0.2, 0, 0.2)
-                    .extra(0.003)
+                    .speed(0.003)
                     .spawn();
         }
 
@@ -301,13 +301,13 @@ public class HydraulicPumpjack extends RebarBlock implements
             new ParticleBuilder(Particle.FLAME)
                     .location(getMultiblockBlock(FLARE_STACK_TIP).getLocation().toCenterLocation().add(0, 0.6, 0))
                     .count(20)
-                    .extra(0.0)
+                    .speed(0.0)
                     .spawn();
             new ParticleBuilder(Particle.LARGE_SMOKE)
                     .location(getMultiblockBlock(FLARE_STACK_TIP).getLocation().toCenterLocation().add(0, 0.9, 0))
                     .count(50)
                     .offset(0.1, 0.1, 0.1)
-                    .extra(0.01)
+                    .speed(0.01)
                     .spawn();
         }
 

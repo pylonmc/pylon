@@ -91,7 +91,7 @@ public class CombustionTower extends RebarBlock implements
                 .location(getBlock().getLocation().add(Vector.fromJOML(SMOKESTACK_POS)).toCenterLocation())
                 .offset(0, 1, 0)
                 .count(0)
-                .extra(0.03)
+                .speed(0.03)
                 .spawn();
     }
 

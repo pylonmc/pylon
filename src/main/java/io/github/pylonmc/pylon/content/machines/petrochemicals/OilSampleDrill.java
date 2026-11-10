@@ -220,7 +220,7 @@ public class OilSampleDrill extends RebarBlock implements
         new ParticleBuilder(Particle.SMOKE)
                 .location(getBlock().getLocation().toCenterLocation().add(smokePosition))
                 .count(20)
-                .extra(0)
+                .speed(0)
                 .spawn();
 
         sampleProcessor.tick(getTickInterval());
