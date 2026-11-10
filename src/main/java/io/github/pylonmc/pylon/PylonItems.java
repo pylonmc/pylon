@@ -17,7 +17,6 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
-import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
 import io.github.pylonmc.pylon.content.machines.electricity.ChargingStation;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
@@ -3715,14 +3714,6 @@ public final class PylonItems {
         RebarItem.register(RebarItem.class, WIRE_HUB, PylonKeys.WIRE_HUB);
         PylonPages.BUILDING.addItem(WIRE_HUB);
     }
-
-    public static final ItemStack CAPACITOR_1_KJ = ItemStackBuilder.rebar(Material.BLUE_GLAZED_TERRACOTTA, PylonKeys.CAPACITOR_1_KJ)
-            .build();
-
-    static {
-        RebarItem.register(Capacitor.Item.class, CAPACITOR_1_KJ, PylonKeys.CAPACITOR_1_KJ);
-        PylonPages.BUILDING.addItem(CAPACITOR_1_KJ);
-    }
     
     public static final ItemStack MAGNETIC_BAR = ItemStackBuilder.rebar(Material.NETHERITE_INGOT, PylonKeys.MAGNETIC_BAR)
             .build();
@@ -3774,6 +3765,24 @@ public final class PylonItems {
     static {
         RebarItem.register(PylonWire.class, WIRE_1_GAUGE, PylonKeys.WIRE_1_GAUGE);
         PylonPages.TOOLS.addItem(WIRE_1_GAUGE);
+    }
+
+    public static final ItemStack WIRE_2_GAUGE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.WIRE_2_GAUGE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.STRING.key())
+            .build();
+
+    static {
+        RebarItem.register(PylonWire.class, WIRE_2_GAUGE, PylonKeys.WIRE_2_GAUGE);
+        PylonPages.TOOLS.addItem(WIRE_2_GAUGE);
+    }
+
+    public static final ItemStack WIRE_3_GAUGE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.WIRE_3_GAUGE)
+            .set(DataComponentTypes.ITEM_MODEL, Material.STRING.key())
+            .build();
+
+    static {
+        RebarItem.register(PylonWire.class, WIRE_3_GAUGE, PylonKeys.WIRE_3_GAUGE);
+        PylonPages.TOOLS.addItem(WIRE_3_GAUGE);
     }
 
     public static final ItemStack CREATIVE_POWER_SOURCE = ItemStackBuilder.rebar(Material.PINK_STAINED_GLASS, PylonKeys.CREATIVE_POWER_SOURCE)

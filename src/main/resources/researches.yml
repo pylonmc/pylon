@@ -102,6 +102,7 @@ smelting_2:
   unlocks:
     - pylon:kiln
     - pylon:carbon
+    - pylon:carbon_block
     - pylon:sulfur
     - pylon:sulfur_block
 
@@ -610,6 +611,13 @@ components_2:
     - pylon:smokestack_cap
     - pylon:steel_drill_bit
 
+components_3:
+  item: pylon:electricity_input_hatch
+  cost: 20
+  unlocks:
+    - pylon:electricity_input_hatch
+    - pylon:electricity_output_hatch
+
 straining:
   item: pylon:fluid_strainer
   cost: 10
@@ -705,6 +713,7 @@ power_grids:
   unlocks:
     - pylon:steam_engine
     - pylon:wire_1_gauge
+    - pylon:wire_2_gauge
     - pylon:wire_hub
 
 electric_machines:
@@ -721,6 +730,24 @@ electric_machines:
     - pylon:electric_pipe_bender
     - pylon:electric_breaker
     - pylon:electric_furnace
+    - pylon:charging_station
+
+electrochemistry:
+  item: pylon:electrolytic_powder
+  cost: 20
+  unlocks:
+    - pylon:carbon_rod
+    - pylon:electrolytic_powder
+
+electric_components:
+  item: pylon:resistor
+  cost: 50
+  unlocks:
+    - pylon:resistor
+    - pylon:heating_element
+    - pylon:fuse
+    - pylon:battery_holder
+    - pylon:capacitor
 
 voltaic_cells:
   item: pylon:disposable_battery_1_kj
@@ -729,3 +756,22 @@ voltaic_cells:
     - pylon:disposable_battery_100_j
     - pylon:disposable_battery_500_j
     - pylon:disposable_battery_1_kj
+
+grid_scale_power:
+  item: pylon:wire_3_gauge
+  cost: 100
+  unlocks:
+    - pylon:combustion_tower
+    - pylon:heat_exchanger
+    - pylon:gas_turbine
+    - pylon:wire_3_gauge
+    - pylon:battery_5_kj
+
+nickel_metal_hydrides:
+  item: pylon:nimh_mix
+  cost: 80
+  unlocks:
+    - pylon:nimh_mix
+    - pylon:nimh_cathode
+    - pylon:battery_500_j
+    - pylon:battery_1_kj

@@ -3118,6 +3118,28 @@ pylon:wire_1_gauge:
     W: pylon:copper_wire
   result: pylon:wire_1_gauge
   category: building
+
+pylon:wire_2_gauge:
+  pattern:
+    - "   "
+    - "WCW"
+    - "   "
+  key:
+    W: pylon:wire_1_gauge
+    C: "#minecraft:wool_carpets"
+  result: pylon:wire_2_gauge
+  category: building
+
+pylon:wire_3_gauge:
+  pattern:
+    - "   "
+    - "WCW"
+    - "   "
+  key:
+    W: pylon:wire_2_gauge
+    C: "#minecraft:wool_carpets"
+  result: pylon:wire_3_gauge
+  category: building
   
 pylon:steam_engine:
   pattern:

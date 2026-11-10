@@ -2630,16 +2630,23 @@ item:
       <arrow> Transmits electricity
       <arrow> <insn>Right click</insn> on an electric port to start connecting
       <arrow> <insn>Right click</insn> on another electric port to connect the two ports
-      <arrow> <attr>Max power:</attr> %max-power%
+      <arrow> <attr>Max power throughput:</attr> %max-power%
 
-  capacitor_1_kj:
-    name: "1 kJ Capacitor"
+  wire_2_gauge:
+    name: "2-Gauge Wire"
     lore: |-
-      <arrow> Stores electricity
-      <arrow> Capacitors will only take excess power that other blocks can't use
-      <arrow> <insn>Right click the block</insn> to display the stored power on that block face
-      <arrow> <insn>Right click again</insn> to stop displaying the power
-      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> Transmits electricity
+      <arrow> <insn>Right click</insn> on an electric port to start connecting
+      <arrow> <insn>Right click</insn> on another electric port to connect the two ports
+      <arrow> <attr>Max power throughput:</attr> %max-power%
+
+  wire_3_gauge:
+    name: "3-Gauge Wire"
+    lore: |-
+      <arrow> Transmits electricity
+      <arrow> <insn>Right click</insn> on an electric port to start connecting
+      <arrow> <insn>Right click</insn> on another electric port to connect the two ports
+      <arrow> <attr>Max power throughput:</attr> %max-power%
 
   electric_grindstone:
     name: "Electric Grindstone"
@@ -2952,6 +2959,10 @@ research:
   power_grids: "<#f3c600>Power Grids"
   electric_machines: "<#f3c600>Electric Machines"
   voltaic_cells: "<#f3c600>Voltaic Cells"
+  electrochemistry: "<#f3c600>Electrochemistry"
+  electric_components: "<#f3c600>Electric Components"
+  nickel_metal_hydrides: "<#f3c600>Nickel-Metal Hydrides"
+  grid_scale_power: "<#f3c600>Grid-Scale Power"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"
