@@ -3333,6 +3333,20 @@ pylon:charging_station:
     P: "#minecraft:planks"
   result: pylon:charging_station
   category: building
+  
+pylon:battery_bank:
+  pattern:
+    - "HHH"
+    - "WBF"
+    - "PPP"
+  key:
+    H: pylon:battery_holder
+    W: pylon:copper_wire
+    B: minecraft:chiseled_bookshelf
+    F: pylon:fuse
+    P: "#minecraft:planks"
+  result: pylon:battery_bank
+  category: building
 
 pylon:fuse:
   pattern:

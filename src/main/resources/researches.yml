@@ -715,6 +715,7 @@ power_grids:
     - pylon:wire_1_gauge
     - pylon:wire_2_gauge
     - pylon:wire_hub
+    - pylon:battery_bank
 
 electric_machines:
   item: pylon:electric_mixer
