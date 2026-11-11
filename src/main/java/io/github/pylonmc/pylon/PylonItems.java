@@ -4030,6 +4030,13 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BATTERY_5_KJ);
     }
 
+    public static final ItemStack BATTERY_BANK = ItemStackBuilder.rebar(Material.CHISELED_BOOKSHELF, PylonKeys.BATTERY_BANK)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BATTERY_BANK, PylonKeys.BATTERY_BANK);
+        PylonPages.ELECTRIC_MACHINES.addItem(BATTERY_BANK);
+    }
+
     public static final ItemStack ELECTRO_BOOM = ItemStackBuilder.rebar(Material.SNOWBALL, PylonKeys.ELECTRO_BOOM)
             .build();
     static {
@@ -4041,7 +4048,7 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(EntitySensor.Item.class, ENTITY_SENSOR, PylonKeys.ENTITY_SENSOR);
-        PylonPages.COMPONENTS.addItem(ENTITY_SENSOR);
+        PylonPages.ELECTRIC_MACHINES.addItem(ENTITY_SENSOR);
     }
 
     public static final ItemStack TEZLA_TOWER = ItemStackBuilder.rebar(Material.LIGHTNING_ROD, PylonKeys.TEZLA_TOWER)

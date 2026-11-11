@@ -1,8 +1,7 @@
 package io.github.pylonmc.pylon.content.tools.electric;
 
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.PylonTags;
-import io.github.pylonmc.pylon.content.machines.electricity.Capacitor;
+import io.github.pylonmc.pylon.content.machines.electricity.BatteryBank;
 import io.github.pylonmc.pylon.content.tools.EntitySensor;
 import io.github.pylonmc.pylon.util.ElectricBolt;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -71,8 +70,8 @@ public class TezlaTower extends RebarBlock implements
     @Override
     public void tick() {
         if (!isFormedAndFullyLoaded() || power == 0 || !on) return;
-        Capacitor capacitor = getMultiblockComponentOrThrow(Capacitor.class, CAPACITOR_POSITION);
-        if (capacitor.getStoredEnergy() < power) return;
+        BatteryBank bank = getMultiblockComponentOrThrow(BatteryBank.class, CAPACITOR_POSITION);
+        if (bank.getStoredEnergy() < power) return;
         EntitySensor sensor = getMultiblockComponentOrThrow(EntitySensor.class, SENSOR_POSITION);
 
         Set<Entity> sensed = sensor.getSensedEntities();
@@ -84,7 +83,7 @@ public class TezlaTower extends RebarBlock implements
         }
         if (sensedLiving.isEmpty()) return;
 
-        capacitor.discharge(power);
+        bank.discharge(power);
         ElectricBolt.spawn(
                 getBlock().getLocation().toCenterLocation().add(0, 1, 0),
                 1,
@@ -105,7 +104,7 @@ public class TezlaTower extends RebarBlock implements
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
         return Map.of(
-                CAPACITOR_POSITION, MultiblockComponent.of(PylonTags.CAPACITORS),
+                CAPACITOR_POSITION, MultiblockComponent.of(PylonKeys.BATTERY_BANK),
                 SENSOR_POSITION, MultiblockComponent.of(PylonKeys.ENTITY_SENSOR)
         );
     }
@@ -135,7 +134,7 @@ public class TezlaTower extends RebarBlock implements
                                         "power",
                                         Component.translatable("pylon.gui.tezla-tower.power-per-discharge"),
                                         0,
-                                        (float) getMultiblockComponentOrThrow(Capacitor.class, CAPACITOR_POSITION).getCapacity()
+                                        (float) getMultiblockComponentOrThrow(BatteryBank.class, CAPACITOR_POSITION).getCapacity()
                                 )
                                 .initial(power)
                                 .step(1f)

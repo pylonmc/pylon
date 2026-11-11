@@ -2793,6 +2793,13 @@ item:
       <arrow> <attr>Capacity:</attr> %capacity%
       <arrow> <attr>Charge:</attr> %charge%
 
+  battery_bank:
+    name: "Battery Bank"
+    lore: |-
+      <arrow> Allows up to six batteries to connect to the power grid
+      <arrow> Place them in like books into a chiseled bookshelf
+      <arrow> The Battery Bank has low priority, so it will only take surplus power and supply power only when needed
+
   electro_boom:
     name: "ElectroBOOM"
     lore: |-

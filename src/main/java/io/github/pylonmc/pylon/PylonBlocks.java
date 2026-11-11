@@ -11,10 +11,7 @@ import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
-import io.github.pylonmc.pylon.content.machines.electricity.ChargingStation;
-import io.github.pylonmc.pylon.content.machines.electricity.ElectricityInputHatch;
-import io.github.pylonmc.pylon.content.machines.electricity.ElectricityOutputHatch;
-import io.github.pylonmc.pylon.content.machines.electricity.WireHub;
+import io.github.pylonmc.pylon.content.machines.electricity.*;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
@@ -248,5 +245,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ENTITY_SENSOR, Material.CHISELED_QUARTZ_BLOCK, EntitySensor.class);
         RebarBlock.register(PylonKeys.TEZLA_TOWER, Material.LIGHTNING_ROD, TezlaTower.class);
         RebarBlock.register(PylonKeys.CHARGING_STATION, Material.CRAFTING_TABLE, ChargingStation.class);
+        RebarBlock.register(PylonKeys.BATTERY_BANK, Material.CHISELED_BOOKSHELF, BatteryBank.class);
     }
 }
