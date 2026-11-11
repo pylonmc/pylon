@@ -84,6 +84,8 @@ public class BatteryBank extends RebarBlock implements
             state.getInventory().setItem(e.getSlot(), newItem == null ? null : ItemStack.of(Material.BOOK));
 
             output.setPower(getStoredEnergy());
+
+            refreshBlockTextureItem();
         });
 
         for (int i = 0; i < 6; i++) {
