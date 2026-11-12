@@ -2,9 +2,9 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.content.components.ElectricityOutputHatch;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
-import io.github.pylonmc.pylon.content.machines.electricity.ElectricityOutputHatch;
 import io.github.pylonmc.pylon.recipes.GasTurbineRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
