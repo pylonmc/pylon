@@ -10,6 +10,7 @@ import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.CargoRebarBlockHandler;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
+import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.content.cargo.CargoDuct;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
@@ -126,7 +127,7 @@ public class CargoExtractor extends CargoInteractor implements
     public CargoExtractor(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
 
-        setTickInterval(transferRate * 20);
+        setTickInterval(RebarConfig.CARGO_TICK_INTERVAL);
 
         addCargoLogisticGroup(getFacing(), "output");
         for (BlockFace face : RebarUtils.perpendicularImmediateFaces(getFacing())) {
@@ -252,11 +253,17 @@ public class CargoExtractor extends CargoInteractor implements
         LogisticGroup group = targetGroups.get(targetLogisticGroup);
         Preconditions.checkState(group != null);
         ItemStack output = outputInventory.getUnsafeItem(0);
-        if (output != null && output.getAmount() == output.getMaxStackSize()) {
+        if (output != null && output.getAmount() >= output.getMaxStackSize()) {
             return;
         }
 
+        long remainingTransfers = (long) transferRate * RebarConfig.CARGO_TRANSFER_RATE_MULTIPLIER;
+
         for (LogisticSlot slot : group.getSlots()) {
+            if (remainingTransfers <= 0) {
+                break;
+            }
+
             ItemStack slotStack = slot.getItemStack();
             if (slotStack == null || slot.getAmount() == 0 || (output != null && !output.isSimilar(slotStack))) {
                 continue;
@@ -278,14 +285,26 @@ public class CargoExtractor extends CargoInteractor implements
                 }
             }
 
-            if (output == null) {
-                RebarUtils.unsafeSet(outputInventory, 0, singleton == null ? slotStack.asOne() : singleton);
-            } else {
-                RebarUtils.unsafeAdd(outputInventory, 0, 1);
+            int toTransfer = (int) Math.min(remainingTransfers, slot.getAmount());
+            toTransfer = Math.min(toTransfer, output == null
+                    ? slotStack.getMaxStackSize()
+                    : output.getMaxStackSize() - output.getAmount());
+            if (toTransfer <= 0) {
+                continue;
             }
-            long newAmount = slot.getAmount() - 1;
+
+            if (output == null) {
+                RebarUtils.unsafeSet(outputInventory, 0, (singleton == null ? slotStack : singleton).asQuantity(toTransfer));
+                output = outputInventory.getUnsafeItem(0);
+            } else {
+                RebarUtils.unsafeAdd(outputInventory, 0, toTransfer);
+            }
+            long newAmount = slot.getAmount() - toTransfer;
             slot.set(newAmount == 0 ? null : slotStack, newAmount);
-            return;
+            remainingTransfers -= toTransfer;
+            if (output.getAmount() >= output.getMaxStackSize()) {
+                break;
+            }
         }
     }
 
