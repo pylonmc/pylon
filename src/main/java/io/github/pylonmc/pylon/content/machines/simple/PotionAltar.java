@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.content.building.Altar;
 import io.github.pylonmc.pylon.content.building.Pedestal;
 import io.github.pylonmc.pylon.content.tools.base.PotionCatalyst;
 import io.github.pylonmc.pylon.util.HslColor;
@@ -55,7 +56,7 @@ import org.joml.Vector3i;
  * @author balugaq
  */
 public class PotionAltar extends RebarBlock
-        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, DirectionalRebarBlock, BlockBreakRebarBlockHandler {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, DirectionalRebarBlock, BlockBreakRebarBlockHandler, Altar {
 
     private static final NamespacedKey RECIPE_TICKS_REMAINING_KEY = PylonUtils.pylonKey("potion_altar_recipe_ticks_remaining");
     private static final MultiblockComponent SHIMMER_PEDESTAL_COMPONENT = MultiblockComponent.of(PylonKeys.SHIMMER_PEDESTAL);
@@ -180,8 +181,25 @@ public class PotionAltar extends RebarBlock
         return mixedColor;
     }
 
-    private boolean isProcessingRecipe() {
+    public boolean isProcessingRecipe() {
         return altarProgress != null;
+    }
+
+    @Override
+    public boolean checkFormed() {
+        // pedestals locked by another altar cannot be used to form this altar (issue #171)
+        return SimpleRebarMultiblock.super.checkFormed()
+                && getValidPedestals().size() == getAllPedestals().size();
+    }
+
+    /**
+     * @return existing pedestals that are not locked by another altar
+     */
+    private List<Pedestal> getValidPedestals() {
+        return getAllPedestals().stream()
+                .filter(Objects::nonNull)
+                .filter(p -> !p.isLockedByOtherThan(getBlock()))
+                .toList();
     }
 
     @Override @MultiHandler(priorities = { EventPriority.NORMAL, EventPriority.MONITOR })
@@ -218,6 +236,12 @@ public class PotionAltar extends RebarBlock
             return null;
         }
 
+        // missing or foreign-locked pedestals must not be used (issue #171);
+        // pedestals locked by this altar are fine so that recipe recovery works
+        if (getValidPedestals().size() < getAllPedestals().size()) {
+            return null;
+        }
+
         ItemStack catalystItem = getCatalystPedestal().getItemDisplay().getItemStack();
         PotionCatalyst catalyst = RebarItem.fromStack(catalystItem, PotionCatalyst.class);
         if (catalyst == null) {
@@ -245,10 +269,8 @@ public class PotionAltar extends RebarBlock
         }
 
         // attempt to start recipe
-        for (Pedestal pedestal : getAllPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(true);
-            }
+        for (Pedestal pedestal : getValidPedestals()) {
+            pedestal.lock(getBlock());
         }
 
         Map<PotionEffectType, PotionEffect> effects = new HashMap<>();
@@ -421,10 +443,8 @@ public class PotionAltar extends RebarBlock
                 pedestal.getItemDisplay().setItemStack(null);
             }
         }
-        for (Pedestal pedestal : getAllPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(false);
-            }
+        for (Pedestal pedestal : getValidPedestals()) {
+            pedestal.unlock();
         }
 
         Location location = getBlock().getLocation().toCenterLocation();
@@ -462,11 +482,10 @@ public class PotionAltar extends RebarBlock
         playSound(FINISH_SOUND);
     }
 
-    private void cancelRecipe() {
-        for (Pedestal pedestal : getAllPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(false);
-            }
+    @Override
+    public void cancelRecipe() {
+        for (Pedestal pedestal : getValidPedestals()) {
+            pedestal.unlock();
         }
 
         for (Block candle : getCandles()) {
@@ -544,10 +563,8 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        for (Pedestal pedestal : getAllPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(false);
-            }
+        for (Pedestal pedestal : getValidPedestals()) {
+            pedestal.unlock();
         }
     }
 }
