@@ -7,6 +7,9 @@ import io.github.pylonmc.pylon.content.assembling.Screwdriver;
 import io.github.pylonmc.pylon.content.building.Elevator;
 import io.github.pylonmc.pylon.content.building.ExplosiveTarget;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
+import io.github.pylonmc.pylon.content.building.sponge.HotLavaSponge;
+import io.github.pylonmc.pylon.content.building.sponge.LavaSponge;
+import io.github.pylonmc.pylon.content.building.sponge.PowerfulWaterSponge;
 import io.github.pylonmc.pylon.content.combat.BeheadingSword;
 import io.github.pylonmc.pylon.content.combat.IceArrow;
 import io.github.pylonmc.pylon.content.combat.ReactivatedWitherSkull;
@@ -1301,6 +1304,46 @@ public final class PylonItems {
     static {
         RebarItem.register(FireproofRune.class, FIREPROOF_RUNE);
         PylonPages.TOOLS.addItem(FIREPROOF_RUNE);
+    }
+
+    // For triggering SpongeAbsorbEvent, sponges' material must be SPONGE
+    public static final ItemStack WET_POWERFUL_WATER_SPONGE
+            = ItemStackBuilder.rebar(Material.WET_SPONGE, PylonKeys.WET_POWERFUL_WATER_SPONGE) // a used sponge shouldn't trigger the event
+            .build();
+
+    static {
+        RebarItem.register(RebarItem.class, WET_POWERFUL_WATER_SPONGE);
+        PylonPages.COMPONENTS.addItem(WET_POWERFUL_WATER_SPONGE);
+    }
+
+    public static final ItemStack HOT_POWERFUL_LAVA_SPONGE
+            = ItemStackBuilder.rebar(Material.SPONGE, PylonKeys.HOT_LAVA_SPONGE)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+
+    static {
+        RebarItem.register(HotLavaSponge.Item.class, HOT_POWERFUL_LAVA_SPONGE);
+        PylonPages.BUILDING.addItem(HOT_POWERFUL_LAVA_SPONGE);
+    }
+
+    public static final ItemStack POWERFUL_WATER_SPONGE
+            = ItemStackBuilder.rebar(Material.SPONGE, PylonKeys.POWERFUL_WATER_SPONGE)
+            .build();
+
+    static {
+        RebarItem.register(PowerfulWaterSponge.Item.class, POWERFUL_WATER_SPONGE);
+        PylonPages.BUILDING.addItem(POWERFUL_WATER_SPONGE);
+    }
+
+    public static final ItemStack LAVA_SPONGE
+            = ItemStackBuilder.rebar(Material.SPONGE, PylonKeys.LAVA_SPONGE)
+            .set(DataComponentTypes.DAMAGE_RESISTANT, DamageResistant.damageResistant(FireproofRune.IS_FIRE_TAG))
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+
+    static {
+        RebarItem.register(LavaSponge.Item.class, LAVA_SPONGE);
+        PylonPages.BUILDING.addItem(LAVA_SPONGE);
     }
 
     public static final ItemStack SOULBOUND_RUNE = ItemStackBuilder.rebar(Material.FIREWORK_STAR, PylonKeys.SOULBOUND_RUNE)

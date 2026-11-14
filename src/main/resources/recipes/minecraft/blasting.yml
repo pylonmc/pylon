@@ -4,6 +4,12 @@ pylon:tin_ingot_blasting:
   experience: 0.5
   category: misc
 
+pylon:powerful_water_sponge_blasting:
+  ingredient: pylon:wet_powerful_water_sponge
+  result: pylon:powerful_water_sponge
+  experience: 1.5
+  cookingtime: 200
+
 pylon:steel_blasting:
   ingredient: pylon:wrought_iron
   result: pylon:steel_ingot

@@ -295,6 +295,11 @@ public class PylonKeys {
 
     public static final NamespacedKey FIREPROOF_RUNE = pylonKey("fireproof_rune");
 
+    public static final NamespacedKey POWERFUL_WATER_SPONGE = pylonKey("powerful_water_sponge");
+    public static final NamespacedKey LAVA_SPONGE = pylonKey("lava_sponge");
+    public static final NamespacedKey WET_POWERFUL_WATER_SPONGE = pylonKey("wet_powerful_water_sponge");
+    public static final NamespacedKey HOT_LAVA_SPONGE = pylonKey("hot_lava_sponge");
+
     public static final NamespacedKey CLEANSING_POTION = pylonKey("cleansing_potion");
 
     public static final NamespacedKey CLIMBING_PICK = pylonKey("climbing_pick");

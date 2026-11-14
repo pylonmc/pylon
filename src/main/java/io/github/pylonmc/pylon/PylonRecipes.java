@@ -48,6 +48,8 @@ public class PylonRecipes {
         KilnRecipe.RECIPE_TYPE.register();
         StrainingRecipe.RECIPE_TYPE.register();
         TableSawRecipe.RECIPE_TYPE.register();
+        FireproofRuneRecipe.RECIPE_TYPE.register();
+        ImmerseRecipe.RECIPE_TYPE.register();
         SiloConverterRecipe.RECIPE_TYPE.register();
         HydraulicPurifier.RECIPE_TYPE.register();
         CrudeAlloyFurnaceRecipe.RECIPE_TYPE.register();

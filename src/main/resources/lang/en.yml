@@ -1196,6 +1196,32 @@ item:
       <arrow> The same fields that make Enriched Soul Soil burn so hot can be inverted to protect items from burning
       <arrow> <insn>Drop your rune and item together</insn> to apply the rune to the item
 
+  powerful_water_sponge:
+    name: "Powerful Water Sponge"
+    lore: |-
+      <arrow> Clear nearby water.
+      <arrow> <attr>Range:</attr> %check-range%
+      <arrow> Drop your fireproof rune and this sponge together to make a Lava Sponge
+
+  lava_sponge:
+    name: "Lava Sponge"
+    lore: |-
+      <arrow> Fireproof Powered
+      <arrow> Clears nearby lava
+      <arrow> <attr>Range:</attr> %check-range%
+
+  wet_powerful_water_sponge:
+    name: "Wet Powerful Water Sponge"
+    lore: |-
+      <arrow> <insn>Too much water inside... You must dry out it in a Blast Furnace, or dry out it by placing it in the nether.</insn>
+
+  hot_lava_sponge:
+    name: "Hot Lava Sponge"
+    lore: |-
+      <arrow> No longer can clear lava but can clear water
+      <arrow> While it clears water, it can turn back into Lava Sponge
+      <arrow> <attr>Range:</attr> %check-range%
+
   fluid_tank:
     name: "Fluid Tank"
     lore: |-
@@ -2834,6 +2860,12 @@ guide:
     molding: "<attr>Molding cycles:</attr> %molding-cycles%"
     kiln: "<attr>Melting time:</attr> %time%"
     hammer: "<attr>Uses:</attr> %uses%"
+    immerse:
+      name: "Put it in %fluid%"
+      chance: "<attr>Chance:</attr> %chance%"
+      fluid:
+        pylon:water: "Water"
+        pylon:lava: "Lava"
   button:
     info:
       loupe:

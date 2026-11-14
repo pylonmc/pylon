@@ -2,6 +2,10 @@ package io.github.pylonmc.pylon;
 
 import io.github.pylonmc.pylon.content.assembling.AssemblyTable;
 import io.github.pylonmc.pylon.content.building.*;
+import io.github.pylonmc.pylon.content.building.sponge.HotLavaSponge;
+import io.github.pylonmc.pylon.content.building.sponge.LavaSponge;
+import io.github.pylonmc.pylon.content.building.sponge.PowerfulWaterSponge;
+import io.github.pylonmc.pylon.content.building.sponge.WetPowerfulWaterSponge;
 import io.github.pylonmc.pylon.content.components.*;
 import io.github.pylonmc.pylon.content.machines.boiler.LargeBoiler;
 import io.github.pylonmc.pylon.content.machines.boiler.LargeFluidBoiler;
@@ -118,6 +122,10 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ELEVATOR_1, Material.SMOOTH_QUARTZ_SLAB, Elevator.class);
         RebarBlock.register(PylonKeys.ELEVATOR_2, Material.SMOOTH_QUARTZ_SLAB, Elevator.class);
         RebarBlock.register(PylonKeys.ELEVATOR_3, Material.SMOOTH_QUARTZ_SLAB, Elevator.class);
+        RebarBlock.register(PylonKeys.POWERFUL_WATER_SPONGE, Material.SPONGE, PowerfulWaterSponge.class);
+        RebarBlock.register(PylonKeys.LAVA_SPONGE, Material.SPONGE, LavaSponge.class);
+        RebarBlock.register(PylonKeys.WET_POWERFUL_WATER_SPONGE, Material.WET_SPONGE, WetPowerfulWaterSponge.class);
+        RebarBlock.register(PylonKeys.HOT_LAVA_SPONGE, Material.SPONGE, HotLavaSponge.class);
         RebarBlock.register(PylonKeys.PRESS, Material.COMPOSTER, Press.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_GRINDSTONE_TURNER, Material.SMOOTH_STONE, HydraulicGrindstoneTurner.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_MIXING_ATTACHMENT, Material.CHISELED_STONE_BRICKS, HydraulicMixingAttachment.class);
