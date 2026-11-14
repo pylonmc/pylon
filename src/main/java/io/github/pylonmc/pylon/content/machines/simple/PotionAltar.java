@@ -181,7 +181,6 @@ public class PotionAltar extends RebarBlock
         return mixedColor;
     }
 
-    @Override
     public boolean isProcessingRecipe() {
         return altarProgress != null;
     }
