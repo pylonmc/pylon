@@ -12,8 +12,6 @@ public interface Altar {
 
     Block getBlock();
 
-    boolean isProcessingRecipe();
-
     /**
      * All pedestal blocks of this altar; entries may be null if the pedestal is unloaded or was replaced.
      */
@@ -24,6 +22,10 @@ public interface Altar {
      */
     List<Pedestal> getValidPedestals();
 
+    /**
+     * Cancels the running recipe (if any), unlocking its pedestals.
+     * Must be a no-op when no recipe is running.
+     */
     void cancelRecipe();
 
     /**

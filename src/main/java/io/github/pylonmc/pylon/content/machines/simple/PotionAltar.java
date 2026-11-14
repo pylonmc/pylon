@@ -482,6 +482,10 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public void cancelRecipe() {
+        if (altarProgress == null) {
+            return;
+        }
+
         unlockPedestals();
 
         for (Block candle : getCandles()) {

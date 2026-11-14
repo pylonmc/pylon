@@ -249,6 +249,10 @@ public class ShimmerAltar extends RebarBlock
 
     @Override
     public void cancelRecipe() {
+        if (!isProcessingRecipe()) {
+            return;
+        }
+
         stopRecipe();
 
         unlockPedestals();
