@@ -73,7 +73,7 @@ public record ImmerseRecipe(
                 .addIngredient('f', ItemStackBuilder.of(Material.BUCKET)
                         .name(Component.translatable(
                                 "pylon.pylon.guide.recipe.immerse.name",
-                                RebarArgument.of("fluid", Component.translatable("pylon.pylon.fluid." + fluid.getKey().getKey()))
+                                RebarArgument.of("fluid", fluid.getName())
                         ))
                         .lore(Component.translatable(
                                 "pylon.pylon.guide.recipe.immerse.chance",
