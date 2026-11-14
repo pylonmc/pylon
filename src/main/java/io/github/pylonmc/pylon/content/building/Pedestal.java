@@ -175,7 +175,7 @@ public class Pedestal extends RebarBlock implements
             return;
         }
         RebarBlock block = BlockStorage.get(lockedBy.getBlock());
-        if (block instanceof Altar altar) {
+        if (block instanceof Altar altar && altar.isProcessingRecipe()) {
             altar.cancelRecipe();
         }
         lockedBy = null;

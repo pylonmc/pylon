@@ -181,6 +181,7 @@ public class PotionAltar extends RebarBlock
         return mixedColor;
     }
 
+    @Override
     public boolean isProcessingRecipe() {
         return altarProgress != null;
     }
@@ -188,14 +189,24 @@ public class PotionAltar extends RebarBlock
     @Override
     public boolean checkFormed() {
         // pedestals locked by another altar cannot be used to form this altar (issue #171)
-        return SimpleRebarMultiblock.super.checkFormed()
-                && getValidPedestals().size() == getAllPedestals().size();
+        return SimpleRebarMultiblock.super.checkFormed() && allPedestalsValid();
+    }
+
+    @Override
+    @NotNull
+    public List<@Nullable Pedestal> getAllPedestals() {
+        List<Pedestal> pedestals = new ArrayList<>();
+        pedestals.add(getPotionPedestal1());
+        pedestals.add(getPotionPedestal2());
+        pedestals.add(getCatalystPedestal());
+        return pedestals;
     }
 
     /**
      * @return existing pedestals that are not locked by another altar
      */
-    private List<Pedestal> getValidPedestals() {
+    @Override
+    public List<Pedestal> getValidPedestals() {
         return getAllPedestals().stream()
                 .filter(Objects::nonNull)
                 .filter(p -> !p.isLockedByOtherThan(getBlock()))
@@ -238,7 +249,7 @@ public class PotionAltar extends RebarBlock
 
         // missing or foreign-locked pedestals must not be used (issue #171);
         // pedestals locked by this altar are fine so that recipe recovery works
-        if (getValidPedestals().size() < getAllPedestals().size()) {
+        if (!allPedestalsValid()) {
             return null;
         }
 
@@ -269,9 +280,7 @@ public class PotionAltar extends RebarBlock
         }
 
         // attempt to start recipe
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.lock(getBlock());
-        }
+        lockPedestals();
 
         Map<PotionEffectType, PotionEffect> effects = new HashMap<>();
         if (contents1 != null) fuseEffects(effects, contents1.allEffects());
@@ -386,15 +395,6 @@ public class PotionAltar extends RebarBlock
     }
 
     @NotNull
-    private List<@Nullable Pedestal> getAllPedestals() {
-        List<Pedestal> pedestals = new ArrayList<>();
-        pedestals.add(getPotionPedestal1());
-        pedestals.add(getPotionPedestal2());
-        pedestals.add(getCatalystPedestal());
-        return pedestals;
-    }
-
-    @NotNull
     private List<@Nullable Pedestal> getPotionPedestals() {
         List<Pedestal> pedestals = new ArrayList<>();
         pedestals.add(getPotionPedestal1());
@@ -443,9 +443,7 @@ public class PotionAltar extends RebarBlock
                 pedestal.getItemDisplay().setItemStack(null);
             }
         }
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.unlock();
-        }
+        unlockPedestals();
 
         Location location = getBlock().getLocation().toCenterLocation();
         getBlock().getWorld().strikeLightningEffect(location);
@@ -484,9 +482,7 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public void cancelRecipe() {
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.unlock();
-        }
+        unlockPedestals();
 
         for (Block candle : getCandles()) {
             new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
@@ -563,8 +559,6 @@ public class PotionAltar extends RebarBlock
 
     @Override
     public void onBlockBreak(@NotNull List<ItemStack> drops, @NotNull BlockBreakContext context) {
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.unlock();
-        }
+        unlockPedestals();
     }
 }

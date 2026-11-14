@@ -122,11 +122,11 @@ public class ShimmerAltar extends RebarBlock
         }
 
         // attempt to start recipe
-        List<Pedestal> pedestals = getValidPedestals();
         // missing or foreign-locked pedestals must not be used (issue #171)
-        if (pedestals.size() != PEDESTAL_COUNT) {
+        if (!allPedestalsValid()) {
             return;
         }
+        List<Pedestal> pedestals = getValidPedestals();
         List<ItemStack> ingredients = pedestals.stream()
                 .map(p -> p.getItemDisplay().getItemStack())
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -138,9 +138,7 @@ public class ShimmerAltar extends RebarBlock
 
             itemDisplay.setItemStack(catalyst.asQuantity(1));
             catalyst.subtract();
-            for (Pedestal pedestal : pedestals) {
-                pedestal.lock(getBlock());
-            }
+            lockPedestals();
             startRecipe(recipe, recipe.timeSeconds() * 20);
             break;
         }
@@ -199,8 +197,9 @@ public class ShimmerAltar extends RebarBlock
     }
 
     /**
-     * @return all pedestal blocks of this multiblock; entries may be null if the pedestal is unloaded or was replaced
+     * All pedestal blocks of this multiblock; entries may be null if the pedestal is unloaded or was replaced.
      */
+    @Override
     public List<@Nullable Pedestal> getAllPedestals() {
         List<@Nullable Pedestal> pedestals = new ArrayList<>();
         for (Vector3i vector : getComponents().keySet()) {
@@ -213,6 +212,7 @@ public class ShimmerAltar extends RebarBlock
     /**
      * @return existing pedestals that are not locked by another altar
      */
+    @Override
     public List<Pedestal> getValidPedestals() {
         return getAllPedestals().stream()
                 .filter(Objects::nonNull)
@@ -223,8 +223,7 @@ public class ShimmerAltar extends RebarBlock
     @Override
     public boolean checkFormed() {
         // pedestals locked by another altar cannot be used to form this altar (issue #171)
-        return SimpleRebarMultiblock.super.checkFormed()
-                && getValidPedestals().size() == PEDESTAL_COUNT;
+        return SimpleRebarMultiblock.super.checkFormed() && allPedestalsValid();
     }
 
     public ItemDisplay getItemDisplay() {
@@ -233,6 +232,7 @@ public class ShimmerAltar extends RebarBlock
 
     @Override
     public void onRecipeFinished(@NotNull ShimmerAltarRecipe recipe) {
+        // consumed ingredients vanish from the pedestals
         for (Pedestal pedestal : getValidPedestals()) {
             pedestal.getItemDisplay().setItemStack(null);
             pedestal.unlock();
@@ -251,9 +251,7 @@ public class ShimmerAltar extends RebarBlock
     public void cancelRecipe() {
         stopRecipe();
 
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.unlock();
-        }
+        unlockPedestals();
 
         new ParticleBuilder(Particle.WHITE_SMOKE)
                 .count(20)
@@ -267,9 +265,8 @@ public class ShimmerAltar extends RebarBlock
         if (!getItemDisplay().getItemStack().getType().isAir()) {
             drops.add(getItemDisplay().getItemStack());
         }
-        for (Pedestal pedestal : getValidPedestals()) {
-            pedestal.unlock();
-        }
+
+        unlockPedestals();
     }
 
     @Override
