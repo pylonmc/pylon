@@ -1801,6 +1801,17 @@ pylon:farming_talisman_simple:
   result: pylon:farming_talisman_simple
   category: equipment
 
+pylon:mining_talisman_simple:
+  pattern:
+    - "CCC"
+    - "CPC"
+    - "CCC"
+  key:
+    C: minecraft:coal
+    P: minecraft:iron_pickaxe
+  result: pylon:mining_talisman_simple
+  category: equipment
+
 pylon:copper_screwdriver:
   pattern:
     - " N "

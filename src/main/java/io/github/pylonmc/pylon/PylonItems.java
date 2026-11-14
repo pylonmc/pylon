@@ -1582,6 +1582,33 @@ public final class PylonItems {
         PylonPages.TALISMANS.addItem(FARMING_TALISMAN_ULTIMATE);
     }
 
+    public static final ItemStack MINING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.MINING_TALISMAN_SIMPLE)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+
+    static {
+        RebarItem.register(MiningTalisman.class, MINING_TALISMAN_SIMPLE);
+        PylonPages.TALISMANS.addItem(MINING_TALISMAN_SIMPLE);
+    }
+
+    public static final ItemStack MINING_TALISMAN_ADVANCED = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.MINING_TALISMAN_ADVANCED)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+
+    static {
+        RebarItem.register(MiningTalisman.class, MINING_TALISMAN_ADVANCED);
+        PylonPages.TALISMANS.addItem(MINING_TALISMAN_ADVANCED);
+    }
+
+    public static final ItemStack MINING_TALISMAN_ULTIMATE = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.MINING_TALISMAN_ULTIMATE)
+            .set(DataComponentTypes.MAX_STACK_SIZE, 1)
+            .build();
+
+    static {
+        RebarItem.register(MiningTalisman.class, MINING_TALISMAN_ULTIMATE);
+        PylonPages.TALISMANS.addItem(MINING_TALISMAN_ULTIMATE);
+    }
+
     public static final ItemStack BARTERING_TALISMAN_SIMPLE = ItemStackBuilder.rebar(Material.GOLD_INGOT, PylonKeys.BARTERING_TALISMAN_SIMPLE)
             .set(DataComponentTypes.MAX_STACK_SIZE, 1)
             .build();
