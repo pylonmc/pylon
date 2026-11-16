@@ -52,7 +52,7 @@ public class SodiumBlock extends RebarBlock implements TickingRebarBlock {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
                     Block relative = getBlock().getRelative(x, y, z);
-                    if (relative.getType() == Material.WATER || relative.getBlockData() instanceof Waterlogged) return true;
+                    if (relative.getType() == Material.WATER || (relative.getBlockData() instanceof Waterlogged waterlogged && waterlogged.isWaterlogged())) return true;
                 }
             }
         }
