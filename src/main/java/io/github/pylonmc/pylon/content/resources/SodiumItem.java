@@ -36,6 +36,7 @@ public class SodiumItem extends RebarItem implements InventoryTickerRebarItem {
         double probability = 1 - Math.pow(1 - explosionChancePerSecond, getBaseTickInterval() * RebarConfig.INVENTORY_TICKER_BASE_RATE / 20.0);
         if (ThreadLocalRandom.current().nextDouble() > probability) return;
         player.getWorld().createExplosion(player.getLocation(), explosionPower, true, true);
+        getStack().subtract();
     }
 
     @Override
