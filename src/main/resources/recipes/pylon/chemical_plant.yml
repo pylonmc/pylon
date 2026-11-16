@@ -1,0 +1,15 @@
+pylon:salt_electrolysis:
+  display:
+    name: <lang:pylon.recipe.salt-electrolysis>
+    item: pylon:salt
+  inputs:
+    items:
+      - pylon:salt_block
+  results:
+    items:
+      - pylon:sodium_nugget
+    fluids:
+      pylon:chlorine: 144
+  modules:
+    - pylon:electrolysis_module
+    - pylon:electric_smeltery_heater

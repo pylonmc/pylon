@@ -8,10 +8,13 @@ import io.github.pylonmc.pylon.content.machines.boiler.LargeFluidBoiler;
 import io.github.pylonmc.pylon.content.machines.boiler.SmallBoiler;
 import io.github.pylonmc.pylon.content.machines.boiler.SmallFluidBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
+import io.github.pylonmc.pylon.content.machines.chemistry.ChemicalPlant;
+import io.github.pylonmc.pylon.content.machines.chemistry.ElectrolysisModule;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
-import io.github.pylonmc.pylon.content.machines.electricity.*;
+import io.github.pylonmc.pylon.content.machines.electricity.BatteryBank;
+import io.github.pylonmc.pylon.content.machines.electricity.ChargingStation;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
@@ -249,5 +252,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.TEZLA_TOWER, Material.LIGHTNING_ROD, TezlaTower.class);
         RebarBlock.register(PylonKeys.CHARGING_STATION, Material.CRAFTING_TABLE, ChargingStation.class);
         RebarBlock.register(PylonKeys.BATTERY_BANK, Material.CHISELED_BOOKSHELF, BatteryBank.class);
+        RebarBlock.register(PylonKeys.CHEMICAL_PLANT, Material.HONEYCOMB_BLOCK, ChemicalPlant.class);
+        RebarBlock.register(PylonKeys.ELECTROLYSIS_MODULE, Material.WAXED_CHISELED_COPPER, ElectrolysisModule.class);
     }
 }

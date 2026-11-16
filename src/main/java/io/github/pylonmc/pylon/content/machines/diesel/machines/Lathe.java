@@ -310,7 +310,7 @@ public class Lathe extends RebarBlock implements
                     .build();
             Window.builder()
                     .setUpperGui(gui)
-                    .setTitle(Component.translatable("pylon.gui.lathe.select-recipe"))
+                    .setTitle(Component.translatable("pylon.gui.select-recipe"))
                     .open(player);
         }
     }

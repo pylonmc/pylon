@@ -806,6 +806,8 @@ item:
   electric_smeltery_heater:
     name: "Electric Smeltery Heater"
     lore: |-
+      <star> <item:pylon:chemical_plant> module
+      <arrow> Place on top of the <item:pylon:chemical_plant> to enable the required recipes
       <arrow> Consumes electricity to heat the smeltery
       <arrow> <attr>Power usage:</attr> %power%
       <arrow> <attr>Temperature:</attr> %temperature%
@@ -2873,6 +2875,20 @@ item:
       <arrow> <insn>Right Click</insn> to open the charging GUI
       <arrow> <attr>Charge rate:</attr> %rate%
 
+  chemical_plant:
+    name: "Chemical Plant"
+    lore: |-
+      <arrow> Does various chemical reactions
+      <arrow> <insn>Right Click</insn> to select a recipe
+      <arrow> <attr>Power consumption:</attr> %power%
+
+  electrolysis_module:
+    name: "Electrolysis Module"
+    lore: |-
+      <star> <item:pylon:chemical_plant> module
+      <arrow> Place on top of the <item:pylon:chemical_plant> to enable the required recipes
+      <arrow> <attr>Power usage:</attr> %power%
+
 fluid:
   tag:
     melting-point: "<arrow> Melting point: %temperature%"
@@ -3278,7 +3294,7 @@ gui:
       redstone_soldering_iron: "Redstone Soldering Iron"
   fuel-left: "Fuel left"
   no-fuel-left: "<white>No fuel"
-  no-recipe: "<white>No recipe"
+  no-recipe: "<red>No recipe"
   temperature: "Temperature"
   kiln:
     temperature: "<arrow> Temperature: %temperature%"
@@ -3315,9 +3331,14 @@ gui:
     invalid-selector: "<red>At least one of the selectors you have inputted is invalid"
   tezla-tower:
     power-per-discharge: "Power use per discharge (J)"
+  select-recipe: "Select recipe"
   lathe:
-    select-recipe: "Select recipe"
     no-fuel: "<red>There is not enough diesel in the lathe"
+  outputs: "Outputs:"
+  chemical-plant:
+    recipe: "Recipe: %name%"
+    click-to-select: "<insn>Click</insn> to select recipe"
+    missing-modules: "<red>Modules required for recipe are missing or inactive"
 
 inventory:
   fuel: "Fuel"
@@ -3333,6 +3354,9 @@ inventory:
   input1: "Input 1"
   input2: "Input 2"
   input3: "Input 3"
+
+recipe:
+  salt-electrolysis: "Salt Electrolysis"
 
 unit:
   # Only used by the gas turbine recipe

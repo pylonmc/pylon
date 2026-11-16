@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon.content.machines.smelting;
 
+import io.github.pylonmc.pylon.content.machines.chemistry.ChemicalPlant;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.NoVanillaInventoryRebarBlock;
@@ -26,7 +27,8 @@ public class ElectricSmelteryHeater extends SmelteryComponent implements
         SimpleElectricRebarBlock,
         DirectionalRebarBlock,
         TickingRebarBlock,
-        NoVanillaInventoryRebarBlock {
+        NoVanillaInventoryRebarBlock,
+        ChemicalPlant.ConditionalModuleBlock {
 
     @Getter
     private final double temperature = getSettingOrThrow("temperature", ConfigAdapter.DOUBLE);
@@ -72,6 +74,11 @@ public class ElectricSmelteryHeater extends SmelteryComponent implements
         SmelteryController controller = getController();
         if (controller == null || !controller.isRunning() || !isPowered()) return;
         controller.heatAsymptotically(temperature);
+    }
+
+    @Override
+    public boolean isActive() {
+        return isPowered();
     }
 
     @Override

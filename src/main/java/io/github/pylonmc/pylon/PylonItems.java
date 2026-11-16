@@ -14,6 +14,7 @@ import io.github.pylonmc.pylon.content.combat.ReactivatedWitherSkull;
 import io.github.pylonmc.pylon.content.combat.RecoilArrow;
 import io.github.pylonmc.pylon.content.machines.boiler.AbstractBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
+import io.github.pylonmc.pylon.content.machines.chemistry.ChemicalPlant;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
@@ -3725,6 +3726,20 @@ public final class PylonItems {
             .build();
     static {
         RebarItem.register(RebarItem.class, HYDRAULIC_FRACTURE, PylonKeys.HYDRAULIC_FRACTURE);
+    }
+    
+    public static final ItemStack CHEMICAL_PLANT = ItemStackBuilder.rebar(Material.HONEYCOMB_BLOCK, PylonKeys.CHEMICAL_PLANT)
+            .build();
+    static {
+        RebarItem.register(ChemicalPlant.Item.class, CHEMICAL_PLANT, PylonKeys.CHEMICAL_PLANT);
+        PylonPages.ELECTRIC_MACHINES.addItem(CHEMICAL_PLANT);
+    }
+
+    public static final ItemStack ELECTROLYSIS_MODULE = ItemStackBuilder.rebar(Material.WAXED_CHISELED_COPPER, PylonKeys.ELECTROLYSIS_MODULE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, ELECTROLYSIS_MODULE, PylonKeys.ELECTROLYSIS_MODULE);
+        PylonPages.COMPONENTS.addItem(ELECTROLYSIS_MODULE);
     }
 
     // <editor-fold desc="Electricity" defaultstate=collapsed>
