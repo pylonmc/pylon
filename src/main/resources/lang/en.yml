@@ -803,6 +803,12 @@ item:
       <arrow> <attr>Diesel buffer:</attr> %diesel-buffer%
       <arrow> <attr>Temperature:</attr> %temperature%
 
+  electric_smeltery_heater:
+    name: "Electric Smeltery Heater"
+    lore: |-
+      <arrow> Consumes electricity to heat the smeltery
+      <arrow> <attr>Power usage:</attr> %power%
+      <arrow> <attr>Temperature:</attr> %temperature%
 
   smeltery_controller:
     name: "Smeltery Controller"

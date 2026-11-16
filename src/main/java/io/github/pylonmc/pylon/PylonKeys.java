@@ -267,6 +267,7 @@ public class PylonKeys {
     public static final NamespacedKey SMELTERY_BURNER = pylonKey("smeltery_burner");
     public static final NamespacedKey CASTING_UNIT = pylonKey("casting_unit");
     public static final NamespacedKey FORMING_TABLE = pylonKey("forming_table");
+    public static final NamespacedKey ELECTRIC_SMELTERY_HEATER = pylonKey("electric_smeltery_heater");
 
     public static final NamespacedKey NUGGET_MOLD = pylonKey("mold_nugget");
     public static final NamespacedKey INGOT_MOLD = pylonKey("mold_ingot");

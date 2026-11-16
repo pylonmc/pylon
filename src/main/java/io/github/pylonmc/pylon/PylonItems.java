@@ -33,6 +33,7 @@ import io.github.pylonmc.pylon.content.machines.petrochemicals.HydraulicPumpjack
 import io.github.pylonmc.pylon.content.machines.petrochemicals.OilSampleDrill;
 import io.github.pylonmc.pylon.content.machines.simple.*;
 import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
+import io.github.pylonmc.pylon.content.machines.smelting.ElectricSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
@@ -2442,6 +2443,13 @@ public final class PylonItems {
     static {
         RebarItem.register(DieselSmelteryHeater.Item.class, DIESEL_SMELTERY_HEATER, PylonKeys.DIESEL_SMELTERY_HEATER);
         PylonPages.SMELTING.addItem(DIESEL_SMELTERY_HEATER);
+    }
+
+    public static final ItemStack ELECTRIC_SMELTERY_HEATER = ItemStackBuilder.rebar(Material.LOOM, PylonKeys.ELECTRIC_SMELTERY_HEATER)
+            .build();
+    static {
+        RebarItem.register(ElectricSmelteryHeater.Item.class, ELECTRIC_SMELTERY_HEATER, PylonKeys.ELECTRIC_SMELTERY_HEATER);
+        PylonPages.SMELTING.addItem(ELECTRIC_SMELTERY_HEATER);
     }
 
     public static final ItemStack CASTING_UNIT = ItemStackBuilder.rebar(Material.BRICKS, PylonKeys.CASTING_UNIT)
