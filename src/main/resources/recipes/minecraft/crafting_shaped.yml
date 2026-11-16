@@ -6,7 +6,7 @@ pylon:raw_tin_block_from_raw_tin:
   key:
     N: pylon:raw_tin
   result: pylon:raw_tin_block
-  category: misc
+  category: building
 
 pylon:tin_ingot_from_tin_nuggets:
   pattern:
@@ -27,7 +27,7 @@ pylon:tin_block_from_tin_ingots:
   key:
     N: pylon:tin_ingot
   result: pylon:tin_block
-  category: misc
+  category: building
 
 pylon:bronze_ingot_from_bronze_nuggets:
   pattern:
@@ -48,7 +48,7 @@ pylon:bronze_block_from_bronze_ingots:
   key:
     N: pylon:bronze_ingot
   result: pylon:bronze_block
-  category: misc
+  category: building
 
 pylon:steel_ingot_from_steel_nuggets:
   pattern:
@@ -69,7 +69,7 @@ pylon:steel_block_from_steel_ingots:
   key:
     N: pylon:steel_ingot
   result: pylon:steel_block
-  category: misc
+  category: building
 
 pylon:nickel_ingot_from_nickel_nuggets:
   pattern:
@@ -91,6 +91,27 @@ pylon:nickel_block_from_nickel_ingots:
     N: pylon:nickel_ingot
   result: pylon:nickel_block
   category: misc
+  
+pylon:sodium_ingot_from_sodium_nuggets:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:sodium_nugget
+  result: pylon:sodium_ingot
+  category: misc
+  priority: -2
+
+pylon:sodium_block_from_sodium_ingots:
+  pattern:
+    - "NNN"
+    - "NNN"
+    - "NNN"
+  key:
+    N: pylon:sodium_ingot
+  result: pylon:sodium_block
+  category: building
 
 pylon:charcoal_block_from_charcoal:
   pattern:

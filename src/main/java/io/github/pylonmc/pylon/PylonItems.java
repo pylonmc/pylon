@@ -36,6 +36,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.DieselSmelteryHeater;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
+import io.github.pylonmc.pylon.content.resources.SodiumItem;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
@@ -300,6 +301,27 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, NICKEL_BLOCK, PylonKeys.NICKEL_BLOCK);
         PylonPages.METALS.addItem(NICKEL_BLOCK);
+    }
+
+    public static final ItemStack SODIUM_INGOT = ItemStackBuilder.rebar(Material.IRON_INGOT, PylonKeys.SODIUM_INGOT)
+            .build();
+    static {
+        RebarItem.register(SodiumItem.class, SODIUM_INGOT, PylonKeys.SODIUM_INGOT);
+        PylonPages.METALS.addItem(SODIUM_INGOT);
+    }
+
+    public static final ItemStack SODIUM_NUGGET = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.SODIUM_NUGGET)
+            .build();
+    static {
+        RebarItem.register(SodiumItem.class, SODIUM_NUGGET, PylonKeys.SODIUM_NUGGET);
+        PylonPages.METALS.addItem(SODIUM_NUGGET);
+    }
+
+    public static final ItemStack SODIUM_BLOCK = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.SODIUM_BLOCK)
+            .build();
+    static {
+        RebarItem.register(SodiumItem.class, SODIUM_BLOCK, PylonKeys.SODIUM_BLOCK);
+        PylonPages.METALS.addItem(SODIUM_BLOCK);
     }
 
     public static final ItemStack SPONGE_IRON = ItemStackBuilder.rebar(Material.RAW_IRON, PylonKeys.SPONGE_IRON)
@@ -759,6 +781,13 @@ public final class PylonItems {
     static {
         RebarItem.register(RebarItem.class, NICKEL_SHEET, PylonKeys.NICKEL_SHEET);
         PylonPages.COMPONENTS.addItem(NICKEL_SHEET);
+    }
+
+    public static final ItemStack SODIUM_SHEET = ItemStackBuilder.rebar(Material.PAPER, PylonKeys.SODIUM_SHEET)
+            .build();
+    static {
+        RebarItem.register(SodiumItem.class, SODIUM_SHEET, PylonKeys.SODIUM_SHEET);
+        PylonPages.COMPONENTS.addItem(SODIUM_SHEET);
     }
 
     public static final ItemStack COPPER_DRILL_BIT = ItemStackBuilder.rebar(Material.LIGHTNING_ROD, PylonKeys.COPPER_DRILL_BIT)

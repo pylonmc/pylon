@@ -1,0 +1,3 @@
+explosion-power: 15
+explosion-chance-per-second: 0.3
+tick-interval: 10

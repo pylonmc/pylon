@@ -25,6 +25,7 @@ import io.github.pylonmc.pylon.content.machines.smelting.*;
 import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.machines.storage.SiloConverter;
 import io.github.pylonmc.pylon.content.resources.RefractoryMix;
+import io.github.pylonmc.pylon.content.resources.SodiumBlock;
 import io.github.pylonmc.pylon.content.tools.EntitySensor;
 import io.github.pylonmc.pylon.content.tools.electric.TezlaTower;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -49,6 +50,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.SALT_BLOCK, Material.CALCITE, RebarBlock.class);
         RebarBlock.register(PylonKeys.SULFUR_BLOCK, Material.YELLOW_TERRACOTTA, RebarBlock.class);
         RebarBlock.register(PylonKeys.GYPSUM_BLOCK, Material.QUARTZ_BLOCK, RebarBlock.class);
+        RebarBlock.register(PylonKeys.SODIUM_BLOCK, Material.IRON_BLOCK, SodiumBlock.class);
         RebarBlock.register(PylonKeys.SPRINKLER, Material.FLOWER_POT, Sprinkler.class);
         RebarBlock.register(PylonKeys.SHIMMER_PEDESTAL, Material.MOSSY_STONE_BRICK_WALL, Pedestal.class);
         RebarBlock.register(PylonKeys.PEDESTAL, Material.STONE_BRICK_WALL, Pedestal.class);

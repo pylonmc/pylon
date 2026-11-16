@@ -6,6 +6,13 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 
 public class PylonKeys {
+
+    // Entities
+    public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
+    public static final NamespacedKey LATHE_BUTTON = pylonKey("lathe_button");
+    public static final NamespacedKey SODIUM_ENTITY = pylonKey("sodium_entity");
+
+    // Items
     public static final NamespacedKey ROCK_DUST = pylonKey("rock_dust");
 
     public static final NamespacedKey OBSIDIAN_CHIP = pylonKey("obsidian_chip");
@@ -69,6 +76,11 @@ public class PylonKeys {
     public static final NamespacedKey NICKEL_NUGGET = pylonKey("nickel_nugget");
     public static final NamespacedKey NICKEL_BLOCK = pylonKey("nickel_block");
 
+    public static final NamespacedKey SODIUM_DUST = pylonKey("sodium_dust");
+    public static final NamespacedKey SODIUM_INGOT = pylonKey("sodium_ingot");
+    public static final NamespacedKey SODIUM_NUGGET = pylonKey("sodium_nugget");
+    public static final NamespacedKey SODIUM_BLOCK = pylonKey("sodium_block");
+
     public static final NamespacedKey COPPER_SHEET = pylonKey("copper_sheet");
     public static final NamespacedKey IRON_SHEET = pylonKey("iron_sheet");
     public static final NamespacedKey GOLD_SHEET = pylonKey("gold_sheet");
@@ -76,6 +88,7 @@ public class PylonKeys {
     public static final NamespacedKey BRONZE_SHEET = pylonKey("bronze_sheet");
     public static final NamespacedKey STEEL_SHEET = pylonKey("steel_sheet");
     public static final NamespacedKey NICKEL_SHEET = pylonKey("nickel_sheet");
+    public static final NamespacedKey SODIUM_SHEET = pylonKey("sodium_sheet");
 
     public static final NamespacedKey ROTOR = pylonKey("rotor");
     public static final NamespacedKey BACKFLOW_VALVE = pylonKey("backflow_valve");
@@ -441,9 +454,6 @@ public class PylonKeys {
     public static final NamespacedKey INJECTION_PIPE = pylonKey("injection_pipe");
     public static final NamespacedKey HYDRAULIC_FRACTURE = pylonKey("hydraulic_fracture");
     public static final NamespacedKey HYDRAULIC_FRACTURE_SEAL = pylonKey("hydraulic_fracture_seal");
-
-    public static final NamespacedKey DISPLAY_PROJECTILE = pylonKey("display_projectile");
-    public static final NamespacedKey LATHE_BUTTON = pylonKey("lathe_button");
 
     public static final NamespacedKey SCREWDRIVER = pylonKey("screwdriver");
 

@@ -49,6 +49,13 @@ pylon:nickel_nuggets_from_nickel_ingot:
   result:
     pylon:nickel_nugget: 9
   category: misc
+  
+pylon:sodium_nuggets_from_sodium_ingot:
+  ingredients:
+    - pylon:sodium_ingot
+  result:
+    pylon:sodium_nugget: 9
+  category: misc
 
 pylon:charcoal_from_charcoal_block:
   ingredients:
@@ -71,6 +78,14 @@ pylon:nickel_ingots_from_nickel_block:
     - pylon:nickel_block
   result:
     pylon:nickel_ingot: 9
+  category: misc
+  priority: -2
+  
+pylon:sodium_ingots_from_sodium_block:
+  ingredients:
+    - pylon:sodium_block
+  result:
+    pylon:sodium_ingot: 9
   category: misc
   priority: -2
 

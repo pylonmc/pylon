@@ -912,6 +912,34 @@ item:
   nickel_sheet:
     name: "Nickel Sheet"
 
+  sodium_ingot:
+    name: "Sodium Ingot"
+    lore: |-
+      <arrow> Extremely explosive on contact with water
+      <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
+      <arrow> <attr>Explosion power:</attr> %power%
+
+  sodium_nugget:
+    name: "Sodium Nugget"
+    lore: |-
+      <arrow> Extremely explosive on contact with water
+      <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
+      <arrow> <attr>Explosion power:</attr> %power%
+
+  sodium_block:
+    name: "Block of Sodium"
+    lore: |-
+      <arrow> Extremely explosive on contact with water
+      <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
+      <arrow> <attr>Explosion power:</attr> %power%
+
+  sodium_sheet:
+    name: "Sodium Sheet"
+    lore: |-
+      <arrow> Extremely explosive on contact with water
+      <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
+      <arrow> <attr>Explosion power:</attr> %power%
+
   watering_can:
     name: "Watering Can"
     lore: |-
