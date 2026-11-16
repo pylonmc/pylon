@@ -3342,6 +3342,19 @@ pylon:electric_furnace:
   result: pylon:electric_furnace
   category: building
   
+pylon:electric_smeltery_heater:
+  pattern:
+    - "HHH"
+    - "FCS"
+    - "HHH"
+  key:
+    H: pylon:heating_element
+    F: pylon:fuse
+    C: pylon:copper_wire
+    S: pylon:refractory_brick
+  result: pylon:electric_smeltery_heater
+  category: building
+  
 pylon:charging_station:
   pattern:
     - "HHH"

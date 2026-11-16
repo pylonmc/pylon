@@ -732,6 +732,7 @@ electric_machines:
     - pylon:electric_breaker
     - pylon:electric_furnace
     - pylon:charging_station
+    - pylon:electric_smeltery_heater
 
 electrochemistry:
   item: pylon:electrolytic_powder
