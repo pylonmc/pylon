@@ -332,6 +332,15 @@ public final class PylonFluids {
         HOT_EXHAUST.register();
     }
 
+    public static final RebarFluid CHLORINE = new RebarFluid(
+            pylonKey("chlorine"),
+            TextColor.fromHexString("#d4ff14"),
+            Material.LIME_STAINED_GLASS
+    ).addTag(FluidTemperature.NORMAL).addTag(new GasTag());
+    static {
+        CHLORINE.register();
+    }
+
     /**
      * Calling this function will run the static blocks
      */

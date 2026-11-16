@@ -2906,6 +2906,7 @@ fluid:
   liquid_xp: "Liquid Experience"
   very_hot_exhaust: "<#ff2b0f>Very Hot Exhaust"
   hot_exhaust: "<#ff6b0f>Hot Exhaust"
+  chlorine: "Chlorine"
 
 research:
   baking: "<#e2b42b>Baking"
