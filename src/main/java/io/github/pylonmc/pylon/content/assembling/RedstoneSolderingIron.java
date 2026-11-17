@@ -8,16 +8,18 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.interfaces.BlockInteractRebarItemHandler;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
+import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Particle;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 
 public class RedstoneSolderingIron extends RebarItem implements BlockInteractRebarItemHandler {
@@ -46,16 +48,24 @@ public class RedstoneSolderingIron extends RebarItem implements BlockInteractReb
             return;
         }
 
+        Player player = event.getPlayer();
         if (priority == EventPriority.NORMAL) {
             event.setUseInteractedBlock(Event.Result.DENY);
             return;
-        } else if (event.getPlayer().hasCooldown(getStack())) {
+        } else if (player.hasCooldown(getStack())) {
             return;
         }
 
-        if (assemblyTable.useTool(toolType, event.getPlayer())) {
-            getStack().damage(1, event.getPlayer());
-            event.getPlayer().setCooldown(PylonKeys.REDSTONE_SOLDERING_IRON, cooldownTicks);
+        Integer solder = RebarUtils.findRebar(player.getInventory(), PylonKeys.SOLDER);
+        if (solder == null) {
+            player.sendMessage(Component.translatable("pylon.message.no-solder"));
+            return;
+        }
+
+        if (assemblyTable.useTool(toolType, player)) {
+            player.getInventory().getItem(solder).subtract();
+            getStack().damage(1, player);
+            player.setCooldown(PylonKeys.REDSTONE_SOLDERING_IRON, cooldownTicks);
             new ParticleBuilder(Particle.SMOKE)
                     .location(assemblyTable.getWorkspaceCenter())
                     .extra(0)

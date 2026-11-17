@@ -948,6 +948,9 @@ item:
       <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
       <arrow> <attr>Explosion power:</attr> %power%
 
+  solder:
+    name: "Solder"
+
   watering_can:
     name: "Watering Can"
     lore: |-
@@ -3212,6 +3215,7 @@ message:
     medium: "<#efae15>Medium"
     high: "<#5ea918>High"
   producing-power: "Producing %power%"
+  no-solder: "<red>You need some <item:pylon:solder> to use the <item:pylon:redstone_soldering_iron>"
 
 gui:
   fluid-selector-title: "Select Fluid"

@@ -48,6 +48,8 @@ public class PylonKeys {
 
     public static final NamespacedKey EMERALD_DUST = pylonKey("emerald_dust");
 
+    public static final NamespacedKey SOLDER = pylonKey("solder");
+
     public static final NamespacedKey RAW_TIN = pylonKey("raw_tin");
     public static final NamespacedKey RAW_TIN_BLOCK = pylonKey("raw_tin_block");
     public static final NamespacedKey TIN_DUST = pylonKey("tin_dust");

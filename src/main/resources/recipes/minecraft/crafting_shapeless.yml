@@ -216,3 +216,10 @@ pylon:nimh_mix:
     - pylon:iron_dust
   result:
     pylon:nimh_mix: 2
+
+pylon:solder:
+  ingredients:
+    - minecraft:redstone
+    - pylon:tin_dust
+  result:
+    pylon:solder: 2

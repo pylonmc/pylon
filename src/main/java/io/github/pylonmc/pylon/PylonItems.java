@@ -582,6 +582,13 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(EMERALD_DUST);
     }
 
+    public static final ItemStack SOLDER = ItemStackBuilder.rebar(Material.GUNPOWDER, PylonKeys.SOLDER)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, SOLDER, PylonKeys.SOLDER);
+        PylonPages.MISCELLANEOUS.addItem(SOLDER);
+    }
+
     public static final ItemStack FIBER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FIBER)
             .set(DataComponentTypes.ITEM_MODEL, Material.BAMBOO_MOSAIC.getKey())
             .build();
