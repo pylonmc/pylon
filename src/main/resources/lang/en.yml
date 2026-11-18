@@ -3031,6 +3031,7 @@ research:
   electric_machines: "<#f3c600>Electric Machines"
   voltaic_cells: "<#f3c600>Voltaic Cells"
   electrochemistry: "<#f3c600>Electrochemistry"
+  advanced_electrochemistry: "<#f3c600>Advanced Electrochemistry"
   electric_components: "<#f3c600>Electric Components"
   nickel_metal_hydrides: "<#f3c600>Nickel-Metal Hydrides"
   grid_scale_power: "<#f3c600>Grid-Scale Power"

@@ -741,6 +741,16 @@ electrochemistry:
     - pylon:carbon_rod
     - pylon:electrolytic_powder
 
+advanced_electrochemistry:
+  item: pylon:electrolysis_module
+  cost: 80
+  unlocks:
+    - pylon:electrolysis_module
+    - pylon:chemical_plant
+    - pylon:sodium_nugget
+    - pylon:sodium_ingot
+    - pylon:sodium_block
+
 electric_components:
   item: pylon:resistor
   cost: 50
@@ -750,6 +760,8 @@ electric_components:
     - pylon:fuse
     - pylon:battery_holder
     - pylon:capacitor
+    - pylon:printed_circuit_board
+    - pylon:high_voltage_circuit
 
 voltaic_cells:
   item: pylon:disposable_battery_1_kj

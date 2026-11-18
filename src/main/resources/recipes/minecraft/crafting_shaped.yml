@@ -3440,6 +3440,32 @@ pylon:electro_boom:
   result: pylon:electro_boom
   category: equipment
   
+pylon:electrolysis_module:
+  pattern:
+    - " W "
+    - "VOV"
+    - "R R"
+  key:
+    W: pylon:copper_wire
+    V: pylon:high_voltage_circuit
+    O: "#minecraft:wool"
+    R: pylon:carbon_rod
+  result: pylon:electrolysis_module
+  category: building
+  
+pylon:chemical_plant:
+  pattern:
+    - "SSS"
+    - "WMP"
+    - "SSS"
+  key:
+    S: pylon:steel_sheet
+    W: pylon:copper_wire
+    M: pylon:electric_mixer
+    P: pylon:fluid_pipe_steel
+  result: pylon:chemical_plant
+  category: building
+  
 pylon:battery_500_j:
   pattern:
     - "TWT"
