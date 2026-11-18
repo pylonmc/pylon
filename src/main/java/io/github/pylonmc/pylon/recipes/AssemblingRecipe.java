@@ -7,11 +7,15 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import io.github.pylonmc.rebar.recipe.*;
+import io.github.pylonmc.rebar.recipe.ConfigurableRecipeType;
+import io.github.pylonmc.rebar.recipe.RebarRecipe;
+import io.github.pylonmc.rebar.recipe.RecipeType;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -23,9 +27,6 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.gui.Markers;
 import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.Item;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -57,8 +58,7 @@ public record AssemblingRecipe(
         @Override
         protected @NotNull AssemblingRecipe loadRecipe(@NotNull NamespacedKey key, @NotNull ConfigSection section) {
             List<Step> steps = new ArrayList<>();
-            for (ConfigSection stepSection : section.get("steps", ConfigAdapter.LIST.from(ConfigAdapter.CONFIG_SECTION))) {
-
+            for (ConfigSection stepSection : section.getOrThrow("steps", ConfigAdapter.LIST.from(ConfigAdapter.CONFIG_SECTION))) {
                 List<AddDisplay> addDisplays = new ArrayList<>();
                 List<ConfigSection> addDisplaysSection = stepSection.get("add-displays", ConfigAdapter.LIST.from(ConfigAdapter.CONFIG_SECTION));
                 if (addDisplaysSection != null) {

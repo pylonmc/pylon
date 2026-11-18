@@ -3161,6 +3161,18 @@ pylon:wire_3_gauge:
     C: "#minecraft:wool_carpets"
   result: pylon:wire_3_gauge
   category: building
+
+pylon:printed_circuit_board:
+  pattern:
+    - " W "
+    - " C "
+    - " S "
+  key:
+    W: pylon:copper_wire
+    S: pylon:copper_sheet
+    C: "#minecraft:wool_carpets"
+  result: pylon:printed_circuit_board
+  category: misc
   
 pylon:steam_engine:
   pattern:

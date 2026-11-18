@@ -14,72 +14,72 @@ pylon:kinetic_control_mechanism:
       add-displays:
         - name: "sh"
           item: minecraft:terracotta
-          position: [0.5, 0.5]
-          scale: [0.7, 0.03, 0.85]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.7, 0.03, 0.85 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 2
       add-displays:
         - name: "rb1"
           item: minecraft:redstone_block
-          position: [0.3, 0.2]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.3, 0.2 ]
+          scale: [ 0.15, 0.15, 0.15 ]
         - name: "rb2"
           item: minecraft:redstone_block
-          position: [0.7, 0.3]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.7, 0.3 ]
+          scale: [ 0.15, 0.15, 0.15 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 2
       add-displays:
         - name: "pi1"
           item: minecraft:piston
-          position: [0.7, 0.8]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.7, 0.8 ]
+          scale: [ 0.15, 0.15, 0.15 ]
         - name: "pi2"
           item: minecraft:piston
-          position: [0.4, 0.8]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.4, 0.8 ]
+          scale: [ 0.15, 0.15, 0.15 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 4
       add-displays:
         - name: "cl1"
           item: minecraft:gold_block
-          position: [0.5, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 2
       add-displays:
         - name: "rw1"
           item: minecraft:red_concrete
-          position: [0.55, 0.8]
-          scale: [0.3, 0.08, 0.08]
+          position: [ 0.55, 0.8 ]
+          scale: [ 0.3, 0.08, 0.08 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 3
       add-displays:
         - name: "rw2"
           item: minecraft:red_concrete
-          position: [0.7, 0.55]
-          scale: [0.08, 0.08, 0.6]
+          position: [ 0.7, 0.55 ]
+          scale: [ 0.08, 0.08, 0.6 ]
         - name: "rw3"
           item: minecraft:red_concrete
-          position: [0.6, 0.5]
-          scale: [0.2, 0.08, 0.08]
+          position: [ 0.6, 0.5 ]
+          scale: [ 0.2, 0.08, 0.08 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 2
       add-displays:
         - name: "rw4"
           item: minecraft:red_concrete
-          position: [0.4, 0.5]
-          scale: [0.28, 0.08, 0.08]
+          position: [ 0.4, 0.5 ]
+          scale: [ 0.28, 0.08, 0.08 ]
         - name: "rw5"
           item: minecraft:red_concrete
-          position: [0.3, 0.35]
-          scale: [0.08, 0.08, 0.38]
+          position: [ 0.3, 0.35 ]
+          scale: [ 0.08, 0.08, 0.38 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 3
@@ -101,116 +101,116 @@ pylon:internal_combustion_engine:
       add-displays:
         - name: "base"
           item: minecraft:light_gray_concrete
-          position: [0.5, 0.5]
-          scale: [0.8, 0.05, 1.0]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.8, 0.05, 1.0 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 16
       add-displays:
         - name: "piston1"
           item: minecraft:light_blue_terracotta
-          position: [0.25, 0.5]
-          scale: [0.2, 0.15, 0.1]
+          position: [ 0.25, 0.5 ]
+          scale: [ 0.2, 0.15, 0.1 ]
         - name: "piston2"
           item: minecraft:light_blue_terracotta
-          position: [0.75, 0.5]
-          scale: [0.2, 0.15, 0.1]
+          position: [ 0.75, 0.5 ]
+          scale: [ 0.2, 0.15, 0.1 ]
         - name: "piston3"
           item: minecraft:light_blue_terracotta
-          position: [0.25, 0.7]
-          scale: [0.2, 0.15, 0.1]
+          position: [ 0.25, 0.7 ]
+          scale: [ 0.2, 0.15, 0.1 ]
         - name: "piston4"
           item: minecraft:light_blue_terracotta
-          position: [0.75, 0.7]
-          scale: [0.2, 0.15, 0.1]
+          position: [ 0.75, 0.7 ]
+          scale: [ 0.2, 0.15, 0.1 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 4
       add-displays:
         - name: "start"
           item: minecraft:terracotta
-          position: [0.5, 0.9]
-          scale: [0.6, 0.2, 0.15]
+          position: [ 0.5, 0.9 ]
+          scale: [ 0.6, 0.2, 0.15 ]
         - name: "end"
           item: minecraft:terracotta
-          position: [0.5, 0.175]
-          scale: [0.6, 0.2, 0.25]
+          position: [ 0.5, 0.175 ]
+          scale: [ 0.6, 0.2, 0.25 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 2
       add-displays:
         - name: "valves"
           item: minecraft:light_gray_terracotta
-          position: [0.5, 0.175]
-          scale: [0.9, 0.1, 0.1]
+          position: [ 0.5, 0.175 ]
+          scale: [ 0.9, 0.1, 0.1 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 12
       add-displays:
         - name: "crankshaft1"
           item: minecraft:gray_concrete
-          position: [0.5, 0.3]
-          scale: [0.05, 0.1, 0.2]
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.05, 0.1, 0.2 ]
         - name: "crankshaft2"
           item: minecraft:gray_concrete
-          position: [0.525, 0.4]
-          scale: [0.1, 0.1, 0.05]
+          position: [ 0.525, 0.4 ]
+          scale: [ 0.1, 0.1, 0.05 ]
         - name: "crankshaft3"
           item: minecraft:gray_concrete
-          position: [0.55, 0.5]
-          scale: [0.05, 0.1, 0.2]
+          position: [ 0.55, 0.5 ]
+          scale: [ 0.05, 0.1, 0.2 ]
         - name: "crankshaft4"
           item: minecraft:gray_concrete
-          position: [0.5, 0.6]
-          scale: [0.15, 0.1, 0.05]
+          position: [ 0.5, 0.6 ]
+          scale: [ 0.15, 0.1, 0.05 ]
         - name: "crankshaft5"
           item: minecraft:gray_concrete
-          position: [0.45, 0.7]
-          scale: [0.05, 0.1, 0.2]
+          position: [ 0.45, 0.7 ]
+          scale: [ 0.05, 0.1, 0.2 ]
         - name: "crankshaft6"
           item: minecraft:gray_concrete
-          position: [0.475, 0.8]
-          scale: [0.1, 0.1, 0.05]
+          position: [ 0.475, 0.8 ]
+          scale: [ 0.1, 0.1, 0.05 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 4
       add-displays:
         - name: "pistoncon1"
           item: minecraft:white_concrete
-          position: [0.5, 0.5]
-          scale: [0.6, 0.09, 0.04]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.6, 0.09, 0.04 ]
         - name: "pistoncon5"
           item: minecraft:white_concrete
-          position: [0.5, 0.7]
-          scale: [0.6, 0.09, 0.04]
+          position: [ 0.5, 0.7 ]
+          scale: [ 0.6, 0.09, 0.04 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 2
       add-displays:
         - name: "control"
           item: minecraft:gold_block
-          position: [0.6, 0.175]
-          scale: [0.1, 0.25, 0.1]
+          position: [ 0.6, 0.175 ]
+          scale: [ 0.1, 0.25, 0.1 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 4
       add-displays:
         - name: "wire"
           item: minecraft:red_concrete
-          position: [0.5, 0.175]
-          scale: [0.3, 0.23, 0.03]
+          position: [ 0.5, 0.175 ]
+          scale: [ 0.3, 0.23, 0.03 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 4
       add-displays:
         - name: "wall1"
           item: minecraft:light_gray_concrete
-          position: [0.15, 0.5]
-          scale: [0.1, 0.25, 1.0]
+          position: [ 0.15, 0.5 ]
+          scale: [ 0.1, 0.25, 1.0 ]
         - name: "wall2"
           item: minecraft:light_gray_concrete
-          position: [0.85, 0.5]
-          scale: [0.1, 0.25, 1.0]
+          position: [ 0.85, 0.5 ]
+          scale: [ 0.1, 0.25, 1.0 ]
 
 pylon:cargo_controller:
   inputs:
@@ -227,8 +227,8 @@ pylon:cargo_controller:
       add-displays:
         - name: "base"
           item: minecraft:light_gray_concrete
-          position: [0.5, 0.5]
-          scale: [0.8, 0.05, 0.8]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.8, 0.05, 0.8 ]
 
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
@@ -236,60 +236,60 @@ pylon:cargo_controller:
       add-displays:
         - name: "core1"
           item: minecraft:gray_concrete
-          position: [0.45, 0.5]
-          scale: [0.4, 0.13, 0.3]
+          position: [ 0.45, 0.5 ]
+          scale: [ 0.4, 0.13, 0.3 ]
         - name: "core2"
           item: minecraft:white_concrete
-          position: [0.5, 0.5]
-          scale: [0.2, 0.18, 0.2]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.2, 0.18, 0.2 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 1
       add-displays:
         - name: "torch1"
           item: minecraft:redstone_block
-          position: [0.5, 0.2]
-          scale: [0.1, 0.13, 0.1]
+          position: [ 0.5, 0.2 ]
+          scale: [ 0.1, 0.13, 0.1 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 1
       add-displays:
         - name: "torch2"
           item: minecraft:redstone_block
-          position: [0.5, 0.8]
-          scale: [0.1, 0.13, 0.1]
+          position: [ 0.5, 0.8 ]
+          scale: [ 0.1, 0.13, 0.1 ]
     - tool: "screwdriver"
       icon: pylon:copper_screwdriver
       clicks: 1
       add-displays:
         - name: "torch3"
           item: minecraft:redstone_block
-          position: [0.8, 0.5]
-          scale: [0.1, 0.13, 0.1]
+          position: [ 0.8, 0.5 ]
+          scale: [ 0.1, 0.13, 0.1 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 1
       add-displays:
         - name: "wire1"
           item: minecraft:red_concrete
-          position: [0.5, 0.35]
-          scale: [0.04, 0.07, 0.3]
+          position: [ 0.5, 0.35 ]
+          scale: [ 0.04, 0.07, 0.3 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 1
       add-displays:
         - name: "wire2"
           item: minecraft:red_concrete
-          position: [0.5, 0.65]
-          scale: [0.04, 0.07, 0.3]
+          position: [ 0.5, 0.65 ]
+          scale: [ 0.04, 0.07, 0.3 ]
     - tool: "redstone_soldering_iron"
       icon: pylon:redstone_soldering_iron
       clicks: 1
       add-displays:
         - name: "wire3"
           item: minecraft:red_concrete
-          position: [0.65, 0.5]
-          scale: [0.3, 0.07, 0.04]
+          position: [ 0.65, 0.5 ]
+          scale: [ 0.3, 0.07, 0.04 ]
     - tool: "hammer"
       icon: pylon:stone_hammer
       clicks: 1
@@ -309,16 +309,16 @@ pylon:research_pack_3:
       add-displays:
         - name: "Engine"
           item: pylon:internal_combustion_engine
-          position: [0.5, 0.5]
-          scale: [0.35, 0.35, 0.35]
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.35, 0.35, 0.35 ]
         - name: "Valve1"
           item: pylon:backflow_valve
-          position: [0.5, 1.0]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.5, 1.0 ]
+          scale: [ 0.15, 0.15, 0.15 ]
         - name: "Valve2"
           item: pylon:backflow_valve
-          position: [0.5, 0.0]
-          scale: [0.15, 0.15, 0.15]
+          position: [ 0.5, 0.0 ]
+          scale: [ 0.15, 0.15, 0.15 ]
     - tool: "hammer"
       icon: pylon:iron_hammer
       clicks: 2
@@ -347,8 +347,8 @@ pylon:research_pack_3:
           position: [ 0.5, 0.2 ]
           scale: [ 0.15, 0.15, 0.15 ]
       remove_displays:
-          - "Valve1P2"
-          - "Valve2P2"
+        - "Valve1P2"
+        - "Valve2P2"
     - tool: "hammer"
       icon: pylon:iron_hammer
       clicks: 2
@@ -385,8 +385,8 @@ pylon:research_pack_3:
       add-displays:
         - name: "CrankP1"
           item: pylon:steel_crankshaft
-          position: [1.0, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 1.0, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
 
     - tool: "screwdriver"
       icon: pylon:steel_screwdriver
@@ -394,8 +394,8 @@ pylon:research_pack_3:
       add-displays:
         - name: "CrankP2"
           item: pylon:steel_crankshaft
-          position: [0.9, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 0.9, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
       remove_displays:
         - "CrankP1"
 
@@ -405,8 +405,8 @@ pylon:research_pack_3:
       add-displays:
         - name: "CrankP3"
           item: pylon:steel_crankshaft
-          position: [0.8, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 0.8, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
       remove_displays:
         - "CrankP2"
 
@@ -416,8 +416,8 @@ pylon:research_pack_3:
       add-displays:
         - name: "CrankP4"
           item: pylon:steel_crankshaft
-          position: [0.7, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 0.7, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
       remove_displays:
         - "CrankP3"
 
@@ -427,7 +427,112 @@ pylon:research_pack_3:
       add-displays:
         - name: "CrankP5"
           item: pylon:steel_crankshaft
-          position: [0.6, 0.5]
-          scale: [0.2, 0.2, 0.2]
+          position: [ 0.6, 0.5 ]
+          scale: [ 0.2, 0.2, 0.2 ]
       remove_displays:
         - "CrankP4"
+
+pylon:high_voltage_circuit:
+  inputs:
+    - pylon:pcb_high_voltage_circuit
+    - pylon:steel_nugget: 2
+    - pylon:copper_wire: 8
+    - pylon:capacitor
+  results:
+    - pylon:high_voltage_circuit
+  steps:
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 4
+      add-displays:
+        - name: "pcb"
+          item: minecraft:green_carpet
+          position: [ 0.5, 0.5 ]
+          scale: [ 1, 0.5, 1 ]
+        - name: "trace_coil_right_bottom"
+          item: minecraft:red_concrete
+          position: [ 0.2, 0.3 ]
+          scale: [ 0.05, 0.05, 0.2 ]
+        - name: "trace_coil_right_top"
+          item: minecraft:red_concrete
+          position: [ 0.2, 0.7 ]
+          scale: [ 0.05, 0.05, 0.2 ]
+        - name: "trace_coil_left_bottom"
+          item: minecraft:red_concrete
+          position: [ 0.8, 0.3 ]
+          scale: [ 0.05, 0.05, 0.2 ]
+        - name: "trace_coil_left_top"
+          item: minecraft:red_concrete
+          position: [ 0.8, 0.7 ]
+          scale: [ 0.05, 0.05, 0.2 ]
+        - name: "trace_top"
+          item: minecraft:red_concrete
+          position: [ 0.5, 0.8 ]
+          scale: [ 0.65, 0.05, 0.05 ]
+        - name: "trace_lead_right"
+          item: minecraft:red_concrete
+          position: [ 0.275, 0.2 ]
+          scale: [ 0.2, 0.05, 0.05 ]
+        - name: "trace_lead_left"
+          item: minecraft:red_concrete
+          position: [ 0.725, 0.2 ]
+          scale: [ 0.2, 0.05, 0.05 ]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 2
+      add-displays:
+        - name: "coil_right_middle"
+          item: minecraft:copper_block
+          position: [ 0.2, 0.5 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+        - name: "coil_right_top"
+          item: minecraft:copper_block
+          position: [ 0.2, 0.6 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+        - name: "coil_right_bottom"
+          item: minecraft:copper_block
+          position: [ 0.2, 0.4 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 2
+      add-displays:
+        - name: "coil_left_middle"
+          item: minecraft:copper_block
+          position: [ 0.8, 0.5 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+        - name: "coil_left_top"
+          item: minecraft:copper_block
+          position: [ 0.8, 0.6 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+        - name: "coil_left_bottom"
+          item: minecraft:copper_block
+          position: [ 0.8, 0.4 ]
+          scale: [ 0.2, 0.2, 0.05 ]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 1
+      add-displays:
+        - name: "lead_right"
+          item: pylon:steel_block
+          position: [ 0.4, 0.2 ]
+          scale: [ 0.1, 0.2, 0.1 ]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 1
+      add-displays:
+        - name: "lead_left"
+          item: pylon:steel_block
+          position: [ 0.6, 0.2 ]
+          scale: [ 0.1, 0.2, 0.1 ]
+    - tool: "redstone_soldering_iron"
+      icon: pylon:redstone_soldering_iron
+      clicks: 2
+      add-displays:
+        - name: "capacitor"
+          item: minecraft:cyan_concrete
+          position: [ 0.5, 0.8 ]
+          scale: [ 0.2, 0.4, 0.2 ]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 1

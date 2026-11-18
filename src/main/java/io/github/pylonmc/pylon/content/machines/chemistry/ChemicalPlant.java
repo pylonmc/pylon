@@ -7,6 +7,7 @@ import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.pylon.content.components.ItemInputHatch;
 import io.github.pylonmc.pylon.content.components.ItemOutputHatch;
 import io.github.pylonmc.pylon.recipes.ChemicalPlantRecipe;
+import io.github.pylonmc.pylon.util.RecipeSelectionGui;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.BlockTypeWrapper;
 import io.github.pylonmc.rebar.block.RebarBlock;
@@ -45,12 +46,9 @@ import org.joml.Vector3i;
 import org.jspecify.annotations.NonNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.gui.Markers;
-import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.ItemWrapper;
-import xyz.xenondevs.invui.window.Window;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -171,49 +169,17 @@ public class ChemicalPlant extends RebarBlock implements
 
         @Override
         public void handleClick(@NonNull ClickType clickType, @NonNull Player player, @NonNull Click click) {
-            selectRecipe(player);
+            new RecipeSelectionGui<>(ChemicalPlantRecipe.RECIPE_TYPE)
+                    .displayFunction(recipe -> new ItemWrapper(recipe.createDisplayItem()))
+                    .onSelected((recipe, _) -> {
+                        setRecipe(recipe);
+                        open(player);
+                    })
+                    .open(player);
         }
     }
 
     private final RecipeButton recipeButton = new RecipeButton();
-
-    private void selectRecipe(Player player) {
-        List<xyz.xenondevs.invui.item.Item> items = new ArrayList<>();
-        items.add(xyz.xenondevs.invui.item.Item.builder()
-                .setItemProvider(ItemStackBuilder.gui(Material.BARRIER, "none").name(Component.translatable("pylon.gui.none")))
-                .addClickHandler(_ -> {
-                    setRecipe(null);
-                    open(player);
-                })
-                .build());
-        for (ChemicalPlantRecipe recipe : ChemicalPlantRecipe.RECIPE_TYPE) {
-            items.add(xyz.xenondevs.invui.item.Item.builder()
-                    .setItemProvider(new ItemWrapper(recipe.createDisplayItem()))
-                    .addClickHandler(_ -> {
-                        setRecipe(recipe);
-                        open(player);
-                    })
-                    .build());
-        }
-        Gui gui = PagedGui.itemsBuilder()
-                .setStructure(
-                        "# # # # # # # # #",
-                        "# x x x x x x x #",
-                        "# x x x x x x x #",
-                        "# x x x x x x x #",
-                        "# # # < # > # # #"
-                )
-                .addIngredient('#', GuiItems.background())
-                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-                .addIngredient('<', GuiItems.pagePrevious())
-                .addIngredient('>', GuiItems.pageNext())
-                .setContent(items)
-                .build();
-        Window.builder()
-                .setUpperGui(gui)
-                .setTitle(Component.translatable("pylon.gui.select-recipe"))
-                .open(player);
-    }
 
     @Override
     public @NotNull Gui createGui() {

@@ -534,6 +534,9 @@ public class PylonKeys {
     public static final NamespacedKey RESISTOR = pylonKey("resistor");
     public static final NamespacedKey HEATING_ELEMENT = pylonKey("heating_element");
 
+    public static final NamespacedKey PRINTED_CIRCUIT_BOARD = pylonKey("printed_circuit_board");
+    public static final NamespacedKey HIGH_VOLTAGE_CIRCUIT = pylonKey("high_voltage_circuit");
+
     public static final NamespacedKey DISPOSABLE_BATTERY_100_J = pylonKey("disposable_battery_100_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_500_J = pylonKey("disposable_battery_500_j");
     public static final NamespacedKey DISPOSABLE_BATTERY_1_KJ = pylonKey("disposable_battery_1_kj");

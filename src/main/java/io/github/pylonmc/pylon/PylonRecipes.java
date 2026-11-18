@@ -55,6 +55,7 @@ public class PylonRecipes {
         HeatExchangerRecipe.RECIPE_TYPE.register();
         LatheRecipe.RECIPE_TYPE.register();
         ChemicalPlantRecipe.RECIPE_TYPE.register();
+        PcbConfiguration.RECIPE_TYPE.register();
 
         //hardcoded
         initCollimator();

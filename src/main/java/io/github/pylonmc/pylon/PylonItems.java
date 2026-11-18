@@ -3749,6 +3749,22 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(ELECTROLYSIS_MODULE);
     }
 
+    public static final ItemStack PRINTED_CIRCUIT_BOARD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PRINTED_CIRCUIT_BOARD)
+            .set(DataComponentTypes.ITEM_MODEL, Material.GREEN_CARPET.getKey())
+            .build();
+    static {
+        RebarItem.register(PrintedCircuitBoard.class, PRINTED_CIRCUIT_BOARD, PylonKeys.PRINTED_CIRCUIT_BOARD);
+        PylonPages.COMPONENTS.addItem(PRINTED_CIRCUIT_BOARD);
+    }
+
+    public static final ItemStack HIGH_VOLTAGE_CIRCUIT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.HIGH_VOLTAGE_CIRCUIT)
+            .set(DataComponentTypes.ITEM_MODEL, Material.YELLOW_CARPET.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, HIGH_VOLTAGE_CIRCUIT, PylonKeys.HIGH_VOLTAGE_CIRCUIT);
+        PylonPages.COMPONENTS.addItem(HIGH_VOLTAGE_CIRCUIT);
+    }
+
     // <editor-fold desc="Electricity" defaultstate=collapsed>
     public static final ItemStack RESISTOR = ItemStackBuilder.rebar(Material.ACTIVATOR_RAIL, PylonKeys.RESISTOR)
             .build();

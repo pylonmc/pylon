@@ -6,6 +6,7 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.pylon.recipes.LatheRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
+import io.github.pylonmc.pylon.util.RecipeSelectionGui;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
@@ -28,7 +29,6 @@ import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
-import io.github.pylonmc.rebar.util.gui.GuiItems;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.BlockPosition;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
@@ -60,11 +60,7 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
-import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.gui.Markers;
-import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.ItemWrapper;
-import xyz.xenondevs.invui.window.Window;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -277,41 +273,14 @@ public class Lathe extends RebarBlock implements
 
     private void chooseRecipe(Player player, ItemStack input) {
         if (input.isEmpty()) return;
-        List<LatheRecipe> recipes = LatheRecipe.RECIPE_TYPE.stream()
+        var gui = new RecipeSelectionGui<>(LatheRecipe.RECIPE_TYPE)
+                .displayFunction(recipe -> new ItemWrapper(recipe.result()))
+                .autoSelectIfOne(true)
+                .showNoneButton(false)
                 .filter(recipe -> recipe.input().matchesIgnoringAmount(input))
-                .toList();
-
-        if (recipes.isEmpty()) {
+                .onSelected((recipe, _) -> setUpNewRecipe(player, input, recipe));
+        if (!gui.open(player)) {
             player.sendMessage(Component.translatable("pylon.message.invalid_recipe"));
-        } else if (recipes.size() == 1) {
-            setUpNewRecipe(player, input, recipes.getFirst());
-        } else {
-            var items = recipes.stream()
-                    .map(recipe -> xyz.xenondevs.invui.item.Item.builder()
-                            .setItemProvider(new ItemWrapper(recipe.result()))
-                            .addClickHandler(_ -> setUpNewRecipe(player, input, recipe))
-                            .build()
-                    )
-                    .toList();
-
-            Gui gui = PagedGui.itemsBuilder()
-                    .setStructure(
-                            "# # # # # # # # #",
-                            "# x x x x x x x #",
-                            "# x x x x x x x #",
-                            "# x x x x x x x #",
-                            "# # # < # > # # #"
-                    )
-                    .addIngredient('#', GuiItems.background())
-                    .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-                    .addIngredient('<', GuiItems.pagePrevious())
-                    .addIngredient('>', GuiItems.pageNext())
-                    .setContent(items)
-                    .build();
-            Window.builder()
-                    .setUpperGui(gui)
-                    .setTitle(Component.translatable("pylon.gui.select-recipe"))
-                    .open(player);
         }
     }
 
