@@ -2819,7 +2819,7 @@ item:
       <arrow> <attr>Charge:</attr> %charge%
 
   battery_500_j:
-    name: "500 J Battery"
+    name: "500 J NiMH Battery"
     lore: |-
       <star> Rechargeable
       <arrow> Stores energy to be used in compatible items
@@ -2827,7 +2827,7 @@ item:
       <arrow> <attr>Charge:</attr> %charge%
 
   battery_1_kj:
-    name: "1 kJ Battery"
+    name: "1 kJ NiMH Battery"
     lore: |-
       <star> Rechargeable
       <arrow> Stores energy to be used in compatible items
@@ -2835,7 +2835,33 @@ item:
       <arrow> <attr>Charge:</attr> %charge%
 
   battery_5_kj:
-    name: "5 kJ Battery"
+    name: "5 kJ NiMH Battery"
+    lore: |-
+      <star> Rechargeable
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  battery_20_kj:
+    name: "20 kJ NaS Battery"
+    lore: |-
+      <star> Rechargeable
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <b>Intentionally does not have a recipe yet</b>
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  battery_100_kj:
+    name: "100 kJ NaS Battery"
+    lore: |-
+      <star> Rechargeable
+      <arrow> Stores energy to be used in compatible items
+      <arrow> <b>Intentionally does not have a recipe yet</b>
+      <arrow> <attr>Capacity:</attr> %capacity%
+      <arrow> <attr>Charge:</attr> %charge%
+
+  battery_1_mj:
+    name: "1 MJ Liquid NaS Battery"
     lore: |-
       <star> Rechargeable
       <arrow> Stores energy to be used in compatible items
@@ -3032,6 +3058,7 @@ research:
   voltaic_cells: "<#f3c600>Voltaic Cells"
   electrochemistry: "<#f3c600>Electrochemistry"
   advanced_electrochemistry: "<#f3c600>Advanced Electrochemistry"
+  sodium_sulfur_chemistry: "<#f3c600>Sodium-Sulfur Chemistry"
   electric_components: "<#f3c600>Electric Components"
   nickel_metal_hydrides: "<#f3c600>Nickel-Metal Hydrides"
   grid_scale_power: "<#f3c600>Grid-Scale Power"

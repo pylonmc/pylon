@@ -558,6 +558,9 @@ public class PylonKeys {
     public static final NamespacedKey BATTERY_500_J = pylonKey("battery_500_j");
     public static final NamespacedKey BATTERY_1_KJ = pylonKey("battery_1_kj");
     public static final NamespacedKey BATTERY_5_KJ = pylonKey("battery_5_kj");
+    public static final NamespacedKey BATTERY_20_KJ = pylonKey("battery_20_kj");
+    public static final NamespacedKey BATTERY_100_KJ = pylonKey("battery_100_kj");
+    public static final NamespacedKey BATTERY_1_MJ = pylonKey("battery_1_mj");
     public static final NamespacedKey BATTERY_BANK = pylonKey("battery_bank");
 
     public static final NamespacedKey CHEMICAL_PLANT = pylonKey("chemical_plant");

@@ -750,6 +750,7 @@ advanced_electrochemistry:
     - pylon:sodium_nugget
     - pylon:sodium_ingot
     - pylon:sodium_block
+    - pylon:sodium_sheet
 
 electric_components:
   item: pylon:resistor
@@ -789,3 +790,11 @@ nickel_metal_hydrides:
     - pylon:nimh_cathode
     - pylon:battery_500_j
     - pylon:battery_1_kj
+
+sodium_sulfur_chemistry:
+  item: pylon:battery_20_kj
+  cost: 100
+  unlocks:
+    - pylon:battery_20_kj
+    - pylon:battery_100_kj
+    - pylon:battery_1_mj

@@ -3502,3 +3502,19 @@ pylon:battery_5_kj:
     C: pylon:copper_wire
   result: pylon:battery_5_kj
   category: equipment
+
+pylon:battery_20_kj:
+  pattern:
+    - "TRT"
+    - "NES"
+    - "CVC"
+  key:
+    T: pylon:copper_sheet
+    R: pylon:resistor
+    N: pylon:sodium_sheet
+    E: pylon:electrolytic_powder
+    S: pylon:sulfur
+    C: "#minecraft:wool_carpets"
+    V: pylon:high_voltage_circuit
+  result: pylon:battery_20_kj
+  category: equipment

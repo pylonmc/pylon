@@ -4105,6 +4105,27 @@ public final class PylonItems {
         PylonPages.TOOLS.addItem(BATTERY_5_KJ);
     }
 
+    public static final ItemStack BATTERY_20_KJ = ItemStackBuilder.rebar(Material.LIGHT_BLUE_CANDLE, PylonKeys.BATTERY_20_KJ)
+            .build();
+    static {
+        RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_20_KJ, PylonKeys.BATTERY_20_KJ);
+        PylonPages.TOOLS.addItem(BATTERY_20_KJ);
+    }
+
+    public static final ItemStack BATTERY_100_KJ = ItemStackBuilder.rebar(Material.LIGHT_BLUE_CANDLE, PylonKeys.BATTERY_100_KJ)
+            .build();
+    static {
+        RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_100_KJ, PylonKeys.BATTERY_100_KJ);
+        PylonPages.TOOLS.addItem(BATTERY_100_KJ);
+    }
+
+    public static final ItemStack BATTERY_1_MJ = ItemStackBuilder.rebar(Material.BLUE_CANDLE, PylonKeys.BATTERY_1_MJ)
+            .build();
+    static {
+        RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_MJ, PylonKeys.BATTERY_1_MJ);
+        PylonPages.TOOLS.addItem(BATTERY_1_MJ);
+    }
+
     public static final ItemStack BATTERY_BANK = ItemStackBuilder.rebar(Material.CHISELED_BOOKSHELF, PylonKeys.BATTERY_BANK)
             .build();
     static {
