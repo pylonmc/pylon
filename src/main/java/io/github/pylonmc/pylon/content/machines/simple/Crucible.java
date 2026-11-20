@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -62,7 +62,7 @@ public final class Crucible extends RebarBlock implements
 
     private static final NamespacedKey PROCESSING_KEY = pylonKey("processing");
 
-    public static final Map<Material, Integer> VANILLA_BLOCK_HEAT_MAP = ConfigSection.fromSettings(PylonKeys.CRUCIBLE).getOrThrow("vanilla-block-heat-map", ConfigAdapter.MAP.from(ConfigAdapter.MATERIAL, ConfigAdapter.INTEGER));
+    public static final Map<BlockData, Integer> VANILLA_BLOCK_HEAT_MAP = ConfigSection.fromSettings(PylonKeys.CRUCIBLE).getOrThrow("vanilla-block-heat-map", ConfigAdapter.MAP.from(ConfigAdapter.BLOCK_DATA, ConfigAdapter.INTEGER));
 
     @SuppressWarnings("unused")
     public Crucible(@NotNull Block block, @NotNull BlockCreateContext context) {
@@ -302,7 +302,15 @@ public final class Crucible extends RebarBlock implements
             return null;
         }
 
-        return VANILLA_BLOCK_HEAT_MAP.get(below.getType());
+        BlockData belowData = below.getBlockData();
+        Integer heat = null;
+        for (var entry : VANILLA_BLOCK_HEAT_MAP.entrySet()) {
+            if (belowData.matches(entry.getKey()) && (heat == null || entry.getValue() > heat)) {
+                heat = entry.getValue();
+            }
+        }
+
+        return heat;
     }
     //endregion
 }

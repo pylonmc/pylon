@@ -15,8 +15,8 @@ import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
@@ -59,8 +59,8 @@ public record CrucibleRecipe(
     public static Set<NamespacedKey> getHeatedBlocks() {
         if (HEATED_BLOCKS == null) {
             HEATED_BLOCKS = new HashSet<>();
-            for (Material material : Crucible.VANILLA_BLOCK_HEAT_MAP.keySet())  {
-                HEATED_BLOCKS.add(material.getKey());
+            for (BlockData blockData : Crucible.VANILLA_BLOCK_HEAT_MAP.keySet()) {
+                HEATED_BLOCKS.add(blockData.getMaterial().getKey());
             }
 
             for (RebarBlockSchema schema : RebarRegistry.BLOCKS) {

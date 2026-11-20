@@ -1,11 +1,13 @@
 capacity: 64
 smelt-time: 60
 vanilla-block-heat-map:
-  torch: 1
-  redstone_torch: 1
-  copper_torch: 1
-  soul_torch: 2
-  magma_block: 10
-  fire: 10
-  soul_fire: 15
-  lava: 20
+  'minecraft:torch': 1
+  'minecraft:redstone_torch': 1
+  'minecraft:copper_torch': 1
+  'minecraft:soul_torch': 2
+  'minecraft:magma_block': 10
+  'minecraft:fire': 10
+  'minecraft:soul_fire': 15
+  'minecraft:lava': 20
+  'minecraft:campfire[lit=true]': 5
+  'minecraft:soul_campfire[lit=true]': 8
