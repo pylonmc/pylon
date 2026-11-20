@@ -3,6 +3,7 @@ package io.github.pylonmc.pylon.content.machines.simple;
 import com.destroystokyo.paper.ParticleBuilder;
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.content.building.Altar;
 import io.github.pylonmc.pylon.content.building.Pedestal;
 import io.github.pylonmc.pylon.recipes.ShimmerAltarRecipe;
 import io.github.pylonmc.pylon.util.PylonUtils;
@@ -40,9 +41,10 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShimmerAltar extends RebarBlock
-        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, RecipeProcessorRebarBlock<ShimmerAltarRecipe>, BlockBreakRebarBlockHandler {
+        implements SimpleRebarMultiblock, InteractRebarBlockHandler, TickingRebarBlock, RecipeProcessorRebarBlock<ShimmerAltarRecipe>, BlockBreakRebarBlockHandler, Altar {
 
     public static final int PEDESTAL_COUNT = 8;
 
@@ -120,10 +122,14 @@ public class ShimmerAltar extends RebarBlock
         }
 
         // attempt to start recipe
-        List<ItemStack> ingredients = new ArrayList<>();
-        for (Pedestal pedestal : getPedestals()) {
-            ingredients.add(pedestal.getItemDisplay().getItemStack());
+        // missing or foreign-locked pedestals must not be used (issue #171)
+        if (!allPedestalsValid()) {
+            return;
         }
+        List<Pedestal> pedestals = getValidPedestals();
+        List<ItemStack> ingredients = pedestals.stream()
+                .map(p -> p.getItemDisplay().getItemStack())
+                .collect(Collectors.toCollection(ArrayList::new));
 
         for (ShimmerAltarRecipe recipe : ShimmerAltarRecipe.RECIPE_TYPE.getRecipes()) {
             if (!recipe.isValidRecipe(ingredients, catalyst)) {
@@ -132,9 +138,7 @@ public class ShimmerAltar extends RebarBlock
 
             itemDisplay.setItemStack(catalyst.asQuantity(1));
             catalyst.subtract();
-            for (Pedestal pedestal : getPedestals()) {
-                pedestal.setLocked(true);
-            }
+            lockPedestals();
             startRecipe(recipe, recipe.timeSeconds() * 20);
             break;
         }
@@ -153,7 +157,7 @@ public class ShimmerAltar extends RebarBlock
             return;
         }
 
-        List<Pedestal> usedPedestals = getPedestals()
+        List<Pedestal> usedPedestals = getValidPedestals()
                 .stream()
                 .filter(pedestal -> !pedestal.getItemDisplay().getItemStack().isEmpty())
                 .toList();
@@ -192,13 +196,34 @@ public class ShimmerAltar extends RebarBlock
         );
     }
 
-    public List<Pedestal> getPedestals() {
-        List<Pedestal> pedestals = new ArrayList<>();
+    /**
+     * All pedestal blocks of this multiblock; entries may be null if the pedestal is unloaded or was replaced.
+     */
+    @Override
+    public List<@Nullable Pedestal> getAllPedestals() {
+        List<@Nullable Pedestal> pedestals = new ArrayList<>();
         for (Vector3i vector : getComponents().keySet()) {
             Block block = getBlock().getRelative(vector.x, vector.y, vector.z);
             pedestals.add(BlockStorage.getAs(Pedestal.class, block));
         }
         return pedestals;
+    }
+
+    /**
+     * @return existing pedestals that are not locked by another altar
+     */
+    @Override
+    public List<Pedestal> getValidPedestals() {
+        return getAllPedestals().stream()
+                .filter(Objects::nonNull)
+                .filter(p -> !p.isLockedByOtherThan(getBlock()))
+                .toList();
+    }
+
+    @Override
+    public boolean checkFormed() {
+        // pedestals locked by another altar cannot be used to form this altar (issue #171)
+        return SimpleRebarMultiblock.super.checkFormed() && allPedestalsValid();
     }
 
     public ItemDisplay getItemDisplay() {
@@ -207,9 +232,10 @@ public class ShimmerAltar extends RebarBlock
 
     @Override
     public void onRecipeFinished(@NotNull ShimmerAltarRecipe recipe) {
-        for (Pedestal pedestal : getPedestals()) {
+        // consumed ingredients vanish from the pedestals
+        for (Pedestal pedestal : getValidPedestals()) {
             pedestal.getItemDisplay().setItemStack(null);
-            pedestal.setLocked(false);
+            pedestal.unlock();
         }
 
         getItemDisplay().setItemStack(recipe.result());
@@ -221,14 +247,15 @@ public class ShimmerAltar extends RebarBlock
                 .spawn();
     }
 
+    @Override
     public void cancelRecipe() {
+        if (!isProcessingRecipe()) {
+            return;
+        }
+
         stopRecipe();
 
-        for (Pedestal pedestal : getPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(false);
-            }
-        }
+        unlockPedestals();
 
         new ParticleBuilder(Particle.WHITE_SMOKE)
                 .count(20)
@@ -242,13 +269,10 @@ public class ShimmerAltar extends RebarBlock
         if (!getItemDisplay().getItemStack().getType().isAir()) {
             drops.add(getItemDisplay().getItemStack());
         }
-        for (Pedestal pedestal : getPedestals()) {
-            if (pedestal != null) {
-                pedestal.setLocked(false);
-            }
-        }
+
+        unlockPedestals();
     }
-    
+
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
         WailaDisplay display = WailaDisplay.of(this, player);
