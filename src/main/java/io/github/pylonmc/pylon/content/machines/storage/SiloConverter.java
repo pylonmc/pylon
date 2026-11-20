@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.machines.storage;
 
 import io.github.pylonmc.pylon.recipes.SiloConverterRecipe;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.interfaces.GuiRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.VirtualInventoryRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -18,7 +19,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.inventory.VirtualInventory;
+import xyz.xenondevs.invui.inventory.event.UpdateReason;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -55,6 +58,12 @@ public class SiloConverter extends RebarBlock implements GuiRebarBlock, VirtualI
         });
         inputInventory.addPostUpdateHandler(event -> recomputeOutput());
         materialInventory.addPostUpdateHandler(event -> recomputeOutput());
+    }
+
+    @Override
+    public void onBlockBreak(@NotNull List<@NotNull ItemStack> drops, @NotNull BlockBreakContext context) {
+        outputInventory.forceSetItem(UpdateReason.SUPPRESSED, 0, null);
+        VirtualInventoryRebarBlock.super.onBlockBreak(drops, context);
     }
 
     @Override
