@@ -331,7 +331,7 @@ pylon:research_pack_3:
           item: pylon:backflow_valve
           position: [ 0.5, 0.1 ]
           scale: [ 0.15, 0.15, 0.15 ]
-      remove_displays:
+      remove-displays:
         - "Valve1"
         - "Valve2"
     - tool: "hammer"
@@ -346,7 +346,7 @@ pylon:research_pack_3:
           item: pylon:backflow_valve
           position: [ 0.5, 0.2 ]
           scale: [ 0.15, 0.15, 0.15 ]
-      remove_displays:
+      remove-displays:
         - "Valve1P2"
         - "Valve2P2"
     - tool: "hammer"
@@ -361,7 +361,7 @@ pylon:research_pack_3:
           item: pylon:backflow_valve
           position: [ 0.5, 0.3 ]
           scale: [ 0.15, 0.15, 0.15 ]
-      remove_displays:
+      remove-displays:
         - "Valve1P3"
         - "Valve2P3"
     - tool: "hammer"
@@ -376,7 +376,7 @@ pylon:research_pack_3:
           item: pylon:backflow_valve
           position: [ 0.5, 0.39 ]
           scale: [ 0.15, 0.15, 0.15 ]
-      remove_displays:
+      remove-displays:
         - "Valve1P4"
         - "Valve2P4"
     - tool: "screwdriver"
@@ -396,7 +396,7 @@ pylon:research_pack_3:
           item: pylon:steel_crankshaft
           position: [ 0.9, 0.5 ]
           scale: [ 0.2, 0.2, 0.2 ]
-      remove_displays:
+      remove-displays:
         - "CrankP1"
 
     - tool: "screwdriver"
@@ -407,7 +407,7 @@ pylon:research_pack_3:
           item: pylon:steel_crankshaft
           position: [ 0.8, 0.5 ]
           scale: [ 0.2, 0.2, 0.2 ]
-      remove_displays:
+      remove-displays:
         - "CrankP2"
 
     - tool: "screwdriver"
@@ -418,7 +418,7 @@ pylon:research_pack_3:
           item: pylon:steel_crankshaft
           position: [ 0.7, 0.5 ]
           scale: [ 0.2, 0.2, 0.2 ]
-      remove_displays:
+      remove-displays:
         - "CrankP3"
 
     - tool: "screwdriver"
@@ -429,8 +429,81 @@ pylon:research_pack_3:
           item: pylon:steel_crankshaft
           position: [ 0.6, 0.5 ]
           scale: [ 0.2, 0.2, 0.2 ]
-      remove_displays:
+      remove-displays:
         - "CrankP4"
+
+pylon:copper_pipe_assembly:
+  inputs:
+    - pylon:copper_sheet: 3
+    - pylon:fluid_pipe_copper: 4
+  results:
+    - pylon:copper_pipe_assembly
+  steps:
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
+      add-displays:
+        - name: "bottom_pipe"
+          item: minecraft:copper_block
+          position: [ 0.5, 0.2 ]
+          scale: [ 0.2, 0.2, 0.4 ]
+        - name: "top_pipe"
+          item: minecraft:copper_block
+          position: [ 0.5, 0.6 ]
+          scale: [ 0.4, 0.2, 0.2 ]
+        - name: "right_pipe"
+          item: minecraft:copper_block
+          position: [ 0.1, 0.5 ]
+          scale: [ 0.2, 0.2, 0.8 ]
+        - name: "left_pipe"
+          item: minecraft:copper_block
+          position: [ 0.9, 0.5 ]
+          scale: [ 0.2, 0.2, 0.8 ]
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "bottom_pipe_final"
+          item: minecraft:copper_block
+          position: [ 0.5, 0.3 ]
+          scale: [ 0.2, 0.2, 0.4 ]
+        - name: "bottom_pipe_fixture"
+          item: minecraft:copper_block
+          position: [ 0.5, 0.5 ]
+          scale: [ 0.25, 0.25, 0.1 ]
+      remove-displays:
+        - "bottom_pipe"
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "left_pipe_final"
+          item: minecraft:copper_block
+          position: [ 0.8, 0.5 ]
+          scale: [ 0.2, 0.2, 0.8 ]
+        - name: "left_pipe_fixture"
+          item: minecraft:copper_block
+          position: [ 0.7, 0.6 ]
+          scale: [ 0.1, 0.25, 0.25 ]
+      remove-displays:
+        - "left_pipe"
+    - tool: "hammer"
+      icon: pylon:stone_hammer
+      clicks: 2
+      add-displays:
+        - name: "right_pipe_final"
+          item: minecraft:copper_block
+          position: [ 0.2, 0.5 ]
+          scale: [ 0.2, 0.2, 0.8 ]
+        - name: "right_pipe_fixture"
+          item: minecraft:copper_block
+          position: [ 0.3, 0.6 ]
+          scale: [ 0.1, 0.25, 0.25 ]
+      remove-displays:
+        - "right_pipe"
+    - tool: "screwdriver"
+      icon: pylon:steel_screwdriver
+      clicks: 1
 
 pylon:high_voltage_circuit:
   inputs:

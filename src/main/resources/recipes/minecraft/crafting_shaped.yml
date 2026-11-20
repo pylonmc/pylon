@@ -3540,7 +3540,7 @@ pylon:heat_exchanger:
     - "BCB"
   key:
     B: minecraft:bricks
-    C: pylon:copper_pipe_assembly
+    C: pylon:large_copper_pipe_assembly
     S: pylon:steel_block
   result: pylon:heat_exchanger
   category: building
