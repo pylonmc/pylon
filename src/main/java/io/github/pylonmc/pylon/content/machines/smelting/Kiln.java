@@ -16,6 +16,7 @@ import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.item.interfaces.VanillaFurnaceFuel;
+import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -57,6 +58,7 @@ public class Kiln extends RebarBlock implements
         RecipeProcessorRebarBlock<KilnRecipe>,
         DirectionalRebarBlock,
         VirtualInventoryRebarBlock,
+        LogisticRebarBlock,
         NoJobRebarBlock,
         TickingRebarBlock {
 
@@ -117,6 +119,28 @@ public class Kiln extends RebarBlock implements
         pdc.set(TEMPERATURE_KEY, RebarSerializers.DOUBLE, temperature);
         pdc.set(FUEL_TICKS_TOTAL_KEY, RebarSerializers.INTEGER, fuelTicksTotal);
         pdc.set(FUEL_TICKS_REMAINING_KEY, RebarSerializers.INTEGER, fuelTicksRemaining);
+    }
+
+    @Override
+    public void postInitialise() {
+        createLogisticGroup("fuel", LogisticGroupType.INPUT, fuelInventory);
+        fuelInventory.addPreUpdateHandler(event -> {
+            if (event.isRemove()) {
+                return;
+            }
+            ItemStack newItem = event.getNewItem();
+            if (newItem == null) {
+                return;
+            }
+            ItemType type = newItem.getType().asItemType();
+            if (type == null || !isValidFuel(newItem, type)) {
+                event.setCancelled(true);
+            }
+        });
+    }
+
+    private static boolean isValidFuel(@NotNull ItemStack fuel, @NotNull ItemType type) {
+        return type.isFuel() && !RebarItem.isRebarItemAndIsNot(fuel, VanillaFurnaceFuel.class);
     }
 
     @Override
@@ -230,7 +254,7 @@ public class Kiln extends RebarBlock implements
         }
 
         ItemType type = fuel.getType().asItemType();
-        if (type == null || !type.isFuel() || RebarItem.isRebarItemAndIsNot(fuel, VanillaFurnaceFuel.class)) {
+        if (type == null || !isValidFuel(fuel, type)) {
             return;
         }
 
