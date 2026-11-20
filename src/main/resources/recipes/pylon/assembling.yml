@@ -508,7 +508,7 @@ pylon:copper_pipe_assembly:
 pylon:high_voltage_circuit:
   inputs:
     - pylon:pcb_high_voltage_circuit
-    - pylon:steel_nugget: 2
+    - minecraft:gold_nugget: 2
     - pylon:copper_wire: 8
     - pylon:capacitor
   results:
@@ -587,7 +587,7 @@ pylon:high_voltage_circuit:
       clicks: 1
       add-displays:
         - name: "lead_right"
-          item: pylon:steel_block
+          item: minecraft:gold_block
           position: [ 0.4, 0.2 ]
           scale: [ 0.1, 0.2, 0.1 ]
     - tool: "hammer"
@@ -595,7 +595,7 @@ pylon:high_voltage_circuit:
       clicks: 1
       add-displays:
         - name: "lead_left"
-          item: pylon:steel_block
+          item: minecraft:gold_block
           position: [ 0.6, 0.2 ]
           scale: [ 0.1, 0.2, 0.1 ]
     - tool: "redstone_soldering_iron"
