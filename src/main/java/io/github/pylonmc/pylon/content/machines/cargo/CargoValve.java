@@ -141,13 +141,14 @@ public class CargoValve extends RebarBlock implements
         pdc.set(ENABLED_KEY, RebarSerializers.BOOLEAN, open);
     }
 
-    @Override @MultiHandler(priorities = EventPriority.MONITOR, ignoreCancelled = true)
+    @Override @MultiHandler(priorities = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Event.Result.DENY || !event.getPlayer().isSneaking()) {
             return;
         }
 
         event.setUseItemInHand(Event.Result.DENY);
+        event.setUseInteractedBlock(Event.Result.DENY);
 
         open = !open;
         if (open) {
