@@ -149,6 +149,10 @@ public class Silo extends RebarBlock implements LogisticRebarBlock, InteractReba
             }
 
             if (stack == null || stack.isEmpty()) {
+                if (event.getPlayer().isSneaking() && stackInHand.getType().isBlock()) {
+                   return;
+                }
+
                 stack = stackInHand.asOne();
                 amount = 0;
             }

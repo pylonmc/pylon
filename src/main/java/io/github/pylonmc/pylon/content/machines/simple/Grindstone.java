@@ -115,10 +115,6 @@ public class Grindstone extends RebarBlock implements
             return;
         }
 
-        if (!isFormedAndFullyLoaded()) {
-            return;
-        }
-
         ItemDisplay itemDisplay = getItemDisplay();
         ItemStack oldStack = itemDisplay.getItemStack();
         ItemStack newStack = event.getItem();
