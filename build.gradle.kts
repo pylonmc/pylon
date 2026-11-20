@@ -73,6 +73,7 @@ tasks.runServer {
     downloadPlugins {
         github("pylonmc", "rebar", rebarVersion, "rebar-$rebarVersion.jar")
     }
+
     maxHeapSize = "2G"
     minecraftVersion(minecraftVersion)
 }

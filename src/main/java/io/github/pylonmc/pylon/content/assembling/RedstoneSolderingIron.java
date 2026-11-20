@@ -58,7 +58,7 @@ public class RedstoneSolderingIron extends RebarItem implements BlockInteractReb
             event.getPlayer().setCooldown(PylonKeys.REDSTONE_SOLDERING_IRON, cooldownTicks);
             new ParticleBuilder(Particle.SMOKE)
                     .location(assemblyTable.getWorkspaceCenter())
-                    .extra(0)
+                    .speed(0)
                     .count(10)
                     .offset(assemblyTable.scale / 4, 0, assemblyTable.scale / 4)
                     .spawn();

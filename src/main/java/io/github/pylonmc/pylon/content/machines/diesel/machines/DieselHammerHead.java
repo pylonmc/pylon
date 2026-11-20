@@ -188,7 +188,7 @@ public class DieselHammerHead extends RebarBlock implements
                     .location(getBlock().getLocation().toCenterLocation().add(smokePosition))
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.05)
+                    .speed(0.05)
                     .spawn();
             progressProcess(getTickInterval());
             return;

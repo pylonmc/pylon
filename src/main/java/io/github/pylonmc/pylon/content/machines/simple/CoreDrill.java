@@ -147,7 +147,7 @@ public abstract class CoreDrill extends RebarBlock implements
                     if (type.isAir() || !type.isItem()) return;
                     new ParticleBuilder(Particle.ITEM)
                             .count(5)
-                            .extra(0.05)
+                            .speed(0.05)
                             .data(ItemStack.of(type))
                             .location(getBlock()
                                     .getRelative(BlockFace.DOWN, 2)

@@ -1,13 +1,17 @@
 package io.github.pylonmc.pylon.util;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableMap;
 import io.github.pylonmc.pylon.PylonKeys;
 import io.github.pylonmc.rebar.entity.RebarEntity;
 import io.github.pylonmc.rebar.entity.interfaces.TickingRebarEntity;
 import io.github.pylonmc.rebar.entity.display.ItemDisplayBuilder;
 import io.github.pylonmc.rebar.entity.display.transform.LineBuilder;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -24,12 +28,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 
-import java.util.List;
-import java.util.Optional;
 import net.kyori.adventure.sound.Sound;
 
 
 public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements TickingRebarEntity {
+    private static final Function<? super Double, Double> ZERO = Functions.constant(-0.0);
     private final Player player;
     private final float thickness;
     private final double damage;
@@ -119,7 +122,8 @@ public final class DisplayProjectile extends RebarEntity<ItemDisplay> implements
                             .withCausingEntity(player)
                             .withDirectEntity(hitEntity)
                             .build(),
-                    damage
+                    new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, damage)),
+                    new EnumMap<EntityDamageEvent.DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, ZERO))
             );
             if (event.callEvent()) {
                 hitEntity.damage(damage, player);

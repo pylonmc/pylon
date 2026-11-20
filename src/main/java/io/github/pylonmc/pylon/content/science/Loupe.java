@@ -265,7 +265,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
                 return;
             }
 
-            new ParticleBuilder(Particle.ITEM).data(stack).extra(0.05).count(16).location(hit.getLocation().add(0, hit.getHeight() / 2, 0)).spawn();
+            new ParticleBuilder(Particle.ITEM).data(stack).speed(0.05).count(16).location(hit.getLocation().add(0, hit.getHeight() / 2, 0)).spawn();
             hit.getWorld().playSound(Sound.sound(SoundEventKeys.ENTITY_ITEM_BREAK, Sound.Source.PLAYER, 0.5f, 1f), hit.getX(), hit.getY(), hit.getZ());
             if (player.getGameMode() != GameMode.ADVENTURE) {
                 if (stack.getAmount() == 1) {
@@ -310,7 +310,7 @@ public final class Loupe extends RebarItem implements InteractRebarItemHandler, 
                     return;
                 }
 
-                hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, hit.getBlockData());
+                hit.getWorld().playEffect(hit.getLocation(), Effect.DESTROY_BLOCK, hit.getBlockData());
                 hit.setType(Material.AIR, true);
             } else {
                 // Prevents scanning the same instance of an unbreakable block again

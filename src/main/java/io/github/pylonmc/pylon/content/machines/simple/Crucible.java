@@ -184,7 +184,7 @@ public final class Crucible extends RebarBlock implements
 
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .count(20)
-                .extra(0.05)
+                .speed(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
 

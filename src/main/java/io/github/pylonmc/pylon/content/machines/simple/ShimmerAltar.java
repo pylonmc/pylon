@@ -166,7 +166,7 @@ public class ShimmerAltar extends RebarBlock
                     0.25,
                     location -> new ParticleBuilder(Particle.DUST)
                             .color(Color.RED)
-                            .extra(0.8F)
+                            .speed(0.8F)
                             .count(1)
                             .location(location)
                             .spawn()
@@ -186,7 +186,7 @@ public class ShimmerAltar extends RebarBlock
                 0.25,
                 location -> new ParticleBuilder(Particle.END_ROD)
                         .count(1)
-                        .extra(0.0)
+                        .speed(0.0)
                         .location(location)
                         .spawn()
         );
@@ -216,7 +216,7 @@ public class ShimmerAltar extends RebarBlock
 
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .count(20)
-                .extra(0.02)
+                .speed(0.02)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
     }
@@ -232,7 +232,7 @@ public class ShimmerAltar extends RebarBlock
 
         new ParticleBuilder(Particle.WHITE_SMOKE)
                 .count(20)
-                .extra(0.05)
+                .speed(0.05)
                 .location(getBlock().getLocation().toCenterLocation())
                 .spawn();
     }

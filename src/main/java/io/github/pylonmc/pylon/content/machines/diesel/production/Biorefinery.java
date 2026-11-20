@@ -204,7 +204,7 @@ public class Biorefinery extends RebarBlock implements
                     .location(getBlock().getLocation().toCenterLocation().add(smokePosition1))
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.05)
+                    .speed(0.05)
                     .spawn();
 
             Vector smokePosition2 = Vector.fromJOML(RebarUtils.rotateVectorToFace(
@@ -215,7 +215,7 @@ public class Biorefinery extends RebarBlock implements
                     .location(getBlock().getLocation().toCenterLocation().add(smokePosition2))
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.05)
+                    .speed(0.05)
                     .spawn();
         }
 

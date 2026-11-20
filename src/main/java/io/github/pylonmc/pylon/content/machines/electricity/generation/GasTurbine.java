@@ -120,7 +120,7 @@ public class GasTurbine extends RebarBlock implements
                 Particle.POOF.builder()
                         .count(0)
                         .offset(direction.x, direction.y, direction.z)
-                        .extra(0.5)
+                        .speed(0.5)
                         .location(spawnLocation)
                         .spawn();
             }, ThreadLocalRandom.current().nextInt(tickInterval));

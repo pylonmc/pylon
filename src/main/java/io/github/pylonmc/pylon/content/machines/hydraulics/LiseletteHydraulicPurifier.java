@@ -143,7 +143,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
             int collectorIndex = RANDOM.nextInt(COLLECTORS.size() - 1);
             Vector collector = Vector.fromJOML(COLLECTORS.get(collectorIndex));
             new ParticleBuilder(Particle.PORTAL)
-                    .extra(0.5)
+                    .speed(0.5)
                     .count(100)
                     .location(getBlock().getLocation().toCenterLocation().add(collector))
                     .spawn();
@@ -158,7 +158,7 @@ public class LiseletteHydraulicPurifier extends RebarBlock implements
                         0.1,
                         location -> new ParticleBuilder(Particle.END_ROD)
                                 .location(location)
-                                .extra(0)
+                                .speed(0)
                                 .spawn()
                 );
                 double speed = 1.0 - ((double) getBlock().getY() + 64) / (maxHeight + 64);

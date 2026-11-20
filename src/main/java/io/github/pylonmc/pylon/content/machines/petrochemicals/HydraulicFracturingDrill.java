@@ -255,7 +255,7 @@ public class HydraulicFracturingDrill extends RebarBlock implements
                 .location(getBlock().getLocation().toCenterLocation().add(0, 1, 0))
                 .offset(0.4, 0.2, 0.4)
                 .count(10)
-                .extra(0)
+                .speed(0)
                 .spawn();
 
         Vector flamePosition = Vector.fromJOML(RebarUtils.rotateVectorToFace(
@@ -265,12 +265,12 @@ public class HydraulicFracturingDrill extends RebarBlock implements
         new ParticleBuilder(Particle.FLAME)
                 .location(getBlock().getLocation().toCenterLocation().add(flamePosition).add(0, -0.4, 0))
                 .count(5)
-                .extra(0)
+                .speed(0)
                 .spawn();
         new ParticleBuilder(Particle.SMOKE)
                 .location(getBlock().getLocation().toCenterLocation().add(flamePosition).add(0, -0.2, 0))
                 .count(20)
-                .extra(0)
+                .speed(0)
                 .spawn();
 
         processor.tick(getTickInterval());

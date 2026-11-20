@@ -190,7 +190,7 @@ public final class BronzeAnvil extends RebarBlock implements
         new ParticleBuilder(Particle.LAVA).location(getBlock().getRelative(BlockFace.UP).getLocation().toCenterLocation())
                 .receivers(32, true)
                 .offset(0.1, 0.1, 0.1)
-                .extra(0.03)
+                .speed(0.03)
                 .count(temperature)
                 .spawn();
 

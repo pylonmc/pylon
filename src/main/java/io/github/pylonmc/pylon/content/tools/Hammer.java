@@ -139,7 +139,7 @@ public class Hammer extends RebarItem implements BlockInteractRebarItemHandler {
 
         new ParticleBuilder(Particle.ITEM)
                 .count(20)
-                .extra(0.1)
+                .speed(0.1)
                 .data(item.getItemStack())
                 .location(item.getLocation().add(0, 0.2, 0))
                 .spawn();

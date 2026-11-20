@@ -72,7 +72,7 @@ public class FlareStack extends RebarBlock implements SimpleRebarMultiblock, Flu
         new ParticleBuilder(Particle.FLAME)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 3.6, 0))
                 .count(flameAmount)
-                .extra(0.001)
+                .speed(0.001)
                 .offset(0.05, 0.05, 0.05)
                 .spawn();
 
@@ -81,7 +81,7 @@ public class FlareStack extends RebarBlock implements SimpleRebarMultiblock, Flu
                     .location(getBlock().getLocation().toCenterLocation().add(0, 4, 0))
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.08)
+                    .speed(0.08)
                     .spawn();
         }
     }
