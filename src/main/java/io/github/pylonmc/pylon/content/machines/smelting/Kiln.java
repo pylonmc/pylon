@@ -124,9 +124,18 @@ public class Kiln extends RebarBlock implements
     @Override
     public void postInitialise() {
         createLogisticGroup("fuel", LogisticGroupType.INPUT, fuelInventory);
-        getLogisticGroupOrThrow("fuel").setFilter(item -> {
-            ItemType type = item.getType().asItemType();
-            return type != null && isValidFuel(item, type);
+        fuelInventory.addPreUpdateHandler(event -> {
+            if (event.isRemove()) {
+                return;
+            }
+            ItemStack newItem = event.getNewItem();
+            if (newItem == null) {
+                return;
+            }
+            ItemType type = newItem.getType().asItemType();
+            if (type == null || !isValidFuel(newItem, type)) {
+                event.setCancelled(true);
+            }
         });
     }
 
