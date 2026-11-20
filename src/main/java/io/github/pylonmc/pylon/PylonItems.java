@@ -3781,6 +3781,14 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(HEATING_ELEMENT);
     }
 
+    public static final ItemStack BLISK = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BLISK)
+            .set(DataComponentTypes.ITEM_MODEL, Material.WHITE_CUSHION.getKey())
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BLISK, PylonKeys.BLISK);
+        PylonPages.COMPONENTS.addItem(BLISK);
+    }
+
     public static final ItemStack WIRE_HUB = ItemStackBuilder.rebar(Material.STRUCTURE_VOID, PylonKeys.WIRE_HUB)
             .set(DataComponentTypes.ITEM_MODEL, Material.COPPER_BULB.key())
             .build();

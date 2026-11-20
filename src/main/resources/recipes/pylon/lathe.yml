@@ -14,3 +14,11 @@ pylon:carbon_rod:
     pylon:carbon: 6
   completion-value: 0.85
   margin-of-error: 0.03
+
+pylon:blisk:
+  input: minecraft:iron_block
+  result: pylon:blisk
+  byproduct:
+    pylon:iron_dust: 2
+  completion-value: 0.3
+  margin-of-error: 0.08

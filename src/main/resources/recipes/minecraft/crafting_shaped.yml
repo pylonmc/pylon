@@ -3544,3 +3544,15 @@ pylon:heat_exchanger:
     S: pylon:steel_block
   result: pylon:heat_exchanger
   category: building
+
+pylon:gas_turbine:
+  pattern:
+    - "SBS"
+    - "BWB"
+    - "SBS"
+  key:
+    S: pylon:steel_sheet
+    B: pylon:blisk
+    W: pylon:weighted_shaft
+  result: pylon:gas_turbine
+  category: building
