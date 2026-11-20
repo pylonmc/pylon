@@ -1,9 +1,11 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.api.FlammableTag;
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicPurifier;
 import io.github.pylonmc.pylon.recipes.*;
 import io.github.pylonmc.rebar.config.ConfigSection;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
 import io.github.pylonmc.rebar.guide.button.ItemButton;
 import io.github.pylonmc.rebar.item.ItemTypeWrapper;
@@ -13,6 +15,7 @@ import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidWithAmount;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.gui.GuiItems;
+import java.util.ArrayList;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -157,16 +160,18 @@ public class PylonRecipes {
         NamespacedKey key = PylonKeys.COMBUSTION_TOWER;
         ConfigSection setting = ConfigSection.fromSettings(key);
 
-        double dieselUsage = setting.getOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
         double exhaustProduction = setting.getOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
 
-        FluidChoice input = FluidChoice.of(PylonFluids.BIODIESEL, dieselUsage);
+        List<FluidWithAmount> fluids = new ArrayList<>();
+        for (RebarFluid flammable : FlammableTag.getFlammableFluids()) {
+            fluids.add(new FluidWithAmount(flammable, 1 / flammable.getTag(FlammableTag.class).secondsPerBucket() * 1000));
+        }
         FluidWithAmount output = new FluidWithAmount(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction);
 
         new SingleRecipe(
                 key,
-                input,
-                output,
+                fluids.stream().map(FluidChoice::of).toList(),
+                List.of(output),
                 () -> Gui.builder()
                         .setStructure(
                                 "# # # # # # # # #",
@@ -176,7 +181,7 @@ public class PylonRecipes {
                                 "# # # # # # # # #"
                         )
                         .addIngredient('#', GuiItems.backgroundBlack())
-                        .addIngredient('d', FluidButton.of(input))
+                        .addIngredient('d', FluidButton.of(fluids))
                         .addIngredient('x', ItemButton.of(PylonItems.COMBUSTION_TOWER))
                         .addIngredient('e', FluidButton.of(output))
                         .build()

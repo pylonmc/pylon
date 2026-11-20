@@ -2,24 +2,23 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.api.FlammableTag;
+import io.github.pylonmc.pylon.content.components.FluidInputHatch;
+import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
-import io.github.pylonmc.rebar.block.interfaces.FluidBufferRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
 import io.github.pylonmc.rebar.block.interfaces.TickingRebarBlock;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
-import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
-import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.Getter;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -30,18 +29,14 @@ import org.joml.Vector3i;
 
 public class CombustionTower extends RebarBlock implements
         TickingRebarBlock,
-        FluidBufferRebarBlock,
         SimpleRebarMultiblock {
 
-    private final int tickInterval = getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER);
-    private final double dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
-    private final double dieselBuffer = getSettingOrThrow("diesel-buffer", ConfigAdapter.DOUBLE);
+    @Getter
     private final double exhaustProduction = getSettingOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
-    private final double exhaustBuffer = getSettingOrThrow("exhaust-buffer", ConfigAdapter.DOUBLE);
 
     public static class Item extends RebarItem {
 
-        private final double dieselUsage = getSettingOrThrow("diesel-usage", ConfigAdapter.DOUBLE);
+        @Getter
         private final double exhaustProduction = getSettingOrThrow("exhaust-production", ConfigAdapter.DOUBLE);
 
         @SuppressWarnings("unused")
@@ -52,7 +47,6 @@ public class CombustionTower extends RebarBlock implements
         @Override
         public @NotNull List<@NotNull RebarArgument> getPlaceholders() {
             return List.of(
-                    RebarArgument.of("diesel-usage", UnitFormat.MILLIBUCKETS_PER_SECOND.format(dieselUsage)),
                     RebarArgument.of("exhaust-production", UnitFormat.MILLIBUCKETS_PER_SECOND.format(exhaustProduction))
             );
         }
@@ -62,13 +56,7 @@ public class CombustionTower extends RebarBlock implements
     public CombustionTower(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
         setFacing(context.getFacing());
-        setTickInterval(tickInterval);
-
-        createFluidBuffer(PylonFluids.BIODIESEL, dieselBuffer, true, false);
-        createFluidBuffer(PylonFluids.VERY_HOT_EXHAUST, exhaustBuffer, false, true);
-
-        createFluidPoint(FluidPointType.INPUT, BlockFace.NORTH);
-        createFluidPoint(FluidPointType.OUTPUT, BlockFace.SOUTH);
+        setTickInterval(getSettingOrThrow("tick-interval", ConfigAdapter.INTEGER));
     }
 
     @SuppressWarnings("unused")
@@ -80,46 +68,51 @@ public class CombustionTower extends RebarBlock implements
     public void tick() {
         if (!isFormedAndFullyLoaded()) return;
 
-        double ratio = Math.min(1, fluidAmount(PylonFluids.BIODIESEL) / dieselUsage);
-        ratio = Math.min(ratio, fluidSpaceRemaining(PylonFluids.VERY_HOT_EXHAUST) / exhaustProduction);
-        if (ratio <= 0) return;
+        FluidInputHatch inputHatch = getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH);
+        if (inputHatch.getFluidType() == null) return;
 
-        removeFluid(PylonFluids.BIODIESEL, dieselUsage * ratio);
-        addFluid(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction * ratio);
+        FluidOutputHatch outputHatch = getMultiblockComponentOrThrow(FluidOutputHatch.class, OUTPUT_HATCH);
+
+        double secondsPassed = getTickInterval() / 20.0;
+        double outputRatio = Math.min(outputHatch.getFluidSpaceRemaining() / (exhaustProduction * secondsPassed), 1);
+        double theoreticalMaxFuel = secondsPassed / inputHatch.getFluidType().getTag(FlammableTag.class).secondsPerBucket() * 1000;
+        double inputRatio = Math.min(inputHatch.getFluidAmount() / theoreticalMaxFuel, 1);
+        double finalRatio = Math.min(outputRatio, inputRatio);
+
+        inputHatch.removeFluid(theoreticalMaxFuel * finalRatio);
+        outputHatch.addFluid(PylonFluids.VERY_HOT_EXHAUST, exhaustProduction * secondsPassed * finalRatio);
 
         Particle.CAMPFIRE_SIGNAL_SMOKE.builder()
-                .location(getBlock().getLocation().add(Vector.fromJOML(SMOKESTACK_POS)).toCenterLocation())
+                .location(getBlock().getLocation().add(Vector.fromJOML(SMOKESTACK)).toCenterLocation())
                 .offset(0, 1, 0)
                 .count(0)
-                .extra(0.03)
+                .speed(0.03)
                 .spawn();
     }
 
     @Override
     public @Nullable WailaDisplay getWaila(@NotNull Player player) {
-        return WailaDisplay.of(this, player)
-                .add(ProgressBar.fluidContentsWithName(
-                        PylonFluids.BIODIESEL,
-                        fluidCapacity(PylonFluids.BIODIESEL),
-                        fluidAmount(PylonFluids.BIODIESEL)
-                ))
-                .add(ProgressBar.fluidContentsWithName(
-                        PylonFluids.VERY_HOT_EXHAUST,
-                        fluidCapacity(PylonFluids.VERY_HOT_EXHAUST),
-                        fluidAmount(PylonFluids.VERY_HOT_EXHAUST)
-                ));
+        return WailaDisplay.of(this, player);
     }
 
-    private static final Vector3i SMOKESTACK_POS = new Vector3i(0, 3, 0);
+    private static final Vector3i SMOKESTACK = new Vector3i(0, 3, 0);
+    private static final Vector3i INPUT_HATCH = new Vector3i(0, 0, -1);
+    private static final Vector3i OUTPUT_HATCH = new Vector3i(0, 0, 1);
 
     @Override
     public @NotNull Map<@NotNull Vector3i, @NotNull MultiblockComponent> getComponents() {
-        Map<Vector3i, MultiblockComponent> components = new HashMap<>();
+        return Map.of(
+                new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING),
+                new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING),
+                SMOKESTACK, MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP),
+                INPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_INPUT_HATCH),
+                OUTPUT_HATCH, MultiblockComponent.of(PylonKeys.FLUID_OUTPUT_HATCH)
+        );
+    }
 
-        components.put(new Vector3i(0, 1, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
-        components.put(new Vector3i(0, 2, 0), MultiblockComponent.of(PylonKeys.SMOKESTACK_RING));
-        components.put(SMOKESTACK_POS, MultiblockComponent.of(PylonKeys.SMOKESTACK_CAP));
-
-        return components;
+    @Override
+    public void onMultiblockFormed() {
+        SimpleRebarMultiblock.super.onMultiblockFormed();
+        getMultiblockComponentOrThrow(FluidInputHatch.class, INPUT_HATCH).setAllowedFluids(FlammableTag.getFlammableFluids());
     }
 }

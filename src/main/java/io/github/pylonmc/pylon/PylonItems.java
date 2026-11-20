@@ -3908,6 +3908,8 @@ public final class PylonItems {
     static {
         RebarItem.register(CombustionTower.Item.class, COMBUSTION_TOWER, PylonKeys.COMBUSTION_TOWER);
         PylonPages.ELECTRICITY_PRODUCTION.addItem(COMBUSTION_TOWER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.COMBUSTION_TOWER)
+                .addButton(LiquidFuelsPage.getButton());
     }
 
     public static final ItemStack HEAT_EXCHANGER = ItemStackBuilder.rebar(Material.RED_NETHER_BRICK_WALL, PylonKeys.HEAT_EXCHANGER)

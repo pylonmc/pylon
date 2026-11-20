@@ -7,10 +7,10 @@ import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.registry.RebarRegistry;
 import io.github.pylonmc.rebar.util.ProgressBar;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.Random;
 import net.kyori.adventure.text.Component;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -18,11 +18,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
-import org.jspecify.annotations.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
@@ -47,7 +42,7 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
         getMultiblockComponentOrThrow(FluidOutputHatch.class, steamOutputPosition())
                 .setFluidType(PylonFluids.STEAM);
         getMultiblockComponentOrThrow(FluidInputHatch.class, fuelInputPosition())
-                .setAllowedFluids(getFlammableFluids());
+                .setAllowedFluids(FlammableTag.getFlammableFluids());
     }
 
     @Override
@@ -115,16 +110,6 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
         return fuelInput.getFluidType() == null
                 ? 0
                 : fuelInput.getFluidType().getTag(FlammableTag.class).secondsPerBucket() * fuelInput.getFluidAmount() / 1000.0;
-    }
-
-    public static @NonNull List<RebarFluid> getFlammableFluids() {
-        List<RebarFluid> fluids = new ArrayList<>();
-        for (RebarFluid fluid : RebarRegistry.FLUIDS) {
-            if (fluid.hasTag(FlammableTag.class)) {
-                fluids.add(fluid);
-            }
-        }
-        return fluids;
     }
 
     public abstract Vector3i waterInputPosition();

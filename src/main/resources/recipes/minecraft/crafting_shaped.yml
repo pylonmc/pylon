@@ -3518,3 +3518,17 @@ pylon:battery_20_kj:
     V: pylon:high_voltage_circuit
   result: pylon:battery_20_kj
   category: equipment
+  
+pylon:combustion_tower:
+  pattern:
+    - "BCB"
+    - "PFB"
+    - "BSB"
+  key:
+    B: minecraft:bricks
+    C: pylon:copper_pipe_assembly
+    P: pylon:fluid_pipe_steel
+    F: pylon:fluid_firebox
+    S: pylon:steel_sheet
+  result: pylon:combustion_tower
+  category: building

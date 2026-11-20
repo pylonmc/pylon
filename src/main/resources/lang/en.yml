@@ -2633,14 +2633,15 @@ item:
   combustion_tower:
     name: "Combustion Tower"
     lore: |-
-      <arrow> Burns diesel to produce very hot exhaust
-      <arrow> <attr>Diesel usage:</attr> %diesel-usage%
-      <arrow> <attr>Very hot exhaust production:</attr> %exhaust-production%
+      <arrow> Burns flammable fluids to produce <fluid:pylon:very_hot_exhaust>
+      <arrow> <attr><fluid:pylon:very_hot_exhaust> production:</attr> %exhaust-production%
      
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:combustion_tower/></yellow>
       <diamond> 2x <yellow><item:pylon:smokestack_ring/></yellow>
       <diamond> 1x <yellow><item:pylon:smokestack_cap/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
 
   heat_exchanger:
     name: "Heat Exchanger"
@@ -2965,8 +2966,8 @@ fluid:
   slurry_redstone: "Redstone Slurry"
   slurry_sponge_iron: "Sponge Iron Slurry"
   liquid_xp: "Liquid Experience"
-  very_hot_exhaust: "<#ff2b0f>Very Hot Exhaust"
-  hot_exhaust: "<#ff6b0f>Hot Exhaust"
+  very_hot_exhaust: "Very Hot Exhaust"
+  hot_exhaust: "Hot Exhaust"
   chlorine: "Chlorine"
 
 research:
