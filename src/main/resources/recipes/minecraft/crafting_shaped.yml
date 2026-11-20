@@ -3532,3 +3532,15 @@ pylon:combustion_tower:
     S: pylon:steel_sheet
   result: pylon:combustion_tower
   category: building
+
+pylon:heat_exchanger:
+  pattern:
+    - "BCB"
+    - "CSC"
+    - "BCB"
+  key:
+    B: minecraft:bricks
+    C: pylon:copper_pipe_assembly
+    S: pylon:steel_block
+  result: pylon:heat_exchanger
+  category: building

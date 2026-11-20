@@ -120,7 +120,7 @@ public class GasTurbine extends RebarBlock implements
                 Particle.POOF.builder()
                         .count(0)
                         .offset(direction.x, direction.y, direction.z)
-                        .extra(0.5)
+                        .speed(0.5)
                         .location(spawnLocation)
                         .spawn();
             }, ThreadLocalRandom.current().nextInt(tickInterval));
@@ -215,12 +215,14 @@ public class GasTurbine extends RebarBlock implements
     }
 
     private void setupDisplay() {
+        Quaternionf quat = new Quaternionf().lookAlong(getFacing().getOppositeFace().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0));
+
         addEntity("turbine_shaft", new ItemDisplayBuilder()
                 .itemStack(ItemStackBuilder.of(Registry.MATERIAL.getOrThrow(NamespacedKey.minecraft("iron_block")))
                         .addCustomModelDataString(getKey() + ":turbine_shaft"))
                 .transformation(new Matrix4f()
                         .scaleLocal(0.20031818431717888F, 0.1998618756962673F, 2.999928431318844F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -232,7 +234,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.7001095104874101F, 0.7003343199606629F, 0.05027297059664036F)
                         .translateLocal(0F, 0F, 0.02499999999999991F)
                         .translateLocal(0F, 0F, -1.2F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -244,7 +246,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.5995684032343717F, 0.5998784121385513F, 0.049829445006917716F)
                         .translateLocal(0F, 0F, -0.025000000000000022F)
                         .translateLocal(0F, 0F, -1.1F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -256,7 +258,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.400408077237662F, 0.39961631863827995F, 0.049862215651233666F)
                         .translateLocal(0F, 0F, -0.02499999999999991F)
                         .translateLocal(0F, 0F, -1.05F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -268,7 +270,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.4998993373616677F, 0.4999216378035786F, 0.050083582762834034F)
                         .translateLocal(0F, 0F, -0.025000000000000022F)
                         .translateLocal(0F, 0F, -0.15000000000000002F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -280,7 +282,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.6000367675274685F, 0.6501684628404046F, 0.04992085141408112F)
                         .translateLocal(0F, -0.025000000000000022F, 0.02499999999999991F)
                         .translateLocal(0F, 0F, 0.6000000000000001F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -292,7 +294,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.5002561171050549F, 0.5496725403840674F, 0.050218433779457734F)
                         .translateLocal(0F, -0.02499999999999991F, -0.025000000000000133F)
                         .translateLocal(0F, 0F, 0.7F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -304,7 +306,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.2999681211206062F, 0.35012340582916684F, 0.049593864090870424F)
                         .translateLocal(0F, -0.025000000000000022F, -0.02499999999999991F)
                         .translateLocal(0F, 0F, 0.75F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
@@ -316,7 +318,7 @@ public class GasTurbine extends RebarBlock implements
                         .scaleLocal(0.5002451479182026F, 0.5003304693503907F, 0.049636693814377984F)
                         .translateLocal(0F, 0F, -0.025000000000000133F)
                         .translateLocal(0F, 0F, 1.05F)
-                        .rotateLocal(new Quaternionf().lookAlong(getFacing().getDirection().toVector3f().mul(-1F, -1F, 1F), new Vector3f(0, 1, 0)))
+                        .rotateLocal(quat)
                 )
                 .build(getBlock().getLocation().toCenterLocation())
         );
