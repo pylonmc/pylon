@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.content.tools.base.Rune;
+import io.github.pylonmc.pylon.recipes.FireproofRuneRecipe;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RandomizedSound;
@@ -65,17 +66,28 @@ public class FireproofRune extends Rune {
         ItemStack targetItemStack = targetItem.getItemStack();
         int consumed = Math.min(getStack().getAmount(), targetItemStack.getAmount());
 
-        ItemStack fireProof = ItemStackBuilder.of(targetItemStack.asQuantity(consumed))
-                .editDataOrSet(DataComponentTypes.DAMAGE_RESISTANT, resistance -> {
-                    if (resistance == null) {
-                        return DamageResistant.damageResistant(IS_FIRE_TAG);
-                    }
-                    Set<TypedKey<DamageType>> types = new HashSet<>(resistance.types().values());
-                    types.addAll(IS_FIRE_TAG.values());
-                    return DamageResistant.damageResistant(RegistrySet.keySet(RegistryKey.DAMAGE_TYPE, types));
-                })
-                .lore(TOOLTIP)
-                .build();
+        ItemStack mappedResult = FireproofRuneRecipe.RECIPE_TYPE.getRecipes().stream()
+                .filter(recipe -> recipe.input().matchesIgnoringAmount(targetItemStack))
+                .map(FireproofRuneRecipe::result)
+                .findFirst()
+                .orElse(null);
+
+        ItemStack fireProof;
+        if (mappedResult != null) {
+            fireProof = mappedResult.asQuantity(consumed);
+        } else {
+            fireProof = ItemStackBuilder.of(targetItemStack.asQuantity(consumed))
+                    .editDataOrSet(DataComponentTypes.DAMAGE_RESISTANT, resistance -> {
+                        if (resistance == null) {
+                            return DamageResistant.damageResistant(IS_FIRE_TAG);
+                        }
+                        Set<TypedKey<DamageType>> types = new HashSet<>(resistance.types().values());
+                        types.addAll(IS_FIRE_TAG.values());
+                        return DamageResistant.damageResistant(RegistrySet.keySet(RegistryKey.DAMAGE_TYPE, types));
+                    })
+                    .lore(TOOLTIP)
+                    .build();
+        }
 
         int remainingRunes = getStack().getAmount() - consumed;
         int remainingTargets = targetItemStack.getAmount() - consumed;

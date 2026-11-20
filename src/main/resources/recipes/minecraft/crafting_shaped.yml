@@ -1696,6 +1696,17 @@ pylon:reactivated_wither_skull:
   result: pylon:reactivated_wither_skull
   category: equipment
 
+pylon:powerful_water_sponge:
+  pattern:
+    - "SBS"
+    - "BBB"
+    - "SBS"
+  key:
+    S: minecraft:sponge
+    B: minecraft:bucket
+  result: pylon:powerful_water_sponge
+  category: building
+
 pylon:tongs:
   pattern:
     - "B B"

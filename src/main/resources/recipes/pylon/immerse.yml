@@ -1,0 +1,21 @@
+pylon:wet_powerful_water_sponge_immerse:
+  ingredient: pylon:powerful_water_sponge
+  fluid: pylon:water
+  result: pylon:wet_powerful_water_sponge
+
+pylon:lava_sponge_immerse:
+  ingredient: pylon:hot_lava_sponge
+  fluid: pylon:water
+  result: pylon:lava_sponge
+  chance: 0.9
+
+pylon:obsidian_immerse:
+  ingredient: pylon:hot_lava_sponge
+  fluid: pylon:water
+  result: minecraft:obsidian
+  chance: 0.1
+
+pylon:hot_lava_sponge_immerse:
+  ingredient: pylon:lava_sponge
+  fluid: pylon:lava
+  result: pylon:hot_lava_sponge
