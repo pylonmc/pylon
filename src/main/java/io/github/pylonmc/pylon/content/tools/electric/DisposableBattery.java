@@ -7,9 +7,11 @@ import org.jetbrains.annotations.NotNull;
 public class DisposableBattery extends ConfigurableBatteryRebarItem {
     public DisposableBattery(@NotNull ItemStack stack) {
         super(stack);
-        if (!getStack().getPersistentDataContainer().has(CHARGE_KEY)) {
-            setCharge(getCapacity());
-        }
+    }
+
+    @Override
+    protected boolean startsCharged() {
+        return true;
     }
 
     @Override

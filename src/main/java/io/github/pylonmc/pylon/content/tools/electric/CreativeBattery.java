@@ -7,24 +7,16 @@ import org.jetbrains.annotations.NotNull;
 public class CreativeBattery extends BatteryRebarItem {
     public CreativeBattery(@NotNull ItemStack stack) {
         super(stack);
+        postCapacityConfiguration();
     }
 
     @Override
-    public boolean isRechargeable() {
-        return false;
-    }
-
-    @Override
-    public double getCharge() {
-        return Double.POSITIVE_INFINITY;
-    }
-
-    @Override
-    public void setCharge(double charge) {
+    protected boolean startsCharged() {
+        return true;
     }
 
     @Override
     public double getCapacity() {
-        return Double.POSITIVE_INFINITY;
+        return 10e20;
     }
 }

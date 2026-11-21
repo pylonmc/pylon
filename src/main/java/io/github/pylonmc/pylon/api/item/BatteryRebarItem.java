@@ -14,19 +14,26 @@ import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
 public abstract class BatteryRebarItem extends RebarItem implements ChargeableRebarItem {
 
-    protected static final NamespacedKey CHARGE_KEY = pylonKey("charge");
+    private static final NamespacedKey CHARGE_KEY = pylonKey("charge");
 
     public BatteryRebarItem(@NotNull ItemStack stack) {
         super(stack);
     }
 
     /**
-     * Must be called by subclasses in their constructor. The reason this exists is that we need to create/update the durability bar
+     * Must be called by direct subclasses in their constructor. The reason this exists is that we need to create/update the durability bar
      * on creation, but can't in the superclass constructor because {@link BatteryRebarItem#getCapacity()} is abstract and may rely
      * on subclass resources, e.x. {@link ConfigurableBatteryRebarItem}.
      */
     protected void postCapacityConfiguration() {
+        if (startsCharged() && !getStack().getPersistentDataContainer().has(CHARGE_KEY)) {
+            setCharge(getCapacity());
+        }
         updateDurabilityBar(getCharge());
+    }
+
+    protected boolean startsCharged() {
+        return false;
     }
 
     @Override
