@@ -379,6 +379,10 @@ public class PylonKeys {
     public static final NamespacedKey FARMING_TALISMAN_ADVANCED = pylonKey("farming_talisman_advanced");
     public static final NamespacedKey FARMING_TALISMAN_ULTIMATE = pylonKey("farming_talisman_ultimate");
 
+    public static final NamespacedKey MINING_TALISMAN_SIMPLE = pylonKey("mining_talisman_simple");
+    public static final NamespacedKey MINING_TALISMAN_ADVANCED = pylonKey("mining_talisman_advanced");
+    public static final NamespacedKey MINING_TALISMAN_ULTIMATE = pylonKey("mining_talisman_ultimate");
+
     public static final NamespacedKey BARTERING_TALISMAN_SIMPLE = pylonKey("bartering_talisman_simple");
     public static final NamespacedKey BARTERING_TALISMAN_ADVANCED = pylonKey("bartering_talisman_advanced");
     public static final NamespacedKey BARTERING_TALISMAN_ULTIMATE = pylonKey("bartering_talisman_ultimate");

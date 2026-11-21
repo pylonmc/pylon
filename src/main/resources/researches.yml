@@ -25,6 +25,7 @@ talismans_1:
   unlocks:
     - pylon:health_talisman_simple
     - pylon:farming_talisman_simple
+    - pylon:mining_talisman_simple
     - pylon:bartering_talisman_simple
     - pylon:water_breathing_talisman_simple
     - pylon:luck_talisman_simple
@@ -39,6 +40,7 @@ talismans_2:
   unlocks:
     - pylon:health_talisman_advanced
     - pylon:farming_talisman_advanced
+    - pylon:mining_talisman_advanced
     - pylon:bartering_talisman_advanced
     - pylon:water_breathing_talisman_advanced
     - pylon:luck_talisman_advanced
@@ -53,6 +55,7 @@ talismans_3:
   unlocks:
     - pylon:health_talisman_ultimate
     - pylon:farming_talisman_ultimate
+    - pylon:mining_talisman_ultimate
     - pylon:bartering_talisman_ultimate
     - pylon:water_breathing_talisman_ultimate
     - pylon:luck_talisman_ultimate
