@@ -631,8 +631,9 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(CARBON_BLOCK);
     }
 
-    public static final ItemStack CARBON_ROD = ItemStackBuilder.rebar(Material.BLACK_CANDLE, PylonKeys.CARBON_ROD)
-            .build();
+    public static final ItemStack CARBON_ROD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CARBON_ROD)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BLACK_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, CARBON_ROD, PylonKeys.CARBON_ROD);
         PylonPages.COMPONENTS.addItem(CARBON_ROD);
@@ -872,8 +873,9 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(NOZZLE);
     }
 
-    public static final ItemStack ABYSSAL_CATALYST = ItemStackBuilder.rebar(Material.BLACK_CANDLE, PylonKeys.ABYSSAL_CATALYST)
-            .build();
+    public static final ItemStack ABYSSAL_CATALYST = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.ABYSSAL_CATALYST)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BLACK_CANDLE.getKey())
+        .build();
 
     static {
         RebarItem.register(RebarItem.class, ABYSSAL_CATALYST);
@@ -970,8 +972,9 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(STEEL_CYLINDER);
     }
 
-    public static final ItemStack STEEL_CRANKSHAFT = ItemStackBuilder.rebar(Material.GRAY_CANDLE, PylonKeys.STEEL_CRANKSHAFT)
-            .build();
+    public static final ItemStack STEEL_CRANKSHAFT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.STEEL_CRANKSHAFT)
+        .set(DataComponentTypes.ITEM_MODEL, Material.GRAY_CANDLE.getKey())
+        .build();
 
     static {
         RebarItem.register(RebarItem.class, STEEL_CRANKSHAFT, PylonKeys.STEEL_CRANKSHAFT);
@@ -2517,8 +2520,9 @@ public final class PylonItems {
         PylonPages.SMELTING.addItem(PIPE_MOLD);
     }
 
-    public static final ItemStack WIRE_MOLD = ItemStackBuilder.rebar(Material.STRING, PylonKeys.WIRE_MOLD)
-            .build();
+    public static final ItemStack WIRE_MOLD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.WIRE_MOLD)
+        .set(DataComponentTypes.ITEM_MODEL, Material.STRING.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, WIRE_MOLD, PylonKeys.WIRE_MOLD);
         PylonPages.SMELTING.addItem(WIRE_MOLD);
@@ -3767,8 +3771,9 @@ public final class PylonItems {
     }
 
     // <editor-fold desc="Electricity" defaultstate=collapsed>
-    public static final ItemStack RESISTOR = ItemStackBuilder.rebar(Material.ACTIVATOR_RAIL, PylonKeys.RESISTOR)
-            .build();
+    public static final ItemStack RESISTOR = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.RESISTOR)
+        .set(DataComponentTypes.ITEM_MODEL, Material.ACTIVATOR_RAIL.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, RESISTOR, PylonKeys.RESISTOR);
         PylonPages.COMPONENTS.addItem(RESISTOR);
@@ -3814,29 +3819,33 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(ELECTROMAGNET);
     }
     
-    public static final ItemStack ELECTRIC_MOTOR = ItemStackBuilder.rebar(Material.DETECTOR_RAIL, PylonKeys.ELECTRIC_MOTOR)
-            .build();
+    public static final ItemStack ELECTRIC_MOTOR = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.ELECTRIC_MOTOR)
+        .set(DataComponentTypes.ITEM_MODEL, Material.DETECTOR_RAIL.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, ELECTRIC_MOTOR, PylonKeys.ELECTRIC_MOTOR);
         PylonPages.COMPONENTS.addItem(ELECTRIC_MOTOR);
     }
 
-    public static final ItemStack DYNAMO = ItemStackBuilder.rebar(Material.POWERED_RAIL, PylonKeys.DYNAMO)
-            .build();
+    public static final ItemStack DYNAMO = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.DYNAMO)
+        .set(DataComponentTypes.ITEM_MODEL, Material.POWERED_RAIL.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, DYNAMO, PylonKeys.DYNAMO);
         PylonPages.COMPONENTS.addItem(DYNAMO);
     }
     
-    public static final ItemStack COPPER_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.COPPER_WIRE)
-            .build();
+    public static final ItemStack COPPER_WIRE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.COPPER_WIRE)
+        .set(DataComponentTypes.ITEM_MODEL, Material.STRING.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, COPPER_WIRE, PylonKeys.COPPER_WIRE);
         PylonPages.COMPONENTS.addItem(COPPER_WIRE);
     }
 
-    public static final ItemStack CREATIVE_WIRE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.CREATIVE_WIRE)
-            .build();
+    public static final ItemStack CREATIVE_WIRE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CREATIVE_WIRE)
+        .set(DataComponentTypes.ITEM_MODEL, Material.STRING.getKey())
+        .build();
     static {
         RebarItem.register(CreativeWire.class, CREATIVE_WIRE, PylonKeys.CREATIVE_WIRE);
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_WIRE);
@@ -4037,15 +4046,17 @@ public final class PylonItems {
         PylonPages.MISCELLANEOUS.addItem(NIMH_MIX);
     }
     
-    public static final ItemStack NIMH_CATHODE = ItemStackBuilder.rebar(Material.LIGHT_GRAY_CANDLE, PylonKeys.NIMH_CATHODE)
-            .build();
+    public static final ItemStack NIMH_CATHODE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.NIMH_CATHODE)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIGHT_GRAY_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, NIMH_CATHODE, PylonKeys.NIMH_CATHODE);
         PylonPages.COMPONENTS.addItem(NIMH_CATHODE);
     }
     
-    public static final ItemStack FUSE = ItemStackBuilder.rebar(Material.STRING, PylonKeys.FUSE)
-            .build();
+    public static final ItemStack FUSE = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.FUSE)
+        .set(DataComponentTypes.ITEM_MODEL, Material.STRING.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, FUSE, PylonKeys.FUSE);
         PylonPages.COMPONENTS.addItem(FUSE);
@@ -4059,29 +4070,33 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(BATTERY_HOLDER);
     }
 
-    public static final ItemStack CAPACITOR = ItemStackBuilder.rebar(Material.POWERED_RAIL, PylonKeys.CAPACITOR)
-            .build();
+    public static final ItemStack CAPACITOR = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CAPACITOR)
+        .set(DataComponentTypes.ITEM_MODEL, Material.POWERED_RAIL.getKey())
+        .build();
     static {
         RebarItem.register(RebarItem.class, CAPACITOR, PylonKeys.CAPACITOR);
         PylonPages.COMPONENTS.addItem(CAPACITOR);
     }
 
-    public static final ItemStack DISPOSABLE_BATTERY_100_J = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_100_J)
-            .build();
+    public static final ItemStack DISPOSABLE_BATTERY_100_J = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.DISPOSABLE_BATTERY_100_J)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BROWN_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_100_J, PylonKeys.DISPOSABLE_BATTERY_100_J);
         PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_100_J);
     }
 
-    public static final ItemStack DISPOSABLE_BATTERY_500_J = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_500_J)
-            .build();
+    public static final ItemStack DISPOSABLE_BATTERY_500_J = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.DISPOSABLE_BATTERY_500_J)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BROWN_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_500_J, PylonKeys.DISPOSABLE_BATTERY_500_J);
         PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_500_J);
     }
 
-    public static final ItemStack DISPOSABLE_BATTERY_1_KJ = ItemStackBuilder.rebar(Material.BROWN_CANDLE, PylonKeys.DISPOSABLE_BATTERY_1_KJ)
-            .build();
+    public static final ItemStack DISPOSABLE_BATTERY_1_KJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.DISPOSABLE_BATTERY_1_KJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BROWN_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(DisposableBattery.class, DISPOSABLE_BATTERY_1_KJ, PylonKeys.DISPOSABLE_BATTERY_1_KJ);
         PylonPages.TOOLS.addItem(DISPOSABLE_BATTERY_1_KJ);
@@ -4095,43 +4110,49 @@ public final class PylonItems {
         PylonPages.CREATIVE_ITEMS.addItem(CREATIVE_BATTERY);
     }
 
-    public static final ItemStack BATTERY_500_J = ItemStackBuilder.rebar(Material.LIME_CANDLE, PylonKeys.BATTERY_500_J)
-            .build();
+    public static final ItemStack BATTERY_500_J = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_500_J)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIME_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_500_J, PylonKeys.BATTERY_500_J);
         PylonPages.TOOLS.addItem(BATTERY_500_J);
     }
 
-    public static final ItemStack BATTERY_1_KJ = ItemStackBuilder.rebar(Material.LIME_CANDLE, PylonKeys.BATTERY_1_KJ)
-            .build();
+    public static final ItemStack BATTERY_1_KJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_1_KJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIME_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_KJ, PylonKeys.BATTERY_1_KJ);
         PylonPages.TOOLS.addItem(BATTERY_1_KJ);
     }
 
-    public static final ItemStack BATTERY_5_KJ = ItemStackBuilder.rebar(Material.LIME_CANDLE, PylonKeys.BATTERY_5_KJ)
-            .build();
+    public static final ItemStack BATTERY_5_KJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_5_KJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIME_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_5_KJ, PylonKeys.BATTERY_5_KJ);
         PylonPages.TOOLS.addItem(BATTERY_5_KJ);
     }
 
-    public static final ItemStack BATTERY_20_KJ = ItemStackBuilder.rebar(Material.LIGHT_BLUE_CANDLE, PylonKeys.BATTERY_20_KJ)
-            .build();
+    public static final ItemStack BATTERY_20_KJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_20_KJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIGHT_BLUE_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_20_KJ, PylonKeys.BATTERY_20_KJ);
         PylonPages.TOOLS.addItem(BATTERY_20_KJ);
     }
 
-    public static final ItemStack BATTERY_100_KJ = ItemStackBuilder.rebar(Material.LIGHT_BLUE_CANDLE, PylonKeys.BATTERY_100_KJ)
-            .build();
+    public static final ItemStack BATTERY_100_KJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_100_KJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.LIGHT_BLUE_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_100_KJ, PylonKeys.BATTERY_100_KJ);
         PylonPages.TOOLS.addItem(BATTERY_100_KJ);
     }
 
-    public static final ItemStack BATTERY_1_MJ = ItemStackBuilder.rebar(Material.BLUE_CANDLE, PylonKeys.BATTERY_1_MJ)
-            .build();
+    public static final ItemStack BATTERY_1_MJ = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.BATTERY_1_MJ)
+        .set(DataComponentTypes.ITEM_MODEL, Material.BLUE_CANDLE.getKey())
+        .build();
     static {
         RebarItem.register(ConfigurableBatteryRebarItem.class, BATTERY_1_MJ, PylonKeys.BATTERY_1_MJ);
         PylonPages.TOOLS.addItem(BATTERY_1_MJ);
