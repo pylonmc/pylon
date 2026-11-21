@@ -19,6 +19,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.logistics.slot.ItemDisplayLogisticSlot;
 import io.github.pylonmc.rebar.util.ProgressBar;
+import io.github.pylonmc.rebar.util.RebarUtils;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
 import java.util.List;
 import java.util.Map;
@@ -185,7 +186,7 @@ public class Grindstone extends RebarBlock implements
 
         ItemStack particleItem = input.clone();
 
-        itemDisplay.setItemStack(input.subtract(nextRecipe.input().getAmount()));
+        RebarUtils.consumeItem(itemDisplay, nextRecipe.input().getAmount());
 
         startRecipe(nextRecipe, nextRecipe.timeTicks());
 
