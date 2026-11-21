@@ -44,7 +44,7 @@ public class SodiumBlock extends RebarBlock implements TickingRebarBlock {
         if (ThreadLocalRandom.current().nextDouble() > probability) return;
         if (!(RebarUtils.isRainingAt(new BlockPosition(getBlock()).getRelative(BlockFace.UP)) || hasWaterOnSides())) return;
         BlockStorage.breakBlock(this, new BlockBreakContext.PluginBreak(getBlock(), false, true));
-        Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> getBlock().getWorld().createExplosion(getBlock().getLocation(), explosionPower, true, true));
+        Bukkit.getScheduler().runTask(Pylon.getInstance(), () -> getBlock().getWorld().createExplosion(getBlock().getLocation().toCenterLocation(), explosionPower, true, true));
     }
 
     private boolean hasWaterOnSides() {
