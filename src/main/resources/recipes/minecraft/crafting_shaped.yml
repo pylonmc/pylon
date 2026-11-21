@@ -3549,11 +3549,12 @@ pylon:gas_turbine:
   pattern:
     - "SBS"
     - "BWB"
-    - "SBS"
+    - "SDS"
   key:
     S: pylon:steel_sheet
     B: pylon:blisk
     W: pylon:weighted_shaft
+    D: pylon:dynamo
   result: pylon:gas_turbine
   category: building
 
@@ -3581,4 +3582,39 @@ pylon:geothermal_plant:
     N: pylon:injection_pipe
     P: pylon:geothermal_pipe
   result: pylon:geothermal_plant
+  category: building
+
+pylon:injection_pipe:
+  pattern:
+    - "   "
+    - "PSP"
+    - "   "
+  key:
+    P: pylon:fluid_pipe_bronze
+    S: pylon:bronze_sheet
+  result: pylon:injection_pipe
+  category: building
+  
+pylon:steel_foundation:
+  pattern:
+    - "   "
+    - "SSS"
+    - "CIC"
+  key:
+    S: pylon:steel_sheet
+    C: "#minecraft:concrete"
+    I: pylon:bronze_ingot
+  result:
+    pylon:steel_foundation: 3
+  category: building
+
+pylon:hydraulic_fracture_cap:
+  pattern:
+    - " P "
+    - " P"
+    - " B "
+  key:
+    P: pylon:fluid_pipe_bronze
+    B: pylon:bronze_drill_bit
+  result: pylon:hydraulic_fracture_cap
   category: building
