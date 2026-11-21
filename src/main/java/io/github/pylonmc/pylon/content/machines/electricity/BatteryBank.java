@@ -22,6 +22,7 @@ import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.ChiseledBookshelf;
@@ -108,7 +109,7 @@ public class BatteryBank extends RebarBlock implements
 
     @Override
     public void onInteractedWith(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
-        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND) return;
+        if (!event.getAction().isRightClick() || event.getHand() != EquipmentSlot.HAND || event.getPlayer().isSneaking()) return;
 
         Location point = event.getInteractionPoint();
         if (point == null) return;
@@ -125,7 +126,7 @@ public class BatteryBank extends RebarBlock implements
         } else if (RebarItem.isRebarItem(item, BatteryRebarItem.class) && !batteriesInventory.hasItem(slot)) {
             batteriesInventory.setItem(new MachineUpdateReason(), slot, item.asOne());
             item.subtract();
-        } else {
+        } else if (Tag.ITEMS_BOOKSHELF_BOOKS.isTagged(item.getType())) {
             event.setCancelled(true);
         }
     }
