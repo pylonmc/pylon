@@ -1,0 +1,191 @@
+tick-interval: 10
+base-rate: 500
+steam-to-water-ratio: 10
+biomes:
+  ocean:
+    item: minecraft:water_bucket
+    temperature: 0
+  deep_ocean:
+    item: minecraft:water_bucket
+    temperature: 0
+  warm_ocean:
+    item: minecraft:water_bucket
+    temperature: 1
+  lukewarm_ocean:
+    item: minecraft:water_bucket
+    temperature: 0.5
+  deep_lukewarm_ocean:
+    item: minecraft:water_bucket
+    temperature: 0.5
+  cold_ocean:
+    item: minecraft:water_bucket
+    temperature: -0.5
+  deep_cold_ocean:
+    item: minecraft:water_bucket
+    temperature: -0.5
+  frozen_ocean:
+    item: minecraft:ice
+    temperature: -1
+  deep_frozen_ocean:
+    item: minecraft:ice
+    temperature: -1
+  frozen_river:
+    item: minecraft:ice
+    temperature: -1
+  river:
+    item: minecraft:water_bucket
+    temperature: 0
+  beach:
+    item: minecraft:water_bucket
+    temperature: 0
+  snowy_beach:
+    item: minecraft:water_bucket
+    temperature: -0.5
+
+  badlands:
+    item: minecraft:terracotta
+    temperature: 1
+  wooded_badlands:
+    item: minecraft:terracotta
+    temperature: 1
+  eroded_badlands:
+    item: minecraft:terracotta
+    temperature: 1
+  desert:
+    item: minecraft:sand
+    temperature: 1
+  windswept_savanna:
+    item: minecraft:acacia_log
+    temperature: 0.5
+  savanna:
+    item: minecraft:acacia_log
+    temperature: 0.5
+  savanna_plateau:
+    item: minecraft:acacia_log
+    temperature: 0.5
+
+  jungle:
+    item: minecraft:jungle_log
+    temperature: 0.5
+  bamboo_jungle:
+    item: minecraft:bamboo
+    temperature: 0.5
+  sparse_jungle:
+    item: minecraft:jungle_log
+    temperature: 0.5
+  swamp:
+    item: minecraft:vine
+    temperature: 0
+  mangrove_swamp:
+    item: minecraft:mangrove_log
+    temperature: 0.5
+  forest:
+    item: minecraft:oak_log
+    temperature: 0
+  flower_forest:
+    item: minecraft:oak_log
+    temperature: 0
+  dark_forest:
+    item: minecraft:dark_oak_log
+    temperature: 0
+  pale_garden:
+    item: minecraft:pale_oak_log
+    temperature: 0
+  birch_forest:
+    item: minecraft:birch_log
+    temperature: 0
+  old_growth_birch_forest:
+    item: minecraft:birch_log
+    temperature: 0
+  cherry_grove:
+    item: minecraft:cherry_log
+    temperature: 0
+  taiga:
+    item: minecraft:spruce_log
+    temperature: -0.5
+  old_growth_pine_taiga:
+    item: minecraft:spruce_log
+    temperature: -0.5
+  old_growth_spruce_taiga:
+    item: minecraft:spruce_log
+    temperature: -0.5
+  windswept_forest:
+    item: minecraft:oak_log
+    temperature: 0
+  dappled_forest:
+    item: minecraft:poplar_log
+    temperature: 0
+
+  plains:
+    item: minecraft:grass_block
+    temperature: 0
+  sunflower_plains:
+    item: minecraft:sunflower
+    temperature: 0
+  mushroom_fields:
+    item: minecraft:mycelium
+    temperature: 0
+  meadow:
+    item: minecraft:grass_block
+    temperature: 0
+  grove:
+    item: minecraft:snow_block
+    temperature: -0.5
+
+  dripstone_caves:
+    item: minecraft:pointed_dripstone
+    temperature: 0
+  deep_dark:
+    item: minecraft:sculk
+    temperature: -0.5
+  lush_caves:
+    item: minecraft:moss_block
+    temperature: 0.5
+  sulfur_caves:
+    item: minecraft:sulfur
+    temperature: 1
+
+  windswept_gravelly_hills:
+    item: minecraft:gravel
+    temperature: -0.5
+  windswept_hills:
+    item: minecraft:stone
+    temperature: -0.5
+  stony_shore:
+    item: minecraft:stone
+    temperature: 0
+  snowy_plains:
+    item: minecraft:snow_block
+    temperature: -0.5
+  ice_spikes:
+    item: minecraft:ice
+    temperature: -1
+  snowy_taiga:
+    item: minecraft:snow_block
+    temperature: -0.5
+
+  stony_peaks:
+    item: minecraft:stone
+    temperature: -1
+  snowy_slopes:
+    item: minecraft:snow_block
+    temperature: -1
+  frozen_peaks:
+    item: minecraft:ice
+    temperature: -1
+  jagged_peaks:
+    item: minecraft:stone
+    temperature: -1
+
+ignored-biomes:
+  - basalt_deltas
+  - nether_wastes
+  - soul_sand_valley
+  - crimson_forest
+  - warped_forest
+  - the_end
+  - end_barrens
+  - end_midlands
+  - end_highlands
+  - small_end_islands
+  - the_void

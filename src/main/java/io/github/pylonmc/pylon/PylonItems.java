@@ -44,6 +44,7 @@ import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
 import io.github.pylonmc.pylon.content.tools.*;
 import io.github.pylonmc.pylon.content.tools.electric.*;
+import io.github.pylonmc.pylon.guide.GeothermalBiomesPage;
 import io.github.pylonmc.pylon.guide.HydraulicRefuelableItemsPage;
 import io.github.pylonmc.pylon.guide.LiquidFuelsPage;
 import io.github.pylonmc.pylon.guide.PressableItemsPage;
@@ -4169,6 +4170,22 @@ public final class PylonItems {
     static {
         RebarItem.register(ChargingStation.Item.class, CHARGING_STATION, PylonKeys.CHARGING_STATION);
         PylonPages.TOOLS.addItem(CHARGING_STATION);
+    }
+    
+    public static final ItemStack GEOTHERMAL_PIPE = ItemStackBuilder.rebar(Material.POLISHED_BASALT, PylonKeys.GEOTHERMAL_PIPE)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GEOTHERMAL_PIPE, PylonKeys.GEOTHERMAL_PIPE);
+        PylonPages.COMPONENTS.addItem(GEOTHERMAL_PIPE);
+    }
+    
+    public static final ItemStack GEOTHERMAL_PLANT = ItemStackBuilder.rebar(Material.SMOOTH_BASALT, PylonKeys.GEOTHERMAL_PLANT)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, GEOTHERMAL_PLANT, PylonKeys.GEOTHERMAL_PLANT);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(GEOTHERMAL_PLANT);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.GEOTHERMAL_PLANT)
+                .addButton(GeothermalBiomesPage.getButton());
     }
     // </editor-fold>
 

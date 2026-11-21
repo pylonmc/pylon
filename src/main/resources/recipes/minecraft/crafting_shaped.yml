@@ -3556,3 +3556,29 @@ pylon:gas_turbine:
     W: pylon:weighted_shaft
   result: pylon:gas_turbine
   category: building
+
+pylon:geothermal_pipe:
+  pattern:
+    - "WIW"
+    - "WIW"
+    - "WIW"
+  key:
+    W: "#minecraft:wool_carpets"
+    I: pylon:injection_pipe
+  result:
+    pylon:geothermal_pipe: 3
+  category: building
+  
+pylon:geothermal_plant:
+  pattern:
+    - "SUS"
+    - "INI"
+    - "SPS"
+  key:
+    S: pylon:steel_sheet
+    U: pylon:water_pump
+    I: pylon:fluid_pipe_steel
+    N: pylon:injection_pipe
+    P: pylon:geothermal_pipe
+  result: pylon:geothermal_plant
+  category: building

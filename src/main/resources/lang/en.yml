@@ -2909,7 +2909,7 @@ item:
       <u>Components</u>
       <diamond> 1x <yellow><item:pylon:tezla_tower/></yellow>
       <diamond> 1x <yellow><item:pylon:entity_sensor/></yellow>
-      <diamond> 1x <yellow>of any capacitor</yellow>
+      <diamond> 1x <yellow><item:pylon:battery_bank/></yellow>
 
   charging_station:
     name: "Charging Station"
@@ -2931,6 +2931,23 @@ item:
       <star> <item:pylon:chemical_plant> module
       <arrow> Place on top of the <item:pylon:chemical_plant> to enable the required recipes
       <arrow> <attr>Power usage:</attr> %power%
+
+  geothermal_pipe:
+    name: "Geothermal Pipe"
+
+  geothermal_plant:
+    name: "Geothermal Power Plant"
+    lore: |-
+      <arrow> Produces steam using the heat from the Overworld's core
+      <arrow> The amount of steam depends on the temperature difference between the Plant and the bottom of a stack of <item:pylon:geothermal_pipe> under the Plant
+      <arrow> Temperature decreases as y increases, stopping at the surface, and also may vary by biome
+      <arrow> See the info page for biome specific temperature adjustments
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:geothermal_plant/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
+      <diamond> 1 or more <yellow><item:pylon:geothermal_pipe/></yellow>
 
 fluid:
   tag:
@@ -3117,6 +3134,7 @@ guide:
     liquid_fuels: "Liquid fuels"
     smeltery_burner_fuels: "Smeltery burner fuels"
     hydraulic_refuelable_items: "Hydraulic refuelable items"
+    geothermal_biomes: "Biome Temperatures"
   recipe:
     grindstone:
       time: "<attr>Grinding time:</attr> %time%"
@@ -3129,6 +3147,8 @@ guide:
     kiln: "<attr>Melting time:</attr> %time%"
     hammer: "<attr>Uses:</attr> %uses%"
   button:
+    geothermal_biomes:
+      temperature: "Temperature: %temperature%"
     info:
       loupe:
         name: "Researching with the Loupe"

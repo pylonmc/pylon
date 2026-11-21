@@ -572,4 +572,7 @@ public class PylonKeys {
     public static final NamespacedKey ENTITY_SENSOR = pylonKey("entity_sensor");
     public static final NamespacedKey TEZLA_TOWER = pylonKey("tezla_tower");
     public static final NamespacedKey CHARGING_STATION = pylonKey("charging_station");
+
+    public static final NamespacedKey GEOTHERMAL_PIPE = pylonKey("geothermal_pipe");
+    public static final NamespacedKey GEOTHERMAL_PLANT = pylonKey("geothermal_plant");
 }

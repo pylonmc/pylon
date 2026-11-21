@@ -4,6 +4,7 @@ import io.github.pylonmc.pylon.api.item.BatteryHoldingRebarItem;
 import io.github.pylonmc.pylon.command.PylonCommand;
 import io.github.pylonmc.pylon.content.blocks.SleepingBag;
 import io.github.pylonmc.pylon.content.building.Immobilizer;
+import io.github.pylonmc.pylon.content.machines.electricity.generation.GeothermalPlant;
 import io.github.pylonmc.pylon.content.machines.fluid.Sprinkler;
 import io.github.pylonmc.pylon.content.machines.simple.Grindstone;
 import io.github.pylonmc.pylon.content.machines.smelting.Bloomery;
@@ -47,6 +48,8 @@ public class Pylon extends JavaPlugin implements RebarAddon {
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             commands.registrar().register(PylonCommand.ROOT);
         });
+
+        GeothermalPlant.BiomeSettings.load();
 
         PylonItems.initialize();
         PylonBlocks.initialize();
