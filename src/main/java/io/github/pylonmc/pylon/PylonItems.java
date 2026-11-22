@@ -15,6 +15,7 @@ import io.github.pylonmc.pylon.content.combat.RecoilArrow;
 import io.github.pylonmc.pylon.content.machines.boiler.AbstractBoiler;
 import io.github.pylonmc.pylon.content.machines.cargo.*;
 import io.github.pylonmc.pylon.content.machines.chemistry.ChemicalPlant;
+import io.github.pylonmc.pylon.content.machines.chemistry.ElectrolysisModule;
 import io.github.pylonmc.pylon.content.machines.diesel.machines.*;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Biorefinery;
 import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
@@ -3750,7 +3751,7 @@ public final class PylonItems {
     public static final ItemStack ELECTROLYSIS_MODULE = ItemStackBuilder.rebar(Material.WAXED_CHISELED_COPPER, PylonKeys.ELECTROLYSIS_MODULE)
             .build();
     static {
-        RebarItem.register(RebarItem.class, ELECTROLYSIS_MODULE, PylonKeys.ELECTROLYSIS_MODULE);
+        RebarItem.register(ElectrolysisModule.Item.class, ELECTROLYSIS_MODULE, PylonKeys.ELECTROLYSIS_MODULE);
         PylonPages.COMPONENTS.addItem(ELECTROLYSIS_MODULE);
     }
 
