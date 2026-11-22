@@ -1,5 +1,6 @@
 package io.github.pylonmc.pylon;
 
+import io.github.pylonmc.pylon.api.EffectTag;
 import io.github.pylonmc.pylon.api.FlammableTag;
 import io.github.pylonmc.pylon.api.GasTag;
 import io.github.pylonmc.pylon.api.MeltingPointTag;
@@ -11,6 +12,8 @@ import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import static io.github.pylonmc.pylon.util.PylonUtils.pylonKey;
 
@@ -155,7 +158,7 @@ public final class PylonFluids {
             pylonKey("mercury"),
             TextColor.fromHexString("#dedede"),
             Material.CYAN_TERRACOTTA
-    ).addTag(FluidTemperature.NORMAL);
+    ).addTag(FluidTemperature.NORMAL).addTag(new EffectTag(new PotionEffect(PotionEffectType.WITHER, 20 * 20, 0)));
     static {
         MERCURY.register();
     }
@@ -336,7 +339,8 @@ public final class PylonFluids {
             pylonKey("chlorine"),
             TextColor.fromHexString("#d4ff14"),
             Material.LIME_STAINED_GLASS
-    ).addTag(FluidTemperature.NORMAL).addTag(new GasTag());
+    ).addTag(FluidTemperature.NORMAL).addTag(new GasTag())
+            .addTag(new EffectTag(new PotionEffect(PotionEffectType.POISON, 5 * 20, 2)));
     static {
         CHLORINE.register();
     }

@@ -2954,6 +2954,7 @@ fluid:
     melting-point: "<arrow> Melting point: %temperature%"
     gas: "<arrow> <#b0abce>Gas</#b0abce>"
     flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"
+    effect: "<arrow> Effect: %effect%%maybe-strength%"
   water: "Water"
   lava: "Lava"
   powder_snow: "Powder Snow"

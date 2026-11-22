@@ -1,14 +1,15 @@
 package io.github.pylonmc.pylon.content.machines.fluid;
 
+import io.github.pylonmc.pylon.api.EffectTag;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.GhostBlockHolderRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.RebarMultiblock;
-import io.github.pylonmc.rebar.block.context.BlockBreakContext;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
@@ -20,6 +21,9 @@ import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
 import io.github.pylonmc.rebar.util.position.ChunkPosition;
 import io.github.pylonmc.rebar.waila.Waila;
 import io.github.pylonmc.rebar.waila.WailaDisplay;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -29,10 +33,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class FluidTank extends RebarBlock
         implements RebarMultiblock, FluidTankWithDisplayEntity, DirectionalRebarBlock, GhostBlockHolderRebarBlock, BlockBreakRebarBlockHandler {
@@ -114,6 +114,11 @@ public class FluidTank extends RebarBlock
         FluidTankCasing casingType = casings.getFirst();
         allowedTemperatures.clear();
         allowedTemperatures.addAll(casingType.allowedTemperatures);
+
+        if (getFluidAmount() > getFluidCapacity()) {
+            spawnAreaEffectClouds(getFluidAmount() - getFluidCapacity());
+        }
+
         setCapacity(casings.size() * casingType.capacity);
         setFluid(Math.min(getFluidCapacity(), getFluidAmount()));
 
@@ -138,6 +143,7 @@ public class FluidTank extends RebarBlock
             FluidTankCasingComponent.INSTANCE.spawnGhostBlock(this, CASING_POSITION);
         }
 
+        spawnAreaEffectClouds(getFluidAmount());
         casings.forEach(FluidTankCasing::reset);
         casings.clear();
         allowedTemperatures.clear();
@@ -148,8 +154,16 @@ public class FluidTank extends RebarBlock
         }
     }
 
+    private void spawnAreaEffectClouds(double fluidAmount) {
+        RebarFluid fluid = getFluidType();
+        if (fluid != null && fluid.hasTag(EffectTag.class) && fluidAmount > 0) {
+            fluid.getTag(EffectTag.class).spawnAreaEffectClouds(getBlock().getLocation().toCenterLocation(), fluidAmount);
+        }
+    }
+
     @Override
     public void onPostBlockBreak(@NotNull BlockBreakContext context) {
+        spawnAreaEffectClouds(getFluidAmount());
         casings.forEach(FluidTankCasing::reset);
     }
 

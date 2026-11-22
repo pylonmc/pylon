@@ -1,25 +1,27 @@
 package io.github.pylonmc.pylon.content.components;
 
 import com.google.common.base.Preconditions;
+import io.github.pylonmc.pylon.api.EffectTag;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankCasing;
 import io.github.pylonmc.pylon.content.machines.fluid.FluidTankWithDisplayEntity;
 import io.github.pylonmc.pylon.content.machines.fluid.multiblock.FluidTankCasingComponent;
 import io.github.pylonmc.rebar.block.BlockStorage;
 import io.github.pylonmc.rebar.block.RebarBlock;
+import io.github.pylonmc.rebar.block.context.BlockBreakContext;
+import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.interfaces.SimpleRebarMultiblock;
-import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
+import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.waila.Waila;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.joml.Vector3i;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public abstract class FluidHatch extends RebarBlock implements
@@ -37,6 +39,18 @@ public abstract class FluidHatch extends RebarBlock implements
 
     protected FluidHatch(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
+    }
+
+    private void spawnAreaEffectClouds() {
+        RebarFluid fluid = getFluidType();
+        if (fluid != null && fluid.hasTag(EffectTag.class) && getFluidAmount() > 0) {
+            fluid.getTag(EffectTag.class).spawnAreaEffectClouds(getBlock().getLocation().toCenterLocation(), getFluidAmount());
+        }
+    }
+
+    @Override
+    public void onPostBlockBreak(@NotNull BlockBreakContext context) {
+        spawnAreaEffectClouds();
     }
 
     @Override
@@ -60,5 +74,6 @@ public abstract class FluidHatch extends RebarBlock implements
         SimpleRebarMultiblock.super.onMultiblockUnformed(partUnloaded);
         Waila.removeWailaOverride(getBlock().getRelative(BlockFace.UP));
         setCapacity(0);
+        spawnAreaEffectClouds();
     }
 }

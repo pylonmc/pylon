@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.api.EffectTag;
 import io.github.pylonmc.pylon.api.GasTag;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -14,15 +15,15 @@ import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
+import java.util.List;
+import java.util.Map;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3i;
-
-import java.util.List;
-import java.util.Map;
 
 
 public class Smokestack extends RebarBlock implements SimpleRebarMultiblock, DirectionalRebarBlock, FluidRebarBlock {
@@ -67,13 +68,17 @@ public class Smokestack extends RebarBlock implements SimpleRebarMultiblock, Dir
 
     @Override
     public void onFluidAdded(@NotNull RebarFluid fluid, double amount) {
+        Location smokeLocation = getBlock().getLocation().toCenterLocation().add(0, 4.1, 0);
         for (int i = 0; i < 1 + (int)(smokeAmount * amount / gasPerFluidTick()); i++) {
             new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
-                    .location(getBlock().getLocation().toCenterLocation().add(0, 4, 0))
+                    .location(smokeLocation)
                     .offset(0, 1, 0)
                     .count(0)
-                    .extra(0.05)
+                    .speed(0.05)
                     .spawn();
+        }
+        if (fluid.hasTag(EffectTag.class)) {
+            fluid.getTag(EffectTag.class).spawnAreaEffectClouds(smokeLocation, amount / (RebarConfig.FLUID_TICK_INTERVAL / 20.0));
         }
     }
 
