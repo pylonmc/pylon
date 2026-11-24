@@ -4,3 +4,17 @@ pylon:liquid_xp_bottle:
     pylon:liquid_xp: 10
   result: pylon:liquid_xp_bottle
   duration: 40
+
+pylon:mercury_splash_potion:
+  input-item: minecraft:glass_bottle
+  input-fluid:
+    pylon:mercury: 333
+  result: "minecraft:splash_potion[item_name={translate: \"pylon.item.mercury_splash_potion\"}, potion_contents={custom_effects: [{id: \"minecraft:wither\", duration: 420}]}]"
+  duration: 400
+
+pylon:chlorine_lingering_potion:
+  input-item: minecraft:glass_bottle
+  input-fluid:
+    pylon:mercury: 333
+  result: "minecraft:lingering_potion[item_name={translate: \"pylon.item.chlorine_lingering_potion\"}, potion_contents={custom_effects: [{id: \"minecraft:poison\", amplifier: 2, duration: 420}]}]"
+  duration: 400

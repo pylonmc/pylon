@@ -2363,6 +2363,10 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1x <yellow><item:minecraft:iron_block/></yellow>
+
+  mercury_splash_potion: "Splash Potion of Withering"
+  chlorine_lingering_potion: "Lingering Potion of Poison"
+  
   piped_cauldron:
     name: "Piped Cauldron"
     lore: |-
