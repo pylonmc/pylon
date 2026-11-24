@@ -2352,31 +2352,17 @@ item:
       <arrow> Throw using <insn>right click</insn> to release stored XP
       <arrow> <attr>Stored XP:</attr> %experience-amount%
 
-  hydraulic_experience_bottler:
-    name: "Hydraulic Experience Bottler"
+  bottler:
+    name: "Bottler"
     lore: |-
-      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <item:pylon:liquid_xp_bottle/>s from empty glass bottles
-      <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
-      <arrow> <attr>Hydraulic fluid usage:</attr> %fluid-input-consumption%
+      <arrow> Fills bottles with fluids
+      <arrow> See this machine's recipes for the full list
+      <arrow> <attr>Diesel consumption:</attr> %diesel%
       
       <u>Components</u>
-      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
+      <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
-      <diamond> 1x <yellow>Lapis Block</yellow>
-      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-
-  diesel_experience_bottler:
-    name: "Diesel Experience Bottler"
-    lore: |-
-      <arrow> Bottles <#1dc420>Liquid XP</#1dc420> into <item:pylon:liquid_xp_bottle/>s from empty glass bottles
-      <arrow> <attr>Seconds per bottle:</attr> %time-per-bottle%
-      <arrow> <attr>Diesel usage:</attr> %fluid-input-consumption%
-
-      <u>Components</u>
-      <diamond> 2x <yellow><item:pylon:fluid_input_hatch/></yellow>
-      <diamond> 1x <yellow>Lapis Block</yellow>
-      <diamond> 3x <yellow>Polished Deepslate Wall</yellow>
-
+      <diamond> 1x <yellow><item:minecraft:iron_block/></yellow>
   piped_cauldron:
     name: "Piped Cauldron"
     lore: |-

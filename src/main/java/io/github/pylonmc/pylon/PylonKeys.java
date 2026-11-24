@@ -490,8 +490,6 @@ public class PylonKeys {
     public static final NamespacedKey EXPERIENCE_DRAIN = pylonKey("experience_drain");
     public static final NamespacedKey EXPERIENCE_FOUNTAIN =  pylonKey("experience_fountain");
     public static final NamespacedKey EXPERIENCE_FOUNTAIN_SPOUT = pylonKey("experience_fountain_spout");
-    public static final NamespacedKey HYDRAULIC_EXPERIENCE_BOTTLER = pylonKey("hydraulic_experience_bottler");
-    public static final NamespacedKey DIESEL_EXPERIENCE_BOTTLER = pylonKey("diesel_experience_bottler");
 
     public static final NamespacedKey LIQUID_XP_BOTTLE = pylonKey("liquid_xp_bottle");
     public static final NamespacedKey LIQUID_XP_BOTTLE_SUPER = pylonKey("liquid_xp_bottle_super");
@@ -502,6 +500,8 @@ public class PylonKeys {
     public static final NamespacedKey OIL_SAMPLE_DRILL = pylonKey("oil_sample_drill");
     public static final NamespacedKey HYDRAULIC_FRACTURING_DRILL = pylonKey("hydraulic_fracturing_drill");
     public static final NamespacedKey HYDRAULIC_PUMPJACK = pylonKey("hydraulic_pumpjack");
+
+    public static final NamespacedKey BOTTLER = pylonKey("bottler");
 
     public static final NamespacedKey SMOKESTACK = pylonKey("smokestack");
     public static final NamespacedKey FLARE_STACK = pylonKey("flare_stack");

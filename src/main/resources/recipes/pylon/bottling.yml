@@ -1,0 +1,6 @@
+pylon:liquid_xp_bottle:
+  input-item: minecraft:glass_bottle
+  input-fluid:
+    pylon:liquid_xp: 10
+  result: pylon:liquid_xp_bottle
+  duration: 40

@@ -19,7 +19,6 @@ import io.github.pylonmc.pylon.content.machines.electricity.generation.*;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
-import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
 import io.github.pylonmc.pylon.content.machines.petrochemicals.*;
@@ -210,8 +209,7 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.EXPERIENCE_DRAIN, Material.BLACKSTONE_SLAB, ExperienceDrain.class);
         RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN, Material.END_STONE, ExperienceFountain.class);
         RebarBlock.register(PylonKeys.EXPERIENCE_FOUNTAIN_SPOUT, Material.END_ROD, RebarBlock.class);
-        RebarBlock.register(PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
-        RebarBlock.register(PylonKeys.DIESEL_EXPERIENCE_BOTTLER, Material.BREWING_STAND, FluidExperienceBottler.class);
+        RebarBlock.register(PylonKeys.BOTTLER, Material.BREWING_STAND, Bottler.class);
         RebarBlock.register(PylonKeys.OIL_SAMPLE_DRILL, Material.CHISELED_DEEPSLATE, OilSampleDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_FRACTURING_DRILL, Material.NETHERITE_BLOCK, HydraulicFracturingDrill.class);
         RebarBlock.register(PylonKeys.HYDRAULIC_PUMPJACK, Material.POLISHED_TUFF, HydraulicPumpjack.class);

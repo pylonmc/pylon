@@ -1585,19 +1585,6 @@ pylon:diesel_core_drill:
   result: pylon:diesel_core_drill
   category: building
 
-pylon:hydraulic_experience_bottler:
-  pattern:
-    - "BPB"
-    - "PSP"
-    - "BHB"
-  key:
-    B: pylon:bronze_sheet
-    H: pylon:hydraulic_motor
-    S: minecraft:brewing_stand
-    P: minecraft:piston
-  result: pylon:hydraulic_experience_bottler
-  category: building
-
 pylon:climbing_pick:
   pattern:
     - "H H"
@@ -2153,7 +2140,7 @@ pylon:diesel_refueling_station:
   result: pylon:diesel_refueling_station
   category: building
 
-pylon:diesel_experience_bottler:
+pylon:bottler:
   pattern:
     - "SPS"
     - "PBP"
@@ -2164,7 +2151,7 @@ pylon:diesel_experience_bottler:
     I: minecraft:iron_bars
     E: pylon:internal_combustion_engine
     B: minecraft:brewing_stand
-  result: pylon:diesel_experience_bottler
+  result: pylon:bottler
   category: building
 
 pylon:fermenter:

@@ -9,6 +9,7 @@ import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.logistics.LogisticGroupType;
 import io.github.pylonmc.rebar.recipe.RebarRecipe;
 import io.github.pylonmc.rebar.recipe.RecipeType;
+import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItemChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
 import io.github.pylonmc.rebar.util.MachineUpdateReason;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -120,7 +121,18 @@ public abstract class GenericMachine<T extends RebarRecipe> extends RebarBlock i
     protected abstract @NotNull List<@NotNull ItemStack> getResults(@NotNull T recipe);
 
     protected boolean tryStartRecipe(T recipe, ItemStack stack) {
-        ItemChoice input = (ItemChoice) recipe.getInputs().getFirst();
+        ItemChoice input = null;
+        for (FluidOrItemChoice choice : recipe.getInputs()) {
+            if (!(choice instanceof ItemChoice itemChoice)) continue;
+            if (input != null) {
+                throw new IllegalStateException("Recipe has more than one item input");
+            }
+            input = itemChoice;
+        }
+        if (input == null) {
+            throw new IllegalStateException("Recipe does not have any item inputs");
+        }
+
         if (!input.matches(stack)) {
             return false;
         }

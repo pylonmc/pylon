@@ -25,7 +25,6 @@ import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngi
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
-import io.github.pylonmc.pylon.content.machines.experience.FluidExperienceBottler;
 import io.github.pylonmc.pylon.content.machines.experience.LiquidXPBottle;
 import io.github.pylonmc.pylon.content.machines.fluid.*;
 import io.github.pylonmc.pylon.content.machines.hydraulics.*;
@@ -3686,20 +3685,13 @@ public final class PylonItems {
         PylonPages.FLUID_MACHINES.addItem(EXPERIENCE_FOUNTAIN_SPOUT);
     }
 
-    public static final ItemStack HYDRAULIC_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER)
+    public static final ItemStack BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.BOTTLER)
             .build();
-
     static {
-        RebarItem.register(FluidExperienceBottler.Item.class, HYDRAULIC_EXPERIENCE_BOTTLER, PylonKeys.HYDRAULIC_EXPERIENCE_BOTTLER);
-        PylonPages.HYDRAULIC_MACHINES.addItem(HYDRAULIC_EXPERIENCE_BOTTLER);
-    }
-
-    public static final ItemStack DIESEL_EXPERIENCE_BOTTLER = ItemStackBuilder.rebar(Material.BREWING_STAND, PylonKeys.DIESEL_EXPERIENCE_BOTTLER)
-            .build();
-
-    static {
-        RebarItem.register(FluidExperienceBottler.Item.class, DIESEL_EXPERIENCE_BOTTLER, PylonKeys.DIESEL_EXPERIENCE_BOTTLER);
-        PylonPages.DIESEL_MACHINES.addItem(DIESEL_EXPERIENCE_BOTTLER);
+        RebarItem.register(Bottler.Item.class, BOTTLER, PylonKeys.BOTTLER);
+        PylonPages.DIESEL_MACHINES.addItem(BOTTLER);
+        RebarGuide.getOrCreateInfoPage(PylonKeys.BOTTLER)
+                .addButton(new MachineRecipesButton(BottlingRecipe.RECIPE_TYPE));
     }
 
     public static final ItemStack LIQUID_XP_BOTTLE = ItemStackBuilder.rebar(Material.EXPERIENCE_BOTTLE, PylonKeys.LIQUID_XP_BOTTLE)
