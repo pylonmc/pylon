@@ -3558,7 +3558,7 @@ pylon:heat_exchanger:
 
 pylon:gas_turbine:
   pattern:
-    - "SBS"
+    - "SES"
     - "BWB"
     - "SDS"
   key:
@@ -3566,6 +3566,7 @@ pylon:gas_turbine:
     B: pylon:blisk
     W: pylon:weighted_shaft
     D: pylon:dynamo
+    E: pylon:oiled_bearing
   result: pylon:gas_turbine
   category: building
 
@@ -3629,3 +3630,14 @@ pylon:hydraulic_fracture_cap:
     B: pylon:bronze_drill_bit
   result: pylon:hydraulic_fracture_cap
   category: building
+
+pylon:bearing:
+  pattern:
+    - "NNN"
+    - "NIN"
+    - "NNN"
+  key:
+    N: minecraft:iron_nugget
+    I: minecraft:iron_ingot
+  result: pylon:bearing
+  category: misc

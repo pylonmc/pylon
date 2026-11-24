@@ -3762,6 +3762,22 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(ELECTROLYSIS_MODULE);
     }
 
+    public static final ItemStack BEARING = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.BEARING)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, BEARING, PylonKeys.BEARING);
+        PylonPages.COMPONENTS.addItem(BEARING);
+    }
+
+    public static final ItemStack OILED_BEARING = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.OILED_BEARING)
+            .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            .build();
+    static {
+        RebarItem.register(RebarItem.class, OILED_BEARING, PylonKeys.OILED_BEARING);
+        PylonPages.COMPONENTS.addItem(OILED_BEARING);
+    }
+
+    // <editor-fold desc="Electricity" defaultstate=collapsed>
     public static final ItemStack PRINTED_CIRCUIT_BOARD = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.PRINTED_CIRCUIT_BOARD)
             .set(DataComponentTypes.ITEM_MODEL, Material.GREEN_CARPET.getKey())
             .build();
@@ -3778,7 +3794,6 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(HIGH_VOLTAGE_CIRCUIT);
     }
 
-    // <editor-fold desc="Electricity" defaultstate=collapsed>
     public static final ItemStack RESISTOR = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.RESISTOR)
         .set(DataComponentTypes.ITEM_MODEL, Material.ACTIVATOR_RAIL.getKey())
         .build();

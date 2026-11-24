@@ -18,3 +18,10 @@ pylon:chlorine_lingering_potion:
     pylon:mercury: 333
   result: "minecraft:lingering_potion[item_name={translate: \"pylon.item.chlorine_lingering_potion\"}, potion_contents={custom_effects: [{id: \"minecraft:poison\", amplifier: 2, duration: 420}]}]"
   duration: 400
+
+pylon:oiled_bearing:
+  input-item: pylon:bearing
+  input-fluid:
+    pylon:hydraulic_fluid: 333
+  result: pylon:oiled_bearing
+  duration: 80

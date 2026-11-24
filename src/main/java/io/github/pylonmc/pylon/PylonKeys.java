@@ -557,6 +557,8 @@ public class PylonKeys {
     public static final NamespacedKey FUSE = pylonKey("fuse");
     public static final NamespacedKey BATTERY_HOLDER = pylonKey("battery_holder");
     public static final NamespacedKey CAPACITOR = pylonKey("capacitor");
+    public static final NamespacedKey BEARING = pylonKey("bearing");
+    public static final NamespacedKey OILED_BEARING = pylonKey("oiled_bearing");
 
     public static final NamespacedKey CREATIVE_BATTERY = pylonKey("creative_battery");
     public static final NamespacedKey BATTERY_500_J = pylonKey("battery_500_j");

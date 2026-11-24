@@ -616,6 +616,8 @@ components_3:
   unlocks:
     - pylon:electricity_input_hatch
     - pylon:electricity_output_hatch
+    - pylon:bearing
+    - pylon:oiled_bearing
 
 straining:
   item: pylon:fluid_strainer

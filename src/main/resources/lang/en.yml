@@ -2941,6 +2941,12 @@ item:
       <arrow> Place on top of the <item:pylon:chemical_plant> to enable the required recipes
       <arrow> <attr>Power usage:</attr> %power%
 
+  bearing:
+    name: "Bearing"
+
+  oiled_bearing:
+    name: "Oiled Bearing"
+
   geothermal_pipe:
     name: "Geothermal Pipe"
 
