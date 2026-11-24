@@ -948,6 +948,23 @@ item:
       <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
       <arrow> <attr>Explosion power:</attr> %power%
 
+  sodium_projectile:
+    name: "Sodium Projectile"
+    lore: |-
+      <arrow> Can be used in cannons
+      <arrow> Extremely explosive on contact with water
+      <arrow> Hold <item:pylon:tongs> in your main or off hand to prevent it from exploding in your inventory
+      <arrow> Explodes when shot and hit an entity
+      <arrow> <attr>Explosion power:</attr> %power%
+
+  sheathed_sodium_projectile:
+    name: "Sheathed Sodium Projectile"
+    lore: |-
+      <arrow> Can be used in cannons
+      <arrow> Does not explode in your inventory
+      <arrow> Explodes when shot and hit an entity
+      <arrow> <attr>Explosion power:</attr> %power%
+
   solder:
     name: "Solder"
 
@@ -1550,7 +1567,7 @@ item:
   hydraulic_cannon:
     name: "Hydraulic Cannon"
     lore: |-
-      <arrow> Uses hydraulic fluid to fire tin projectiles
+      <arrow> Uses hydraulic fluid to fire projectiles
       <arrow> Refuel using the <white>Hydraulic Refueling Station
       <arrow> <insn>Right click</insn> to fire
       <arrow> <attr>Cooldown:</attr> %cooldown%
@@ -1563,6 +1580,8 @@ item:
 
   tin_projectile:
     name: "Tin Projectile"
+    lore: |-
+      <arrow> Can be used in cannons
 
   hydraulic_refueling_station:
     name: "Hydraulic Refueling Station"
@@ -2366,7 +2385,7 @@ item:
 
   mercury_splash_potion: "Splash Potion of Withering"
   chlorine_lingering_potion: "Lingering Potion of Poison"
-  
+
   piped_cauldron:
     name: "Piped Cauldron"
     lore: |-

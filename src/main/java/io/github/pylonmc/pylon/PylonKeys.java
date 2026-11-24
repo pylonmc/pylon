@@ -335,6 +335,8 @@ public class PylonKeys {
     public static final NamespacedKey HYDRAULIC_CANNON_CHAMBER = pylonKey("hydraulic_cannon_chamber");
     public static final NamespacedKey HYDRAULIC_CANNON = pylonKey("hydraulic_cannon");
     public static final NamespacedKey TIN_PROJECTILE = pylonKey("tin_projectile");
+    public static final NamespacedKey SODIUM_PROJECTILE = pylonKey("sodium_projectile");
+    public static final NamespacedKey SHEATHED_SODIUM_PROJECTILE = pylonKey("sheathed_sodium_projectile");
     public static final NamespacedKey HYDRAULIC_REFUELING_STATION = pylonKey("hydraulic_refueling_station");
 
     public static final NamespacedKey HYDRAULIC_FARMER = pylonKey("hydraulic_farmer");

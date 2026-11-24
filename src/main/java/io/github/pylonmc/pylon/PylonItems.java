@@ -39,6 +39,7 @@ import io.github.pylonmc.pylon.content.machines.storage.Silo;
 import io.github.pylonmc.pylon.content.resources.CharcoalBlock;
 import io.github.pylonmc.pylon.content.resources.IronBloom;
 import io.github.pylonmc.pylon.content.resources.SodiumItem;
+import io.github.pylonmc.pylon.content.resources.SodiumProjectile;
 import io.github.pylonmc.pylon.content.science.Loupe;
 import io.github.pylonmc.pylon.content.science.ResearchPack;
 import io.github.pylonmc.pylon.content.talismans.*;
@@ -1635,8 +1636,22 @@ public final class PylonItems {
             .build();
 
     static {
-        RebarItem.register(RebarItem.class, TIN_PROJECTILE);
+        RebarItem.register(BasicCannonProjectileRebarItem.class, TIN_PROJECTILE);
         PylonPages.COMBAT.addItem(TIN_PROJECTILE);
+    }
+
+    public static final ItemStack SODIUM_PROJECTILE = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.SODIUM_PROJECTILE)
+            .build();
+    static {
+        RebarItem.register(SodiumProjectile.class, SODIUM_PROJECTILE, PylonKeys.SODIUM_PROJECTILE);
+        PylonPages.COMBAT.addItem(SODIUM_PROJECTILE);
+    }
+
+    public static final ItemStack SHEATHED_SODIUM_PROJECTILE = ItemStackBuilder.rebar(Material.IRON_NUGGET, PylonKeys.SHEATHED_SODIUM_PROJECTILE)
+            .build();
+    static {
+        RebarItem.register(SodiumProjectile.class, SHEATHED_SODIUM_PROJECTILE, PylonKeys.SHEATHED_SODIUM_PROJECTILE);
+        PylonPages.COMBAT.addItem(SHEATHED_SODIUM_PROJECTILE);
     }
 
     //</editor-fold>

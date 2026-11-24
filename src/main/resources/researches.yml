@@ -750,6 +750,8 @@ advanced_electrochemistry:
     - pylon:sodium_ingot
     - pylon:sodium_block
     - pylon:sodium_sheet
+    - pylon:sodium_projectile
+    - pylon:sheathed_sodium_projectile
 
 electric_components:
   item: pylon:resistor

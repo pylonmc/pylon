@@ -1722,6 +1722,30 @@ pylon:tin_projectile:
     pylon:tin_projectile: 16
   category: equipment
 
+pylon:sodium_projectile:
+  pattern:
+    - "N  "
+    - "S  "
+    - "N  "
+  key:
+    N: pylon:sodium_nugget
+    S: minecraft:stick
+  result:
+    pylon:sodium_projectile: 16
+  category: equipment
+
+pylon:sheathed_sodium_projectile:
+  pattern:
+    - "PPP"
+    - "PSP"
+    - "PPP"
+  key:
+    P: pylon:sodium_projectile
+    S: pylon:tin_sheet
+  result:
+    pylon:sheathed_sodium_projectile: 8
+  category: equipment
+
 pylon:hydraulic_refueling_station:
   pattern:
     - "   "

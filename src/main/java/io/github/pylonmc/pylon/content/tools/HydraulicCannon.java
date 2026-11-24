@@ -2,6 +2,7 @@ package io.github.pylonmc.pylon.content.tools;
 
 import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.PylonKeys;
+import io.github.pylonmc.pylon.api.item.CannonProjectileRebarItem;
 import io.github.pylonmc.pylon.content.machines.hydraulics.HydraulicRefuelable;
 import io.github.pylonmc.pylon.util.DisplayProjectile;
 import io.github.pylonmc.rebar.config.ConfigSection;
@@ -12,13 +13,12 @@ import io.github.pylonmc.rebar.event.api.annotation.MultiHandler;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.item.interfaces.InteractRebarItemHandler;
-import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.ProgressBar;
-import io.github.pylonmc.rebar.util.RebarUtils;
+import io.github.pylonmc.rebar.util.RandomizedSound;
 import io.github.pylonmc.rebar.util.gui.unit.UnitFormat;
-import net.kyori.adventure.text.Component;
 import java.util.List;
-import net.kyori.adventure.text.format.TextColor;
+import java.util.Objects;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -105,15 +105,19 @@ public class HydraulicCannon extends RebarItem implements InteractRebarItemHandl
             return;
         }
 
-        Integer projectileIndex = RebarUtils.findRebar(player.getInventory(), PylonKeys.TIN_PROJECTILE);
-        ItemStack projectile = projectileIndex != null ? player.getInventory().getItem(projectileIndex) : null;
+        ItemStack projectile = null;
+        for (ItemStack stack : player.getInventory()) {
+            if (RebarItem.isRebarItem(stack, CannonProjectileRebarItem.class)) {
+                projectile = stack;
+                break;
+            }
+        }
         if (projectile == null) {
             player.sendMessage(Component.translatable("pylon.message.hydraulic-cannon.no-ammo"));
             noAmmoSound.play(source);
             return;
         }
 
-        projectile.subtract();
         setHydraulicFluid(getHydraulicFluid() - hydraulicFluidPerShot);
         setDirtyHydraulicFluid(getDirtyHydraulicFluid() + hydraulicFluidPerShot);
 
@@ -131,9 +135,11 @@ public class HydraulicCannon extends RebarItem implements InteractRebarItemHandl
                 projectileDamage,
                 projectileTickInterval,
                 projectileLifetimeTicks,
+                Objects.requireNonNull(RebarItem.fromStack(projectile.asOne(), CannonProjectileRebarItem.class)),
                 hitSound.create(),
                 playerHitSound.create()
         ));
+        projectile.subtract();
 
         sound.play(source);
         player.setVelocity(player.getVelocity().subtract(direction.clone().multiply(recoilVelocity)));
