@@ -2,7 +2,6 @@ package io.github.pylonmc.pylon.content.machines.electricity.generation;
 
 import io.github.pylonmc.pylon.Pylon;
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.util.PylonUtils;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockBreakContext;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -61,16 +60,20 @@ public class WindTurbine extends RebarBlock implements
         super(block, pdc);
     }
 
+    private static final Quaternionf ROTATION_QUAT = new Quaternionf().rotationAxis((float) (Math.PI / 2), new Vector3f(0, 1, 0));
+
     @Override
     public void tick() {
         if (!isFormedAndFullyLoaded()) return;
 
-        for (Vector2i vane : VANES) {
-            Quaternionf rotation = new Quaternionf().rotationTo(new Vector3f(1, 0, 0), new Vector3f(vane.x(), 0, vane.y()));
-            ItemDisplay barDisplay = getHeldEntityOrThrow(ItemDisplay.class, barName(vane));
-            PylonUtils.animate(barDisplay, getTickInterval(), barTransform(barDisplay.getTicksLived() / (float) getTickInterval(), rotation));
-            ItemDisplay vaneDisplay = getHeldEntityOrThrow(ItemDisplay.class, vaneName(vane));
-            PylonUtils.animate(vaneDisplay, getTickInterval(), vaneTransform(vaneDisplay.getTicksLived() / (float) getTickInterval(), rotation));
+        for (String name : getHeldEntities().keySet()) {
+            if (!name.startsWith("turbine_display:")) continue;
+            ItemDisplay display = getHeldEntityOrThrow(ItemDisplay.class, name);
+            display.setInterpolationDuration(getTickInterval());
+            display.setTeleportDuration(getTickInterval());
+            Location loc = display.getLocation();
+            loc.setYaw(loc.getYaw() + 90);
+            display.teleportAsync(loc);
         }
     }
 
@@ -85,16 +88,23 @@ public class WindTurbine extends RebarBlock implements
         SimpleRebarMultiblock.super.onMultiblockFormed();
 
         Location center = getBlock().getLocation().add(0.5, 3, 0.5);
+        Vector3f xVector = new Vector3f(1, 0, 0);
         for (Vector2i vane : VANES) {
-            Quaternionf rotation = new Quaternionf().rotationTo(new Vector3f(1, 0, 0), new Vector3f(vane.x(), 0, vane.y()));
-            addEntity(barName(vane), new ItemDisplayBuilder()
+            Quaternionf rotation = new Quaternionf().rotationTo(xVector, new Vector3f(vane.x(), 0, vane.y()));
+            addEntity("turbine_display:bar:" + vane, new ItemDisplayBuilder()
                     .itemStack(barItem)
-                    .transformation(barTransform(0, rotation))
+                    .transformation(new Matrix4f()
+                            .scaleLocal(0.49f, 0.1f, 0.1f)
+                            .translateLocal(xVector.mul(0.5f, new Vector3f()))
+                            .rotateLocal(rotation))
                     .build(center)
             );
-            addEntity(vaneName(vane), new ItemDisplayBuilder()
+            addEntity("turbine_display:vane:" + vane, new ItemDisplayBuilder()
                     .itemStack(vaneItem)
-                    .transformation(vaneTransform(0, rotation))
+                    .transformation(new Matrix4f()
+                            .scaleLocal(1, 4, 1)
+                            .translateLocal(xVector)
+                            .rotateLocal(rotation))
                     .build(center)
             );
         }
@@ -105,32 +115,6 @@ public class WindTurbine extends RebarBlock implements
                 setVane(vane, Material.AIR);
             }
         });
-    }
-
-    private static final float ROTATION_PER_TICK = (float) (Math.PI / 2);
-
-    private static Matrix4f barTransform(float time, Quaternionf initialRotation) {
-        return new Matrix4f()
-                .scaleLocal(0.5f, 0.1f, 0.1f)
-                .translateLocal(new Vector3f(0.5f, 0, 0))
-                .rotateLocal(initialRotation)
-                .rotateLocal(new Quaternionf().rotateAxis(ROTATION_PER_TICK * time, new Vector3f(0, 1, 0)));
-    }
-
-    private static String barName(Vector2i vane) {
-        return "turbine_display:bar:" + vane.x() + " " + vane.y();
-    }
-
-    private static Matrix4f vaneTransform(float time, Quaternionf initialRotation) {
-        return new Matrix4f()
-                .scaleLocal(1, 4, 1)
-                .translateLocal(new Vector3f(1, 0, 0))
-                .rotateLocal(initialRotation)
-                .rotateLocal(new Quaternionf().rotateAxis(ROTATION_PER_TICK * time, new Vector3f(0, 1, 0)));
-    }
-
-    private static String vaneName(Vector2i vane) {
-        return "turbine_display:vane:" + vane.x() + " " + vane.y();
     }
 
     @Override
