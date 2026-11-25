@@ -254,5 +254,6 @@ public final class PylonBlocks {
         RebarBlock.register(PylonKeys.ELECTROLYSIS_MODULE, Material.WAXED_CHISELED_COPPER, ElectrolysisModule.class);
         RebarBlock.register(PylonKeys.GEOTHERMAL_PIPE, Material.POLISHED_BASALT, RebarBlock.class);
         RebarBlock.register(PylonKeys.GEOTHERMAL_PLANT, Material.SMOOTH_BASALT, GeothermalPlant.class);
+        RebarBlock.register(PylonKeys.WIND_TURBINE, Material.IRON_BLOCK, WindTurbine.class);
     }
 }

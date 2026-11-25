@@ -2964,6 +2964,9 @@ item:
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1 or more <yellow><item:pylon:geothermal_pipe/></yellow>
 
+  wind_turbine:
+    name: "Wind Turbine"
+
 fluid:
   tag:
     melting-point: "<arrow> Melting point: %temperature%"

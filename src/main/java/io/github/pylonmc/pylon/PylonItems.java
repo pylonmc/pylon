@@ -22,6 +22,7 @@ import io.github.pylonmc.pylon.content.machines.diesel.production.Fermenter;
 import io.github.pylonmc.pylon.content.machines.electricity.ChargingStation;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.CombustionTower;
 import io.github.pylonmc.pylon.content.machines.electricity.generation.SteamEngine;
+import io.github.pylonmc.pylon.content.machines.electricity.generation.WindTurbine;
 import io.github.pylonmc.pylon.content.machines.electricity.machines.*;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceDrain;
 import io.github.pylonmc.pylon.content.machines.experience.ExperienceFountain;
@@ -4230,6 +4231,13 @@ public final class PylonItems {
         PylonPages.ELECTRICITY_PRODUCTION.addItem(GEOTHERMAL_PLANT);
         RebarGuide.getOrCreateInfoPage(PylonKeys.GEOTHERMAL_PLANT)
                 .addButton(GeothermalBiomesPage.getButton());
+    }
+    
+    public static final ItemStack WIND_TURBINE = ItemStackBuilder.rebar(Material.IRON_BLOCK, PylonKeys.WIND_TURBINE)
+            .build();
+    static {
+        RebarItem.register(WindTurbine.Item.class, WIND_TURBINE, PylonKeys.WIND_TURBINE);
+        PylonPages.ELECTRICITY_PRODUCTION.addItem(WIND_TURBINE);
     }
     // </editor-fold>
 

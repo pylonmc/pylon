@@ -579,4 +579,6 @@ public class PylonKeys {
 
     public static final NamespacedKey GEOTHERMAL_PIPE = pylonKey("geothermal_pipe");
     public static final NamespacedKey GEOTHERMAL_PLANT = pylonKey("geothermal_plant");
+
+    public static final NamespacedKey WIND_TURBINE = pylonKey("wind_turbine");
 }
