@@ -2916,7 +2916,6 @@ item:
       <arrow> <insn>Right Click</insn> to configure
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:tezla_tower/></yellow>
       <diamond> 1x <yellow><item:pylon:entity_sensor/></yellow>
       <diamond> 1x <yellow><item:pylon:battery_bank/></yellow>
 
@@ -2959,13 +2958,22 @@ item:
       <arrow> See the info page for biome specific temperature adjustments
       
       <u>Components</u>
-      <diamond> 1x <yellow><item:pylon:geothermal_plant/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_input_hatch/></yellow>
       <diamond> 1x <yellow><item:pylon:fluid_output_hatch/></yellow>
       <diamond> 1 or more <yellow><item:pylon:geothermal_pipe/></yellow>
 
   wind_turbine:
     name: "Wind Turbine"
+    lore: |-
+      <arrow> Produces power from the wind
+      <arrow> More efficient at higher altitudes
+      <arrow> <attr>Power production at world bottom:</attr> %base%
+      <arrow> <attr>Extra power for every additional block in height:</attr> %extra%
+      
+      <u>Components</u>
+      <diamond> 1x <yellow><item:pylon:steel_foundation/></yellow>
+      <diamond> 4x <yellow><item:pylon:steel_support_beam/></yellow>
+      <diamond> 16x <yellow><item:minecraft:iron_bars/></yellow>      
 
 fluid:
   tag:
