@@ -3110,6 +3110,7 @@ research:
   electric_components: "<#f3c600>Electric Components"
   nickel_metal_hydrides: "<#f3c600>Nickel-Metal Hydrides"
   grid_scale_power: "<#f3c600>Grid-Scale Power"
+  green_energy: "<#befe00>Green Energy"
 
 guide:
   pressable_items: "<arrow> %plant-oil%"

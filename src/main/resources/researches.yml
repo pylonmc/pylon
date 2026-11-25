@@ -785,6 +785,14 @@ grid_scale_power:
     - pylon:wire_3_gauge
     - pylon:battery_5_kj
 
+green_energy:
+  item: pylon:wind_turbine
+  cost: 100
+  unlocks:
+    - pylon:wind_turbine
+    - pylon:geothermal_plant
+    - pylon:geothermal_pipe
+
 nickel_metal_hydrides:
   item: pylon:nimh_mix
   cost: 80
