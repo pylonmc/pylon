@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.fluid;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.pylonmc.pylon.PylonKeys;
-import io.github.pylonmc.pylon.api.GasTag;
+import io.github.pylonmc.pylon.api.GasProperty;
 import io.github.pylonmc.rebar.block.RebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
@@ -60,7 +60,7 @@ public class Smokestack extends RebarBlock implements SimpleRebarMultiblock, Dir
             return 0.0;
         }
 
-        return fluid.hasTag(GasTag.class)
+        return fluid.hasProperty(GasProperty.class)
                 ? gasPerFluidTick()
                 : 0.0;
     }

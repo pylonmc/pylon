@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.github.pylonmc.pylon.api.MeltingPointTag;
+import io.github.pylonmc.pylon.api.MeltingPointProperty;
 import io.github.pylonmc.pylon.recipes.MeltingRecipe;
 import io.github.pylonmc.rebar.block.interfaces.BlockBreakRebarBlockHandler;
 import io.github.pylonmc.rebar.block.interfaces.LogisticRebarBlock;
@@ -104,7 +104,7 @@ public final class SmelteryHopper extends SmelteryComponent implements
         }
 
         RebarFluid result = recipe.result();
-        if (!result.hasTag(MeltingPointTag.class) || result.getTag(MeltingPointTag.class).temperature() > controller.getTemperature()) {
+        if (!result.hasProperty(MeltingPointProperty.class) || result.getProperty(MeltingPointProperty.class).temperature() > controller.getTemperature()) {
             return false;
         }
 

@@ -45,7 +45,7 @@ import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.datatypes.RebarSerializers;
 import io.github.pylonmc.rebar.entity.display.transform.TransformUtil;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
+import io.github.pylonmc.rebar.fluid.properties.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.builder.ItemStackBuilder;
 import io.github.pylonmc.rebar.util.RebarUtils;
@@ -104,7 +104,7 @@ public final class SmelteryController extends SmelteryComponent
 
     private final Set<SmelteryComponent> components = new HashSet<>();
     private final Object2DoubleMap<RebarFluid> fluids = new Object2DoubleRBTreeMap<>(
-            Comparator.<RebarFluid, FluidTemperature>comparing(fluid -> fluid.getTag(FluidTemperature.class))
+            Comparator.<RebarFluid, FluidTemperature>comparing(fluid -> fluid.getProperty(FluidTemperature.class))
                     .reversed()
                     .thenComparing(fluid -> fluid.getKey().toString())
     );
@@ -369,7 +369,7 @@ public final class SmelteryController extends SmelteryComponent
 
     // <editor-fold desc="Fluid" defaultstate="collapsed">
     public void addFluid(@NotNull RebarFluid fluid, double amount) {
-        Preconditions.checkArgument(fluid.hasTag(FluidTemperature.class), "Fluid does not have a temperature tag");
+        Preconditions.checkArgument(fluid.hasProperty(FluidTemperature.class), "Fluid does not have a temperature property");
         Preconditions.checkArgument(amount > 0, "Amount must be positive");
 
         double amountToAdd = Math.min(amount, capacity - getTotalFluid());
@@ -378,7 +378,7 @@ public final class SmelteryController extends SmelteryComponent
     }
 
     public void removeFluid(@NotNull RebarFluid fluid, double amount) {
-        Preconditions.checkArgument(fluid.hasTag(FluidTemperature.class), "Fluid does not have a temperature tag");
+        Preconditions.checkArgument(fluid.hasProperty(FluidTemperature.class), "Fluid does not have a temperature property");
         Preconditions.checkArgument(amount > 0, "Amount must be positive");
 
         fluids.mergeDouble(fluid, -amount, Double::sum);

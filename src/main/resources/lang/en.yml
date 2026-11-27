@@ -2651,7 +2651,7 @@ item:
       <arrow> <attr>Smelting speed:</attr> %speed%
 
 fluid:
-  tag:
+  property:
     melting-point: "<arrow> Melting point: %temperature%"
     gas: "<arrow> <#b0abce>Gas</#b0abce>"
     flammable: "<arrow> <#ff6702>Flammable</#ff6702> (%burn-time% per bucket)"

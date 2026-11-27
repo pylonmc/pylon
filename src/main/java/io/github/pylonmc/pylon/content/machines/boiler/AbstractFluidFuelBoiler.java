@@ -2,7 +2,7 @@ package io.github.pylonmc.pylon.content.machines.boiler;
 
 import com.google.common.base.Preconditions;
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.api.FlammableTag;
+import io.github.pylonmc.pylon.api.FlammableProperty;
 import io.github.pylonmc.pylon.content.components.FluidInputHatch;
 import io.github.pylonmc.pylon.content.components.FluidOutputHatch;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
@@ -62,8 +62,8 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
         FluidInputHatch fuelInput = getMultiblockComponentOrThrow(FluidInputHatch.class, fuelInputPosition());
         if (fuelLeft != 0.0) {
             Preconditions.checkState(fuelInput.getFluidType() != null);
-            Preconditions.checkState(fuelInput.getFluidType().hasTag(FlammableTag.class));
-            double secondsPerMillibucket = fuelInput.getFluidType().getTag(FlammableTag.class).secondsPerBucket() / 1000.0;
+            Preconditions.checkState(fuelInput.getFluidType().hasProperty(FlammableProperty.class));
+            double secondsPerMillibucket = fuelInput.getFluidType().getProperty(FlammableProperty.class).secondsPerBucket() / 1000.0;
             fuelInput.removeFluid(actualFuelConsumedSeconds / secondsPerMillibucket);
         }
 
@@ -94,7 +94,7 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
         double maxFuelLeft = getMaxFuelLeft();
         if (maxFuelLeft != 0) {
             RebarFluid fuel = getMultiblockComponentOrThrow(FluidInputHatch.class, fuelInputPosition()).getFluidType();
-            double fluidBurnRate = fuelBurnRate * 1000.0 / fuel.getTag(FlammableTag.class).secondsPerBucket();
+            double fluidBurnRate = fuelBurnRate * 1000.0 / fuel.getProperty(FlammableProperty.class).secondsPerBucket();
             display.add(UnitFormat.MILLIBUCKETS_PER_SECOND.format(fluidBurnRate).decimalPlaces(2).asComponent()
                     .append(Component.text(" "))
                     .append(fuel.getName())
@@ -107,20 +107,20 @@ public abstract class AbstractFluidFuelBoiler extends AbstractBoiler {
         FluidInputHatch fuelInput = getMultiblockComponentOrThrow(FluidInputHatch.class, fuelInputPosition());
         return fuelInput.getFluidType() == null
                 ? 0
-                : fuelInput.getFluidType().getTag(FlammableTag.class).secondsPerBucket() * fuelInput.getFluidCapacity();
+                : fuelInput.getFluidType().getProperty(FlammableProperty.class).secondsPerBucket() * fuelInput.getFluidCapacity();
     }
 
     public double getFuelLeft() {
         FluidInputHatch fuelInput = getMultiblockComponentOrThrow(FluidInputHatch.class, fuelInputPosition());
         return fuelInput.getFluidType() == null
                 ? 0
-                : fuelInput.getFluidType().getTag(FlammableTag.class).secondsPerBucket() * fuelInput.getFluidAmount() / 1000.0;
+                : fuelInput.getFluidType().getProperty(FlammableProperty.class).secondsPerBucket() * fuelInput.getFluidAmount() / 1000.0;
     }
 
     public static @NonNull List<RebarFluid> getFlammableFluids() {
         List<RebarFluid> fluids = new ArrayList<>();
         for (RebarFluid fluid : RebarRegistry.FLUIDS) {
-            if (fluid.hasTag(FlammableTag.class)) {
+            if (fluid.hasProperty(FlammableProperty.class)) {
                 fluids.add(fluid);
             }
         }

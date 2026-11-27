@@ -6,14 +6,14 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.pylonmc.pylon.api.MeltingPointTag;
+import io.github.pylonmc.pylon.api.MeltingPointProperty;
 import io.github.pylonmc.rebar.block.interfaces.DirectionalRebarBlock;
 import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.RebarConfig;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
+import io.github.pylonmc.rebar.fluid.properties.FluidTemperature;
 
 public final class SmelteryInputHatch extends SmelteryComponent implements FluidBufferRebarBlock, DirectionalRebarBlock {
     public final double flowRate = getSettingOrThrow("flow-rate", ConfigAdapter.DOUBLE);
@@ -33,7 +33,7 @@ public final class SmelteryInputHatch extends SmelteryComponent implements Fluid
     @Override
     public double fluidAmountRequested(@NotNull RebarFluid fluid) {
         SmelteryController controller = getController();
-        if (controller == null || !fluid.hasTag(FluidTemperature.class) || !fluid.hasTag(MeltingPointTag.class) || fluid.getTag(MeltingPointTag.class).temperature() > controller.getTemperature()) return 0.0;
+        if (controller == null || !fluid.hasProperty(FluidTemperature.class) || !fluid.hasProperty(MeltingPointProperty.class) || fluid.getProperty(MeltingPointProperty.class).temperature() > controller.getTemperature()) return 0.0;
         return Math.min(controller.getCapacity() - controller.getTotalFluid(), flowRate * RebarConfig.FLUID_TICK_INTERVAL / 20);
     }
 

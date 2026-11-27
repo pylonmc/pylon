@@ -1,12 +1,12 @@
 package io.github.pylonmc.pylon;
 
-import io.github.pylonmc.pylon.api.FlammableTag;
-import io.github.pylonmc.pylon.api.GasTag;
-import io.github.pylonmc.pylon.api.MeltingPointTag;
+import io.github.pylonmc.pylon.api.FlammableProperty;
+import io.github.pylonmc.pylon.api.GasProperty;
+import io.github.pylonmc.pylon.api.MeltingPointProperty;
 import io.github.pylonmc.pylon.content.machines.smelting.Slurry;
 import io.github.pylonmc.rebar.content.guide.RebarGuide;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
+import io.github.pylonmc.rebar.fluid.properties.FluidTemperature;
 import io.github.pylonmc.rebar.recipe.ingredient.IngredientCalculator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -24,7 +24,7 @@ public final class PylonFluids {
             pylonKey("water"),
             TextColor.fromHexString("#4040ff"),
             Material.BLUE_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         WATER.register();
         IngredientCalculator.addBaseIngredient(WATER);
@@ -34,7 +34,7 @@ public final class PylonFluids {
             pylonKey("lava"),
             TextColor.fromHexString("#fc4e03"),
             Material.ORANGE_CONCRETE
-    ).addTag(FluidTemperature.HOT);
+    ).addProperty(FluidTemperature.HOT);
     static {
         LAVA.register();
         IngredientCalculator.addBaseIngredient(LAVA);
@@ -44,7 +44,7 @@ public final class PylonFluids {
             pylonKey("powder_snow"),
             TextColor.fromHexString("#e8e8e8"),
             Material.SNOW_BLOCK
-    ).addTag(FluidTemperature.COLD);
+    ).addProperty(FluidTemperature.COLD);
     static {
         POWDER_SNOW.register();
         IngredientCalculator.addBaseIngredient(POWDER_SNOW);
@@ -54,7 +54,7 @@ public final class PylonFluids {
             pylonKey("steam"),
             TextColor.fromHexString("#ffffff"),
             Material.WHITE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    ).addProperty(FluidTemperature.HOT).addProperty(new GasProperty());
     static {
         STEAM.register();
     }
@@ -63,7 +63,7 @@ public final class PylonFluids {
             pylonKey("plant_oil"),
             TextColor.fromHexString("#c4b352"),
             Material.YELLOW_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(110));
+    ).addProperty(FluidTemperature.NORMAL).addProperty(new FlammableProperty(110));
     static {
         PLANT_OIL.register();
         IngredientCalculator.addBaseIngredient(PLANT_OIL);
@@ -73,7 +73,7 @@ public final class PylonFluids {
             pylonKey("hydraulic_fluid"),
             TextColor.fromHexString("#212d99"),
             Material.BLUE_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         HYDRAULIC_FLUID.register();
     }
@@ -82,7 +82,7 @@ public final class PylonFluids {
             pylonKey("dirty_hydraulic_fluid"),
             TextColor.fromHexString("#48459b"),
             Material.BROWN_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         DIRTY_HYDRAULIC_FLUID.register();
     }
@@ -91,7 +91,7 @@ public final class PylonFluids {
             pylonKey("reflector_fluid"),
             TextColor.fromHexString("#d1c9ab"),
             Material.WHITE_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         REFLECTOR_FLUID.register();
     }
@@ -100,7 +100,7 @@ public final class PylonFluids {
             pylonKey("sugarcane"),
             TextColor.fromHexString("#a3ed2d"),
             Material.LIME_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         SUGARCANE.register();
         RebarGuide.hideFluid(SUGARCANE.getKey());
@@ -110,7 +110,7 @@ public final class PylonFluids {
             pylonKey("oil"),
             TextColor.fromHexString("#404040"),
             Material.BLACK_CONCRETE
-    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(160));
+    ).addProperty(FluidTemperature.NORMAL).addProperty(new FlammableProperty(160));
     static {
         OIL.register();
     }
@@ -119,7 +119,7 @@ public final class PylonFluids {
             pylonKey("ethanol"),
             TextColor.fromHexString("#d8d8d8"),
             Material.LIGHT_GRAY_CONCRETE_POWDER
-    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(150));
+    ).addProperty(FluidTemperature.NORMAL).addProperty(new FlammableProperty(150));
     static {
         ETHANOL.register();
     }
@@ -128,7 +128,7 @@ public final class PylonFluids {
             pylonKey("biodiesel"),
             TextColor.fromHexString("#eaa627"),
             Material.YELLOW_CONCRETE
-    ).addTag(FluidTemperature.NORMAL).addTag(new FlammableTag(250));
+    ).addProperty(FluidTemperature.NORMAL).addProperty(new FlammableProperty(250));
     static {
         BIODIESEL.register();
     }
@@ -137,7 +137,7 @@ public final class PylonFluids {
             pylonKey("obscyra"),
             TextColor.fromHexString("#5c4a66"),
             Material.BLACK_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         OBSCYRA.register();
     }
@@ -146,7 +146,7 @@ public final class PylonFluids {
             pylonKey("sulfur"),
             TextColor.fromHexString("#fff387"),
             Material.YELLOW_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(112.8));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(112.8));
     static {
         SULFUR.register();
     }
@@ -155,7 +155,7 @@ public final class PylonFluids {
             pylonKey("mercury"),
             TextColor.fromHexString("#dedede"),
             Material.CYAN_TERRACOTTA
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         MERCURY.register();
     }
@@ -164,7 +164,7 @@ public final class PylonFluids {
             pylonKey("tin"),
             TextColor.fromHexString("#62b98e"),
             Material.GREEN_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(231.9));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(231.9));
     static {
         TIN.register();
     }
@@ -173,7 +173,7 @@ public final class PylonFluids {
             pylonKey("copper"),
             TextColor.fromHexString("#e16f22"),
             Material.TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1083));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(1083));
     static {
         COPPER.register();
     }
@@ -182,7 +182,7 @@ public final class PylonFluids {
             pylonKey("iron"),
             TextColor.fromHexString("#e5d7b9"),
             Material.RED_TERRACOTTA
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1538));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(1538));
     static {
         IRON.register();
     }
@@ -191,7 +191,7 @@ public final class PylonFluids {
             pylonKey("bronze"),
             TextColor.fromHexString("#d4a796"),
             Material.BROWN_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(950));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(950));
     static {
         BRONZE.register();
     }
@@ -200,7 +200,7 @@ public final class PylonFluids {
             pylonKey("gold"),
             TextColor.fromHexString("#debc57"),
             Material.YELLOW_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1064));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(1064));
     static {
         GOLD.register();
     }
@@ -209,7 +209,7 @@ public final class PylonFluids {
             pylonKey("steel"),
             TextColor.fromHexString("#848484"),
             Material.GRAY_CONCRETE
-    ).addTag(FluidTemperature.HOT).addTag(new MeltingPointTag(1410));
+    ).addProperty(FluidTemperature.HOT).addProperty(new MeltingPointProperty(1410));
     static {
         STEEL.register();
     }
@@ -218,7 +218,7 @@ public final class PylonFluids {
             pylonKey("slurry"),
             TextColor.fromHexString("#bcbcbc"),
             Material.LIGHT_GRAY_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         SLURRY.register();
     }
@@ -227,7 +227,7 @@ public final class PylonFluids {
             pylonKey("slurry_coal"),
             TextColor.fromHexString("#343434"),
             PylonItems.COAL_DUST
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         COAL_SLURRY.register();
     }
@@ -236,7 +236,7 @@ public final class PylonFluids {
             pylonKey("slurry_carbon"),
             TextColor.fromHexString("#464646"),
             PylonItems.CARBON
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         CARBON_SLURRY.register();
     }
@@ -245,7 +245,7 @@ public final class PylonFluids {
             pylonKey("slurry_raw_tin"),
             TextColor.fromHexString("#387154"),
             PylonItems.CRUSHED_RAW_TIN
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         RAW_TIN_SLURRY.register();
     }
@@ -254,7 +254,7 @@ public final class PylonFluids {
             pylonKey("slurry_raw_copper"),
             TextColor.fromHexString("#8d4717"),
             PylonItems.CRUSHED_RAW_COPPER
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         RAW_COPPER_SLURRY.register();
     }
@@ -263,7 +263,7 @@ public final class PylonFluids {
             pylonKey("slurry_raw_iron"),
             TextColor.fromHexString("#887f6d"),
             PylonItems.CRUSHED_RAW_IRON
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         RAW_IRON_SLURRY.register();
     }
@@ -272,7 +272,7 @@ public final class PylonFluids {
             pylonKey("slurry_raw_gold"),
             TextColor.fromHexString("#a0873f"),
             PylonItems.CRUSHED_RAW_GOLD
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         RAW_GOLD_SLURRY.register();
     }
@@ -281,7 +281,7 @@ public final class PylonFluids {
             pylonKey("slurry_redstone"),
             TextColor.fromHexString("#841f1e"),
             ItemStack.of(Material.REDSTONE)
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         REDSTONE_SLURRY.register();
     }
@@ -291,7 +291,7 @@ public final class PylonFluids {
             TextColor.fromHexString("#847975"),
             PylonItems.SPONGE_IRON,
             500
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         SPONGE_IRON_SLURRY.register();
     }
@@ -300,7 +300,7 @@ public final class PylonFluids {
             pylonKey("liquid_xp"),
             TextColor.fromHexString("#1dc420"),
             Material.LIME_CONCRETE
-    ).addTag(FluidTemperature.NORMAL);
+    ).addProperty(FluidTemperature.NORMAL);
     static {
         LIQUID_XP.register();
     }
@@ -309,7 +309,7 @@ public final class PylonFluids {
             pylonKey("very_hot_exhaust"),
             TextColor.fromHexString("#ff0000"),
             Material.RED_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    ).addProperty(FluidTemperature.HOT).addProperty(new GasProperty());
     static {
         VERY_HOT_EXHAUST.register();
     }
@@ -318,7 +318,7 @@ public final class PylonFluids {
             pylonKey("hot_exhaust"),
             TextColor.fromHexString("#ff8000"),
             Material.ORANGE_STAINED_GLASS
-    ).addTag(FluidTemperature.HOT).addTag(new GasTag());
+    ).addProperty(FluidTemperature.HOT).addProperty(new GasProperty());
     static {
         HOT_EXHAUST.register();
     }

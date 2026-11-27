@@ -4,7 +4,7 @@ import io.github.pylonmc.pylon.PylonFluids;
 import io.github.pylonmc.pylon.recipes.MixingPotRecipe;
 import io.github.pylonmc.pylon.recipes.StrainingRecipe;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.fluid.RebarFluidTag;
+import io.github.pylonmc.rebar.fluid.RebarFluidProperty;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidChoice;
 import io.github.pylonmc.rebar.recipe.ingredient.FluidOrItem;
 import io.github.pylonmc.rebar.recipe.ingredient.ItemChoice;
@@ -31,9 +31,9 @@ public class Slurry extends RebarFluid implements RegistryHandler {
             @NotNull NamespacedKey key,
             @NotNull TextColor color,
             @NotNull ItemStack slurryStack,
-            @NotNull RebarFluidTag @NotNull ... tags
+            @NotNull RebarFluidProperty @NotNull ... properties
     ) {
-        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, properties);
         this.amount = 1000;
         this.slurryStack = slurryStack;
     }
@@ -43,8 +43,8 @@ public class Slurry extends RebarFluid implements RegistryHandler {
             @NotNull TextColor color,
             @NotNull ItemStack slurryStack,
             int amount,
-            @NotNull RebarFluidTag @NotNull ... tags) {
-        super(key, color, Material.LIGHT_GRAY_CONCRETE, tags);
+            @NotNull RebarFluidProperty @NotNull ... properties) {
+        super(key, color, Material.LIGHT_GRAY_CONCRETE, properties);
         this.amount = amount;
         this.slurryStack = slurryStack;
     }

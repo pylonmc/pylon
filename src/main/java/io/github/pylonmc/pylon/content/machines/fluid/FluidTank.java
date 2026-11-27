@@ -12,7 +12,7 @@ import io.github.pylonmc.rebar.block.context.BlockCreateContext;
 import io.github.pylonmc.rebar.config.adapter.ConfigAdapter;
 import io.github.pylonmc.rebar.fluid.FluidPointType;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
-import io.github.pylonmc.rebar.fluid.tags.FluidTemperature;
+import io.github.pylonmc.rebar.fluid.properties.FluidTemperature;
 import io.github.pylonmc.rebar.i18n.RebarArgument;
 import io.github.pylonmc.rebar.item.RebarItem;
 import io.github.pylonmc.rebar.util.ProgressBar;
@@ -164,7 +164,7 @@ public class FluidTank extends RebarBlock
 
     @Override
     public boolean isAllowedFluid(@NotNull RebarFluid fluid) {
-        return fluid.hasTag(FluidTemperature.class) && allowedTemperatures.contains(fluid.getTag(FluidTemperature.class));
+        return fluid.hasProperty(FluidTemperature.class) && allowedTemperatures.contains(fluid.getProperty(FluidTemperature.class));
     }
 
     @Override
