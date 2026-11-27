@@ -59,7 +59,7 @@ public record GasTurbineRecipe(
 
     private static final UnitFormat JOULES_PER_MILLIBUCKET = new UnitFormat(
             Pylon.getInstance(),
-            "joules-per-millibucket"
+            pylonKey("joules-per-millibucket")
     ).withDefaultStyle(UnitFormat.JOULES.getDefaultStyle());
 
     @Override
