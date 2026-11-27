@@ -212,14 +212,14 @@ pylon:internal_combustion_engine:
           position: [0.85, 0.5]
           scale: [0.1, 0.25, 1.0]
 
-pylon:cargo_controller:
+pylon:cargo_circuit:
   inputs:
     - minecraft:repeater: 1
     - minecraft:redstone_torch: 2
     - minecraft:redstone: 3
     - pylon:iron_sheet: 1
   results:
-    - pylon:cargo_controller
+    - pylon:cargo_circuit
   steps:
     - tool: "hammer"
       icon: pylon:stone_hammer

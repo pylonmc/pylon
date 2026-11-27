@@ -891,13 +891,13 @@ public final class PylonItems {
         PylonPages.COMPONENTS.addItem(INTERNAL_COMBUSTION_ENGINE);
     }
 
-    public static final ItemStack CARGO_CONTROLLER = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CARGO_CONTROLLER)
+    public static final ItemStack CARGO_CIRCUIT = ItemStackBuilder.rebar(Material.CLAY_BALL, PylonKeys.CARGO_CIRCUIT)
             .set(DataComponentTypes.ITEM_MODEL, Material.NOTE_BLOCK.getKey())
             .build();
 
     static {
-        RebarItem.register(RebarItem.class, CARGO_CONTROLLER, PylonKeys.CARGO_CONTROLLER);
-        PylonPages.COMPONENTS.addItem(CARGO_CONTROLLER);
+        RebarItem.register(RebarItem.class, CARGO_CIRCUIT, PylonKeys.CARGO_CIRCUIT);
+        PylonPages.COMPONENTS.addItem(CARGO_CIRCUIT);
     }
 
     public static final ItemStack REINFORCED_GLASS = ItemStackBuilder.rebar(Material.GRAY_STAINED_GLASS, PylonKeys.REINFORCED_GLASS)

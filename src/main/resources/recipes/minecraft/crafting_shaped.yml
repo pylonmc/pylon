@@ -2350,7 +2350,7 @@ pylon:cargo_splitter:
     - "SAS"
   key:
     S: pylon:iron_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
   result:
@@ -2364,7 +2364,7 @@ pylon:cargo_merger:
     - "S S"
   key:
     S: pylon:iron_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
   result:
@@ -2378,7 +2378,7 @@ pylon:cargo_filter:
     - "SAS"
   key:
     S: pylon:iron_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     F: pylon:filter_mesh
@@ -2393,7 +2393,7 @@ pylon:cargo_overflow_gate:
     - "SAS"
   key:
     S: pylon:iron_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
@@ -2408,7 +2408,7 @@ pylon:cargo_gate:
     - "SRS"
   key:
     S: pylon:steel_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     C: pylon:liselette_cathode
     A: pylon:liselette_anode
     R: minecraft:comparator
@@ -2423,7 +2423,7 @@ pylon:cargo_accumulator:
     - "SAS"
   key:
     S: pylon:steel_sheet
-    O: pylon:cargo_controller
+    O: pylon:cargo_circuit
     A: pylon:liselette_anode
     C: pylon:liselette_cathode
     R: minecraft:repeater
