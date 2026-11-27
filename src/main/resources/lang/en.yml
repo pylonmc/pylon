@@ -290,7 +290,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
@@ -299,7 +299,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
@@ -309,7 +309,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
@@ -318,7 +318,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
@@ -327,7 +327,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
@@ -336,7 +336,7 @@ item:
     lore: |-
       <arrow> Can be placed down and connected with pipes
       <arrow> Retains contents when broken
-      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with water or lava)
+      <arrow> <insn>Right click</insn> with a bucket to add/remove fluids (only works with lava)
       <arrow> <attr>Fluid:</attr> %fluid%
       <arrow> <attr>Allowed temperatures:</attr> %temperatures%
 
