@@ -1,7 +1,7 @@
 package io.github.pylonmc.pylon.guide;
 
 import io.github.pylonmc.pylon.PylonFluids;
-import io.github.pylonmc.pylon.api.FlammableTag;
+import io.github.pylonmc.pylon.api.FlammableProperty;
 import io.github.pylonmc.pylon.recipes.PressRecipe;
 import io.github.pylonmc.rebar.fluid.RebarFluid;
 import io.github.pylonmc.rebar.guide.button.FluidButton;
@@ -42,7 +42,7 @@ public class LiquidFuelsPage extends SimpleDynamicGuidePage {
     private static @NonNull List<Item> getButtons() {
         List<Item> buttons = new ArrayList<>();
         for (RebarFluid fluid : RebarRegistry.FLUIDS) {
-            if (fluid.hasTag(FlammableTag.class)) {
+            if (fluid.hasProperty(FlammableProperty.class)) {
                 buttons.add(FluidButton.of(fluid));
             }
         }
