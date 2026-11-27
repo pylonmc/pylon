@@ -2072,8 +2072,8 @@ item:
     name: "Liselette Anode"
     story: <story>Creates a Liselette gradient when paired with a Liselette Cathode and appropriate mediating conductors.
 
-  cargo_controller:
-    name: "Cargo Controller"
+  cargo_circuit:
+    name: "Cargo Circuit"
 
   steel_helmet:
     name: "Steel Helmet"

@@ -587,7 +587,7 @@ components_2:
     - pylon:steel_crankshaft
     - pylon:kinetic_control_mechanism
     - pylon:internal_combustion_engine
-    - pylon:cargo_controller
+    - pylon:cargo_circuit
     - pylon:steel_support_beam
     - pylon:reinforced_glass
     - pylon:reinforced_glass_casing
